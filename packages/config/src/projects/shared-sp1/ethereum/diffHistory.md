@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xb2856faa946b4980f9f0d18a797fbe2758bfcea5
+
+# Diff at Thu, 10 Jul 2025 08:15:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882427
+- current block number: 22882427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882427 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf1dce07804a55aad970287fc3171c5bd520dfd7d
 
 # Diff at Wed, 09 Jul 2025 15:09:45 GMT:

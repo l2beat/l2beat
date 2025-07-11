@@ -10,6 +10,7 @@ import {
 import {
   ChainConverter,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
@@ -1070,7 +1071,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address,
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

@@ -1,3 +1,561 @@
+Generated with discovered.json: 0xa6181b3fbcbd496d0a9be357cada84e529dc3c32
+
+# Diff at Thu, 10 Jul 2025 08:14:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22472206
+- current block number: 22472206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22472206 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EcdsaPointsXColumn (0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey1Column (0x032e5cDb729Ce94638ACA9e82A22688109B43046)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PedersenHashPointsXColumn (0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0x05C98569CA566a2035b87dE7d1b623C950798035)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey1Column (0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PedersenHashPointsYColumn (0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SHARP Multisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0x243682b9A01455ac671c97D8dE686EBd4EE25791)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FriStatementContract (0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MerkleStatementContract (0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0x351666E9EeA6E012f08695ccd1923f37519563f1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0x3d57526c1C8D63fa2A8704487Df65e9000166c8E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0x42AF9498647Be47A256C9cc8278eE94473Cb7771)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows 0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0x4742f8723CAE9C17Cb1D54708898904fB43621c9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey2Column (0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey0Column (0x53daC4aB94955f35657463252a7b25F343A14451)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CairoBootloaderProgram (0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey1Column (0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0xA9db7bDfbc3664C8954f490e4d94B8607a080f23)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0xAaAe0edF6536de72E7163D293518c40011179f8a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonPartialRoundKey0Column (0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuConstraintPoly (0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey0Column (0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuOods (0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey2Column (0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CpuFrilessVerifier (0xe155154845950573EC5F518fC0D4950AB71303ff)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EcdsaPointsYColumn (0xE3929Ea107238Ce59d64A3cE497f12b57846B716)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MemoryPageFactRegistry (0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460)
+    +++ description: Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey0Column (0xedFfEA8296945aA91FC035Aefc8c33D737dBc573)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PoseidonPoseidonFullRoundKey1Column (0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsXColumn (0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey1Column (0x032e5cDb729Ce94638ACA9e82A22688109B43046)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsXColumn (0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x05C98569CA566a2035b87dE7d1b623C950798035)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey1Column (0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsYColumn (0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SHARP Multisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x243682b9A01455ac671c97D8dE686EBd4EE25791)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FriStatementContract (0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MerkleStatementContract (0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x351666E9EeA6E012f08695ccd1923f37519563f1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x3d57526c1C8D63fa2A8704487Df65e9000166c8E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x42AF9498647Be47A256C9cc8278eE94473Cb7771)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifierCallProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: Upgradable call proxy contract through which the SHARPVerifier can be called. A call proxy does not delegatecall and the storage context remains at the target contract. It allows eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4 to change the otherwise immutable verifier contract with 8d delay.
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x4742f8723CAE9C17Cb1D54708898904fB43621c9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey2Column (0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey0Column (0x53daC4aB94955f35657463252a7b25F343A14451)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515)
+    +++ description: Bootloader program for the SHARPVerifier.
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey1Column (0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SHARPVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    +++ description: Shared Starkware SHARP verifier used collectively by Starknet and other SN stack and StarkEx projects. It receives STARK proofs from the Prover and verifies the integrity of the offchain execution including a correctly computed state root which is part of the Program Output.
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xA9db7bDfbc3664C8954f490e4d94B8607a080f23)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0xAaAe0edF6536de72E7163D293518c40011179f8a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey0Column (0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey0Column (0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey2Column (0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0xe155154845950573EC5F518fC0D4950AB71303ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsYColumn (0xE3929Ea107238Ce59d64A3cE497f12b57846B716)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MemoryPageFactRegistry (0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460)
+    +++ description: Auxiliary to the SHARPVerifier contract: Verified 'memory fact pages' get stored here. This is important as it registers all necessary onchain data produced by the verifier.
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey0Column (0xedFfEA8296945aA91FC035Aefc8c33D737dBc573)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey1Column (0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf699d39cde57d76ae9259d35fbada301b3dc46fc
 
 # Diff at Fri, 04 Jul 2025 13:26:28 GMT:

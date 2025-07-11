@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "Governance",
-      "address": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+      "address": "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
       "type": "Contract",
       "sourceHashes": [
         "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
@@ -16,50 +16,50 @@
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
-        "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "$implementation": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
-        "networkGovernor": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8",
+        "networkGovernor": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
         "totalTokens": 39,
-        "validators": ["0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
+        "validators": ["eth:0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"]
       },
       "implementationNames": {
-        "0x02ecef526f806f06357659fFD14834fe82Ef4B04": "Proxy",
-        "0x9d3fdf9b4782753d12f6262bf22B6322608962b8": "Governance"
+        "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04": "Proxy",
+        "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8": "Governance"
       }
     },
     {
-      "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
+      "address": "eth:0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Verifier",
-      "address": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+      "address": "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
-        "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "$implementation": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F"
       },
       "implementationNames": {
-        "0x27C229937745d697d28FC7853d1bFEA7331Edf56": "Proxy",
-        "0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F": ""
+        "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56": "Proxy",
+        "eth:0x165dFA76DFD3F6ad6Ad614aE4566C2E9262E532F": ""
       }
     },
     {
       "name": "ZkSyncCommitBlock",
-      "address": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+      "address": "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
       "type": "Contract",
       "sourceHashes": [
         "0x423fde4a6b6351d8f7f10a2e073dedc2c2250adb57d53e7cb226a30202e62863"
@@ -81,37 +81,37 @@
         "totalPairTokens": 0,
         "upgradePreparationActivationTime": 0,
         "upgradePreparationActive": false,
-        "zkSyncCommitBlockAddress": "0x0000000000000000000000000000000000000000",
-        "zkSyncExitAddress": "0x0000000000000000000000000000000000000000"
+        "zkSyncCommitBlockAddress": "eth:0x0000000000000000000000000000000000000000",
+        "zkSyncExitAddress": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": "ZkSyncCommitBlock"
+        "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": "ZkSyncCommitBlock"
       }
     },
     {
       "name": "PairManager",
-      "address": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+      "address": "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
-        "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "$implementation": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8"
       },
       "implementationNames": {
-        "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": "Proxy",
-        "0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8": ""
+        "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": "Proxy",
+        "eth:0x65Fab217f1948af2D7A8eEB11fF111B0993C5Df8": ""
       }
     },
     {
       "name": "UpgradeGatekeeper",
-      "address": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
+      "address": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
       "type": "Contract",
       "sourceHashes": [
         "0x1359a771e28c9c71730920ab6bee9509009c60908022ff865419a483f74f702b"
@@ -148,31 +148,31 @@
       "sinceBlock": 11841962,
       "values": {
         "$immutable": true,
-        "getMaster": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
-        "mainContract": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+        "getMaster": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+        "mainContract": "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
         "managedContracts": [
-          "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
-          "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
-          "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
-          "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
-          "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+          "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+          "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+          "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+          "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+          "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
         ],
         "noticePeriodFinishTimestamp": 0,
         "upgradeStatus": 0,
         "versionId": 0
       },
       "implementationNames": {
-        "0x714B2D10210f2A3a7AA614F949259C87613689aB": "UpgradeGatekeeper"
+        "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB": "UpgradeGatekeeper"
       }
     },
     {
-      "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
+      "address": "eth:0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ZkSyncExit",
-      "address": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
+      "address": "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -180,12 +180,12 @@
       "sinceBlock": 11841961,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5": ""
+        "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5": ""
       }
     },
     {
       "name": "ZkSync",
-      "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+      "address": "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
       "type": "Contract",
       "sourceHashes": [
         "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
@@ -202,19 +202,19 @@
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
-        "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "$implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
         "firstPendingWithdrawalIndex": 37174,
         "firstPriorityRequestId": 22930,
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
-        "governance": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "governance": "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04",
         "numberOfPendingWithdrawals": 6,
-        "pairManager": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+        "pairManager": "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
         "totalBlocksCommitted": 130744,
         "totalBlocksVerified": 130744,
         "totalCommittedPriorityRequests": 0,
@@ -222,35 +222,35 @@
         "totalPairTokens": 108,
         "upgradePreparationActivationTime": 0,
         "upgradePreparationActive": false,
-        "verifier": "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
-        "verifierExit": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
-        "zkSyncCommitBlockAddress": "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
-        "zkSyncExitAddress": "0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5"
+        "verifier": "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+        "verifierExit": "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+        "zkSyncCommitBlockAddress": "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157",
+        "zkSyncExitAddress": "eth:0x8A1DBf1C32A4f5AfBD70D778F25FBEed7Cc881e5"
       },
       "implementationNames": {
-        "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": "Proxy",
-        "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": "ZkSync"
+        "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": "Proxy",
+        "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": "ZkSync"
       }
     },
     {
       "name": "VerifierExit",
-      "address": "0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
+      "address": "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1613135194,
       "sinceBlock": 11841962,
       "values": {
-        "$admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "$implementation": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
+        "$admin": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "$implementation": "eth:0xd12F4D8329584F36aEd67f807F42D9a02bEb9534",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
-        "getTarget": "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
+        "getMaster": "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB",
+        "getTarget": "eth:0xd12F4D8329584F36aEd67f807F42D9a02bEb9534"
       },
       "implementationNames": {
-        "0x961369d347EF7A6896BDD39cBE2B89e3911f521f": "Proxy",
-        "0xd12F4D8329584F36aEd67f807F42D9a02bEb9534": ""
+        "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f": "Proxy",
+        "eth:0xd12F4D8329584F36aEd67f807F42D9a02bEb9534": ""
       }
     }
   ],
@@ -486,5 +486,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xe38f2a76ff31b1b7f01bcaaef272675c59dde0f15e11b6450c5d0ffaf0e11bc2"
+  "permissionsConfigHash": "0x616d6a39aa7fee1f83459e31c8d98a8060971fd356d0ef44575777396baeb8d7"
 }

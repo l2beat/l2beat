@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "BlockVerifier",
-      "address": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
+      "address": "eth:0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
       "type": "Contract",
       "sourceHashes": [
         "0x034de7052cf5e10120ac3d5f4432bd52f50acc4c6d7d51d04aeaeffb45f9b87d"
@@ -16,16 +16,16 @@
       "sinceBlock": 17087068,
       "values": {
         "$immutable": true,
-        "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
+        "owner": "eth:0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e": "BlockVerifier"
+        "eth:0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e": "BlockVerifier"
       }
     },
     {
       "name": "LoopringOwner",
-      "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+      "address": "eth:0x2028834B2c0A36A918c10937EeA71BE4f932da52",
       "type": "Contract",
       "sourceHashes": [
         "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
@@ -37,29 +37,29 @@
       "values": {
         "$immutable": true,
         "getOwners": [
-          "0xf5020ADf433645c451A4809eac0d6F680709f11B",
-          "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
-          "0xB7093FC2d926ADdE48122B70991fe68374879adf",
-          "0xC715b8501039d3514787dC55BC09f89c293351e9",
-          "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
-          "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+          "eth:0xf5020ADf433645c451A4809eac0d6F680709f11B",
+          "eth:0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
+          "eth:0xB7093FC2d926ADdE48122B70991fe68374879adf",
+          "eth:0xC715b8501039d3514787dC55BC09f89c293351e9",
+          "eth:0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
+          "eth:0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
         "transactionCount": 8
       },
       "implementationNames": {
-        "0x2028834B2c0A36A918c10937EeA71BE4f932da52": "MultiSigWallet"
+        "eth:0x2028834B2c0A36A918c10937EeA71BE4f932da52": "MultiSigWallet"
       }
     },
     {
-      "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
+      "address": "eth:0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LoopringV3",
-      "address": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
+      "address": "eth:0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
       "type": "Contract",
       "sourceHashes": [
         "0x1a927b8a2febc8b60253ee7277d887fe95ec3e23241d77d0ec9e6f424239438e"
@@ -69,23 +69,23 @@
       "sinceBlock": 17087402,
       "values": {
         "$immutable": true,
-        "blockVerifierAddress": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
+        "blockVerifierAddress": "eth:0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
         "forcedWithdrawalFee": "10000000000000000",
         "getProtocolFeeValues": 18,
-        "lrcAddress": "0x53C8395465A84955c95159814461466053DedEDE",
-        "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "lrcAddress": "eth:0x53C8395465A84955c95159814461466053DedEDE",
+        "owner": "eth:0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "protocolFeeBips": 18,
-        "protocolFeeVault": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+        "protocolFeeVault": "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
         "totalStake": 0
       },
       "implementationNames": {
-        "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458": "LoopringV3"
+        "eth:0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458": "LoopringV3"
       }
     },
     {
       "name": "LoopringIOExchangeOwner",
-      "address": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
+      "address": "eth:0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
       "type": "Contract",
       "sourceHashes": [
         "0x80a64d522f935661e6a91ce240c8fab04db5aa499462cca019fcda5e0494b18e"
@@ -96,26 +96,26 @@
       "values": {
         "$immutable": true,
         "blockSubmitters": [
-          "0x84A00D39C3c95e839202E19F892F17743d6370a0",
-          "0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C"
+          "eth:0x84A00D39C3c95e839202E19F892F17743d6370a0",
+          "eth:0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C"
         ],
         "open": false,
-        "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "target": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5"
+        "owner": "eth:0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "target": "eth:0xe63602a9B3DFE983187525AC985Fec4F57B24eD5"
       },
       "implementationNames": {
-        "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83": "LoopringIOExchangeOwner"
+        "eth:0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83": "LoopringIOExchangeOwner"
       }
     },
     {
-      "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
+      "address": "eth:0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "FeeVault",
-      "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
+      "address": "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
       "type": "Contract",
       "sourceHashes": [
         "0xf716f94059215d0e4c8d8edf41e5a65e741bce5005c2afee04eaafcf5c210d20"
@@ -127,24 +127,24 @@
       "values": {
         "$immutable": true,
         "getOwners": [
-          "0xf5020ADf433645c451A4809eac0d6F680709f11B",
-          "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
-          "0xB7093FC2d926ADdE48122B70991fe68374879adf",
-          "0xC715b8501039d3514787dC55BC09f89c293351e9",
-          "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
-          "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+          "eth:0xf5020ADf433645c451A4809eac0d6F680709f11B",
+          "eth:0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
+          "eth:0xB7093FC2d926ADdE48122B70991fe68374879adf",
+          "eth:0xC715b8501039d3514787dC55BC09f89c293351e9",
+          "eth:0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
+          "eth:0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
         "transactionCount": 110
       },
       "implementationNames": {
-        "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "MultiSigWallet"
+        "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": "MultiSigWallet"
       }
     },
     {
       "name": "DefaultDepositContract",
-      "address": "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
+      "address": "eth:0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
       "type": "Contract",
       "sourceHashes": [
         "0x84fb4e2bbd657c64908e8875c1bbe3610271899626eaf9cf56d6b69400a607b3"
@@ -154,37 +154,37 @@
       "sinceBlock": 17087506,
       "values": {
         "$immutable": true,
-        "exchange": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
-        "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
-        "pendingOwner": "0x0000000000000000000000000000000000000000"
+        "exchange": "eth:0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
+        "owner": "eth:0x2028834B2c0A36A918c10937EeA71BE4f932da52",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA": "DefaultDepositContract"
+        "eth:0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA": "DefaultDepositContract"
       }
     },
     {
-      "address": "0x84A00D39C3c95e839202E19F892F17743d6370a0",
+      "address": "eth:0x84A00D39C3c95e839202E19F892F17743d6370a0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xB7093FC2d926ADdE48122B70991fe68374879adf",
+      "address": "eth:0xB7093FC2d926ADdE48122B70991fe68374879adf",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xC715b8501039d3514787dC55BC09f89c293351e9",
+      "address": "eth:0xC715b8501039d3514787dC55BC09f89c293351e9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
+      "address": "eth:0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ExchangeV3",
-      "address": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
+      "address": "eth:0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
       "type": "Contract",
       "sourceHashes": [
         "0xfe68945beed1d671d49de42310f9808862fb79dd5fe0a529fe1a43b93aab8f03"
@@ -219,7 +219,7 @@
           "MAX_FORCED_WITHDRAWAL_FEE": "250000000000000000",
           "DEFAULT_PROTOCOL_FEE_BIPS": 18
         },
-        "getDepositContract": "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
+        "getDepositContract": "eth:0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
         "getDomainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
@@ -236,17 +236,17 @@
         },
         "isInWithdrawalMode": false,
         "isShutdown": true,
-        "loopringV3": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
-        "owner": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "loopringV3": "eth:0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
+        "owner": "eth:0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "shutdownTriggered": [1695894359],
         "state": {
           "maxAgeDepositUntilWithdrawable": 1296000,
           "DOMAIN_SEPARATOR": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
-          "loopring": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
-          "blockVerifier": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
-          "agentRegistry": "0x0000000000000000000000000000000000000000",
-          "depositContract": "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
+          "loopring": "eth:0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
+          "blockVerifier": "eth:0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
+          "agentRegistry": "eth:0x0000000000000000000000000000000000000000",
+          "depositContract": "eth:0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
           "depositState": {
             "freeDepositMax": 5000,
             "freeDepositRemained": 4999,
@@ -273,21 +273,21 @@
         "version": "0.1.0"
       },
       "implementationNames": {
-        "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5": "ExchangeV3"
+        "eth:0xe63602a9B3DFE983187525AC985Fec4F57B24eD5": "ExchangeV3"
       }
     },
     {
-      "address": "0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C",
+      "address": "eth:0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
+      "address": "eth:0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B",
+      "address": "eth:0xf5020ADf433645c451A4809eac0d6F680709f11B",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -522,5 +522,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x94806e3bf2fab81c4a98cf890b9a59371b5c5346cf9c832dd144551c3aab54e7"
+  "permissionsConfigHash": "0x4d728ab6390a5eddd34182c87850044a8083c3a19a96c045392d51e569896550"
 }

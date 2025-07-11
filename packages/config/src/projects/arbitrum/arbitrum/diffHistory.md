@@ -1,3 +1,369 @@
+Generated with discovered.json: 0x803505793ad6be825c3fd2600ec13e3dc6233582
+
+# Diff at Thu, 10 Jul 2025 08:13:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 348602301
+- current block number: 348602301
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 348602301 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe)
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417)
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+```
+
+```diff
+-   Status: DELETED
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
+-   Status: DELETED
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0)
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+```
+
+```diff
+-   Status: DELETED
+    contract StandardArbERC20 (0x3f770Ac673856F105b586bb393d122721265aD46)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BeaconProxyFactory (0x3fE38087A94903A9D946fa1915e1772fe611000f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65)
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
+    +++ description: Token governance contract for the Security Council member elections.
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933)
+    +++ description: Router managing token <–> gateway mapping on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B)
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318)
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
+    +++ description: Token governance contract for the Security Council member removals.
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4)
+    +++ description: Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0)
+    +++ description: Token governance contract for the Security Council nominee elections.
+```
+
+```diff
+-   Status: DELETED
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548)
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a)
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649)
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58)
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E)
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827)
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC)
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9)
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe)
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+```
+
+```diff
++   Status: CREATED
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417)
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0)
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+```
+
+```diff
++   Status: CREATED
+    contract StandardArbERC20 (0x3f770Ac673856F105b586bb393d122721265aD46)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxyFactory (0x3fE38087A94903A9D946fa1915e1772fe611000f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65)
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
+    +++ description: Token governance contract for the Security Council member elections.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933)
+    +++ description: Router managing token <–> gateway mapping on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B)
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318)
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
+    +++ description: Token governance contract for the Security Council member removals.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4)
+    +++ description: Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0)
+    +++ description: Token governance contract for the Security Council nominee elections.
+```
+
+```diff
++   Status: CREATED
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548)
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a)
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649)
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58)
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E)
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827)
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC)
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9)
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+```
+
 Generated with discovered.json: 0xc64afc992d8b42deb93155deb21dbf668085e417
 
 # Diff at Fri, 04 Jul 2025 12:18:52 GMT:

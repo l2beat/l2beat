@@ -1,3 +1,345 @@
+Generated with discovered.json: 0xcf07d56c42aa37b69c5c692738695010786bf198
+
+# Diff at Thu, 10 Jul 2025 08:15:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882452
+- current block number: 22882452
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882452 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Treasurer (0x1041D127b2d4BC700F0F563883bC689502606918)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+```
+
+```diff
+-   Status: DELETED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargateMultiRewarder (0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CreditMessaging (0x6b8aD17795d89B283e6D0362A87A403f3544bb9d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980)
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+```
+
+```diff
+-   Status: DELETED
+    contract FeeLibV1 (0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+```
+
+```diff
+-   Status: DELETED
+    contract PriceFeed (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LPToken (0xF14EEe033D8b00101aB147F87cB238a2d3E74940)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasurer (0x1041D127b2d4BC700F0F563883bC689502606918)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargateMultiRewarder (0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CreditMessaging (0x6b8aD17795d89B283e6D0362A87A403f3544bb9d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessaging (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980)
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+```
+
+```diff
++   Status: CREATED
+    contract FeeLibV1 (0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Verifier (0x8FafAE7Dd957044088b3d0F67359C327c6200d18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+```
+
+```diff
++   Status: CREATED
+    contract PriceFeed (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePool (0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xd0ab8512CF4907bD94CDb5fE7d0C324E666c4006)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LPToken (0xF14EEe033D8b00101aB147F87cB238a2d3E74940)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x68665bb6363599b0f33897dd2f5f01480aec5c73
 
 # Diff at Wed, 09 Jul 2025 15:14:49 GMT:

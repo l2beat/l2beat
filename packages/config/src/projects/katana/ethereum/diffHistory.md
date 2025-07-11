@@ -1,3 +1,489 @@
+Generated with discovered.json: 0xc3364c7e928f0822e9b779f8f2e650d43631ffce
+
+# Diff at Thu, 10 Jul 2025 08:13:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22837267
+- current block number: 22837267
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22837267 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666)
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x14Be6579A41342ca6B402ec85E7be538e6Ade951)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0x15a32FCeA89617Ff450F094cDE102CCa46598B7F)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract Yearn Strategist Multisig (0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E)
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x263b251D67BB154DD6b8352539466ACE7948ED56)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
+-   Status: DELETED
+    contract Katana vaultBridge Multisig 1 (0x2De242e27386e224E5fbF110EA8406d5B70740ec)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x377a9e5df2882DC1DF8A0bD162cbc640eA634010)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
+-   Status: DELETED
+    contract MigrationManager (0x417d01B64Ea30C4E163873f3a1f77b727c689e02)
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x6d0ff67fb427422AfF35EEa8596949B374b09a52)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract AnchorStateRegistry (0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract Katana Steakhouse Financial / Morpho Multisig (0x827e86072B06674a077f592A531dcE4590aDeCdB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8970650CF3f1E57cA804C65B4DBcFf698789FE30)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x98906C3f90A06B5484DD67bf32938815d2993dBC)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract Polygon Labs Engineering/Security Multisig (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
+-   Status: DELETED
+    contract Katana vaultBridge Multisig 2 (0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xD1e389c046FB734D2a0c7C390312210c408ba832)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Katana vaultBridge Multisig 3 (0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666)
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x14Be6579A41342ca6B402ec85E7be538e6Ade951)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x15a32FCeA89617Ff450F094cDE102CCa46598B7F)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract Yearn Strategist Multisig (0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E)
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x263b251D67BB154DD6b8352539466ACE7948ED56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract Katana vaultBridge Multisig 1 (0x2De242e27386e224E5fbF110EA8406d5B70740ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x377a9e5df2882DC1DF8A0bD162cbc640eA634010)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract MigrationManager (0x417d01B64Ea30C4E163873f3a1f77b727c689e02)
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x6d0ff67fb427422AfF35EEa8596949B374b09a52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract Katana Steakhouse Financial / Morpho Multisig (0x827e86072B06674a077f592A531dcE4590aDeCdB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8970650CF3f1E57cA804C65B4DBcFf698789FE30)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x98906C3f90A06B5484DD67bf32938815d2993dBC)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon Labs Engineering/Security Multisig (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract Katana vaultBridge Multisig 2 (0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xD1e389c046FB734D2a0c7C390312210c408ba832)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Katana vaultBridge Multisig 3 (0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5c6d5eccb8c520e2a2c0a17648a1e0b5be8117a5
 
 # Diff at Fri, 04 Jul 2025 12:19:05 GMT:

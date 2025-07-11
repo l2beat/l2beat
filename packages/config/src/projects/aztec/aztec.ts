@@ -25,7 +25,7 @@ const discovery = new ProjectDiscovery('aztec')
 function getRollupProviders() {
   // not getting this from the discovery, because it's the deployer
   // https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L88
-  const deployer = '0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895'
+  const deployer = 'eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895'
   const removedProviders = discovery.getContractValue<string[]>(
     'RollupProcessor',
     'removedRollupProviders',

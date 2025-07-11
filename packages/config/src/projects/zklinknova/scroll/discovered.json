@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "zkLink",
-      "address": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
+      "address": "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
@@ -25,13 +25,13 @@
       "sinceTimestamp": 1718004361,
       "sinceBlock": 6433793,
       "values": {
-        "$admin": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
-        "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
+        "$admin": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+        "$implementation": "scr:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
         "$pastUpgrades": [
           [
             "2024-06-10T07:26:01.000Z",
             "0x9d2ffc640100c25deacf7308dafb540b000bfc8a3d6fa8dab19ec9150ce38434",
-            ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
+            ["scr:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"]
           ]
         ],
         "$upgradeCount": 1,
@@ -44,14 +44,14 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0x0000000000000000000000000000000000000000",
-        "gateway": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
-        "getGateway": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
-        "getGovernor": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+        "forwardFeeAllocator": "scr:0x0000000000000000000000000000000000000000",
+        "gateway": "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+        "getGateway": "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+        "getGovernor": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
         "getPriorityTxMaxGasLimit": 72000000,
         "getTotalBatchesExecuted": 50873,
         "getTotalPriorityTxs": 1006,
-        "owner": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+        "owner": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
         "paused": false,
         "totalBatchesExecuted": 50873,
         "totalPriorityTxs": 1006,
@@ -61,18 +61,18 @@
         "txGasPrice": 0
       },
       "implementationNames": {
-        "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2": "ERC1967Proxy",
-        "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": "ZkLink"
+        "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2": "ERC1967Proxy",
+        "scr:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": "ZkLink"
       }
     },
     {
-      "address": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4",
+      "address": "scr:0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge",
-      "address": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+      "address": "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
       "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
@@ -82,48 +82,48 @@
       "sinceTimestamp": 1718026877,
       "sinceBlock": 6441298,
       "values": {
-        "$admin": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
-        "$implementation": "0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
+        "$admin": "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f",
+        "$implementation": "scr:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
         "$pastUpgrades": [
           [
             "2024-06-10T13:41:17.000Z",
             "0xd2775129688587d97fff37813acd0581f68fdfe7f1a52b36a779e4ef9021c3fe",
-            ["0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"]
+            ["scr:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"]
           ]
         ],
         "$upgradeCount": 1,
-        "l2Bridge": "0xC97c5E43c14D4F524347795410C299db1FA331b3",
-        "l2TokenBeacon": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4",
+        "l2Bridge": "scr:0xC97c5E43c14D4F524347795410C299db1FA331b3",
+        "l2TokenBeacon": "scr:0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
       "implementationNames": {
-        "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": "TransparentUpgradeableProxy",
-        "0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": "L1ERC20Bridge"
+        "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": "TransparentUpgradeableProxy",
+        "scr:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": "L1ERC20Bridge"
       }
     },
     {
-      "address": "0x45b62A07c525278F2ecd7915130E797B04B05C48",
+      "address": "scr:0x45b62A07c525278F2ecd7915130E797B04B05C48",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "address": "scr:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "address": "scr:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144",
+      "address": "scr:0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ScrollProxyAdmin",
-      "address": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
+      "address": "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -141,26 +141,26 @@
       "sinceBlock": 6441298,
       "values": {
         "$immutable": true,
-        "owner": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+        "owner": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0xC4673dAbfAf04D2A430e244B63F040D27199102f": "ProxyAdmin"
+        "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f": "ProxyAdmin"
       }
     },
     {
-      "address": "0xC97c5E43c14D4F524347795410C299db1FA331b3",
+      "address": "scr:0xC97c5E43c14D4F524347795410C299db1FA331b3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "address": "scr:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ScrollL2Gateway",
-      "address": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+      "address": "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
@@ -171,36 +171,36 @@
       "sinceTimestamp": 1718004634,
       "sinceBlock": 6433884,
       "values": {
-        "$admin": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
-        "$implementation": "0xe469c1330cEEcC375fE17E7D649eA270186D344F",
+        "$admin": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+        "$implementation": "scr:0xe469c1330cEEcC375fE17E7D649eA270186D344F",
         "$pastUpgrades": [
           [
             "2024-06-10T07:30:34.000Z",
             "0xa45f6d61d7c5c041f10950e9448a39a9fbf490d2fcb3155ff9add77b43cfc0c6",
-            ["0xe469c1330cEEcC375fE17E7D649eA270186D344F"]
+            ["scr:0xe469c1330cEEcC375fE17E7D649eA270186D344F"]
           ]
         ],
         "$upgradeCount": 1,
-        "ethToken": "0x0000000000000000000000000000000000000000",
-        "getRemoteGateway": "0x986c905087a663db3C81ad319b94c1E9dd388e92",
+        "ethToken": "scr:0x0000000000000000000000000000000000000000",
+        "getRemoteGateway": "scr:0x986c905087a663db3C81ad319b94c1E9dd388e92",
         "isEthGasToken": true,
-        "MESSAGE_SERVICE": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "owner": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
-        "ZKLINK": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"
+        "MESSAGE_SERVICE": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+        "owner": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+        "ZKLINK": "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"
       },
       "implementationNames": {
-        "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": "ERC1967Proxy",
-        "0xe469c1330cEEcC375fE17E7D649eA270186D344F": "ScrollL2Gateway"
+        "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": "ERC1967Proxy",
+        "scr:0xe469c1330cEEcC375fE17E7D649eA270186D344F": "ScrollL2Gateway"
       }
     },
     {
-      "address": "0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+      "address": "scr:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ScrollOwner",
-      "address": "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
+      "address": "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -240,15 +240,15 @@
       "sinceBlock": 6435761,
       "values": {
         "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$implementation": "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
-          "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-          "0xF801886AE2e127A269B0F11892edb54F692d02dF",
-          "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-          "0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144",
-          "0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
-          "0x45b62A07c525278F2ecd7915130E797B04B05C48"
+          "scr:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "scr:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+          "scr:0xF801886AE2e127A269B0F11892edb54F692d02dF",
+          "scr:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "scr:0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144",
+          "scr:0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272",
+          "scr:0x45b62A07c525278F2ecd7915130E797B04B05C48"
         ],
         "$threshold": 5,
         "domainSeparator": "0x6ea4319dae215d4c06df613e8fec7b09f84e084de571fc40189958aa362267c6",
@@ -259,12 +259,12 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeProxy",
-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+        "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": "GnosisSafeProxy",
+        "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
     {
-      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "address": "scr:0xF801886AE2e127A269B0F11892edb54F692d02dF",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -486,5 +486,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xa7898e959e407f299e52f0942a8f63acd8acbc85e1473107ce0c48c037db5d2d"
+  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
 }

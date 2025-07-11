@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xbd1133b1070b3f8b8363fa685b17247122eae9f0
+
+# Diff at Thu, 10 Jul 2025 08:15:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21736867
+- current block number: 21736867
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21736867 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238)
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238)
+    +++ description: The main system contract defining the witnesschain Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
 Generated with discovered.json: 0x6a05b7c1a334d0289458d57f81981559aea43482
 
 # Diff at Fri, 04 Jul 2025 12:19:27 GMT:

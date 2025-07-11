@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xfbedd4a706dcd334648ea13fb9ca488b32216a76
+
+# Diff at Thu, 10 Jul 2025 08:14:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 19532229
+- current block number: 19532229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532229 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FeeHandlerRouter (0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Permissionless Generic Handler (0x31282123E7bcd947e2c1Bc364d564839574fAdCD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BasicFeeHandler (0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Community Multisig (0xc4d8b2F5501C765dE0C5E12550118F397B197D05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20 Bridge Handler (0xC832588193cd5ED2185daDA4A531e0B26eC5B830)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Admin Multisig (0xde79695d5cefF7c324552B3ecbe6165f77FCdF53)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AccessControlSegregator (0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeHandlerRouter (0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Permissionless Generic Handler (0x31282123E7bcd947e2c1Bc364d564839574fAdCD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BasicFeeHandler (0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Community Multisig (0xc4d8b2F5501C765dE0C5E12550118F397B197D05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Bridge Handler (0xC832588193cd5ED2185daDA4A531e0B26eC5B830)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Admin Multisig (0xde79695d5cefF7c324552B3ecbe6165f77FCdF53)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccessControlSegregator (0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xeb36b86907a34ed701809c418ddcea26e7f041f6
 
 # Diff at Tue, 04 Mar 2025 10:40:05 GMT:

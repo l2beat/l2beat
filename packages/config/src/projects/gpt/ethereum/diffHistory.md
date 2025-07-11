@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x132b9c92090ad495e0353fc62d6ca89ace4bc657
+
+# Diff at Thu, 10 Jul 2025 08:13:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21744154
+- current block number: 21744154
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744154 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858)
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xada59D145126A746976F0F56477aafFEB3acc8e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0xC4E903D3Af4c3d2e437492d602adcC9d9b536858)
+    +++ description: The main system contract defining the gpt-mainnet Layer 2 logic. Entry point for sequencing batches.
+```
+
 Generated with discovered.json: 0xc1d9fe2a17136cd12163f876005f87931f4b3990
 
 # Diff at Fri, 04 Jul 2025 12:19:02 GMT:

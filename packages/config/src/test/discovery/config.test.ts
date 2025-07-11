@@ -11,7 +11,11 @@ import {
   getDiscoveryPaths,
   makeEntryStructureConfig,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
@@ -176,7 +180,7 @@ describe('discovery config.jsonc', () => {
           for (const entry of discovery.entries) {
             const fields = makeEntryStructureConfig(
               c.structure,
-              entry.address,
+              ChainSpecificAddress.address(entry.address),
             ).fields
             for (const [key, value] of Object.entries(fields)) {
               if (

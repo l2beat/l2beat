@@ -1,3 +1,177 @@
+Generated with discovered.json: 0xfb15fddf59511297e82318e1db9686b49bc7c843
+
+# Diff at Thu, 10 Jul 2025 08:13:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22208300
+- current block number: 22208300
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208300 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DataAvailabilityChallenge (0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49)
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x12a580c05466eefb2c467C6b115844cDaF55B255)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x19b5804B88F10262A55ac731f28A3BbC4209853a)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0x4F4B716627D2Ba0439327Ce8B563b4443aF47Dbd)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract Cyber Multisig 2 (0x68ca4cDCb0F47457273B554E60ff8321D5C133E4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xa669A743b065828682eE16109273F5CFeF5e676d)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract Cyber Multisig 1 (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DataAvailabilityChallenge (0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49)
+    +++ description: The DataAvailabilityChallenge contract is used to challenge the full availability of data behind commimted transaction data hashes. See the technology section for more details.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x12a580c05466eefb2c467C6b115844cDaF55B255)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x19b5804B88F10262A55ac731f28A3BbC4209853a)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x4F4B716627D2Ba0439327Ce8B563b4443aF47Dbd)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract Cyber Multisig 2 (0x68ca4cDCb0F47457273B554E60ff8321D5C133E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0xa669A743b065828682eE16109273F5CFeF5e676d)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract Cyber Multisig 1 (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3b1867a18d62aff75fd7ae638ba37a7914c782a4
 
 # Diff at Fri, 04 Jul 2025 12:18:57 GMT:

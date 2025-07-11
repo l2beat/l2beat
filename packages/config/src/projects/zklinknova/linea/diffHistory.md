@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x7fd8ceffcfabed3b3d6d7c63a3fc803379d092b0
+
+# Diff at Thu, 10 Jul 2025 08:16:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 19494394
+- current block number: 19494394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19494394 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x509ff56c152315EdeE91A2e0f059195519507e01)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x902C3806A84f4e855a8746e92d7F1C9a51400458)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x509ff56c152315EdeE91A2e0f059195519507e01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaL2Gateway (0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x902C3806A84f4e855a8746e92d7F1C9a51400458)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x649b980aef955e54966a92474b74daf2e514c53d
 
 # Diff at Fri, 30 May 2025 06:44:11 GMT:

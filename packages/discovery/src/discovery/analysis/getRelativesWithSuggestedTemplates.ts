@@ -2,7 +2,7 @@ import type { EthereumAddress } from '@l2beat/shared-pure'
 
 import type { StructureContractField } from '../config/StructureConfig'
 import type { HandlerResult } from '../handlers/Handler'
-import { toAddressArray } from '../utils/extractors'
+import { toAddressArrayPrivate } from '../utils/extractors'
 import type { AddressesWithTemplates } from './AddressAnalyzer'
 
 export function getRelativesWithSuggestedTemplates(
@@ -16,7 +16,7 @@ export function getRelativesWithSuggestedTemplates(
     if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
       continue
     }
-    const addresses = toAddressArray(param.value).filter(
+    const addresses = toAddressArrayPrivate(param.value).filter(
       (address) => !ignoredAddresses?.includes(address),
     )
     const template = fields?.[param.field]?.template ?? undefined

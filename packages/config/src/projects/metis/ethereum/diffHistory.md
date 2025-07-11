@@ -1,3 +1,333 @@
+Generated with discovered.json: 0x542a1e81cc829ad735a4eb550b07ca031986e04e
+
+# Diff at Thu, 10 Jul 2025 08:13:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22774371
+- current block number: 22774371
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22774371 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff)
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48)
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9)
+    +++ description: Storage container for SCC batches.
+```
+
+```diff
+-   Status: DELETED
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3)
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+```
+
+```diff
+-   Status: DELETED
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff)
+    +++ description: Contract used to manage configuration of global Metis values.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb)
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7)
+    +++ description: Storage container for CTC batches.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b)
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+```diff
+-   Status: DELETED
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21)
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9)
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+```
+
+```diff
+-   Status: DELETED
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528)
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+```
+
+```diff
+-   Status: DELETED
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947)
+    +++ description: Escrows staking rewards for Sequencers.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a)
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC)
+    +++ description: Oracle for providing preimages.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063)
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d)
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6)
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57)
+    +++ description: Storage container for CTC queue.
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd)
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb)
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+```
+
+```diff
+-   Status: DELETED
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0)
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738)
+    +++ description: Delayed wrapped Metis token contract.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff)
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48)
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9)
+    +++ description: Storage container for SCC batches.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3)
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+```
+
+```diff
++   Status: CREATED
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff)
+    +++ description: Contract used to manage configuration of global Metis values.
+```
+
+```diff
++   Status: CREATED
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb)
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7)
+    +++ description: Storage container for CTC batches.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b)
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+```diff
++   Status: CREATED
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21)
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9)
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+```
+
+```diff
++   Status: CREATED
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528)
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+```
+
+```diff
++   Status: CREATED
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947)
+    +++ description: Escrows staking rewards for Sequencers.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a)
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC)
+    +++ description: Oracle for providing preimages.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063)
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d)
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
++   Status: CREATED
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6)
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57)
+    +++ description: Storage container for CTC queue.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd)
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb)
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0)
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738)
+    +++ description: Delayed wrapped Metis token contract.
+```
+
 Generated with discovered.json: 0x582819c46777f619913faed86222a47108cbd7da
 
 # Diff at Fri, 04 Jul 2025 12:19:09 GMT:

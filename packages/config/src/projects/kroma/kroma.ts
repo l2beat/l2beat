@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -150,8 +151,10 @@ export const kroma: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xfF00000000000000000000000000000000000255',
-        sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
+        inbox: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+        sequencers: [
+          EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
+        ],
       },
     ],
     trackedTxs: [
@@ -162,11 +165,15 @@ export const kroma: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: EthereumAddress(
-            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          from: ChainSpecificAddress.address(
+            ChainSpecificAddress(
+              discovery.getContractValue('SystemConfig', 'batcherHash'),
+            ),
           ),
-          to: EthereumAddress(
-            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          to: ChainSpecificAddress.address(
+            ChainSpecificAddress(
+              discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+            ),
           ),
           sinceTimestamp: UnixTime(1693883663),
         },

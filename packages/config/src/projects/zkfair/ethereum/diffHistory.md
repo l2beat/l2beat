@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x9cefe9e5e38e899b04905806a6f19620fea048e0
+
+# Diff at Thu, 10 Jul 2025 08:15:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22322978
+- current block number: 22322978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ZKFairAdmin (0x0110B1B231aA3b96a94c900eb3056297526AB725)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x769E285d2120472c3400A09684B82A842012F46d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b)
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+```
+
+```diff
+-   Status: DELETED
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairAdmin (0x0110B1B231aA3b96a94c900eb3056297526AB725)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FflonkVerifier (0x769E285d2120472c3400A09684B82A842012F46d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b)
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+```
+
+```diff
++   Status: CREATED
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x408fe88ca79ae236d4f26c36695a41db4ff0d6d8
 
 # Diff at Fri, 04 Jul 2025 12:19:29 GMT:

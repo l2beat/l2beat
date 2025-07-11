@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x1d97ca7f868e346a8998b1acf561d39d00e2b3a1
+
+# Diff at Thu, 10 Jul 2025 08:14:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20017695
+- current block number: 20017695
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb2aed57baffc7fbf6464e8a37fc21f9b1bc05523
 
 # Diff at Fri, 04 Jul 2025 12:19:18 GMT:

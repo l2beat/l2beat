@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x8bdb26c140db9259435c8fc73a3a4f8ef4992554
+
+# Diff at Thu, 10 Jul 2025 08:15:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22187530
+- current block number: 22187530
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22187530 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0x78253E2E6120164bd826668A4C96Db20f78A94c9)
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x78253E2E6120164bd826668A4C96Db20f78A94c9)
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+```
+
 Generated with discovered.json: 0xbb9bda1197c0054137d64f025e159cc3d8b7edb1
 
 # Diff at Fri, 04 Jul 2025 12:19:27 GMT:

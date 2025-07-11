@@ -1,3 +1,153 @@
+Generated with discovered.json: 0xee62441b9a26a47d434281f0b2b337c4b8f60712
+
+# Diff at Thu, 10 Jul 2025 08:13:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22615662
+- current block number: 22615662
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615662 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x012c341506ee1939e56084F43Ae5dbCe224Ce2af)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x12d4E64E1B46d27A00fe392653A894C1dd36fb80)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0x132b3456300332d488f946B818eB9512931eBCAa)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x15A52Fed1c448028A240b603dD93f2697E12Dc82)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract Ancient8GuardianMultisig (0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x75a223Fb459461B9Fa61dd25109EA05522b4b492)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xB09DC08428C8b4EFB4ff9C0827386CDF34277996)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0xd5e3eDf5b68135D559D572E26bF863FBC1950033)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x012c341506ee1939e56084F43Ae5dbCe224Ce2af)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x12d4E64E1B46d27A00fe392653A894C1dd36fb80)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x132b3456300332d488f946B818eB9512931eBCAa)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x15A52Fed1c448028A240b603dD93f2697E12Dc82)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Ancient8GuardianMultisig (0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x75a223Fb459461B9Fa61dd25109EA05522b4b492)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0xB09DC08428C8b4EFB4ff9C0827386CDF34277996)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0xd5e3eDf5b68135D559D572E26bF863FBC1950033)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
 Generated with discovered.json: 0x5e8797eb435fe94481448b6e7fd2ba595ce0e9c4
 
 # Diff at Fri, 04 Jul 2025 12:18:51 GMT:

@@ -1,6 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -415,11 +416,12 @@ function orbitStackCommon(
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
   const fastConfirmer =
-    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+    templateVars.discovery.getContractValueOrUndefined<ChainSpecificAddress>(
       'RollupProxy',
       'anyTrustFastConfirmer',
-    ) ?? EthereumAddress.ZERO
-  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+    ) ?? ChainSpecificAddress.from('eth', EthereumAddress.ZERO)
+  const existFastConfirmer =
+    ChainSpecificAddress.address(fastConfirmer) !== EthereumAddress.ZERO
 
   // const validatorWhitelistDisabled =
   //   templateVars.discovery.getContractValue<boolean>(
@@ -490,7 +492,9 @@ function orbitStackCommon(
           [
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: templateVars.bridge.address,
+              address: ChainSpecificAddress.address(
+                templateVars.bridge.address,
+              ),
               tokens: trackedGasTokens ?? ['ETH'],
               description: trackedGasTokens
                 ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
@@ -831,10 +835,12 @@ function getDaTracking(
   }
 
   if (templateVars.usesEthereumBlobs) {
-    const batchPosters = templateVars.discovery.getContractValue<string[]>(
-      'SequencerInbox',
-      'batchPosters',
-    )
+    const batchPosters = templateVars.discovery
+      .getContractValue<ChainSpecificAddress[]>(
+        'SequencerInbox',
+        'batchPosters',
+      )
+      .map((a) => ChainSpecificAddress.address(a))
 
     const inboxDeploymentBlockNumber =
       templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
@@ -844,7 +850,9 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
-        inbox: templateVars.sequencerInbox.address,
+        inbox: ChainSpecificAddress.address(
+          templateVars.sequencerInbox.address,
+        ),
         sequencers: batchPosters,
       },
     ]
@@ -1126,7 +1134,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0xe0bc9729',
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
@@ -1140,7 +1148,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x8f111f3c',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
@@ -1154,7 +1162,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x37501551',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
@@ -1168,7 +1176,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x3e5aa082',
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
@@ -1182,7 +1190,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x6e620055',
         functionSignature:
           'function addSequencerL2BatchDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
@@ -1196,7 +1204,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x917cf8ac',
         functionSignature:
           'function addSequencerL2BatchFromBlobsDelayProof(uint256 sequenceNumber, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
@@ -1210,7 +1218,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: sequencerInbox.address,
+        address: ChainSpecificAddress.address(sequencerInbox.address),
         selector: '0x69cacded',
         functionSignature:
           'function addSequencerL2BatchFromOriginDelayProof(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, tuple(bytes32 beforeDelayedAcc, tuple(uint8 kind, address sender, uint64 blockNumber, uint64 timestamp, uint256 inboxSeqNum, uint256 baseFeeL1, bytes32 messageDataHash) delayedMessage) delayProof)',
@@ -1224,7 +1232,7 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       ],
       query: {
         formula: 'functionCall',
-        address: outbox.address,
+        address: ChainSpecificAddress.address(outbox.address),
         selector: '0xa04cee60',
         functionSignature:
           'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',

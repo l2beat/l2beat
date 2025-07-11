@@ -1,3 +1,585 @@
+Generated with discovered.json: 0xce5ff4399b19ee65c17a37f594de2c5bade41a8e
+
+# Diff at Thu, 10 Jul 2025 10:16:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@02e286046e930bb2f29cd437a366d7035cafe46c block: 22731106
+- current block number: 22731106
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22731106 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostEuclid (0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4)
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockSCSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F)
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+```
+
+```diff
+-   Status: DELETED
+    contract L1MessageQueueV2 (0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV0 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B)
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367)
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x69C2eD64171bF5737c2B78bdF722e68a032B2825)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d)
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6)
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+```
+
+```diff
+-   Status: DELETED
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: Contract used to bridge WETH from L1 to L2.
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierPostEuclid-2 (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905)
+    +++ description: Contract used to bridge ETH from L1 to L2.
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D)
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 4 (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x9479ABfebefEea3c846163012a472b44F305b3d7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556)
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6)
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostEuclid-2 (0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0xC3eA7C657884BB380B66D79C36aDCb5658b01896)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierPostEuclid (0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B)
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6)
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid (0x0112315Fa1c81c35ac9a477e161B52Ae4D1466B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV1-1 (0x03a72B00D036C479105fF98A1953b15d9c510110)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4)
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV1 (0x2293cd12e8564e8219d314b075867c2f66ac6941)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV2 (0x2d6e16d8e8a0C3Bc7750E774B108Ec39Ab0C18fB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockSCSlow (0x3f9041350B661c74C6CbE440c8Bd6BC4C168a9fd)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV0 (0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F)
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+```
+
+```diff
++   Status: CREATED
+    contract L1MessageQueueV2 (0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV0 (0x585DfaD7bF4099E011D185E266907A8ab60DAD2D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B)
+    +++ description: Contract used to bridge ERC721 tokens from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETHescrowLido (0x6625C6332c9F91F2D27c304E729B86db87A3f504)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DaiEscrow (0x67260A8B73C5B77B55c1805218A42A7A6F98F515)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367)
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x69C2eD64171bF5737c2B78bdF722e68a032B2825)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d)
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender.
+```
+
+```diff
++   Status: CREATED
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6)
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+```
+
+```diff
++   Status: CREATED
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE)
+    +++ description: Contract used to bridge WETH from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierPostEuclid-2 (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905)
+    +++ description: Contract used to bridge ETH from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D)
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV2 (0x8759E83b6570A0bA46c3CE7eB359F354F816c9a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV2-1 (0x8c1b52757b5c571ADcB5572E992679d4D48e30f7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 4 (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x9479ABfebefEea3c846163012a472b44F305b3d7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pufETHEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+```
+
+```diff
++   Status: CREATED
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556)
+    +++ description: The main contract of the Scroll chain. Allows to post transaction data and state roots, along with proofs. Sequencing and proposing are behind a whitelist unless enforcedBatchMode is activated.
+```
+
+```diff
++   Status: CREATED
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It allows to change the token mappings.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6)
+    +++ description: Contract used to bridge ERC1155 tokens from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid-2 (0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xC3eA7C657884BB380B66D79C36aDCb5658b01896)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV2-1 (0xCAECeE2E815e7f758c2477f900AFA14bDDce54B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierPostEuclid (0xd1638c0C7Bd6bf49D655D855d353aC8b4f949582)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B)
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6)
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+```
+
 Generated with discovered.json: 0xfc00e9a63ac6cc27febb73b249d9ff1ad04e2951
 
 # Diff at Fri, 04 Jul 2025 12:19:18 GMT:

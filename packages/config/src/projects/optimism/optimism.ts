@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -102,8 +107,10 @@ export const optimism: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xFF00000000000000000000000000000000000010',
-      sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
+      inbox: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+      sequencers: [
+        EthereumAddress('0x6887246668a3b87f54deb3b94ba47a6f63f32985'),
+      ],
     },
   ],
   nonTemplateTrackedTxs: [
@@ -114,13 +121,17 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'batcherHash',
+        from: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'batcherHash',
+          ),
         ),
-        to: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'sequencerInbox',
+        to: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'sequencerInbox',
+          ),
         ),
         sinceTimestamp: genesisTimestamp,
       },
@@ -147,7 +158,9 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: discovery.getContract('DisputeGameFactory').address,
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

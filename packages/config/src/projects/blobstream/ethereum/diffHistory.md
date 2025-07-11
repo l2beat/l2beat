@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xea5cff6e61250e8d85306bf200ab133cde19d8a0
+
+# Diff at Thu, 10 Jul 2025 08:13:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882089
+- current block number: 22882089
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882089 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
+```diff
+-   Status: DELETED
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Blobstream (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
+```diff
++   Status: CREATED
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x86e04d0f154d1a3fed8857314ba4feb9a7679626
 
 # Diff at Wed, 09 Jul 2025 15:10:15 GMT:

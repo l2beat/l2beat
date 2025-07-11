@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x09ecf355d271e775952b92b2bd049906d66fcea0
+
+# Diff at Thu, 10 Jul 2025 08:13:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20138492
+- current block number: 20138492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138492 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutorManager (0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x13a4cC0750296bB72Eb0006febec306551A4f472)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LiquidityPool (0x2A5c2568b10A0E826BfA892Cf21BA7218310180b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutorManager (0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenManager (0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LiquidityProviders (0xebaB24F13de55789eC1F3fFe99A285754e15F7b9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfbf1ff1770688455c940e59b9e9e5846c87d6415
 
 # Diff at Fri, 04 Jul 2025 12:19:04 GMT:

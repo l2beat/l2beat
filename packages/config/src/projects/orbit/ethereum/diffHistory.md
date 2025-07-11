@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x992e068ec0ef4b7d921a45c48b74b37fb1fa41d0
+
+# Diff at Thu, 10 Jul 2025 08:14:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa5d5f8af35bebb1a3e0fac78ae98563f4b7506fd
 
 # Diff at Fri, 04 Jul 2025 12:19:13 GMT:

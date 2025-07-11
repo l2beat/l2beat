@@ -1,3 +1,189 @@
+Generated with discovered.json: 0xcd755d46658f72e73b645a6f47e17b6ad074be17
+
+# Diff at Thu, 10 Jul 2025 08:15:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22765709
+- current block number: 22765709
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22765709 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c)
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+```
+
+```diff
+-   Status: DELETED
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20TokenBridge (0x912C7271a6A3622dfb8B218eb46a6122aB046C79)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4)
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737)
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x2a721cBE81a128be0F01040e3353c3805A5EA091)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract Zircuit Multisig 2 (0x2c0B27F7C8F083B539557a0bA787041BF22DB276)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c)
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+```
+
+```diff
++   Status: CREATED
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and access control for configuring actors who can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20TokenBridge (0x912C7271a6A3622dfb8B218eb46a6122aB046C79)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x92Ef6Af472b39F1b363da45E35530c24619245A4)
+    +++ description: Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in 4h.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x994eEb321F9cD79B077a5455fC248c77f30Dd244)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737)
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+```
+
+```diff
++   Status: CREATED
+    contract Zircuit Multisig 1 (0xC463EaC02572CC964D43D2414023E2c6B62bAF38)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
 Generated with discovered.json: 0xc0acab0068ff6dddf7f305bac3f2f8083b9b49e0
 
 # Diff at Fri, 04 Jul 2025 12:19:29 GMT:

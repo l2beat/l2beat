@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x93bdd69413afdd3b0b5dfb291c03ca7a80a3d3c8
+
+# Diff at Thu, 10 Jul 2025 08:14:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22829897
+- current block number: 22829897
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22829897 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe)
+    +++ description: The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2)
+    +++ description: The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb)
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF)
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+```
+
+```diff
++   Status: CREATED
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe)
+    +++ description: The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonSecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2)
+    +++ description: The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb)
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF)
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+```
+
 Generated with discovered.json: 0xb3834fe429266df9ef245873daa1d91c330a3545
 
 # Diff at Fri, 04 Jul 2025 12:19:19 GMT:

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -70,8 +75,14 @@ export const base: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
     },
   ],
   nonTemplateTrackedTxs: [
@@ -82,13 +93,17 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'batcherHash',
+        from: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'batcherHash',
+          ),
         ),
-        to: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'sequencerInbox',
+        to: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'sequencerInbox',
+          ),
         ),
         sinceTimestamp: genesisTimestamp,
       },
@@ -115,7 +130,9 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: discovery.getContract('DisputeGameFactory').address,
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

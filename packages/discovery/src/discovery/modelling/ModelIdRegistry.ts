@@ -79,7 +79,7 @@ export class ModelIdRegistry {
 
   idToChainSpecificAddress(modelId: string): ChainSpecificAddress {
     const data = this.getAddressData(modelId)
-    return ChainSpecificAddress(`${data.shortChain}:${data.address}`)
+    return ChainSpecificAddress(data.address)
   }
 
   replaceIdsWithNames(s: string): string {

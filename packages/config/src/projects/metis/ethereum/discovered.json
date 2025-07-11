@@ -5,18 +5,18 @@
   "configHash": "0xb8f310867d3e761937e859916b8bb06026326ff4d3b8089b9915247a9ac934d5",
   "entries": [
     {
-      "address": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
+      "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x02058Bb1d98D88087008F2ac1273584591380e3F",
+      "address": "eth:0x02058Bb1d98D88087008F2ac1273584591380e3F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "L1CrossDomainMessenger",
-      "address": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+      "address": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
       "type": "Contract",
       "template": "metis/L1CrossDomainMessenger",
       "sourceHashes": [
@@ -28,32 +28,32 @@
       "sinceTimestamp": 1637076488,
       "sinceBlock": 13627370,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$immutable": false,
-        "$implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
+        "$implementation": "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
         "$pastUpgrades": [
           [
             "2021-11-16T15:26:15.000Z",
             "0xa752a872bee0f5d9be41b00f85e4d0b5e958f5644f5609dd0907dd74263ff7f4",
-            ["0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]
+            ["eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"]
           ]
         ],
         "$upgradeCount": 1,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
-        "owner": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+        "owner": "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
         "paused": false,
-        "ResolvedDelegateProxy_addressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "ResolvedDelegateProxy_addressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger"
       },
       "implementationNames": {
-        "0x081D1101855bD523bA69A9794e0217F0DB6323ff": "Lib_ResolvedDelegateProxy",
-        "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": "L1CrossDomainMessenger"
+        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff": "Lib_ResolvedDelegateProxy",
+        "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": "L1CrossDomainMessenger"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "LockingInfo",
-      "address": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+      "address": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
       "type": "Contract",
       "template": "metis/LockingInfo",
       "sourceHashes": [
@@ -66,42 +66,42 @@
       "sinceTimestamp": 1710314867,
       "sinceBlock": 19424659,
       "values": {
-        "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-        "$implementation": "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC",
+        "$admin": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+        "$implementation": "eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC",
         "$pastUpgrades": [
           [
             "2024-03-13T07:27:47.000Z",
             "0x37356e30602c7e4e6b05129e3a0375c3fbeb08856eb198ef7ec2a6c75fd3ee78",
-            ["0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]
+            ["eth:0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"]
           ],
           [
             "2024-06-29T01:46:35.000Z",
             "0x356768c4abdb1df76773881dc3c4d8ad7af36ac2154baaec83c3f878aedb6b57",
-            ["0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]
+            ["eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"]
           ]
         ],
         "$upgradeCount": 2,
-        "bridge": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-        "l1Token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "bridge": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+        "l1Token": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "l2ChainId": 1088,
-        "l2Token": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
-        "manager": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+        "l2Token": "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+        "manager": "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
         "maxLock": "100000000000000000000000",
         "minLock": "20000000000000000000000",
-        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "proxiableUUID": "EXPECT_REVERT",
-        "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
+        "rewardPayer": "eth:0x62478E4eeb4070fE399866aB05e821AB97200947",
         "totalLocked": "422119411362603469396031",
         "totalRewardsLiquidated": "45430009372346478876180"
       },
       "implementationNames": {
-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
-        "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC": "LockingInfo"
+        "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
+        "eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC": "LockingInfo"
       }
     },
     {
       "name": "ChainStorageContainer-SCC-batches",
-      "address": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
+      "address": "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
       "type": "Contract",
       "template": "metis/ChainStorageContainer-SCC-batches",
       "sourceHashes": [
@@ -124,26 +124,26 @@
         "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000685a972300013bebc6",
         "length": 29820,
         "lengthByChainId": 29820,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
       "implementationNames": {
-        "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer"
+        "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer"
       }
     },
     {
-      "address": "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
+      "address": "eth:0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x1A9da0aedA630dDf2748a453BF6d92560762D914",
+      "address": "eth:0x1A9da0aedA630dDf2748a453BF6d92560762D914",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DisputeGameFactory",
-      "address": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+      "address": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
       "type": "Contract",
       "template": "metis/DisputeGameFactory_Metis",
       "sourceHashes": [
@@ -155,29 +155,29 @@
       "sinceTimestamp": 1747126931,
       "sinceBlock": 22473285,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45",
         "$pastUpgrades": [
           [
             "2025-05-13T09:02:11.000Z",
             "0xbf5ee49e50e078552444649c10f208c22d68ec3854b6922449f8115d9c934733",
-            ["0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"]
+            ["eth:0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"]
           ],
           [
             "2025-06-19T02:52:35.000Z",
             "0xfca0728fa948cf329424111232b2c80521c66bf13f49e9fff118a8de282f1cd5",
-            ["0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"]
+            ["eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"]
           ]
         ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+            "members": ["eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
           },
           "GAME_CREATOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+            "members": ["eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -185,36 +185,36 @@
         "GAME_CREATOR_ROLE": "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02",
         "gameAtIndex": [],
         "gameCount": 0,
-        "gameCreator": ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"],
+        "gameCreator": ["eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"],
         "gameImpls": [
-          "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000"
+          "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
         ],
         "initBonds": ["4000000000000000000", 0, 0, 0, 0],
-        "METIS": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "METIS": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "version": "1.0.0"
       },
       "implementationNames": {
-        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": "TransparentUpgradeableProxy",
-        "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45": "DisputeGameFactory"
+        "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": "TransparentUpgradeableProxy",
+        "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45": "DisputeGameFactory"
       }
     },
     {
-      "address": "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
+      "address": "eth:0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
+      "address": "eth:0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MetisConfig",
-      "address": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
+      "address": "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
       "type": "Contract",
       "template": "metis/MetisConfig",
       "sourceHashes": [
@@ -226,19 +226,19 @@
       "sinceBlock": 22473290,
       "values": {
         "$immutable": true,
-        "guardian": "0x0000000000000000000000000000000000000000",
+        "guardian": "eth:0x0000000000000000000000000000000000000000",
         "GUARDIAN_SLOT": "0x50d681db8bc9633efca150f3f65f126f9e520217b9746db9605f1e12d30ee319",
         "paused": false,
         "PAUSED_SLOT": "0x97f28943c081556dccc8a65dd44d936fcf82359ecbde35e60021819342c380fb",
         "version": "1.1.0"
       },
       "implementationNames": {
-        "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": "MetisConfig"
+        "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": "MetisConfig"
       }
     },
     {
       "name": "FaultProofLockingPool",
-      "address": "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
+      "address": "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
       "type": "Contract",
       "template": "metis/FaultProofLockingPool",
       "sourceHashes": [
@@ -250,44 +250,44 @@
       "sinceTimestamp": 1747127087,
       "sinceBlock": 22473297,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4",
         "$pastUpgrades": [
           [
             "2025-05-13T09:04:47.000Z",
             "0x5955dbbc10911769fdc4826d6eac373f3a88f9ea22fa07fc91dedbddd50df93c",
-            ["0x6d554097D5784a7184650B95ba7EA359d162Dbb7"]
+            ["eth:0x6d554097D5784a7184650B95ba7EA359d162Dbb7"]
           ],
           [
             "2025-06-19T02:52:59.000Z",
             "0x6e859980e53cbf8c232b3c491787274de2ec78c2af68069d0d910cd452fd99a5",
-            ["0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"]
+            ["eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"]
           ]
         ],
         "$upgradeCount": 2,
-        "addressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
-        "config": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
+        "addressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+        "config": "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
         "depositedSequencers": [],
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "lockPeriod": 604800,
-        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "slashRatio": 1000,
-        "token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "token": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "totalLocked": 0
       },
       "implementationNames": {
-        "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb": "TransparentUpgradeableProxy",
-        "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4": "LockingPool"
+        "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb": "TransparentUpgradeableProxy",
+        "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4": "LockingPool"
       }
     },
     {
-      "address": "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+      "address": "eth:0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ChainStorageContainer-CTC-batches",
-      "address": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
+      "address": "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
       "type": "Contract",
       "template": "metis/ChainStorageContainer-CTC-batches",
       "sourceHashes": [
@@ -300,16 +300,16 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "CanonicalTransactionChain"
       },
       "implementationNames": {
-        "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer"
+        "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": "ChainStorageContainer"
       }
     },
     {
       "name": "L1StandardBridge",
-      "address": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+      "address": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
       "type": "Contract",
       "template": "metis/L1StandardBridge",
       "sourceHashes": [
@@ -321,35 +321,35 @@
       "sinceTimestamp": 1637077208,
       "sinceBlock": 13627429,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0xa0cfE8Af2AB5C9232714647702DbACf862EA4798",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "addressmgr": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "DEFAULT_CHAINID": 1088,
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
-        "metis": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "messenger": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+        "metis": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": "L1ChugSplashProxy",
-        "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798": "L1StandardBridge"
+        "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": "L1ChugSplashProxy",
+        "eth:0xa0cfE8Af2AB5C9232714647702DbACf862EA4798": "L1StandardBridge"
       }
     },
     {
-      "address": "0x4200000000000000000000000000000000000007",
+      "address": "eth:0x4200000000000000000000000000000000000007",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4200000000000000000000000000000000000010",
+      "address": "eth:0x4200000000000000000000000000000000000010",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "FaultDisputeGame",
-      "address": "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
+      "address": "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235",
       "type": "Contract",
       "template": "metis/FaultDisputeGame",
       "sourceHashes": [
@@ -366,9 +366,9 @@
         "claimDataLen": 0,
         "clockExtension": 0,
         "createdAt": 0,
-        "disputeCreator": "0x0000000000000000000000000000000000000000",
+        "disputeCreator": "eth:0x0000000000000000000000000000000000000000",
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
         "gameData": {
           "gameType_": 0,
           "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -379,13 +379,13 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
-        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2BlockNumberChallenger": "eth:0x0000000000000000000000000000000000000000",
         "l2ChainId": 1088,
         "maxClockDuration": 86400,
         "maxGameDepth": 73,
         "resolvedAt": 0,
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "scc": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+        "scc": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
         "splitDepth": 30,
         "startingBlockNumber": 0,
         "startingOutputRoot": {
@@ -395,16 +395,16 @@
         "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "status": 0,
         "version": "1.3.0-rc.1",
-        "vm": "0xAFD640204D73B02C3521eA8ea3771182527Ff057",
-        "wmetis": "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+        "vm": "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057",
+        "wmetis": "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
       },
       "implementationNames": {
-        "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": "FaultDisputeGame"
+        "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": "FaultDisputeGame"
       }
     },
     {
       "name": "Metis Multisig",
-      "address": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+      "address": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -499,17 +499,17 @@
       "sinceBlock": 13616534,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
-          "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
-          "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
-          "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
-          "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
-          "0x7a9059F4A6e50090e4f55994d465918200AB4454",
-          "0x02058Bb1d98D88087008F2ac1273584591380e3F",
-          "0xB961047013F974C5b6B6F8dA4402379525316550",
-          "0xa6D8941F935932a531A856C2e48046DA73a1098E"
+          "eth:0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
+          "eth:0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+          "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
+          "eth:0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
+          "eth:0xB383E1331dEE29864b68f7D84b0dC289F770d846",
+          "eth:0x7a9059F4A6e50090e4f55994d465918200AB4454",
+          "eth:0x02058Bb1d98D88087008F2ac1273584591380e3F",
+          "eth:0xB961047013F974C5b6B6F8dA4402379525316550",
+          "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E"
         ],
         "$threshold": 4,
         "domainSeparator": "0xfb4b712c4b7702310419a72c040b8486f1f9e8b0b84ae19732273a65d3a840c5",
@@ -524,13 +524,13 @@
         "getThreshold": { "severity": "HIGH", "type": "PERMISSION" }
       },
       "implementationNames": {
-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "CanonicalTransactionChain",
-      "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
+      "address": "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
       "type": "Contract",
       "template": "metis/CanonicalTransactionChain",
       "sourceHashes": [
@@ -551,7 +551,7 @@
       "sinceBlock": 13626959,
       "values": {
         "$immutable": true,
-        "batches": "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
+        "batches": "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7",
         "DEFAULT_CHAINID": 1088,
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
@@ -563,20 +563,20 @@
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "MAX_ROLLUP_TX_SIZE": 50000,
         "maxTransactionGasLimit": 1100000000,
         "MIN_ROLLUP_TX_GAS": 100000,
-        "queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
+        "queue": "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
       },
       "implementationNames": {
-        "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": "CanonicalTransactionChain"
+        "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": "CanonicalTransactionChain"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "BondManager",
-      "address": "0x595801b85628ec6979C420988b8843A40F850528",
+      "address": "eth:0x595801b85628ec6979C420988b8843A40F850528",
       "type": "Contract",
       "template": "metis/BondManager",
       "sourceHashes": [
@@ -588,16 +588,16 @@
       "sinceBlock": 19717907,
       "values": {
         "$immutable": true,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
-        "0x595801b85628ec6979C420988b8843A40F850528": "BondManager"
+        "eth:0x595801b85628ec6979C420988b8843A40F850528": "BondManager"
       }
     },
     {
       "name": "RewardEscrowerMultisig",
-      "address": "0x62478E4eeb4070fE399866aB05e821AB97200947",
+      "address": "eth:0x62478E4eeb4070fE399866aB05e821AB97200947",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -611,12 +611,12 @@
       "sinceBlock": 19697815,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
-          "0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
-          "0xa6D8941F935932a531A856C2e48046DA73a1098E",
-          "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
+          "eth:0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+          "eth:0x1577D2b835f561BD021E3219Cd786181D0e17ff5",
+          "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E",
+          "eth:0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
         ],
         "$threshold": 2,
         "domainSeparator": "0x1ff48766fae122adcf2ec1fea38fe30f58b0dc6fde08e8849041ae19278ca567",
@@ -627,13 +627,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x62478E4eeb4070fE399866aB05e821AB97200947": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x62478E4eeb4070fE399866aB05e821AB97200947": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "MVM_CanonicalTransaction",
-      "address": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+      "address": "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
       "type": "Contract",
       "template": "metis/MVM_CanonicalTransaction",
       "sourceHashes": [
@@ -645,8 +645,8 @@
       "sinceTimestamp": 1649638297,
       "sinceBlock": 14561258,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0xC878771A4ff7466B7be8b59FB8766719AEa8d562",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
@@ -656,7 +656,7 @@
         "getTxBatchSize": 9000000,
         "getTxDataSliceCount": 100,
         "getTxDataSliceSize": 90000,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "proxiableUUID": "EXPECT_REVERT",
         "stakeBaseCost": "100000000000000000",
         "stakeSeqSeconds": 86400,
@@ -667,13 +667,13 @@
         "txDataSliceSize": 90000
       },
       "implementationNames": {
-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": "L1ChugSplashProxy",
-        "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": "MVM_CanonicalTransaction"
+        "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": "L1ChugSplashProxy",
+        "eth:0xC878771A4ff7466B7be8b59FB8766719AEa8d562": "MVM_CanonicalTransaction"
       }
     },
     {
       "name": "PreimageOracle",
-      "address": "0x789a64284e29d2225430606D3D89a9336870BBbC",
+      "address": "eth:0x789a64284e29d2225430606D3D89a9336870BBbC",
       "type": "Contract",
       "template": "metis/PreimageOracle",
       "sourceHashes": [
@@ -696,17 +696,17 @@
         "version": "1.1.2-rc.1"
       },
       "implementationNames": {
-        "0x789a64284e29d2225430606D3D89a9336870BBbC": "PreimageOracle"
+        "eth:0x789a64284e29d2225430606D3D89a9336870BBbC": "PreimageOracle"
       }
     },
     {
-      "address": "0x7a9059F4A6e50090e4f55994d465918200AB4454",
+      "address": "eth:0x7a9059F4A6e50090e4f55994d465918200AB4454",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MVM_DiscountOracle",
-      "address": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
+      "address": "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063",
       "type": "Contract",
       "template": "metis/MVM_DiscountOracle",
       "sourceHashes": [
@@ -722,17 +722,17 @@
         "discount": 0,
         "getDiscount": 0,
         "getMinL2Gas": 200000,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "minL2Gas": 200000,
         "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
-        "0x7f6B0b7589febc40419a8646EFf9801b87397063": "MVM_DiscountOracle"
+        "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063": "MVM_DiscountOracle"
       }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+      "address": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -755,15 +755,15 @@
       "sinceBlock": 19424653,
       "values": {
         "$immutable": true,
-        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+        "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
       },
       "implementationNames": {
-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": "ProxyAdmin"
+        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": "ProxyAdmin"
       }
     },
     {
       "name": "Lib_AddressManager",
-      "address": "0x918778e825747a892b17C66fe7D24C618262867d",
+      "address": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
       "type": "Contract",
       "template": "metis/Lib_AddressManager",
       "sourceHashes": [
@@ -774,29 +774,29 @@
       "sinceTimestamp": 1637047108,
       "sinceBlock": 13625248,
       "values": {
-        "_1088_MVM_FraudVerifier": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "_1088_MVM_Proposer": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
-        "_1088_MVM_Sequencer": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
-        "_1088_MVM_Sequencer_Wrapper": "0xcDf02971871B7736874E20B8487c019D28090019",
+        "_1088_MVM_FraudVerifier": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "_1088_MVM_Proposer": "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
+        "_1088_MVM_Sequencer": "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+        "_1088_MVM_Sequencer_Wrapper": "eth:0xcDf02971871B7736874E20B8487c019D28090019",
         "$immutable": true,
-        "1088_MVM_FraudVerifier": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "blobBatcher": "0xae4d46bd9117cb017c5185844699c51107cb28a9",
-        "BondManager": "0x595801b85628ec6979C420988b8843A40F850528",
-        "CanonicalTransactionChain": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
-        "ChainStorageContainer_CTC_queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
-        "DisputeGameFactory": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-        "FaultProofLockingPool": "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
-        "inboxAddress": "0xFf00000000000000000000000000000000001088",
-        "L2CrossDomainMessenger": "0x4200000000000000000000000000000000000007",
-        "METIS_MANAGER": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "MVM_DiscountOracle": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
-        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "Proxy__MVM_CanonicalTransaction": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
-        "Proxy__MVM_ChainManager": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
-        "Proxy__MVM_Verifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
-        "Proxy__OVM_L1StandardBridge": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-        "StateCommitmentChain": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
-        "undefined_MVM_FraudVerifier": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
+        "1088_MVM_FraudVerifier": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "blobBatcher": "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
+        "BondManager": "eth:0x595801b85628ec6979C420988b8843A40F850528",
+        "CanonicalTransactionChain": "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
+        "ChainStorageContainer_CTC_queue": "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
+        "DisputeGameFactory": "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+        "FaultProofLockingPool": "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
+        "inboxAddress": "eth:0xFf00000000000000000000000000000000001088",
+        "L2CrossDomainMessenger": "eth:0x4200000000000000000000000000000000000007",
+        "METIS_MANAGER": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "MVM_DiscountOracle": "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063",
+        "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "Proxy__MVM_CanonicalTransaction": "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+        "Proxy__MVM_ChainManager": "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+        "Proxy__MVM_Verifier": "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+        "Proxy__OVM_L1StandardBridge": "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+        "StateCommitmentChain": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+        "undefined_MVM_FraudVerifier": "eth:0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
       },
       "fieldMeta": {
         "StateCommitmentChain": {
@@ -806,12 +806,12 @@
         }
       },
       "implementationNames": {
-        "0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager"
+        "eth:0x918778e825747a892b17C66fe7D24C618262867d": "Lib_AddressManager"
       }
     },
     {
       "name": "Metis Token",
-      "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+      "address": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
       "type": "Contract",
       "template": "metis/METISToken",
       "sourceHashes": [
@@ -825,17 +825,17 @@
         "$immutable": true,
         "decimals": 18,
         "name": "Metis Token",
-        "owner": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "Metis",
         "totalSupply": "10000000000000000000000000"
       },
       "implementationNames": {
-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
+        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
       }
     },
     {
       "name": "StateCommitmentChain",
-      "address": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+      "address": "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
       "type": "Contract",
       "template": "metis/MVM_StateCommitmentChain",
       "sourceHashes": [
@@ -855,11 +855,11 @@
       "sinceTimestamp": 1710487823,
       "sinceBlock": 19438866,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
+        "batches": "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
@@ -870,23 +870,23 @@
         "getTotalBatchesByChainId": 29820,
         "getTotalElements": 20704198,
         "getTotalElementsByChainId": 20704198,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
       "implementationNames": {
-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
-        "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": "MVM_StateCommitmentChain"
+        "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "L1ChugSplashProxy",
+        "eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": "MVM_StateCommitmentChain"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xa6D8941F935932a531A856C2e48046DA73a1098E",
+      "address": "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ChainStorageContainer-CTC-queue",
-      "address": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
+      "address": "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
       "type": "Contract",
       "template": "metis/ChainStorageContainer-CTC-queue",
       "sourceHashes": [
@@ -904,15 +904,15 @@
         "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000000000000000000000",
         "length": 0,
         "lengthByChainId": 0,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "CanonicalTransactionChain"
       },
       "implementationNames": {
-        "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": "ChainStorageContainer"
+        "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": "ChainStorageContainer"
       }
     },
     {
-      "address": "0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
+      "address": "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -925,7 +925,7 @@
     },
     {
       "name": "MIPS",
-      "address": "0xAFD640204D73B02C3521eA8ea3771182527Ff057",
+      "address": "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057",
       "type": "Contract",
       "template": "metis/MIPS",
       "sourceHashes": [
@@ -936,36 +936,36 @@
       "sinceBlock": 22473199,
       "values": {
         "$immutable": true,
-        "oracle": "0x789a64284e29d2225430606D3D89a9336870BBbC",
+        "oracle": "eth:0x789a64284e29d2225430606D3D89a9336870BBbC",
         "version": "1.1.0-rc.1"
       },
       "implementationNames": {
-        "0xAFD640204D73B02C3521eA8ea3771182527Ff057": "MIPS"
+        "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057": "MIPS"
       }
     },
     {
-      "address": "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
+      "address": "eth:0xB383E1331dEE29864b68f7D84b0dC289F770d846",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xB961047013F974C5b6B6F8dA4402379525316550",
+      "address": "eth:0xB961047013F974C5b6B6F8dA4402379525316550",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xcDf02971871B7736874E20B8487c019D28090019",
+      "address": "eth:0xcDf02971871B7736874E20B8487c019D28090019",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
+      "address": "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LockingPool",
-      "address": "0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
+      "address": "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd",
       "type": "Contract",
       "template": "metis/LockingPool",
       "sourceHashes": [
@@ -984,88 +984,88 @@
       "sinceTimestamp": 1710314939,
       "sinceBlock": 19424665,
       "values": {
-        "$admin": "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
-        "$implementation": "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
+        "$admin": "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8",
+        "$implementation": "eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60",
         "$pastUpgrades": [
           [
             "2024-03-13T07:28:59.000Z",
             "0x5a9766b27606f1c41f132a4a900131f39ab49a27607d27db667ecc1de2f9f0d1",
-            ["0xd87Da73F82abe83915d61342199A4690cfdf4718"]
+            ["eth:0xd87Da73F82abe83915d61342199A4690cfdf4718"]
           ],
           [
             "2024-06-29T01:46:35.000Z",
             "0x356768c4abdb1df76773881dc3c4d8ad7af36ac2154baaec83c3f878aedb6b57",
-            ["0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]
+            ["eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"]
           ]
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
         "currentBatch": 131,
-        "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+        "escrow": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
-        "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
-        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "mpcAddress": "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
+        "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "paused": false,
         "rewardPerBlock": "19413226030000000",
         "sequencers": [
           {
-            "owner": "0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
-            "signer": "0xEcA7Ae7dE0d1978DF299a547Ee66c4503fBa474D",
-            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "owner": "eth:0x05B755a8B2fEc50391B5C38B2afB206Ba0e8e50E",
+            "signer": "eth:0xEcA7Ae7dE0d1978DF299a547Ee66c4503fBa474D",
+            "rewardRecipient": "eth:0x0000000000000000000000000000000000000000",
             "status": 2
           },
           {
-            "owner": "0xe8D97563Cfd919F1B9F7cE0049346e8796148CD5",
-            "signer": "0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04",
-            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "owner": "eth:0xe8D97563Cfd919F1B9F7cE0049346e8796148CD5",
+            "signer": "eth:0xa233Cc81fC6C12e3318eA71EC5D7bBA78C706b04",
+            "rewardRecipient": "eth:0x0000000000000000000000000000000000000000",
             "status": 2
           },
           {
-            "owner": "0x24194DFB135B33507a8F05C3F9Ada922F40CE3Ff",
-            "signer": "0xAfF606251d8540f97Ca2Db12774C0147A170aB9e",
-            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "owner": "eth:0x24194DFB135B33507a8F05C3F9Ada922F40CE3Ff",
+            "signer": "eth:0xAfF606251d8540f97Ca2Db12774C0147A170aB9e",
+            "rewardRecipient": "eth:0x0000000000000000000000000000000000000000",
             "status": 2
           },
           {
-            "owner": "0x735Aad08c5eF7620b6422E85613f8335Ec07b573",
-            "signer": "0x31e623DCb8B43aD4d05aAA6209574cf336980590",
-            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "owner": "eth:0x735Aad08c5eF7620b6422E85613f8335Ec07b573",
+            "signer": "eth:0x31e623DCb8B43aD4d05aAA6209574cf336980590",
+            "rewardRecipient": "eth:0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
             "status": 2
           },
           {
-            "owner": "0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
-            "signer": "0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
-            "rewardRecipient": "0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
+            "owner": "eth:0x66c7674732357b01B3E9a8F94A05C411BeA1767A",
+            "signer": "eth:0x36f10B20781bb1E78278e84f3e1E97Acf92FA302",
+            "rewardRecipient": "eth:0x810Ef8Aa1326FB1c5Ce57cD79d549CF9B2cC32aF",
             "status": 2
           },
           {
-            "owner": "0x490e02f5D3c88Cf3A16d5f265378Af962a5A999E",
-            "signer": "0xEc05be638D1941c788244603AEbB5B937cD72C21",
-            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "owner": "eth:0x490e02f5D3c88Cf3A16d5f265378Af962a5A999E",
+            "signer": "eth:0xEc05be638D1941c788244603AEbB5B937cD72C21",
+            "rewardRecipient": "eth:0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
             "status": 2
           },
           {
-            "owner": "0xb6112C3613B2B6E2dB0ee0216e7D20399777114D",
-            "signer": "0x652016b5718cB79d3FA360701F2d30982d7c4D7B",
-            "rewardRecipient": "0x0000000000000000000000000000000000000000",
+            "owner": "eth:0xb6112C3613B2B6E2dB0ee0216e7D20399777114D",
+            "signer": "eth:0x652016b5718cB79d3FA360701F2d30982d7c4D7B",
+            "rewardRecipient": "eth:0x0000000000000000000000000000000000000000",
             "status": 2
           },
           {
-            "owner": "0xbd3BaD2a57C49E5B3Bb4b05a737cC3673a9E9f55",
-            "signer": "0xD4Eec5110Df06888211275594F340C43cD882f00",
-            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "owner": "eth:0xbd3BaD2a57C49E5B3Bb4b05a737cC3673a9E9f55",
+            "signer": "eth:0xD4Eec5110Df06888211275594F340C43cD882f00",
+            "rewardRecipient": "eth:0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
             "status": 2
           },
           {
-            "owner": "0x9D56F28b85Eddc058Fc911e8c6393Bd0BD4835A5",
-            "signer": "0xaDd60572c4F39c5c9D7053A7F9e16B5d59Be6563",
-            "rewardRecipient": "0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
+            "owner": "eth:0x9D56F28b85Eddc058Fc911e8c6393Bd0BD4835A5",
+            "signer": "eth:0xaDd60572c4F39c5c9D7053A7F9e16B5d59Be6563",
+            "rewardRecipient": "eth:0x0Cf6ab3c169B0169E35aD58D350CbACdaF80E139",
             "status": 2
           },
           {
-            "owner": "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
-            "signer": "0x8594f6eB82e4140a3b7A2c045d85f02a6c2DCDf2",
-            "rewardRecipient": "0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
+            "owner": "eth:0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
+            "signer": "eth:0x8594f6eB82e4140a3b7A2c045d85f02a6c2DCDf2",
+            "rewardRecipient": "eth:0x680f8981e28fC48a1ed657895e5642960E0cf3E9",
             "status": 2
           }
         ],
@@ -1074,12 +1074,12 @@
         "WITHDRAWAL_DELAY": 1814400
       },
       "implementationNames": {
-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd": "TransparentUpgradeableProxy",
-        "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60": "LockingPool"
+        "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd": "TransparentUpgradeableProxy",
+        "eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60": "LockingPool"
       }
     },
     {
-      "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
+      "address": "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -1092,13 +1092,13 @@
       ]
     },
     {
-      "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
+      "address": "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MVM_Verifier",
-      "address": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+      "address": "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
       "type": "Contract",
       "template": "metis/MVM_Verifier",
       "sourceHashes": [
@@ -1110,15 +1110,15 @@
       "sinceTimestamp": 1649719906,
       "sinceBlock": 14567320,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "activeChallenges": 0,
         "challenges": [],
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
-        "metis": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
+        "metis": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "minStake": "200000000000000000000",
         "numQualifiedVerifiers": 0,
         "proxiableUUID": "EXPECT_REVERT",
@@ -1127,12 +1127,12 @@
         "verifyWindow": 0
       },
       "implementationNames": {
-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": "L1ChugSplashProxy",
-        "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": "MVM_Verifier"
+        "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": "L1ChugSplashProxy",
+        "eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": "MVM_Verifier"
       }
     },
     {
-      "address": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
+      "address": "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -1145,7 +1145,7 @@
     },
     {
       "name": "MVM_L2ChainManagerOnL1",
-      "address": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+      "address": "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
       "type": "Contract",
       "template": "metis/MVM_L2ChainManagerOnL1",
       "sourceHashes": [
@@ -1157,23 +1157,23 @@
       "sinceTimestamp": 1637089464,
       "sinceBlock": 13628326,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "addressmgr": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "addressmgr": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "CONFIG_OWNER_KEY": "METIS_MANAGER",
-        "messenger": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+        "messenger": "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "implementationNames": {
-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": "L1ChugSplashProxy",
-        "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": "MVM_L2ChainManagerOnL1"
+        "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": "L1ChugSplashProxy",
+        "eth:0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": "MVM_L2ChainManagerOnL1"
       }
     },
     {
       "name": "DelayedWMetis",
-      "address": "0xfA947f70c3509d5b70A606e871aE0C85397D0738",
+      "address": "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
       "type": "Contract",
       "template": "metis/DelayedWMetis",
       "sourceHashes": [
@@ -1186,33 +1186,33 @@
       "sinceTimestamp": 1747127051,
       "sinceBlock": 22473294,
       "values": {
-        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
-        "$implementation": "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51",
+        "$admin": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51",
         "$pastUpgrades": [
           [
             "2025-05-13T09:04:11.000Z",
             "0x01245dfca81d0eee17a1ed68eebcf822d05a17ad298e3879cd40002932079a12",
-            ["0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"]
+            ["eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"]
           ]
         ],
         "$upgradeCount": 1,
-        "config": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
+        "config": "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
         "decimals": 18,
         "delay": 86400,
-        "metisToken": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "metisToken": "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
         "name": "Wrapped Metis",
-        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "symbol": "WMETIS",
         "totalSupply": 0,
         "version": "1.0.0"
       },
       "implementationNames": {
-        "0xfA947f70c3509d5b70A606e871aE0C85397D0738": "TransparentUpgradeableProxy",
-        "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51": "DelayedWMetis"
+        "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738": "TransparentUpgradeableProxy",
+        "eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51": "DelayedWMetis"
       }
     },
     {
-      "address": "0xFf00000000000000000000000000000000001088",
+      "address": "eth:0xFf00000000000000000000000000000000001088",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -2143,5 +2143,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xbd13af5d1802886de111612d9af285ae0b496536252ed30e2446c585057144ad"
+  "permissionsConfigHash": "0xdd6f9f61061d5c1511a73e183deef8b607a863bcf8c49d69526b660977b9c0b1"
 }

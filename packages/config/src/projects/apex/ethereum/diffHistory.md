@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x357b3035a406bb438fadc1c948d06ba70d8d951c
+
+# Diff at Thu, 10 Jul 2025 08:13:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22880718
+- current block number: 22880718
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22880718 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract CommitteeUSDC (0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+```
+
+```diff
+-   Status: DELETED
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22)
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).
+```
+
+```diff
+-   Status: DELETED
+    contract CommitteeUSDT (0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+```
+
+```diff
+-   Status: DELETED
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD)
+    +++ description: Special verifier for the escape() function.
+```
+
+```diff
+-   Status: DELETED
+    contract ApexAdminMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953)
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+```
+
+```diff
++   Status: CREATED
+    contract CommitteeUSDC (0x23Cab3CF1aa7B929Df5e9f3712aCA3A6Fb9494E4)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+```
+
+```diff
++   Status: CREATED
+    contract FinalizableGpsFactAdapterUSDT (0x40e1e5Ece49A878062fA9F87eA6dc81281098B22)
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`770346231394331402493200980986217737662224545740427952627288191358999988146`).
+```
+
+```diff
++   Status: CREATED
+    contract CommitteeUSDT (0x7249082BfAFE9BCA502d38a686Ef3df37A0cf800)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 3.
+```
+
+```diff
++   Status: CREATED
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD)
+    +++ description: Special verifier for the escape() function.
+```
+
+```diff
++   Status: CREATED
+    contract ApexAdminMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract FinalizableGpsFactAdapterUSDC (0xE741e26573782ae3C0ea9EC710FA99Fcd27fB953)
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`2530337539466159944237001094809327283009177793361359619481044346150483328860`).
+```
+
 Generated with discovered.json: 0x0dd0a79f53f883cf8c3801e23bf876431bdf01d0
 
 # Diff at Wed, 09 Jul 2025 09:25:16 GMT:

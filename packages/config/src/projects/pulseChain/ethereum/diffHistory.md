@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x7f7f23e6036406e36a0d31094c896de4424efd97
+
+# Diff at Thu, 10 Jul 2025 08:14:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22431228
+- current block number: 22431228
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431228 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d)
+    +++ description: Custom multisignature contract for Validator addresses.
+```
+
+```diff
+-   Status: DELETED
+    contract WETHOmnibridgeRouter (0x8AC4ae65b3656e26dC4e0e69108B392283350f55)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenFactory (0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermittableToken (0xA1077a294dDE1B09bB078844df40758a5D0f9a27)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d)
+    +++ description: Custom multisignature contract for Validator addresses.
+```
+
+```diff
++   Status: CREATED
+    contract WETHOmnibridgeRouter (0x8AC4ae65b3656e26dC4e0e69108B392283350f55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenFactory (0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermittableToken (0xA1077a294dDE1B09bB078844df40758a5D0f9a27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9c7bb8d744322ef006dc6239a2d751abce2b3bfe
 
 # Diff at Fri, 04 Jul 2025 12:19:16 GMT:

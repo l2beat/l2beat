@@ -1,3 +1,393 @@
+Generated with discovered.json: 0x1aa97de6f58555ecd1f374d910b54c1c5e45adca
+
+# Diff at Thu, 10 Jul 2025 08:13:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882445
+- current block number: 22882445
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882445 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FPValidator (0x07245eEa05826F5984c7c3C8F478b04892e4df89)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x19565F4771843467aAD632d6B56c75396785b06C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BobaEscrow1 (0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UsdcEscrow (0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EuraEscrow (0x4Fa745FCCC04555F2AFA8874cd23961636CdF982)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x6BD792911F4B3714E88FbDf32B351632e7d22c70)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BobaEscrow3 (0x6F537839714761388B6d7ED61Bc09579d5dA2F41)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StoneEscrow (0x7122985656e38BDC0302Db86685bb972b145bD3C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WagmiEscrow (0x92CC36D66e9d739D50673d1f27929a371FB83a67)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DVN (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DVNFeeLib (0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Stargate Token (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BobaEscrow2 (0xB0003eB166654f7e57c0463F8D1a438eB238c490)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
+-   Status: DELETED
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LinkEscrow (0xEe381e476b4335B8584A2026f3E845edaC2c69de)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FPValidator (0x07245eEa05826F5984c7c3C8F478b04892e4df89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x19565F4771843467aAD632d6B56c75396785b06C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobaEscrow1 (0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UsdcEscrow (0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EuraEscrow (0x4Fa745FCCC04555F2AFA8874cd23961636CdF982)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TSS Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6BD792911F4B3714E88FbDf32B351632e7d22c70)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobaEscrow3 (0x6F537839714761388B6d7ED61Bc09579d5dA2F41)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StoneEscrow (0x7122985656e38BDC0302Db86685bb972b145bD3C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WagmiEscrow (0x92CC36D66e9d739D50673d1f27929a371FB83a67)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVN (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVNFeeLib (0xa7b5189bcA84Cd304D8553977c7C614329750d99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Stargate Token (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BobaEscrow2 (0xB0003eB166654f7e57c0463F8D1a438eB238c490)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xdC4e6DFe07EFCa50a197DF15D9200883eF4Eb1c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xe9Fb0C2206B53d3e76C88Da58790f7fe9A45b373)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LinkEscrow (0xEe381e476b4335B8584A2026f3E845edaC2c69de)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x16e3366b112a92c6930315628ec239f056545bcc
 
 # Diff at Wed, 09 Jul 2025 15:13:27 GMT:

@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xab0b6f459739b65ac0298b427de365bd733b8511
+
+# Diff at Thu, 10 Jul 2025 08:14:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21744185
+- current block number: 21744185
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744185 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xee5b9a0846837cc920db67c60dbc4ab46021d590
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

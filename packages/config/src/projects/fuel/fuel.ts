@@ -105,8 +105,10 @@ export const fuel: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 20915271,
-        inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
-        sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
+        inbox: EthereumAddress('0xEA0337EFC12e98AB118948dA570C07691E8E4b37'),
+        sequencers: [
+          EthereumAddress('0xEA0337EFC12e98AB118948dA570C07691E8E4b37'),
+        ],
         untilBlock: 22837254,
       },
       // TODO: add as soon as we have their customerId

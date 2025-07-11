@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xf760dd2427b0ab2e902a04ba0ea0dbcc2f4d4419
+
+# Diff at Thu, 10 Jul 2025 08:13:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22796394
+- current block number: 22796394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22796394 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Multisig2 (0x2028834B2c0A36A918c10937EeA71BE4f932da52)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Multisig1 (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlockVerifier (0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig2 (0x2028834B2c0A36A918c10937EeA71BE4f932da52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultDepositContract (0x54D7aE423Edb07282645e740C046B9373970a168)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig1 (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringV3 (0x9385aCd9d78dFE854c543294770d0C94c2B07EDC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringIOExchangeOwner (0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockVerifier (0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x41c719a671d52cb8e276099b91ac094e7d8df909
 
 # Diff at Fri, 04 Jul 2025 12:18:57 GMT:

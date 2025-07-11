@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x13ac952f8ed03bc84740e3242525194792ef61c6
+
+# Diff at Thu, 10 Jul 2025 08:14:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22865659
+- current block number: 22865659
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865659 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf71739e5f801415ded7233d58a1c8e0df389301e
 
 # Diff at Mon, 07 Jul 2025 06:54:33 GMT:

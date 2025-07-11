@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x3c00bc8955f1148f9bc192c67d4f1ccc82f0c089
+
+# Diff at Thu, 10 Jul 2025 08:13:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21981677
+- current block number: 21981677
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981677 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B)
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x92726F7dE49300DBdb60930066bc1d0803c0740B)
+    +++ description: The main system contract defining the prism Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa9b263aeca382d86b922d316ea880b3bf927e996
 
 # Diff at Fri, 04 Jul 2025 12:19:08 GMT:

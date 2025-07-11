@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xbbc50d0d6a66917ba0c5d0b084855e6e5a3dc7bc
+
+# Diff at Thu, 10 Jul 2025 08:13:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22208513
+- current block number: 22208513
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208513 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd)
+    +++ description: Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04)
+    +++ description: Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.
+```
+
+```diff
+-   Status: DELETED
+    contract Lightlink Multisig 1 (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8)
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+```
+
+```diff
+-   Status: DELETED
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72)
+    +++ description: The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Predicate (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9)
+    +++ description: ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE)
+    +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x670E1C42A7A5962348138110E3ede3F422c10e2f)
+    +++ description: Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.
+```
+
+```diff
+-   Status: DELETED
+    contract Lightlink Multisig 2 (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract LightLinkPortal (0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE)
+    +++ description: Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract RLPReader (0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Challenge (0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd)
+    +++ description: Allows to challenge block headers. Each challenge requires the payment of a challenger fee. DA challenges are enabled: false. Header challenges are enabled: true. L2 Header challenges are enabled: false.
+```
+
+```diff
++   Status: CREATED
+    contract ChainOracle (0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04)
+    +++ description: Used to challenge L2 block headers. If L2 block header challenges are inactive, this contract is not used.
+```
+
+```diff
++   Status: CREATED
+    contract Lightlink Multisig 1 (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8)
+    +++ description: Custom multisig implementation with a hardcoded n/2+1 threshold.
+```
+
+```diff
++   Status: CREATED
+    contract L1BridgeRegistry (0x624631881655a310adcF0d1336658Cc977609b72)
+    +++ description: The L1BridgeRegistry contract is used to store the address of the LightLink multisig and the address and voting power of the validators managing the bridge.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Predicate (0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9)
+    +++ description: ERC20 token escrow contract. It is validated by external validators, according to the L1BridgeRegistry values.
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalStateChain (0x65E325A22c0F519041db69F5693EbAc3b4AE71bE)
+    +++ description: Contains the logic to update the state of the chain, and apply rollbacks based on an external challenger contract. If a block header is challenged and rolled back, then all subsequent blocks are also rolled back.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x670E1C42A7A5962348138110E3ede3F422c10e2f)
+    +++ description: Fork of the OP stack's SystemConfig. It link to the main portal contract and stores a 'start block' number. Both values are currently unused. Most importantly, it does NOT contain the resource configuration info.
+```
+
+```diff
++   Status: CREATED
+    contract Lightlink Multisig 2 (0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract LightLinkPortal (0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE)
+    +++ description: Main contract to deposit ETH and handle L1 to L2 messages. It also allows to prove and finalize withdrawals. It also stores the resource configuration for the chain.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract RLPReader (0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2c16fd9851e9debedd5027a1555915a12c5cc5d8
 
 # Diff at Fri, 04 Jul 2025 12:19:07 GMT:

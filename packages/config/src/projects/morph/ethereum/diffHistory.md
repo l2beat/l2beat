@@ -1,3 +1,201 @@
+Generated with discovered.json: 0xa4ab5907ab7ecbc05d805980783a2330821600b5
+
+# Diff at Thu, 10 Jul 2025 08:13:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22767866
+- current block number: 22767866
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22767866 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7)
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+```
+
+```diff
+-   Status: DELETED
+    contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68)
+    +++ description: Contract used to bridge ETH from L1 to L2.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (0x4006FDA79493FEE14dA42BfA34575aAA79bcf953)
+    +++ description: Current SP1 verifier using Blobs for DA.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+```
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
+-   Status: DELETED
+    contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a)
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+```
+
+```diff
+-   Status: DELETED
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60)
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+```
+
+```diff
+-   Status: DELETED
+    contract Morph Multisig 2 (0xB822319ab7848b7cC4537c8409e50f85BFb04377)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7)
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304)
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154)
+    +++ description: SP1 verifier using Blobs for DA (being deprecated).
+```
+
+```diff
+-   Status: DELETED
+    contract Morph Multisig 1 (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Whitelist (0xFFafDd9167777C0e5421e0B6789D6d7A5E386984)
+    +++ description: Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.
+```
+
+```diff
++   Status: CREATED
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7)
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+```
+
+```diff
++   Status: CREATED
+    contract L1ETHGateway (0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68)
+    +++ description: Contract used to bridge ETH from L1 to L2.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x31110622D6CA24c9FF307d6ae1715F16E47F16A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1MessageQueueWithGasPriceOracle (0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF)
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0x4006FDA79493FEE14dA42BfA34575aAA79bcf953)
+    +++ description: Current SP1 verifier using Blobs for DA.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardERC20Gateway (0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8)
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a)
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+```
+
+```diff
++   Status: CREATED
+    contract MorphRollup (0x759894Ced0e6af42c26668076Ffa84d02E3CeF60)
+    +++ description: The main contract of the Morph chain. Allows to post transaction data and state roots, implements challenge mechanism along with proofs. Sequencing and proposing are behind a whitelist.
+```
+
+```diff
++   Status: CREATED
+    contract Morph Multisig 2 (0xB822319ab7848b7cC4537c8409e50f85BFb04377)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EnforcedTxGateway (0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7)
+    +++ description: Contracts to force L1 -> L2 messages with the proper sender. Currently paused: true.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304)
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1 (0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154)
+    +++ description: SP1 verifier using Blobs for DA (being deprecated).
+```
+
+```diff
++   Status: CREATED
+    contract Morph Multisig 1 (0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Whitelist (0xFFafDd9167777C0e5421e0B6789D6d7A5E386984)
+    +++ description: Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.
+```
+
 Generated with discovered.json: 0xdb055c6620f5aa76a0adf5f978482e5c7fc81b4d
 
 # Diff at Fri, 04 Jul 2025 12:19:10 GMT:

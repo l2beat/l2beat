@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x06cc018e9b0717fc4e25035120cd68e7a3f00e07
+
+# Diff at Thu, 10 Jul 2025 08:15:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 1846362
+- current block number: 1846362
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1846362 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EverclearHubGateway (0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EverclearHubGateway (0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x025d4eaf9069cba284986fdd844e5c47cf88ed8c
 
 # Diff at Mon, 07 Jul 2025 08:11:47 GMT:

@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xe7466fe9cc0c5b2108900943bfce597709a20b82
+
+# Diff at Thu, 10 Jul 2025 08:15:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22593198
+- current block number: 22593198
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593198 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0)
+    +++ description: A router contract for verifiers. Routes verification requests to 0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF or 0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF or eth:0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
 Generated with discovered.json: 0x2c7661d450d61e27cdb80ab2e9b8f3dab1f0e2e8
 
 # Diff at Fri, 04 Jul 2025 12:19:29 GMT:

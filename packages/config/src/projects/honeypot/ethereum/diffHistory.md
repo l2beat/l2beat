@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x6c11804204d494eb9a278f527c8941eb81686954
+
+# Diff at Thu, 10 Jul 2025 08:13:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20641250
+- current block number: 20641250
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20641250 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Honeypot (0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract History (0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Authority (0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Honeypot (0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract History (0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Authority (0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7a599aaaee4e13f2ceeb2fc01a35f2f4a6c57103
 
 # Diff at Tue, 04 Mar 2025 10:39:14 GMT:

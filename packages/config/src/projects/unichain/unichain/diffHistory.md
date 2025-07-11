@@ -1,3 +1,261 @@
+Generated with discovered.json: 0xfa79a65f9b6ea4d446270cb9b434f5a842a049a9
+
+# Diff at Thu, 10 Jul 2025 08:15:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 17837889
+- current block number: 17837889
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17837889 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002)
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+```
+
+```diff
+-   Status: DELETED
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F)
+    +++ description: Provides the current gas price for L2 transactions.
+```
+
+```diff
+-   Status: DELETED
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
+-   Status: DELETED
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011)
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012)
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013)
+    +++ description: Simple contract that returns the latest L1 block number.
+```
+
+```diff
+-   Status: DELETED
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014)
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
+-   Status: DELETED
+    contract L1Block (0x4200000000000000000000000000000000000015)
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+```
+
+```diff
+-   Status: DELETED
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016)
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017)
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018)
+    +++ description: Administration contract for other contract proxies.
+```
+
+```diff
+-   Status: DELETED
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019)
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract L1FeeVault (0x420000000000000000000000000000000000001A)
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020)
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+```
+
+```diff
+-   Status: DELETED
+    contract EAS (0x4200000000000000000000000000000000000021)
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+```
+
+```diff
+-   Status: DELETED
+    contract FeeSplitter (0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1Splitter (0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002)
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+```
+
+```diff
+-   Status: DELETED
+    contract L1Splitter (0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003)
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd).
+```
+
+```diff
+-   Status: DELETED
+    contract NetFeeSplitter (0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeployerWhitelist (0x4200000000000000000000000000000000000002)
+    +++ description: Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade.
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F)
+    +++ description: Provides the current gas price for L2 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011)
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012)
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013)
+    +++ description: Simple contract that returns the latest L1 block number.
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014)
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract L1Block (0x4200000000000000000000000000000000000015)
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+```
+
+```diff
++   Status: CREATED
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016)
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017)
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018)
+    +++ description: Administration contract for other contract proxies.
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019)
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
++   Status: CREATED
+    contract L1FeeVault (0x420000000000000000000000000000000000001A)
+    +++ description: Collects the L1 portion of the L2 transaction fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
++   Status: CREATED
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020)
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract EAS (0x4200000000000000000000000000000000000021)
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract FeeSplitter (0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1Splitter (0x4300C0D3C0D3C0D3C0d3C0d3c0d3C0d3C0d30002)
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa).
+```
+
+```diff
++   Status: CREATED
+    contract L1Splitter (0x4300c0d3c0d3c0D3c0d3C0D3c0d3C0D3C0D30003)
+    +++ description: Automatically collects ETH on L2 and periodically bridges it back to Ethereum Layer 1 to a specified recipient address (unichain:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd).
+```
+
+```diff
++   Status: CREATED
+    contract NetFeeSplitter (0x4300c0D3c0D3c0D3c0D3c0D3C0D3c0d3c0D30004)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf638c43f01c23c5ccbd345413f13486b6914d2bb
 
 # Diff at Fri, 30 May 2025 07:18:15 GMT:

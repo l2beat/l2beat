@@ -1,3 +1,309 @@
+Generated with discovered.json: 0x0046a584d8df682252d903db61bc0dcb9549fd95
+
+# Diff at Thu, 10 Jul 2025 08:14:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22337733
+- current block number: 22337733
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22337733 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ERC1155Predicate (0x0057bed57066F61c64DACB395B38c6E1792e03B8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MintableERC721Predicate (0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootChainManager (0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82)
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+```
+
+```diff
+-   Status: DELETED
+    contract EventsHub (0x12185669Dac70749f717247971E0B8819b2e472e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakeManagerExtension (0x17174796E0eF24330aed565c87Ba5e85431DE19e)
+    +++ description: Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
+```
+
+```diff
+-   Status: DELETED
+    contract Merkle (0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StateSender (0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C)
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+```
+
+```diff
+-   Status: DELETED
+    contract StakingNFT (0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakingInfo (0x539964b3d225194717fb896D26c8b3E635b8A1aE)
+    +++ description: Contains logging and getter functions about staking.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorRegistry (0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6)
+    +++ description: Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract WithdrawalManager (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0)
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+```
+
+```diff
+-   Status: DELETED
+    contract StakeManager (0x65218A41Fb92637254B4f8c97448d3dF343A3064)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Predicate (0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExitNFT (0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307)
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+```
+
+```diff
+-   Status: DELETED
+    contract DepositManager (0x885fcE983b6a01633f764325B8c3c5D31032C995)
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract SlashingManager (0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce)
+    +++ description: Contract that allows the consensus supermajority to slash validators.
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721Predicate (0x98C831cFB18852f7deB3E3a970e907475b49730f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721Predicate (0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RLPReader (0xc107664eeEEA2c84e51D56F1B7a479EbCf9541c4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EtherPredicate (0xc3897302aB4B42931cB4857050Fa60f53B775870)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (0xC476E20c2F7FA3B35aC242aBE71B59e902242f06)
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract RootChain (0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9)
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Predicate (0xdaF14950155DF895E9D0fd2521D05477d26F462c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB)
+    +++ description: Maintains the addresses of the contracts used in the system.
+```
+
+```diff
++   Status: CREATED
+    contract ERC1155Predicate (0x0057bed57066F61c64DACB395B38c6E1792e03B8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC721Predicate (0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChainManager (0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82)
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+```
+
+```diff
++   Status: CREATED
+    contract EventsHub (0x12185669Dac70749f717247971E0B8819b2e472e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeManagerExtension (0x17174796E0eF24330aed565c87Ba5e85431DE19e)
+    +++ description: Contract primarily used to check whether a validator is whitelisted or not. It also provides the ability to update the validator registry address.
+```
+
+```diff
++   Status: CREATED
+    contract Merkle (0x32262DDD01fFF9bb367586317A5e40Dbe2bCcbe2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StateSender (0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C)
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+```
+
+```diff
++   Status: CREATED
+    contract StakingNFT (0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingInfo (0x539964b3d225194717fb896D26c8b3E635b8A1aE)
+    +++ description: Contains logging and getter functions about staking.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorRegistry (0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6)
+    +++ description: Defines the whitelist of validators that can stake and therefore participate in the PoS consensus protocol.
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawalManager (0x5F683665ca87dbC3D1358913da80e3C71c328Fb0)
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+```
+
+```diff
++   Status: CREATED
+    contract StakeManager (0x65218A41Fb92637254B4f8c97448d3dF343A3064)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Predicate (0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExitNFT (0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307)
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+```
+
+```diff
++   Status: CREATED
+    contract DepositManager (0x885fcE983b6a01633f764325B8c3c5D31032C995)
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract SlashingManager (0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce)
+    +++ description: Contract that allows the consensus supermajority to slash validators.
+```
+
+```diff
++   Status: CREATED
+    contract ERC721Predicate (0x98C831cFB18852f7deB3E3a970e907475b49730f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC721Predicate (0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RLPReader (0xc107664eeEEA2c84e51D56F1B7a479EbCf9541c4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherPredicate (0xc3897302aB4B42931cB4857050Fa60f53B775870)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0xC476E20c2F7FA3B35aC242aBE71B59e902242f06)
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+```
+
+```diff
++   Status: CREATED
+    contract RootChain (0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9)
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Predicate (0xdaF14950155DF895E9D0fd2521D05477d26F462c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB)
+    +++ description: Maintains the addresses of the contracts used in the system.
+```
+
 Generated with discovered.json: 0x9cc15bc1b954366d8116b38baf19b382be7a8dec
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

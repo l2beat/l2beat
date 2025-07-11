@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xb79e4b30c163c9c5a30d8a15c3ad391e4d76fe8c
+
+# Diff at Thu, 10 Jul 2025 08:14:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22397534
+- current block number: 22397534
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397534 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x3F74698A4ADb075c0501DF739745ACA55Ae543a1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB)
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 3/2).
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3F74698A4ADb075c0501DF739745ACA55Ae543a1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB)
+    +++ description: The main system contract defining the silicon-zk Layer 2 logic. Entry point for sequencing batches.
+```
+
 Generated with discovered.json: 0x0ab04b19723a821ca217804e3cee6a9ecc171f07
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

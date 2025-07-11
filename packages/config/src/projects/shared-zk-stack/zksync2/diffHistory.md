@@ -1,3 +1,177 @@
+Generated with discovered.json: 0xdae64f1aae0c0887a5a3d8966552940289b9e223
+
+# Diff at Thu, 10 Jul 2025 08:15:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 61100811
+- current block number: 61100811
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 61100811 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89)
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolTimelockController_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenTimelockController_deprecated (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkGovOpsGovernor_deprecated (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb)
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E)
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f)
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746)
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
+-   Status: DELETED
+    contract GovOpsTimelockController_deprecated (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
+-   Status: DELETED
+    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
+-   Status: DELETED
+    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160)
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89)
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolTimelockController_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+```
+
+```diff
++   Status: CREATED
+    contract TokenTimelockController_deprecated (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
++   Status: CREATED
+    contract ZkGovOpsGovernor_deprecated (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb)
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+```
+
+```diff
++   Status: CREATED
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E)
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+```
+
+```diff
++   Status: CREATED
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f)
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
++   Status: CREATED
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746)
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+```
+
+```diff
++   Status: CREATED
+    contract GovOpsTimelockController_deprecated (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
++   Status: CREATED
+    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
++   Status: CREATED
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d)
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+```
+
+```diff
++   Status: CREATED
+    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160)
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+```
+
 Generated with discovered.json: 0x09110da964c6b1ed98d8e3355d03e831151831bf
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

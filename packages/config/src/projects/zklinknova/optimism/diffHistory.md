@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x285f41122141b854b334411bc576501779f97f60
+
+# Diff at Thu, 10 Jul 2025 08:16:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 133041012
+- current block number: 133041012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xbddaa93f509b712c0f23d1051c536da16f19f1e6
 
 # Diff at Fri, 04 Jul 2025 12:19:30 GMT:

@@ -1,4 +1,9 @@
-import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -223,7 +228,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',

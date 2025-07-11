@@ -1,3 +1,525 @@
+Generated with discovered.json: 0x68f1c20a820d13d60bb85440876ad5ed1c5c35a4
+
+# Diff at Thu, 10 Jul 2025 08:15:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882688
+- current block number: 22882688
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882688 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169)
+    +++ description: Library for managing PEM certificate chains.
+```
+
+```diff
+-   Status: DELETED
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03)
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+```
+
+```diff
+-   Status: DELETED
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a)
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract Halborn (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2)
+    +++ description: A signer list for registering agents, similar to a Multisig.
+```
+
+```diff
+-   Status: DELETED
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
+-   Status: DELETED
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800)
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+```
+
+```diff
+-   Status: DELETED
+    contract Drew Van der Werff (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+```
+
+```diff
+-   Status: DELETED
+    contract EncryptionRegistry (0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1)
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+```
+
+```diff
+-   Status: DELETED
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Chainbound (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9)
+    +++ description: Library for verifying signatures.
+```
+
+```diff
+-   Status: DELETED
+    contract Nethermind (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+```
+
+```diff
+-   Status: DELETED
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
+    +++ description: Entry contract to verify batches using RISC Zero.
+```
+
+```diff
+-   Status: DELETED
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+```diff
+-   Status: DELETED
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
+-   Status: DELETED
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
+-   Status: DELETED
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
+-   Status: DELETED
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E)
+    +++ description: Defines withdrawal limits per token.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE)
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab)
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261)
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C)
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
+-   Status: DELETED
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72)
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+```
+
+```diff
+-   Status: DELETED
+    contract Toni Wahrstätter (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract Aragon (0xb284810536C0dAB6A8e48153B58588A9B9e0F701)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Daniel Wang (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
+    +++ description: Entry contract to verify batches using SP1.
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC)
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+```
+
+```diff
+-   Status: DELETED
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+```
+
+```diff
+-   Status: DELETED
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
+-   Status: DELETED
+    contract L2BEAT (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169)
+    +++ description: Library for managing PEM certificate chains.
+```
+
+```diff
++   Status: CREATED
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03)
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a)
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+```
+
+```diff
++   Status: CREATED
+    contract Halborn (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2)
+    +++ description: A signer list for registering agents, similar to a Multisig.
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800)
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+```
+
+```diff
++   Status: CREATED
+    contract Drew Van der Werff (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+```
+
+```diff
++   Status: CREATED
+    contract EncryptionRegistry (0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1)
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Chainbound (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9)
+    +++ description: Library for verifying signatures.
+```
+
+```diff
++   Status: CREATED
+    contract Nethermind (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+```
+
+```diff
++   Status: CREATED
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
+    +++ description: Entry contract to verify batches using RISC Zero.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E)
+    +++ description: Defines withdrawal limits per token.
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE)
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+```
+
+```diff
++   Status: CREATED
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab)
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261)
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+```
+
+```diff
++   Status: CREATED
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C)
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72)
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+```
+
+```diff
++   Status: CREATED
+    contract Toni Wahrstätter (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
+```
+
+```diff
++   Status: CREATED
+    contract Aragon (0xb284810536C0dAB6A8e48153B58588A9B9e0F701)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Daniel Wang (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
+    +++ description: Entry contract to verify batches using SP1.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC)
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+```
+
+```diff
++   Status: CREATED
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract L2BEAT (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
 Generated with discovered.json: 0x5062afcf00fa337bb7de1292f0f139b61536005a
 
 # Diff at Wed, 09 Jul 2025 16:02:11 GMT:

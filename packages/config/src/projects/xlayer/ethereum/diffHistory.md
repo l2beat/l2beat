@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x8909978172764452ac73ff8e6faac11342474a63
+
+# Diff at Thu, 10 Jul 2025 08:15:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22166659
+- current block number: 22166659
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22166659 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/2).
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: The main system contract defining the X Layer Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
 Generated with discovered.json: 0x80e49c35b28a936967441fd9e303315aedabf8e4
 
 # Diff at Fri, 04 Jul 2025 12:19:28 GMT:

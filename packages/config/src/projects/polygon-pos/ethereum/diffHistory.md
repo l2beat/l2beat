@@ -1,3 +1,429 @@
+Generated with discovered.json: 0x28533632e3fd3314abe52e3d2d2b42c7ff6e919e
+
+# Diff at Thu, 10 Jul 2025 08:14:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22865648
+- current block number: 22865648
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865648 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE)
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+```
+
+```diff
+-   Status: DELETED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+```
+
+```diff
+-   Status: DELETED
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b)
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootChainInitialImplementation (0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48)
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShare (0x7e94d6cAbb20114b22a088d828772645f68CC67B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287)
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+```
+
+```diff
+-   Status: DELETED
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77)
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+```
+
+```diff
+-   Status: DELETED
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B)
+    +++ description: Contains logging and getter functions about staking.
+```
+
+```diff
+-   Status: DELETED
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+```
+
+```diff
+-   Status: DELETED
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE)
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b)
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChainInitialImplementation (0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48)
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (0x7e94d6cAbb20114b22a088d828772645f68CC67B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287)
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77)
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+```
+
+```diff
++   Status: CREATED
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B)
+    +++ description: Contains logging and getter functions about staking.
+```
+
+```diff
++   Status: CREATED
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+```
+
+```diff
++   Status: CREATED
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xbb7650af53d46f3e6046799ec47229c546dc4df7
 
 # Diff at Mon, 07 Jul 2025 06:52:33 GMT:

@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xb4cf0586a8b3b9590f01d620271f696e0a3a0114
+
+# Diff at Thu, 10 Jul 2025 08:13:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 18554408
+- current block number: 18554408
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18554408 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LoopringIOExchangeOwner (0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringV3 (0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlockVerifier (0x707B12e8921b442D4015eb03c86E66F3b8042Dd2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ExchangeV3 (0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DefaultDepositContract (0xF13e21653AEB763595D5E4baA1dC115689Da49b9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringIOExchangeOwner (0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringV3 (0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockVerifier (0x707B12e8921b442D4015eb03c86E66F3b8042Dd2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeV3 (0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultDepositContract (0xF13e21653AEB763595D5E4baA1dC115689Da49b9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0d7fa02d8f9050bf31b0b0b151322d00cf88abfd
 
 # Diff at Tue, 04 Mar 2025 10:39:04 GMT:

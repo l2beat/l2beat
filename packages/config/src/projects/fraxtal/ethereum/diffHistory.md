@@ -1,3 +1,249 @@
+Generated with discovered.json: 0xba8b8339c3a141fd6f1efdc121e62bfa4412451d
+
+# Diff at Thu, 10 Jul 2025 08:13:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22666214
+- current block number: 22666214
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22666214 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract EtherRouter (0x5acAf61d339dd123e60ba450Ea38fbC49445007C)
+    +++ description: ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.
+```
+
+```diff
+-   Status: DELETED
+    contract Frax Ether Token (0x5E8422345238F34275888049021821E8E08CAa1f)
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract frxETH Minter (0x7Bc6bad540453360F744666D625fec0ee1320cA3)
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+```
+
+```diff
+-   Status: DELETED
+    contract Frax Multisig  (0x8306300ffd616049FD7e4b0354a64Da835c1A81C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FrxEthTimelock (0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA)
+    +++ description: Allows for time-delayed execution of transactions. Current delay is 2d.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x8c5D64d10394cFa070066e70Ec19E67398b4dABE)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract Staked Frax Ether Token (0xac3E018457B222d93114458476f3E3416Abbe38F)
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract Fraxtal Multisig 2 (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract frxETH Minter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138)
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+```
+
+```diff
+-   Status: DELETED
+    contract Fraxtal Multisig 1 (0xe0d7755252873c4eF5788f7f45764E0e17610508)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract EtherRouter (0x5acAf61d339dd123e60ba450Ea38fbC49445007C)
+    +++ description: ETH deposited by users via the FraxEtherMinter is forwarded to this contract and then routed further to either lending pools or AMOs.
+```
+
+```diff
++   Status: CREATED
+    contract Frax Ether Token (0x5E8422345238F34275888049021821E8E08CAa1f)
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract frxETH Minter (0x7Bc6bad540453360F744666D625fec0ee1320cA3)
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+```
+
+```diff
++   Status: CREATED
+    contract Frax Multisig  (0x8306300ffd616049FD7e4b0354a64Da835c1A81C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FrxEthTimelock (0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA)
+    +++ description: Allows for time-delayed execution of transactions. Current delay is 2d.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x8c5D64d10394cFa070066e70Ec19E67398b4dABE)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract Staked Frax Ether Token (0xac3E018457B222d93114458476f3E3416Abbe38F)
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+```
+
+```diff
++   Status: CREATED
+    contract Fraxtal Multisig 2 (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract frxETH Minter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138)
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+```
+
+```diff
++   Status: CREATED
+    contract Fraxtal Multisig 1 (0xe0d7755252873c4eF5788f7f45764E0e17610508)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1ae8ab0bff3e95fd26a8fb91831ba6007c596a1e
 
 # Diff at Fri, 04 Jul 2025 12:19:00 GMT:

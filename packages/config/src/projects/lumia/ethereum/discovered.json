@@ -7,7 +7,7 @@
   "entries": [
     {
       "name": "Verifier",
-      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "address": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
@@ -19,12 +19,12 @@
       "sinceBlock": 19505052,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
+        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x258862dec9a77db57b398c441390783293E2a7A1",
+      "address": "eth:0x258862dec9a77db57b398c441390783293E2a7A1",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -50,7 +50,7 @@
     },
     {
       "name": "PolygonDataCommittee",
-      "address": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
+      "address": "eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
       "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
@@ -62,13 +62,13 @@
       "sinceTimestamp": 1720110635,
       "sinceBlock": 20234353,
       "values": {
-        "$admin": "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
-        "$implementation": "0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB",
+        "$admin": "eth:0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
+        "$implementation": "eth:0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB",
         "$pastUpgrades": [
           [
             "2024-07-04T16:30:35.000Z",
             "0x612548f69d4e06199889a118828af64ea857bc9e12c6d80224c69b886ee37303",
-            ["0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB"]
+            ["eth:0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB"]
           ]
         ],
         "$upgradeCount": 1,
@@ -78,24 +78,24 @@
         "members": [
           {
             "url": "https://prism-da-2.eu-north-2.gateway.fm/",
-            "addr": "0xf1cACD549400824D54c8794e63C5368C296FDA00"
+            "addr": "eth:0xf1cACD549400824D54c8794e63C5368C296FDA00"
           },
           {
             "url": "https://prism-da-1.eu-north-2.gateway.fm/",
-            "addr": "0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"
+            "addr": "eth:0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18"
           }
         ],
-        "owner": "0x258862dec9a77db57b398c441390783293E2a7A1",
+        "owner": "eth:0x258862dec9a77db57b398c441390783293E2a7A1",
         "requiredAmountOfSignatures": 1
       },
       "implementationNames": {
-        "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": "TransparentUpgradeableProxy",
-        "0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": "PolygonDataCommittee"
+        "eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": "TransparentUpgradeableProxy",
+        "eth:0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": "PolygonDataCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
+      "address": "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -108,7 +108,7 @@
     },
     {
       "name": "Validium",
-      "address": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+      "address": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
       "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -121,31 +121,31 @@
       "sinceTimestamp": 1719499031,
       "sinceBlock": 20183666,
       "values": {
-        "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+        "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "$implementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
             "2024-06-27T14:37:11.000Z",
             "0x03c9a006f95a45fda2a18e475242078b8563715bc621e21e62a78962e9fb4e63",
-            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+            ["eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
           ],
           [
             "2025-03-05T12:12:47.000Z",
             "0xc376c3725fb986eead241c5b7663e6e081f66b92984bc4b3f0c08d23a0101a35",
-            ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
+            ["eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
         "$upgradeCount": 2,
-        "admin": "0x258862dec9a77db57b398c441390783293E2a7A1",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "admin": "eth:0x258862dec9a77db57b398c441390783293E2a7A1",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
-        "forceBatchAddress": "0x258862dec9a77db57b398c441390783293E2a7A1",
+        "dataAvailabilityProtocol": "eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8",
+        "forceBatchAddress": "eth:0x258862dec9a77db57b398c441390783293E2a7A1",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
+        "gasTokenAddress": "eth:0xD9343a049D5DBd89CD19DC6BcA8c48fB3a0a42a7",
         "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
         "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
         "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
@@ -159,14 +159,14 @@
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "prism",
-        "pendingAdmin": "0x0000000000000000000000000000000000000000",
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
+        "trustedSequencer": "eth:0x8F2D2Da3044B0A1ea54Ee26F7fe376cD9ec4393F",
         "trustedSequencerURL": "https://prism-sequencer.eu-north-2.gateway.fm/"
       },
       "fieldMeta": {
@@ -176,14 +176,14 @@
         }
       },
       "implementationNames": {
-        "0x92726F7dE49300DBdb60930066bc1d0803c0740B": "PolygonTransparentProxy",
-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
+        "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B": "PolygonTransparentProxy",
+        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
+      "address": "eth:0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -201,14 +201,14 @@
       "sinceBlock": 20234352,
       "values": {
         "$immutable": true,
-        "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+        "owner": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
       },
       "implementationNames": {
-        "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a": "ProxyAdmin"
+        "eth:0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a": "ProxyAdmin"
       }
     },
     {
-      "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+      "address": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -231,12 +231,12 @@
       ]
     },
     {
-      "address": "0xf1cACD549400824D54c8794e63C5368C296FDA00",
+      "address": "eth:0xf1cACD549400824D54c8794e63C5368C296FDA00",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18",
+      "address": "eth:0xF2cF1EEe5A4B71CEc8cFA16791f72b03bFD00e18",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -425,5 +425,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xd4a67837b9e861670e0e528989b9b8f9d046a8a87f4f705fc0b04109689ca207"
+  "permissionsConfigHash": "0x782c86fc9c06e168b147f637c655b5714e2cfaaef9861025565bf7f258ce0de9"
 }

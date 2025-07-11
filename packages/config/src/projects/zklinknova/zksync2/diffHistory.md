@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xf62d2412f2ce4edf2108bc00f2538dc823c73532
+
+# Diff at Thu, 10 Jul 2025 08:16:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 57470008
+- current block number: 57470008
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57470008 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfc62f2799fa576164095eeba4d9497fa19bb78ff
 
 # Diff at Fri, 04 Jul 2025 12:19:30 GMT:

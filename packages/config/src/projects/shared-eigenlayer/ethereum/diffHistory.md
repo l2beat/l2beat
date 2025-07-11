@@ -1,3 +1,381 @@
+Generated with discovered.json: 0x63730c4389cf614dc04c2ad1e20cd6fd5ca2d2ce
+
+# Diff at Thu, 10 Jul 2025 08:14:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22567898
+- current block number: 22567898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567898 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
+-   Status: DELETED
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+```diff
+-   Status: DELETED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5)
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647)
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
+-   Status: DELETED
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda)
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39)
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+```
+
+```diff
+-   Status: DELETED
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+```diff
+-   Status: DELETED
+    contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806)
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+```
+
+```diff
+-   Status: DELETED
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
++   Status: CREATED
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+```diff
++   Status: CREATED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5)
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647)
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
++   Status: CREATED
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda)
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39)
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+```
+
+```diff
++   Status: CREATED
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806)
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc38bd0b2a400475991ce3f7823b9f85d347ac108
 
 # Diff at Fri, 04 Jul 2025 12:19:19 GMT:

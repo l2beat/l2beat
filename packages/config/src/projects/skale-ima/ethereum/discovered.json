@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "ProxyAdminOwner",
-      "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
+      "address": "eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -19,13 +19,13 @@
       "sinceBlock": 10949879,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
-          "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
-          "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
-          "0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
-          "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
+          "eth:0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
+          "eth:0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
+          "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
+          "eth:0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
+          "eth:0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
         ],
         "$threshold": 3,
         "domainSeparator": "0xfe553e7fa2b6b6eabfd8b489f5d70c9409db0501fd37f91a9f6f48239e815eaa",
@@ -36,18 +36,18 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": "Proxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": "Proxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
+      "address": "eth:0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DepositBoxERC1155",
-      "address": "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
+      "address": "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -57,71 +57,71 @@
       "sinceTimestamp": 1626720238,
       "sinceBlock": 12858680,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304",
         "$pastUpgrades": [
           [
             "2021-07-19T18:43:58.000Z",
             "0x5b80fc3749c3566819a2d47c64765b135b053dad4db02ee8e287c8579080e6b3",
-            ["0xd0Fc79156E3a60858F24F9b7172Cd64ef7cc1DBB"]
+            ["eth:0xd0Fc79156E3a60858F24F9b7172Cd64ef7cc1DBB"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0x825a23B6cBbb1880b3189C2C684b3DF53Dd8Cb83"]
+            ["eth:0x825a23B6cBbb1880b3189C2C684b3DF53Dd8Cb83"]
           ],
           [
             "2021-12-21T05:02:24.000Z",
             "0xe76706c2f940db536f4643b67219ac20d4d650fb17f04532b421ab695e59e1ef",
-            ["0x2faDfcb4AB510463bA8B1aE6f44FB0D55a79a6db"]
+            ["eth:0x2faDfcb4AB510463bA8B1aE6f44FB0D55a79a6db"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0x947CB65494903A53E55f7Dfef949e66d43e076b3"]
+            ["eth:0x947CB65494903A53E55f7Dfef949e66d43e076b3"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0xDdE9fC39471F1D119b9928994c555E7296752b9A"]
+            ["eth:0xDdE9fC39471F1D119b9928994c555E7296752b9A"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0xBc03C79991f6a6486B5187ad91853626c9686bF2"]
+            ["eth:0xBc03C79991f6a6486B5187ad91853626c9686bF2"]
           ],
           [
             "2023-01-30T15:33:59.000Z",
             "0xe7b669eef46447925e0078929d6bff80622593c36470eb1b12bb9a5563d57a23",
-            ["0x9429952791A01c35E715826f34727E885A2b2f09"]
+            ["eth:0x9429952791A01c35E715826f34727E885A2b2f09"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"]
+            ["eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"]
           ]
         ],
         "$upgradeCount": 8,
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
-        "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+        "linker": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
       },
       "implementationNames": {
-        "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": "TransparentUpgradeableProxy",
-        "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304": "DepositBoxERC1155"
+        "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": "TransparentUpgradeableProxy",
+        "eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304": "DepositBoxERC1155"
       }
     },
     {
-      "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
+      "address": "eth:0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DepositBoxEth",
-      "address": "0x49F583d263e4Ef938b9E09772D3394c71605Df94",
+      "address": "eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -131,66 +131,66 @@
       "sinceTimestamp": 1626719733,
       "sinceBlock": 12858640,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a",
         "$pastUpgrades": [
           [
             "2021-07-19T18:35:33.000Z",
             "0x568a87e9dc5f1871d936648d80c1eeb22f6202e4d0d01ea3f37f40bbd92a86d6",
-            ["0x912B03Fa0aA8C848f7B16950870dC0B1B89CB28C"]
+            ["eth:0x912B03Fa0aA8C848f7B16950870dC0B1B89CB28C"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0xAcb26F2B4018e20ab4F5b729bbF70c56583dFBD9"]
+            ["eth:0xAcb26F2B4018e20ab4F5b729bbF70c56583dFBD9"]
           ],
           [
             "2021-12-21T05:02:24.000Z",
             "0xe76706c2f940db536f4643b67219ac20d4d650fb17f04532b421ab695e59e1ef",
-            ["0x02113b595aF3BAFD390Bc4B0a44224c789dE3824"]
+            ["eth:0x02113b595aF3BAFD390Bc4B0a44224c789dE3824"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0xF0551a55E73734751324BF8299f50c9229754c56"]
+            ["eth:0xF0551a55E73734751324BF8299f50c9229754c56"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0x1d3c18a87DF66cc3F8e176f5bef4CDE0C40D50e7"]
+            ["eth:0x1d3c18a87DF66cc3F8e176f5bef4CDE0C40D50e7"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0x998D6AA8CaC99f1557b65E680fc4FDCD94Be70ca"]
+            ["eth:0x998D6AA8CaC99f1557b65E680fc4FDCD94Be70ca"]
           ],
           [
             "2023-01-30T15:33:59.000Z",
             "0xe7b669eef46447925e0078929d6bff80622593c36470eb1b12bb9a5563d57a23",
-            ["0xfE6faFAC88150A23D946E53E9e2285aAB98A0d90"]
+            ["eth:0xfE6faFAC88150A23D946E53E9e2285aAB98A0d90"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"]
+            ["eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"]
           ]
         ],
         "$upgradeCount": 8,
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
-        "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+        "linker": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
       },
       "implementationNames": {
-        "0x49F583d263e4Ef938b9E09772D3394c71605Df94": "TransparentUpgradeableProxy",
-        "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a": "DepositBoxEth"
+        "eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94": "TransparentUpgradeableProxy",
+        "eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a": "DepositBoxEth"
       }
     },
     {
       "name": "CommunityPool",
-      "address": "0x588801cA36558310D91234aFC2511502282b1621",
+      "address": "eth:0x588801cA36558310D91234aFC2511502282b1621",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -205,68 +205,68 @@
       "sinceTimestamp": 1626719564,
       "sinceBlock": 12858631,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a",
         "$pastUpgrades": [
           [
             "2021-07-19T18:32:44.000Z",
             "0xe0d6fcfaf5c705f71b54e2eefa27a88a8ea7aec7995fd39499ffc70c614449e5",
-            ["0xf1b9d10472A62EA977089336dc4a65580Ebdae60"]
+            ["eth:0xf1b9d10472A62EA977089336dc4a65580Ebdae60"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0x8375acDca1feCdb89F3C3A440f40884C6B1a7A7D"]
+            ["eth:0x8375acDca1feCdb89F3C3A440f40884C6B1a7A7D"]
           ],
           [
             "2021-12-21T05:02:24.000Z",
             "0xe76706c2f940db536f4643b67219ac20d4d650fb17f04532b421ab695e59e1ef",
-            ["0x956455d81d5DC0F4FbE666Bffb278Af292dFa4dB"]
+            ["eth:0x956455d81d5DC0F4FbE666Bffb278Af292dFa4dB"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0x06FE670E7647A67F95f09EbC292a833d66ebb681"]
+            ["eth:0x06FE670E7647A67F95f09EbC292a833d66ebb681"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0x59501EDE4441B566D43330938b01044168a4Af0C"]
+            ["eth:0x59501EDE4441B566D43330938b01044168a4Af0C"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0xAC1861ed87595E0AfF6C2bB9f8742D3308f48ba0"]
+            ["eth:0xAC1861ed87595E0AfF6C2bB9f8742D3308f48ba0"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"]
+            ["eth:0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"]
           ],
           [
             "2024-11-27T15:17:59.000Z",
             "0x0b3d111d1bb272489d650a99c3bb9cae63a18bc85b51b76bf8d2b49e9fedbfc7",
-            ["0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"]
+            ["eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"]
           ]
         ],
         "$upgradeCount": 8,
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
         "minTransactionGas": 1000000,
         "multiplierDivider": 2,
         "multiplierNumerator": 3
       },
       "implementationNames": {
-        "0x588801cA36558310D91234aFC2511502282b1621": "TransparentUpgradeableProxy",
-        "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a": "CommunityPool"
+        "eth:0x588801cA36558310D91234aFC2511502282b1621": "TransparentUpgradeableProxy",
+        "eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a": "CommunityPool"
       }
     },
     {
       "name": "Linker",
-      "address": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+      "address": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -276,54 +276,54 @@
       "sinceTimestamp": 1626719338,
       "sinceBlock": 12858615,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0",
         "$pastUpgrades": [
           [
             "2021-07-19T18:28:58.000Z",
             "0x50f3638d32e0e0dd744862e5ec92444bedc9035031250ad78b4f516a83e5cca7",
-            ["0x886C47563cA045dd3b41F4E13CdD0122D412738c"]
+            ["eth:0x886C47563cA045dd3b41F4E13CdD0122D412738c"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0x4827ecE3114796c9c26459b35B6E23E2A952Ae09"]
+            ["eth:0x4827ecE3114796c9c26459b35B6E23E2A952Ae09"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0xe8608987fee290114f99Cc23C1eABD084C0176E9"]
+            ["eth:0xe8608987fee290114f99Cc23C1eABD084C0176E9"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0xc107d8CCC84C391b0E66A6cE2460Ece69EF1ad26"]
+            ["eth:0xc107d8CCC84C391b0E66A6cE2460Ece69EF1ad26"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0xEde996A9899b570dE70eaDE06Fa69621cE1470Be"]
+            ["eth:0xEde996A9899b570dE70eaDE06Fa69621cE1470Be"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0x676FAFCE73F5a304988C519407AAc06bD117CdD0"]
+            ["eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0"]
           ]
         ],
         "$upgradeCount": 6,
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
       },
       "implementationNames": {
-        "0x6ef406953bac772C2146389ED37846BA3b6086D1": "TransparentUpgradeableProxy",
-        "0x676FAFCE73F5a304988C519407AAc06bD117CdD0": "Linker"
+        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1": "TransparentUpgradeableProxy",
+        "eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0": "Linker"
       }
     },
     {
       "name": "DepositBoxERC721",
-      "address": "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
+      "address": "eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -333,66 +333,66 @@
       "sinceTimestamp": 1626720065,
       "sinceBlock": 12858665,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5",
         "$pastUpgrades": [
           [
             "2021-07-19T18:41:05.000Z",
             "0x05fa2ff5a314d87ee520260b30014cb71a2535c90ade033f733aa894322e76fd",
-            ["0xB6b164FD2b72a5Cf2570BB55b9cd9624DDD23ad7"]
+            ["eth:0xB6b164FD2b72a5Cf2570BB55b9cd9624DDD23ad7"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0x683325e0B5475222f6521e729Dd1f3D566a2fa66"]
+            ["eth:0x683325e0B5475222f6521e729Dd1f3D566a2fa66"]
           ],
           [
             "2021-12-21T05:02:24.000Z",
             "0xe76706c2f940db536f4643b67219ac20d4d650fb17f04532b421ab695e59e1ef",
-            ["0xA99A7b8FBb46cbeb9BF8174B21964ba11399B272"]
+            ["eth:0xA99A7b8FBb46cbeb9BF8174B21964ba11399B272"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0x573383DB7D9b41e2a9Aa180e305d958c0CF9A52e"]
+            ["eth:0x573383DB7D9b41e2a9Aa180e305d958c0CF9A52e"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0x5C6Cbec4dbDbb5176BbfbF68aA33AbF4b49a116c"]
+            ["eth:0x5C6Cbec4dbDbb5176BbfbF68aA33AbF4b49a116c"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0x205fDFa8BB5b035152d9aca24cA32377A98838b8"]
+            ["eth:0x205fDFa8BB5b035152d9aca24cA32377A98838b8"]
           ],
           [
             "2023-01-30T15:33:59.000Z",
             "0xe7b669eef46447925e0078929d6bff80622593c36470eb1b12bb9a5563d57a23",
-            ["0xa66b813b2e32EEb82D4dafB5e784471cdba452E8"]
+            ["eth:0xa66b813b2e32EEb82D4dafB5e784471cdba452E8"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"]
+            ["eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"]
           ]
         ],
         "$upgradeCount": 8,
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
-        "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+        "linker": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
       },
       "implementationNames": {
-        "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d": "TransparentUpgradeableProxy",
-        "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5": "DepositBoxERC721"
+        "eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d": "TransparentUpgradeableProxy",
+        "eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5": "DepositBoxERC721"
       }
     },
     {
       "name": "MessageProxyForMainnet",
-      "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+      "address": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -410,65 +410,65 @@
       "sinceTimestamp": 1626719196,
       "sinceBlock": 12858602,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0x0AE92a5105111281151b980A0aD680b890bf1944",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0x0AE92a5105111281151b980A0aD680b890bf1944",
         "$pastUpgrades": [
           [
             "2021-07-19T18:26:36.000Z",
             "0xe6be237e587bdc9db6dd8f8d8d6cd98e65ca7e940347967a38af12e2cfe9d282",
-            ["0x7B50F0d25a45Fa3e121F51e101099d2d5a6980eD"]
+            ["eth:0x7B50F0d25a45Fa3e121F51e101099d2d5a6980eD"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0xb7512b598d4751B5636573235588E42aAC0eCE02"]
+            ["eth:0xb7512b598d4751B5636573235588E42aAC0eCE02"]
           ],
           [
             "2021-12-21T05:02:24.000Z",
             "0xe76706c2f940db536f4643b67219ac20d4d650fb17f04532b421ab695e59e1ef",
-            ["0xc8663c0bd8238A440C0E272c01b64F509ca4E1F5"]
+            ["eth:0xc8663c0bd8238A440C0E272c01b64F509ca4E1F5"]
           ],
           [
             "2022-02-16T19:20:59.000Z",
             "0x822d7f5407d4c2e9a0e6958377d8ea1e88fd29caaaa26d388b2c098796915a26",
-            ["0x8629703a9903515818C2FeB45a6f6fA5df8Da404"]
+            ["eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"]
           ],
           [
             "2022-02-19T11:09:28.000Z",
             "0xbdff7ad0f309109578f7d24ceaadc6f4e2988f8caba8ded1d4e341746d0c335e",
-            ["0x7F388C2282987Fd7738D4d56Ea047ee05D2dFef7"]
+            ["eth:0x7F388C2282987Fd7738D4d56Ea047ee05D2dFef7"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0x7EeB2Fb952a11a4675717A34bA803D6E95FF24A5"]
+            ["eth:0x7EeB2Fb952a11a4675717A34bA803D6E95FF24A5"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0x8BaC52833c7901182ED972Bfa4A56A2432D79170"]
+            ["eth:0x8BaC52833c7901182ED972Bfa4A56A2432D79170"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0xC261084Dc6475d4980548Bd8C323FF825b3D0C38"]
+            ["eth:0xC261084Dc6475d4980548Bd8C323FF825b3D0C38"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"]
+            ["eth:0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"]
           ],
           [
             "2024-11-27T15:17:59.000Z",
             "0x0b3d111d1bb272489d650a99c3bb9cae63a18bc85b51b76bf8d2b49e9fedbfc7",
-            ["0x0AE92a5105111281151b980A0aD680b890bf1944"]
+            ["eth:0x0AE92a5105111281151b980A0aD680b890bf1944"]
           ]
         ],
         "$upgradeCount": 10,
         "CHAIN_CONNECTOR_ROLE": "0x2785f35fe7d8743aa971942d8474737bb31895d396eff2cc688a481e0221e191",
-        "communityPool": "0x588801cA36558310D91234aFC2511502282b1621",
+        "communityPool": "eth:0x588801cA36558310D91234aFC2511502282b1621",
         "CONSTANT_SETTER_ROLE": "0x96e3fc3be15159903e053027cff8a23f39a990e0194abcd8ac1cf1b355b8b93c",
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXTRA_CONTRACT_REGISTRAR_ROLE": "0x6155b5aac15ce9aa193c0527a6f43be0a36a7e2e7496c2b615c0e5f922842773",
         "gasLimit": 1000000,
@@ -482,18 +482,18 @@
         "version": "2.2.0"
       },
       "implementationNames": {
-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404": "TransparentUpgradeableProxy",
-        "0x0AE92a5105111281151b980A0aD680b890bf1944": "MessageProxyForMainnet"
+        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404": "TransparentUpgradeableProxy",
+        "eth:0x0AE92a5105111281151b980A0aD680b890bf1944": "MessageProxyForMainnet"
       }
     },
     {
-      "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
+      "address": "eth:0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DepositBoxERC20",
-      "address": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+      "address": "eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -503,72 +503,72 @@
       "sinceTimestamp": 1626719900,
       "sinceBlock": 12858653,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788",
         "$pastUpgrades": [
           [
             "2021-07-19T18:38:20.000Z",
             "0xe3fa6660277c14675b94b8b0d666836ae44df0f11d627ee6d017315ea8232383",
-            ["0x28bb5918c37F8170D12C211Ae924bF02A7DF8CA4"]
+            ["eth:0x28bb5918c37F8170D12C211Ae924bF02A7DF8CA4"]
           ],
           [
             "2021-09-23T19:13:19.000Z",
             "0xb28aad86a8c28fa44f4fa54cec9324e3b4723059b08003272c84d233a20a5e1a",
-            ["0xD0aEc35561751FA11e622532383f5aAe4b58F66e"]
+            ["eth:0xD0aEc35561751FA11e622532383f5aAe4b58F66e"]
           ],
           [
             "2021-12-21T05:02:24.000Z",
             "0xe76706c2f940db536f4643b67219ac20d4d650fb17f04532b421ab695e59e1ef",
-            ["0x0c02d198dd84582FA319dB9d53158C4a21AF3D09"]
+            ["eth:0x0c02d198dd84582FA319dB9d53158C4a21AF3D09"]
           ],
           [
             "2022-04-18T22:17:20.000Z",
             "0xd4e9c64a551783e8ed585b01b61348d111b242c985b79629ea5f02c3f74dc0c2",
-            ["0x0209B161D99E121C026697F6C7558905a9bD7089"]
+            ["eth:0x0209B161D99E121C026697F6C7558905a9bD7089"]
           ],
           [
             "2022-05-24T20:26:27.000Z",
             "0xdbf30d230420116b9ee51a527df5f1d00a4b1c729d912f67ab3431842cbef1a8",
-            ["0xBDA6d5ced98156377A9E3f60eadc0424b2934D19"]
+            ["eth:0xBDA6d5ced98156377A9E3f60eadc0424b2934D19"]
           ],
           [
             "2022-07-01T23:44:45.000Z",
             "0x652cc6955b243a7a55658e5cf88f0d354c89c0233e8ad8831352ac67edacf096",
-            ["0x1419fE9A82741fe6d9Ab27Fd7e007810a3c1896b"]
+            ["eth:0x1419fE9A82741fe6d9Ab27Fd7e007810a3c1896b"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0x4B4192649E9450f329dD36F56a81C08aD0c12c02"]
+            ["eth:0x4B4192649E9450f329dD36F56a81C08aD0c12c02"]
           ],
           [
             "2023-01-30T15:33:59.000Z",
             "0xe7b669eef46447925e0078929d6bff80622593c36470eb1b12bb9a5563d57a23",
-            ["0x778B105215e59e4731CcBDcB0A54C367FD3897a1"]
+            ["eth:0x778B105215e59e4731CcBDcB0A54C367FD3897a1"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"]
+            ["eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"]
           ]
         ],
         "$upgradeCount": 9,
         "ARBITER_ROLE": "0xbb08418a67729a078f87bbc8d02a770929bb68f5bfdf134ae2ead6ed38e2f4ae",
-        "contractManagerOfSkaleManager": "0xC04A10Fd5e6513242558f47331568aBD6185a310",
+        "contractManagerOfSkaleManager": "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
-        "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+        "linker": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
       },
       "implementationNames": {
-        "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669": "TransparentUpgradeableProxy",
-        "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788": "DepositBoxERC20"
+        "eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669": "TransparentUpgradeableProxy",
+        "eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788": "DepositBoxERC20"
       }
     },
     {
       "name": "DepositBoxERC721WithMetadata",
-      "address": "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
+      "address": "eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
@@ -578,46 +578,46 @@
       "sinceTimestamp": 1650021217,
       "sinceBlock": 14589619,
       "values": {
-        "$admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
-        "$implementation": "0xF99F446340483C5d9D63697a60232ECb9274E1e7",
+        "$admin": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+        "$implementation": "eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7",
         "$pastUpgrades": [
           [
             "2022-04-15T11:13:37.000Z",
             "0x32999bee93f7f647dd8f6df554757497d1f36263fb5965a2636b6170f995bbf4",
-            ["0x584cc3A9305867E30594647872cB5257E6769C1a"]
+            ["eth:0x584cc3A9305867E30594647872cB5257E6769C1a"]
           ],
           [
             "2022-11-30T10:30:23.000Z",
             "0x53217efab58e401cbee637a7f394a3c22d037016a6f38fb2ed124cc71bdfe0b3",
-            ["0xCe4ceF453a2D7071B845e36a2E1bf096fba6eEeA"]
+            ["eth:0xCe4ceF453a2D7071B845e36a2E1bf096fba6eEeA"]
           ],
           [
             "2023-01-30T15:33:59.000Z",
             "0xe7b669eef46447925e0078929d6bff80622593c36470eb1b12bb9a5563d57a23",
-            ["0x858b1F991F248Dc150cE2B839d3d0d71597dBF68"]
+            ["eth:0x858b1F991F248Dc150cE2B839d3d0d71597dBF68"]
           ],
           [
             "2023-06-22T10:42:11.000Z",
             "0x8f9002c78a635798016c2423c1a312468a5adc7af1586cdec327f2882bac0cf5",
-            ["0xF99F446340483C5d9D63697a60232ECb9274E1e7"]
+            ["eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7"]
           ]
         ],
         "$upgradeCount": 4,
-        "contractManagerOfSkaleManager": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
+        "contractManagerOfSkaleManager": "eth:0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSIT_BOX_MANAGER_ROLE": "0xadc0611617a946881d948c7506bdf0975adbe0cfb172896a62eb6a75f21f2ff9",
-        "linker": "0x6ef406953bac772C2146389ED37846BA3b6086D1",
+        "linker": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
         "LINKER_ROLE": "0x733bac3dca102687aa08c854c5f9067fc424f98fd8e90e41ad6b73aecc59a4fd",
-        "messageProxy": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+        "messageProxy": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
       },
       "implementationNames": {
-        "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986": "TransparentUpgradeableProxy",
-        "0xF99F446340483C5d9D63697a60232ECb9274E1e7": "DepositBoxERC721WithMetadata"
+        "eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986": "TransparentUpgradeableProxy",
+        "eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7": "DepositBoxERC721WithMetadata"
       }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
+      "address": "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627",
       "type": "Contract",
       "sourceHashes": [
         "0x31b987ba8db4fc147856ec1375d9df4f40d58c4dc97e16be5b38ee2e3c3cc6f9"
@@ -669,24 +669,24 @@
       "sinceBlock": 12858428,
       "values": {
         "$immutable": true,
-        "owner": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
+        "owner": "eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
       },
       "implementationNames": {
-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627": "ProxyAdmin"
+        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627": "ProxyAdmin"
       }
     },
     {
-      "address": "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
+      "address": "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e",
+      "address": "eth:0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
+      "address": "eth:0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1263,5 +1263,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xf943743e089980b8c8fc70d09b4d2ba946e2a2d58a53b1a19947e3ba6cd909af"
+  "permissionsConfigHash": "0xd8b37091887fca78350b4abd61c228921e75882b22102dfc00f1adc2eee83dc8"
 }

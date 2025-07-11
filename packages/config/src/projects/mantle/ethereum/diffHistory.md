@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xac5ec88b8b1c30c96270d69819c79ce8bbb7cc81
+
+# Diff at Thu, 10 Jul 2025 08:13:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22273219
+- current block number: 22273219
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273219 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354)
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354)
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5f8bfcb7543ffa28f12259565d47b15b610d1e79
 
 # Diff at Fri, 04 Jul 2025 12:19:08 GMT:

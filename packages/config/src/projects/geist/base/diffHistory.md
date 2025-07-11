@@ -1,3 +1,213 @@
+Generated with discovered.json: 0x2e508b54fc2bbf545a1977ce7c407397241d19c7
+
+# Diff at Thu, 10 Jul 2025 08:12:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 31729291
+- current block number: 31729291
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 31729291 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x109b5d31a5D431B856Ae30E121A1e04302bA9872)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x327b96a94763c50D5EC56D79a0324f5eb9527306)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Inbox (0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
+-   Status: DELETED
+    contract SequencerInbox (0x400f7c5DaC37aAEe3cE007e43Db54424414743f5)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x55c6253DB419EDaE4A3d86e44064a4A5f1422751)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x696FC111c7a3E31951426660a0B1da9396056a29)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChallengeManager (0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x9464dC1403b83432e573f4ff20ba4aF58De59226)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0x9F904Fea0efF79708B37B99960e05900fE310A8E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorUtils (0xa51F58cdE1955754329E071626C7e74d860C0406)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xbB13eB1C56cf1408f657c6f3d56eFf188665B896)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x109b5d31a5D431B856Ae30E121A1e04302bA9872)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x327b96a94763c50D5EC56D79a0324f5eb9527306)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x32AB85A3F0C702EbE74f73C5934b7Fb8452B492f)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x400f7c5DaC37aAEe3cE007e43Db54424414743f5)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x55c6253DB419EDaE4A3d86e44064a4A5f1422751)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x696FC111c7a3E31951426660a0B1da9396056a29)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x7cF0a5D0211AC30365bA8C1cB8CFD4caF64b2D60)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x92BD2232110BEd46f1d65f1FA0916f52443DFCa3)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x9464dC1403b83432e573f4ff20ba4aF58De59226)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x95E613a501a0AaB5a1C5Cbe682B29d4d300EAc3B)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x9F904Fea0efF79708B37B99960e05900fE310A8E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0xa51F58cdE1955754329E071626C7e74d860C0406)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xaDD83738fd8a1cdCccab49e761F36ED1C93805FD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xbB13eB1C56cf1408f657c6f3d56eFf188665B896)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
 Generated with discovered.json: 0x439c7e41a33b65853bce6900eec6e2c285959392
 
 # Diff at Wed, 18 Jun 2025 11:59:40 GMT:

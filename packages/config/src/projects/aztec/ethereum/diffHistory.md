@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x07718184ed83e9fc5344d40d2e0df1e0ba230cfb
+
+# Diff at Thu, 10 Jul 2025 08:13:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22466421
+- current block number: 22466421
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22466421 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734)
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+```
+
+```diff
+-   Status: DELETED
+    contract TurboVerifier (0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8)
+    +++ description: Turbo Plonk ZK verifier.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    EOA FirstAnvilAddress (0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734)
+    +++ description: Contract responsible for collecting transaction fees and reimbursing gas to whitelisted Rollup Providers.
+```
+
+```diff
++   Status: CREATED
+    contract TurboVerifier (0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8)
+    +++ description: Turbo Plonk ZK verifier.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    EOA FirstAnvilAddress (0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd5d524abf4190e6b2177d7f54e1226967efb6bfe
 
 # Diff at Wed, 28 May 2025 08:03:21 GMT:

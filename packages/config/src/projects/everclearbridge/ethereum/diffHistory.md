@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xfa1bbb927da08c3bcd5371112b7a180a2b3ce155
+
+# Diff at Thu, 10 Jul 2025 08:15:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22397509
+- current block number: 22397509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397509 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FeeAdapter (0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EverclearSpokeV4 (0xa05A3380889115bf313f1Db9d5f335157Be4D816)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract XERC20Module (0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeAdapter (0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EverclearSpokeV4 (0xa05A3380889115bf313f1Db9d5f335157Be4D816)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XERC20Module (0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa90e2af0427811d2f8db992d5f2e7e49cd48cf7d
 
 # Diff at Fri, 04 Jul 2025 12:18:59 GMT:

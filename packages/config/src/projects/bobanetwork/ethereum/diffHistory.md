@@ -1,3 +1,213 @@
+Generated with discovered.json: 0x2b2a3715c0c86ad6e469787c87520a39441d2749
+
+# Diff at Thu, 10 Jul 2025 08:13:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22823822
+- current block number: 22823822
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823822 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x4e27966e7D3727bE584d32081fc341321B047bF6)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+-   Status: DELETED
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal2 (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e)
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract AnchorStateRegistry (0xd50395Fd129A40B77119b2994d285Ef1919D7Ac7)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract DisputeGameFactory (0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x4d898F66327Fa050131A17ed17a39EBeCC81f0c3)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x4e27966e7D3727bE584d32081fc341321B047bF6)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal2 (0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e)
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x996ffD627901f10C80A7d4B72A12316D2e77c076)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0xd50395Fd129A40B77119b2994d285Ef1919D7Ac7)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
 Generated with discovered.json: 0x3e8e3161d1c3b8fc997e4f2b924948658dc78fa7
 
 # Diff at Fri, 04 Jul 2025 12:18:55 GMT:

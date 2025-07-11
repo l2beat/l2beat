@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x87178beb7b206badc0e2d9802c7af116ce67ad2e
+
+# Diff at Thu, 10 Jul 2025 08:13:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21322782
+- current block number: 21322782
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21322782 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TransitionDisputer (0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RollupChain (0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransitionDisputer (0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupChain (0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x80acf39b0d142a2199218e8ba4bdfc41425ec5fc
 
 # Diff at Tue, 04 Mar 2025 10:39:19 GMT:

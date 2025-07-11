@@ -1,3 +1,117 @@
+Generated with discovered.json: 0xdbd86087560c20b5ef3cd9430f364134ed8f1432
+
+# Diff at Thu, 10 Jul 2025 08:14:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockController (0x647489df0673E17dB3163c47d5233EBB6F5cAc70)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1BridgeZap (0x6571d6be3d8460CF5F7d6711Cd9961860029D85F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge Multisig (0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x647489df0673E17dB3163c47d5233EBB6F5cAc70)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1BridgeZap (0x6571d6be3d8460CF5F7d6711Cd9961860029D85F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge Multisig (0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xee8239c1e1d4adc8dbcd71c547478ef1a750b702
 
 # Diff at Fri, 04 Jul 2025 12:19:24 GMT:

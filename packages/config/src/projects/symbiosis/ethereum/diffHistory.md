@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x35b14b64eba40be3aa18ce7e53a7d469756d30c0
+
+# Diff at Thu, 10 Jul 2025 08:14:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22022451
+- current block number: 22022451
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022451 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Multisig (0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MetaRouter (0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MetaRouterGateway (0xfCEF2Fe72413b65d3F393d278A714caD87512bcd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MetaRouter (0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MetaRouterGateway (0xfCEF2Fe72413b65d3F393d278A714caD87512bcd)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4423a6cc3bad8c1e93eb92146a30622dbf4c14a3
 
 # Diff at Fri, 04 Jul 2025 12:19:24 GMT:
