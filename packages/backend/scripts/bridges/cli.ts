@@ -66,7 +66,10 @@ const cmd = command({
     const decoders = protocols.map((p) => p.decoder)
 
     const transfers: (Send | Receive)[] = []
-    const matching: Record<string, Record<string, (Send | Receive)[]>> = {}
+    const matching: Record<
+      string,
+      Record<string, { send: Send[]; receive: Receive[] }>
+    > = {}
 
     for (const r of rpcs) {
       const range = args.range ?? 100
@@ -96,24 +99,38 @@ const cmd = command({
 
       if (transfer.matchingId) {
         if (!protocol[transfer.matchingId]) {
-          protocol[transfer.matchingId] = []
+          protocol[transfer.matchingId] = { send: [], receive: [] }
         }
-        protocol[transfer.matchingId].push(transfer)
+        switch (transfer.direction) {
+          case 'send':
+            protocol[transfer.matchingId].send.push(transfer)
+            break
+          case 'receive':
+            protocol[transfer.matchingId].receive.push(transfer)
+            break
+        }
       } else {
         if (!protocol['undefined']) {
-          protocol['undefined'] = []
+          protocol['undefined'] = { send: [], receive: [] }
         }
-        protocol['undefined'].push(transfer)
+        switch (transfer.direction) {
+          case 'send':
+            protocol['undefined'].send.push(transfer)
+            break
+          case 'receive':
+            protocol['undefined'].receive.push(transfer)
+            break
+        }
       }
     }
 
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
       for (const [id, mm] of Array.from(Object.entries(m))) {
-        if (mm.length < 2) continue
+        if (mm.send.length === 0 || mm.receive.length === 0) continue
 
         logger.info(`${protocol} ID: ${id}`)
 
-        for (const t of mm) {
+        for (const t of [...mm.send, ...mm.receive]) {
           const getTxUrl = CHAINS.find(
             (c) => c.shortName === t.token.split(':')[0],
           )?.getTxUrl
@@ -135,6 +152,63 @@ const cmd = command({
       const receive = transfers.filter(
         (t) => t.protocol === protocol && t.direction === 'receive',
       )
+      const matchedBreakdown: Record<string, number> = {}
+      Object.entries(m).forEach(([id, match]) => {
+        if (
+          id === 'undefined' ||
+          match.send.length === 0 ||
+          match.receive.length === 0
+        )
+          return
+
+        match.send.forEach((sendTx) => {
+          match.receive.forEach((receiveTx) => {
+            const senderChain = sendTx.token.split(':')[0]
+            const receiverChain = receiveTx.token.split(':')[0]
+            const pairKey = `${senderChain} -> ${receiverChain}`
+
+            matchedBreakdown[pairKey] = (matchedBreakdown[pairKey] || 0) + 1
+          })
+        })
+      })
+
+      const unmatchedBreakdown: Record<string, number> = {}
+
+      Object.entries(m).forEach(([id, match]) => {
+        if (id === 'undefined') return
+        if (match.send.length > 0 && match.receive.length === 0) {
+          match.send.forEach((sendTx) => {
+            const senderChain = sendTx.token.split(':')[0]
+            const pairKey = `${senderChain} -> X`
+            unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+          })
+        }
+      })
+
+      Object.entries(m).forEach(([id, match]) => {
+        if (id === 'undefined') return
+        if (match.send.length === 0 && match.receive.length > 0) {
+          match.receive.forEach((receiveTx) => {
+            const receiverChain = receiveTx.token.split(':')[0]
+            const pairKey = `X -> ${receiverChain}`
+            unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+          })
+        }
+      })
+
+      if (m['undefined']) {
+        m['undefined'].send.forEach((sendTx) => {
+          const senderChain = sendTx.token.split(':')[0]
+          const pairKey = `${senderChain} -> X`
+          unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+        })
+
+        m['undefined'].receive.forEach((receiveTx) => {
+          const receiverChain = receiveTx.token.split(':')[0]
+          const pairKey = `X -> ${receiverChain}`
+          unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+        })
+      }
 
       logger.info(protocol, {
         send: {
@@ -162,11 +236,20 @@ const cmd = command({
           ),
         },
         matched: {
-          count: Object.entries(m).filter(([_, m]) => m.length > 1).length,
+          count: Object.entries(m).filter(
+            ([_, m]) => m.send.length > 0 && m.receive.length > 0,
+          ).length,
+          breakdown: matchedBreakdown,
         },
-        unmatched:
-          Object.entries(m).filter(([_, m]) => m.length === 1).length +
-          (m['undefined']?.length ?? 0),
+        unmatched: {
+          count:
+            Object.entries(m).filter(
+              ([_, m]) => m.send.length === 0 || m.receive.length === 0,
+            ).length +
+            (m['undefined']?.send.length ?? 0) +
+            (m['undefined']?.receive.length ?? 0),
+          breakdown: unmatchedBreakdown,
+        },
       })
     }
     process.exit(0)
