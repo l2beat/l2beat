@@ -2,7 +2,6 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "extends": { "type": "string" },
     "canActIndependently": { "type": "boolean" },
     "ignoreDiscovery": { "type": "boolean" },
     "proxyType": {
@@ -104,480 +103,445 @@
             ]
           },
           "handler": {
-            "$ref": "#/definitions/DiscoveryContractField/properties/handler"
-          },
-          "template": {
-            "$ref": "#/definitions/DiscoveryContractField/properties/template"
-          },
-          "copy": {
-            "$ref": "#/definitions/DiscoveryContractField/properties/copy"
-          },
-          "edit": {
-            "$ref": "#/definitions/DiscoveryContractField/properties/edit"
-          }
-        },
-        "additionalProperties": false
-      }
-    }
-  },
-  "additionalProperties": false,
-  "definitions": {
-    "UserHandlerDefinition": {
-      "anyOf": [
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "storage" },
-            "slot": {
-              "anyOf": [
-                {
-                  "anyOf": [
-                    { "type": "integer", "minimum": 0 },
-                    { "type": "string", "pattern": "^(0x)?[a-f\\d]*$" },
-                    { "type": "string", "pattern": "^([1-9]\\d*|0)$" },
-                    {
-                      "type": "string",
-                      "pattern": "^\\{\\{\\s*[$a-z_][$.a-z\\d_]*\\s*\\}\\}$"
-                    }
-                  ]
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0"
-                  },
-                  "minItems": 1
-                }
-              ]
-            },
-            "offset": {
-              "anyOf": [
-                { "type": "integer", "minimum": 0 },
-                {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/2"
-                },
-                {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/3"
-                }
-              ]
-            },
-            "returnType": {
-              "type": "string",
-              "enum": ["address", "bytes", "number", "uint8"]
-            },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type", "slot"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "dynamicArray" },
-            "slot": {
-              "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0"
-            },
-            "returnType": { "type": "string", "enum": ["address"] },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type", "slot"],
-          "additionalProperties": false
-        },
-        { "$ref": "#/definitions/UserHandlerDefinition/anyOf/1" },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "array" },
-            "indices": {
-              "anyOf": [
-                { "type": "array", "items": { "type": "number" } },
-                { "type": "string" }
-              ]
-            },
-            "method": { "type": "string" },
-            "length": {
-              "anyOf": [
-                { "type": "integer", "minimum": 0 },
-                {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/0/properties/slot/anyOf/0/anyOf/3"
-                }
-              ]
-            },
-            "maxLength": { "type": "integer", "minimum": 0 },
-            "startIndex": { "type": "integer", "minimum": 0 },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "call" },
-            "method": { "type": "string" },
-            "args": {
-              "type": "array",
-              "items": { "type": ["string", "number"] }
-            },
-            "ignoreRelative": { "type": "boolean" },
-            "expectRevert": { "type": "boolean" },
-            "address": { "type": "string" }
-          },
-          "required": ["type", "args"],
-          "additionalProperties": false
-        },
-        {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "type": { "type": "string", "const": "event" },
-                "select": {
-                  "anyOf": [
-                    { "type": "string" },
-                    { "type": "array", "items": { "type": "string" } }
-                  ]
-                },
-                "groupBy": { "type": "string" },
-                "ignoreRelative": { "type": "boolean" },
-                "set": {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "event": {
-                          "anyOf": [
-                            { "type": "string" },
-                            {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0/properties/event/anyOf/0"
-                              }
-                            }
-                          ]
-                        },
-                        "where": {}
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "storage" },
+                  "slot": {
+                    "anyOf": [
+                      {
+                        "anyOf": [
+                          { "type": "number" },
+                          { "type": "string" },
+                          { "type": "string" },
+                          { "type": "string" }
+                        ]
                       },
-                      "required": ["event"],
-                      "additionalProperties": false
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
+                      {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            { "type": "number" },
+                            { "type": "string" },
+                            { "type": "string" },
+                            { "type": "string" }
+                          ]
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  },
+                  "offset": {
+                    "anyOf": [
+                      { "type": "number" },
+                      { "type": "string" },
+                      { "type": "string" }
+                    ]
+                  },
+                  "returnType": {
+                    "enum": ["address", "bytes", "number", "uint8"]
+                  },
+                  "ignoreRelative": { "type": "boolean" }
                 },
-                "add": { "not": {} },
-                "remove": { "not": {} }
+                "required": ["type", "slot"]
               },
-              "required": ["type", "set"],
-              "additionalProperties": false
-            },
-            {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/type"
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "dynamicArray" },
+                  "slot": {
+                    "anyOf": [
+                      { "type": "number" },
+                      { "type": "string" },
+                      { "type": "string" },
+                      { "type": "string" }
+                    ]
+                  },
+                  "returnType": { "enum": ["address"] },
+                  "ignoreRelative": { "type": "boolean" }
                 },
-                "select": {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/select"
-                },
-                "groupBy": {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/groupBy"
-                },
-                "ignoreRelative": {
-                  "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/ignoreRelative"
-                },
-                "set": { "not": {} },
-                "add": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
-                      }
-                    }
-                  ]
-                },
-                "remove": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/definitions/UserHandlerDefinition/anyOf/5/anyOf/0/properties/set/anyOf/0"
-                      }
-                    }
-                  ]
-                }
+                "required": ["type", "slot"]
               },
-              "required": ["type", "add"],
-              "additionalProperties": false
-            }
-          ]
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "starkWareNamedStorage" },
-            "tag": { "type": "string" },
-            "returnType": {
-              "type": "string",
-              "enum": ["address", "bytes", "number"]
-            },
-            "ignoreRelative": { "type": "boolean" }
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "array" },
+                  "indices": {
+                    "anyOf": [
+                      { "type": "array", "items": { "type": "number" } },
+                      { "type": "string" }
+                    ]
+                  },
+                  "method": { "type": "string" },
+                  "length": {
+                    "anyOf": [{ "type": "number" }, { "type": "string" }]
+                  },
+                  "maxLength": { "type": "number" },
+                  "startIndex": { "type": "number" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "call" },
+                  "method": { "type": "string" },
+                  "args": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [{ "type": "string" }, { "type": "number" }]
+                    }
+                  },
+                  "ignoreRelative": { "type": "boolean" },
+                  "expectRevert": { "type": "boolean" },
+                  "address": { "type": "string" }
+                },
+                "required": ["type", "args"]
+              },
+              {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": { "const": "event" },
+                      "select": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "array", "items": { "type": "string" } }
+                        ]
+                      },
+                      "groupBy": { "type": "string" },
+                      "ignoreRelative": { "type": "boolean" },
+                      "set": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "event": {
+                                "anyOf": [
+                                  { "type": "string" },
+                                  {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                  }
+                                ]
+                              },
+                              "where": {}
+                            },
+                            "required": ["event"]
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "event": {
+                                  "anyOf": [
+                                    { "type": "string" },
+                                    {
+                                      "type": "array",
+                                      "items": { "type": "string" }
+                                    }
+                                  ]
+                                },
+                                "where": {}
+                              },
+                              "required": ["event"]
+                            }
+                          }
+                        ]
+                      },
+                      "add": {},
+                      "remove": {}
+                    },
+                    "required": ["type", "set"]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": { "const": "event" },
+                      "select": {
+                        "anyOf": [
+                          { "type": "string" },
+                          { "type": "array", "items": { "type": "string" } }
+                        ]
+                      },
+                      "groupBy": { "type": "string" },
+                      "ignoreRelative": { "type": "boolean" },
+                      "set": {},
+                      "add": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "event": {
+                                "anyOf": [
+                                  { "type": "string" },
+                                  {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                  }
+                                ]
+                              },
+                              "where": {}
+                            },
+                            "required": ["event"]
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "event": {
+                                  "anyOf": [
+                                    { "type": "string" },
+                                    {
+                                      "type": "array",
+                                      "items": { "type": "string" }
+                                    }
+                                  ]
+                                },
+                                "where": {}
+                              },
+                              "required": ["event"]
+                            }
+                          }
+                        ]
+                      },
+                      "remove": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "event": {
+                                "anyOf": [
+                                  { "type": "string" },
+                                  {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                  }
+                                ]
+                              },
+                              "where": {}
+                            },
+                            "required": ["event"]
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "event": {
+                                  "anyOf": [
+                                    { "type": "string" },
+                                    {
+                                      "type": "array",
+                                      "items": { "type": "string" }
+                                    }
+                                  ]
+                                },
+                                "where": {}
+                              },
+                              "required": ["event"]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "required": ["type", "add"]
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "starkWareNamedStorage" },
+                  "tag": { "type": "string" },
+                  "returnType": { "enum": ["address", "bytes", "number"] },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type", "tag"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "accessControl" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "pickRoleMembers": { "type": "string" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "scrollAccessControl" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "kintoAccessControl" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "lineaRolesModule" },
+                  "roleNames": {
+                    "type": "object",
+                    "propertyNames": { "type": "string" },
+                    "additionalProperties": { "type": "string" }
+                  },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "constructorArgs" },
+                  "nameArgs": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "eventCount" },
+                  "topics": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [{ "type": "string" }, { "type": "null" }]
+                    }
+                  }
+                },
+                "required": ["type", "topics"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "hardcoded" }, "value": {} },
+                "required": ["type", "value"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "starkWareGovernance" },
+                  "filterBy": { "type": "string" }
+                },
+                "required": ["type", "filterBy"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "layerZeroMultisig" } },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "arbitrumActors" },
+                  "actorType": {
+                    "anyOf": [
+                      { "const": "validator" },
+                      { "const": "batchPoster" }
+                    ]
+                  }
+                },
+                "required": ["type", "actorType"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "arbitrumScheduledTransactions" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "opStackDA" },
+                  "sequencerAddress": { "type": "string" }
+                },
+                "required": ["type", "sequencerAddress"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "opStackSequencerInbox" },
+                  "sequencerAddress": { "type": "string" }
+                },
+                "required": ["type", "sequencerAddress"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "arbitrumSequencerVersion" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "arbitrumDACKeyset" } },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "eip2535Facets" },
+                  "ignoreRelative": { "type": "boolean" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "zksynceraScheduledTransactions" }
+                },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "zksynceraValidators" } },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": { "type": { "const": "orbitPostsBlobs" } },
+                "required": ["type"]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": { "const": "polygoncdkScheduledTransactions" }
+                },
+                "required": ["type"]
+              }
+            ]
           },
-          "required": ["type", "tag"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "accessControl" },
-            "roleNames": {
-              "type": "object",
-              "additionalProperties": { "type": "string" },
-              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
-            },
-            "pickRoleMembers": { "type": "string" },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "scrollAccessControl" },
-            "roleNames": {
-              "type": "object",
-              "additionalProperties": { "type": "string" },
-              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
-            },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "kintoAccessControl" },
-            "roleNames": {
-              "type": "object",
-              "additionalProperties": { "type": "string" },
-              "propertyNames": { "pattern": "^0x[a-f\\d]*$" }
-            },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "lineaRolesModule" },
-            "roleNames": {
-              "type": "object",
-              "additionalProperties": { "type": "string" },
-              "propertyNames": { "pattern": "^0x[a-f\\d]{64}$" }
-            },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "constructorArgs" },
-            "nameArgs": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "eventCount" },
-            "topics": {
-              "type": "array",
-              "items": { "type": ["string", "null"] }
-            }
-          },
-          "required": ["type", "topics"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "hardcoded" },
-            "value": {}
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "starkWareGovernance" },
-            "filterBy": { "type": "string" }
-          },
-          "required": ["type", "filterBy"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "layerZeroMultisig" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "arbitrumActors" },
-            "actorType": {
-              "type": "string",
-              "enum": ["validator", "batchPoster"]
-            }
-          },
-          "required": ["type", "actorType"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "const": "arbitrumScheduledTransactions"
-            }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "opStackDA" },
-            "sequencerAddress": { "type": "string" }
-          },
-          "required": ["type", "sequencerAddress"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "opStackSequencerInbox" },
-            "sequencerAddress": { "type": "string" }
-          },
-          "required": ["type", "sequencerAddress"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "arbitrumSequencerVersion" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "arbitrumDACKeyset" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "eip2535Facets" },
-            "ignoreRelative": { "type": "boolean" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "const": "zksynceraScheduledTransactions"
-            }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "zksynceraValidators" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": { "type": "string", "const": "orbitPostsBlobs" }
-          },
-          "required": ["type"],
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "const": "polygoncdkScheduledTransactions"
-            }
-          },
-          "required": ["type"],
-          "additionalProperties": false
+          "template": { "type": "string" },
+          "copy": { "type": "string" },
+          "edit": {}
         }
-      ]
-    },
-    "Permission": {
-      "type": "string",
-      "enum": [
-        "challenge",
-        "guard",
-        "propose",
-        "sequence",
-        "validate",
-        "disperse",
-        "relayDA",
-        "operateLinea",
-        "fastconfirm",
-        "validateZkStack",
-        "validateBridge",
-        "validateBridge2",
-        "validateBridge3",
-        "relay",
-        "aggregatePolygon",
-        "operateStarknet",
-        "operateStarkEx",
-        "governStarknet",
-        "metisGameCreator",
-        "stateDeleterMetis",
-        "hotValidatorHyperliquid",
-        "coldValidatorHyperliquid",
-        "acrossPropose",
-        "member",
-        "act",
-        "interact",
-        "upgrade"
-      ]
+      }
     },
     "methods": {
       "type": "object",
