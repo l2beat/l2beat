@@ -204,7 +204,7 @@ export class DiscoveryRunner {
           config.name,
           config.chain,
           blockNumber,
-          dependentDiscoveries,
+          dependentDiscoveries ?? {},
           logger,
           configReader,
         )
