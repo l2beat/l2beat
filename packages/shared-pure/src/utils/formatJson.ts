@@ -160,10 +160,7 @@ function wordNestPop(): Word {
 }
 
 function arrayIsConcise(value: unknown[]): boolean {
-  return (
-    value.length > 1 &&
-    value.every((v) => typeof v === 'number' || typeof v === 'bigint')
-  )
+  return value.length > 1 && value.every((v) => typeof v === 'number')
 }
 
 function pushJsonDocument(doc: Word[], value: unknown) {
