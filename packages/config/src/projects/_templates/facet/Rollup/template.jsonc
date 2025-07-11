@@ -1,11 +1,11 @@
-{ 
-    "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-    "description": "Rollup contract for Facet",
-    "ignoreMethods": [
-        "getProposal",
-        "gameOver",
-        "isResolvable",
-        "latestProposals",
-        "needsDefense"
-    ]
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Rollup contract for Facet",
+  "ignoreMethods": [
+    "getProposal",
+    "gameOver",
+    "isResolvable",
+    "latestProposals",
+    "needsDefense"
+  ]
 }

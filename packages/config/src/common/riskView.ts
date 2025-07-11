@@ -66,6 +66,14 @@ export const STATE_ZKP_SN: TableReadyValue = {
   orderHint: Infinity,
 }
 
+export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
+  value: 'ZK fault proofs (SN)',
+  description:
+    'Actors watching the chain can challenge state proposals, and challenged proposals must provide ZK proofs. SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+  sentiment: 'good',
+  orderHint: Infinity,
+}
+
 export const STATE_ZKP_ST: TableReadyValue = {
   value: 'ZK proofs (ST)',
   description:
@@ -521,6 +529,18 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
   }
 }
 
+export function PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
+  delay: number,
+): TableReadyValue {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `Only the whitelisted proposers can propose state roots for recent blocks. Anyone can propose for L2 blocks that are older than ${delayString}.`,
+    sentiment: 'good',
+    orderHint: delay,
+  }
+}
+
 export const PROPOSER_SELF_PROPOSE_ZK: TableReadyValue = {
   value: 'Self propose',
   description:
@@ -698,6 +718,7 @@ export const RISK_VIEW = {
   STATE_FP_INT_ZK,
   STATE_FP_1R_ZK,
   STATE_ZKP_SN,
+  STATE_ZKP_OPTIMISTIC,
   STATE_ZKP_ST,
   STATE_ZKP_ST_SN_WRAP,
   STATE_ZKP_L3,
@@ -748,6 +769,7 @@ export const RISK_VIEW = {
   PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
   PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+  PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   PROPOSER_POS,
