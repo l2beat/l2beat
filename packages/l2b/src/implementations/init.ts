@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
-import { getDiscoveryPaths, readJsonc, toPrettyJson } from '@l2beat/discovery'
-import { type EthereumAddress, withoutUndefinedKeys } from '@l2beat/shared-pure'
+import { getDiscoveryPaths, readJsonc } from '@l2beat/discovery'
+import { type EthereumAddress, formatJson, withoutUndefinedKeys } from '@l2beat/shared-pure'
 
 interface ConfigSkeleton {
   chains?: Record<string, object>
@@ -9,7 +9,7 @@ interface ConfigSkeleton {
   archived?: boolean
 }
 
-export async function initDiscovery(
+export function initDiscovery(
   project: string,
   chain: string,
   initalAddresses: EthereumAddress[],
@@ -31,7 +31,7 @@ export async function initDiscovery(
     initalAddresses,
   )
 
-  const content = await toPrettyJson(config)
+  const content = formatJson(config)
   writeFileSync(configPath, content)
 }
 

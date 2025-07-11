@@ -1,4 +1,5 @@
 import { writeFileSync } from 'fs'
+import { formatJson } from '@l2beat/shared-pure'
 import { type Parser, toJsonSchema, v } from '@l2beat/validate'
 import {
   _ColorConfig,
@@ -16,14 +17,10 @@ import {
   _StructureContract,
   _StructureContractField,
 } from '../src/discovery/config/StructureConfig'
-import { jsonFormat } from '@l2beat/shared-pure'
 
-function generateAndSaveSchema<T>(
-  baseSchema: Parser<T>,
-  filename: string,
-) {
+function generateAndSaveSchema<T>(baseSchema: Parser<T>, filename: string) {
   const schema = toJsonSchema(baseSchema)
-  writeFileSync(filename, jsonFormat(schema))
+  writeFileSync(filename, formatJson(schema))
 }
 
 function main() {
