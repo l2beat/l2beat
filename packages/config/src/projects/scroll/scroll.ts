@@ -9,14 +9,15 @@ import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
-  DA_MODES,ESCROW, 
+  DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
   STATE_ZKP_SN,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'

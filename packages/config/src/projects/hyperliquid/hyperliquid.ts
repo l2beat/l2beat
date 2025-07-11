@@ -91,7 +91,8 @@ export const hyperliquid: Bridge = {
     canonical: true,
     principleOfOperation: {
       name: 'Principle of operation',
-      description: 'Hyperliquid is a DEX with its main bridge implemented as a smart contract on Arbitrum. Deposits in USDC can be locked in the bridge escrow and are picked up by the permissioned node to be used on the platform. Withdrawals are handled by external actors (validators and finalizers). Although the platform with its main bridge on Arbitrum suggests a decentralized appchain setup, there is no proof system or data availability solution that would qualify it as such.',
+      description:
+        'Hyperliquid is a DEX with its main bridge implemented as a smart contract on Arbitrum. Deposits in USDC can be locked in the bridge escrow and are picked up by the permissioned node to be used on the platform. Withdrawals are handled by external actors (validators and finalizers). Although the platform with its main bridge on Arbitrum suggests a decentralized appchain setup, there is no proof system or data availability solution that would qualify it as such.',
       references: [],
       risks: [],
     },

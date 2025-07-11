@@ -40,7 +40,7 @@ export async function decodeChainId(chainId: number): Promise<string> {
   if (entry !== undefined) {
     return entry.name
   }
-    return chainId.toString()
+  return chainId.toString()
 }
 
 const ChainIDResponse = v.array(

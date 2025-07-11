@@ -43,15 +43,15 @@ describe(CelestiaRpcClient.name, () => {
               },
             }
           }
-            return {
-              result: {
-                block: {
-                  header: {
-                    time: mockTimestamp,
-                  },
+          return {
+            result: {
+              block: {
+                header: {
+                  time: mockTimestamp,
                 },
               },
-            }
+            },
+          }
         },
       })
       const rpc = mockClient({ http })
@@ -98,15 +98,15 @@ describe(CelestiaRpcClient.name, () => {
               },
             }
           }
-            return {
-              result: {
-                block: {
-                  header: {
-                    time: mockTimestamp,
-                  },
+          return {
+            result: {
+              block: {
+                header: {
+                  time: mockTimestamp,
                 },
               },
-            }
+            },
+          }
         },
       })
       const rpc = mockClient({ http })

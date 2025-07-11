@@ -5,7 +5,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { DA_BRIDGES, DA_LAYERS, DA_MODES, REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  REASON_FOR_BEING_OTHER,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

@@ -116,7 +116,8 @@ App-specific data can be reconstructed by app clients, which request and assembl
     */
     consensusAlgorithm: {
       name: 'BABE/GRANDPA',
-      description: 'Avail uses the BABE/GRANDPA consensus algorithm. BABE is a block production mechanism that is used to create new blocks in the Avail blockchain. GRANDPA is a finality gadget that is used to finalize blocks.',
+      description:
+        'Avail uses the BABE/GRANDPA consensus algorithm. BABE is a block production mechanism that is used to create new blocks in the Avail blockchain. GRANDPA is a finality gadget that is used to finalize blocks.',
       blockTime: 20, // seconds
       consensusFinality: 60, //seconds
       unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime

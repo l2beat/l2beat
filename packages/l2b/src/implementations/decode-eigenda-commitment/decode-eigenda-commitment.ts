@@ -82,8 +82,12 @@ export async function decodeEigenDACommitment(rpcUrl: string, txHash: string) {
   quorumInfo.forEach((params, i) => {
     console.log(`\nQuorum ${i + 1}:`)
     console.log(`- Quorum Number: ${Number.parseInt(params[0], 16) || 0}`)
-    console.log(`- Adversary Threshold: ${Number.parseInt(params[1], 16) || 0}%`)
-    console.log(`- Confirmation Threshold: ${Number.parseInt(params[2], 16) || 0}%`)
+    console.log(
+      `- Adversary Threshold: ${Number.parseInt(params[1], 16) || 0}%`,
+    )
+    console.log(
+      `- Confirmation Threshold: ${Number.parseInt(params[2], 16) || 0}%`,
+    )
     console.log(`- Chunk Length: ${Number.parseInt(params[3], 16) || 0}`)
   })
 }

@@ -437,7 +437,8 @@ export const degate3: ScalingProject = {
           'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
         ),
         discovery.getContractDetails('DefaultDepositContract', {
-          description: 'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
+          description:
+            'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
           ...timelockUpgrades2,
         }),
         discovery.getContractDetails(

@@ -55,11 +55,11 @@ export class MulticallClient {
     if (!config || config.sinceBlock > blockNumber) {
       return this.executeIndividual(requests, blockNumber)
     }
-      const batches = toBatches(requests, config.batchSize)
-      const batchedResults = await Promise.all(
-        batches.map((batch) => this.executeBatch(batch, blockNumber, config)),
-      )
-      return batchedResults.flat()
+    const batches = toBatches(requests, config.batchSize)
+    const batchedResults = await Promise.all(
+      batches.map((batch) => this.executeBatch(batch, blockNumber, config)),
+    )
+    return batchedResults.flat()
   }
 
   private async executeIndividual(

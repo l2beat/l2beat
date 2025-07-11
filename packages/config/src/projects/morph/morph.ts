@@ -8,12 +8,14 @@ import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
-  DA_MODES,ESCROW, 
+  DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
-  FRONTRUNNING_RISK,REASON_FOR_BEING_OTHER, 
+  FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'

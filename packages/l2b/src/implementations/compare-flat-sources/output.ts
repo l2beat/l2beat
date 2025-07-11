@@ -110,18 +110,24 @@ export function colorMap(value: number, multiplier = 1): string {
 
   if (value < 0.125 * multiplier) {
     return chalk.grey(valueString)
-  }if (value < 0.25 * multiplier) {
+  }
+  if (value < 0.25 * multiplier) {
     return chalk.red(valueString)
-  }if (value < 0.375 * multiplier) {
+  }
+  if (value < 0.375 * multiplier) {
     return chalk.redBright(valueString)
-  }if (value < 0.5 * multiplier) {
+  }
+  if (value < 0.5 * multiplier) {
     return chalk.magenta(valueString)
-  }if (value < 0.625 * multiplier) {
+  }
+  if (value < 0.625 * multiplier) {
     return chalk.magentaBright(valueString)
-  }if (value < 0.75 * multiplier) {
+  }
+  if (value < 0.75 * multiplier) {
     return chalk.yellow(valueString)
-  }if (value < 0.875 * multiplier) {
+  }
+  if (value < 0.875 * multiplier) {
     return chalk.yellowBright(valueString)
   }
-    return chalk.greenBright(valueString)
+  return chalk.greenBright(valueString)
 }

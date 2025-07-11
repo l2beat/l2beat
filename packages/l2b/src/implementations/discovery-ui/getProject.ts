@@ -1,13 +1,15 @@
 import {
   type ConfigReader,
-  type ConfigRegistry,type ContractConfig, 
+  type ConfigRegistry,
+  type ContractConfig,
   type DiscoveryOutput,
-  type EntryParameters,get$Implementations, 
+  type EntryParameters,
+  get$Implementations,
   getChainShortName,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
-  type TemplateService
+  type TemplateService,
 } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
 import { EthereumAddress } from '@l2beat/shared-pure'

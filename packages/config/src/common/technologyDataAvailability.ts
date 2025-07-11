@@ -41,9 +41,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKNET_ON_CHAIN = (
-  usesBlobs = false,
-): ProjectTechnologyChoice => {
+const STARKNET_ON_CHAIN = (usesBlobs = false): ProjectTechnologyChoice => {
   const blobOr = usesBlobs ? 'blob or ' : ''
   return {
     name: 'All data required to reconstruct rollup state is published on chain',

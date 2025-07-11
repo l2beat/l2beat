@@ -3,7 +3,6 @@ To send messages you need to create a Discord Bot first and give it appropriate 
 https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
-
 import { RateLimiter } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import type { RequestInit } from 'node-fetch'

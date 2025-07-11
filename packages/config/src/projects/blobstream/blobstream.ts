@@ -32,7 +32,8 @@ export const blobstream: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: 'The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.',
+    description:
+      'The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.',
     links: {
       documentation: [
         'https://docs.celestia.org/developers/blobstream',

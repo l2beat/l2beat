@@ -113,12 +113,12 @@ export class LocalStorage implements DataStorage {
           : new Map(),
       }
     }
-      return {
-        prices: new Map(),
-        amounts: new Map(),
-        blocks: new Map(),
-        addresses: new Map(),
-      }
+    return {
+      prices: new Map(),
+      amounts: new Map(),
+      blocks: new Map(),
+      addresses: new Map(),
+    }
   }
 
   private saveToFile() {

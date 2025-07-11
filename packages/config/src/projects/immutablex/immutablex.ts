@@ -3,13 +3,16 @@ import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
-  DA_MODES,DaCommitteeSecurityRisk, DaEconomicSecurityRisk, 
+  DA_MODES,
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
   EXITS,
   FORCE_TRANSACTIONS,
-  OPERATOR,REASON_FOR_BEING_OTHER, 
+  OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'

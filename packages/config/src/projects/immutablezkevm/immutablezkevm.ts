@@ -8,8 +8,9 @@ import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
-  DA_MODES,REASON_FOR_BEING_OTHER, 
-  RISK_VIEW
+  DA_MODES,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

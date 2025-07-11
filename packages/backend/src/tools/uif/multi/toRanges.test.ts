@@ -7,7 +7,11 @@ describe(toRanges.name, () => {
   it('empty', () => {
     const ranges = toRanges([])
     expect(ranges).toEqual([
-      { from: Number.NEGATIVE_INFINITY, to: Number.POSITIVE_INFINITY, configurations: [] },
+      {
+        from: Number.NEGATIVE_INFINITY,
+        to: Number.POSITIVE_INFINITY,
+        configurations: [],
+      },
     ])
   })
 
@@ -15,7 +19,11 @@ describe(toRanges.name, () => {
     const ranges = toRanges([saved('a', 100, null)])
     expect(ranges).toEqual([
       { from: Number.NEGATIVE_INFINITY, to: 99, configurations: [] },
-      { from: 100, to: Number.POSITIVE_INFINITY, configurations: [actual('a', 100, null)] },
+      {
+        from: 100,
+        to: Number.POSITIVE_INFINITY,
+        configurations: [actual('a', 100, null)],
+      },
     ])
   })
 

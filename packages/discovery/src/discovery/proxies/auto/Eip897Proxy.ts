@@ -14,7 +14,8 @@ async function getProxyType(
   )
   if (type?.eq(1)) {
     return 1
-  }if (type?.eq(2)) {
+  }
+  if (type?.eq(2)) {
     return 2
   }
 }

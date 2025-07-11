@@ -28,17 +28,17 @@ function reencodeWithReturnType(
     assert(firstElement !== undefined)
     return reencodeType(value, firstElement.type)
   }
-    assert(Array.isArray(value))
-    const names = type.elements.map((o) => o.name)
-    const entries = names.map((name, i) => {
-      const element = value[i]
-      const outputElement = type.elements[i]
-      assert(element !== undefined)
-      assert(outputElement !== undefined)
-      return [name, reencodeType(element, outputElement.type)]
-    })
+  assert(Array.isArray(value))
+  const names = type.elements.map((o) => o.name)
+  const entries = names.map((name, i) => {
+    const element = value[i]
+    const outputElement = type.elements[i]
+    assert(element !== undefined)
+    assert(outputElement !== undefined)
+    return [name, reencodeType(element, outputElement.type)]
+  })
 
-    return asObjectIfValidKeys(entries)
+  return asObjectIfValidKeys(entries)
 }
 
 function reencodeType(value: ContractValue, paramType: Type): ContractValue {
@@ -101,5 +101,5 @@ function asObjectIfValidKeys(
   if (entries.every((e) => e[0] !== undefined)) {
     return Object.fromEntries(entries)
   }
-    return entries.map((e) => e[1] as ContractValue)
+  return entries.map((e) => e[1] as ContractValue)
 }

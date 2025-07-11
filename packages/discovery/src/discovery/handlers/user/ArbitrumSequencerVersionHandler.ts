@@ -144,14 +144,17 @@ export class ArbitrumSequencerVersionHandler implements Handler {
   decodeCalldata(calldata: string): utils.Result {
     if (calldata.startsWith(addSequencerBatchV1SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV1, calldata)
-    }if (calldata.startsWith(addSequencerBatchV2SigHash)) {
+    }
+    if (calldata.startsWith(addSequencerBatchV2SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV2, calldata)
-    }if (calldata.startsWith(addSequencerBatchV3SigHash)) {
+    }
+    if (calldata.startsWith(addSequencerBatchV3SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV3, calldata)
-    }if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
+    }
+    if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
       return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
     }
-      throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
+    throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
   }
 
   async getLastEventWithTxInput(

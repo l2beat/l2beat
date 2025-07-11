@@ -106,7 +106,7 @@ export class LineaRolesModuleHandler implements Handler {
             if ('targetAddress' in e) {
               return e.targetAddress
             }
-              return undefined
+            return undefined
           })
           .filter(notUndefined),
       ),
@@ -517,13 +517,15 @@ function parseRoleLog(
       targetAddress: EthereumAddress(event.args.targetAddress as string),
       execOption: decodeExecOptions(event.args.options as number),
     } as const
-  }if (event.name === 'RevokeTarget' || event.name === 'ScopeTarget') {
+  }
+  if (event.name === 'RevokeTarget' || event.name === 'ScopeTarget') {
     return {
       type: event.name,
       role: event.args.role as number,
       targetAddress: EthereumAddress(event.args.targetAddress as string),
     } as const
-  }if (event.name === 'ScopeAllowFunction') {
+  }
+  if (event.name === 'ScopeAllowFunction') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -534,7 +536,8 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'ScopeRevokeFunction') {
+  }
+  if (event.name === 'ScopeRevokeFunction') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -544,7 +547,8 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'ScopeFunction') {
+  }
+  if (event.name === 'ScopeFunction') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -559,7 +563,8 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'ScopeFunctionExecutionOptions') {
+  }
+  if (event.name === 'ScopeFunctionExecutionOptions') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -570,7 +575,8 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'ScopeParameter') {
+  }
+  if (event.name === 'ScopeParameter') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -584,7 +590,8 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'ScopeParameterAsOneOf') {
+  }
+  if (event.name === 'ScopeParameterAsOneOf') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -597,7 +604,8 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'UnscopeParameter') {
+  }
+  if (event.name === 'UnscopeParameter') {
     return {
       type: event.name,
       role: event.args.role as number,
@@ -608,14 +616,16 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  }if (event.name === 'AssignRoles') {
+  }
+  if (event.name === 'AssignRoles') {
     return {
       type: event.name,
       module: EthereumAddress(event.args.module as string),
       roles: event.args.roles as number[],
       memberOf: event.args.memberOf as boolean[],
     } as const
-  }if (event.name === 'SetDefaultRole') {
+  }
+  if (event.name === 'SetDefaultRole') {
     return {
       type: event.name,
       module: EthereumAddress(event.args.module as string),

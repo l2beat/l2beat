@@ -197,7 +197,9 @@ export function DATA_EXTERNAL_DAC(DAC?: {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
     sentiment: getDacSentiment(DAC),
-    orderHint: DAC ? DAC.requiredSignatures / DAC.membersCount : Number.NEGATIVE_INFINITY,
+    orderHint: DAC
+      ? DAC.requiredSignatures / DAC.membersCount
+      : Number.NEGATIVE_INFINITY,
   }
 }
 

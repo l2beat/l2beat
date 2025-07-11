@@ -112,7 +112,9 @@ async function getDecimals(
 
   logger.assert(decimals !== '0x', 'Could not find decimals for token')
 
-  return Number.parseInt(CODER.decodeFunctionResult('decimals', decimals)[0] as string)
+  return Number.parseInt(
+    CODER.decodeFunctionResult('decimals', decimals)[0] as string,
+  )
 }
 
 function getImageUrl(

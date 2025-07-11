@@ -44,9 +44,11 @@ export function toAddressArray(
 ): EthereumAddress[] {
   if (Array.isArray(value)) {
     return value.flatMap((v) => toAddressArray(v))
-  }if (typeof value === 'object') {
+  }
+  if (typeof value === 'object') {
     return Object.values(value).flatMap((v) => toAddressArray(v))
-  }if (typeof value === 'string') {
+  }
+  if (typeof value === 'string') {
     try {
       return [EthereumAddress(value)]
     } catch {

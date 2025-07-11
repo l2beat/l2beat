@@ -11,7 +11,8 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  OPERATOR,REASON_FOR_BEING_OTHER 
+  OPERATOR,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'

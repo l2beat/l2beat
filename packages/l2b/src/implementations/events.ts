@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { get$Implementations, type IProvider, ProxyDetector } from '@l2beat/discovery'
+import {
+  get$Implementations,
+  type IProvider,
+  ProxyDetector,
+} from '@l2beat/discovery'
 import {
   assert,
   type EthereumAddress,

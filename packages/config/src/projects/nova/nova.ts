@@ -1,8 +1,12 @@
 import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
-import { 
+import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,ESCROW, RISK_VIEW, UPGRADE_MECHANISM, } from '../../common'
+  DaUpgradeabilityRisk,
+  ESCROW,
+  RISK_VIEW,
+  UPGRADE_MECHANISM,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'

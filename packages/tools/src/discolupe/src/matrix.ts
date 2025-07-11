@@ -43,7 +43,7 @@ export function toVisibleRows(
     if (column?.sortComparator !== undefined) {
       return column.sortComparator(r1.project, r2.project)
     }
-      return defaultSortComparator(r1, r2, columnIndex)
+    return defaultSortComparator(r1, r2, columnIndex)
   })
 
   if (sort.direction === 'desc') {

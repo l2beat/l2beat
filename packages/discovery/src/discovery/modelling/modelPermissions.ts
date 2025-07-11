@@ -11,7 +11,10 @@ import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
-import { generateClingoFromModelLp, generateClingoFromPermissionsConfig } from './generateClingo'
+import {
+  generateClingoFromModelLp,
+  generateClingoFromPermissionsConfig,
+} from './generateClingo'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
 import {

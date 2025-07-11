@@ -54,7 +54,8 @@ const ejectableStakePercentParam = discovery.getContractValue<string>(
   'EjectionManager',
   'ejectableStakePercent',
 )
-const ejectableStakePercent = Number.parseFloat(ejectableStakePercentParam) / 100
+const ejectableStakePercent =
+  Number.parseFloat(ejectableStakePercentParam) / 100
 
 const operatorSetParamsQuorum1 = discovery.getContractValue<{
   maxOperatorCount: number

@@ -276,7 +276,7 @@ function WithExtra({ extra, children }: WithExtraProps) {
       </div>
     )
   }
-    return <>{children}</>
+  return <>{children}</>
 }
 
 interface DecodedDisplayProps {

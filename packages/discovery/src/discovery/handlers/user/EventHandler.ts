@@ -283,7 +283,7 @@ function getEventName(eventString: string): string {
     const fragment = toEventFragment(eventString)
     return fragment.name
   }
-    return eventString
+  return eventString
 }
 
 function eventsAreCompatible(
@@ -303,7 +303,7 @@ function eventsAreCompatible(
         inputs.some((i) => isDeepStrictEqual(i, elem)),
       )
     }
-      return false
+    return false
   })
 
   return abiCompatible

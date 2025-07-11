@@ -1,5 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { BlobClient, CelestiaApiClient, type HttpClient, RpcClient } from '@l2beat/shared'
+import {
+  BlobClient,
+  CelestiaApiClient,
+  type HttpClient,
+  RpcClient,
+} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import type { DiscoveryChainConfig } from '../../config/types'

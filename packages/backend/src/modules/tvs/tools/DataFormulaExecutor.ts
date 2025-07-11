@@ -349,35 +349,35 @@ export class DataFormulaExecutor {
         })(),
       ]
     }
-      const pricesToFetch: PriceConfig[] = []
+    const pricesToFetch: PriceConfig[] = []
 
-      await Promise.all(
-        prices.map(async (price) => {
-          const cachedValue = await this.localStorage.getPrice(
-            price.id,
-            timestamp,
-          )
-          if (cachedValue !== undefined) {
-            this.logger.debug(`Cached value found for ${price.priceId}`)
-            return
-          }
+    await Promise.all(
+      prices.map(async (price) => {
+        const cachedValue = await this.localStorage.getPrice(
+          price.id,
+          timestamp,
+        )
+        if (cachedValue !== undefined) {
+          this.logger.debug(`Cached value found for ${price.priceId}`)
+          return
+        }
 
-          const dbValue = await this.dbStorage?.getPrice(price.id, timestamp)
+        const dbValue = await this.dbStorage?.getPrice(price.id, timestamp)
 
-          if (dbValue !== undefined) {
-            this.logger.debug(`DB value found for ${price.priceId}`)
-            await this.localStorage.writePrice(price.id, timestamp, dbValue)
-            return
-          }
+        if (dbValue !== undefined) {
+          this.logger.debug(`DB value found for ${price.priceId}`)
+          await this.localStorage.writePrice(price.id, timestamp, dbValue)
+          return
+        }
 
-          pricesToFetch.push(price)
-        }),
-      )
+        pricesToFetch.push(price)
+      }),
+    )
 
-      return pricesToFetch.map(async (price) => {
-        const v = await this.fetchPrice(price, timestamp)
-        await this.localStorage.writePrice(price.id, timestamp, v)
-      })
+    return pricesToFetch.map(async (price) => {
+      const v = await this.fetchPrice(price, timestamp)
+      await this.localStorage.writePrice(price.id, timestamp, v)
+    })
   }
 
   private async processCirculatingSupplies(
@@ -417,36 +417,36 @@ export class DataFormulaExecutor {
         })(),
       ]
     }
-      const amountsToFetch: AmountConfig[] = []
+    const amountsToFetch: AmountConfig[] = []
 
-      await Promise.all(
-        circulatingAmounts.map(async (amount) => {
-          const cachedValue = await this.localStorage.getAmount(
-            amount.id,
-            timestamp,
-          )
-          if (cachedValue !== undefined) {
-            this.logger.debug(`Cached value found for ${amount.id}`)
-            return
-          }
+    await Promise.all(
+      circulatingAmounts.map(async (amount) => {
+        const cachedValue = await this.localStorage.getAmount(
+          amount.id,
+          timestamp,
+        )
+        if (cachedValue !== undefined) {
+          this.logger.debug(`Cached value found for ${amount.id}`)
+          return
+        }
 
-          const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
+        const dbValue = await this.dbStorage?.getAmount(amount.id, timestamp)
 
-          if (dbValue !== undefined) {
-            this.logger.debug(`DB value found for ${amount.id}`)
-            await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
-            return
-          }
+        if (dbValue !== undefined) {
+          this.logger.debug(`DB value found for ${amount.id}`)
+          await this.localStorage.writeAmount(amount.id, timestamp, dbValue)
+          return
+        }
 
-          amountsToFetch.push(amount)
-        }),
-      )
+        amountsToFetch.push(amount)
+      }),
+    )
 
-      return amountsToFetch.map(async (amount) => {
-        assert(amount.type === 'circulatingSupply')
-        const value = await this.fetchCirculatingSupply(amount, timestamp)
-        await this.localStorage.writeAmount(amount.id, timestamp, value)
-      })
+    return amountsToFetch.map(async (amount) => {
+      assert(amount.type === 'circulatingSupply')
+      const value = await this.fetchCirculatingSupply(amount, timestamp)
+      await this.localStorage.writeAmount(amount.id, timestamp, value)
+    })
   }
 
   private async fetchBlockNumber(

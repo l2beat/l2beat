@@ -1341,10 +1341,11 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
   if (respectedGameType === 0) {
     return 'Permissionless'
-  }if (respectedGameType === 1) {
+  }
+  if (respectedGameType === 1) {
     return 'Permissioned'
   }
-    throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
+  throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {

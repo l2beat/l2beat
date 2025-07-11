@@ -102,5 +102,5 @@ function throwMissingEnvVar(keys: string | string[]): never {
       )}`,
     )
   }
-    throw new Error(`Missing environment variable: ${keys}`)
+  throw new Error(`Missing environment variable: ${keys}`)
 }

@@ -430,13 +430,14 @@ function initLogger(env: Env) {
 function toDollarString(value: number) {
   if (value > 1e9) {
     return `$${(value / 1e9).toFixed(2)}B`
-  }if (value > 1e6) {
+  }
+  if (value > 1e6) {
     return `$${(value / 1e6).toFixed(2)}M`
   }
-    return `$${value.toLocaleString('en-US', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`
+  return `$${value.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`
 }
 
 export function formatNumberWithCommas(value: number, precision = 2): string {

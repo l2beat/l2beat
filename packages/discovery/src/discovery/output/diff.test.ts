@@ -249,7 +249,9 @@ describe('diff', () => {
     })
 
     it('NaN handling with LCS-based insert/remove', () => {
-      expect(diff([Number.NaN, 'A', Number.NaN], ['A', Number.NaN, 'B'])).toEqual([
+      expect(
+        diff([Number.NaN, 'A', Number.NaN], ['A', Number.NaN, 'B']),
+      ).toEqual([
         { kind: 'remove', path: [0], lhs: Number.NaN },
         { kind: 'create', path: [2], rhs: 'B' },
       ])
@@ -385,7 +387,9 @@ describe('microdiff tests', () => {
   })
 
   it('new NaN value in array', () => {
-    expect(diff([], [Number.NaN])).toEqual([{ kind: 'create', path: [0], rhs: Number.NaN }])
+    expect(diff([], [Number.NaN])).toEqual([
+      { kind: 'create', path: [0], rhs: Number.NaN },
+    ])
   })
 
   it('change NaN value in object', () => {

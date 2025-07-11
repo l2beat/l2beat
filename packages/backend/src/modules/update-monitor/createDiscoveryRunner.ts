@@ -58,8 +58,9 @@ export function createDiscoveryRunner(
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {
   if (uri === 'postgres') {
     return new DatabaseCache(database)
-  }if (uri.startsWith('redis')) {
+  }
+  if (uri.startsWith('redis')) {
     return new RedisCache(uri)
   }
-    assert(false, 'unsupported cache URI')
+  assert(false, 'unsupported cache URI')
 }

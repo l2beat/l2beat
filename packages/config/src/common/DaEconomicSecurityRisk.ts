@@ -50,7 +50,8 @@ const DAChallengesNoFunds: AdjustableEconomicSecurityRisk = {
   value: {
     value: 'DA Challenges',
     sentiment: 'bad',
-    description: 'There are no onchain assets at risk of being slashed in case of a data withholding attack. However, there is a mechanism that allows users to challenge unavailability of data. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers, and there is no pool of funds onchain to incentivize challengers.',
+    description:
+      'There are no onchain assets at risk of being slashed in case of a data withholding attack. However, there is a mechanism that allows users to challenge unavailability of data. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers, and there is no pool of funds onchain to incentivize challengers.',
   },
   adjustSecurityRisk: false,
 }

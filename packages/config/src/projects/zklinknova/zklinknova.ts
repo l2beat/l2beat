@@ -11,9 +11,10 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  OPERATOR,REASON_FOR_BEING_OTHER, 
+  OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

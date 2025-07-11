@@ -18,8 +18,9 @@ export function parseFieldValue(
           address,
         }
       }
-        return { type: 'hex', value }
-    }if (/^\w*:0x[a-f\d]*$/i.test(value)) {
+      return { type: 'hex', value }
+    }
+    if (/^\w*:0x[a-f\d]*$/i.test(value)) {
       const [prefix, rawAddress] = value.split(':')
 
       if (isChainShortName(prefix) && rawAddress.length === 42) {
@@ -31,11 +32,12 @@ export function parseFieldValue(
           address,
         }
       }
-        return { type: 'string', value }
-    }if (/^-?\d+$/.test(value)) {
+      return { type: 'string', value }
+    }
+    if (/^-?\d+$/.test(value)) {
       return { type: 'number', value: BigInt(value).toString(10) }
     }
-      return { type: 'string', value }
+    return { type: 'string', value }
   }
 
   if (typeof value === 'number' || typeof value === 'bigint') {

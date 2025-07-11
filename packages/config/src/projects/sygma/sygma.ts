@@ -64,7 +64,8 @@ export const sygma: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: 'Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. From the PoV of Ethereum transfers are authorized by a single EOA address.',
+      description:
+        'Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. From the PoV of Ethereum transfers are authorized by a single EOA address.',
       references: [],
       risks: [],
     },

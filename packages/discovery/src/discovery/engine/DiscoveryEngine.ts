@@ -7,7 +7,10 @@ import type {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
-import { buildSharedModuleIndex, makeEntryStructureConfig } from '../config/structureUtils'
+import {
+  buildSharedModuleIndex,
+  makeEntryStructureConfig,
+} from '../config/structureUtils'
 import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'

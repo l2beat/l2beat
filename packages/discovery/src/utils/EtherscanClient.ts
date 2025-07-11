@@ -15,9 +15,11 @@ import {
   TransactionListResult,
   tryParseEtherscanResponse,
 } from './EtherscanModels'
-import type { ContractSource, 
+import type {
+  ContractSource,
   EtherscanUnsupportedMethods,
-  IEtherscanClient,} from './IEtherscanClient'
+  IEtherscanClient,
+} from './IEtherscanClient'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class EtherscanError extends Error {}

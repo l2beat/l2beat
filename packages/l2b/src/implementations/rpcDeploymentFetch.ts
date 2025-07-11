@@ -47,10 +47,10 @@ async function bisectToFindCreationBlock(
       midBlockNumber,
     )
   }
-    return bisectToFindCreationBlock(
-      provider,
-      address,
-      midBlockNumber + 1,
-      maxBlockNumber,
-    )
+  return bisectToFindCreationBlock(
+    provider,
+    address,
+    midBlockNumber + 1,
+    maxBlockNumber,
+  )
 }

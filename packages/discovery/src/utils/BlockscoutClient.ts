@@ -16,9 +16,11 @@ import {
   TransactionListResult,
   UnverifiedContractSourceResult,
 } from './BlockscoutModels'
-import type { ContractSource, 
+import type {
+  ContractSource,
   EtherscanUnsupportedMethods,
-  IEtherscanClient,} from './IEtherscanClient'
+  IEtherscanClient,
+} from './IEtherscanClient'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class BlockscoutError extends Error {}

@@ -179,17 +179,17 @@ export function getCodePaths(
         ],
       }
     }
-      const dir = readdirSync(join(root, name))
-      const codePaths = dir
-        .map((file) => ({
-          name: file,
-          path: join(root, name, file),
-        }))
-        .sort((a, b) => compareFiles(a.name, b.name))
-      return {
-        entryName: entry.name,
-        codePaths,
-      }
+    const dir = readdirSync(join(root, name))
+    const codePaths = dir
+      .map((file) => ({
+        name: file,
+        path: join(root, name, file),
+      }))
+      .sort((a, b) => compareFiles(a.name, b.name))
+    return {
+      entryName: entry.name,
+      codePaths,
+    }
   }
 
   return { entryName: undefined, codePaths: [] }

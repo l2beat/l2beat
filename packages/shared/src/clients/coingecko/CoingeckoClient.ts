@@ -71,7 +71,7 @@ export class CoingeckoClient extends ClientCore {
     if (!options.includePlatform) {
       return CoinListResult.parse(data)
     }
-      return CoinListPlatformResult.parse(data)
+    return CoinListPlatformResult.parse(data)
   }
 
   async getImageUrl(id: CoingeckoId): Promise<string> {

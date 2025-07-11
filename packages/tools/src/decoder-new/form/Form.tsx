@@ -116,7 +116,10 @@ export function Form() {
             id="chainId"
             value={state.values.chainId}
             onChange={(e) =>
-              dispatch({ type: 'set chainId', value: Number.parseInt(e.target.value) })
+              dispatch({
+                type: 'set chainId',
+                value: Number.parseInt(e.target.value),
+              })
             }
           >
             {SUPPORTED_CHAINS.map((c) => (

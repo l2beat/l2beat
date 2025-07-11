@@ -67,9 +67,10 @@ export {
 export { neuterErrors } from './discovery/output/errors'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
-export {combineStructureAndColor, 
+export {
+  combineStructureAndColor,
   toDiscoveryOutput,
-  toRawDiscoveryOutput
+  toRawDiscoveryOutput,
 } from './discovery/output/toDiscoveryOutput'
 export { toPrettyJson } from './discovery/output/toPrettyJson'
 export type {

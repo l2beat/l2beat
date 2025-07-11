@@ -73,24 +73,24 @@ export class DiffoveryController {
           '// NOTE: Source code for this address has not been verified',
       }
     }
-      const input = Object.entries(source.files)
-        .map(([fileName, content]) => ({
-          path: fileName,
-          content,
-        }))
-        .filter((e) => e.path.endsWith('.sol'))
+    const input = Object.entries(source.files)
+      .map(([fileName, content]) => ({
+        path: fileName,
+        content,
+      }))
+      .filter((e) => e.path.endsWith('.sol'))
 
-      if (input.length === 0) {
-        return {
-          'L2BEAT-NON-SOLIDITY':
-            '// NOTE: DIFFOVERY currently does not support non-solidity contracts',
-        }
+    if (input.length === 0) {
+      return {
+        'L2BEAT-NON-SOLIDITY':
+          '// NOTE: DIFFOVERY currently does not support non-solidity contracts',
       }
+    }
 
-      const flat = flattenStartingFrom(source.name, input, source.remappings, {
-        includeAll: true,
-      })
-      return splitFlatSolidity(flat)
+    const flat = flattenStartingFrom(source.name, input, source.remappings, {
+      includeAll: true,
+    })
+    return splitFlatSolidity(flat)
   }
 }
 

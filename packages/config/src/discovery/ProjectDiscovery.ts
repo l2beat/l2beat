@@ -805,10 +805,7 @@ export class ProjectDiscovery {
     return result
   }
 
-  formatViaPath(
-    path: ResolvedPermissionPath,
-    skipName = false,
-  ): string {
+  formatViaPath(path: ResolvedPermissionPath, skipName = false): string {
     const name =
       this.getContractByChainSpecificAddress(path.address)?.name ??
       path.address.toString()

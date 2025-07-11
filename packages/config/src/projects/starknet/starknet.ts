@@ -9,13 +9,14 @@ import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
-  DA_MODES,ESCROW, 
+  DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
@@ -89,9 +90,9 @@ function formatMaxTotalBalanceString(
   ) {
     return 'There is no bridge cap.'
   }
-    return `The current bridge cap is ${formatLargeNumber(
-      maxTotalBalance / 10 ** decimals,
-    )} ${ticker}.`
+  return `The current bridge cap is ${formatLargeNumber(
+    maxTotalBalance / 10 ** decimals,
+  )} ${ticker}.`
 }
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(

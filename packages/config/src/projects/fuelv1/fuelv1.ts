@@ -178,7 +178,8 @@ export const fuelv1: ScalingProject = {
   stateDerivation: {
     nodeSoftware:
       'The node software source code can be found [here](https://github.com/FuelLabs/fuel-js).',
-    genesisState: 'The bridge contracts deployments are the genesis state of the rollup chain. The bridge contracts of mainnet and testnet (rinkeby) deployment block number are available [here](https://github.com/FuelLabs/fuel-js/blob/master/packages/logic/src/genesis.js).',
+    genesisState:
+      'The bridge contracts deployments are the genesis state of the rollup chain. The bridge contracts of mainnet and testnet (rinkeby) deployment block number are available [here](https://github.com/FuelLabs/fuel-js/blob/master/packages/logic/src/genesis.js).',
     dataFormat:
       'The data format details are documented in the Data Structure subsection [here](https://docs.fuel.sh/v1.1.0/Concepts/Fundamentals/System%20Description%20Primer.html).',
   },

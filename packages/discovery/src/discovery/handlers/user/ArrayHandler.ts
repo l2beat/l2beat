@@ -79,7 +79,10 @@ export class ArrayHandler implements Handler {
 
     const value: ContractValue[] = []
     const startIndex = resolved.startIndex
-    const maxLength = Math.min(resolved.maxLength, resolved.length ?? Number.POSITIVE_INFINITY)
+    const maxLength = Math.min(
+      resolved.maxLength,
+      resolved.length ?? Number.POSITIVE_INFINITY,
+    )
     const callIndex = createCallIndex(provider, address, this.fragment)
     const arrayFragment = getArrayFragment(this.fragment)
 

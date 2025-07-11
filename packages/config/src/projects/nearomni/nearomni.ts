@@ -91,7 +91,8 @@ export const nearomni: Bridge = {
     },
     validation: {
       name: 'MPC validation and ethereum light client',
-      description: 'Multi-party computation (MPC) is used to validate bridge transactions going out from NEAR. This usually means that multiple distributed signers need to combine their signatures to create a single signature authorizings a transaction. The MPC setup is offchain and from an Ethereum L1 perspective is equal to an EOA. Transfers from Ethereum to NEAR are validated by an Ethereum light client implemented as a smart contract on NEAR, of which the source code is unverified.',
+      description:
+        'Multi-party computation (MPC) is used to validate bridge transactions going out from NEAR. This usually means that multiple distributed signers need to combine their signatures to create a single signature authorizings a transaction. The MPC setup is offchain and from an Ethereum L1 perspective is equal to an EOA. Transfers from Ethereum to NEAR are validated by an Ethereum light client implemented as a smart contract on NEAR, of which the source code is unverified.',
       references: [],
       risks: [
         {

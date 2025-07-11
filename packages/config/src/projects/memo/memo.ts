@@ -21,7 +21,8 @@ export const memo: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: 'Meeda (MemoDA) is a blockchain-based cloud storage protocol developed by MEMO Labs.',
+    description:
+      'Meeda (MemoDA) is a blockchain-based cloud storage protocol developed by MEMO Labs.',
     links: {
       websites: ['https://www.memolabs.org/'],
       documentation: ['https://memolabs.gitbook.io/meeda'],

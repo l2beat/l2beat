@@ -11,11 +11,12 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  FRONTRUNNING_RISK,REASON_FOR_BEING_OTHER, 
+  FRONTRUNNING_RISK,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_VALIDATION,
-  TECHNOLOGY_DATA_AVAILABILITY
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

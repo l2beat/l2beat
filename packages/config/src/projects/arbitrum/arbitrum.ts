@@ -1,10 +1,11 @@
 import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import {
-  CONTRACTS,ESCROW, 
+  CONTRACTS,
+  ESCROW,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
-  UPGRADE_MECHANISM
+  UPGRADE_MECHANISM,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -103,7 +104,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
     slug: 'arbitrum',
     warning: undefined,
     architectureImage: 'arbitrumwithbold',
-    description: 'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
+    description:
+      'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       bridges: ['https://bridge.arbitrum.io'],

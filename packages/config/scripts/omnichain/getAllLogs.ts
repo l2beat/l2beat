@@ -37,6 +37,6 @@ export async function getAllLogs(
       ])
       return a.concat(b)
     }
-      throw e
+    throw e
   }
 }

@@ -36,11 +36,11 @@ export class MulticallClient {
       if (!config || requests.length === 1) {
         return this.executeIndividual(requests, blockNumber)
       }
-        const batches = toBatches(requests, config.batchSize)
-        const batchedResults = await Promise.all(
-          batches.map((batch) => this.executeBatch(config, batch, blockNumber)),
-        )
-        return batchedResults.flat()
+      const batches = toBatches(requests, config.batchSize)
+      const batchedResults = await Promise.all(
+        batches.map((batch) => this.executeBatch(config, batch, blockNumber)),
+      )
+      return batchedResults.flat()
     } catch (e) {
       const ethersError = parseEthersError(e)
 

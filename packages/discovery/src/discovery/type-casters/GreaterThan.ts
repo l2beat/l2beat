@@ -24,6 +24,6 @@ export const GreaterThan: BaseTypeCaster = {
     if (asBigInt.gt(compareValue)) {
       return toContractValue(validated.trueResult ?? true)
     }
-      return toContractValue(validated.falseResult ?? false)
+    return toContractValue(validated.falseResult ?? false)
   },
 }

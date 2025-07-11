@@ -19,7 +19,7 @@ export function toContractValue(value: unknown): ContractValue {
     ) {
       return value.toString()
     }
-      return value.toNumber()
+    return value.toNumber()
   }
   return `${value}`
 }

@@ -9,12 +9,12 @@ export function getEventFragment(
   if (event.includes(' ')) {
     return toEventFragment(event)
   }
-    const fragment = abi
-      .filter((x) => x.startsWith(`event ${event}(`))
-      .map(toEventFragment)[0]
+  const fragment = abi
+    .filter((x) => x.startsWith(`event ${event}(`))
+    .map(toEventFragment)[0]
 
-    if (!fragment) {
-      throw new Error(`Cannot find a matching event for ${event}`)
-    }
-    return fragment
+  if (!fragment) {
+    throw new Error(`Cannot find a matching event for ${event}`)
+  }
+  return fragment
 }

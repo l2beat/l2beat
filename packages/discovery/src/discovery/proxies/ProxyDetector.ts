@@ -108,7 +108,7 @@ export class ProxyDetector {
           },
         }
       }
-        return { type: 'EOA', values: {} }
+      return { type: 'EOA', values: {} }
     }
   }
 
