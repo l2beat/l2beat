@@ -1,6 +1,7 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
+import { groupBy } from 'lodash'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
 import type { Receive } from './types/Receive'
@@ -106,35 +107,63 @@ const cmd = command({
       }
     }
 
+    // for (const [protocol, m] of Array.from(Object.entries(matching))) {
+    //   for (const [id, mm] of Array.from(Object.entries(m))) {
+    //     if (mm.length < 2) continue
+
+    //     logger.info(`${protocol} ID: ${id}`)
+
+    //     for (const t of mm) {
+    //       const getTxUrl = CHAINS.find(
+    //         (c) => c.shortName === t.token.split(':')[0],
+    //       )?.getTxUrl
+    //       logger.info(t.direction, {
+    //         token: t.token,
+    //         amount: t.amount,
+    //         ...(t.txHash ? { tx: t.txHash } : {}),
+    //         ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
+    //       })
+    //     }
+    //   }
+    // }
+
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
-      for (const [id, mm] of Array.from(Object.entries(m))) {
-        if (mm.length < 2) continue
+      const send = transfers.filter(
+        (t) => t.protocol === protocol && t.direction === 'send',
+      )
 
-        logger.info(`${protocol} ID: ${id}`)
+      const receive = transfers.filter(
+        (t) => t.protocol === protocol && t.direction === 'receive',
+      )
 
-        for (const t of mm) {
-          const getTxUrl = CHAINS.find(
-            (c) => c.shortName === t.token.split(':')[0],
-          )?.getTxUrl
-          logger.info(t.direction, {
-            token: t.token,
-            amount: t.amount,
-            ...(t.txHash ? { tx: t.txHash } : {}),
-            ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
-          })
-        }
-      }
-    }
-
-    for (const [protocol, m] of Array.from(Object.entries(matching))) {
       logger.info(protocol, {
-        send: transfers.filter(
-          (t) => t.protocol === protocol && t.direction === 'send',
-        ).length,
-        receive: transfers.filter(
-          (t) => t.protocol === protocol && t.direction === 'receive',
-        ).length,
-        matched: Object.entries(m).filter(([_, m]) => m.length > 1).length,
+        send: {
+          count: send.length,
+          breakdown: Object.entries(
+            groupBy(send, (s) => s.token.split(':')[0]),
+          ).reduce(
+            (acc, [chain, items]) => {
+              acc[chain] = items.length
+              return acc
+            },
+            {} as Record<string, number>,
+          ),
+        },
+        receive: {
+          count: receive.length,
+          breakdown: Object.entries(
+            groupBy(receive, (s) => s.token.split(':')[0]),
+          ).reduce(
+            (acc, [chain, items]) => {
+              acc[chain] = items.length
+              return acc
+            },
+            {} as Record<string, number>,
+          ),
+        },
+        matched: {
+          count: Object.entries(m).filter(([_, m]) => m.length > 1).length,
+        },
         unmatched:
           Object.entries(m).filter(([_, m]) => m.length === 1).length +
           (m['undefined']?.length ?? 0),
