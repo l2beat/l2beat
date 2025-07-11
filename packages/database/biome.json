@@ -2,7 +2,7 @@
   "root": false,
   "extends": "//",
   "files": {
-    "includes": ["**", "!**/src/kysely/generated"]
+    "includes": ["**", "!**/src/kysely/generated", "!**/dist/**"]
   },
   "linter": {
     "rules": {

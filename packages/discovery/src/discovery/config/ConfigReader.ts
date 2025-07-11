@@ -33,9 +33,9 @@ export class ConfigReader {
       ...(rawConfig.archived ? { archived: true } : {}),
       modelCrossChainPermissions: rawConfig.modelCrossChainPermissions,
       ...merge(
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: it's there
         (rawConfig.chains as any)['all'],
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        // biome-ignore lint/suspicious/noExplicitAny: it's there
         (rawConfig.chains as any)[chain],
       ),
     }
