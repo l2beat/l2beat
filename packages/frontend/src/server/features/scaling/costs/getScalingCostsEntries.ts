@@ -49,7 +49,7 @@ function getScalingCostEntry(
   const costPerUop =
     costs?.uopsCount && costs.usd.total
       ? costs.usd.total / costs.uopsCount
-      : Infinity
+      : Number.POSITIVE_INFINITY
 
   return {
     ...getCommonScalingEntry({ project, changes }),

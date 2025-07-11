@@ -1,6 +1,6 @@
 {
   "root": false,
-  "extends": "//",
+  "extends": ["../../../biome.json"],
   "files": {
     "includes": ["**", "!**/src/kysely/generated", "!**/dist/**"]
   },

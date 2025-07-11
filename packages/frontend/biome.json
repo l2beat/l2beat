@@ -1,5 +1,9 @@
 {
-  "extends": "//",
+  "root": false,
+  "extends": ["../../../biome.json"],
+  "files": {
+    "includes": ["**", "!**/static/**", "!**/dist/**"]
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -32,8 +36,5 @@
         "noBlankTarget": "error"
       }
     }
-  },
-  "files": {
-    "includes": ["**", "!static"]
   }
 }

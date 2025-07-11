@@ -80,7 +80,7 @@ export function ValueSecuredBreakdownTooltipContent({
                       'size-3 rounded bg-rose-500 dark:bg-rose-700',
                       v.className,
                     )}
-                  ></div>
+                  />
                   <span>{v.title}</span>
                 </span>
                 <span className="font-medium">

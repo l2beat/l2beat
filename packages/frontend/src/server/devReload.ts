@@ -10,6 +10,6 @@ export function setupDevReload(logger: Logger) {
   new WebSocketServer({ server })
 
   server.listen(PORT, () => {
-    appLogger.info(`Started`, { port: PORT })
+    appLogger.info('Started', { port: PORT })
   })
 }

@@ -1,6 +1,6 @@
 {
   "root": false,
-  "extends": "//",
+  "extends": ["../../../biome.json"],
   "files": {
     "maxSize": 10485760,
     "includes": [

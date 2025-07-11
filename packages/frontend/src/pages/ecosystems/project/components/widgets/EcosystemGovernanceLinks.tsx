@@ -109,7 +109,7 @@ function DelegateToL2BEATLink({
           className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black"></div>
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black" />
         <div className="relative flex h-full flex-col justify-center">
           <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Governance

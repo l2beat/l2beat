@@ -143,7 +143,7 @@ function CombinedRiskTable(props: {
         <thead>
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             {/* Empty top-left header cell */}
-            <th></th>
+            <th />
             <HeaderCell className="rounded-tl">
               SEQUENCER
               <br />

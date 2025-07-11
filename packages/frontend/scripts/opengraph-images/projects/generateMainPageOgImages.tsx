@@ -93,7 +93,7 @@ export async function generateMainPageOgImages(
   for (const mainPage of mainPages) {
     const outputDir = path.join(
       process.cwd(),
-      `static/meta-images`,
+      'static/meta-images',
       mainPage.type ?? '',
       `/${mainPage.title.toLowerCase().split(' ').join('-')}`,
     )

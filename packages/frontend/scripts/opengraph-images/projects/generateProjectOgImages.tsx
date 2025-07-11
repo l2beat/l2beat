@@ -57,7 +57,7 @@ async function generateProjectOgImage(
 ) {
   const svg = await satori(
     <ProjectOpengraphImage
-      baseUrl={`http://localhost:6464`}
+      baseUrl={'http://localhost:6464'}
       slug={project.slug}
       name={project.name}
       size={size}

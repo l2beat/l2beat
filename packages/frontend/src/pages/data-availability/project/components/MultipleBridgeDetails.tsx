@@ -45,7 +45,7 @@ export function MultipleBridgeDetails({ project }: Props) {
         </div>
         <div className="flex flex-col rounded-lg bg-header-secondary lg:h-[278px]">
           <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-secondary px-4 py-2 font-semibold text-secondary text-xs uppercase md:flex md:border-b">
-            <div className="w-12"></div>
+            <div className="w-12" />
             <div className="flex-1">DA Bridge</div>
             <div className="flex-1 text-center">DA Risks</div>
             <div className="flex-1 pr-12 text-right">TVS</div>

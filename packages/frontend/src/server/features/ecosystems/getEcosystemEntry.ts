@@ -200,7 +200,7 @@ export async function getEcosystemEntry(
     images: {
       buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
       delegateToL2BEAT: getStaticAsset(
-        `/partners/governance-delegate-to-l2beat.png`,
+        '/partners/governance-delegate-to-l2beat.png',
       ),
     },
   }
