@@ -11,26 +11,40 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
   const PROJECT_B = ProjectId('project-b')
 
   const START = UnixTime.now()
-  const DATA: RealTimeAnomalyRecord[] = [
+  const DATA = [
     {
       start: START - 1 * UnixTime.HOUR,
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
       status: 'ongoing',
+      isApproved: false,
+      end: undefined,
+    },
+    {
+      start: START - 2 * UnixTime.HOUR,
+      projectId: PROJECT_B,
+      subtype: 'stateUpdates',
+      status: 'ongoing',
+      isApproved: false,
+      end: undefined,
     },
     {
       start: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'batchSubmissions',
-      status: 'approved',
+      status: 'ongoing',
+      isApproved: true,
+      end: undefined,
     },
     {
       start: START - 3 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
       status: 'recovered',
+      isApproved: true,
+      end: START,
     },
-  ]
+  ] as const satisfies RealTimeAnomalyRecord[]
 
   beforeEach(async function () {
     this.timeout(10000)
@@ -46,8 +60,9 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           start: START - 1 * UnixTime.HOUR,
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
-          status: 'approved',
-          end: START,
+          status: 'ongoing',
+          isApproved: true,
+          end: undefined,
         },
         //to add
         {
@@ -55,6 +70,8 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           status: 'ongoing',
+          isApproved: false,
+          end: undefined,
         },
       ]
 
@@ -63,20 +80,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
         newRows[0]!,
-        {
-          start: START - 2 * UnixTime.HOUR,
-          projectId: PROJECT_B,
-          subtype: 'batchSubmissions',
-          status: 'approved',
-          end: undefined,
-        },
-        {
-          start: START - 3 * UnixTime.HOUR,
-          projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          status: 'recovered',
-          end: undefined,
-        },
+        ...DATA.slice(1),
         { ...newRows[1]!, end: undefined },
       ])
     })
@@ -90,12 +94,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-          end: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted(DATA)
     })
   })
 
@@ -104,12 +103,37 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all ongoing anomalies', async () => {
       const results = await repository.getOngoingAnomalies()
 
-      expect(results).toEqualUnsorted(
-        DATA.filter((e) => e.status !== 'recovered').map((e) => ({
-          ...e,
-          end: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted([DATA[0], DATA[1], DATA[2]])
+    })
+  })
+
+  describe(RealTimeAnomaliesRepository.prototype
+    .getApprovedAnomaliesByProjectIds.name, () => {
+    it('should return all approved and resolved anomalies', async () => {
+      const results = await repository.getApprovedAnomaliesByProjectIds([
+        PROJECT_B,
+      ])
+      expect(results).toEqualUnsorted([DATA[2]!, DATA[3]!])
+    })
+
+    it('should return empty array if no project ids', async () => {
+      const results = await repository.getApprovedAnomaliesByProjectIds([])
+      expect(results).toEqual([])
+    })
+  })
+
+  describe(RealTimeAnomaliesRepository.prototype
+    .getApprovedAnomaliesByProjectIds.name, () => {
+    it('should return all approved and resolved anomalies', async () => {
+      const results = await repository.getApprovedAnomaliesByProjectIds([
+        PROJECT_B,
+      ])
+      expect(results).toEqualUnsorted([DATA[2]!, DATA[3]!])
+    })
+
+    it('should return empty array if no project ids', async () => {
+      const results = await repository.getApprovedAnomaliesByProjectIds([])
+      expect(results).toEqual([])
     })
   })
 

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const ozean: ScalingProject = upcomingL2({
       "Ozean is Clearpool's new Layer 2 blockchain focused on integrating RWAs into DeFi. Built on the OP Stack.",
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://ozean.finance/'],
       documentation: ['https://docs.ozean.finance/'],
@@ -27,5 +27,8 @@ export const ozean: ScalingProject = upcomingL2({
         'https://discord.com/invite/YYzxscA4nu',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "(Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.",
+  "category": "spam",
+  "fields": {
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    },
+    "accessControl": { "handler": { "type": "accessControl" } }
+  }
+}

@@ -102,6 +102,7 @@ export const apex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('apex'),
   addedAt: UnixTime(1663927910), // 2022-09-23T10:11:50Z
+  archivedAt: UnixTime(1752072188),
   capability: 'appchain',
   badges: [
     BADGES.VM.AppChain,
@@ -114,6 +115,8 @@ export const apex: ScalingProject = {
     redWarning:
       'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     architectureImage: 'starkex',
+    headerWarning:
+      'Apex Pro and the associated StarkEx instances [were sunset](https://www.apex.exchange/blog/detail/ApeX-Pro-Sunset-Delisting-Timeline-for-Trading-Pairs).',
     name: 'ApeX',
     slug: 'apex',
     description: `ApeX Pro is a non-custodial trading platform that delivers
@@ -122,7 +125,7 @@ export const apex: ScalingProject = {
       two independent StarkEx instances, one for USDC and one for USDT, but that
       technical distinction is not visible to the user.`,
     purposes: ['Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'Other',
     links: {
       websites: ['https://apex.exchange/'],

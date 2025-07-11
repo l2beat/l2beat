@@ -15,6 +15,7 @@ import { checkRisk } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
 import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
+import { ecosystems } from './ecosystems'
 import { layer2s, milestonesLayer2s } from './layer2s'
 
 const tokenList = getTokenList(chains)
@@ -38,6 +39,17 @@ describe('layer2s', () => {
       it(`every Other project has reasonsForBeingOther configured: ${layer2.display.name}`, () => {
         if (layer2.display.category === 'Other') {
           expect(!!layer2.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
+  describe('ecosystems', () => {
+    const ecosystemIds = ecosystems.map((e) => e.id)
+    for (const layer2 of layer2s) {
+      it(`every project with ecosystemInfo has valid ecosystem configured: ${layer2.display.name}`, () => {
+        if (layer2.ecosystemInfo) {
+          expect(ecosystemIds).toInclude(layer2.ecosystemInfo.id)
         }
       })
     }
@@ -70,7 +82,7 @@ describe('layer2s', () => {
     describe('every escrow in new format resolves to discovery entry', () => {
       for (const layer2 of layer2s) {
         // NOTE(radomski): PolygonCDK projects have a shared escrow
-        if (layer2.display.stack === 'Agglayer CDK') continue
+        if (layer2.display.stacks?.includes('Agglayer CDK')) continue
 
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
@@ -243,23 +255,12 @@ describe('layer2s', () => {
     })
   })
 
-  describe('finality', () => {
-    describe('every project with finality enabled has finalizationPeriod property', () => {
-      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
-      for (const project of projectsWithFinality) {
-        it(project.id.toString(), () => {
-          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
-        })
-      }
-    })
-  })
-
   describe('activity', () => {
     describe('all arbitrum and op stack chains have the assessCount defined', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
-          const { stack } = layer2.display
-          return stack === 'Arbitrum' || stack === 'OP Stack'
+          const { stacks: stack } = layer2.display
+          return stack?.includes('Arbitrum') || stack?.includes('OP Stack')
         })
         .flatMap((layer2) => {
           const { activityConfig } = layer2.config

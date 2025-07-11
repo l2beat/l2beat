@@ -3,7 +3,7 @@ import {
   assert,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import {
@@ -154,8 +154,7 @@ export function polygonCDKStack(
   )
   const bridge = shared.getContract('PolygonSharedBridge')
 
-  const finalizationPeriod =
-    templateVars.display.finality?.finalizationPeriod ?? 0
+  const finalizationPeriod = 0
 
   const discoveries = [templateVars.discovery, shared]
   return {
@@ -184,17 +183,8 @@ export function polygonCDKStack(
         templateVars.daProvider !== undefined)
           ? 'polygon-cdk-validium'
           : 'polygon-cdk-rollup',
-      stack: 'Agglayer CDK',
+      stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
-      finality: templateVars.display.finality ?? {
-        finalizationPeriod,
-        warnings: {
-          timeToInclusion: {
-            sentiment: 'neutral',
-            value: 'Uniform block distribution is assumed for calculations.',
-          },
-        },
-      },
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -215,15 +205,6 @@ export function polygonCDKStack(
         },
       },
       daTracking: getDaTracking(templateVars),
-      finality:
-        templateVars.daProvider !== undefined
-          ? undefined
-          : {
-              type: 'PolygonZkEvm',
-              minTimestamp: UnixTime(1679653163),
-              lag: 0,
-              stateUpdate: 'disabled',
-            },
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,

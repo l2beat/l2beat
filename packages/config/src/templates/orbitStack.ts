@@ -42,7 +42,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectFinalityConfig,
   ProjectPermission,
   ProjectRisk,
   ProjectScalingCapability,
@@ -127,7 +126,6 @@ interface OrbitStackConfigCommon {
   }
   bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
-  finality?: ProjectFinalityConfig
   rollupProxy: EntryParameters
   sequencerInbox: EntryParameters
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
@@ -338,7 +336,7 @@ function orbitStackCommon(
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
-    | 'stack'
+    | 'stacks'
     | 'category'
     | 'warning'
   >
@@ -473,7 +471,7 @@ function orbitStackCommon(
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      stack: 'Arbitrum',
+      stacks: ['Arbitrum'],
       category:
         templateVars.display.category ??
         (templateVars.reasonsForBeingOther
@@ -797,7 +795,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     display: {
       ...common.display,
       ...templateVars.display,
-      finality: { finalizationPeriod: challengePeriodSeconds },
       liveness: ifPostsToEthereum(
         templateVars,
         templateVars.display.liveness ?? {
@@ -808,7 +805,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
             templateVars.display.name
           } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
             selfSequencingDelaySeconds,
-          )}. The state root gets finalized ${formatSeconds(
+          )}. The state root is settled ${formatSeconds(
             challengePeriodSeconds,
           )} after it has been posted.`,
         },
@@ -817,7 +814,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     config: {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
-      finality: templateVars.finality,
     },
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),

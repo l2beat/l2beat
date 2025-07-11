@@ -17,6 +17,7 @@ import {
   type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import type { Config, TrackedTxsConfig } from '../../../config/Config'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
@@ -214,6 +215,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           projectId: group.projectId,
           subtype: group.subtype,
           status: 'ongoing',
+          isApproved: false,
         }
 
         await this.notifier?.anomalyDetected(
@@ -307,7 +309,11 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     const livenesConfigurations = trackedTxsConfig.projects
       .filter((project) => !project.isArchived)
       .flatMap((project) => project.configurations)
-      .filter((config) => config.type === 'liveness')
+      .filter(
+        (config) =>
+          config.type === 'liveness' &&
+          (!config.untilTimestamp || config.untilTimestamp > UnixTime.now()),
+      )
 
     this.transfers = livenesConfigurations.filter(
       (

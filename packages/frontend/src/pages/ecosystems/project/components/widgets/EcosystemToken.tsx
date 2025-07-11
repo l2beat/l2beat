@@ -45,7 +45,7 @@ export function EcosystemToken({ token, className }: Props) {
           />
         </DataTile>
         <DataTile label="Circulating Supply">
-          <span>{`${formatNumber(token.data.amount.value)}`}</span>
+          <span>{`${formatNumber(token.data.amount.value)} ${token.symbol}`}</span>
           <PercentChange className="ml-0.5" value={token.data.amount.change} />
         </DataTile>
       </div>

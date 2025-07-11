@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const union: ScalingProject = upcomingL2({
       'Union Chain is a ZK Chain designed to bridge the worlds of Crypto and Traditional Finance (TradFi) by uniting top centralized crypto exchanges (CEXs) and licensed RWA tokenization leaders with top Blockchain technology to build, issue, distribute, and transact on one chain.',
     purposes: ['Universal', 'RWA'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://unionchain.io/'],
       socialMedia: [
@@ -22,5 +22,8 @@ export const union: ScalingProject = upcomingL2({
         'https://t.me/union_chain',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

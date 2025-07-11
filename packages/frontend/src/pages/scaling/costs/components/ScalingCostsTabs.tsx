@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import { useEffect, useState } from 'react'
 import { OthersInfo, RollupsInfo } from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingCostsChart } from '~/components/chart/costs/ScalingCostsChart'
@@ -23,7 +22,6 @@ type Props = TabbedScalingEntries<ScalingCostsEntry> & {
 
 export function ScalingCostsTabs(props: Props) {
   const filterEntries = useFilterEntries()
-  const [tab, setTab] = useState('rollups')
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -37,13 +35,6 @@ export function ScalingCostsTabs(props: Props) {
     desc: false,
   }
 
-  useEffect(() => {
-    if (tab === 'others' && entries.others.length === 0) {
-      setTab('rollups')
-    }
-  }, [entries.others, tab])
-
-  const showOthers = entries.others.length > 0
   return (
     <>
       <TableFilters
@@ -53,16 +44,14 @@ export function ScalingCostsTabs(props: Props) {
           ...props.others,
         ]}
       />
-      <DirectoryTabs value={tab} onValueChange={setTab} defaultValue="rollups">
+      <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {showOthers && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
@@ -76,20 +65,18 @@ export function ScalingCostsTabs(props: Props) {
             <ScalingCostsTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
-              <OthersInfo />
-              <ScalingCostsChart
-                tab="others"
-                entries={entries.others}
-                milestones={props.milestones}
-              />
-              <HorizontalSeparator className="my-5" />
-              <ScalingCostsTable entries={entries.others} />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others" className="pt-4 sm:pt-3">
+            <OthersInfo />
+            <ScalingCostsChart
+              tab="others"
+              entries={entries.others}
+              milestones={props.milestones}
+            />
+            <HorizontalSeparator className="my-5" />
+            <ScalingCostsTable entries={entries.others} />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

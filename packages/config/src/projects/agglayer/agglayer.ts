@@ -24,8 +24,8 @@ export const agglayer: BaseProject = {
     links: {
       buildOn: 'https://docs.agglayer.dev/',
       learnMore: 'https://www.agglayer.dev/',
-      governanceTopDelegates:
-        'https://governance.polygon.technology/community-members/',
+      governanceDelegateToL2BEAT:
+        'https://governance.polygon.technology/community-members/0x1B686eE8E31c5959D9F5BBd8122a58682788eeaD/',
       governanceProposals: 'https://governance.polygon.technology/proposals/',
     },
     token: {

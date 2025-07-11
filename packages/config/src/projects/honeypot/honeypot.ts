@@ -21,6 +21,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('honeypot')
 
 export const honeypot: ScalingProject = {
+  archivedAt: UnixTime(1751987762), // 2025-07-08T15:16:02Z
   type: 'layer2',
   id: ProjectId('honeypot'),
   capability: 'appchain',
@@ -36,7 +37,7 @@ export const honeypot: ScalingProject = {
     name: 'Cartesi Authority Honeypot',
     shortName: 'Honeypot Authority',
     slug: 'cartesi-honeypot',
-    stack: 'Cartesi Rollups',
+    stacks: ['Cartesi Rollups'],
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
@@ -241,6 +242,13 @@ export const honeypot: ScalingProject = {
       url: 'https://x.com/cartesiproject/status/1706685141421047982',
       date: '2023-09-26T00:00:00Z',
       description: 'Honeypot launched on mainnet.',
+      type: 'general',
+    },
+    {
+      title: 'Honeypot archived',
+      url: 'https://x.com/cartesiproject/status/1940757477844455765',
+      date: '2025-07-08T00:00:00Z',
+      description: 'Honeypot funds withdrawn, and validator turned off.',
       type: 'general',
     },
   ],

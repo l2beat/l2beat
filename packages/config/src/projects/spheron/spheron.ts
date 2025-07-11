@@ -14,7 +14,7 @@ export const spheron: ScalingProject = upcomingL3({
       'Spheron is a decentralized platform designed to harness compute resources across the globe.',
     purposes: ['AI'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://spheron.network/'],
       documentation: ['https://docs.spheron.network/'],
@@ -26,5 +26,8 @@ export const spheron: ScalingProject = upcomingL3({
         'https://youtube.com/@spheronfdn',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

@@ -22,7 +22,7 @@ export const unichain: ScalingProject = opStackL2({
     description:
       'Unichain, a faster, cheaper L2 designed to be the home for DeFi and the home for multichain liquidity.',
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://unichain.org/'],
       bridges: ['https://unichain.org/bridge'],
@@ -73,14 +73,6 @@ export const unichain: ScalingProject = opStackL2({
     },
   ),
   associatedTokens: ['UNI'],
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 1,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateExcludedTokens: ['USDC'],
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('UNICHAIN'),

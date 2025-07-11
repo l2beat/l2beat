@@ -1,0 +1,84 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.",
+  "category": "core",
+  "fields": {
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract."
+        }
+      ]
+    },
+    "upgraderAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f": "UPGRADER_ROLE"
+        },
+        "pickRoleMembers": "UPGRADER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "upgrade"
+        }
+      ]
+    },
+    "withdrawerAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE"
+        },
+        "pickRoleMembers": "WITHDRAW_AUTHORITY_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw ETH from the contract."
+        }
+      ]
+    },
+    "emergencyAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d": "EMERGENCY_ROLE"
+        },
+        "pickRoleMembers": "EMERGENCY_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw ETH from the contract, even when it is paused."
+        }
+      ]
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf": "DEPOSITOR_ROLE",
+          "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d": "EMERGENCY_ROLE",
+          "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626": "PAUSER_ROLE",
+          "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c": "STARTER_ROLE",
+          "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f": "UPGRADER_ROLE",
+          "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE"
+        }
+      }
+    },
+    "proxiableUUID": {
+      "handler": {
+        "type": "call",
+        "method": "function proxiableUUID() view returns (bytes32)",
+        "args": [],
+        "expectRevert": true
+      }
+    }
+  }
+}

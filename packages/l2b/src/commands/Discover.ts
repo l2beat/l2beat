@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   DiscoverCommandArgs,
@@ -8,6 +9,7 @@ import {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
 // NOTE(radomski): We need to modify the args object because the only allowed
@@ -43,12 +45,13 @@ export const Discover = command({
   description: 'User interface to discover projects located in discovery.',
   args,
   handler: async (args) => {
+    const logger = getPlainLogger()
     const projectsOnChain: Record<string, string[]> = resolveProjectsOnChain(
       args.projectQuery,
       args.chainQuery,
     )
 
-    logProjectsToDiscover(projectsOnChain)
+    logProjectsToDiscover(projectsOnChain, logger)
 
     for (const chainName in projectsOnChain) {
       const chain = getChainConfig(chainName)
@@ -59,23 +62,29 @@ export const Discover = command({
           chain,
         }
 
-        await discoverAndUpdateDiffHistory(config, args.message)
+        await discoverAndUpdateDiffHistory(config, {
+          logger,
+          description: args.message,
+        })
       }
     }
   },
 })
 
-function logProjectsToDiscover(projectsOnChain: Record<string, string[]>) {
+function logProjectsToDiscover(
+  projectsOnChain: Record<string, string[]>,
+  logger: Logger,
+) {
   if (Object.keys(projectsOnChain).length === 0) {
-    console.log(chalk.greenBright('Nothing to discover'))
+    logger.info(chalk.greenBright('Nothing to discover'))
     return
   }
 
-  console.log('Will discover')
+  logger.info('Will discover')
   for (const chainName in projectsOnChain) {
-    console.log(chalk.blue(chainName))
+    logger.info(chalk.blue(chainName))
     for (const project of projectsOnChain[chainName]) {
-      console.log(`  - ${chalk.yellowBright(project)}`)
+      logger.info(`  - ${chalk.yellowBright(project)}`)
     }
   }
 }

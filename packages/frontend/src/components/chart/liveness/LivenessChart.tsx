@@ -130,7 +130,7 @@ export function LivenessCustomTooltip({
   let content: React.ReactNode = null
   if (!range?.value || !avg?.value) {
     content = (
-      <div className="label-value-16-medium mt-2">
+      <div className="mt-2 font-medium text-label-value-16">
         {getTooltipContent(subtype)}
       </div>
     )
@@ -147,7 +147,7 @@ export function LivenessCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
-        <div className="label-value-14-medium mb-1 whitespace-nowrap text-secondary">
+        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatTimestamp(timestamp, {
             longMonthName: true,
             mode: 'datetime',
@@ -163,13 +163,13 @@ export function LivenessCustomTooltip({
 function Stat({ name, seconds }: { name: string; seconds: number }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="label-value-14-medium">{name}</span>
-      <span className="heading-16">{formatDuration(seconds)}</span>
+      <span className="font-medium text-label-value-14">{name}</span>
+      <span className="text-heading-16">{formatDuration(seconds)}</span>
     </div>
   )
 }
 
-function formatDuration(durationInSeconds: number) {
+export function formatDuration(durationInSeconds: number) {
   const seconds = durationInSeconds
   const minutes = Math.floor(seconds / 60)
   const hours = Math.floor(minutes / 60)

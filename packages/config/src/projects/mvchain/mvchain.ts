@@ -14,10 +14,13 @@ export const mvchain: ScalingProject = upcomingL3({
       'MV Chain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is focused on creating a better gaming- and metaverse experience.',
     purposes: ['Gaming'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://genso.game/en/'],
       socialMedia: ['https://x.com/genso_meta'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

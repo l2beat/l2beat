@@ -1,13 +1,9 @@
 import { BaseRepository } from '../../BaseRepository'
 import { type CurrentPriceRecord, toRecord, toRow } from './entity'
-import { selectCurrentPrice } from './select'
 
 export class CurrentPriceRepository extends BaseRepository {
   async getAll(): Promise<CurrentPriceRecord[]> {
-    const rows = await this.db
-      .selectFrom('CurrentPrice')
-      .select(selectCurrentPrice)
-      .execute()
+    const rows = await this.db.selectFrom('CurrentPrice').selectAll().execute()
     return rows.map(toRecord)
   }
 
@@ -16,7 +12,7 @@ export class CurrentPriceRepository extends BaseRepository {
   ): Promise<CurrentPriceRecord | undefined> {
     const row = await this.db
       .selectFrom('CurrentPrice')
-      .select(selectCurrentPrice)
+      .selectAll()
       .where('coingeckoId', '=', coingeckoId)
       .limit(1)
       .executeTakeFirst()
@@ -30,7 +26,7 @@ export class CurrentPriceRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('CurrentPrice')
-      .select(selectCurrentPrice)
+      .selectAll()
       .where('coingeckoId', 'in', coingeckoIds)
       .execute()
     return rows.map(toRecord)

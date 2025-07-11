@@ -204,9 +204,9 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
           >
             <div className="flex items-baseline gap-1">
               <div className={cn('size-2.5 rounded-sm', s.className)} />
-              <span className="label-value-14-medium">{s.label}</span>
+              <span className="font-medium text-label-value-14">{s.label}</span>
             </div>
-            <span className="label-value-15-medium">
+            <span className="font-medium text-label-value-15">
               {s.percentage.toFixed(1)}%
             </span>
           </div>

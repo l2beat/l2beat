@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const polygonmiden: ScalingProject = upcomingL2({
       "Polygon Miden is a ZK rollup built on top of Ethereum running on the Miden VM. It will allow you to build high-throughput & private applications using smart contract languages like Rust that offer greater safety and lower fees while still benefiting from Ethereum's security.",
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: 'Agglayer CDK',
+    stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://polygon.technology/polygon-miden'],
       documentation: ['https://docs.polygon.technology/miden/'],
@@ -25,5 +25,8 @@ export const polygonmiden: ScalingProject = upcomingL2({
         'https://t.me/polygonofficial',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
   },
 })

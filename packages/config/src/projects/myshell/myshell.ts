@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const myshell: ScalingProject = upcomingL2({
       'MyShell announced new L2 aimed to connect users, creators, and open-source AI model researchers, powered by EigenDA and OP Stack.',
     purposes: ['AI'],
     category: 'Optimium',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://myshell.ai/'],
       documentation: ['https://docs.myshell.ai/'],
@@ -22,5 +22,8 @@ export const myshell: ScalingProject = upcomingL2({
         'https://discord.com/invite/myshell',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

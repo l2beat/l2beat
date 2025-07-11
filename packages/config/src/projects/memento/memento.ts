@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const memento: ScalingProject = upcomingL2({
       'Memento ZKchain is a ZK Rollup dedicated to institutional DeFi and digital asset management, providing a secure, permissioned environment for digital investment funds and asset distribution.',
     purposes: ['Interoperability', 'Privacy', 'RWA'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://mementoblockchain.com/'],
       socialMedia: [
@@ -21,5 +21,8 @@ export const memento: ScalingProject = upcomingL2({
         'https://linkedin.com/company/memento-blockchain/',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

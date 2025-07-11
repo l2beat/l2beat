@@ -19,6 +19,10 @@ export function createLegacyPathsRouter() {
     res.redirect(301, '/scaling/tvs')
   })
 
+  router.get('/scaling/finality', (_, res) => {
+    res.redirect(301, '/scaling/summary')
+  })
+
   router.get('/scaling/projects/:name/tvl-breakdown', (req, res) => {
     res.redirect(301, `/scaling/projects/${req.params.name}/tvs-breakdown`)
   })

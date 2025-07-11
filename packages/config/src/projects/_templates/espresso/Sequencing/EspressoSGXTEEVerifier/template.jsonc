@@ -1,0 +1,42 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Verifies attestations of an Intel SGX TEE.",
+  "ignoreInWatchMode": ["registeredSigners", "validEnclaveHashes"],
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers."
+        }
+      ]
+    },
+    "registeredSigners": {
+      "handler": {
+        "type": "event",
+        "select": "signer",
+        "add": {
+          "event": "SignerRegistered"
+        },
+        "remove": {
+          "event": "DeletedRegisteredSigner"
+        }
+      }
+    },
+    "validEnclaveHashes": {
+      "handler": {
+        "type": "event",
+        "select": "enclaveHash",
+        "add": {
+          "event": "EnclaveHashSet",
+          "where": ["=", "#valid", true]
+        },
+        "remove": {
+          "event": "EnclaveHashSet",
+          "where": ["=", "#valid", false]
+        }
+      }
+    }
+  }
+}

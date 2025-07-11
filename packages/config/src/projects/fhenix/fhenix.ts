@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const fhenix: ScalingProject = upcomingL2({
       'Fhenix is Fully Homomorphic Encryption rollup, build on top of Arbitrum Stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://fhenix.io/'],
       documentation: [
@@ -25,5 +25,8 @@ export const fhenix: ScalingProject = upcomingL2({
         'https://discord.com/invite/FuVgxrvJMY',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

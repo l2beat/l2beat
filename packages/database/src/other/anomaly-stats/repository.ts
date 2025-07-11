@@ -1,7 +1,6 @@
 import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AnomalyStatsRecord, toRecord, toRow } from './entity'
-import { selectAnomaly } from './select'
 
 export class AnomalyStatsRepository extends BaseRepository {
   async upsertMany(records: AnomalyStatsRecord[]): Promise<number> {
@@ -29,10 +28,7 @@ export class AnomalyStatsRepository extends BaseRepository {
   }
 
   async getAll(): Promise<AnomalyStatsRecord[]> {
-    const rows = await this.db
-      .selectFrom('AnomalyStats')
-      .select(selectAnomaly)
-      .execute()
+    const rows = await this.db.selectFrom('AnomalyStats').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -43,7 +39,7 @@ export class AnomalyStatsRepository extends BaseRepository {
   ): Promise<AnomalyStatsRecord | undefined> {
     const row = await this.db
       .selectFrom('AnomalyStats')
-      .select(selectAnomaly)
+      .selectAll()
       .where('projectId', '=', projectId)
       .where('subtype', '=', subtype)
       .orderBy('timestamp', 'desc')

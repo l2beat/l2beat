@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const destra: ScalingProject = upcomingL2({
       'Destra Network pioneers true Decentralized computing solutions for the emerging AI economy.',
     purposes: ['AI'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://destra.network/'],
       bridges: ['https://ocai.destranetwork.io/'],
@@ -25,5 +25,8 @@ export const destra: ScalingProject = upcomingL2({
         'https://t.me/DestraNetwork',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

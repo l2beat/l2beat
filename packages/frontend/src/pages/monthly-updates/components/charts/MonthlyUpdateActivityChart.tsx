@@ -13,12 +13,12 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -123,11 +123,11 @@ function Header({
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">
-          <ChartTimeRange range={range} />
+          <EcosystemChartTimeRange range={range} />
         </div>
       </div>
       <div className="text-right">
@@ -154,7 +154,7 @@ export function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="label-value-14-medium mb-3 whitespace-nowrap text-secondary">
+        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatTimestamp(timestamp, {
             longMonthName: true,
           })}
@@ -177,11 +177,11 @@ export function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     Average UOPS
                   </span>
                 </div>
-                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
+                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {formatActivityCount(entry.value)}
                 </span>
               </div>
@@ -191,11 +191,11 @@ export function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     Operations count
                   </span>
                 </div>
-                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
+                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {formatInteger(entry.value * UnixTime.DAY)}
                 </span>
               </div>

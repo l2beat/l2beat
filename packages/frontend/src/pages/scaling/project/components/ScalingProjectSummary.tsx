@@ -31,7 +31,10 @@ export function ProjectScalingSummary({ project }: Props) {
       >
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
-            <ProjectHeader project={project} />
+            <ProjectHeader
+              project={project}
+              ongoingAnomaly={project.header.ongoingAnomaly}
+            />
             <div className="space-y-2">
               {project.archivedAt && <ArchivedBar />}
               {project.isUpcoming && <UpcomingBar />}

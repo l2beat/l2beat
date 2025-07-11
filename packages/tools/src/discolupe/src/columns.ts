@@ -131,14 +131,6 @@ const AVAILABLE_COLUMNS_RAW = [
     displayFn: IndicatorContainer,
   },
   {
-    header: 'Finality Configured',
-    id: 'i7',
-    align: 'right',
-    fn: (project: DiscoLupeProject) =>
-      project.finalityConfigured ? 'Yes' : 'No',
-    displayFn: IndicatorContainer,
-  },
-  {
     header: 'Milestones & Incidents Configured',
     id: '5k',
     align: 'right',

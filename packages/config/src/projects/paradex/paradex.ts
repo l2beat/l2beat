@@ -75,7 +75,7 @@ export const paradex: ScalingProject = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    stack: 'SN Stack',
+    stacks: ['SN Stack'],
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
@@ -93,9 +93,6 @@ export const paradex: ScalingProject = {
     liveness: {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -278,12 +275,6 @@ export const paradex: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'Starknet',
-      minTimestamp: UnixTime(1725811667),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

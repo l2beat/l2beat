@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
@@ -15,12 +15,15 @@ export const pay: ScalingProject = upcomingL2({
       'Pay is a zkEVM blockchain by Wirex, powered by the Polygon CDK stack. It aims to be a decentralized payments network.',
     purposes: ['Payments'],
     category: 'ZK Rollup',
-    stack: 'Agglayer CDK',
+    stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://wirexpaychain.com/'],
       documentation: [],
       explorers: [],
       socialMedia: ['https://x.com/wirexpaychain'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
   },
 })

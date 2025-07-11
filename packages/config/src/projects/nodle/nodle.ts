@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const nodle: ScalingProject = upcomingL2({
       'Nodle is a decentralized wireless network for IoT devices built on zkSync.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://nodle.com/'],
       documentation: ['https://docs.nodle.com/'],
@@ -27,5 +27,8 @@ export const nodle: ScalingProject = upcomingL2({
         'https://youtube.com/c/Nodle',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

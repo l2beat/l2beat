@@ -5,6 +5,7 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectLink } from '~/components/projects/links/types'
 import { getCollection } from '~/content/getCollection'
@@ -20,6 +21,10 @@ import {
   getScalingSummaryEntry,
 } from '../scaling/summary/getScalingSummaryEntries'
 import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
+import {
+  type ScalingUpcomingEntry,
+  getScalingUpcomingEntry,
+} from '../scaling/upcoming/getScalingUpcomingEntries'
 import { compareStageAndTvs } from '../scaling/utils/compareStageAndTvs'
 import { getStaticAsset } from '../utils/getProjectIcon'
 import { type BlobsData, getBlobsData } from './getBlobsData'
@@ -52,7 +57,8 @@ export interface EcosystemEntry {
   }
   badges: BadgeWithParams[]
   colors: ProjectColors
-  projects: EcosystemProjectEntry[]
+  liveProjects: EcosystemProjectEntry[]
+  upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData
   allScalingProjects: {
     tvs: number
@@ -72,9 +78,10 @@ export interface EcosystemEntry {
   }
   images: {
     buildOn: string
-    topDelegates: string
+    delegateToL2BEAT: string
   }
-  milestones: EcosystemMilestone[]
+  allMilestones: EcosystemMilestone[]
+  ecosystemMilestones: EcosystemMilestone[]
 }
 
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
@@ -115,9 +122,9 @@ export async function getEcosystemEntry(
         'chainConfig',
         'milestones',
         'archivedAt',
+        'isUpcoming',
       ],
       where: ['isScaling'],
-      whereNot: ['isUpcoming'],
     }),
   ])
 
@@ -134,6 +141,11 @@ export async function getEcosystemEntry(
     (acc, curr) =>
       acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
+  )
+
+  const [upcomingProjects, liveProjects] = partition(
+    ecosystemProjects,
+    (p) => p.isUpcoming,
   )
 
   return {
@@ -163,7 +175,7 @@ export async function getEcosystemEntry(
       ecosystemProjects,
       allScalingProjects.length,
     ),
-    projects: ecosystemProjects
+    liveProjects: liveProjects
       .filter((p) => !p.archivedAt)
       .map((project) => {
         const entry = getScalingSummaryEntry(
@@ -182,10 +194,14 @@ export async function getEcosystemEntry(
         }
       })
       .sort(compareStageAndTvs),
-    milestones: getMilestones([ecosystem, ...ecosystemProjects]),
+    upcomingProjects: upcomingProjects.map(getScalingUpcomingEntry),
+    allMilestones: getMilestones([ecosystem, ...ecosystemProjects]),
+    ecosystemMilestones: getMilestones([ecosystem]),
     images: {
       buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
-      topDelegates: getStaticAsset(`/partners/governance-delegates.png`),
+      delegateToL2BEAT: getStaticAsset(
+        `/partners/governance-delegate-to-l2beat.png`,
+      ),
     },
   }
 }
@@ -224,7 +240,8 @@ function getGovernanceLinks(
   assert(bankImage, 'Bank image not found')
 
   return {
-    topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
+    delegateToL2BEAT:
+      ecosystem.ecosystemConfig.links.governanceDelegateToL2BEAT,
     proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
     bankImage,

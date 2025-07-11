@@ -62,7 +62,7 @@ export const termstructure: ScalingProject = {
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
     purposes: ['Payments', 'Exchange', 'Lending'],
     category: 'ZK Rollup',
-    stack: 'ZKsync Lite',
+    stacks: ['ZKsync Lite'],
     links: {
       websites: ['https://ts.finance/'],
       bridges: ['https://app.ts.finance/'],
@@ -79,9 +79,6 @@ export const termstructure: ScalingProject = {
     liveness: {
       explanation:
         'Term Structure is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
-    },
-    finality: {
-      finalizationPeriod: 0,
     },
   },
   config: {

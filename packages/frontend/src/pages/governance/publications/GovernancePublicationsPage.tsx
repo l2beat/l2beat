@@ -19,7 +19,7 @@ export function GovernancePublicationsPage({ publications, ...props }: Props) {
           <h1 className="mb-4 font-bold text-3xl md:hidden">
             Governance Publications
           </h1>
-          <p className="md:paragraph-18 paragraph-16">
+          <p className="text-paragraph-16 md:text-paragraph-18">
             Explore the L2BEAT Governance publications, and discover the latest
             insights, analyses, and updates on Layer 2 project governance,
             curated by our L2BEAT Governance Team. Empower your blockchain
@@ -48,7 +48,7 @@ function PublicationCard({
       href={`/governance/publications/${publication.id}`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
-        <p className="subtitle-12 text-purple-100 uppercase dark:text-pink-200">
+        <p className="text-purple-100 text-subtitle-12 uppercase dark:text-pink-200">
           {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}
         </p>

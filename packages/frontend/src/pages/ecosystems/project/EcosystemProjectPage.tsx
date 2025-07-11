@@ -3,14 +3,13 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { CssVariables } from '~/components/CssVariables'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
-import { TableFilters } from '~/components/table/filters/TableFilters'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
 import { EcosystemPageHeader } from './components/EcosystemPageHeader'
-import { EcosystemProjectsTable } from './components/EcosystemProjectsTable'
+import { EcosystemProjectPageTables } from './components/EcosystemProjectPageTables'
 import { EcosystemsActivityChart } from './components/charts/EcosystemsActivityChart'
 import { EcosystemsProjectsChart } from './components/charts/EcosystemsProjectsChart'
 import { EcosystemsTvsChart } from './components/charts/EcosystemsTvsChart'
@@ -62,14 +61,16 @@ export function EcosystemProjectPage({
                 />
                 <EcosystemsTvsChart
                   name={ecosystem.name}
-                  entries={ecosystem.projects}
+                  entries={ecosystem.liveProjects}
                   allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+                  ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6"
                 />
                 <EcosystemsActivityChart
                   name={ecosystem.name}
-                  entries={ecosystem.projects}
+                  entries={ecosystem.liveProjects}
                   allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+                  ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6"
                 />
                 <div className="col-span-12 grid gap-[--spacing] lg:hidden lg:grid-cols-2">
@@ -102,6 +103,7 @@ export function EcosystemProjectPage({
                 />
                 <EcosystemsProjectsChart
                   data={ecosystem.projectsChartData}
+                  ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6 min-[1440px]:col-span-12"
                 />
                 <EcosystemToken
@@ -124,7 +126,7 @@ export function EcosystemProjectPage({
                   />
                 </div>
                 <EcosystemMilestonesAndIncidents
-                  milestones={ecosystem.milestones}
+                  milestones={ecosystem.allMilestones}
                   className="col-span-12"
                 />
                 <EcosystemProjectsByRaas
@@ -133,19 +135,15 @@ export function EcosystemProjectPage({
                 />
                 <EcosystemGovernanceLinks
                   links={ecosystem.links.governance}
-                  topDelegatesBackgroundImage={ecosystem.images.topDelegates}
+                  delegateToL2BEATBackgroundImage={
+                    ecosystem.images.delegateToL2BEAT
+                  }
                   className="col-span-12 lg:col-span-8"
                 />
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />
               <TableFilterContextProvider>
-                <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
-                  <TableFilters entries={ecosystem.projects} />
-                </div>
-                <EcosystemProjectsTable
-                  entries={ecosystem.projects}
-                  ecosystemId={ecosystem.id}
-                />
+                <EcosystemProjectPageTables ecosystem={ecosystem} />
               </TableFilterContextProvider>
             </div>
           </div>

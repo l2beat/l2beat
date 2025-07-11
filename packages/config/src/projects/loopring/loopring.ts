@@ -57,7 +57,7 @@ export const loopring: ScalingProject = {
     description:
       'Loopring is a ZK Rollup exchange protocol for trading and payments.',
     purposes: ['NFT', 'Exchange'],
-    stack: 'Loopring',
+    stacks: ['Loopring'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://loopring.org'],
@@ -82,9 +82,6 @@ export const loopring: ScalingProject = {
     liveness: {
       explanation:
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -179,12 +176,6 @@ export const loopring: ScalingProject = {
         from: 'stateUpdates',
         to: 'proofSubmissions',
       },
-    },
-    finality: {
-      lag: 0,
-      type: 'Loopring',
-      minTimestamp: UnixTime(1616396742),
-      stateUpdate: 'disabled',
     },
   },
   dataAvailability: {

@@ -8,24 +8,24 @@ interface Props {
 export function OurApproachSection({ className }: Props) {
   return (
     <GovernanceCard mobileFull className={cn(className, 'h-min')}>
-      <div className="heading-24 md:heading-32">Our approach</div>
-      <p className="md:paragraph-15 paragraph-16 mt-6">
+      <div className="text-heading-24 md:text-heading-32">Our approach</div>
+      <p className="mt-6 text-paragraph-16 md:text-paragraph-15">
         We recognize that achieving successful decentralized governance stands
         as a vital challenge within the blockchain realm. Our goal is to
         actively contribute to governance across the Ethereum ecosystem,
         ensuring that L2 solutions evolve towards a{' '}
         <strong>more secure, decentralized, and trustworthy future</strong>.
       </p>
-      <p className="md:paragraph-15 paragraph-16 mt-4">
+      <p className="mt-4 text-paragraph-16 md:text-paragraph-15">
         For us, governance isn&apos;t just about casting a vote. The real magic
         happens during{' '}
         <strong>healthy debates and coming to conclusions together</strong>.
         Voting should just be the cherry on top of a great community-driven
         process.
       </p>
-      <div className="md:paragraph-15 paragraph-16 mt-4">
+      <div className="mt-4 text-paragraph-16 md:text-paragraph-15">
         As a governance delegate, we hold the following core values:
-        <ul className="md:paragraph-15 paragraph-16 mt-2 ml-6 list-disc">
+        <ul className="mt-2 ml-6 list-disc text-paragraph-16 md:text-paragraph-15">
           <li>
             <strong>Transparency & Open Communication:</strong> We believe in
             being open about our decision-making process and keeping the

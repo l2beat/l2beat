@@ -51,14 +51,6 @@ export const lisk: ScalingProject = opStackL2({
   ],
   l1StandardBridgePremintedTokens: ['LSK'],
   nonTemplateExcludedTokens: ['USDC', 'wstETH'],
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1714728791),
-    minTimestamp: UnixTime(1714746983), // first blob
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'analyze',
-  },
   // not ready yet, check this PR https://github.com/ethereum-optimism/superchain-registry/pull/234 or the prepared links in `DERIVATION.OPSTACK('LISK')`
   // stateDerivation: DERIVATION.OPSTACK('LISK'),
   isNodeAvailable: true,
