@@ -31,13 +31,12 @@ interface Props {
   groups: NavGroup[]
   logoLink: string
   sideLinks: NavLink[]
-  topNavbar: boolean
 }
 
-export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
+export function NavSidebar({ groups, logoLink, sideLinks }: Props) {
   const pathname = usePathname()
   return (
-    <Sidebar topNavbar={topNavbar}>
+    <Sidebar>
       <SidebarHeader>
         <div className="flex h-[38px] flex-row items-center justify-between">
           <a href={logoLink}>

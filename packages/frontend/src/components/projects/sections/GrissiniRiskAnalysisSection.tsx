@@ -1,4 +1,4 @@
-import { InlinedNoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/NoBridgeGrissiniDetailsPlaceholder'
+import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/NoBridgeGrissiniDetailsPlaceholder'
 import type { RosetteValue } from '~/components/rosette/types'
 import { Markdown } from '../../markdown/Markdown'
 import { RiskBanner } from '../RiskBanner'
@@ -39,7 +39,7 @@ export function GrissiniRiskAnalysisSection({
       {bridgeGrissiniValues && bridgeGrissiniValues.length > 0 && (
         <RiskValues grissiniValues={bridgeGrissiniValues} />
       )}
-      {isNoBridge && <InlinedNoBridgeGrissiniDetailsPlaceholder />}
+      {isNoBridge && <NoBridgeGrissiniDetailsPlaceholder />}
     </ProjectSection>
   )
 }
@@ -53,7 +53,7 @@ function RiskValues({
     <div>
       {Object.values(grissiniValues).map((value, key) => (
         <div key={key} className="mb-6 flex flex-col gap-2">
-          <RiskBanner key={value.name} {...value} />
+          <RiskBanner key={value.name} {...value} size="large" />
         </div>
       ))}
     </div>

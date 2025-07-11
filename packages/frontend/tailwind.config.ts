@@ -175,35 +175,36 @@ const config: Config = {
         '18px',
         {
           lineHeight: '150%',
-          fontWeight: '400',
         },
       ],
       'paragraph-16': [
         '16px',
         {
           lineHeight: '150%',
-          fontWeight: '400',
         },
       ],
       'paragraph-15': [
         '15px',
         {
           lineHeight: '150%',
-          fontWeight: '400',
         },
       ],
       'paragraph-14': [
         '14px',
         {
-          lineHeight: '145%',
-          fontWeight: '400',
+          lineHeight: '140%',
         },
       ],
       'paragraph-13': [
         '13px',
         {
-          lineHeight: '140%',
-          fontWeight: '400',
+          lineHeight: '130%',
+        },
+      ],
+      'paragraph-12': [
+        '12px',
+        {
+          lineHeight: '125%',
         },
       ],
     },
@@ -395,7 +396,8 @@ const config: Config = {
       sm: '550px',
       md: '768px',
       lg: '1200px',
-      xl: '1920px',
+      xl: '1440px',
+      '2xl': '1920px',
     },
     zIndex: {
       1: '1',

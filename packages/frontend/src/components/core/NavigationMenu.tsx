@@ -31,7 +31,7 @@ const NavigationMenuList = ({
   <NavigationMenuPrimitive.List
     ref={ref}
     className={cn(
-      'group flex flex-1 list-none flex-wrap items-center gap-1',
+      'group flex flex-1 list-none flex-wrap items-center gap-1.5',
       className,
     )}
     {...props}

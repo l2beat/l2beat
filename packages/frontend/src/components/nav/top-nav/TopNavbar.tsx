@@ -50,10 +50,10 @@ export function TopNavbar({
           })}
         </ul>
         <div className="flex h-full items-center gap-5">
-          <ul className="hidden items-center gap-4 xl:flex">
+          <ul className="2xlflex hidden items-center gap-4">
             <SocialLinks />
           </ul>
-          <VerticalSeparator className="hidden h-8 max-md:border-none xl:block" />
+          <VerticalSeparator className="2xlblock hidden h-8 max-md:border-none" />
           <ul className="flex h-full items-center">
             {sideLinks.map((link) => (
               <TopNavLink key={link.title} href={link.href}>

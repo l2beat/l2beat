@@ -110,7 +110,7 @@ export function L3RiskAnalysisSection({
       </div>
       <div className="space-y-6">
         {(combined ?? l3.risks).map((value) => (
-          <RiskBanner key={value.name} {...value} />
+          <RiskBanner key={value.name} {...value} size="large" />
         ))}
       </div>
     </ProjectSection>

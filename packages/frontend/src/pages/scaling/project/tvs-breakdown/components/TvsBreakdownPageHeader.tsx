@@ -15,7 +15,7 @@ export function TvsBreakdownPageHeader({
   tvsBreakdownTimestamp,
 }: Props) {
   return (
-    <div className="flex flex-col border-divider px-4 py-6 max-md:border-b max-md:bg-header-primary md:mt-[38px] md:px-0">
+    <div className="flex flex-col border-divider px-4 py-6 max-md:mt-px max-md:border-b max-md:bg-header-primary md:px-0">
       <Breadcrumbs
         className="mb-4"
         items={[

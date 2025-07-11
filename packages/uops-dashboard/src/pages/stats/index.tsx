@@ -66,7 +66,7 @@ export default function StatsPage() {
         <h1 className="mt-4 mb-4 text-center font-extrabold text-4xl text-gray-900 leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">
           Block statistics
         </h1>
-        <p className="mb-6 text-center font-normal text-gray-500 text-lg sm:px-16 lg:text-xl xl:px-48 dark:text-gray-400">
+        <p className="2xlpx-48 mb-6 text-center font-normal text-gray-500 text-lg sm:px-16 lg:text-xl dark:text-gray-400">
           Select the chain and provide the number of blocks to analyze. The tool
           will fetch the data and generate statistics by comparing overall
           number of transactions to user operations. Subsequent clicks on Go!

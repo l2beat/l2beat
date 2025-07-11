@@ -1,3 +1,5 @@
+import { cn } from '~/utils/cn'
+
 import { ChevronIcon } from '~/icons/Chevron'
 import { LiveIndicator } from '../LiveIndicator'
 
@@ -10,22 +12,22 @@ interface Project {
 interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
+  className?: string
 }
 
-export function ProjectHeader({ project, ongoingAnomaly }: Props) {
+export function ProjectHeader({ project, ongoingAnomaly, className }: Props) {
   return (
     <div className="flex gap-6 max-md:flex-col md:items-center">
-      <h1 className="flex items-center justify-start gap-3">
+      <h1 className={cn('flex items-center justify-start gap-3', className)}>
         {project.slug && (
           <img
-            className="max-md:size-8"
-            width={40}
-            height={40}
+            width={32}
+            height={32}
             src={project.icon}
             alt={`${project.name} logo`}
           />
         )}
-        <span className="!leading-none font-bold text-3xl md:text-4xl">
+        <span className="!leading-none font-bold text-[28px]">
           {project.name}
         </span>
       </h1>

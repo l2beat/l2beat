@@ -35,7 +35,7 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
           )}
         </div>
         <div className="max-md:hidden">
-          <DesktopProjectLinks projectLinks={links} variant="primary" />
+          <DesktopProjectLinks projectLinks={links} />
         </div>
       </div>
       <div className="ml-auto flex gap-3 max-md:hidden">

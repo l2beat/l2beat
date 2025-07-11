@@ -16,7 +16,6 @@ export interface TokenBreakdownProps {
 
 export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
   associatedTokenSymbols: string[]
-
   tvsWarnings: WarningWithSentiment[]
 }
 
