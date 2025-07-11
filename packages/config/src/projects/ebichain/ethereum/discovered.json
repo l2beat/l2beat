@@ -1,7 +1,7 @@
 {
   "name": "ebichain",
   "chain": "ethereum",
-  "blockNumber": 22615664,
+  "blockNumber": 22895934,
   "configHash": "0x657b5bb9e3c84a3e9e6fdf56bd7c5f95feedd720b41a28f464d8d6f6c035f7bf",
   "entries": [
     {
@@ -355,7 +355,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
