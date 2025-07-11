@@ -16,6 +16,7 @@ import type {
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
+import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
 import { DaIndexer } from './DaIndexer'
 
@@ -52,6 +53,51 @@ describe(DaIndexer.name, () => {
       const safeHeight = await updateCallback()
 
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
+      expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        UnixTime.toStartOf(100, 'hour'),
+        UnixTime.toEndOf(200, 'hour'),
+      )
+      expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
+        blobs,
+        previousRecords,
+        configurations,
+      )
+
+      expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
+
+      expect(safeHeight).toEqual(150)
+    })
+
+    it('fetches blobs from cache, generates records, saves metrics to DB', async () => {
+      const mockInbox = EthereumAddress.random()
+      const configurations = [
+        config('project-a', mockInbox),
+        config('project-b'),
+      ]
+      const blobs = [blob(100, 100_000), blob(200, 200_000)]
+      const previousRecords = [record('project', 100, 100_000)]
+      const generatedRecords = [record('project', 100, 400_000)]
+
+      const { indexer, repository, daService, daProvider, blobService } =
+        mockIndexer({
+          configurations,
+          blobs,
+          previousRecords,
+          generatedRecords,
+          batchSize: 50,
+          useBlobService: true,
+        })
+
+      const updateCallback = await indexer.multiUpdate(
+        100,
+        200,
+        toIndexerConfigurations(configurations),
+      )
+      const safeHeight = await updateCallback()
+
+      expect(daProvider.getBlobs).not.toHaveBeenCalled()
+      expect(blobService!.get).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'hour'),
@@ -160,6 +206,7 @@ function mockIndexer($: {
   blobs?: DaBlob[]
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
+  useBlobService?: boolean
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigurationId: mockFn().resolvesTo({}),
@@ -174,6 +221,12 @@ function mockIndexer($: {
   const daProvider = mockObject<DaProvider>({
     getBlobs: async () => $.blobs ?? [], // Empty response
   })
+
+  const blobService = $.useBlobService
+    ? mockObject<BlobService>({
+        get: mockFn().resolvesTo($.blobs ?? []), // Empty response
+      })
+    : undefined
 
   const indexer = new DaIndexer({
     configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
@@ -192,9 +245,10 @@ function mockIndexer($: {
     db: mockDatabase({
       dataAvailability: repository,
     }),
+    blobService,
   })
 
-  return { repository, indexer, daService, daProvider }
+  return { repository, indexer, daService, daProvider, blobService }
 }
 
 function config(project: string, inbox?: string): BlockDaIndexedConfig {
