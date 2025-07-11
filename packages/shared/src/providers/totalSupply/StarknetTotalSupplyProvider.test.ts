@@ -68,9 +68,9 @@ describe(StarknetTotalSupplyProvider.name, () => {
         Logger.SILENT,
       )
 
-      await expect(
+      expect( () =>
         totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith(`Missing starknet client for ${CHAIN}`)
+      ).toThrow(`Missing starknet client for ${CHAIN}`)
     })
   })
 })
