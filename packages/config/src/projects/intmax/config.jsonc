@@ -9,6 +9,11 @@
       "initialAddresses": [
         "0xF65e73aAc9182e353600a916a6c7681F810f79C3"
       ]
+    },
+    "scroll": {
+      "initialAddresses": [
+        "0x16f4BFeb925e748ef4Af8ce96E48d4B78Ec9da47"
+      ]
     }
   }
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7d6838e7da0edaafcbe2e517afc19f54ee26e9af
+Generated with discovered.json: 0x200baadec5aec8a6b62ca800d83b2f028e1fddd3
 
-# Diff at Tue, 08 Jul 2025 12:41:36 GMT:
+# Diff at Fri, 11 Jul 2025 10:42:01 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 22872700
+- current block number: 22894361
 
 ## Description
 
@@ -32,6 +32,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract  (0x7153803C06d6a36D6d91aEB3C1ed8e5b934Df601)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xA3C2a579af4cF3853172058e5c76d273DC1542DD)
     +++ description: None
 ```
 

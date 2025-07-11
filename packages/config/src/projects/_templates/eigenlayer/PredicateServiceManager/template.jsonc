@@ -1,12 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PredicateServiceManager",
-  "ignoreMethods": [
-    "getRestakeableStrategies",
-    "strategies",
-    "delegationManager",
+  "ignoreRelatives": [
     "avsDirectory",
-    "stakeRegistry"
+    "stakeRegistry",
+    "delegationManager",
+    "strategies",
+    "getRestakeableStrategies"
   ],
   "fields": {
     "intmaxThreshold": {
