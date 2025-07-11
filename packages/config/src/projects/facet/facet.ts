@@ -3,15 +3,14 @@ import {
   DATA_ON_CHAIN,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
-import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 
 const discovery = new ProjectDiscovery('facet')
 
