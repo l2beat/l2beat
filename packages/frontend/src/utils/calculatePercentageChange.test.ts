@@ -36,6 +36,17 @@ describe('formatPercent', () => {
     expect(formatPercent(1)).toEqual('100%')
   })
 
+  it('formats close values correctly', () => {
+    const values = [
+      { value: 0.9999943793529054, expected: '99.9%' },
+      { value: 0.0999943793529054, expected: '9.99%' },
+    ]
+
+    for (const { value, expected } of values) {
+      expect(formatPercent(value)).toEqual(expected)
+    }
+  })
+
   it('formats values greater than or equal to 10 with one decimal place', () => {
     expect(formatPercent(0.15)).toEqual('15.0%')
   })

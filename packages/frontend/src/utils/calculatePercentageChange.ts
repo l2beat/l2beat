@@ -26,5 +26,7 @@ export function formatPercent(value: number) {
 }
 
 function fixedPercent(value: number, digits: number) {
-  return value.toFixed(digits).slice(0, 4)
+  return (Math.floor(value * 10 ** digits) / 10 ** digits)
+    .toFixed(digits)
+    .slice(0, 4)
 }
