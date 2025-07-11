@@ -6,7 +6,7 @@ setup:
   config:
     NODE_ENV: production
 run:
-  web:
+  frontend:
     command:
     - node ./dist/server/index.js
     image: frontend
