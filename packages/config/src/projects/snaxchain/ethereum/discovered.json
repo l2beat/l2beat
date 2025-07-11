@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
   "chain": "ethereum",
-  "blockNumber": 22615678,
+  "blockNumber": 22895949,
   "configHash": "0x7b83fa8b98cdfaf487bbe9f580db5fb82b871dc529558b78b65939e20fdc773f",
   "entries": [
     {
@@ -325,7 +325,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 72,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -509,7 +509,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -627,7 +627,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 17,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -820,7 +820,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 29,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1013,7 +1013,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 107,
+        "nonce": 108,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1230,7 +1230,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 29,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1410,10 +1410,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 12636000,
-        "latestOutputIndex": 584,
-        "nextBlockNumber": 12657600,
-        "nextOutputIndex": 585,
+        "latestBlockNumber": 14320800,
+        "latestOutputIndex": 662,
+        "nextBlockNumber": 14342400,
+        "nextOutputIndex": 663,
         "proposer": "0x85C73d8F7a3C95667779E0d9b8104982A5C1d04e",
         "PROPOSER": "0x85C73d8F7a3C95667779E0d9b8104982A5C1d04e",
         "startingBlockNumber": 0,

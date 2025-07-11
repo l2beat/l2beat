@@ -1,7 +1,7 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 22615668,
+  "blockNumber": 22895938,
   "configHash": "0x7a34f610707ec2de8d2945e5a6dbfa437dc08208b8997b132f534e60674820aa",
   "entries": [
     {
@@ -372,7 +372,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

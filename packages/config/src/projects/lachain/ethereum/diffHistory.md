@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3e81b28325c7ff3142d0a905d05f0ee7b5ee1b35
+
+# Diff at Fri, 11 Jul 2025 13:12:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6f02976fdd9466dab085b947bf3c4d28ccef1010 block: 22593196
+- current block number: 22896151
+
+## Description
+
+v28 upgrade planned.
+
+## Watched changes
+
+```diff
+    contract ChainAdminOwnable (0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.2:
++        {"_protocolVersion":120259084288,"_upgradeTimestamp":1752159600}
+    }
+```
+
 Generated with discovered.json: 0x2ec15ec764ca035425b81ac0c096959a217e37c3
 
 # Diff at Fri, 04 Jul 2025 12:19:06 GMT:

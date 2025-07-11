@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xb992071e3fb2ebd4b25808d363047055ac9f7455
+
+# Diff at Fri, 11 Jul 2025 12:28:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6f02976fdd9466dab085b947bf3c4d28ccef1010 block: 22744036
+- current block number: 22895937
+
+## Description
+
+operator address removed.
+
+## Watched changes
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      values.GRAVITY_STAKERS.0.0:
+-        "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.6:
+-        "0xBa369bd77a346babCd282cB1a015194E8ec54542"
+      values.setIsBatchPosterCount:
+-        2
++        3
+    }
+```
+
+```diff
+    contract RollupProxy (0xf993AF239770932A0EDaB88B6A5ba3708Bd58239) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        3
+      values.stakerCount:
+-        2
++        1
+      values.validators.3:
+-        "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634"
+    }
+```
+
 Generated with discovered.json: 0x909753b169d529010e1ceedc42f46ecd6c8a7948
 
 # Diff at Fri, 04 Jul 2025 12:19:01 GMT:

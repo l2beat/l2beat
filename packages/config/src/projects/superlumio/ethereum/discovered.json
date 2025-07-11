@@ -1,7 +1,7 @@
 {
   "name": "superlumio",
   "chain": "ethereum",
-  "blockNumber": 22615679,
+  "blockNumber": 22895950,
   "configHash": "0x3f080c31cb3c324fa10501bd5967a8f3b51290de8ada39a031d13d6851082b7f",
   "entries": [
     {
@@ -144,7 +144,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -302,8 +302,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22602985
+          "prevBoughtGas": 200000,
+          "prevBlockNum": 22758142
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xFb252d6199AEfeE6938a1c57213AAd96ecD2650c",
@@ -609,10 +609,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 19915200,
-        "latestOutputIndex": 921,
-        "nextBlockNumber": 19936800,
-        "nextOutputIndex": 922,
+        "latestBlockNumber": 21621600,
+        "latestOutputIndex": 1000,
+        "nextBlockNumber": 21643200,
+        "nextOutputIndex": 1001,
         "PROPOSER": "0xb6E2Eee22b684f6AAb2083097F7E874994bA930e",
         "startingBlockNumber": 0,
         "startingTimestamp": 1708984631,

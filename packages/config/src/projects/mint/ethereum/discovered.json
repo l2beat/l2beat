@@ -1,7 +1,7 @@
 {
   "name": "mint",
   "chain": "ethereum",
-  "blockNumber": 22615670,
+  "blockNumber": 22895941,
   "configHash": "0xa41cf58fafd66a4404c852bfd9671cd19d4bcf5ef1bd42660409880cc0d666b2",
   "entries": [
     {
@@ -170,7 +170,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -224,7 +224,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 22551765
+          "prevBlockNum": 22891498
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xC975862927797812371A9Fb631f83F8f5e2240D5",
@@ -307,10 +307,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 16610400,
-        "latestOutputIndex": 768,
-        "nextBlockNumber": 16632000,
-        "nextOutputIndex": 769,
+        "latestBlockNumber": 18295200,
+        "latestOutputIndex": 846,
+        "nextBlockNumber": 18316800,
+        "nextOutputIndex": 847,
         "PROPOSER": "0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA",
         "startingBlockNumber": 0,
         "startingTimestamp": 1715608931,
@@ -519,7 +519,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634204",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292634209",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
