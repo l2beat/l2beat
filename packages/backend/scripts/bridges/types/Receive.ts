@@ -10,6 +10,8 @@ export interface Receive {
   amount: bigint
   /** Short name of the origin chain */
   origin: string
+  /** Block in which transaction was included */
+  blockNumber?: bigint
   /** Transaction hash of a transaction in which event was emitted */
   txHash?: string
   /** Custom property to differentiate between events from the same bridge */
