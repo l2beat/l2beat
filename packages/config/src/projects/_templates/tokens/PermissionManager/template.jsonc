@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "admins": {
+      "description": "group 0 members are the full admins and can act via this contract. other groups are used as transfer whitelists for example.",
+      "handler": {
+        "type": "event",
+        "select": "user",
+        "add": {
+          "event": "GroupAdded",
+          "where": ["=", "#group", 0]
+        },
+        "remove": {
+          "event": "GroupRemoved",
+          "where": ["=", "#group", 0]
+        }
+      }
+    }
+  }
+}

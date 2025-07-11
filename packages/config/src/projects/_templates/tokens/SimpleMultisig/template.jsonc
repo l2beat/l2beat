@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["ownersArr", "owners", "threshold"],
+  "ignoreInWatchMode": ["nonce"],
+  "fields": {
+    "$members": {
+      "handler": {
+        "type": "call",
+        "method": "owners",
+        "args": []
+      }
+    },
+    "$threshold": {
+      "handler": {
+        "type": "call",
+        "method": "threshold",
+        "args": []
+      }
+    }
+  }
+}

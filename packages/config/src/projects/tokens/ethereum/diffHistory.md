@@ -1,3 +1,176 @@
+Generated with discovered.json: 0x3c5ddfbb92b9469779c8e5e8dceaddcdef8191b2
+
+# Diff at Thu, 10 Jul 2025 15:33:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f69ff944dc2501a54a7c05f54d37308d5262553d block: 22615727
+- current block number: 22889418
+
+## Description
+
+lido update: 
+- recovery vault unset (was set to Lido DAO Agent.)
+- Lido Withdrawal vault now admin'd by Lido DAO Agent
+
+add PAXG
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract Voting (0x2e59A20f205bB85a89C53f1936454680651E618e)
+    +++ description: None
+```
+
+```diff
+    contract Lido Dao Agent (0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f","role":"admin"}
+    }
+```
+
+```diff
+    contract LegacyOracle (0x442af784A788A5bd6F42A01Ebe9F287a871243fb) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Lido DAO Token (0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32)
+    +++ description: None
+```
+
+```diff
+    contract EVMScriptRegistry (0x853cc0D5917f49B57B8e9F89e491F5E18919093A) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MiniMeTokenFactory (0x909d05F384D0663eD4BE59863815aB43b4f347Ec)
+    +++ description: None
+```
+
+```diff
+    contract ACL (0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract NodeOperatorsRegistry (0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Kernel (0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc) {
+    +++ description: None
+      values.getRecoveryVault:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "0x0000000000000000000000000000000000000000"
+      values.recoveryVaultAppId:
+-        "0x701a4fd1f5174d12a0f1d9ad2c88d0ad11ab6aad0ac72b7d9ce621815f8016a9"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract WithdrawalVault (0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f) {
+    +++ description: None
+      values.$admin:
+-        "0x2e59A20f205bB85a89C53f1936454680651E618e"
++        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.proxy_getAdmin:
+-        "0x2e59A20f205bB85a89C53f1936454680651E618e"
++        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TokenManager (0xf73a1260d222f447210581DDf212D915c09a3249)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@22615727/Lido DAO Token.sol => /dev/null |  496 ------
+ .../MiniMeTokenFactory.sol => /dev/null            |   38 -
+ .../AppProxyUpgradeable.p.sol => /dev/null         |  241 ---
+ .../TokenManager/TokenManager.sol => /dev/null     | 1209 ---------------
+ .../Voting/AppProxyUpgradeable.p.sol => /dev/null  |  241 ---
+ .../.flat@22615727/Voting/Voting.sol => /dev/null  | 1639 --------------------
+ 6 files changed, 3864 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615727 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SimpleMultiSig (0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SimpleMultiSig (0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SimpleMultiSig (0x38699d04656fF537ef8671b6b595402ebDBdf6f4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Paxos Gold Token (0x45804880De22913dAFE09f4980848ECE6EcbAf78)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9af9ae61be52d74c0c9f9f0702de8de8e58778c4
 
 # Diff at Fri, 04 Jul 2025 12:19:26 GMT:
