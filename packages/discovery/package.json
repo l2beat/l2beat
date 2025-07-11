@@ -17,7 +17,7 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "generate-schemas": "node -r esbuild-register schemas/generate.ts"
+    "generate-schemas": "node -r esbuild-register src/cli.ts generate-schemas"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",

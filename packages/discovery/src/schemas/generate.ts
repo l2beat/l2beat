@@ -1,29 +1,28 @@
-import { writeFileSync } from 'fs'
-import { formatJson } from '@l2beat/shared-pure'
 import { type Parser, toJsonSchema, v } from '@l2beat/validate'
 import {
   _ColorConfig,
   _ColorContract,
   _ColorContractField,
-} from '../src/discovery/config/ColorConfig'
+} from '../discovery/config/ColorConfig'
 import {
   _ContractPermission,
   _ContractPermissionField,
   _PermissionsConfig,
-} from '../src/discovery/config/PermissionConfig'
+} from '../discovery/config/PermissionConfig'
 import {
   DiscoveryCustomType,
   _StructureConfig,
   _StructureContract,
   _StructureContractField,
-} from '../src/discovery/config/StructureConfig'
+} from '../discovery/config/StructureConfig'
+import { formatJson } from '@l2beat/shared-pure'
 
-function generateAndSaveSchema<T>(baseSchema: Parser<T>, filename: string) {
-  const schema = toJsonSchema(baseSchema)
-  writeFileSync(filename, formatJson(schema))
+export interface Schema {
+  filepath: string
+  schema: string
 }
 
-function main() {
+export async function generateAllSchemas(): Promise<Schema[]> {
   const MergedField = v.object({
     ..._ContractPermissionField,
     ..._ColorContractField,
@@ -56,8 +55,14 @@ function main() {
     chains: v.record(v.string(), ChainConfig),
   })
 
-  generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')
-  generateAndSaveSchema(MergedContract, 'schemas/contract.v2.schema.json')
+  return [
+    {
+      filepath: 'schemas/config.v2.schema.json',
+      schema: formatJson(toJsonSchema((MergedConfig))),
+    },
+    {
+      filepath: 'schemas/contract.v2.schema.json',
+      schema: formatJson(toJsonSchema((MergedContract))),
+    },
+  ]
 }
-
-main()
