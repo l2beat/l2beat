@@ -1,6 +1,6 @@
-import { generateAllSchemas } from './generate'
 import { readFileSync } from 'fs'
 import { assert } from '@l2beat/shared-pure'
+import { generateAllSchemas } from './generate'
 
 describe('schemas', async () => {
   const schemas = await generateAllSchemas()
