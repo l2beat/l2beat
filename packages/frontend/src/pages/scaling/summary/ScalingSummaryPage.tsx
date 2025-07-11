@@ -28,7 +28,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <MainPageHeader>Summary</MainPageHeader>
-          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+          <div className="grid grid-cols-2 gap-4 max-lg:hidden ">
             <PrimaryCard>
               <ScalingSummaryTvsChart
                 unit={SCALING_SUMMARY_UNIT}

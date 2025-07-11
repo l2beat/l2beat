@@ -72,13 +72,13 @@ export function MonthlyUpdateActivityChart({
   const range = getChartRange(chartData)
 
   return (
-    <PrimaryCard className="!rounded-lg border border-divider">
+    <PrimaryCard className="rounded-lg! border border-divider">
       <Header range={range} stats={stats} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />

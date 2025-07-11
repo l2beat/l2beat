@@ -25,7 +25,7 @@ export function ProjectHeader({ project, ongoingAnomaly }: Props) {
             alt={`${project.name} logo`}
           />
         )}
-        <span className="!leading-none font-bold text-3xl md:text-4xl">
+        <span className="font-bold text-3xl leading-none! md:text-4xl">
           {project.name}
         </span>
       </h1>

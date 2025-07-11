@@ -243,7 +243,7 @@ function BasicDaTableRow<T extends BasicEntry>({
                   highlightedSlug === row.original.slug &&
                   'animate-row-highlight-no-opacity',
                 groupParams?.isFirstInGroup && 'pl-6',
-                groupParams?.isLastInGroup && '!pr-6',
+                groupParams?.isLastInGroup && 'pr-6!',
                 cell.column.getCanSort() && meta?.align === undefined
                   ? groupParams?.isFirstInGroup
                     ? 'pl-10'

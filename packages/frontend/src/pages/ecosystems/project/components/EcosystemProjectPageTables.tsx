@@ -37,7 +37,7 @@ export function EcosystemProjectPageTables({ ecosystem }: Props) {
       />
       <DirectoryTabs
         defaultValue="live"
-        className="!p-0 max-md:-mx-4 rounded-b-none"
+        className="max-md:-mx-4 rounded-b-none p-0!"
       >
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="live">

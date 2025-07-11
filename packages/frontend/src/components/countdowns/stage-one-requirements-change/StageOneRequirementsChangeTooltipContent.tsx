@@ -27,7 +27,7 @@ export function StageOneRequirementsChangeTooltipContent({
         className="mx-auto w-full py-1"
         withBackground
       />
-      <p className="!mt-4 font-bold text-label-value-14 text-primary">
+      <p className="mt-4! font-bold text-label-value-14 text-primary">
         Reasons
       </p>
       <div className="flex gap-2">

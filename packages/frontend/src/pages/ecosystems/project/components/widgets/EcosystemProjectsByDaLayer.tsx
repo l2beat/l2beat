@@ -35,7 +35,7 @@ export function EcosystemProjectsByDaLayer({
         </table>
         <div className="sm:-mt-2 relative mt-3 rounded bg-surface-secondary p-4">
           <div className="-translate-x-full absolute top-2.5 left-0 max-sm:hidden">
-            <div className="size-0 border-y-8 border-y-transparent border-r-[10px] border-r-surface-secondary"></div>
+            <div className="size-0 border-y-8 border-y-transparent border-r-10 border-r-surface-secondary"></div>
           </div>
           <div className="flex flex-col items-center">
             <h3 className="font-medium text-2xs text-secondary">
@@ -49,8 +49,8 @@ export function EcosystemProjectsByDaLayer({
           <ProgressBar
             progress={blobsData.blobsShare * 100}
             className="h-3 w-full"
-            progressClassName="bg-[--ecosystem-primary]"
-            trackClassName="border-[--ecosystem-secondary]"
+            progressClassName="bg-(--ecosystem-primary)"
+            trackClassName="border-(--ecosystem-secondary)"
           />
           <p className="mt-1 text-center text-2xs text-secondary">
             {formatPercent(blobsData.blobsShare)} of total blob size
