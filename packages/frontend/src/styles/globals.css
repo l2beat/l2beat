@@ -473,8 +473,6 @@ body:has(.reading) {
   --transition-property-height: height;
   --transition-property-max-height: max-height;
 
-  --bg-gradient-radial: radial-gradient(closest-side, var(--tw-gradient-stops));
-
   --animate-beat: beat 5s ease-in-out infinite forwards;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
