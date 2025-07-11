@@ -68,7 +68,7 @@ describe(L2CostsPricesIndexer.name, () => {
       expect(result).toEqual(to)
     })
 
-    it('shifts from if time range greather than MAX_DAYS_FOR_ONE_CALL', async () => {
+    it('shifts from if time range greater than MAX_DAYS_FOR_ONE_CALL', async () => {
       const from =
         NOW -
         CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY -
