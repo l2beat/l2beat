@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
-import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'

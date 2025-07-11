@@ -1,16 +1,16 @@
-import { readdirSync } from 'fs'
-import path from 'path'
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import {
-  type Type,
   command,
   number,
   option,
   positional,
   string,
   subcommands,
+  type Type,
 } from 'cmd-ts'
+import { readdirSync } from 'fs'
+import path from 'path'
 import {
   DIFFING_MODES,
   DISPLAY_MODES,
@@ -21,7 +21,7 @@ import {
 import { Directory } from './types'
 
 export const DiffingModeType: Type<string, DiffingMode> = {
-  async from(str): Promise<DiffingMode> {
+  from(str): Promise<DiffingMode> {
     return new Promise((resolve, reject) => {
       if (!DIFFING_MODES.includes(str as DiffingMode)) {
         reject(new Error(`Diffing modes are: ${DIFFING_MODES.join(', ')}`))
@@ -32,7 +32,7 @@ export const DiffingModeType: Type<string, DiffingMode> = {
 }
 
 export const DisplayModeType: Type<string, DisplayMode> = {
-  async from(str): Promise<DisplayMode> {
+  from(str): Promise<DisplayMode> {
     return new Promise((resolve, reject) => {
       if (!DISPLAY_MODES.includes(str as DisplayMode)) {
         reject(new Error(`Display modes are: ${DISPLAY_MODES.join(', ')}`))

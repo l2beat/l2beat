@@ -5,12 +5,11 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
 import { type providers, utils } from 'ethers'
+import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 import { getAdmin, getImplementation } from './Eip1967Proxy'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)
@@ -77,7 +76,7 @@ function mergeLogs(
   }
 
   while (lhi < lhs.length) {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const leftLog = lhs[lhi]!
     lhi += 1
     lastLeftImpl = abi.parseLog(leftLog).args.implementation
@@ -92,7 +91,7 @@ function mergeLogs(
   }
 
   while (rhi < rhs.length) {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const rightLog = rhs[rhi]!
     rhi += 1
     lastRightImpl = abi.parseLog(rightLog).args.implementation

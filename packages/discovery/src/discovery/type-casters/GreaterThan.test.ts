@@ -49,7 +49,7 @@ const testData: TestData[] = [
 
 describe('GreaterThan', () => {
   for (const data of testData) {
-    it(`should cast a number to a ContractValue`, () => {
+    it('should cast a number to a ContractValue', () => {
       const result = GreaterThan.cast(
         {
           value: data.value,

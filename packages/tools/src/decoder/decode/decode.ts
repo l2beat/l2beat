@@ -9,11 +9,11 @@ export function decode(data: `0x${string}`, abi: string[]): DecodedResult {
     try {
       if (abiItem.startsWith('function')) {
         return decodeFunction(data, abiItem)
-      } else if (abiItem === 'plugin:multisend') {
-        return decodeMultisend(data)
-      } else {
-        return decodeParameters(data, abiItem)
       }
+      if (abiItem === 'plugin:multisend') {
+        return decodeMultisend(data)
+      }
+      return decodeParameters(data, abiItem)
     } catch (e) {
       console.error(`Error while decoding: ${abiItem}`, e)
       continue

@@ -3,8 +3,7 @@ import type {
   ContractPermission,
   RawPermissionConfiguration,
 } from '../config/PermissionConfig'
-import type { StructureEntry } from '../output/types'
-import type { ContractValue } from '../output/types'
+import type { ContractValue, StructureEntry } from '../output/types'
 import { get$Admins, toAddressArray } from '../utils/extractors'
 import { interpolateString } from '../utils/interpolateString'
 import { interpolateModelTemplate } from './interpolate'

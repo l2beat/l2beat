@@ -29,7 +29,7 @@ export class TotalSupplyProvider {
             if (r.success === false) {
               this.logger
                 .tag({ chain })
-                .warn(`Issue with totalSupply fetching`, {
+                .warn('Issue with totalSupply fetching', {
                   token: tokens[i],
                   blockNumber,
                 })
@@ -37,24 +37,23 @@ export class TotalSupplyProvider {
             }
             return BigInt(r.data.toString())
           })
-        } else {
-          return Promise.all(
-            calls.map(async (c, i) => {
-              try {
-                const res = await client.call(c, blockNumber)
-                return res.toString() === '0x' ? 0n : BigInt(res.toString())
-              } catch {
-                this.logger
-                  .tag({ chain })
-                  .warn(`Issue with totalSupply fetching`, {
-                    token: tokens[i],
-                    blockNumber,
-                  })
-                return 0n
-              }
-            }),
-          )
         }
+        return Promise.all(
+          calls.map(async (c, i) => {
+            try {
+              const res = await client.call(c, blockNumber)
+              return res.toString() === '0x' ? 0n : BigInt(res.toString())
+            } catch {
+              this.logger
+                .tag({ chain })
+                .warn('Issue with totalSupply fetching', {
+                  token: tokens[i],
+                  blockNumber,
+                })
+              return 0n
+            }
+          }),
+        )
       } catch (error) {
         if (i === clients.length - 1) throw error
       }

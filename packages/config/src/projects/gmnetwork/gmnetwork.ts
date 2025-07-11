@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -126,11 +126,11 @@ However, there is a mechanism that allows users to challenge unavailability of d
       risks: [
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate and there are no challengers.',
         },
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.',
         },
       ],
     },

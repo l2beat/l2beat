@@ -2,7 +2,6 @@ import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
 import { AreaChart, type TooltipProps } from 'recharts'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -17,6 +16,7 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'

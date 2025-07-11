@@ -63,7 +63,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   },
   removeEditor: (editorId: string) =>
     set((state) => {
-      const { [editorId]: removed, ...editors } = state.editors
+      const { [editorId]: _, ...editors } = state.editors
       return { editors }
     }),
   setDiffEditor: (editorId: string, editor: DiffEditor) =>
@@ -83,7 +83,7 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   showRange: (address: string, range: Range | undefined) =>
     set((state) => {
       if (range === undefined) {
-        const { [address]: removed, ...restRanges } = state.ranges
+        const { [address]: _, ...restRanges } = state.ranges
         return { ranges: restRanges }
       }
       return { ranges: { ...state.ranges, [address]: range } }

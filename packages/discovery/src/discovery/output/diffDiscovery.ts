@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
-import { type FieldDiff, diffContracts } from './diffContracts'
+import { diffContracts, type FieldDiff } from './diffContracts'
 import type { EntryParameters, StructureEntry } from './types'
 
 export interface DiscoveryDiff {

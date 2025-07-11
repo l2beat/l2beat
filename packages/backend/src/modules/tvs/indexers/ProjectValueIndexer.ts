@@ -26,7 +26,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
   constructor(private readonly $: ProjectValueIndexerDeps) {
     assert(
       $.configurations.length === 1,
-      `This indexer should take only one configuration`,
+      'This indexer should take only one configuration',
     )
     super({
       ...$,

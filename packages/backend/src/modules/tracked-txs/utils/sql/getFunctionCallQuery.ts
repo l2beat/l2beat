@@ -59,7 +59,7 @@ export function getFunctionCallQuery(
       AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${configs
-          .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
+          .map(() => '(traces.to_address = ? AND traces.input LIKE ?)')
           .join(' OR ')}
       )
     WHERE
@@ -74,7 +74,7 @@ export function getFunctionCallQuery(
     'STRING',
     ...configs.flatMap(() => ['STRING', 'STRING']),
     'STRING',
-    `STRING`,
+    'STRING',
   ]
 
   return { query, params, types, limitInGb: 22 }

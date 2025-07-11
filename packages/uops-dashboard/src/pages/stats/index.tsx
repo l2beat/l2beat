@@ -1,10 +1,10 @@
+import Head from 'next/head'
+import { useState } from 'react'
 import { BlockList } from '@/components/blockList'
 import { SmartAccountList } from '@/components/smartAccountList'
 import { StatsDetails } from '@/components/statsDetails'
 import { StatsForm } from '@/components/statsForm'
 import type { StatsWithChain } from '@/types'
-import Head from 'next/head'
-import { useState } from 'react'
 import { rankBlocks } from '../../utils/rankBlocks'
 
 export default function StatsPage() {

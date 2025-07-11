@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
@@ -74,7 +74,7 @@ export const nomad: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: `updater manages to relay a fraudulent message batch.`,
+          text: 'updater manages to relay a fraudulent message batch.',
           isCritical: false,
         },
         {

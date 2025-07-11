@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -160,7 +160,7 @@ export const cartesiprthoneypot: ScalingProject = {
       description:
         'Users cannot exit their funds as all deposits are considered donations.',
       sentiment: 'neutral',
-      orderHint: -Infinity,
+      orderHint: Number.NEGATIVE_INFINITY,
       warning: {
         value:
           'Bug bounty Appchain: The single hardcoded address can withdraw all funds.',

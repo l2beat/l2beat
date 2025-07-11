@@ -3,11 +3,11 @@ import { useEffect, useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
 import { useStore } from '../store/store'
+import { useDesktopControls } from './hooks/useDesktopControls'
+import { useTouchControls } from './hooks/useTouchControls'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
 import { ScalableView } from './ScalableView'
-import { useDesktopControls } from './hooks/useDesktopControls'
-import { useTouchControls } from './hooks/useTouchControls'
 
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)

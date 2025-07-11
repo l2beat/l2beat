@@ -3,7 +3,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/languageJoin'
 import { Square } from '../Square'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
 export interface TokenBreakdownProps {

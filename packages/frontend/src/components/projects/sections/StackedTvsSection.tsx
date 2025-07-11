@@ -70,7 +70,9 @@ export function StackedTvsSection({
 
 export function TvsBreakdownButton({
   tvsBreakdownUrl,
-}: { tvsBreakdownUrl: string }) {
+}: {
+  tvsBreakdownUrl: string
+}) {
   return (
     <a
       href={tvsBreakdownUrl}

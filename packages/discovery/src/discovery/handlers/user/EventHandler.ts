@@ -1,9 +1,8 @@
 import { assert, type EthereumAddress, unique } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v } from '@l2beat/validate'
-
-import { isDeepStrictEqual } from 'util'
 import { type providers, utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
+import { isDeepStrictEqual } from 'util'
 import { executeBlip } from '../../../blip/executeBlip'
 import type { BlipSexp } from '../../../blip/type'
 import { validateBlip } from '../../../blip/validateBlip'
@@ -89,12 +88,12 @@ export class EventHandler implements Handler {
       const abiCompatible = eventsAreCompatible(action, stringAbi)
       if (!abiCompatible) {
         throw new Error(
-          `ABI compatibility error: The following events have incompatible parameter structures:\n` +
+          'ABI compatibility error: The following events have incompatible parameter structures:\n' +
             `• Received events:\n${actionEvents.map((e) => `  - ${e}`).join('\n')}\n\n` +
-            `All events in an action must contain compatible parameter names and types. ` +
-            `Check that these fields match across all event ABIs:\n` +
-            `  1. Parameter names\n` +
-            `  2. Parameter types`,
+            'All events in an action must contain compatible parameter names and types. ' +
+            'Check that these fields match across all event ABIs:\n' +
+            '  1. Parameter names\n' +
+            '  2. Parameter types',
         )
       }
 
@@ -211,12 +210,12 @@ export class EventHandler implements Handler {
 
       assert(
         !(add && remove),
-        `Conflict detected in log processing:\n` +
-          `  A log entry cannot trigger both add AND remove actions simultaneously\n` +
-          `Potential resolutions:\n` +
-          `  1. Check event handler conditions for overlaps\n` +
-          `  2. Verify mutually exclusive filters in add/remove actions\n` +
-          `  3. Make sure that remove where clause is opposite to add one`,
+        'Conflict detected in log processing:\n' +
+          '  A log entry cannot trigger both add AND remove actions simultaneously\n' +
+          'Potential resolutions:\n' +
+          '  1. Check event handler conditions for overlaps\n' +
+          '  2. Verify mutually exclusive filters in add/remove actions\n' +
+          '  3. Make sure that remove where clause is opposite to add one',
       )
 
       const value =
@@ -283,9 +282,8 @@ function getEventName(eventString: string): string {
   if (eventString.includes(' ')) {
     const fragment = toEventFragment(eventString)
     return fragment.name
-  } else {
-    return eventString
   }
+  return eventString
 }
 
 function eventsAreCompatible(
@@ -304,9 +302,8 @@ function eventsAreCompatible(
       return smallest.every((elem) =>
         inputs.some((i) => isDeepStrictEqual(i, elem)),
       )
-    } else {
-      return false
     }
+    return false
   })
 
   return abiCompatible

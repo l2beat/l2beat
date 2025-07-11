@@ -15,7 +15,7 @@ import { discoverAndUpdateDiffHistory } from '../implementations/discovery/disco
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
 // specify "all" as the chain namas the chain name.
-const { project, chain, ...remainingArgs } = DiscoverCommandArgs
+const { project: _, chain: __, ...remainingArgs } = DiscoverCommandArgs
 const args = {
   ...remainingArgs,
   chainQuery: positional({

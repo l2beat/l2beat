@@ -2,7 +2,7 @@ export class BinaryReader {
   private position = 0
   constructor(
     private readonly input: `0x${string}`,
-    offset: number = 0,
+    offset = 0,
   ) {
     this.position += offset
   }

@@ -1,12 +1,12 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import {
+  DA_LAYERS,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -167,11 +167,11 @@ Only hashes of data batches are posted as DA commitments to an EOA on Ethereum. 
       risks: [
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate and there are no challengers.',
         },
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.',
         },
       ],
     },

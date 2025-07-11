@@ -59,7 +59,7 @@ export class BeaconChainClient extends ClientCore {
     const parsedError = BeaconChainError.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         error: parsedError.data,
       })
       return { success: false }

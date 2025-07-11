@@ -1,6 +1,6 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import round from 'lodash/round'

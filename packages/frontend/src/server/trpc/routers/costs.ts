@@ -5,8 +5,8 @@ import {
 } from '~/server/features/scaling/costs/getCostsChart'
 import { getCostsTable } from '~/server/features/scaling/costs/getCostsTableData'
 import {
-  ProjectCostsChartParams,
   getProjectCostsChart,
+  ProjectCostsChartParams,
 } from '~/server/features/scaling/costs/getProjectCostsChart'
 import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { procedure, router } from '../trpc'

@@ -45,7 +45,7 @@ export function getTransferQuery(
       AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${transfersConfig
-          .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
+          .map(() => '(traces.from_address = ? AND traces.to_address = ?)')
           .join(' OR ')}
       )
     WHERE

@@ -259,10 +259,7 @@ function Badge(props: { children: React.ReactNode; className?: string }) {
   )
 }
 
-function WithHeadline(props: {
-  headline: string
-  children: React.ReactNode
-}) {
+function WithHeadline(props: { headline: string; children: React.ReactNode }) {
   return (
     <div className="mb-1 flex flex-col overflow-x-auto font-mono text-xs">
       <span className="text-coffee-400">{props.headline}</span>

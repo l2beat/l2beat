@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-export function useCopy(timeoutMs: number = 1000) {
+export function useCopy(timeoutMs = 1000) {
   const [copied, setCopied] = useState(false)
 
   const copy = useCallback(

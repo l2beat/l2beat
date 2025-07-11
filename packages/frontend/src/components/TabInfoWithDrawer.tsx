@@ -11,7 +11,10 @@ import {
 export function TabInfoWithDrawer({
   title,
   content,
-}: { title: string; content: string }) {
+}: {
+  title: string
+  content: string
+}) {
   return (
     <div className="mb-3 flex flex-row sm:mb-3">
       <div className="!leading-[15px] text-[11px] md:text-[13px]">

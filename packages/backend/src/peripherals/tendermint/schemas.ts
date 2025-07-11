@@ -5,7 +5,7 @@ export const TendermintValidatorsResponseBodySchema = z.object({
   id: z.number().check(Number.isInteger),
   result: z
     .object({
-      block_height: z.string().transform((x) => parseInt(x)),
+      block_height: z.string().transform((x) => Number.parseInt(x)),
       validators: z.array(
         z.object({
           address: z.string(),
@@ -13,12 +13,12 @@ export const TendermintValidatorsResponseBodySchema = z.object({
             type: z.string(),
             value: z.string(),
           }),
-          voting_power: z.string().transform((x) => parseInt(x)),
-          proposer_priority: z.string().transform((x) => parseInt(x)),
+          voting_power: z.string().transform((x) => Number.parseInt(x)),
+          proposer_priority: z.string().transform((x) => Number.parseInt(x)),
         }),
       ),
-      count: z.string().transform((x) => parseInt(x)),
-      total: z.string().transform((x) => parseInt(x)),
+      count: z.string().transform((x) => Number.parseInt(x)),
+      total: z.string().transform((x) => Number.parseInt(x)),
     })
     .transform((x) => ({
       blockHeight: x.block_height,

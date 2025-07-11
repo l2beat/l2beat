@@ -1,6 +1,6 @@
 import { type providers, utils } from 'ethers'
 
-import { type LogFilter, getAllLogs } from './getAllLogs'
+import { getAllLogs, type LogFilter } from './getAllLogs'
 
 const ULTRA_LIGHT_NODE_V2 = '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2'
 const INBOUND_PROOF_TOPIC =
@@ -48,7 +48,7 @@ export async function getInboundLibraries(
 
   const chainIds: number[] = []
   for (const chainId of unique.keys()) {
-    chainIds.push(parseInt(chainId.slice(26), 16))
+    chainIds.push(Number.parseInt(chainId.slice(26), 16))
   }
 
   const defaultAppConfigs: DefaultAppConfig[] = []
@@ -62,11 +62,11 @@ export async function getInboundLibraries(
     const data = cutData(call)
 
     defaultAppConfigs.push({
-      inboundProofLibraryVersion: parseInt(data[0], 16),
-      inboundBlockConfirmations: parseInt(data[1], 16),
+      inboundProofLibraryVersion: Number.parseInt(data[0], 16),
+      inboundBlockConfirmations: Number.parseInt(data[1], 16),
       relayer: data[2],
-      outboundProofType: parseInt(data[3], 16),
-      outboundBlockConfirmations: parseInt(data[4], 16),
+      outboundProofType: Number.parseInt(data[3], 16),
+      outboundBlockConfirmations: Number.parseInt(data[4], 16),
       oracle: data[5],
       chainId,
     })

@@ -249,8 +249,10 @@ describe('diff', () => {
     })
 
     it('NaN handling with LCS-based insert/remove', () => {
-      expect(diff([NaN, 'A', NaN], ['A', NaN, 'B'])).toEqual([
-        { kind: 'remove', path: [0], lhs: NaN },
+      expect(
+        diff([Number.NaN, 'A', Number.NaN], ['A', Number.NaN, 'B']),
+      ).toEqual([
+        { kind: 'remove', path: [0], lhs: Number.NaN },
         { kind: 'create', path: [2], rhs: 'B' },
       ])
     })
@@ -363,39 +365,41 @@ describe('microdiff tests', () => {
   })
 
   it('new NaN value in object', () => {
-    expect(diff({}, { testNaN: NaN })).toEqual([
-      { kind: 'create', path: ['testNaN'], rhs: NaN },
+    expect(diff({}, { testNaN: Number.NaN })).toEqual([
+      { kind: 'create', path: ['testNaN'], rhs: Number.NaN },
     ])
   })
 
   it('change NaN value in object', () => {
-    expect(diff({ testNaN: NaN }, { testNaN: 0 })).toEqual([
-      { kind: 'change', path: ['testNaN'], rhs: 0, lhs: NaN },
+    expect(diff({ testNaN: Number.NaN }, { testNaN: 0 })).toEqual([
+      { kind: 'change', path: ['testNaN'], rhs: 0, lhs: Number.NaN },
     ])
   })
 
   it('do not change NaN value in object', () => {
-    expect(diff({ testNaN: NaN }, { testNaN: NaN })).toEqual([])
+    expect(diff({ testNaN: Number.NaN }, { testNaN: Number.NaN })).toEqual([])
   })
 
   it('remove NaN value in object', () => {
-    expect(diff({ testNaN: NaN }, {})).toEqual([
-      { kind: 'remove', path: ['testNaN'], lhs: NaN },
+    expect(diff({ testNaN: Number.NaN }, {})).toEqual([
+      { kind: 'remove', path: ['testNaN'], lhs: Number.NaN },
     ])
   })
 
   it('new NaN value in array', () => {
-    expect(diff([], [NaN])).toEqual([{ kind: 'create', path: [0], rhs: NaN }])
+    expect(diff([], [Number.NaN])).toEqual([
+      { kind: 'create', path: [0], rhs: Number.NaN },
+    ])
   })
 
   it('change NaN value in object', () => {
-    expect(diff([NaN], [0])).toEqual([
-      { kind: 'change', path: [0], rhs: 0, lhs: NaN },
+    expect(diff([Number.NaN], [0])).toEqual([
+      { kind: 'change', path: [0], rhs: 0, lhs: Number.NaN },
     ])
   })
 
   it('do not change NaN value in array', () => {
-    expect(diff([NaN], [NaN])).toEqual([])
+    expect(diff([Number.NaN], [Number.NaN])).toEqual([])
   })
 
   it('Handles equal regex', () => {

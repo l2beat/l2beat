@@ -35,7 +35,7 @@ export class BalanceProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (r.success === false) {
-              this.logger.tag({ chain }).warn(`Issue with balance fetching`, {
+              this.logger.tag({ chain }).warn('Issue with balance fetching', {
                 token: queries[i].token,
                 blockNumber,
               })
@@ -43,42 +43,37 @@ export class BalanceProvider {
             }
             return BigInt(r.data.toString())
           })
-        } else {
-          return Promise.all(
-            queries.map(async (q) => {
-              if (q.token === 'native') {
-                try {
-                  const res = await client.getBalance(q.holder, blockNumber)
-                  return res.toString() === '0x' ? 0n : BigInt(res.toString())
-                } catch {
-                  this.logger
-                    .tag({ chain })
-                    .warn(`Issue with balance fetching`, {
-                      token: q.token,
-                      blockNumber,
-                    })
-                  return 0n
-                }
-              } else {
-                try {
-                  const res = await client.call(
-                    encodeErc20Balance(q.token, q.holder),
-                    blockNumber,
-                  )
-                  return res.toString() === '0x' ? 0n : BigInt(res.toString())
-                } catch {
-                  this.logger
-                    .tag({ chain })
-                    .warn(`Issue with balance fetching`, {
-                      token: q.token,
-                      blockNumber,
-                    })
-                  return 0n
-                }
-              }
-            }),
-          )
         }
+        return Promise.all(
+          queries.map(async (q) => {
+            if (q.token === 'native') {
+              try {
+                const res = await client.getBalance(q.holder, blockNumber)
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+              } catch {
+                this.logger.tag({ chain }).warn('Issue with balance fetching', {
+                  token: q.token,
+                  blockNumber,
+                })
+                return 0n
+              }
+            } else {
+              try {
+                const res = await client.call(
+                  encodeErc20Balance(q.token, q.holder),
+                  blockNumber,
+                )
+                return res.toString() === '0x' ? 0n : BigInt(res.toString())
+              } catch {
+                this.logger.tag({ chain }).warn('Issue with balance fetching', {
+                  token: q.token,
+                  blockNumber,
+                })
+                return 0n
+              }
+            }
+          }),
+        )
       } catch (error) {
         if (index === clients.length - 1) throw error
       }

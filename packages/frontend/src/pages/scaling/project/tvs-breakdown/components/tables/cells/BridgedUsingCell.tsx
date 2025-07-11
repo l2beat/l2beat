@@ -64,7 +64,9 @@ function SingleBridge({
 
 function MultipleBridge({
   bridges,
-}: { bridges: NonNullable<TvsToken['bridgedUsing']>['bridges'] }) {
+}: {
+  bridges: NonNullable<TvsToken['bridgedUsing']>['bridges']
+}) {
   return (
     <Tooltip>
       <TooltipTrigger className="font-medium text-xs">Multiple</TooltipTrigger>

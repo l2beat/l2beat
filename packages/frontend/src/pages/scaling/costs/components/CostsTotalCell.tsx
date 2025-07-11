@@ -1,16 +1,16 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { Callout } from '~/components/Callout'
-import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { CostsBreakdown } from '~/components/breakdown/CostsBreakdown'
+import { Callout } from '~/components/Callout'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { PrimaryValueCell } from '~/components/table/cells/PrimaryValueCell'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatCostValue } from '../utils/formatCostValue'

@@ -1,14 +1,14 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
-  DATA_ON_CHAIN,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  DATA_ON_CHAIN,
   EXITS,
   FRONTRUNNING_RISK,
   OPERATOR,
@@ -329,7 +329,7 @@ export const phala: ScalingProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `the contracts or their dependencies (e.g. SuccinctGateway) receive a malicious code upgrade. There is no delay on upgrades.`,
+        text: 'the contracts or their dependencies (e.g. SuccinctGateway) receive a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
   },

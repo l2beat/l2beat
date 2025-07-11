@@ -10,10 +10,10 @@ type OpStackProject = {
   L2OutputOracle: string | undefined
 }
 
-export async function analyseAllOpStackChains(
+export function analyseAllOpStackChains(
   projectToCompare: string | null,
   paths: DiscoveryPaths,
-): Promise<void> {
+) {
   const configReader = new ConfigReader(paths.discovery)
   const allL2s = configReader
     .readAllDiscoveredProjects()

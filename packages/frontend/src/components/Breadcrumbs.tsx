@@ -1,5 +1,5 @@
-import React from 'react'
 import type { ReactNode } from 'react'
+import React from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 
@@ -39,7 +39,11 @@ function BreadcrumbItem({
   href,
   children,
   className,
-}: { href?: string; children: ReactNode; className?: string }) {
+}: {
+  href?: string
+  children: ReactNode
+  className?: string
+}) {
   if (href) {
     return (
       <a href={href} className={className}>

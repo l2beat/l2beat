@@ -10,7 +10,10 @@ import { knownCookies } from '~/consts/cookies'
 export function parseKnownCookie<T extends KnownCookieName>({
   name,
   value,
-}: { name: T; value: string }): KnownCookieValue<T> {
+}: {
+  name: T
+  value: string
+}): KnownCookieValue<T> {
   const meta = knownCookies[name]
   try {
     const parsedValue: unknown = JSON.parse(value)

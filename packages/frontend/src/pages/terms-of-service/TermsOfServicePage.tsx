@@ -1,7 +1,7 @@
 import { ContentWrapper } from '~/components/ContentWrapper'
 import { FullPageHeader } from '~/components/FullPageHeader'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { Article } from '~/components/markdown/Article'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { CollectionEntry } from '~/content/getCollection'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { TopNavLayout } from '~/layouts/TopNavLayout'

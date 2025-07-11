@@ -66,7 +66,7 @@ function DAC_MEMBERS({
     }),
     description: requiredSignatures
       ? `There is a threshold of ${requiredSignatures}/${membersCount} members that must sign and attest that the data is correct and available.`
-      : `There is a threshold of DAC members that must sign and attest that the data is correct and available.`,
+      : 'There is a threshold of DAC members that must sign and attest that the data is correct and available.',
     orderHint: -probabilityOfCompromise(requiredSignatures, membersCount),
   }
 }

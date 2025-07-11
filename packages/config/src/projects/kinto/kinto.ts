@@ -1,8 +1,8 @@
 import {
   assert,
   EthereumAddress,
-  UnixTime,
   formatSeconds,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { SOA } from '../../common'
 import { BADGES } from '../../common/badges'

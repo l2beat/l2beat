@@ -1,8 +1,7 @@
+import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
-
-import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../test/database'
 import type { L2CostRecord } from './entity'
 import { L2CostRepository } from './repository'
@@ -124,42 +123,44 @@ describeDatabase(L2CostRepository.name, (db) => {
     })
   })
 
-  describe(L2CostRepository.prototype.getGasSumByTimeRangeAndConfigId
-    .name, () => {
-    it('should return sum of gas used for given time range and configurations id', async () => {
-      // add second record to txIdA
-      await repository.insertMany([
-        {
-          timestamp: START - 1 * UnixTime.HOUR,
-          txHash: '0x4',
-          configurationId: txIdA,
-          gasUsed: 200,
-          gasPrice: 1n,
-          calldataLength: 100,
-          calldataGasUsed: 100,
-          blobGasPrice: null,
-          blobGasUsed: null,
-        },
-      ])
+  describe(
+    L2CostRepository.prototype.getGasSumByTimeRangeAndConfigId.name,
+    () => {
+      it('should return sum of gas used for given time range and configurations id', async () => {
+        // add second record to txIdA
+        await repository.insertMany([
+          {
+            timestamp: START - 1 * UnixTime.HOUR,
+            txHash: '0x4',
+            configurationId: txIdA,
+            gasUsed: 200,
+            gasPrice: 1n,
+            calldataLength: 100,
+            calldataGasUsed: 100,
+            blobGasPrice: null,
+            blobGasUsed: null,
+          },
+        ])
 
-      const result = await repository.getGasSumByTimeRangeAndConfigId(
-        [txIdA, txIdB],
-        START - 1 * UnixTime.HOUR,
-        START,
-      )
+        const result = await repository.getGasSumByTimeRangeAndConfigId(
+          [txIdA, txIdB],
+          START - 1 * UnixTime.HOUR,
+          START,
+        )
 
-      expect(result).toEqualUnsorted([
-        {
-          configurationId: txIdA,
-          totalCostInWei: 300n,
-        },
-        {
-          configurationId: txIdB,
-          totalCostInWei: 400n,
-        },
-      ])
-    })
-  })
+        expect(result).toEqualUnsorted([
+          {
+            configurationId: txIdA,
+            totalCostInWei: 300n,
+          },
+          {
+            configurationId: txIdB,
+            totalCostInWei: 400n,
+          },
+        ])
+      })
+    },
+  )
 
   describe(L2CostRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {

@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { type ForwardedRef, type ReactNode, forwardRef } from 'react'
+import { type ForwardedRef, forwardRef, type ReactNode } from 'react'
 
 import { useStore } from '../store/store'
 

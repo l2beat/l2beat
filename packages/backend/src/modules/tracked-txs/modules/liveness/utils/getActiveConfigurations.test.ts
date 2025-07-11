@@ -1,7 +1,7 @@
 import {
+  createTrackedTxId,
   type TrackedTxConfigEntry,
   type TrackedTxLivenessConfig,
-  createTrackedTxId,
 } from '@l2beat/shared'
 import {
   ProjectId,

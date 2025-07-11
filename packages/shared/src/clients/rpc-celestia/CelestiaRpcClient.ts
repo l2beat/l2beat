@@ -1,4 +1,4 @@
-import { type Block, UnixTime, type json } from '@l2beat/shared-pure'
+import { type Block, type json, UnixTime } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   CelestiaBlockResponse,
@@ -45,7 +45,7 @@ export class CelestiaRpcClient extends ClientCore {
     const blockResponse = CelestiaBlockResponse.safeParse(response)
 
     if (!blockResponse.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         height,
         response: JSON.stringify(blockResponse),
       })
@@ -65,7 +65,7 @@ export class CelestiaRpcClient extends ClientCore {
     const blockResponse = CelestiaBlockResultResponse.safeParse(response)
 
     if (!blockResponse.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         height,
         response: JSON.stringify(blockResponse),
       })
@@ -93,7 +93,7 @@ export class CelestiaRpcClient extends ClientCore {
     const parsedError = CelestiaErrorResponse.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
       return { success: false }

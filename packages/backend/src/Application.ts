@@ -1,7 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
-
 import { createDatabase } from '@l2beat/database'
+import { HttpClient } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import type { ApplicationModule } from './modules/ApplicationModule'

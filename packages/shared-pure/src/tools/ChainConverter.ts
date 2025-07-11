@@ -21,7 +21,7 @@ export class ChainConverter {
 
   toName(id: number | undefined): string {
     if (id === undefined) {
-      throw new Error(`Cannot find chains with undefined chainId`)
+      throw new Error('Cannot find chains with undefined chainId')
     }
     const name = this.idToName.get(id)
     if (!name) {

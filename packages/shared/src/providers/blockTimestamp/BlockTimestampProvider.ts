@@ -27,9 +27,8 @@ export class BlockTimestampProvider {
     } catch (error) {
       if (block) {
         return await block.getBlockNumberAtOrBefore(timestamp)
-      } else {
-        throw error
       }
+      throw error
     }
   }
 }

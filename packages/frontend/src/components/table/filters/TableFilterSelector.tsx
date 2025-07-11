@@ -23,22 +23,24 @@ import { useTracking } from '~/hooks/useTracking'
 import { FilterIcon } from '~/icons/Filter'
 import { PlusIcon } from '~/icons/Plus'
 import { cn } from '~/utils/cn'
-import { useTableFilterContext } from './TableFilterContext'
-import {
-  TableFilterInternalContextProvider,
-  useTableFilterInternalContext,
-} from './TableFilterInternalContext'
-import { TableFilterValueMenuItems } from './TableFilterValueMenu'
 import type { FilterableEntry } from './filterableValue'
 import {
   emptyStateLabel,
   filterIdToLabel,
   inputPlaceholder,
 } from './filterableValue'
+import { useTableFilterContext } from './TableFilterContext'
+import {
+  TableFilterInternalContextProvider,
+  useTableFilterInternalContext,
+} from './TableFilterInternalContext'
+import { TableFilterValueMenuItems } from './TableFilterValueMenu'
 
 export function TableFilterSelector({
   entries,
-}: { entries: FilterableEntry[] }) {
+}: {
+  entries: FilterableEntry[]
+}) {
   const isMobile = useIsMobile()
 
   return (
@@ -52,11 +54,7 @@ export function TableFilterSelector({
   )
 }
 
-function MobileFilters({
-  entries,
-}: {
-  entries: FilterableEntry[]
-}) {
+function MobileFilters({ entries }: { entries: FilterableEntry[] }) {
   const { open, setOpen } = useTableFilterInternalContext()
 
   return (
@@ -79,11 +77,7 @@ function MobileFilters({
   )
 }
 
-function DesktopFilters({
-  entries,
-}: {
-  entries: FilterableEntry[]
-}) {
+function DesktopFilters({ entries }: { entries: FilterableEntry[] }) {
   const { open, setOpen, onEscapeKeyDown } = useTableFilterInternalContext()
 
   useGlobalShortcut('f', () => {
@@ -129,11 +123,7 @@ function Trigger() {
   )
 }
 
-function Content({
-  entries,
-}: {
-  entries: FilterableEntry[]
-}) {
+function Content({ entries }: { entries: FilterableEntry[] }) {
   const { track } = useTracking()
 
   // Count unique values for each filter

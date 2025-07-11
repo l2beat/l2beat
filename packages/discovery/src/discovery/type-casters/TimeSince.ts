@@ -1,5 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
-import { formatSeconds } from '@l2beat/shared-pure'
+import { assert, formatSeconds } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'
 import type { ArgType } from './BaseTypeCaster'
 

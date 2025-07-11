@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import {
   type ConfigReader,
   ConfigRegistry,
@@ -15,8 +16,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'

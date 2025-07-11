@@ -1,11 +1,9 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { getDb } from '~/server/database'
-import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-
 import type { ActivityRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import { getDb } from '~/server/database'
 import type { TimeRange } from '~/utils/range/range'
+import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
 
 export async function getSummedActivityForProjects(
   projectIds: string[],

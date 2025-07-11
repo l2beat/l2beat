@@ -1,5 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
-import { type UpdateDiffRecord, toRecord, toRow } from './entity'
+import { toRecord, toRow, type UpdateDiffRecord } from './entity'
 
 export class UpdateDiffRepository extends BaseRepository {
   async insertMany(records: UpdateDiffRecord[]): Promise<number> {

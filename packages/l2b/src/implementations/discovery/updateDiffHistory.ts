@@ -4,21 +4,18 @@
   Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
-import { execSync } from 'child_process'
-import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
-import path, { join, relative } from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
+  combinePermissionsIntoDiscovery,
   type DiscoveryDiff,
   type DiscoveryOutput,
   DiscoveryRegistry,
-  TemplateService,
-  combinePermissionsIntoDiscovery,
   diffDiscovery,
   discoveryDiffToMarkdown,
   getDiscoveryPaths,
   modelPermissions,
+  TemplateService,
 } from '@l2beat/discovery'
 import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 import {
@@ -27,6 +24,9 @@ import {
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { execSync } from 'child_process'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import path, { join, relative } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
 import { updateDiffHistoryHash } from './hashing'
@@ -37,7 +37,7 @@ const FIRST_SECTION_PREFIX = '# Diff at'
 export async function updateDiffHistory(
   projectName: string,
   description?: string,
-  overwriteCache: boolean = false,
+  overwriteCache = false,
   logger: Logger = getPlainLogger(),
 ) {
   const paths = getDiscoveryPaths()
@@ -60,7 +60,7 @@ export async function updateDiffHistoryForChain(
   projectName: string,
   chain: string,
   description?: string,
-  overwriteCache: boolean = false,
+  overwriteCache = false,
   logger: Logger = getPlainLogger(),
 ) {
   // Get discovered.json from main branch and compare to current

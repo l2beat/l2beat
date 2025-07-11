@@ -1,9 +1,9 @@
-import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
-import path from 'path'
 import type { Logger } from '@l2beat/backend-tools'
-import { HttpClient, formatSI } from '@l2beat/shared'
+import { formatSI, HttpClient } from '@l2beat/shared'
 import { FlatSourcesApiResponse, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { existsSync, mkdirSync, rmSync, writeFileSync } from 'fs'
+import path from 'path'
 import { type ProgressEvent, ResponseProgress } from './common/ResponseProgress'
 import { colorMap } from './compare-flat-sources/output'
 

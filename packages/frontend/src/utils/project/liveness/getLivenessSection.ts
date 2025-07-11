@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import type { TrackedTxCostsConfig } from '@l2beat/shared/frontend'
+import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'

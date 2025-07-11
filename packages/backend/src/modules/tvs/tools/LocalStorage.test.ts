@@ -1,7 +1,7 @@
-import { existsSync, unlinkSync } from 'fs'
-import path from 'path'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { existsSync, unlinkSync } from 'fs'
+import path from 'path'
 import { LocalStorage } from './LocalStorage'
 
 const TEST_FILE_PATH = path.join(__dirname, 'local-data-test.json')

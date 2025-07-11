@@ -1,10 +1,10 @@
 import {
   ConfigReader,
-  TemplateService,
   colorize,
   combineStructureAndColor,
   getDiscoveryPaths,
   saveDiscoveredJson,
+  TemplateService,
 } from '@l2beat/discovery'
 import { command, option, optional, string } from 'cmd-ts'
 import { updateDiffHistory } from '../implementations/discovery/updateDiffHistory'

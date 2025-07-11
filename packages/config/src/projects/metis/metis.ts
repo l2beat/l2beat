@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -218,7 +218,7 @@ export const metis: ScalingProject = {
       ...RISK_VIEW.STATE_FP_INT,
       description:
         RISK_VIEW.STATE_FP_INT.description +
-        ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
+        ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
       sentiment: 'bad',
       secondLine: formatChallengePeriod(CHALLENGE_PERIOD_SECONDS),
     },

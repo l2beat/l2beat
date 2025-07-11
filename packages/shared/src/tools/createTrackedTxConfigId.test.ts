@@ -1,8 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
 import { createTrackedTxId } from './createTrackedTxConfigId'
+import type { TrackedTxConfigEntry } from './TrackedTxsConfig'
 
 describe(createTrackedTxId.name, () => {
   const fields = [

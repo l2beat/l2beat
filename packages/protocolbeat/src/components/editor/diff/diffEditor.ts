@@ -1,12 +1,11 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-
-import * as solidity from '../languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 import { cyrb64 } from '../cyrb-hash'
+import * as solidity from '../languages/solidity'
 import { theme } from '../theme'
 import { LineSelector } from './extensions/lineSelector'
 
@@ -28,7 +27,7 @@ export class DiffEditor {
   private readonly editor: monaco.editor.IStandaloneDiffEditor
   private models: Record<string, editor.IDiffEditorModel | null> = {}
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
-  private currentCodeHash: string = ''
+  private currentCodeHash = ''
   private readonly element: HTMLElement
 
   public lineSelector: LineSelector

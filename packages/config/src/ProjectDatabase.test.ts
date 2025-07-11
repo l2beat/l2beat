@@ -1,4 +1,3 @@
-import { unlinkSync } from 'fs'
 import {
   AssetId,
   ChainId,
@@ -7,6 +6,7 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { unlinkSync } from 'fs'
 import { ProjectDatabase } from './ProjectDatabase'
 import type { BaseProject } from './types'
 

@@ -1,13 +1,12 @@
 import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
-
-import { createHash } from 'crypto'
 import {
-  ProjectId,
-  UnixTime,
   assertUnreachable,
   notUndefined,
+  ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import type {
   BlockDaIndexedConfig,
   BlockLayerDaTrackingConfig,

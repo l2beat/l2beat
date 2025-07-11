@@ -6,7 +6,10 @@ import { UnknownIcon } from './icons/unknownIcon'
 export function BlockList({
   blocks,
   chain,
-}: { blocks: BlockRatio[]; chain: Chain }) {
+}: {
+  blocks: BlockRatio[]
+  chain: Chain
+}) {
   const getBlockLink = (blockNumber: number) => {
     return `${window.location.origin}/?chain=${chain.id}&block=${blockNumber}`
   }

@@ -1,5 +1,5 @@
-import { writeFileSync } from 'fs'
 import { type Parser, toJsonSchema, v } from '@l2beat/validate'
+import { writeFileSync } from 'fs'
 import {
   _ColorConfig,
   _ColorContract,
@@ -11,10 +11,10 @@ import {
   _PermissionsConfig,
 } from '../src/discovery/config/PermissionConfig'
 import {
-  DiscoveryCustomType,
   _StructureConfig,
   _StructureContract,
   _StructureContractField,
+  DiscoveryCustomType,
 } from '../src/discovery/config/StructureConfig'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 

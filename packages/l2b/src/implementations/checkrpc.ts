@@ -57,21 +57,20 @@ async function callRpc(
 
     if (response.status === 200) {
       return null
-    } else if (response.status === 429) {
-      return FailureReason.Status429
-    } else {
-      logger.info(`Got HTTP code: ${chalk.yellow(response.status.toString())}`)
-      return FailureReason.OtherStatus
     }
+    if (response.status === 429) {
+      return FailureReason.Status429
+    }
+    logger.info(`Got HTTP code: ${chalk.yellow(response.status.toString())}`)
+    return FailureReason.OtherStatus
   } catch (error) {
     clearTimeout(id)
 
     if (error instanceof Error && error.name === 'AbortError') {
       return FailureReason.Timeout
-    } else {
-      logger.info(chalk.red(error))
-      return FailureReason.Other
     }
+    logger.info(chalk.red(error))
+    return FailureReason.Other
   }
 }
 

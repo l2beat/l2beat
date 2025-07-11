@@ -14,8 +14,10 @@ import {
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { providers } from 'ethers'
-import type { IEtherscanClient } from '../../utils/IEtherscanClient'
-import type { ContractSource } from '../../utils/IEtherscanClient'
+import type {
+  ContractSource,
+  IEtherscanClient,
+} from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { ContractDeployment, RawProviders } from './IProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
@@ -23,8 +25,8 @@ import { ProviderMeasurement, ProviderStats } from './Stats'
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 500, // 0.5, 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s
   maxAttempts: 10,
-  maxDistanceMs: Infinity,
-  notifyAfterAttempts: Infinity,
+  maxDistanceMs: Number.POSITIVE_INFINITY,
+  notifyAfterAttempts: Number.POSITIVE_INFINITY,
 })
 
 export class LowLevelProvider {
@@ -49,7 +51,7 @@ export class LowLevelProvider {
     }
   }
 
-  async call(
+  call(
     address: EthereumAddress,
     data: Bytes,
     blockNumber: number,
@@ -69,7 +71,7 @@ export class LowLevelProvider {
     }, ProviderMeasurement.CALL)
   }
 
-  async getStorage(
+  getStorage(
     address: EthereumAddress,
     slot: number | bigint | Bytes,
     blockNumber: number,
@@ -90,7 +92,7 @@ export class LowLevelProvider {
     }, ProviderMeasurement.GET_STORAGE)
   }
 
-  async getLogs(
+  getLogs(
     address: EthereumAddress,
     topics: (string | string[] | null)[],
     fromBlock: number,
@@ -112,7 +114,7 @@ export class LowLevelProvider {
     }, ProviderMeasurement.GET_LOGS)
   }
 
-  async getTransaction(
+  getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
     return this.measure(() => {
@@ -129,7 +131,7 @@ export class LowLevelProvider {
     }, ProviderMeasurement.GET_TRANSACTION)
   }
 
-  async getDebugTrace(
+  getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
     return this.measure(() => {
@@ -147,10 +149,7 @@ export class LowLevelProvider {
     }, ProviderMeasurement.GET_DEBUG_TRACE)
   }
 
-  async getBytecode(
-    address: EthereumAddress,
-    blockNumber: number,
-  ): Promise<Bytes> {
+  getBytecode(address: EthereumAddress, blockNumber: number): Promise<Bytes> {
     return this.measure(() => {
       return rpcWithRetries(
         async () => {
@@ -232,7 +231,7 @@ export class LowLevelProvider {
           return await this.provider.getBlockNumber()
         },
         this.logger,
-        `getBlockNumber`,
+        'getBlockNumber',
       )
     }, ProviderMeasurement.GET_BLOCKNUMBER)
   }

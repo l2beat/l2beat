@@ -1,5 +1,5 @@
-import type { TemplateService } from '../analysis/TemplateService'
 import { resolveCategory } from '../analysis/category'
+import type { TemplateService } from '../analysis/TemplateService'
 import type {
   ColorConfig,
   ColorContract,

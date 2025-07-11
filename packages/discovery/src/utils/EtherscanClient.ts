@@ -15,8 +15,8 @@ import {
   TransactionListResult,
   tryParseEtherscanResponse,
 } from './EtherscanModels'
-import type { ContractSource } from './IEtherscanClient'
 import type {
+  ContractSource,
   EtherscanUnsupportedMethods,
   IEtherscanClient,
 } from './IEtherscanClient'
@@ -27,8 +27,8 @@ class EtherscanError extends Error {}
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
   maxAttempts: 10,
-  maxDistanceMs: Infinity,
-  notifyAfterAttempts: Infinity,
+  maxDistanceMs: Number.POSITIVE_INFINITY,
+  notifyAfterAttempts: Number.POSITIVE_INFINITY,
 })
 
 export class EtherscanClient implements IEtherscanClient {
@@ -203,7 +203,7 @@ export class EtherscanClient implements IEtherscanClient {
     const resp = OneTransactionListResult.parse(response)[0]
     assert(resp)
 
-    return UnixTime(parseInt(resp.timeStamp, 10))
+    return UnixTime(Number.parseInt(resp.timeStamp, 10))
   }
 
   async getAtMost10RecentOutgoingTxs(

@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs'
 import path from 'path'
-import { assert } from '@l2beat/shared-pure'
 import { getImageDimensions } from '~/utils/project/getImageParams'
 import { getAllStaticPngs } from './utils/getAllStaticPngs'
 import { hashPng } from './utils/hashPng'

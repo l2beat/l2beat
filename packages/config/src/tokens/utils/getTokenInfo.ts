@@ -7,8 +7,8 @@ import {
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
 import { MIN_TIMESTAMP_FOR_TVL } from '../../projects/ethereum/ethereum'
-import type { ScriptLogger } from './ScriptLogger'
 import { getContractCreationTimestamp } from './getContractCreationTimestamp'
+import type { ScriptLogger } from './ScriptLogger'
 
 export async function getTokenInfo(
   logger: ScriptLogger,
@@ -112,7 +112,9 @@ async function getDecimals(
 
   logger.assert(decimals !== '0x', 'Could not find decimals for token')
 
-  return parseInt(CODER.decodeFunctionResult('decimals', decimals)[0] as string)
+  return Number.parseInt(
+    CODER.decodeFunctionResult('decimals', decimals)[0] as string,
+  )
 }
 
 function getImageUrl(

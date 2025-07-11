@@ -1,10 +1,10 @@
-import { createHash } from 'crypto'
 import { Hash256 } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import type { PerContractSource } from '../discovery/source/SourceCodeService'
 import type { ContractSource } from '../utils/IEtherscanClient'
-import type { FileContent } from './ParsedFilesManager'
 import { flattenStartingFrom } from './flatten'
 import { format } from './format'
+import type { FileContent } from './ParsedFilesManager'
 
 export interface HashedChunks {
   content: string

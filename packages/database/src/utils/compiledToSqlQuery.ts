@@ -8,7 +8,7 @@ import type { CompiledQuery } from 'kysely'
 export function compiledToSqlQuery(compiled: CompiledQuery<unknown>): string {
   let sql = compiled.sql
   for (const [index, param] of Object.entries(compiled.parameters)) {
-    const sqlIndex = parseInt(index) + 1
+    const sqlIndex = Number.parseInt(index) + 1
     sql = sql.replace(`$${sqlIndex}`, parseParam(param))
   }
   return sql

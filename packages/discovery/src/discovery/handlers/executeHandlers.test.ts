@@ -1,10 +1,9 @@
+import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { Logger } from '@l2beat/backend-tools'
 import type { IProvider } from '../provider/IProvider'
-import type { Handler, HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
+import type { Handler, HandlerResult } from './Handler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { ArrayHandler, getArrayFragment } from './user/ArrayHandler'
 import { StorageHandler } from './user/StorageHandler'

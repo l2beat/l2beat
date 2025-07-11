@@ -1,6 +1,6 @@
 import { ThemeProvider } from 'next-themes'
-import { DevAutoReloader } from '~/components/DevAutoReloader'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
+import { DevAutoReloader } from '~/components/DevAutoReloader'
 import type { GlossaryTermWithoutDescription } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'

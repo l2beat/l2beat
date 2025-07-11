@@ -1,6 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
 
-import { type Database, createDatabase } from '../database'
+import { createDatabase, type Database } from '../database'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {
   const database = getTestDatabase()
@@ -19,7 +19,7 @@ export function describeDatabase(name: string, suite: (db: Database) => void) {
     if (database) {
       suite(database)
     } else {
-      it.skip(`Database tests skipped`)
+      it.skip('Database tests skipped')
     }
   })
 }

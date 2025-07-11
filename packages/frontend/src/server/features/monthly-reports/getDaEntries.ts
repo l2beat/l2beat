@@ -11,8 +11,8 @@ import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import {
-  type ThroughputSummaryData,
   getDaThroughputSummary,
+  type ThroughputSummaryData,
 } from '../data-availability/throughput/getDaThroughputSummary'
 import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
 import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'

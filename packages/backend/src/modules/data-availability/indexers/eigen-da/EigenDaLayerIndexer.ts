@@ -33,7 +33,7 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
           c.properties.daLayer === $.daLayer &&
           c.properties.projectId === $.daLayer,
       ),
-      `DaLayer mismatch detected in configurations`,
+      'DaLayer mismatch detected in configurations',
     )
   }
 

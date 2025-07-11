@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { assert, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import type { Indexer } from '@l2beat/uif'
 import type { Config } from '../../config'
 import type { Providers } from '../../providers/Providers'
@@ -16,12 +16,12 @@ import { TokenValueIndexer } from './indexers/TokenValueIndexer'
 import { TvsPriceIndexer } from './indexers/TvsPriceIndexer'
 import { ValueService } from './services/ValueService'
 import { DBStorage } from './tools/DBStorage'
-import { SyncOptimizer } from './tools/SyncOptimizer'
 import {
   createAmountConfig,
   generateConfigurationId,
 } from './tools/extractPricesAndAmounts'
 import { getTokenSyncRange } from './tools/getTokenSyncRange'
+import { SyncOptimizer } from './tools/SyncOptimizer'
 import { isOnchainAmountConfig } from './types'
 
 export function initTvsModule(
@@ -38,7 +38,7 @@ export function initTvsModule(
 
   logger = logger.tag({ feature: 'tvs', module: 'tvs' })
 
-  logger.info(`TVS config loaded`, {
+  logger.info('TVS config loaded', {
     projects: config.tvs.projects.length,
     prices: config.tvs.prices.length,
     amounts: config.tvs.amounts.length,
@@ -191,7 +191,7 @@ export function initTvsModule(
 
     const since = tokensWithRanges.reduce(
       (prev, curr) => (prev > curr.sinceTimestamp ? curr.sinceTimestamp : prev),
-      Infinity,
+      Number.POSITIVE_INFINITY,
     )
 
     const hasUndefinedTimestamp = tokensWithRanges.some(

@@ -7,9 +7,9 @@ import {
 } from '../common'
 import type {
   DaBridgeRisks,
+  DacInfo,
   DaLayerRisks,
   DaTechnology,
-  DacInfo,
   ProjectCustomDa,
   TableReadyValue,
 } from '../types'

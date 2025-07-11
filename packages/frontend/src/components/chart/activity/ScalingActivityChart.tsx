@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'

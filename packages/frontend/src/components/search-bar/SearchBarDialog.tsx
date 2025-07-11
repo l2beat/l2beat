@@ -21,6 +21,7 @@ import type { AnySearchBarEntry, SearchBarProject } from './SearchBarEntry'
 import type { SearchBarCategory } from './searchBarCategories'
 import { searchBarCategories } from './searchBarCategories'
 import { searchBarPages } from './searchBarPages'
+
 interface Props {
   allProjects: SearchBarProject[]
   recentlyAdded: SearchBarProject[]

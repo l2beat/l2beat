@@ -6,8 +6,8 @@ import { SortingArrowIcon } from './icons/SortingArrowIcon'
 import {
   AVAILABLE_COLUMNS,
   DEFAULT_COLUMN_IDS,
-  type LupeColumn,
   deserializeColumns,
+  type LupeColumn,
   serializeColumns,
 } from './src/columns'
 import {
@@ -18,10 +18,10 @@ import {
 import { type Row, toMatrix, toVisibleRows } from './src/matrix'
 import type { DiscoLupeProject } from './src/model'
 import {
-  type SortConfig,
-  type SortDirection,
   deserializeSort,
   getSortDirection,
+  type SortConfig,
+  type SortDirection,
   serializeSort,
 } from './src/sort'
 import { useSearchParamsState } from './useSearchParamsState'

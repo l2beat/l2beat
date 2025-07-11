@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
-
 import clsx from 'clsx'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useCopy } from '../../../hooks/useCopy'
 import { IconArrowToDotDown } from '../../../icons/IconArrowToDotDown'

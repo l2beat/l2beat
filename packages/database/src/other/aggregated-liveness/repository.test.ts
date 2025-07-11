@@ -138,235 +138,242 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
-  describe(AggregatedLivenessRepository.prototype.getAggregatesByTimeRange
-    .name, () => {
-    it('returns aggregates with correctly calculated weighted averages for a given time range, grouped by project and subtype', async () => {
-      const results = await repository.getAggregatesByTimeRange([
-        START - 2 * UnixTime.HOUR,
-        START,
-      ])
+  describe(
+    AggregatedLivenessRepository.prototype.getAggregatesByTimeRange.name,
+    () => {
+      it('returns aggregates with correctly calculated weighted averages for a given time range, grouped by project and subtype', async () => {
+        const results = await repository.getAggregatesByTimeRange([
+          START - 2 * UnixTime.HOUR,
+          START,
+        ])
 
-      expect(results).toEqualUnsorted([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 10,
-          avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql round it down
-          max: 50,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'stateUpdates',
-          min: 30,
-          avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql round it down
-          max: 60,
-        },
-        {
-          projectId: PROJECT_B,
-          subtype: 'stateUpdates',
-          min: 10,
-          avg: 10,
-          max: 10,
-        },
-      ])
-    })
+        expect(results).toEqualUnsorted([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 10,
+            avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql round it down
+            max: 50,
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'stateUpdates',
+            min: 30,
+            avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql round it down
+            max: 60,
+          },
+          {
+            projectId: PROJECT_B,
+            subtype: 'stateUpdates',
+            min: 10,
+            avg: 10,
+            max: 10,
+          },
+        ])
+      })
 
-    it('returns aggregates with null from', async () => {
-      await repository.deleteAll()
-      await repository.upsertMany([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 10,
-          avg: 20,
-          max: 30,
-          timestamp: START,
-          numberOfRecords: 1,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 20,
-          avg: 30,
-          max: 40,
-          timestamp: START - 1 * UnixTime.HOUR,
-          numberOfRecords: 4,
-        },
-      ])
-      const results = await repository.getAggregatesByTimeRange([null, START])
+      it('returns aggregates with null from', async () => {
+        await repository.deleteAll()
+        await repository.upsertMany([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 10,
+            avg: 20,
+            max: 30,
+            timestamp: START,
+            numberOfRecords: 1,
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 20,
+            avg: 30,
+            max: 40,
+            timestamp: START - 1 * UnixTime.HOUR,
+            numberOfRecords: 4,
+          },
+        ])
+        const results = await repository.getAggregatesByTimeRange([null, START])
 
-      expect(results).toEqualUnsorted([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 10,
-          avg: 28, // 1 * 20 + 4 * 30/ 1 + 4 = 32.5 but sql round it down
-          max: 40,
-        },
-      ])
-    })
-  })
+        expect(results).toEqualUnsorted([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 10,
+            avg: 28, // 1 * 20 + 4 * 30/ 1 + 4 = 32.5 but sql round it down
+            max: 40,
+          },
+        ])
+      })
+    },
+  )
 
-  describe(AggregatedLivenessRepository.prototype
-    .getByProjectAndSubtypeInTimeRange.name, () => {
-    it('returns records for a specific project and subtype within a time range, ordered asc', async () => {
-      const results = await repository.getByProjectAndSubtypeInTimeRange(
-        PROJECT_A,
-        'batchSubmissions',
-        [START - 2 * UnixTime.HOUR, START],
-      )
+  describe(
+    AggregatedLivenessRepository.prototype.getByProjectAndSubtypeInTimeRange
+      .name,
+    () => {
+      it('returns records for a specific project and subtype within a time range, ordered asc', async () => {
+        const results = await repository.getByProjectAndSubtypeInTimeRange(
+          PROJECT_A,
+          'batchSubmissions',
+          [START - 2 * UnixTime.HOUR, START],
+        )
 
-      expect(results).toEqual([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 30,
-          avg: 40,
-          max: 50,
-          timestamp: START - 2 * UnixTime.HOUR,
-          numberOfRecords: 3,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 20,
-          avg: 30,
-          max: 40,
-          timestamp: START - 1 * UnixTime.HOUR,
-          numberOfRecords: 4,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 10,
-          avg: 20,
-          max: 30,
-          timestamp: START,
-          numberOfRecords: 1,
-        },
-      ])
-    })
+        expect(results).toEqual([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 30,
+            avg: 40,
+            max: 50,
+            timestamp: START - 2 * UnixTime.HOUR,
+            numberOfRecords: 3,
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 20,
+            avg: 30,
+            max: 40,
+            timestamp: START - 1 * UnixTime.HOUR,
+            numberOfRecords: 4,
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 10,
+            avg: 20,
+            max: 30,
+            timestamp: START,
+            numberOfRecords: 1,
+          },
+        ])
+      })
 
-    it('returns records when from is null', async () => {
-      const results = await repository.getByProjectAndSubtypeInTimeRange(
-        PROJECT_A,
-        'batchSubmissions',
-        [null, START - 1 * UnixTime.HOUR],
-      )
+      it('returns records when from is null', async () => {
+        const results = await repository.getByProjectAndSubtypeInTimeRange(
+          PROJECT_A,
+          'batchSubmissions',
+          [null, START - 1 * UnixTime.HOUR],
+        )
 
-      expect(results).toEqual([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 40,
-          avg: 50,
-          max: 60,
-          timestamp: START - 3 * UnixTime.HOUR,
-          numberOfRecords: 2,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 30,
-          avg: 40,
-          max: 50,
-          timestamp: START - 2 * UnixTime.HOUR,
-          numberOfRecords: 3,
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          min: 20,
-          avg: 30,
-          max: 40,
-          timestamp: START - 1 * UnixTime.HOUR,
-          numberOfRecords: 4,
-        },
-      ])
-    })
+        expect(results).toEqual([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 40,
+            avg: 50,
+            max: 60,
+            timestamp: START - 3 * UnixTime.HOUR,
+            numberOfRecords: 2,
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 30,
+            avg: 40,
+            max: 50,
+            timestamp: START - 2 * UnixTime.HOUR,
+            numberOfRecords: 3,
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            min: 20,
+            avg: 30,
+            max: 40,
+            timestamp: START - 1 * UnixTime.HOUR,
+            numberOfRecords: 4,
+          },
+        ])
+      })
 
-    it('returns records for a different project and subtype', async () => {
-      const results = await repository.getByProjectAndSubtypeInTimeRange(
-        PROJECT_B,
-        'stateUpdates',
-        [START - 3 * UnixTime.HOUR, START],
-      )
+      it('returns records for a different project and subtype', async () => {
+        const results = await repository.getByProjectAndSubtypeInTimeRange(
+          PROJECT_B,
+          'stateUpdates',
+          [START - 3 * UnixTime.HOUR, START],
+        )
 
-      expect(results).toEqual([
-        {
-          projectId: PROJECT_B,
-          subtype: 'stateUpdates',
-          min: 10,
-          avg: 10,
-          max: 10,
-          timestamp: START - 2 * UnixTime.HOUR,
-          numberOfRecords: 2,
-        },
-      ])
-    })
+        expect(results).toEqual([
+          {
+            projectId: PROJECT_B,
+            subtype: 'stateUpdates',
+            min: 10,
+            avg: 10,
+            max: 10,
+            timestamp: START - 2 * UnixTime.HOUR,
+            numberOfRecords: 2,
+          },
+        ])
+      })
 
-    it('returns empty array when no records match criteria', async () => {
-      const results = await repository.getByProjectAndSubtypeInTimeRange(
-        PROJECT_B,
-        'batchSubmissions',
-        [START - 3 * UnixTime.HOUR, START],
-      )
+      it('returns empty array when no records match criteria', async () => {
+        const results = await repository.getByProjectAndSubtypeInTimeRange(
+          PROJECT_B,
+          'batchSubmissions',
+          [START - 3 * UnixTime.HOUR, START],
+        )
 
-      expect(results).toEqual([])
-    })
-  })
+        expect(results).toEqual([])
+      })
+    },
+  )
 
-  describe(AggregatedLivenessRepository.prototype.getAvgByProjectAndTimeRange
-    .name, () => {
-    it('returns weighted averages for a project within a time range, grouped by subtype', async () => {
-      const results = await repository.getAvgByProjectAndTimeRange(PROJECT_A, [
-        START - 2 * UnixTime.HOUR,
-        START,
-      ])
+  describe(
+    AggregatedLivenessRepository.prototype.getAvgByProjectAndTimeRange.name,
+    () => {
+      it('returns weighted averages for a project within a time range, grouped by subtype', async () => {
+        const results = await repository.getAvgByProjectAndTimeRange(
+          PROJECT_A,
+          [START - 2 * UnixTime.HOUR, START],
+        )
 
-      expect(results).toEqualUnsorted([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql rounds down
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'stateUpdates',
-          avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
-        },
-      ])
-    })
+        expect(results).toEqualUnsorted([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql rounds down
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'stateUpdates',
+            avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
+          },
+        ])
+      })
 
-    it('returns averages when from is null', async () => {
-      const results = await repository.getAvgByProjectAndTimeRange(PROJECT_A, [
-        null,
-        START - 1 * UnixTime.HOUR,
-      ])
+      it('returns averages when from is null', async () => {
+        const results = await repository.getAvgByProjectAndTimeRange(
+          PROJECT_A,
+          [null, START - 1 * UnixTime.HOUR],
+        )
 
-      expect(results).toEqualUnsorted([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          avg: 37, // 4 * 30 + 3 * 40 + 2 * 50 / 4 + 3 + 2 = 37.2 but sql rounds down
-        },
-        {
-          projectId: PROJECT_A,
-          subtype: 'stateUpdates',
-          avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
-        },
-      ])
-    })
+        expect(results).toEqualUnsorted([
+          {
+            projectId: PROJECT_A,
+            subtype: 'batchSubmissions',
+            avg: 37, // 4 * 30 + 3 * 40 + 2 * 50 / 4 + 3 + 2 = 37.2 but sql rounds down
+          },
+          {
+            projectId: PROJECT_A,
+            subtype: 'stateUpdates',
+            avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
+          },
+        ])
+      })
 
-    it('returns empty array when no records match criteria', async () => {
-      const results = await repository.getAvgByProjectAndTimeRange(
-        ProjectId('non-existent'),
-        [START - 3 * UnixTime.HOUR, START],
-      )
+      it('returns empty array when no records match criteria', async () => {
+        const results = await repository.getAvgByProjectAndTimeRange(
+          ProjectId('non-existent'),
+          [START - 3 * UnixTime.HOUR, START],
+        )
 
-      expect(results).toEqual([])
-    })
-  })
+        expect(results).toEqual([])
+      })
+    },
+  )
 
   describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {

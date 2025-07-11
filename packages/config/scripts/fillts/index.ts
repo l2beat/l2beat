@@ -1,7 +1,7 @@
 import { exec } from 'child_process'
+import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
-import dotenv from 'dotenv'
 
 dotenv.config()
 

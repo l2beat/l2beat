@@ -1,5 +1,5 @@
-import * as fs from 'fs'
 import { toJsonSchema } from '@l2beat/validate'
+import * as fs from 'fs'
 import { ProjectTvsConfigSchema } from '../../src/types'
 
 function main() {

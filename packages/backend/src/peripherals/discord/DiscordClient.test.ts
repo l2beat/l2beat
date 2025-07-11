@@ -91,7 +91,7 @@ describe(DiscordClient.name, () => {
 
       const message = 'a'.repeat(2001)
       await expect(discord.sendMessage(message, 'PUBLIC')).toBeRejectedWith(
-        `Discord error: Message size exceeded (2000 characters)`,
+        'Discord error: Message size exceeded (2000 characters)',
       )
     })
   })

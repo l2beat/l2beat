@@ -2,9 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import { PercentChange } from '~/components/PercentChange'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -27,8 +24,11 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -63,7 +63,10 @@ const chartMeta = {
 export function ScalingSummaryTvsChart({
   unit,
   timeRange,
-}: { unit: ChartUnit; timeRange: TvsChartRange }) {
+}: {
+  unit: ChartUnit
+  timeRange: TvsChartRange
+}) {
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },

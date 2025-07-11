@@ -1,10 +1,6 @@
 import type { ImageParams } from '~/utils/project/getImageParams'
 
-export function ReportBanner({
-  image,
-}: {
-  image: ImageParams
-}) {
+export function ReportBanner({ image }: { image: ImageParams }) {
   return (
     <div className="mt-8 mb-10 flex max-h-fit flex-col overflow-hidden rounded-md bg-transparent from-gray-250 to-gray-450 md:my-12 md:grid md:grid-cols-2 md:bg-gradient-to-r">
       <div className="mx-0 my-8 flex flex-col justify-center md:mx-12">

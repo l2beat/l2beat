@@ -1,6 +1,6 @@
+import { useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
 import type { ApiError, Stats, StatsApiRequest, StatsWithChain } from '@/types'
-import { useState } from 'react'
 import { BlockCountInput, type InputMode } from './blockCountInput'
 import { ChainDropdown } from './chainDropdown'
 import { ErrorModal } from './errorModal'

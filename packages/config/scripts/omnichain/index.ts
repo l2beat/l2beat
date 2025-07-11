@@ -1,6 +1,6 @@
-import { writeFileSync } from 'fs'
 import { getEnv } from '@l2beat/backend-tools'
 import { providers } from 'ethers'
+import { writeFileSync } from 'fs'
 
 import { getInboundLibraries } from './getInboundLibraries'
 import { getLZ } from './getLZ'

@@ -1,7 +1,5 @@
-import {} from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import {} from 'ethers'
 import { bridges } from '../processing/bridges'
 import { chains } from '../processing/chains'
 import { getTokenList } from './tokens'

@@ -1,6 +1,5 @@
-import { getCollectionEntry } from '~/content/getCollection'
-
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getCollectionEntry } from '~/content/getCollection'
 import { getGovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'

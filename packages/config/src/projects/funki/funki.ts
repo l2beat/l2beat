@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -170,11 +170,11 @@ export const funki: ScalingProject = opStackL2({
       risks: [
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate and there are no challengers.',
         },
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.',
         },
       ],
     },

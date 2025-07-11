@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 import fs, { mkdirSync, readFileSync } from 'fs'
-import path from 'path'
 import { imageSize } from 'image-size'
+import path from 'path'
 
 interface Manifest {
   names: Record<string, string>
@@ -24,7 +24,7 @@ interface AddHashesOptions {
   hashLength: number
 }
 
-async function addHashes(options: AddHashesOptions) {
+function addHashes(options: AddHashesOptions) {
   const fullInputDir = path.resolve(options.inputDir)
   const fullOutputDir = path.resolve(options.outputDir)
 

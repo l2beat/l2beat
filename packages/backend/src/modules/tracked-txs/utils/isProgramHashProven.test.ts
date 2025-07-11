@@ -1,5 +1,5 @@
-import { readFileSync } from 'fs'
 import { expect } from 'earl'
+import { readFileSync } from 'fs'
 
 import { isProgramHashProven } from './isProgramHashProven'
 
@@ -8,7 +8,7 @@ describe(isProgramHashProven.name, () => {
     // this file includes input taken from the real tx on ethereum
     // 0x54c214bb9b0bc5dcce5f6dfef800448c0e39c1bc5295f7fe708499a2adf1acfb
     // this tx verifies both starknet and paradex
-    const inputFile = `src/test/sharpVerifierInput.txt`
+    const inputFile = 'src/test/sharpVerifierInput.txt'
     const contents = readFileSync(inputFile, 'utf-8')
 
     const isStarknetProven = isProgramHashProven({ input: contents }, [

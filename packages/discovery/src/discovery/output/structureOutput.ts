@@ -5,8 +5,8 @@ import {
 } from '@l2beat/shared-pure'
 import { recalculateSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { StructureConfig } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
+import type { StructureConfig } from '../config/StructureConfig'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(

@@ -1,16 +1,16 @@
-import { mkdirSync } from 'fs'
-import { dirname } from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   type DiscoveryChainConfig,
   type ExplorerConfig,
-  type IProvider,
-  SQLiteCache,
   getDiscoveryPaths,
   getMulticall3Config,
+  type IProvider,
+  SQLiteCache,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
+import { mkdirSync } from 'fs'
+import { dirname } from 'path'
 
 const UNKNOWN_CHAIN_NAME = 'UnknownChainName'
 

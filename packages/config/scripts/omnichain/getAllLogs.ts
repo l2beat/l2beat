@@ -36,8 +36,7 @@ export async function getAllLogs(
         }),
       ])
       return a.concat(b)
-    } else {
-      throw e
     }
+    throw e
   }
 }

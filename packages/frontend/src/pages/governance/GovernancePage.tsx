@@ -1,5 +1,5 @@
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { CustomLink } from '~/components/link/CustomLink'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { CollectionEntry } from '~/content/getCollection'
 import { CustomLinkIcon } from '~/icons/Outlink'
@@ -56,7 +56,9 @@ export interface DelegatedProjectWithIcon
 
 function Header({
   delegatedProjects,
-}: { delegatedProjects: DelegatedProjectWithIcon[] }) {
+}: {
+  delegatedProjects: DelegatedProjectWithIcon[]
+}) {
   return (
     <PrimaryCard className="md:p-8">
       <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>

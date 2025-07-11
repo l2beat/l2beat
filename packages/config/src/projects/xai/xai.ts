@@ -71,7 +71,7 @@ export const xai: ScalingProject = orbitStackL3({
           {
             title:
               'RollupUser.sol - Etherscan source code, onlyValidator modifier',
-            url: `https://etherscan.io/address/0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A#code`,
+            url: 'https://etherscan.io/address/0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A#code',
           },
           {
             title:

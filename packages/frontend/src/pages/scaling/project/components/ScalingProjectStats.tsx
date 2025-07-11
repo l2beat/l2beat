@@ -10,9 +10,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'

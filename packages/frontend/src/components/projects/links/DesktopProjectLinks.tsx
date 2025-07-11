@@ -80,7 +80,10 @@ function ProjectLinkItem({
 function MultiProjectLink({
   projectLink,
   variant,
-}: { projectLink: ProjectLink; variant: 'primary' | 'header' }) {
+}: {
+  projectLink: ProjectLink
+  variant: 'primary' | 'header'
+}) {
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger

@@ -10,7 +10,8 @@ const HAIR_SPACE = '\u200a'
 export function formatLargeNumber(value: number): string {
   if (value === 0) {
     return '0.00'
-  } else if (value < 0) {
+  }
+  if (value < 0) {
     return `-${formatLargeNumber(-value)}`
   }
   const str = Math.floor(value * 100).toString()
@@ -23,7 +24,8 @@ export function formatLargeNumber(value: number): string {
         str.slice(offset, offset + 2) +
         withSpace(unit)
       )
-    } else if (str.length === 5 + i * 3) {
+    }
+    if (str.length === 5 + i * 3) {
       return str.slice(0, 3) + withSpace(unit)
     }
   }

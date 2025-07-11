@@ -249,7 +249,7 @@ describe(contractDiffToMarkdown.name, () => {
 
     expect(result.length).toBeLessThanOrEqual(maxLength)
     expect(result).toEqual(
-      ['```diff', `    contract f... (message too long)`, '```'].join('\n'),
+      ['```diff', '    contract f... (message too long)', '```'].join('\n'),
     )
   })
 

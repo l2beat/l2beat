@@ -7,11 +7,11 @@ import { TendermintClient } from '../../peripherals/tendermint/TendermintClient'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
+import { AvailClient } from './stake-analyzers/avail/AvailClient'
+import { AvailStakeAnalyzer } from './stake-analyzers/avail/AvailStakeAnalyzer'
 import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
 import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
 import { NearStakeAnalyzer } from './stake-analyzers/NearStakeAnalyzer'
-import { AvailClient } from './stake-analyzers/avail/AvailClient'
-import { AvailStakeAnalyzer } from './stake-analyzers/avail/AvailStakeAnalyzer'
 
 export class DaBeatStakeRefresher {
   private readonly refreshQueue: TaskQueue<void>
@@ -91,7 +91,7 @@ export class DaBeatStakeRefresher {
       Object.entries(this.analyzers).map(async ([type, analyzer]) => {
         try {
           const { totalStake, thresholdStake } = await analyzer.analyze()
-          this.logger.info(`Stake data refreshed`, {
+          this.logger.info('Stake data refreshed', {
             type,
             totalStake,
             thresholdStake,

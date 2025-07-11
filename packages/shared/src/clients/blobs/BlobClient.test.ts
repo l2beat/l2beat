@@ -15,61 +15,67 @@ function generateKzgCommitment(): string {
 }
 
 describe(BlobClient.name, () => {
-  describe(BlobClient.prototype.getBlobsByVersionedHashesAndBlockNumber
-    .name, () => {
-    it('should return blobs for given versioned hashes', async () => {
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
-      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
-      const client = mockClient({})
-      client.getBlockSidecar = mockFn().resolvesTo([
-        {
-          kzg_commitment: kzgCommitment1,
-          data: 'blob1',
-        },
-        {
-          kzg_commitment: kzgCommitment2,
-          data: 'blob2',
-        },
-      ])
-
-      const result = await client.getBlobsByVersionedHashesAndBlockNumber(
-        [versionedHash1],
-        1,
-      )
-      expect(result).toEqual({
-        blockNumber: 1,
-        blobs: [
+  describe(
+    BlobClient.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
+    () => {
+      it('should return blobs for given versioned hashes', async () => {
+        const kzgCommitment1 = generateKzgCommitment()
+        const kzgCommitment2 = generateKzgCommitment()
+        const versionedHash1 =
+          '0x01' + utils.sha256(kzgCommitment1).substring(4)
+        const client = mockClient({})
+        client.getBlockSidecar = mockFn().resolvesTo([
           {
             kzg_commitment: kzgCommitment1,
             data: 'blob1',
           },
-        ],
-      })
-    })
+          {
+            kzg_commitment: kzgCommitment2,
+            data: 'blob2',
+          },
+        ])
 
-    it('should return empty array for no versioned hashes', async () => {
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
-      const client = mockClient({})
-      client.getBlockSidecar = mockFn().resolvesTo([
-        {
-          kzg_commitment: kzgCommitment1,
-          data: 'blob1',
-        },
-        {
-          kzg_commitment: kzgCommitment2,
-          data: 'blob2',
-        },
-      ])
-
-      const result = await client.getBlobsByVersionedHashesAndBlockNumber([], 1)
-      expect(result).toEqual({
-        blockNumber: 1,
-        blobs: [],
+        const result = await client.getBlobsByVersionedHashesAndBlockNumber(
+          [versionedHash1],
+          1,
+        )
+        expect(result).toEqual({
+          blockNumber: 1,
+          blobs: [
+            {
+              kzg_commitment: kzgCommitment1,
+              data: 'blob1',
+            },
+          ],
+        })
       })
-    })
-  })
+
+      it('should return empty array for no versioned hashes', async () => {
+        const kzgCommitment1 = generateKzgCommitment()
+        const kzgCommitment2 = generateKzgCommitment()
+        const client = mockClient({})
+        client.getBlockSidecar = mockFn().resolvesTo([
+          {
+            kzg_commitment: kzgCommitment1,
+            data: 'blob1',
+          },
+          {
+            kzg_commitment: kzgCommitment2,
+            data: 'blob2',
+          },
+        ])
+
+        const result = await client.getBlobsByVersionedHashesAndBlockNumber(
+          [],
+          1,
+        )
+        expect(result).toEqual({
+          blockNumber: 1,
+          blobs: [],
+        })
+      })
+    },
+  )
 
   describe(BlobClient.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {

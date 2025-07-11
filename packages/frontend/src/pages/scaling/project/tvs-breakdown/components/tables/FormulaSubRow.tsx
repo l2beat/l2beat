@@ -3,7 +3,9 @@ import type { Row } from '@tanstack/react-table'
 
 export function renderFormulaSubComponent<T extends { formula: Formula }>({
   row,
-}: { row: Row<T> }) {
+}: {
+  row: Row<T>
+}) {
   return (
     <div className="flex flex-col py-3">
       <p className="font-normal text-xs">The amount is calculated as:</p>

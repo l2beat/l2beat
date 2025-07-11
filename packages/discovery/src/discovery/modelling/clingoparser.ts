@@ -1,5 +1,5 @@
 import { type Parser, v } from '@l2beat/validate'
-import { type Node, grammar } from 'ohm-js'
+import { grammar, type Node } from 'ohm-js'
 
 // In Ohm grammar, uppercase ids are for syntactic rules
 // which allow spaces in-between tokens.
@@ -41,7 +41,7 @@ const semantics = clingoFactGrammar.createSemantics().addOperation('toValue', {
   },
 
   Number(_maybeMinus, _digits, _maybeDot, _maybeDecimal) {
-    return parseFloat(this.sourceString)
+    return Number.parseFloat(this.sourceString)
   },
 
   atom(_chars) {

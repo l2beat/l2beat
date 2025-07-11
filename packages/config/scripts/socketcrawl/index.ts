@@ -488,7 +488,7 @@ async function getTokenTVL(
 
   try {
     const tvlString = ethers.utils.formatUnits(balanceRawBigNum, decimals)
-    const tvl = parseFloat(tvlString)
+    const tvl = Number.parseFloat(tvlString)
 
     if (Number.isNaN(tvl)) {
       logWarn(
@@ -933,20 +933,20 @@ function generateCopyPasta(
 
   // Combine sections
   const outputLines = [
-    `// === config.jsonc additions ===`,
+    '// === config.jsonc additions ===',
     `\n"initialAddresses": [`,
     ...copypastaSections.initialAddresses,
-    `],`,
+    '],',
     `\n"names": {`,
     ...copypastaSections.names,
-    `},`,
+    '},',
     `\n"ignoreMethods": {`,
     ...copypastaSections.ignoreMethods,
-    `},`,
-    `\n\n// === socket.ts additions (inside escrows:) ===`,
-    `\nescrows: [`,
+    '},',
+    '\n\n// === socket.ts additions (inside escrows:) ===',
+    '\nescrows: [',
     ...copypastaSections.escrows,
-    `],`,
+    '],',
   ]
 
   // Apply comma cleaning only to the sections that need it

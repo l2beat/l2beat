@@ -1,7 +1,7 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { SUPPORTED_CHAINS } from '@/chains'
 import { ChainService } from '@/server/services/ChainService'
 import type { ApiError, Stats, StatsApiRequest } from '@/types'
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { loadDb } from '../../server/db/db'
 
 export default async function handler(

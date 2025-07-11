@@ -27,11 +27,11 @@ export class SvmRpcClient extends ClientCore {
     const parsedResponse = SvmRpcGetLatestBlockhashResponse.safeParse(response)
 
     if (!parsedResponse.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         method,
         response: JSON.stringify(response),
       })
-      throw new Error(`getLatestBlockhash: Error during parsing`)
+      throw new Error('getLatestBlockhash: Error during parsing')
     }
 
     return parsedResponse.data.result.context.slot
@@ -63,13 +63,13 @@ export class SvmRpcClient extends ClientCore {
         return undefined
       }
 
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         method,
         slot,
         response: JSON.stringify(response),
       })
 
-      throw new Error(`getBlock: Error during parsing`)
+      throw new Error('getBlock: Error during parsing')
     }
 
     const block = parsedResponse.data.result
@@ -94,7 +94,7 @@ export class SvmRpcClient extends ClientCore {
       const parsedResponse = SvmRpcGetBlockTimeResponse.safeParse(response)
 
       if (!parsedResponse.success) {
-        this.$.logger.warn(`Invalid response`, {
+        this.$.logger.warn('Invalid response', {
           method,
           currentSlot,
           response: JSON.stringify(response),
@@ -144,7 +144,7 @@ export class SvmRpcClient extends ClientCore {
         return { success: true }
       }
 
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         errorMessage: parsedError.data.error.message,
       })
       return { success: false }

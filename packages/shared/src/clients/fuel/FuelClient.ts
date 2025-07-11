@@ -35,7 +35,7 @@ export class FuelClient extends ClientCore implements BlockClient {
       !latestBlockNumberResponse.success ||
       latestBlockNumberResponse.data.data.blocks.nodes.length === 0
     ) {
-      throw new Error(`Latest block number: Error during parsing`)
+      throw new Error('Latest block number: Error during parsing')
     }
 
     return Number(latestBlockNumberResponse.data.data.blocks.nodes[0].height)
@@ -100,7 +100,7 @@ export class FuelClient extends ClientCore implements BlockClient {
     const parsedError = FuelError.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         ...parsedError.data.errors,
       })
       return { success: false }

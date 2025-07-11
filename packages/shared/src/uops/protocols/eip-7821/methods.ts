@@ -60,7 +60,7 @@ function decodeExecuteInput(mode: string, executionData: string): Call[] {
   }
 
   const decoded = ethers.utils.defaultAbiCoder.decode(
-    [`tuple(address to, uint256 value, bytes data)[]`],
+    ['tuple(address to, uint256 value, bytes data)[]'],
     executionData,
   )
   return decoded[0]

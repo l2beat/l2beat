@@ -1,7 +1,3 @@
-import type { UnixTime } from '@l2beat/shared-pure'
-
-import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -9,8 +5,10 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import type { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { TrackedTxProject } from '../../config/Config'
+import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,

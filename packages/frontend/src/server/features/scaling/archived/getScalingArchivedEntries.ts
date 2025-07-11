@@ -11,8 +11,8 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingArchivedEntries() {

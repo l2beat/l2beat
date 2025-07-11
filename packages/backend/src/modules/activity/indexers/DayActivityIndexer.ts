@@ -7,7 +7,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DayActivityIndexerDeps) {
     super({
       ...$,
-      name: `activity_day_indexer`,
+      name: 'activity_day_indexer',
       tags: {
         tag: $.projectId,
         project: $.projectId,

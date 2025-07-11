@@ -42,10 +42,10 @@ export function NodesAndConnections() {
     isDimmed: boolean
   }[]
 
-  let minX = Infinity,
-    minY = Infinity,
-    maxX = -Infinity,
-    maxY = -Infinity
+  let minX = Number.POSITIVE_INFINITY
+  let minY = Number.POSITIVE_INFINITY
+  let maxX = Number.NEGATIVE_INFINITY
+  let maxY = Number.NEGATIVE_INFINITY
 
   connections.forEach(({ from, to }) => {
     minX = Math.min(minX, from.x, to.x) - 200

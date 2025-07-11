@@ -6,12 +6,12 @@ import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import {
-  type ReferenceInput,
   generateReferenceInput,
   getReferencedName,
+  type ReferenceInput,
   resolveReference,
 } from '../reference'
-import { EXEC_REVERT_MSG, callMethod } from '../utils/callMethod'
+import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
 export type CallHandlerDefinition = v.infer<typeof CallHandlerDefinition>

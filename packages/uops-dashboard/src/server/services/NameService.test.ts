@@ -1,9 +1,9 @@
+import { expect, mockFn, mockObject } from 'earl'
 import type {
   CountedBlock,
   CountedOperation,
   CountedTransaction,
 } from '@/types'
-import { expect, mockFn, mockObject } from 'earl'
 import type { RpcCodeClient } from '../clients/code/RpcCodeClient'
 import type { ContractClient } from '../clients/contract/ContractClient'
 import type { SignatureClient } from '../clients/signature/SignatureClient'

@@ -1,4 +1,4 @@
-import { Logger, getEnv } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { ScriptLogger } from '../src/tokens/utils/ScriptLogger'
 

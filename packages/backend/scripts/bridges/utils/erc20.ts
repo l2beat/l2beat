@@ -1,9 +1,9 @@
 import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type Hex,
   decodeFunctionResult,
   encodeFunctionData,
+  type Hex,
   parseAbi,
 } from 'viem'
 import type { Receive } from '../types/Receive'

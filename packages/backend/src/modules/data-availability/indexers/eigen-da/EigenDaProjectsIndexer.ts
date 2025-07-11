@@ -1,3 +1,4 @@
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import {
   assert,
@@ -6,8 +7,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-
-import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiIndexer'
 import type { ManagedMultiIndexerOptions } from '../../../../tools/uif/multi/types'
@@ -31,7 +30,7 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
 
     assert(
       $.configurations.every((c) => c.properties.daLayer === $.daLayer),
-      `DaLayer mismatch detected in configurations`,
+      'DaLayer mismatch detected in configurations',
     )
   }
 

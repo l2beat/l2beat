@@ -1,11 +1,10 @@
-import { assert } from '@l2beat/shared-pure'
-
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharedBridgeConfig,
   TrackedTxSharpSubmissionConfig,
 } from '@l2beat/shared'
+import { assert } from '@l2beat/shared-pure'
 import type { Configuration } from '../../../tools/uif/multi/types'
 import type {
   BigQueryFunctionCallResult,

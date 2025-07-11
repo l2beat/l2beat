@@ -3,7 +3,7 @@ import type { Type } from 'cmd-ts'
 import { chains } from '../config/chains'
 
 export const EthereumAddressValue: Type<string, EthereumAddress> = {
-  async from(str): Promise<EthereumAddress> {
+  from(str): Promise<EthereumAddress> {
     return new Promise((resolve, _) => {
       resolve(EthereumAddress(str))
     })
@@ -11,7 +11,7 @@ export const EthereumAddressValue: Type<string, EthereumAddress> = {
 }
 
 export const ChainValue: Type<string, string> = {
-  async from(str): Promise<string> {
+  from(str): Promise<string> {
     return new Promise((resolve, reject) => {
       const chainNames = chains.map((c) => c.name)
       if (!chainNames.includes(str)) {

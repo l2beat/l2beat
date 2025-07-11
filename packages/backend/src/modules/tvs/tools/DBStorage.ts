@@ -83,7 +83,7 @@ export class DBStorage implements DataStorage {
     )
 
     if (fallback) {
-      this.logger.warn(`Price fallback triggered`, {
+      this.logger.warn('Price fallback triggered', {
         configurationId,
         timestamp,
         fallbackTimestamp: fallback.timestamp,
@@ -122,7 +122,7 @@ export class DBStorage implements DataStorage {
     )
 
     if (fallback) {
-      this.logger.warn(`Amount fallback triggered`, {
+      this.logger.warn('Amount fallback triggered', {
         configurationId,
         timestamp,
         fallbackTimestamp: fallback.timestamp,

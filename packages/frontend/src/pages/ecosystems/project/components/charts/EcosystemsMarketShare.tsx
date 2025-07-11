@@ -3,7 +3,9 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 
 export function EcosystemsMarketShare({
   marketShare,
-}: { marketShare: number | undefined }) {
+}: {
+  marketShare: number | undefined
+}) {
   if (marketShare === undefined) {
     return <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
   }

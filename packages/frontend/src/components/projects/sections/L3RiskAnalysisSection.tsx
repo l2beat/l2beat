@@ -1,10 +1,10 @@
 import type { Sentiment } from '@l2beat/config'
 import type { ReactNode } from 'react'
-import { SentimentText } from '~/components/SentimentText'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { BigIndividualRosette } from '~/components/rosette/individual/BigIndividualRosette'
 import type { RosetteValueTuple } from '~/components/rosette/individual/IndividualRosetteIcon'
 import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
+import { SentimentText } from '~/components/SentimentText'
 import { EM_DASH } from '~/consts/characters'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
@@ -117,11 +117,7 @@ export function L3RiskAnalysisSection({
   )
 }
 
-function RosetteTile({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+function RosetteTile({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex w-full flex-col items-center gap-1 rounded-lg bg-surface-secondary p-6">
       {children}
@@ -226,7 +222,10 @@ function CombinedRiskTable(props: {
 function HeaderCell({
   children,
   className,
-}: { children: ReactNode; className?: string }) {
+}: {
+  children: ReactNode
+  className?: string
+}) {
   return (
     <td
       className={cn(

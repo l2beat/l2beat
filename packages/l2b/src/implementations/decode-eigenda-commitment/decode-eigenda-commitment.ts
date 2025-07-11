@@ -81,10 +81,14 @@ export async function decodeEigenDACommitment(rpcUrl: string, txHash: string) {
   console.log('\nQuorum Parameters:')
   quorumInfo.forEach((params, i) => {
     console.log(`\nQuorum ${i + 1}:`)
-    console.log(`- Quorum Number: ${parseInt(params[0], 16) || 0}`)
-    console.log(`- Adversary Threshold: ${parseInt(params[1], 16) || 0}%`)
-    console.log(`- Confirmation Threshold: ${parseInt(params[2], 16) || 0}%`)
-    console.log(`- Chunk Length: ${parseInt(params[3], 16) || 0}`)
+    console.log(`- Quorum Number: ${Number.parseInt(params[0], 16) || 0}`)
+    console.log(
+      `- Adversary Threshold: ${Number.parseInt(params[1], 16) || 0}%`,
+    )
+    console.log(
+      `- Confirmation Threshold: ${Number.parseInt(params[2], 16) || 0}%`,
+    )
+    console.log(`- Chunk Length: ${Number.parseInt(params[3], 16) || 0}`)
   })
 }
 
@@ -128,21 +132,21 @@ function extractBlobVerificationInfo(decoded: EigenDaBlobInfo) {
   })
 
   return {
-    batch_id: parseInt(blobVerificationProof[0], 16),
-    blob_index: parseInt(blobVerificationProof[1], 16),
+    batch_id: Number.parseInt(blobVerificationProof[0], 16),
+    blob_index: Number.parseInt(blobVerificationProof[1], 16),
     batch_metadata: {
       batch_header: {
         batch_root: formatField(blobVerificationProof[2][0][0]),
         quorum_numbers: formatField(blobVerificationProof[2][0][1]),
         quorum_signed_percentages: formatField(blobVerificationProof[2][0][2]),
-        reference_block_number: parseInt(
+        reference_block_number: Number.parseInt(
           blobVerificationProof[2][0][3].slice(2),
           16,
         ),
       },
       signatory_record_hash: formatField(blobVerificationProof[2][1]),
       fee: formatField(blobVerificationProof[2][2]),
-      confirmation_block_number: parseInt(
+      confirmation_block_number: Number.parseInt(
         blobVerificationProof[2][3].slice(2),
         16,
       ),

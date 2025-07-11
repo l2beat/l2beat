@@ -1,11 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
-import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import type {
   DiscoveryDiff,
   DiscoveryOutput,
   EntryParameters,
 } from '@l2beat/discovery'
+import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import { assert, type UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
@@ -149,7 +149,7 @@ export class UpdateDiffer {
         if (indexString === undefined) {
           return false
         }
-        const index = parseInt(indexString)
+        const index = Number.parseInt(indexString)
 
         const entry = latestContracts.find(
           (e) => e.address === discoveryDiff.address,
@@ -224,7 +224,10 @@ export class UpdateDiffer {
   getOnDiskDiscovery({
     name,
     chain,
-  }: { name: string; chain: string }): DiscoveryOutput {
+  }: {
+    name: string
+    chain: string
+  }): DiscoveryOutput {
     return this.configReader.readDiscovery(name, chain)
   }
 }

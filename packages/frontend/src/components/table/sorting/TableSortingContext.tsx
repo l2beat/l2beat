@@ -10,7 +10,10 @@ const TableSortingContext = createContext<{
 export function TableSortingProvider({
   children,
   initialSort,
-}: { children: React.ReactNode; initialSort: ColumnSort }) {
+}: {
+  children: React.ReactNode
+  initialSort: ColumnSort
+}) {
   const [sorting, setSorting] = useState<SortingState>([initialSort])
 
   return (

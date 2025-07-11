@@ -1,6 +1,6 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { CollectionEntry } from '~/content/getCollection'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'

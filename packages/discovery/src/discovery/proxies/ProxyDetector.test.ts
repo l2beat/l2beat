@@ -56,7 +56,7 @@ describe(ProxyDetector.name, () => {
 
     const provider = mockObject<IProvider>({
       getBytecode: mockFn().returns(
-        Bytes.fromHex(`0xef0100`).concat(
+        Bytes.fromHex('0xef0100').concat(
           Bytes.fromHex(implementation.toString()),
         ),
       ),

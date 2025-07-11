@@ -1,4 +1,4 @@
-import { assert, type ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { assert, formatSeconds, type ProjectId } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type {
   ProjectScalingRiskView,
@@ -15,7 +15,7 @@ export const STATE_NONE: TableReadyValue = {
   description:
     'Currently the system permits invalid state roots. More details in project overview.',
   sentiment: 'bad',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export const STATE_FP: TableReadyValue = {
@@ -23,7 +23,7 @@ export const STATE_FP: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_FP_1R: TableReadyValue = {
@@ -31,7 +31,7 @@ export const STATE_FP_1R: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_FP_INT: TableReadyValue = {
@@ -39,7 +39,7 @@ export const STATE_FP_INT: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_FP_INT_ZK: TableReadyValue = {
@@ -47,7 +47,7 @@ export const STATE_FP_INT_ZK: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. ZK proofs are used to adjudicate the correctness of the last step.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_FP_1R_ZK: TableReadyValue = {
@@ -55,7 +55,7 @@ export const STATE_FP_1R_ZK: TableReadyValue = {
   description:
     'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) only require a single transaction to resolve. ZK proofs are used to prove the correctness of the state transition.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_ZKP_SN: TableReadyValue = {
@@ -63,7 +63,7 @@ export const STATE_ZKP_SN: TableReadyValue = {
   description:
     'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_ZKP_ST: TableReadyValue = {
@@ -71,7 +71,7 @@ export const STATE_ZKP_ST: TableReadyValue = {
   description:
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
@@ -79,7 +79,7 @@ export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
   description:
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export function STATE_ZKP_L3(L2: string): TableReadyValue {
@@ -87,7 +87,7 @@ export function STATE_ZKP_L3(L2: string): TableReadyValue {
     value: 'ZK proofs',
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
-    orderHint: Infinity,
+    orderHint: Number.POSITIVE_INFINITY,
   }
 }
 
@@ -96,7 +96,7 @@ export const STATE_EXITS_ONLY: TableReadyValue = {
   description:
     'Exits from the network are subject to a period when they can be challenged. The internal network state is left unchecked.',
   sentiment: 'bad',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
@@ -150,7 +150,7 @@ export const DATA_ON_CHAIN: TableReadyValue = {
   description:
     'All of the data needed for proof construction is published on Ethereum L1.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const DATA_ON_CHAIN_L3: TableReadyValue = {
@@ -158,7 +158,7 @@ export const DATA_ON_CHAIN_L3: TableReadyValue = {
   description:
     'All of the data needed for proof construction is published on the base chain, which ultimately gets published on Ethereum.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const DATA_ON_CHAIN_STATE_DIFFS: TableReadyValue = {
@@ -166,7 +166,7 @@ export const DATA_ON_CHAIN_STATE_DIFFS: TableReadyValue = {
   description:
     'All of the data (SD = state diffs) needed for proof construction is published onchain.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const DATA_MIXED: TableReadyValue = {
@@ -181,7 +181,7 @@ export const DATA_EXTERNAL_MEMO: TableReadyValue = {
   value: 'External (MEMO)',
   description: 'Transaction data is kept in MEMO decentralized storage.',
   sentiment: 'bad',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export function DATA_EXTERNAL_DAC(DAC?: {
@@ -191,13 +191,15 @@ export function DATA_EXTERNAL_DAC(DAC?: {
   const additionalString =
     DAC !== undefined
       ? ` with a threshold of ${DAC.requiredSignatures}/${DAC.membersCount}`
-      : ``
+      : ''
 
   return {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published onchain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
     sentiment: getDacSentiment(DAC),
-    orderHint: DAC ? DAC.requiredSignatures / DAC.membersCount : -Infinity,
+    orderHint: DAC
+      ? DAC.requiredSignatures / DAC.membersCount
+      : Number.NEGATIVE_INFINITY,
   }
 }
 
@@ -229,7 +231,7 @@ export function DATA_CELESTIA(isUsingBlobstream: boolean): TableReadyValue {
   return {
     value: 'External',
     description:
-      `Proof construction and state derivation fully rely on data that is posted on Celestia.` +
+      'Proof construction and state derivation fully rely on data that is posted on Celestia.' +
       additional,
     sentiment: isUsingBlobstream ? 'warning' : 'bad',
   }
@@ -242,7 +244,7 @@ export function DATA_AVAIL(isUsingVector: boolean): TableReadyValue {
   return {
     value: 'External',
     description:
-      `Proof construction and state derivation fully rely on data that is posted on Avail.` +
+      'Proof construction and state derivation fully rely on data that is posted on Avail.' +
       additional,
     sentiment: isUsingVector ? 'warning' : 'bad',
   }
@@ -255,7 +257,7 @@ export function DATA_EIGENDA(isUsingServiceManager: boolean): TableReadyValue {
   return {
     value: 'External',
     description:
-      `Proof construction and state derivation fully rely on data that is posted on EigenDA.` +
+      'Proof construction and state derivation fully rely on data that is posted on EigenDA.' +
       additional,
     sentiment: 'bad',
   }
@@ -458,7 +460,7 @@ export const PROPOSER_CANNOT_WITHDRAW: TableReadyValue = {
   description:
     'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen.',
   sentiment: 'bad',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
@@ -466,7 +468,7 @@ export const PROPOSER_WHITELIST_GOVERNANCE: TableReadyValue = {
   description:
     'Only the whitelisted proposers can publish state roots on L1, so in the event of failure the withdrawals are frozen. There is a decentralized Governance system that can attempt changing Proposers with an upgrade.',
   sentiment: 'warning',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export const PROPOSER_WHITELIST_SECURITY_COUNCIL: TableReadyValue = {
@@ -474,7 +476,7 @@ export const PROPOSER_WHITELIST_SECURITY_COUNCIL: TableReadyValue = {
   description:
     'Only the whitelisted proposer can update state roots on L1, so in the event of failure the withdrawals are frozen. The Security Council minority can be alerted to enforce censorship resistance because they are a permissioned Operator.',
   sentiment: 'warning',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_ZK: TableReadyValue = {
@@ -482,7 +484,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_ZK: TableReadyValue = {
   description:
     'Users are able to trustlessly exit by submitting a zero knowledge proof of funds.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP: TableReadyValue = {
@@ -490,7 +492,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP: TableReadyValue = {
   description:
     'Users are able to trustlessly exit by submitting a Merkle proof of funds.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: TableReadyValue = {
@@ -498,7 +500,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_NFT: TableReadyValue = {
   description:
     PROPOSER_USE_ESCAPE_HATCH_MP.description +
     ' NFTs will be minted on L1 to exit.',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: TableReadyValue = {
@@ -506,7 +508,7 @@ export const PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE: TableReadyValue = {
   description:
     PROPOSER_USE_ESCAPE_HATCH_MP.description +
     ' Positions will be closed using the average price from the last batch state update.',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
@@ -664,7 +666,7 @@ export const EXIT_WINDOW_NON_UPGRADABLE: TableReadyValue = {
   description:
     'Users can exit funds at any time because contracts are not upgradeable.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
@@ -672,7 +674,7 @@ export const EXIT_WINDOW_UNKNOWN: TableReadyValue = {
   description:
     'Some contracts are not verified, so there is no way to assess the exit window.',
   sentiment: 'bad',
-  orderHint: -Infinity,
+  orderHint: Number.NEGATIVE_INFINITY,
 }
 
 export function EXIT_WINDOW_STARKNET(upgradeDelay: number): TableReadyValue {

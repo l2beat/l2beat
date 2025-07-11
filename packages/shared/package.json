@@ -21,8 +21,12 @@
   },
   "typesVersions": {
     "*": {
-      "uops": ["./build/index-uops.d.ts"],
-      "frontend": ["./build/index-fe.d.ts"]
+      "uops": [
+        "./build/index-uops.d.ts"
+      ],
+      "frontend": [
+        "./build/index-fe.d.ts"
+      ]
     }
   },
   "scripts": {

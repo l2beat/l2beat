@@ -1,18 +1,18 @@
-import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
-  DiscoveryRegistry,
-  TemplateService,
   colorize,
   combineStructureAndColor,
+  DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   makeEntryStructureConfig,
+  TemplateService,
 } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
@@ -265,7 +265,7 @@ describe('discovery config.jsonc', () => {
           '',
           `Permissions model of "${c.name}" is not up to date.`,
           `Run \`l2b model-permissions ${c.name}\`.`,
-          `or to refresh all projects: \`l2b model-permissions all\`.`,
+          'or to refresh all projects: \`l2b model-permissions all\`.',
           '',
         ].join('\n\n'),
       )

@@ -1,7 +1,7 @@
-import { Logger, getEnv } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import {
-  type CoinListPlatformEntry,
   CoingeckoClient,
+  type CoinListPlatformEntry,
   HttpClient,
 } from '@l2beat/shared'
 import {
@@ -17,7 +17,6 @@ import { providers } from 'ethers'
 import { ProjectService } from '../ProjectService'
 import type { ChainConfig } from '../types'
 import type { GeneratedToken, Output, SourceEntry } from './types'
-import { ScriptLogger } from './utils/ScriptLogger'
 import {
   readGeneratedFile,
   readTokensFile,
@@ -26,6 +25,7 @@ import {
 } from './utils/fsIntegration'
 import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
+import { ScriptLogger } from './utils/ScriptLogger'
 
 export async function getTokenData(
   sourceFilePath: string,
@@ -68,7 +68,7 @@ export async function getTokenData(
     const chainConfig = chains.find((c) => c.name === chain)
     logger.assert(
       chainConfig !== undefined,
-      `Configuration not found, add chain configuration to project .ts file`,
+      'Configuration not found, add chain configuration to project .ts file',
     )
     const chainId = getChainId(chainLogger, chainConfig)
 
@@ -124,7 +124,7 @@ export async function getTokenData(
 
       tokenLogger.assert(
         token.address !== undefined,
-        `Native asset detected - configure manually`,
+        'Native asset detected - configure manually',
       )
       console.log()
       tokenLogger.processing()
@@ -195,7 +195,7 @@ function getCoingeckoClient() {
 
 function getChainId(logger: ScriptLogger, chain: ChainConfig) {
   if (!chain.chainId) {
-    logger.assert(false, `ChainId not found for`)
+    logger.assert(false, 'ChainId not found for')
   }
   return ChainId(chain.chainId)
 }
@@ -206,7 +206,7 @@ function getSource(
   entry: SourceEntry,
 ) {
   const type = chain === 'ethereum' ? 'canonical' : entry.source
-  tokenLogger.assert(type !== undefined, `Missing type`)
+  tokenLogger.assert(type !== undefined, 'Missing type')
   return type
 }
 
@@ -216,7 +216,7 @@ function getSupply(
   entry: SourceEntry,
 ) {
   const formula = chain === 'ethereum' ? 'zero' : entry.supply
-  tokenLogger.assert(formula !== undefined, `Missing formula`)
+  tokenLogger.assert(formula !== undefined, 'Missing formula')
   return formula
 }
 

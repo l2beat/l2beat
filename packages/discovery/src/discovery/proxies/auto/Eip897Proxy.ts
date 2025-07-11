@@ -1,8 +1,7 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { BigNumber } from 'ethers'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
+import type { ProxyDetails } from '../types'
 
 async function getProxyType(
   provider: IProvider,
@@ -15,7 +14,8 @@ async function getProxyType(
   )
   if (type?.eq(1)) {
     return 1
-  } else if (type?.eq(2)) {
+  }
+  if (type?.eq(2)) {
     return 2
   }
 }

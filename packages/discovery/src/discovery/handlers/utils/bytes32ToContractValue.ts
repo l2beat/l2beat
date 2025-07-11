@@ -11,9 +11,11 @@ export function bytes32ToContractValue(
       return parsed.toString()
     }
     return Number(parsed)
-  } else if (returnType === 'address') {
+  }
+  if (returnType === 'address') {
     return EthereumAddress(value.slice(12, 32).toString()).toString()
-  } else if (returnType === 'uint8') {
+  }
+  if (returnType === 'uint8') {
     return Number(value.get(31))
   }
   return value.toString()

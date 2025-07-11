@@ -117,7 +117,7 @@ describe(TaskQueue.name, () => {
     const queue = new TaskQueue(execute, logger, {
       shouldRetry: Retries.exponentialBackOff({
         stepMs: 1,
-        maxDistanceMs: Infinity,
+        maxDistanceMs: Number.POSITIVE_INFINITY,
         maxAttempts: 5,
         notifyAfterAttempts: 2,
       }),

@@ -7,9 +7,9 @@ import type {
 import type { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import {
   assert,
+  clampRangeToDay,
   type ProjectId,
   UnixTime,
-  clampRangeToDay,
 } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import type { TrackedTxProject } from '../../../../../config/Config'

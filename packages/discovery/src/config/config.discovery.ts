@@ -58,8 +58,8 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_BEACON_API_URL`,
     ]),
     celestiaApiUrl: env.optionalString([
-      `CELESTIA_API_URL_FOR_DISCOVERY`,
-      `CELESTIA_API_URL`,
+      'CELESTIA_API_URL_FOR_DISCOVERY',
+      'CELESTIA_API_URL',
     ]),
     reorgSafeDepth: env.optionalInteger([
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
@@ -84,8 +84,8 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
                 chainId: chainConfig.chainId,
                 url: 'https://api.etherscan.io/v2/api',
                 apiKey: env.string([
-                  `ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-                  `ETHERSCAN_API_KEY`,
+                  'ETHERSCAN_API_KEY_FOR_DISCOVERY',
+                  'ETHERSCAN_API_KEY',
                 ]),
               }
             : ({

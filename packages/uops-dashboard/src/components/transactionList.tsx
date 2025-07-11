@@ -7,7 +7,10 @@ import { TransactionDetails } from './transactionDetails'
 export function TransactionList({
   txs,
   chain,
-}: { txs: CountedTransaction[]; chain: Chain }) {
+}: {
+  txs: CountedTransaction[]
+  chain: Chain
+}) {
   function sortTransactions(
     a: CountedTransaction,
     b: CountedTransaction,

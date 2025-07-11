@@ -76,7 +76,7 @@ export const _StructureConfig = {
     .number()
     .check((x) => x >= 0)
     .default(100),
-  maxDepth: v.number().default(Infinity),
+  maxDepth: v.number().default(Number.POSITIVE_INFINITY),
   overrides: v
     .record(
       v.string().transform((v) => EthereumAddress(v).toString()),

@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import { OthersInfo, RollupsInfo } from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingCostsChart } from '~/components/chart/costs/ScalingCostsChart'
 import {
@@ -9,6 +8,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { OthersInfo, RollupsInfo } from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'

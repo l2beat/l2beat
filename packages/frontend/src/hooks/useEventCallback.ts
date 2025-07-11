@@ -19,7 +19,6 @@ export function useEventCallback<Args extends unknown[], R>(
     ref.current = fn
   }, [fn])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: it's correct
   return useCallback((...args: Args) => ref.current?.(...args), [ref]) as (
     ...args: Args
   ) => R

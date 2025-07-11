@@ -1,9 +1,8 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
 import { get$Implementations } from '../../utils/extractors'
 import { detectPolygonProxy } from '../auto/PolygonProxy'
+import type { ProxyDetails } from '../types'
 
 export async function getPolygonExtensionProxy(
   provider: IProvider,

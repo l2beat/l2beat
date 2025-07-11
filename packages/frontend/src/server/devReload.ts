@@ -1,5 +1,5 @@
-import { createServer } from 'http'
 import type { Logger } from '@l2beat/backend-tools'
+import { createServer } from 'http'
 import { WebSocketServer } from 'ws'
 
 const PORT = 9999

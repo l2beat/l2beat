@@ -38,13 +38,7 @@ export function ScopeOfAssessment({
   )
 }
 
-function Section({
-  checked,
-  items,
-}: {
-  checked: boolean
-  items: string[]
-}) {
+function Section({ checked, items }: { checked: boolean; items: string[] }) {
   const Icon = checked ? SatisfiedIcon : MissingIcon
   return (
     <div className="flex flex-col gap-2">

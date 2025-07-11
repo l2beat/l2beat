@@ -1,6 +1,6 @@
+import { v } from '@l2beat/validate'
 import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
-import { v } from '@l2beat/validate'
 import { hashPng } from './hashPng'
 
 const metadataFile = path.join(__dirname, '../metadata.json')

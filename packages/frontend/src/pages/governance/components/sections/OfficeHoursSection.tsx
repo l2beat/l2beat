@@ -1,5 +1,5 @@
-import { PlainLink } from '~/components/PlainLink'
 import { Button } from '~/components/core/Button'
+import { PlainLink } from '~/components/PlainLink'
 import { OfficeHoursIllustration } from '../../assets/OfficeHoursIllustration'
 import { GovernanceCard } from '../GovernanceCard'
 

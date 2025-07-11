@@ -1,8 +1,8 @@
 export function splitCode(
   incomingLeft: Record<string, string>,
   incomingRight: Record<string, string>,
-  removeSameDeclarations: boolean = false,
-  removeComments: boolean = false,
+  removeSameDeclarations = false,
+  removeComments = false,
 ): [string, string] {
   const left = removeComments
     ? removeCommentsFromCode(incomingLeft)
@@ -60,7 +60,8 @@ function removeComments(source: string): string {
           i++
         }
         break
-      } else if (source[i] === '/' && source[i + 1] === '*') {
+      }
+      if (source[i] === '/' && source[i + 1] === '*') {
         hasComment = true
         i += 2
         while (i < source.length - 1) {

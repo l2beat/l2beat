@@ -1,10 +1,6 @@
 import type { ChartMeta } from '~/components/core/chart/Chart'
 
-export function getDaChartMeta({
-  shape,
-}: {
-  shape: 'line' | 'square'
-}) {
+export function getDaChartMeta({ shape }: { shape: 'line' | 'square' }) {
   return {
     ethereum: {
       label: 'Ethereum (blobs)',

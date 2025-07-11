@@ -337,7 +337,10 @@ function writeFavorites(favorites: string[]) {
 function WithHeader({
   children,
   title = 'Projects',
-}: { children: React.ReactNode; title?: string }) {
+}: {
+  children: React.ReactNode
+  title?: string
+}) {
   return (
     <>
       <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">

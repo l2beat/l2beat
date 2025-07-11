@@ -1,9 +1,8 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
 import { get$Implementations } from '../../utils/extractors'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
+import type { ProxyDetails } from '../types'
 
 export async function getZkSpaceProxy(
   provider: IProvider,

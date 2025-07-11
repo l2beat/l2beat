@@ -1,6 +1,6 @@
-import fs from 'fs'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
+import fs from 'fs'
 
 // Interface definitions remain the same
 interface TokenAddressMap {
@@ -254,9 +254,9 @@ export class ZkStackDataFetcher {
       }
 
       // Process protocol version
-      let major = 0,
-        minor = 0,
-        patch = 0
+      let major = 0
+      let minor = 0
+      let patch = 0
       if (protocolVersionPromise.status === 'fulfilled') {
         ;[major, minor, patch] = protocolVersionPromise.value
       }

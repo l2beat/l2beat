@@ -4,7 +4,10 @@ import type { FontInfo } from './fonts'
 export function FontStyles({
   fonts,
   manifest,
-}: { fonts: FontInfo[]; manifest: Manifest }) {
+}: {
+  fonts: FontInfo[]
+  manifest: Manifest
+}) {
   const fontStyles = fonts
     .map((font) =>
       font.src

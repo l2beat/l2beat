@@ -1,6 +1,6 @@
+import { type DiscoveryPaths, readJsonc } from '@l2beat/discovery'
 import fs from 'fs'
 import path from 'path'
-import { type DiscoveryPaths, readJsonc } from '@l2beat/discovery'
 
 const SCHEMA_CONFIG = {
   schemas: {
@@ -176,13 +176,13 @@ export function lintJsonFiles(paths: DiscoveryPaths) {
     }
   }
 
-  console.log(`\n📊 Summary:`)
+  console.log('\n📊 Summary:')
   console.log(`   Fixed: ${fixedCount} files`)
   console.log(
     `   Skipped: ${skippedCount} files (not matching configured patterns)`,
   )
   if (skippedFiles.length > 0) {
-    console.log(`   Skipped files:`)
+    console.log('   Skipped files:')
     for (const file of skippedFiles) {
       console.log(`      ${file}`)
     }
@@ -191,9 +191,9 @@ export function lintJsonFiles(paths: DiscoveryPaths) {
 
   if (fixedCount > 0) {
     console.log(
-      `\n✅ Schema paths have been fixed! You may want to verify the changes.`,
+      '\n✅ Schema paths have been fixed! You may want to verify the changes.',
     )
   } else {
-    console.log(`\n✅ All schema paths are already correct!`)
+    console.log('\n✅ All schema paths are already correct!')
   }
 }

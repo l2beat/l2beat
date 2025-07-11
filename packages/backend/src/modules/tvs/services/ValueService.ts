@@ -4,9 +4,9 @@ import type {
   CalculationFormula,
   ValueFormula,
 } from '@l2beat/config'
-import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
-import type { DataStorage } from '../tools/DataStorage'
+import { assert, notUndefined, type UnixTime } from '@l2beat/shared-pure'
 import { BigIntWithDecimals } from '../tools/bigIntWithDecimals'
+import type { DataStorage } from '../tools/DataStorage'
 import {
   createAmountConfig,
   createPriceConfigId,
@@ -178,7 +178,7 @@ export class ValueService {
               const result = subtractFrom - toSubtract
 
               if (result < 0n) {
-                this.logger.warn(`Diff returned less than zero`, { tokenId })
+                this.logger.warn('Diff returned less than zero', { tokenId })
                 return 0n
               }
 

@@ -103,7 +103,8 @@ function mapFields(
             },
           },
         ]
-      } else if (typeof value === 'object' && value !== null) {
+      }
+      if (typeof value === 'object' && value !== null) {
         return mapFields(
           value as Record<string, unknown>,
           chain,

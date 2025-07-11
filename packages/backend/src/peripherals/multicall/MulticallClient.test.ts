@@ -178,7 +178,7 @@ describe(MulticallClient.name, () => {
     ])
   })
 
-  it(`batches calls`, async () => {
+  it('batches calls', async () => {
     const calls: number[] = []
     const ethereumClient = mockObject<RpcClient>({
       async call(parameters) {

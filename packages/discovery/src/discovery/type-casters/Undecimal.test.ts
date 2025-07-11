@@ -29,7 +29,7 @@ const testData: TestData[] = [
 
 describe('Undecimal', () => {
   for (const data of testData) {
-    it(`should cast a number to a ContractValue`, () => {
+    it('should cast a number to a ContractValue', () => {
       const result = Undecimal.cast(
         { decimals: data.decimals },
         data.incomingValue,

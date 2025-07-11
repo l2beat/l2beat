@@ -63,9 +63,7 @@ const descriptions: Record<string, string> = {
     'Dispute window (in blocks) during which it is required to respond to a challenge',
 }
 
-export async function analyseAllOrbitChains(
-  paths: DiscoveryPaths,
-): Promise<void> {
+export function analyseAllOrbitChains(paths: DiscoveryPaths) {
   const configReader = new ConfigReader(paths.discovery)
   const rollups: EntryParameters[] = []
   for (const [chain, mapping] of Object.entries(chainMapping)) {
@@ -146,11 +144,11 @@ export async function analyseAllOrbitChains(
   console.table(data3)
 }
 
-export async function compareTwoOrbitChain(
+export function compareTwoOrbitChain(
   firstProject: string,
   secondProject: string,
   paths: DiscoveryPaths,
-): Promise<void> {
+) {
   console.log(`Analyzing ${firstProject} and ${secondProject}`)
   const configReader = new ConfigReader(paths.discovery)
 

@@ -1,11 +1,11 @@
 import { HttpClient } from '@l2beat/shared'
-import { type Type, command, option, restPositionals } from 'cmd-ts'
-import { StarknetClient } from '../implementations/starknet-access-control/StarknetClient'
+import { command, option, restPositionals, type Type } from 'cmd-ts'
 import { getAccessControlState } from '../implementations/starknet-access-control/getAccessControlState'
+import { StarknetClient } from '../implementations/starknet-access-control/StarknetClient'
 import { HttpUrl } from './types'
 
 export const StarknetAddressValue: Type<string, string> = {
-  async from(str): Promise<string> {
+  from(str): Promise<string> {
     return new Promise((resolve, _) => {
       const address = str.startsWith('0x') ? str.slice(2) : str
 

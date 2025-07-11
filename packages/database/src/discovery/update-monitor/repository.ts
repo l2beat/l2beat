@@ -1,6 +1,6 @@
 import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type UpdateMonitorRecord, toRecord, toRow } from './entity'
+import { toRecord, toRow, type UpdateMonitorRecord } from './entity'
 
 export class UpdateMonitorRepository extends BaseRepository {
   async findLatest(

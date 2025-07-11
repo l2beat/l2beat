@@ -137,7 +137,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       risks: [
         {
           category: 'Funds can be lost if',
-          text: `a dishonest majority of Near validators finalizes an unavailable block.`,
+          text: 'a dishonest majority of Near validators finalizes an unavailable block.',
         },
       ],
     },

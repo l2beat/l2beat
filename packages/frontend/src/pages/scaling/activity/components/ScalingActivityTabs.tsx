@@ -1,10 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import {
-  NotReviewedInfo,
-  OthersInfo,
-  RollupsInfo,
-  ValidiumsAndOptimiumsInfo,
-} from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingActivityChart } from '~/components/chart/activity/ScalingActivityChart'
 import {
@@ -14,6 +8,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  NotReviewedInfo,
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'

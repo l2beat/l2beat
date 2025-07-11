@@ -1,13 +1,13 @@
-import { readFileSync } from 'fs'
-import path from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import {
-  type HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
   format,
+  type HashedFileContent,
 } from '@l2beat/discovery'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { readFileSync } from 'fs'
+import path from 'path'
 import { listFilesRecursively } from './compare-flat-sources/common'
 import { colorMap } from './compare-flat-sources/output'
 

@@ -98,7 +98,7 @@ export function executeMatchFlat(
 }
 
 export function executeDownloadAllShapes(): EventSource {
-  return new EventSource(`/api/terminal/download-all-shapes`)
+  return new EventSource('/api/terminal/download-all-shapes')
 }
 
 export async function listTemplates(): Promise<ApiListTemplatesResponse> {

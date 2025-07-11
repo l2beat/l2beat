@@ -128,9 +128,9 @@ function hslToRgb(h: number, s: number, l: number): [number, number, number] {
   const x = chroma * (1 - Math.abs(((h / 60) % 2) - 1))
   const m = lNormalized - chroma / 2
 
-  let r = 0,
-    g = 0,
-    b = 0
+  let r = 0
+  let g = 0
+  let b = 0
   if (0 <= h && h < 60) {
     r = chroma
     g = x

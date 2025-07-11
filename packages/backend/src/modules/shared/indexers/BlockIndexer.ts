@@ -21,7 +21,7 @@ export class BlockIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockIndexerDeps) {
     super({
       ...$,
-      name: `block_indexer`,
+      name: 'block_indexer',
       tags: {
         tag: $.source,
         project: $.source,
@@ -34,7 +34,7 @@ export class BlockIndexer extends ManagedChildIndexer {
     let adjustedFrom = from
     if (
       adjustedFrom !== to &&
-      (from === this.$.minHeight || this.$.mode === `LATEST_ONLY`)
+      (from === this.$.minHeight || this.$.mode === 'LATEST_ONLY')
     ) {
       adjustedFrom = to
       this.logger.info('Range adjusted', {

@@ -54,7 +54,7 @@ export class LoopringClient extends ClientCore implements BlockClient {
       const parsedError = LoopringError.safeParse(response)
 
       if (parsedError.success) {
-        this.$.logger.warn(`Response validation error`, {
+        this.$.logger.warn('Response validation error', {
           message: parsedError.data.resultInfo.message,
           code: parsedError.data.resultInfo.code,
         })
@@ -66,7 +66,7 @@ export class LoopringClient extends ClientCore implements BlockClient {
       const parsedError = DegateError.safeParse(response)
 
       if (parsedError.success) {
-        this.$.logger.warn(`Response validation error`, {
+        this.$.logger.warn('Response validation error', {
           message: parsedError.data.message,
           code: parsedError.data.code,
         })

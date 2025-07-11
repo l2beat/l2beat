@@ -55,14 +55,13 @@ export function onWheel(
         scale: scale * (1 + change),
       },
     }
-  } else {
-    return {
-      transform: {
-        offsetX: offsetX - deltaX,
-        offsetY: offsetY - deltaY,
-        scale,
-      },
-    }
+  }
+  return {
+    transform: {
+      offsetX: offsetX - deltaX,
+      offsetY: offsetY - deltaY,
+      scale,
+    },
   }
 }
 

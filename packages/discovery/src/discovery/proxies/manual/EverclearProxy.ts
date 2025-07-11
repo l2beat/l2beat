@@ -5,14 +5,13 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import { utils } from 'ethers'
 import zip from 'lodash/zip'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 // keccak256('settlement_module');
 const _SETTLEMENT_MODULE = Bytes.fromHex(

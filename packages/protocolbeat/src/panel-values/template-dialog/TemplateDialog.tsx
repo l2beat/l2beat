@@ -3,14 +3,14 @@ import clsx from 'clsx'
 import { useMemo, useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
 import { Dialog } from '../../components/Dialog'
-import { DialogActions } from './DialogActions'
-import { TemplateFolder } from './TemplateFolder'
 import {
   DialogContext,
   type DialogStep,
   type TemplateFormData,
   useTemplateDialogContext,
 } from './context'
+import { DialogActions } from './DialogActions'
+import { TemplateFolder } from './TemplateFolder'
 
 interface TemplateDialogProps {
   addresses: string[]
@@ -69,7 +69,7 @@ function TemplateDialogTrigger({
           className,
         )}
       >
-        <span className="pointer-events-none absolute inset-0 animate-[disco_1.5s_linear_infinite] bg-[length:400%_400%] bg-[linear-gradient(270deg,#ff0080,#ff8c00,#40e0d0,#8a2be2)] opacity-0 transition-opacity duration-200 group-hover:opacity-80"></span>
+        <span className="pointer-events-none absolute inset-0 animate-[disco_1.5s_linear_infinite] bg-[length:400%_400%] bg-[linear-gradient(270deg,#ff0080,#ff8c00,#40e0d0,#8a2be2)] opacity-0 transition-opacity duration-200 group-hover:opacity-80" />
         <span className="relative z-10">{children}</span>
       </div>
     </Dialog.Trigger>

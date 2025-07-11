@@ -1,11 +1,10 @@
 import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 async function getPastUpgrades(
   provider: IProvider,

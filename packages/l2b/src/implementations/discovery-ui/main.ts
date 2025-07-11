@@ -1,12 +1,12 @@
-import type { Server } from 'http'
-import path, { join } from 'path'
 import {
   ConfigReader,
-  TemplateService,
   getDiscoveryPaths,
+  TemplateService,
 } from '@l2beat/discovery'
 import { v as z } from '@l2beat/validate'
 import express from 'express'
+import type { Server } from 'http'
+import path, { join } from 'path'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'

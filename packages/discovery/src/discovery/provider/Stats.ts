@@ -32,11 +32,11 @@ export class ProviderStats {
       }) satisfies ProviderMark,
   )
 
-  mark(key: number, durations: number, count: number = 1): void {
+  mark(key: number, durations: number, count = 1): void {
     assert(key >= 0 && key < this.measurements.length, 'key out of bounds')
     assert(
       this.measurements[key] !== undefined,
-      `entry should not be undefined`,
+      'entry should not be undefined',
     )
     this.measurements[key].count += count
     const partDuration = durations / count
@@ -49,7 +49,7 @@ export class ProviderStats {
     assert(key >= 0 && key < this.measurements.length, 'key out of bounds')
     assert(
       this.measurements[key] !== undefined,
-      `entry should not be undefined`,
+      'entry should not be undefined',
     )
     return this.measurements[key]
   }

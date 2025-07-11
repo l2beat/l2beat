@@ -184,7 +184,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
       if (isAnomaly) {
         if (ongoingAnomaly) {
-          this.logger.info(`Ongoing anomaly detected`, {
+          this.logger.info('Ongoing anomaly detected', {
             projectId: group.projectId,
             subtype: group.subtype,
             duration: interval,
@@ -203,7 +203,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           continue
         }
 
-        this.logger.info(`New anomaly detected`, {
+        this.logger.info('New anomaly detected', {
           projectId: group.projectId,
           subtype: group.subtype,
           duration: interval,
@@ -233,7 +233,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           continue
         }
 
-        this.logger.info(`Recovered from anomaly`, {
+        this.logger.info('Recovered from anomaly', {
           projectId: group.projectId,
           subtype: group.subtype,
           blockNumber: block.number,

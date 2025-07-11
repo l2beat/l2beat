@@ -4,8 +4,8 @@ import { ChainConverter } from '@l2beat/shared-pure'
 import type { Config } from '../../config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { ApplicationModule } from '../ApplicationModule'
-import { FlatSourcesController } from './api/FlatSourcesController'
 import { createFlatSourcesRouter } from './api/createFlatSourcesRouter'
+import { FlatSourcesController } from './api/FlatSourcesController'
 
 export function createFlatSourcesModule(
   config: Config,

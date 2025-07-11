@@ -1,9 +1,8 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
-import { useTable } from '~/hooks/useTable'
-
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
+import { useTable } from '~/hooks/useTable'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/getBridgesArchivedEntries'
 import { getBridgesArchivedColumns } from './Columns'
 

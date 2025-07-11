@@ -1,20 +1,19 @@
 import type { DaBridgeRisks, Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { ps } from '~/server/projects'
-
 import {
-  type TabbedDaEntries,
   groupByDaTabs,
+  type TabbedDaEntries,
 } from '~/pages/data-availability/utils/groupByDaTabs'
+import { ps } from '~/server/projects'
 import {
-  type ProjectsChangeReport,
   getProjectsChangeReport,
+  type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import {
   type CommonDaEntry,
-  getCommonDaEntry,
   getCommonDacDaEntry,
+  getCommonDaEntry,
 } from '../getCommonDaEntry'
 import {
   type AdjustedDaLayerRisks,

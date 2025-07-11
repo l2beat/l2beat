@@ -97,9 +97,8 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     const result = this.safeValidate(value)
     if (result.success) {
       return result.data
-    } else {
-      throw new Error(`At ${result.path || '@'}: ${result.message}`)
     }
+    throw new Error(`At ${result.path || '@'}: ${result.message}`)
   }
 
   isValid(value: unknown): value is T {
@@ -110,9 +109,8 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     const result = this.safeParse(value)
     if (result.success) {
       return result.data
-    } else {
-      throw new Error(`At ${result.path || '@'}: ${result.message}`)
     }
+    throw new Error(`At ${result.path || '@'}: ${result.message}`)
   }
 
   check(predicate: (value: T) => boolean | string, message?: string) {

@@ -4,9 +4,6 @@ import capitalize from 'lodash/capitalize'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import { TokenCombobox } from '~/components/TokenCombobox'
-import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { Skeleton } from '~/components/core/Skeleton'
 import {
   ChartContainer,
   ChartLegend,
@@ -23,8 +20,11 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
+import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
 import type {
   ProjectToken,

@@ -21,7 +21,10 @@ export function formatSI(value: number, unit: string): string {
   if (value === 0) {
     return `0 ${unit}`
   }
-  if (value === Infinity || value === -Infinity) {
+  if (
+    value === Number.POSITIVE_INFINITY ||
+    value === Number.NEGATIVE_INFINITY
+  ) {
     const sign = value > 0 ? '' : '-'
     return `${sign}∞ ${unit}`
   }

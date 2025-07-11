@@ -170,6 +170,6 @@ function getSafeHeight<T>(configurations: SavedConfiguration<T>[]) {
   return configurations.reduce(
     (agg, curr) =>
       (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
-    Infinity,
+    Number.POSITIVE_INFINITY,
   )
 }

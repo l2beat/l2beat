@@ -50,7 +50,7 @@ export class PolkadotRpcClient extends ClientCore {
     const hash = PolkadotGetBlockHashResponse.safeParse(hashResponse)
 
     if (!hash.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         height,
         response: JSON.stringify(hash),
       })
@@ -62,7 +62,7 @@ export class PolkadotRpcClient extends ClientCore {
     const block = PolkadotGetBlockResponse.safeParse(blockResponse)
 
     if (!block.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         height,
         response: JSON.stringify(blockResponse),
       })
@@ -97,7 +97,7 @@ export class PolkadotRpcClient extends ClientCore {
     const parsedError = PolkadotErrorResponse.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
       return { success: false }

@@ -4,7 +4,6 @@ import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +12,7 @@ import {
 import { Markdown } from '../markdown/Markdown'
 import { GrissiniStick } from '../rosette/grissini/GrissiniStick'
 import type { RosetteValue } from '../rosette/types'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 
 interface RiskBannerProps extends RosetteValue {
   className?: string

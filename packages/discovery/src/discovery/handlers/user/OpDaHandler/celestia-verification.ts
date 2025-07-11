@@ -31,7 +31,7 @@ export async function checkForCelestia(
 
   // check if we have single namespace
   if (new Set(namespaces).size !== 1) {
-    throw new Error(`Multiple Celestia namespaces have been detected.`)
+    throw new Error('Multiple Celestia namespaces have been detected.')
   }
 
   const requiredCount = celestiaCommitments.length

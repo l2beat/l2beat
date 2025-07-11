@@ -18,9 +18,8 @@ export function toContractValue(value: unknown): ContractValue {
       value.lt(Number.MIN_SAFE_INTEGER.toString())
     ) {
       return value.toString()
-    } else {
-      return value.toNumber()
     }
+    return value.toNumber()
   }
   return `${value}`
 }

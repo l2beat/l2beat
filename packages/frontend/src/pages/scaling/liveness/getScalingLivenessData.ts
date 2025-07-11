@@ -3,8 +3,8 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import {
-  type ScalingLivenessEntry,
   getScalingLivenessEntries,
+  type ScalingLivenessEntry,
 } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'

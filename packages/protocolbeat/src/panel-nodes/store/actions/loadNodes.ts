@@ -7,7 +7,7 @@ import {
   HIDDEN_FIELDS_FOOTER_HEIGHT,
   NODE_WIDTH,
 } from '../utils/constants'
-import { type StoredNodeLayout, recallNodeLayout } from '../utils/storage'
+import { recallNodeLayout, type StoredNodeLayout } from '../utils/storage'
 import { layout } from './other'
 
 export function loadNodes(

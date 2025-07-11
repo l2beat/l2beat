@@ -1,5 +1,3 @@
-import { readFileSync } from 'fs'
-import path, { join, relative } from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import {
   type DiscoveryOutput,
@@ -8,14 +6,16 @@ import {
   getChainConfigs,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
+import { readFileSync } from 'fs'
+import path, { join, relative } from 'path'
 import { rimraf } from 'rimraf'
 
 export async function rediscoverStructureOnBlock(
   projectName: string,
   chain: string,
   blockNumber: number,
-  saveSources: boolean = false,
-  overwriteCache: boolean = false,
+  saveSources = false,
+  overwriteCache = false,
 ): Promise<DiscoveryOutput> {
   process.stdout.write(
     `Rediscovering ${projectName} on ${chain} at block ${blockNumber}... `,

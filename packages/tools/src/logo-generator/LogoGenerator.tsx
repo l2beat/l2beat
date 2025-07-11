@@ -92,7 +92,7 @@ export function LogoGenerator() {
             min={16}
             max={128}
             value={size}
-            onChange={(e) => setSize(parseInt(e.target.value))}
+            onChange={(e) => setSize(Number.parseInt(e.target.value))}
           />
         </div>
 
@@ -103,7 +103,7 @@ export function LogoGenerator() {
             min={0}
             max={128}
             value={borderRadius}
-            onChange={(e) => setBorderRadius(parseInt(e.target.value))}
+            onChange={(e) => setBorderRadius(Number.parseInt(e.target.value))}
           />
         </div>
         <div className="flex flex-col">

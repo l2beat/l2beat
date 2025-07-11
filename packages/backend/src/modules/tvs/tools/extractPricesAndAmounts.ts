@@ -1,4 +1,3 @@
-import { createHash } from 'crypto'
 import type {
   AmountFormula,
   BalanceOfEscrowAmountFormula,
@@ -11,6 +10,7 @@ import type {
   ValueFormula,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import type { AmountConfig, PriceConfig } from '../types'
 
 export function extractPricesAndAmounts(tokens: TvsToken[]) {

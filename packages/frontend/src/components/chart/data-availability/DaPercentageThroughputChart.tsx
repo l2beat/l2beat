@@ -1,10 +1,8 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
-
-import { UnixTime } from '@l2beat/shared-pure'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   ChartContainer,
   ChartLegend,
@@ -15,6 +13,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaChartMeta } from './meta'

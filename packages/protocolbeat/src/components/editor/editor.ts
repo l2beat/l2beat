@@ -4,10 +4,9 @@ import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 
-import * as solidity from './languages/solidity'
-
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { jsonDiagnostics } from './languages/json'
+import * as solidity from './languages/solidity'
 import type { EditorFile } from './store'
 import { theme } from './theme'
 

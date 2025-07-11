@@ -1,13 +1,12 @@
+import { AsyncLocalStorage } from 'node:async_hooks'
 import {
   Kysely,
   type Transaction as KyselyTransaction,
   type LogConfig,
   PostgresDialect,
 } from 'kysely'
-import { Pool, type PoolConfig, defaults, types } from 'pg'
+import { defaults, Pool, type PoolConfig, types } from 'pg'
 import type { DB as GeneratedDB } from './generated/types'
-
-import { AsyncLocalStorage } from 'node:async_hooks'
 
 export type DB = GeneratedDB
 // Interpret `timestamp without time zone` as UTC

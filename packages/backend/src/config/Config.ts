@@ -19,8 +19,8 @@ import type {
   ProjectTvsConfig,
 } from '../modules/tvs/types'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
-import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
+import type { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string

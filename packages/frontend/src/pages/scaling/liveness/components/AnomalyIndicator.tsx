@@ -1,13 +1,13 @@
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import { Callout } from '~/components/Callout'
-import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
@@ -135,9 +135,7 @@ function AnomalyTooltipContent(props: {
   )
 }
 
-export function AnomalyTypeBadge(props: {
-  type: LivenessAnomaly['subtype']
-}) {
+export function AnomalyTypeBadge(props: { type: LivenessAnomaly['subtype'] }) {
   return (
     <span className="w-max rounded bg-orange-400 px-1.5 text-black uppercase">
       {anomalySubtypeToLabel(props.type)}

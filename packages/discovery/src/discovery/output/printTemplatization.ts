@@ -3,8 +3,8 @@ import { formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import partition from 'lodash/partition'
 import type { Analysis } from '../analysis/AddressAnalyzer'
-import type { TemplateService } from '../analysis/TemplateService'
 import { getShapeFromAnalyzedContract } from '../analysis/findShape'
+import type { TemplateService } from '../analysis/TemplateService'
 
 export function printTemplatization(
   logger: Logger,
@@ -39,8 +39,8 @@ export function printTemplatization(
         contract,
       )
 
-      const firstLinePrefix = i === templatized.length - 1 ? `└─` : `├─`
-      const nestedLinePrefix = i === templatized.length - 1 ? `  ` : `│ `
+      const firstLinePrefix = i === templatized.length - 1 ? '└─' : '├─'
+      const nestedLinePrefix = i === templatized.length - 1 ? '  ' : '│ '
       const indent = ' '.repeat(2)
       const name = chalk.blue(contract.name)
       const template = `${contract.extendedTemplate?.template} ${contract.extendedTemplate?.reason}`
@@ -87,7 +87,7 @@ export function printTemplatization(
   if (untemplatized.length > 0) {
     logs.push(chalk.redBright(chalk.bold('Untemplatized')))
     for (const [i, contract] of untemplatized.entries()) {
-      const prefix = i === untemplatized.length - 1 ? `└─` : `├─`
+      const prefix = i === untemplatized.length - 1 ? '└─' : '├─'
       const indent = ' '.repeat(2)
       const name = chalk.blue(contract.name)
       const log = `${contract.address} ${name}`

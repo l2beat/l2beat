@@ -1,8 +1,7 @@
-import { estimateSimilarity } from '@l2beat/discovery'
-import chalk from 'chalk'
-
 import type { Logger } from '@l2beat/backend-tools'
+import { estimateSimilarity } from '@l2beat/discovery'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import chalk from 'chalk'
 import { type Project, removeCommonPath, transpose } from './common'
 
 export function formatHeader(title: string): string {
@@ -106,24 +105,29 @@ export function printComparisonBetweenProjects(
   )
 }
 
-export function colorMap(value: number, multiplier: number = 1): string {
+export function colorMap(value: number, multiplier = 1): string {
   const valueString = value.toFixed(2)
 
   if (value < 0.125 * multiplier) {
     return chalk.grey(valueString)
-  } else if (value < 0.25 * multiplier) {
-    return chalk.red(valueString)
-  } else if (value < 0.375 * multiplier) {
-    return chalk.redBright(valueString)
-  } else if (value < 0.5 * multiplier) {
-    return chalk.magenta(valueString)
-  } else if (value < 0.625 * multiplier) {
-    return chalk.magentaBright(valueString)
-  } else if (value < 0.75 * multiplier) {
-    return chalk.yellow(valueString)
-  } else if (value < 0.875 * multiplier) {
-    return chalk.yellowBright(valueString)
-  } else {
-    return chalk.greenBright(valueString)
   }
+  if (value < 0.25 * multiplier) {
+    return chalk.red(valueString)
+  }
+  if (value < 0.375 * multiplier) {
+    return chalk.redBright(valueString)
+  }
+  if (value < 0.5 * multiplier) {
+    return chalk.magenta(valueString)
+  }
+  if (value < 0.625 * multiplier) {
+    return chalk.magentaBright(valueString)
+  }
+  if (value < 0.75 * multiplier) {
+    return chalk.yellow(valueString)
+  }
+  if (value < 0.875 * multiplier) {
+    return chalk.yellowBright(valueString)
+  }
+  return chalk.greenBright(valueString)
 }

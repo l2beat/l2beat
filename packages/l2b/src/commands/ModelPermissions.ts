@@ -1,8 +1,8 @@
 import {
   ConfigReader,
-  TemplateService,
   getDiscoveryPaths,
   modelPermissionsCommand,
+  TemplateService,
 } from '@l2beat/discovery'
 import {
   boolean,

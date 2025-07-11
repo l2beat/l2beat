@@ -30,10 +30,9 @@ export function RediscoverPrompt({ chain }: RediscoverPromptProps) {
         onClick={() => {
           setChain(chain)
           setDevMode(true)
-          discover(project).then(() => {
-            queryClient.invalidateQueries({
-              queryKey: ['projects', project],
-            })
+          discover(project)
+          queryClient.invalidateQueries({
+            queryKey: ['projects', project],
           })
         }}
         disabled={command.inFlight}

@@ -1,3 +1,31 @@
+import {
+  EIP_7821_TRANSACTION_SELECTOR,
+  EIP712_methods,
+  EIP7821_methods,
+  ENTRY_POINT_ADDRESS_0_6_0,
+  ENTRY_POINT_ADDRESS_0_7_0,
+  ENTRY_POINT_ADDRESS_0_8_0,
+  ERC20ROUTER_methods,
+  ERC20ROUTER_TRANSACTION_SELECTOR,
+  ERC4337_methods,
+  isEip712,
+  isEip7821,
+  isErc20Router,
+  isErc4337,
+  isGnosisSafe,
+  isMulticallv3,
+  type Method,
+  MULTICALL_V3,
+  MULTICALL_V3_ZKSYNCERA,
+  MULTICALLV3_methods,
+  type Operation,
+  SAFE_EXEC_TRANSACTION_SELECTOR,
+  SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
+  SAFE_methods,
+  WHITEBIT_TRANSACTION_SELECTOR,
+} from '@l2beat/shared/uops'
+
+import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import type {
   BlockRatio,
   CountedBlock,
@@ -5,34 +33,6 @@ import type {
   CountedTransaction,
   StatResults,
 } from '@/types'
-
-import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
-import {
-  EIP712_methods,
-  EIP7821_methods,
-  EIP_7821_TRANSACTION_SELECTOR,
-  ENTRY_POINT_ADDRESS_0_6_0,
-  ENTRY_POINT_ADDRESS_0_7_0,
-  ENTRY_POINT_ADDRESS_0_8_0,
-  ERC20ROUTER_TRANSACTION_SELECTOR,
-  ERC20ROUTER_methods,
-  ERC4337_methods,
-  MULTICALLV3_methods,
-  MULTICALL_V3,
-  MULTICALL_V3_ZKSYNCERA,
-  type Method,
-  type Operation,
-  SAFE_EXEC_TRANSACTION_SELECTOR,
-  SAFE_MULTI_SEND_CALL_ONLY_1_3_0,
-  SAFE_methods,
-  WHITEBIT_TRANSACTION_SELECTOR,
-  isEip712,
-  isEip7821,
-  isErc20Router,
-  isErc4337,
-  isGnosisSafe,
-  isMulticallv3,
-} from '@l2beat/shared/uops'
 import { generateId } from '../../utils/generateId'
 import { rankBlocks } from '../../utils/rankBlocks'
 import { traverseOperationTree } from '../../utils/traverseOperationTree'

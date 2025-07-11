@@ -51,7 +51,7 @@ export class StarkexClient extends ClientCore {
     const parsedError = StarkexApiErrorResponse.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         message: parsedError.data.message,
       })
       return { success: false }

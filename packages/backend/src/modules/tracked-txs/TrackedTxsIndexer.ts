@@ -1,6 +1,6 @@
 import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
-import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
+import { clampRangeToDay, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import type {

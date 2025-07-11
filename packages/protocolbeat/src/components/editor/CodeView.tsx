@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
-
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
 import { Editor } from './editor'
 import { useCodeStore } from './store'

@@ -3,10 +3,10 @@ import { DiagramImage } from '~/components/DiagramImage'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { HorizontalSeparator } from '../../core/HorizontalSeparator'
 import { Markdown } from '../../markdown/Markdown'
+import { SectionIncompleteNote } from './contracts/SectionIncompleteNote'
 import { ProjectSection } from './ProjectSection'
 import { ReferenceList } from './ReferenceList'
 import { RiskList } from './RiskList'
-import { SectionIncompleteNote } from './contracts/SectionIncompleteNote'
 import type { ProjectSectionProps } from './types'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {

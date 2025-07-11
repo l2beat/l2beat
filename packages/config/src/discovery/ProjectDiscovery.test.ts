@@ -1,11 +1,10 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
-
 import {
   type ConfigReader,
   ConfigRegistry,
   type DiscoveryConfig,
 } from '@l2beat/discovery'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 

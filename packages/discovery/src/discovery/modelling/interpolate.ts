@@ -1,6 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import type { EntryParameters } from '../output/types'
-import type { ContractValue } from '../output/types'
+import type { ContractValue, EntryParameters } from '../output/types'
 
 export function interpolateModelTemplate(
   content: string,

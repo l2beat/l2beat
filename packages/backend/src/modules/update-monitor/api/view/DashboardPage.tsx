@@ -1,12 +1,10 @@
+import { sortBySeverity } from '@l2beat/discovery'
 import React, { type ReactNode } from 'react'
-
 import type { DashboardProject } from '../props/getDashboardProjects'
 import { TableData } from './components/Components'
 import { Diff } from './components/Diff'
 import { Page } from './components/Page'
 import { reactToHtml } from './components/reactToHtml'
-
-import { sortBySeverity } from '@l2beat/discovery'
 
 interface DashboardPageProps {
   projects: Record<string, DashboardProject[]>

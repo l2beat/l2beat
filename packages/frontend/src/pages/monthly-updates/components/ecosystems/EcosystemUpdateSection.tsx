@@ -1,11 +1,11 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
+import { MonthlyUpdateActivityChart } from '../charts/MonthlyUpdateActivityChart'
+import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 import { Leaderboards } from '../Leaderboards'
 import { NewProjects } from '../NewProjects'
 import { News } from '../News'
 import { ProjectUpdateSection } from '../ProjectUpdateSection'
-import { MonthlyUpdateActivityChart } from '../charts/MonthlyUpdateActivityChart'
-import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 
 interface Props {
   ecosystem: EcosystemMonthlyUpdateEntry

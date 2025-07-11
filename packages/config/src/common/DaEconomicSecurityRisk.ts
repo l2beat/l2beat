@@ -14,7 +14,7 @@ function OnChainNotSlashable(token?: string): AdjustableEconomicSecurityRisk {
   const tokenExpression = token ? ` ${token} tokens` : 'tokens'
   const description =
     token === 'EIGEN'
-      ? `Node operators are required to stake a minimum of 32 ETH (first quorum) or 1 EIGEN (second quorum) to become members of the DA network. Although slashing is enabled at EigenLayer protocol level, individual AVSs like EigenDA need to activate it by migrating to Operators Sets and defining slashing conditions. Currently, there is no slashing condition in place for misbehaving nodes. The EIGEN token social forking protocol for intersubjective attributable faults is under active development.`
+      ? 'Node operators are required to stake a minimum of 32 ETH (first quorum) or 1 EIGEN (second quorum) to become members of the DA network. Although slashing is enabled at EigenLayer protocol level, individual AVSs like EigenDA need to activate it by migrating to Operators Sets and defining slashing conditions. Currently, there is no slashing condition in place for misbehaving nodes. The EIGEN token social forking protocol for intersubjective attributable faults is under active development.'
       : `Although node operators are required to stake ${tokenExpression} to become members of the DA network, there is no slashing mechanism in place for misbehaving nodes.`
   return {
     value: {
@@ -50,7 +50,8 @@ const DAChallengesNoFunds: AdjustableEconomicSecurityRisk = {
   value: {
     value: 'DA Challenges',
     sentiment: 'bad',
-    description: `There are no onchain assets at risk of being slashed in case of a data withholding attack. However, there is a mechanism that allows users to challenge unavailability of data. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers, and there is no pool of funds onchain to incentivize challengers.`,
+    description:
+      'There are no onchain assets at risk of being slashed in case of a data withholding attack. However, there is a mechanism that allows users to challenge unavailability of data. The system is not secure if the malicious sequencer is able to outspend the altruistic challengers, and there is no pool of funds onchain to incentivize challengers.',
   },
   adjustSecurityRisk: false,
 }

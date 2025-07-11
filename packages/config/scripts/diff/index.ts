@@ -37,7 +37,7 @@ async function main() {
   writeFileSync(outputPath, html)
 }
 
-async function query(
+function query(
   db: Database,
   query: string,
   values?: unknown[],

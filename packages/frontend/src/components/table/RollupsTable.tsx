@@ -62,7 +62,10 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
 function RowDivider({
   children,
   className,
-}: { children: React.ReactNode; className?: string }) {
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <tr className="group/divider">
       <td colSpan={100} className={cn('group-first/divider:pt-1', className)}>

@@ -6,13 +6,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, type providers, utils } from 'ethers'
+import { parseSemver, type Semver } from '../../../utils/semver'
 import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
-import { type Semver, parseSemver } from '../../../utils/semver'
 import type { IProvider } from '../../provider/IProvider'
-
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implementation-slot")

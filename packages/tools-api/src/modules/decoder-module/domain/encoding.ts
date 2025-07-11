@@ -62,7 +62,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     elements = type.tupleElements
   }
   if (type.arrayElement) {
-    const length = parseInt(sliceBytes(encoded, 0, 32))
+    const length = Number.parseInt(sliceBytes(encoded, 0, 32))
     if (length > 1_000_000) {
       throw new Error('Invalid encoding')
     }
@@ -79,7 +79,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
       const bytes = sliceBytes(encoded, offset * 32, end * 32)
       staticData.push(bytes)
       offset = end
-      dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)
+      dynamicOffsets.push(element.dynamic ? Number.parseInt(bytes) : undefined)
       hasDynamic ||= element.dynamic
     }
     offset *= 32
@@ -153,7 +153,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     return { ...common, decoded: { type: 'bool', value: uint === 1n } }
   }
   if (type.type.startsWith('bytes')) {
-    const size = parseInt(type.type.slice('bytes'.length))
+    const size = Number.parseInt(type.type.slice('bytes'.length))
     const suffix = sliceBytes(encoded, size)
     if (!isZeroed(suffix)) {
       throw new Error('Invalid encoding')
@@ -199,7 +199,7 @@ function decodeBytes(type: string, encoded: `0x${string}`) {
   if (encoded.length < 66) {
     throw new Error(`Invalid encoding, ${type} too short`)
   }
-  const length = parseInt(sliceBytes(encoded, 0, 32))
+  const length = Number.parseInt(sliceBytes(encoded, 0, 32))
   const bytesEnd = 32 + length
   const alignmentEnd = alignTo32(bytesEnd)
   const bytes = sliceBytes(encoded, 32, bytesEnd)
@@ -215,7 +215,7 @@ function hexToString(bytes: `0x${string}`) {
   const length = (bytes.length - 2) / 2
   const buffer = new Uint8Array(length)
   for (let i = 0; i < length; i++) {
-    const byte = parseInt(bytes.slice(2 + i * 2, 2 + (i + 1) * 2), 16)
+    const byte = Number.parseInt(bytes.slice(2 + i * 2, 2 + (i + 1) * 2), 16)
     buffer[i] = byte
   }
   return new TextDecoder().decode(buffer)
@@ -327,7 +327,7 @@ function parseTypeName(tokens: string[]): ParsedType {
       }
       continue
     }
-    const length = parseInt(expect(tokens))
+    const length = Number.parseInt(expect(tokens))
     expect(tokens, ']')
     parsed = {
       type: `${parsed.type}[${length}]`,
@@ -372,7 +372,7 @@ function accept(tokens: string[], token: string) {
 
 export function tokenizeType(type: string) {
   const result: string[] = []
-  let current: string = ''
+  let current = ''
   for (const char of type) {
     if (/\w/.test(char)) {
       current += char

@@ -1,7 +1,7 @@
 import {
   ConfigReader,
-  TemplateService,
   getDiscoveryPaths,
+  TemplateService,
 } from '@l2beat/discovery'
 import chalk from 'chalk'
 import { command } from 'cmd-ts'
@@ -11,7 +11,7 @@ export const FindUnusedShapes = command({
   description:
     'Go through all discovered.json and shape.json files and list all shapes that are not currently used.',
   args: {},
-  handler: async () => {
+  handler: () => {
     const paths = getDiscoveryPaths()
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)

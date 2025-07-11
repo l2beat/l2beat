@@ -1,4 +1,4 @@
-import { assert, type UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, type UnixTime } from '@l2beat/shared-pure'
 
 export function getTimeRangeIntersection(
   ...timestamps: {

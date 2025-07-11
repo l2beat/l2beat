@@ -1,5 +1,5 @@
-import type { ApiError, LatestBlockApiRequest } from '@/types'
 import { useState } from 'react'
+import type { ApiError, LatestBlockApiRequest } from '@/types'
 
 export function BlockNumberInput({
   value,

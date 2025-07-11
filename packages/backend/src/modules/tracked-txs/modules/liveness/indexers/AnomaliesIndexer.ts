@@ -5,25 +5,25 @@ import type {
 } from '@l2beat/database'
 import {
   assert,
+  clampRangeToDay,
+  notUndefined,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
-  clampRangeToDay,
-  notUndefined,
 } from '@l2beat/shared-pure'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { RunningStatistics } from '../utils/RollingVariance'
-import { type Interval, calculateIntervals } from '../utils/calculateIntervals'
+import { calculateIntervals, type Interval } from '../utils/calculateIntervals'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 import {
   type LivenessRecordWithConfig,
   mapToRecordWithConfig,
 } from '../utils/mapToRecordWithConfig'
+import { RunningStatistics } from '../utils/RollingVariance'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

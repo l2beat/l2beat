@@ -1,8 +1,8 @@
-import { readFileSync, readdirSync } from 'fs'
-import path from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import type { v } from '@l2beat/validate'
+import { readdirSync, readFileSync } from 'fs'
 import matter from 'gray-matter'
+import path from 'path'
 
 import { startsWithLetterOrNumber } from '~/utils/startsWithLetterOrNumber'
 import { collections } from './collections'

@@ -8,7 +8,7 @@ const DEFAULT_DATABASE_FILENAME = 'discovery.sqlite'
 
 export class SQLiteCache implements DiscoveryCache {
   private readonly db: sqlite3.Database
-  private initialized: boolean = false
+  private initialized = false
 
   constructor(databaseUrl?: string) {
     databaseUrl ??= `${DEFAULT_DATABASE_DIR}/${DEFAULT_DATABASE_FILENAME}`

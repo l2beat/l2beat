@@ -1,6 +1,5 @@
-import { expect } from 'earl'
-
 import { assert } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 import uniq from 'lodash/uniq'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'

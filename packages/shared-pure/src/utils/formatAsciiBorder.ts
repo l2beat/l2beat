@@ -1,10 +1,7 @@
 import chalk from 'chalk'
 import { stripAnsiEscapeCodes } from './formatAsAsciiTable'
 
-export function formatAsciiBorder(
-  lines: string[],
-  colorGrey: boolean = false,
-): string {
+export function formatAsciiBorder(lines: string[], colorGrey = false): string {
   const maxWidth = lines.reduce(
     (acc, v) => Math.max(acc, stripAnsiEscapeCodes(v).length),
     0,

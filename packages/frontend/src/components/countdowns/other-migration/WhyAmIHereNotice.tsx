@@ -7,7 +7,9 @@ import { CountdownSection } from '../CountdownSection'
 
 export function WhyAmIHereNotice({
   reasons,
-}: { reasons: ReasonForBeingInOther[] }) {
+}: {
+  reasons: ReasonForBeingInOther[]
+}) {
   return (
     <CountdownSection>
       <h2 className="mr-auto font-bold text-2xl md:text-3xl">

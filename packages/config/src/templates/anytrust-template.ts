@@ -1,11 +1,10 @@
-import { DaUpgradeabilityRisk } from '../common'
-import { DA_LAYERS } from '../common'
+import { DA_LAYERS, DaUpgradeabilityRisk } from '../common'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   DaBridgeRisks,
+  DacInfo,
   DaLayerRisks,
   DaTechnology,
-  DacInfo,
   ProjectCustomDa,
   TableReadyValue,
 } from '../types'
@@ -61,11 +60,11 @@ The sequencer distributes the data and collects signatures from Committee member
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a malicious committee attests to an invalid data availability certificate.`,
+        text: 'a malicious committee attests to an invalid data availability certificate.',
       },
       {
         category: 'Funds can be lost if',
-        text: `the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.`,
+        text: 'the bridge contract or its dependencies receive a malicious code upgrade. There is no delay on code upgrades.',
       },
     ],
     references: [

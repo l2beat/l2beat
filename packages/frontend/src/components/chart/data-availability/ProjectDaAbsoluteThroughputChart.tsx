@@ -1,10 +1,8 @@
+import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-
-import type { Milestone } from '@l2beat/config'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -20,6 +18,7 @@ import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGrad
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
 

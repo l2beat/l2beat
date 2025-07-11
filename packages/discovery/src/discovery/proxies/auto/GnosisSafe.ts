@@ -1,8 +1,7 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'
+import type { ProxyDetails } from '../types'
 
 async function getMasterCopy(
   provider: IProvider,

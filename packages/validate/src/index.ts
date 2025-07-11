@@ -1,7 +1,7 @@
+export { toJsonSchema } from './schema.js'
 export {
-  v,
   type Parser,
   type Result,
   type Validator,
+  v,
 } from './validate.js'
-export { toJsonSchema } from './schema.js'

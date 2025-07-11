@@ -16,9 +16,9 @@ export async function simulate(
     simulation_type: 'full',
     source: 'rabby-wallet',
     network_id: tx.chainId.toString(),
-    gas: parseInt(tx.gas, 16) || null,
-    gas_price: parseInt(tx.gasPrice, 16) || null,
-    value: parseInt(tx.value, 16) || null,
+    gas: Number.parseInt(tx.gas, 16) || null,
+    gas_price: Number.parseInt(tx.gasPrice, 16) || null,
+    value: Number.parseInt(tx.value, 16) || null,
     input: tx.data,
   }
 

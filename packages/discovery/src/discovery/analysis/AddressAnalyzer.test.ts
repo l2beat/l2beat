@@ -6,8 +6,10 @@ import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
-import type { ContractSources } from '../source/SourceCodeService'
-import type { SourceCodeService } from '../source/SourceCodeService'
+import type {
+  ContractSources,
+  SourceCodeService,
+} from '../source/SourceCodeService'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'

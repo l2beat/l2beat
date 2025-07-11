@@ -1,6 +1,6 @@
 import { type ChainId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type UpdateNotifierRecord, toRecord, toRow } from './entity'
+import { toRecord, toRow, type UpdateNotifierRecord } from './entity'
 
 export class UpdateNotifierRepository extends BaseRepository {
   async findLatestId(): Promise<number | undefined> {

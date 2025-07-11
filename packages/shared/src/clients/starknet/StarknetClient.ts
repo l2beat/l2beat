@@ -29,7 +29,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
       StarknetGetBlockResponse.safeParse(response)
 
     if (!latestBlockNumberResponse.success) {
-      throw new Error(`Latest block number: Error during parsing`)
+      throw new Error('Latest block number: Error during parsing')
     }
 
     return Number(latestBlockNumberResponse.data.result.block_number)
@@ -72,7 +72,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
     const calllResponse = StarknetCallResponse.safeParse(response)
 
     if (!calllResponse.success) {
-      throw new Error(`Call: Error during parsing`)
+      throw new Error('Call: Error during parsing')
     }
 
     return calllResponse.data.result
@@ -101,7 +101,7 @@ export class StarknetClient extends ClientCore implements BlockClient {
     const parsedError = StarknetErrorResponse.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
       return { success: false }

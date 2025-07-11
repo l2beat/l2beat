@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { EtherscanLink } from '~/components/EtherscanLink'
 import { Badge } from '~/components/badge/Badge'
 import { Checkbox } from '~/components/core/Checkbox'
 import {
@@ -12,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { EtherscanLink } from '~/components/EtherscanLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import { InfoIcon } from '~/icons/Info'
 import { formatTimestamp } from '~/utils/dates'

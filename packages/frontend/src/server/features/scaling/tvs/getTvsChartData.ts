@@ -10,10 +10,10 @@ import { getSummedTvsValues } from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
-  TvsProjectFilter,
   createTvsProjectsFilter,
+  TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { TvsChartRange, rangeToResolution } from './utils/range'
+import { rangeToResolution, TvsChartRange } from './utils/range'
 
 export const TvsChartDataParams = v.object({
   range: v.union([
