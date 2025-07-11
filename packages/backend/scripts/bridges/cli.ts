@@ -107,25 +107,25 @@ const cmd = command({
       }
     }
 
-    // for (const [protocol, m] of Array.from(Object.entries(matching))) {
-    //   for (const [id, mm] of Array.from(Object.entries(m))) {
-    //     if (mm.length < 2) continue
+    for (const [protocol, m] of Array.from(Object.entries(matching))) {
+      for (const [id, mm] of Array.from(Object.entries(m))) {
+        if (mm.length < 2) continue
 
-    //     logger.info(`${protocol} ID: ${id}`)
+        logger.info(`${protocol} ID: ${id}`)
 
-    //     for (const t of mm) {
-    //       const getTxUrl = CHAINS.find(
-    //         (c) => c.shortName === t.token.split(':')[0],
-    //       )?.getTxUrl
-    //       logger.info(t.direction, {
-    //         token: t.token,
-    //         amount: t.amount,
-    //         ...(t.txHash ? { tx: t.txHash } : {}),
-    //         ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
-    //       })
-    //     }
-    //   }
-    // }
+        for (const t of mm) {
+          const getTxUrl = CHAINS.find(
+            (c) => c.shortName === t.token.split(':')[0],
+          )?.getTxUrl
+          logger.info(t.direction, {
+            token: t.token,
+            amount: t.amount,
+            ...(t.txHash ? { tx: t.txHash } : {}),
+            ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
+          })
+        }
+      }
+    }
 
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
       const send = transfers.filter(
