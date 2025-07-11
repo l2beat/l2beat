@@ -154,6 +154,14 @@ export const facet: ScalingProject = {
   },
   milestones: [
     {
+      title: 'SP1 proof system deployed',
+      url: 'https://etherscan.io/tx/0x2c76f9fb8d18290ae8d75b8bcfe6ee2bd5a7548983fa1d400f83ed9db11d0b84',
+      date: '2025-07-02T00:00:00Z',
+      type: 'general',
+      description:
+        'Facet launches its optimistic rollup contract with SP1 zk fault proofs.',
+    },
+    {
       title: 'Mainnet Launch',
       url: 'https://x.com/0xFacet/status/1866610169620336761',
       date: '2024-12-10T00:00:00Z',
