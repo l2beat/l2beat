@@ -699,6 +699,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
       "values": {
@@ -2250,7 +2251,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "layerzero/OneSigMultisig": "0x5b6a1cdfdac9ee89ca501ba2b1e37107b88742d0892ae796ca27995c218ffcde",
+    "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861",
     "metis/METISToken": "0xe4c7c8a93327a313a78b8443c90b3cfe44501c5ddc41bab647f77de5ff00152f",
     "stargate/StargatePoolMigratable": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
