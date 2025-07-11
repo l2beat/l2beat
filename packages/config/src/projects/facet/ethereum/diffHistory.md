@@ -1,3 +1,71 @@
+Generated with discovered.json: 0xfea0321c7ff22255a3fb40ad0f4b9ebd69aac7f0
+
+# Diff at Wed, 09 Jul 2025 09:06:06 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@9fc7d86984262816c25132a2cdce848ac9abc774 block: 22367347
+- current block number: 22880623
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Rollup (0x101e853255f3a0cA1dd3772d00893A103A6d0261) {
+    +++ description: Rollup contract for Facet
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      template:
++        "facet/Rollup"
+      sourceHashes:
++        ["0xd216d1bc3ddc27353a122901c9226323aaff4c9ca1da61b91c7e1baf40b4c9b1"]
+      description:
++        "Rollup contract for Facet"
+      sinceTimestamp:
++        1751482343
+      sinceBlock:
++        22833445
+      values:
++        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorProposalId":0,"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorProposal":{"rootClaim":"0x502d6539c2a9a22d13bcc281c8b1f528a0f5ded3d89ccb46e645801d8b40c4a7","l1Head":"0x0000000000000000000000000000000000000000000000000000000000000000","proposer":"0x0000000000000000000000000000000000000000","l2BlockNumber":1467888,"parentIndex":0,"deadline":0,"resolvedAt":0,"proposalStatus":4,"resolutionStatus":1,"challenger":"0x0000000000000000000000000000000000000000","prover":"0x0000000000000000000000000000000000000000"},"getAnchorRoot":["0x502d6539c2a9a22d13bcc281c8b1f528a0f5ded3d89ccb46e645801d8b40c4a7",1467888],"getProposalsLength":28,"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1751459195,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","VERIFIER":"0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
+      implementationNames:
++        {"0x101e853255f3a0cA1dd3772d00893A103A6d0261":"Rollup"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+## Source code changes
+
+```diff
+.../src/projects/facet/ethereum/.flat/Rollup.sol   |  545 ++++++++
+ ...-0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol | 1396 ++++++++++++++++++++
+ ...-0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++++++
+ .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++++
+ 4 files changed, 2774 insertions(+)
+```
+
 Generated with discovered.json: 0xe97e41029573e01c2c917e569473ceadea2f15f9
 
 # Diff at Fri, 04 Jul 2025 12:34:23 GMT:
