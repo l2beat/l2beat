@@ -73,7 +73,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -380,7 +380,7 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -469,7 +469,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -534,7 +534,7 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -631,7 +631,7 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": false
     }
   ]
 }
