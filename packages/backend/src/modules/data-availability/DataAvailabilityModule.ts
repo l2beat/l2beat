@@ -108,12 +108,16 @@ function createIndexers(
       (c) => c.daLayer === daLayer.name,
     )
 
+    let blobService: BlobService | undefined = undefined
+    let blobIndexer: BlobIndexer | undefined = undefined
+
     if (daLayer.type === 'ethereum') {
-      const blobIndexer = new BlobIndexer({
+      blobService = new BlobService(database)
+      blobIndexer = new BlobIndexer({
         daLayer: daLayer.name,
         batchSize: daLayer.batchSize,
         daProvider: providers.da,
-        blobService: new BlobService(database),
+        blobService,
         logger,
         indexerService,
         minHeight: daLayer.startingBlock,
@@ -134,9 +138,10 @@ function createIndexers(
       logger,
       daLayer: daLayer.name,
       batchSize: daLayer.batchSize,
-      parents: [targetIndexer],
+      parents: [blobIndexer ?? targetIndexer],
       indexerService,
       db: database,
+      blobService,
     })
 
     daIndexers.push(indexer)
