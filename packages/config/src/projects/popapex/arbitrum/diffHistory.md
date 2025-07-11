@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x25faf30a5ca3481a50e6129672d60d029e6c5a0d
+
+# Diff at Fri, 11 Jul 2025 12:39:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6f02976fdd9466dab085b947bf3c4d28ccef1010 block: 350405394
+- current block number: 356573977
+
+## Description
+
+operator addresses changed.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        3
+      values.stakerCount:
+-        2
++        1
+      values.validators.9:
+-        "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.0:
+-        "0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"
+      values.setIsBatchPosterCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0xd670ec1df794709b69ad73e258a1d07adf99cdb8
 
 # Diff at Fri, 04 Jul 2025 12:19:15 GMT:
