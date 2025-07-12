@@ -1327,7 +1327,7 @@ Generated with discovered.json: 0x6c2987f2fd2f0d30409924f65b1807ff9fddb32b
 
 ## Description
 
-Reya socket vault admin transfered to a new EOA (previous was socketadmin.eth, current one is funded by it).
+Reya socket vault admin transferred to a new EOA (previous was socketadmin.eth, current one is funded by it).
 
 ## Watched changes
 
