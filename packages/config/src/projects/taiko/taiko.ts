@@ -7,7 +7,6 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
   // formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'

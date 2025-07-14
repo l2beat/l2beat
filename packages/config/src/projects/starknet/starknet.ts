@@ -5,7 +5,6 @@ import {
   formatLargeNumber,
   ProjectId,
   UnixTime,
-  formatLargeNumber,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,

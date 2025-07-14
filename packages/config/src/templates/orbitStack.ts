@@ -6,7 +6,6 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import isEmpty from 'lodash/isEmpty'

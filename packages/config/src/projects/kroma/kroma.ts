@@ -5,7 +5,6 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
