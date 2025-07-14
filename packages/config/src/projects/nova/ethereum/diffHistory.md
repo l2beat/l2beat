@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa11cf4b9297872c799b3c48fd38255bf06fbbbcd
+Generated with discovered.json: 0x40e80ce49c44b51b0efbd22079f1ca0741f54f00
 
-# Diff at Mon, 14 Jul 2025 12:47:04 GMT:
+# Diff at Mon, 14 Jul 2025 13:11:55 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22730615
@@ -952,7 +952,7 @@ discovery. Values are for block 22730615 (main branch discovery), not current.
 +        "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
       values.l2Timelock:
 -        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
-+        "eth:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
       values.Proposer.0:
 -        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
 +        "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
@@ -2629,6 +2629,8 @@ discovery. Values are for block 22730615 (main branch discovery), not current.
 +        "TransparentUpgradeableProxy"
       implementationNames.eth:0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3:
 +        "L1ArbitrumTimelock"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"arb1"}}]
     }
 ```
 
