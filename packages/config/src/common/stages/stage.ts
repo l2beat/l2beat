@@ -1,4 +1,4 @@
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { PROJECT_COUNTDOWNS } from '../../global/countdowns'
 import type {
   MissingStageDetails,
@@ -43,7 +43,7 @@ export type ChecklistTemplate<T extends StageBlueprint> = {
     ? {
         principle: ChecklistValue
       }
-    : // biome-ignore lint/complexity/noBannedTypes: <explanation>
+    : // biome-ignore lint/complexity/noBannedTypes: it's needed
       {})
 }
 

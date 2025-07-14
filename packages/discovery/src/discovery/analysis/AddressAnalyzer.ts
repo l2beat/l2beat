@@ -7,19 +7,19 @@ import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
+import { getImplementationNames } from '../source/getDerivedName'
 import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import { getImplementationNames } from '../source/getDerivedName'
 import {
   get$Beacons,
   get$Implementations,
   get$PastUpgrades,
 } from '../utils/extractors'
-import type { TemplateService } from './TemplateService'
 import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import type { TemplateService } from './TemplateService'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 

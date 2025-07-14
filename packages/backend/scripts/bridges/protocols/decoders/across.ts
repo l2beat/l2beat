@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { type Log, decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
+import { decodeEventLog, encodeEventTopics, type Log, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Receive } from '../../types/Receive'
 import type { Send } from '../../types/Send'

@@ -13,7 +13,7 @@ export function TableFilterCheckbox({ checked }: { checked: boolean }) {
       <CheckIcon
         className={cn(
           'size-4 stroke-[1.8px]',
-          '!stroke-surface-primary primary-card:!stroke-surface-secondary',
+          'primary-card:stroke-surface-secondary! stroke-surface-primary!',
           !checked && 'opacity-0',
         )}
       />

@@ -13,8 +13,8 @@ import type { RpcClient } from '@l2beat/shared'
 import { assert, type LegacyToken, TokenId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { ProjectTvsConfig } from '../../types'
-import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
+import type { LocalStorage } from '../LocalStorage'
 import { getAggLayerTokens } from '../sharedEscrows/getAggLayerTokens'
 import { getElasticChainTokens } from '../sharedEscrows/getElasticChainTokens'
 import type { LegacyEscrow, LegacyProjectConfig } from './types'
@@ -137,7 +137,7 @@ export function createEscrowToken(
   )
 
   if (legacyToken.isPreminted) {
-    assert(legacyToken.address, `Native asset not supported`)
+    assert(legacyToken.address, 'Native asset not supported')
     amountFormula = {
       type: 'calculation',
       operator: 'min',

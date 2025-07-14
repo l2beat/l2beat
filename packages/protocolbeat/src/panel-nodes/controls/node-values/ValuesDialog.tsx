@@ -3,9 +3,9 @@ import { Dialog } from '../../../components/Dialog'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { ControlButton } from '../ControlButton'
-import { FieldNode } from './FieldNode'
-import { buildFieldTree } from './buildFieldTree'
 import type { ExpandedField } from './buildFieldTree'
+import { buildFieldTree } from './buildFieldTree'
+import { FieldNode } from './FieldNode'
 
 export const ValuesDialog = {
   Root: ValuesDialogRoot,
@@ -20,7 +20,10 @@ function ValuesDialogRoot({ children }: { children: React.ReactNode }) {
 function ValuesDialogTrigger({
   disabled,
   children,
-}: { disabled: boolean; children: React.ReactNode }) {
+}: {
+  disabled: boolean
+  children: React.ReactNode
+}) {
   return (
     <Dialog.Trigger asChild disabled={disabled}>
       <ControlButton disabled={disabled} className="relative">

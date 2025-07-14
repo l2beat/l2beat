@@ -5,7 +5,6 @@ import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -17,6 +16,7 @@ import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapp
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '~/components/core/Skeleton'
 import type {
   EcosystemEntry,
   EcosystemMilestone,
@@ -86,7 +86,7 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>

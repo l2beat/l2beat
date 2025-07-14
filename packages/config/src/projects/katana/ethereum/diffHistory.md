@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xcd8b1f519e36434eaf3e03c79a3ba0d0d39c873a
+
+# Diff at Fri, 11 Jul 2025 12:28:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6f02976fdd9466dab085b947bf3c4d28ccef1010 block: 22837267
+- current block number: 22895938
+
+## Description
+
+2 member added, 1 member switch.
+
+## Watched changes
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      values.$members.4:
+-        "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
++        "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
+    }
+```
+
+```diff
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      values.$members.0:
++        "0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
+      values.$members.1:
++        "0x54DFA4B635E7eB98515fEBA81d360A3871739277"
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x5c6d5eccb8c520e2a2c0a17648a1e0b5be8117a5
 
 # Diff at Fri, 04 Jul 2025 12:19:05 GMT:

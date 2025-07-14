@@ -4,7 +4,7 @@ export const FILLED = '█'
 export function asciiProgressBar(
   current: number,
   total: number,
-  width: number = 40,
+  width = 40,
 ): string {
   const currentClamped = Math.max(0, Math.min(current, total))
   const filled = Math.round((currentClamped / total) * width)

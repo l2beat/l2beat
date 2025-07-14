@@ -1,6 +1,6 @@
-import { writeFileSync } from 'fs'
 import chalk from 'chalk'
 import { boolean, command, flag, option, positional, string } from 'cmd-ts'
+import { writeFileSync } from 'fs'
 import { getExplorer } from '../implementations/common/getExplorer'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { fetchAndFlatten } from '../implementations/flatten'

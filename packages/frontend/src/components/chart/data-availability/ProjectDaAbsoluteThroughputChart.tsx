@@ -1,10 +1,8 @@
+import type { Milestone } from '@l2beat/config'
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-
-import type { Milestone } from '@l2beat/config'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -20,6 +18,7 @@ import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGrad
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -211,17 +210,17 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-ethereum))',
+          color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line' },
         },
         projectTarget: {
           label: 'Target capacity',
-          color: 'hsl(var(--chart-ethereum-secondary))',
+          color: 'var(--chart-ethereum-secondary)',
           indicatorType: { shape: 'line', strokeDasharray: '9 3' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-ethereum))',
+          color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -229,12 +228,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-fuchsia))',
+          color: 'var(--chart-fuchsia)',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-fuchsia))',
+          color: 'var(--chart-fuchsia)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -242,12 +241,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-sky))',
+          color: 'var(--chart-sky)',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-sky))',
+          color: 'var(--chart-sky)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -255,12 +254,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-lime))',
+          color: 'var(--chart-lime)',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-lime))',
+          color: 'var(--chart-lime)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta

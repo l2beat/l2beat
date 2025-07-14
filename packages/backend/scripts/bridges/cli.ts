@@ -1,4 +1,4 @@
-import { Logger, getEnv } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'

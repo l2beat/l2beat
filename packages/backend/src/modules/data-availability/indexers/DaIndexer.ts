@@ -9,6 +9,7 @@ import type {
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
+import type { BlobService } from '../services/BlobService'
 import type { DaService } from '../services/DaService'
 
 export interface Dependencies
@@ -17,6 +18,7 @@ export interface Dependencies
   daProvider: DaProvider
   daLayer: string
   batchSize: number
+  blobService?: BlobService
 }
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
@@ -32,7 +34,7 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
 
     assert(
       $.configurations.every((c) => c.properties.daLayer === $.daLayer),
-      `DaLayer mismatch detected in configurations`,
+      'DaLayer mismatch detected in configurations',
     )
   }
 
@@ -49,11 +51,20 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       to: adjustedTo,
     })
 
-    const blobs = await this.$.daProvider.getBlobs(
-      this.daLayer,
-      from,
-      adjustedTo,
-    )
+    let blobs: DaBlob[] = []
+    if (this.$.blobService) {
+      blobs = await this.$.blobService.get(this.daLayer, from, adjustedTo)
+
+      this.logger.info('Fetched blobs from cache', {
+        blobs: blobs.length,
+      })
+    } else {
+      blobs = await this.$.daProvider.getBlobs(this.daLayer, from, adjustedTo)
+
+      this.logger.info('Fetched blobs from provider', {
+        blobs: blobs.length,
+      })
+    }
 
     if (blobs.length === 0) {
       this.logger.info('Empty blobs response received', {
@@ -64,10 +75,6 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         return Promise.resolve(adjustedTo)
       }
     }
-
-    this.logger.info('Fetched blobs', {
-      blobs: blobs.length,
-    })
 
     const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
 

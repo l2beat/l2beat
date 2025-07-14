@@ -1,8 +1,7 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TableValueCell } from '~/components/table/cells/TableValueCell'
-
-import { TableLink } from '~/components/table/TableLink'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import { virtual, withSpanByBridges } from '../../../utils/ColUtils'

@@ -11,6 +11,7 @@ import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
+import { SortingArrows } from './sorting/SortingArrows'
 import {
   Table,
   TableBody,
@@ -21,7 +22,6 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
-import { SortingArrows } from './sorting/SortingArrows'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import {
   getRowClassNames,
@@ -190,7 +190,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
           getRowClassNames(rowType),
           row.getIsExpanded() &&
             props.renderSubComponent?.({ row }) &&
-            '!border-none',
+            'border-none!',
           className,
         )}
       >
@@ -212,7 +212,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
                 align={meta?.align}
                 className={cn(
                   groupParams?.isFirstInGroup && 'pl-6',
-                  groupParams?.isLastInGroup && '!pr-6',
+                  groupParams?.isLastInGroup && 'pr-6!',
                   cell.column.getCanSort() && meta?.align === undefined
                     ? groupParams?.isFirstInGroup
                       ? 'pl-10'

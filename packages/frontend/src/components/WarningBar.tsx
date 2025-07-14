@@ -6,8 +6,8 @@ import { CustomLinkIcon } from '~/icons/Outlink'
 import { ShieldIcon } from '~/icons/Shield'
 import { cn } from '~/utils/cn'
 import { Callout } from './Callout'
-import { PlainLink } from './PlainLink'
 import { Markdown } from './markdown/Markdown'
+import { PlainLink } from './PlainLink'
 
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'

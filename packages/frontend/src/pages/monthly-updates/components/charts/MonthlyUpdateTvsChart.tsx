@@ -3,7 +3,6 @@ import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -14,6 +13,7 @@ import {
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
@@ -76,13 +76,13 @@ export function MonthlyUpdateTvsChart({
   const range = getChartRange(chartData)
 
   return (
-    <PrimaryCard className="!rounded-lg border border-divider">
+    <PrimaryCard className="rounded-lg! border border-divider">
       <Header range={range} stats={stats} unit={'usd'} />
       <ChartContainer
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
       >
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
           <defs>

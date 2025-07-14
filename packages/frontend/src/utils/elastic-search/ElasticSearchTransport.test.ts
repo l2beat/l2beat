@@ -1,6 +1,5 @@
-import { type MockObject, expect, mockFn, mockObject } from 'earl'
-
 import { formatDate } from '@l2beat/backend-tools'
+import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import type { ElasticSearchClient } from './ElasticSearchClient'
 import {
   ElasticSearchTransport,

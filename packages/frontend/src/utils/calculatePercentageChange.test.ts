@@ -22,8 +22,8 @@ describe('calculatePercentageChange', () => {
   })
 
   it('returns 0 for invalid change values', () => {
-    expect(calculatePercentageChange(Infinity, 100)).toEqual(0)
-    expect(calculatePercentageChange(NaN, 100)).toEqual(0)
+    expect(calculatePercentageChange(Number.POSITIVE_INFINITY, 100)).toEqual(0)
+    expect(calculatePercentageChange(Number.NaN, 100)).toEqual(0)
   })
 })
 

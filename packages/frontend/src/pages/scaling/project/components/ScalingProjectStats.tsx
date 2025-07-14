@@ -10,9 +10,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
@@ -39,8 +39,8 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
-            className="!leading-none font-medium md:font-bold md:text-lg"
-            changeClassName="md:text-base md:font-medium !leading-none"
+            className="font-medium leading-none! md:font-bold md:text-lg"
+            changeClassName="md:text-base md:font-medium leading-none!"
           >
             {project.header.activity.lastDayUops.toFixed(2)}
           </ValueWithPercentageChange>
@@ -152,7 +152,7 @@ function ProjectStat(props: ProjectStat) {
 
       <span
         className={cn(
-          '!leading-none font-medium text-lg md:font-bold',
+          'font-medium text-lg leading-none! md:font-bold',
           props.valueClassName,
         )}
       >

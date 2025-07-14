@@ -14,12 +14,12 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
-import { ReferenceList } from './ReferenceList'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
+import { ReferenceList } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
@@ -69,7 +69,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
       icon={icon}
       body={
         <>
-          <div className="!leading-[1.15] flex flex-wrap items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2 leading-[1.15]!">
             <strong
               id={contract.name}
               className="word-break-word scroll-mt-14 md:scroll-mt-10"

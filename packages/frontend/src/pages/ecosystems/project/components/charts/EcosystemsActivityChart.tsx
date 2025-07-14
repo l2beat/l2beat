@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
 import { Checkbox } from '~/components/core/Checkbox'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -21,6 +20,7 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
@@ -75,7 +75,7 @@ export function EcosystemsActivityChart({
       },
       ethereum: {
         label: 'Ethereum',
-        color: 'hsl(var(--chart-ethereum))',
+        color: 'var(--chart-ethereum)',
         indicatorType: {
           shape: 'line',
         },
@@ -105,7 +105,7 @@ export function EcosystemsActivityChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>

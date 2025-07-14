@@ -1,10 +1,10 @@
-import { FullPageHeader } from '~/components/FullPageHeader'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { FullPageHeader } from '~/components/FullPageHeader'
 import { ArchivedBar } from '~/components/projects/ArchivedBar'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { GrissiniDetails } from '~/components/rosette/grissini/GrissiniDetails'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
@@ -42,7 +42,7 @@ export function RegularDaProjectSummary({ project }: Props) {
           {/* Links and stats */}
           <div className="flex flex-row items-end gap-10">
             <div className="w-full">
-              <div className="!mb-8 hidden md:flex">
+              <div className="mb-8! hidden md:flex">
                 <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
               </div>
               {project.archivedAt && (

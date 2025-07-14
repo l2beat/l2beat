@@ -1,9 +1,9 @@
 import {
   assert,
-  EthereumAddress,
-  UnixTime,
   assertUnreachable,
+  EthereumAddress,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'

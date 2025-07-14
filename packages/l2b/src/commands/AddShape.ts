@@ -1,9 +1,9 @@
 import {
-  TemplateService,
   getChainConfig,
   getDiscoveryPaths,
+  getExplorerClient,
+  TemplateService,
 } from '@l2beat/discovery'
-import { getExplorerClient } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'

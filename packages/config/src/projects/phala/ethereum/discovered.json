@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 22882050,
+  "blockNumber": 22895947,
   "configHash": "0xe10f512e6592cfc70557cfded3e9fb6e388274da629d1bace1e7f407f00e5458",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -521,7 +521,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 110,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1099,10 +1099,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1762860,
-        "latestOutputIndex": 428,
-        "nextBlockNumber": 1767180,
-        "nextOutputIndex": 429,
+        "latestBlockNumber": 1779060,
+        "latestOutputIndex": 431,
+        "nextBlockNumber": 1783380,
+        "nextOutputIndex": 432,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",

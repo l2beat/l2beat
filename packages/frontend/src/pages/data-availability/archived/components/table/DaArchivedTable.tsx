@@ -1,8 +1,8 @@
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { TableLink } from '~/components/table/TableLink'
-import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { useTable } from '~/hooks/useTable'
 import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import {
@@ -14,7 +14,10 @@ import { customColumns, publicColumns } from './Columns'
 export function DaArchivedTable({
   items,
   excludeBridge = false,
-}: { items: DaArchivedEntry[]; excludeBridge?: boolean }) {
+}: {
+  items: DaArchivedEntry[]
+  excludeBridge?: boolean
+}) {
   const table = useTable({
     columns: excludeBridge ? customColumns : publicColumns,
     data: items,

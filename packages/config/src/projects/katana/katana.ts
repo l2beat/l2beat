@@ -1,14 +1,14 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
-  DATA_ON_CHAIN,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  DATA_ON_CHAIN,
   EXITS,
   FORCE_TRANSACTIONS,
   RISK_VIEW,
@@ -336,7 +336,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `the contracts or their dependencies (e.g. AggLayerGateway) receive a malicious code upgrade. There is no delay on upgrades.`,
+        text: 'the contracts or their dependencies (e.g. AggLayerGateway) receive a malicious code upgrade. There is no delay on upgrades.',
       },
     ],
   },

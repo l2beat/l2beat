@@ -111,8 +111,12 @@ function calculateDataByType(
   if (metric === 'total') {
     return entries.sort(
       (a, b) =>
-        (b.data?.type === 'available' ? b.data.total : -Infinity) -
-        (a.data?.type === 'available' ? a.data.total : -Infinity),
+        (b.data?.type === 'available'
+          ? b.data.total
+          : Number.NEGATIVE_INFINITY) -
+        (a.data?.type === 'available'
+          ? a.data.total
+          : Number.NEGATIVE_INFINITY),
     )
   }
 
@@ -141,7 +145,9 @@ function calculateDataByType(
     })
     .sort(
       (a, b) =>
-        (a.data.type === 'available' ? a.data.total : Infinity) -
-        (b.data.type === 'available' ? b.data.total : Infinity),
+        (a.data.type === 'available'
+          ? a.data.total
+          : Number.POSITIVE_INFINITY) -
+        (b.data.type === 'available' ? b.data.total : Number.POSITIVE_INFINITY),
     )
 }

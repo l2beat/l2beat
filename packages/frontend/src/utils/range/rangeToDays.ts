@@ -12,7 +12,7 @@ export function rangeToDays(
   }
 
   if (range.type === 'max') return null
-  const count = parseInt(range.type.substring(0, range.type.length - 1))
+  const count = Number.parseInt(range.type.substring(0, range.type.length - 1))
   const unit = range.type.substring(range.type.length - 1)
 
   if (unit === 'd') {

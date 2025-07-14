@@ -1,17 +1,14 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { HttpClient } from '@l2beat/shared'
 import {
   type EthereumAddress,
   Hash256,
   Retries,
   type UnixTime,
 } from '@l2beat/shared-pure'
-
-import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
-
-import type { HttpClient } from '@l2beat/shared'
-
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
+import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
 
 const URL = 'https://sourcify.dev/server'
 
@@ -20,8 +17,8 @@ class SourcifyError extends Error {}
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
   maxAttempts: 10,
-  maxDistanceMs: Infinity,
-  notifyAfterAttempts: Infinity,
+  maxDistanceMs: Number.POSITIVE_INFINITY,
+  notifyAfterAttempts: Number.POSITIVE_INFINITY,
 })
 
 export class SourcifyClient implements IEtherscanClient {

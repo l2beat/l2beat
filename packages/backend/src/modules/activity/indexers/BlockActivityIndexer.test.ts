@@ -234,8 +234,8 @@ function activityRecord(
   timestamp: UnixTime,
   count: number,
   uopsCount: number | null,
-  start: number = 0,
-  end: number = 0,
+  start = 0,
+  end = 0,
 ) {
   return {
     projectId: ProjectId(projectId),

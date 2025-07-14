@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
-import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
 import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
+import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -70,7 +70,7 @@ export function MonthlyUpdateThroughputChart({
   const range = getChartRange(chartData)
 
   return (
-    <PrimaryCard className="!rounded-lg border border-divider">
+    <PrimaryCard className="rounded-lg! border border-divider">
       <Header
         range={range}
         stats={{
@@ -82,7 +82,7 @@ export function MonthlyUpdateThroughputChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />

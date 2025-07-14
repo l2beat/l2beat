@@ -3,9 +3,9 @@ import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earl'
 
 import { Indexer } from './Indexer'
-import type { RetryStrategy } from './Retries'
 import { ChildIndexer } from './indexers/ChildIndexer'
 import { RootIndexer } from './indexers/RootIndexer'
+import type { RetryStrategy } from './Retries'
 import type { IndexerAction } from './reducer/types/IndexerAction'
 
 describe(Indexer.name, () => {

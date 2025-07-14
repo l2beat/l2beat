@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type UpdateMessageRecord, toRecord, toRow } from './entity'
+import { toRecord, toRow, type UpdateMessageRecord } from './entity'
 
 export class UpdateMessageRepository extends BaseRepository {
   async upsert(record: UpdateMessageRecord): Promise<void> {

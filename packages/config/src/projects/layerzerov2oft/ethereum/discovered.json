@@ -1189,6 +1189,7 @@
       ],
       "proxyType": "immutable",
       "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1748566235,
       "sinceBlock": 22592087,
       "values": {
@@ -3700,7 +3701,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "layerzero/OneSigMultisig": "0x5b6a1cdfdac9ee89ca501ba2b1e37107b88742d0892ae796ca27995c218ffcde"
+    "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
   "permissionsConfigHash": "0x1236fee6ab1988471e1dc85a6b56257d6e972862b83547c7fb510502f3d31e01"
 }

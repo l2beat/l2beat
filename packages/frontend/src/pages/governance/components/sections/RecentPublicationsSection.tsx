@@ -1,5 +1,5 @@
-import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
 import { Button } from '~/components/core/Button'
+import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
 import type { GovernancePublicationEntry } from '../../utils/getGovernancePublicationEntry'
 import { GovernanceCard } from '../GovernanceCard'
 

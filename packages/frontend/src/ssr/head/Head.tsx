@@ -48,7 +48,8 @@ export function Head({ manifest, metadata }: HeadProps) {
           />
           <script
             dangerouslySetInnerHTML={{
-              __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
+              __html:
+                'window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }',
             }}
           />
         </>

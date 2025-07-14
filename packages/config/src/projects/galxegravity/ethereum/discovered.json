@@ -1,7 +1,7 @@
 {
   "name": "galxegravity",
   "chain": "ethereum",
-  "blockNumber": 22744036,
+  "blockNumber": 22895937,
   "configHash": "0x8e33b292a2bd263ef147dd7f0512d3e200f7c5ac307ad41e25142990650da674",
   "entries": [
     {
@@ -121,19 +121,6 @@
       ]
     },
     {
-      "address": "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
-    },
-    {
       "name": "ValidatorUtils",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
       "type": "Contract",
@@ -148,10 +135,7 @@
       "values": {
         "$immutable": true,
         "GRAVITY_STAKERS": [
-          [
-            "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634",
-            "0x16C1D3b4aDB6f0F468FCE7b802cE5AA0A2B06d03"
-          ],
+          ["0x16C1D3b4aDB6f0F468FCE7b802cE5AA0A2B06d03"],
           false
         ]
       },
@@ -326,7 +310,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 109,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -473,7 +457,7 @@
           "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
         ],
         "allowedOutboxList": ["0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"],
-        "delayedMessageCount": 14457,
+        "delayedMessageCount": 14487,
         "inboxHistory": [
           "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
           "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A"
@@ -483,8 +467,8 @@
         "outboxHistory": ["0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF"],
         "rollup": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerInbox": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
-        "sequencerMessageCount": 60783,
-        "sequencerReportedSubMessageCount": 71998096
+        "sequencerMessageCount": 62213,
+        "sequencerReportedSubMessageCount": 77419554
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -641,7 +625,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 60783,
+        "batchCount": 62213,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x17F187D978664C96ffD655996a45e085c403AD8b",
@@ -650,7 +634,6 @@
           "0x74a0d46BA4F69cAB77A459f8B12dc531c7DaBf3C",
           "0x85e70D857F6Fad7AD4ffc3fC95FD0fd8C396A09D",
           "0xA4f98Ac0E083C79BAB53A3895082e8a4fbf12CDe",
-          "0xBa369bd77a346babCd282cB1a015194E8ec54542",
           "0xCEEAEC6b7e010fE1Ac253Ebd6f93eEBF9249Cd7e",
           "0xb9B2AeAe8D160a5bF9cb7FE7B2c8B58c0293FD5e",
           "0xc7ef93FE91D4658bb422B11C5f8Ae17ae3B86D36"
@@ -682,8 +665,8 @@
         "reader4844": "0x58f9a83EF35a241bcAc7EC4fB6e7DBcE2A1D1125",
         "rollup": "0xf993AF239770932A0EDaB88B6A5ba3708Bd58239",
         "sequencerVersion": "0x63",
-        "setIsBatchPosterCount": 2,
-        "totalDelayedMessagesRead": 14457,
+        "setIsBatchPosterCount": 3,
+        "totalDelayedMessagesRead": 14487,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -895,19 +878,6 @@
       ]
     },
     {
-      "address": "0xBa369bd77a346babCd282cB1a015194E8ec54542",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "eth:0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
-          "role": ".batchPosters"
-        }
-      ]
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0xBbc3872E30C91ef69336937838c2a283F79f7E68",
       "type": "Contract",
@@ -1088,13 +1058,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 752,
+        "firstUnresolvedNode": 794,
         "inbox": "0x7AD2a94BefF3294a31894cFb5ba4206957a53c19",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22739188,
-        "latestConfirmed": 751,
-        "latestNodeCreated": 762,
+        "latestConfirmed": 793,
+        "latestNodeCreated": 805,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1153a1e4B1523DFf36f77d696bd6eBF2B0e7DAbF",
@@ -1103,8 +1073,8 @@
         "rollupDeploymentBlock": 19898364,
         "rollupEventInbox": "0xa24eDA32bb36171a6c34CBB4B56f89FF7B8fD49A",
         "sequencerInbox": "0x8D99372612e8cFE7163B1a453831Bc40eAeb3cF3",
-        "setValidatorCount": 2,
-        "stakerCount": 2,
+        "setValidatorCount": 3,
+        "stakerCount": 1,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
@@ -1112,7 +1082,6 @@
           "0x006F5B7E2D58fb4E53DEdaB8802FCdf2a5441DC7",
           "0x11f563dDbF266484Dd910A401A7e44299d80b1d5",
           "0x16C1D3b4aDB6f0F468FCE7b802cE5AA0A2B06d03",
-          "0x18c87d3DbF779E3F7793fc6c62ead9Ff15F0e634",
           "0x33Bf8bF5aF3579D0E2305302409A5b6b4173c779",
           "0x401Ba2e5037e3d8D1c32E77Dfd371501618604Bf",
           "0x8fbEf9f7554aec9CCf62b88D86aE1C91F1599F7C",
@@ -1825,5 +1794,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x4b40d5d1f45d8124749f99dd6c8613c21f20d6e44bcb96a881b70484ac7eaeb9"
+  "permissionsConfigHash": "0xb8ca4d4744d80860639b53832dcaddf51ba9010c1d3838143b2d9fb5a4118236"
 }
