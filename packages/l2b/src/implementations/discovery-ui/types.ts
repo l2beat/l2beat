@@ -1,6 +1,6 @@
 // This file is duplicated in protocolbeat and l2b!
 
-import { ChainSpecificAddress } from "@l2beat/shared-pure"
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export type ApiProjectsResponse = ApiProjectEntry[]
 
