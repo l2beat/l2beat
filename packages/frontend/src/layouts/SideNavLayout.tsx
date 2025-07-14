@@ -1,5 +1,5 @@
-import { Banner } from '~/components/Banner'
 import { Footer } from '~/components/Footer'
+import { TopBanner } from '~/components/TopBanner'
 import { NavLayout } from '~/components/nav/NavLayout'
 
 export function SideNavLayout({
@@ -12,7 +12,7 @@ export function SideNavLayout({
   return (
     <NavLayout
       logoLink="/scaling/summary"
-      topChildren={<Banner className="2xlrounded-br-none lg:rounded-b-xl" />}
+      topChildren={<TopBanner className="2xlrounded-br-none lg:rounded-b-xl" />}
       childrenWrapperClassName={childrenWrapperClassName}
     >
       <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0">

@@ -8,7 +8,7 @@ import { CustomLink } from './link/CustomLink'
 const localStorageTag = 'top-banner'
 const purpose = 'recategorisation-live'
 
-export function Banner({ className }: { className?: string }) {
+export function TopBanner({ className }: { className?: string }) {
   const enabled =
     UnixTime.now() < UnixTime.fromDate(new Date('2025-07-10T00:00:00Z'))
   const isClient = useIsClient()
