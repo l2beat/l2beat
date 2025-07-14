@@ -1,9 +1,9 @@
-import { posix } from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import { timed } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import type { FileContent } from '../../flatten/ParsedFilesManager'
+import { posix } from 'path'
 import { flattenStartingFrom } from '../../flatten/flatten'
+import type { FileContent } from '../../flatten/ParsedFilesManager'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 
 export function flattenDiscoveredSources(
@@ -105,14 +105,15 @@ function addSolidityVersionComment(
 ): string {
   // v1.2.3+commit.1234
   const version = solidityVersion.slice(1).split('+')[0]
-  const license = `// SPDX-License-Identifier: Unknown\n`
+  const license = '// SPDX-License-Identifier: Unknown\n'
   return `${license}pragma solidity ${version};\n\n${flatSource}`
 }
 
 function stringifyError(e: unknown): string {
   if (e instanceof Error) {
     return e.message
-  } else if (typeof e === 'string') {
+  }
+  if (typeof e === 'string') {
     return e
   }
 

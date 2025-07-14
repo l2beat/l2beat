@@ -1,4 +1,4 @@
-import { type TrackedTxsConfigSubtype, pluralize } from '@l2beat/shared-pure'
+import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
 export function formatSubtype(subtype: TrackedTxsConfigSubtype): string {
   switch (subtype) {

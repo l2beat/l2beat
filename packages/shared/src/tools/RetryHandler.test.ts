@@ -47,7 +47,7 @@ function mockHandler(deps: {
   return new RetryHandler({
     maxRetries: deps.maxRetries ?? 10,
     initialRetryDelayMs: deps.initialRetryDelayMs ?? 1,
-    maxRetryDelayMs: deps.maxRetryDelayMs ?? Infinity,
+    maxRetryDelayMs: deps.maxRetryDelayMs ?? Number.POSITIVE_INFINITY,
     logger: Logger.SILENT,
   })
 }

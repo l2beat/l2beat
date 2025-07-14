@@ -1,7 +1,6 @@
-import { utils } from 'ethers'
-
 import { assert, type json } from '@l2beat/shared-pure'
 import type { v as z } from '@l2beat/validate'
+import { utils } from 'ethers'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { RpcClient } from '../rpc/RpcClient'
 import {
@@ -103,7 +102,7 @@ export class BlobClient extends ClientCore {
     const parsedError = BeaconChainError.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         error: parsedError.data,
       })
       return { success: false }

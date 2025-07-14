@@ -2,18 +2,18 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { EventTracker } from '@l2beat/shared'
 import {
   assert,
-  Retries,
-  type ShouldRetry,
   getErrorMessage,
   getErrorStackTrace,
   type json,
+  Retries,
+  type ShouldRetry,
 } from '@l2beat/shared-pure'
 import { setTimeout as wait } from 'timers/promises'
 
 const ONE_HOUR = 1 * 60 * 60000
 const DEFAULT_RETRY = Retries.exponentialBackOff({
   stepMs: 1000, // 2s 4s 8s 16s 32s 64s 128s 256s 512s 1024s...
-  maxAttempts: Infinity, // never stop the queue
+  maxAttempts: Number.POSITIVE_INFINITY, // never stop the queue
   maxDistanceMs: ONE_HOUR,
   notifyAfterAttempts: 10, // sum = 2046s minutes = 34 minutes
 })

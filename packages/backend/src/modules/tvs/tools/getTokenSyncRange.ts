@@ -14,7 +14,7 @@ export function getTokenSyncRange(token: TvsToken): {
   sinceTimestamp: number
   untilTimestamp: number | undefined
 } {
-  let sinceTimestamp: number = Infinity
+  let sinceTimestamp: number = Number.POSITIVE_INFINITY
   let untilTimestamp: number | undefined = -1
 
   const getSyncRangeRecursive = (

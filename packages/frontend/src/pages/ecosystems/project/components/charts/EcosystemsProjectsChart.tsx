@@ -35,7 +35,7 @@ export function EcosystemsProjectsChart({
     return {
       projectCount: {
         color: 'var(--ecosystem-primary)',
-        label: `Project count`,
+        label: 'Project count',
         indicatorType: {
           shape: 'line',
         },

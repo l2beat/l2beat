@@ -7,8 +7,8 @@ import {
   getDaThroughputChartByProject,
 } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import {
-  ProjectDaThroughputChartParams,
   getProjectDaThroughputChart,
+  ProjectDaThroughputChartParams,
 } from '~/server/features/data-availability/throughput/getProjectDaThroughputChart'
 import { procedure, router } from '../trpc'
 

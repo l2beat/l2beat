@@ -4,7 +4,7 @@ import type { NextFunction, Request, Response } from 'express'
 export function MetricsMiddleware(logger: Logger) {
   return (req: Request, res: Response, next: NextFunction) => {
     const appLogger = logger.for('Metrics')
-    appLogger.info(`Processing request`, {
+    appLogger.info('Processing request', {
       method: req.method,
       url: req.originalUrl,
       referer: req.headers.referer ?? 'unknown',
@@ -16,7 +16,7 @@ export function MetricsMiddleware(logger: Logger) {
       const end = process.hrtime.bigint()
       const durationMs = Number(end - start) / 1_000_000
       const contentLength = res.getHeader('Content-Length')
-      appLogger.info(`Request processed`, {
+      appLogger.info('Request processed', {
         method: req.method,
         url: req.originalUrl,
         status: res.statusCode,

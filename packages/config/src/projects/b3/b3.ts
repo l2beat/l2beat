@@ -3,8 +3,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { CELESTIA_DA_PROVIDER } from '../../templates/opStack'
-import { opStackL3 } from '../../templates/opStack'
+import { CELESTIA_DA_PROVIDER, opStackL3 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('b3', 'base')
 

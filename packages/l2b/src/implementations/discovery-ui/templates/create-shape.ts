@@ -1,7 +1,7 @@
 import {
-  type TemplateService,
   getChainConfig,
   getExplorerClient,
+  type TemplateService,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import type { EthereumAddress } from '@l2beat/shared-pure'
@@ -23,7 +23,7 @@ export async function createShape(
     addresses.map(async (address) => client.getContractSource(address)),
   )
 
-  const hasBeenCreated = await templateService.ensureTemplateExists(templateId)
+  const hasBeenCreated = templateService.ensureTemplateExists(templateId)
 
   if (hasBeenCreated) {
     templateService.reload()

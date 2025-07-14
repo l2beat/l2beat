@@ -28,7 +28,7 @@ function exponentialBackOff(opts: ExponentialBackOffOpts): RetryStrategy {
   let attempts = 0
   const maxAttempts = opts.maxAttempts
   assert(maxAttempts > 0)
-  const maxTimeoutMs = opts.maxTimeoutMs ?? Infinity
+  const maxTimeoutMs = opts.maxTimeoutMs ?? Number.POSITIVE_INFINITY
   assert(maxTimeoutMs > 0)
 
   return {

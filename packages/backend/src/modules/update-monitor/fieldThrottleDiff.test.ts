@@ -1,8 +1,7 @@
+import type { UpdateNotifierRecord } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import type { UpdateNotifierRecord } from '@l2beat/database'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 
 describe(fieldThrottleDiff.name, () => {

@@ -38,8 +38,8 @@ export function MultipleBridgeDetails({ project }: Props) {
           Bridge selection will define total DA risks.
         </div>
         <div className="flex flex-col rounded-lg bg-surface-secondary">
-          <div className="!leading-none hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary px-4 py-2 text-secondary text-subtitle-12 uppercase md:flex md:border-b">
-            <div className="w-12"></div>
+          <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary px-4 py-2 text-secondary text-subtitle-12 uppercase leading-none! md:flex md:border-b">
+            <div className="w-12" />
             <div className="flex-1">DA Bridge</div>
             <div className="flex-1 text-center">DA Risks</div>
             <div className="flex-1 pr-12 text-right max-xs:hidden">TVS</div>

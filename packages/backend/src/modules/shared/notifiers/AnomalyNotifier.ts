@@ -6,7 +6,7 @@ import type {
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
 } from '@l2beat/database'
-import { type Block, UnixTime, formatAsAsciiTable } from '@l2beat/shared-pure'
+import { type Block, formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
 import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import type { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'

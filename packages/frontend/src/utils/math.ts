@@ -6,7 +6,7 @@ export function unifyPercentagesAsIntegers<T extends number[]>(
   percentages: T,
 ): T {
   if (percentages.length < 2) {
-    throw new Error(`Array has to contain at least two elements`)
+    throw new Error('Array has to contain at least two elements')
   }
 
   const ALLOWED_ERROR = 0.001

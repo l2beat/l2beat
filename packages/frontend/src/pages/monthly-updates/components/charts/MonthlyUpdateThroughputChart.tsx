@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
-import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
 import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
+import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,

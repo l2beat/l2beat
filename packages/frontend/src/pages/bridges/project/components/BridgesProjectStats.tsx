@@ -1,4 +1,3 @@
-import { SentimentText } from '~/components/SentimentText'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   TokenBreakdown,
@@ -10,6 +9,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import { SentimentText } from '~/components/SentimentText'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'

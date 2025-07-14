@@ -1,3 +1,5 @@
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
 import type {
   ApiError,
@@ -5,8 +7,6 @@ import type {
   CountedBlock,
   UserOperationsApiRequest,
 } from '@/types'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { BlockNumberInput } from './blockNumberInput'
 import { ChainDropdown } from './chainDropdown'
 import { ErrorModal } from './errorModal'
@@ -14,7 +14,9 @@ import { SubmitButton } from './submitButton'
 
 export function BlockForm({
   onComplete,
-}: { onComplete: (block: BlockWithChain | undefined) => void }) {
+}: {
+  onComplete: (block: BlockWithChain | undefined) => void
+}) {
   const [chainId, setChain] = useState<string>(SUPPORTED_CHAINS[0].id)
   const [blockNumber, setBlockNumber] = useState('')
 

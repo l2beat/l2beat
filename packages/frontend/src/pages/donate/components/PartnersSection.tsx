@@ -42,7 +42,9 @@ export function PartnersSection({ partners }: Props) {
 
 export function EcosystemTierCard({
   partner,
-}: { partner: Partners['ecosystem'][number] }) {
+}: {
+  partner: Partners['ecosystem'][number]
+}) {
   return (
     <div
       key={partner.slug}
@@ -102,7 +104,9 @@ export function EcosystemTierCard({
 
 export function InnovatorTierCard({
   partner,
-}: { partner: Partners['innovator'][number] }) {
+}: {
+  partner: Partners['innovator'][number]
+}) {
   return (
     <a
       href={partner.link}
@@ -123,7 +127,9 @@ export function InnovatorTierCard({
 
 export function SupporterTierCard({
   partner,
-}: { partner: Partners['supporter'][number] }) {
+}: {
+  partner: Partners['supporter'][number]
+}) {
   return (
     <a
       href={partner.link}

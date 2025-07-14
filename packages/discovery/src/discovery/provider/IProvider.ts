@@ -11,8 +11,10 @@ import type {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { providers, utils } from 'ethers'
-import type { IEtherscanClient } from '../../utils/IEtherscanClient'
-import type { ContractSource } from '../../utils/IEtherscanClient'
+import type {
+  ContractSource,
+  IEtherscanClient,
+} from '../../utils/IEtherscanClient'
 import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
 
 export interface ContractDeployment {

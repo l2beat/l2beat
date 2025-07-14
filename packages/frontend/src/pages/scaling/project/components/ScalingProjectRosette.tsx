@@ -30,7 +30,10 @@ export function ProjectScalingRosette({ project, size }: Props) {
   const Wrapper = ({
     children,
     hideSelector,
-  }: { children: React.ReactNode; hideSelector?: boolean }) => (
+  }: {
+    children: React.ReactNode
+    hideSelector?: boolean
+  }) => (
     <div className="my-auto flex flex-col gap-3 max-lg:hidden">
       {!hideSelector && (
         <RosetteSelector

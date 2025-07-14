@@ -11,9 +11,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'

@@ -1,21 +1,20 @@
 import {
   EthereumAddress,
-  ProjectId,
-  UnixTime,
   formatLargeNumber,
   formatSeconds,
+  ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'

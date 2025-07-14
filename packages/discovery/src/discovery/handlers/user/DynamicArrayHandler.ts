@@ -6,9 +6,9 @@ import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import {
-  type ReferenceInput,
   generateReferenceInput,
   getReferencedName,
+  type ReferenceInput,
   resolveReference,
 } from '../reference'
 import { SingleSlot } from '../storageCommon'

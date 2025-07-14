@@ -41,9 +41,7 @@ const STARKEX_ON_CHAIN: ProjectTechnologyChoice = {
   ],
 }
 
-const STARKNET_ON_CHAIN = (
-  usesBlobs: boolean = false,
-): ProjectTechnologyChoice => {
+const STARKNET_ON_CHAIN = (usesBlobs = false): ProjectTechnologyChoice => {
   const blobOr = usesBlobs ? 'blob or ' : ''
   return {
     name: 'All data required to reconstruct rollup state is published on chain',
@@ -136,7 +134,7 @@ function CELESTIA_OFF_CHAIN(
   return {
     name: 'Data is posted to Celestia',
     description:
-      `Transactions roots are posted onchain and the full data is posted on Celestia. ` +
+      'Transactions roots are posted onchain and the full data is posted on Celestia. ' +
       additionalDescription,
     risks: [
       {
@@ -166,7 +164,7 @@ function AVAIL_OFF_CHAIN(isUsingVector: boolean): ProjectTechnologyChoice {
   return {
     name: 'Data is posted to Avail',
     description:
-      `Transactions roots are posted onchain and the full data is posted on Avail. ` +
+      'Transactions roots are posted onchain and the full data is posted on Avail. ' +
       additionalDescription,
     risks: [
       {
@@ -199,7 +197,7 @@ function EIGENDA_OFF_CHAIN(
   return {
     name: 'Data is posted to EigenDA',
     description:
-      `Transactions roots are posted onchain and the full data is posted on EigenDA. ` +
+      'Transactions roots are posted onchain and the full data is posted on EigenDA. ' +
       additionalDescription,
     risks: [
       {

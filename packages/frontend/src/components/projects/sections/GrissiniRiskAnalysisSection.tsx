@@ -44,11 +44,7 @@ export function GrissiniRiskAnalysisSection({
   )
 }
 
-function RiskValues({
-  grissiniValues,
-}: {
-  grissiniValues: RosetteValue[]
-}) {
+function RiskValues({ grissiniValues }: { grissiniValues: RosetteValue[] }) {
   return (
     <div>
       {Object.values(grissiniValues).map((value, key) => (

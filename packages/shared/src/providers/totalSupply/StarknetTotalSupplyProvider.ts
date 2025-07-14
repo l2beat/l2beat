@@ -1,5 +1,4 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {} from '@l2beat/shared-pure'
 import type { StarknetClient } from '../../clients'
 
 export const STARKNET_TOTAL_SUPPLY_SELECTOR =
@@ -14,7 +13,7 @@ export class StarknetTotalSupplyProvider {
     this.logger = logger.for(this)
   }
 
-  async getTotalSupplies(
+  getTotalSupplies(
     tokens: string[],
     blockNumber: number,
     chain: string,
@@ -37,7 +36,7 @@ export class StarknetTotalSupplyProvider {
           const res = await client.call(c, blockNumber)
           return res.toString() === '0x' ? 0n : BigInt(res[0])
         } catch {
-          this.logger.tag({ chain }).warn(`Issue with totalSupply fetching`, {
+          this.logger.tag({ chain }).warn('Issue with totalSupply fetching', {
             token: tokens[i],
             blockNumber,
           })

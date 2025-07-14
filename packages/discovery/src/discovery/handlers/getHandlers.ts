@@ -1,6 +1,6 @@
 import type { StructureContractConfig } from '../config/structureUtils'
-import type { Handler } from './Handler'
 import { getSystemHandlers } from './getSystemHandlers'
+import type { Handler } from './Handler'
 import { ErrorHandler } from './system/ErrorHandler'
 import { getUserHandler } from './user'
 

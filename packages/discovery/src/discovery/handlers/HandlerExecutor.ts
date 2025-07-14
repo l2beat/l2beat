@@ -3,10 +3,10 @@ import type { DiscoveryCustomType } from '../config/StructureConfig'
 import type { StructureContractConfig } from '../config/structureUtils'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
-import type { HandlerResult } from './Handler'
 import { decodeHandlerResults } from './decodeHandlerResults'
 import { executeHandlers } from './executeHandlers'
 import { getHandlers } from './getHandlers'
+import type { HandlerResult } from './Handler'
 
 export class HandlerExecutor {
   async execute(

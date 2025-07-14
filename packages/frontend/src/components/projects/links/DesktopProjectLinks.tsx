@@ -36,11 +36,7 @@ export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
   )
 }
 
-function ProjectLinkItem({
-  projectLink,
-}: {
-  projectLink: ProjectLink
-}) {
+function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
       <NavigationMenuItem>

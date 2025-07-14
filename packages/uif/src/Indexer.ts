@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 
 import { assert } from '@l2beat/shared-pure'
-import { Retries, type RetryStrategy } from './Retries'
 import { assertUnreachable } from './assertUnreachable'
+import { Retries, type RetryStrategy } from './Retries'
 import { getInitialState } from './reducer/getInitialState'
 import { indexerReducer } from './reducer/indexerReducer'
 import type { IndexerAction } from './reducer/types/IndexerAction'
@@ -39,7 +39,7 @@ export abstract class Indexer {
   static getInfiniteRetryStrategy: () => RetryStrategy = () =>
     Retries.exponentialBackOff({
       initialTimeoutMs: 1000,
-      maxAttempts: Infinity,
+      maxAttempts: Number.POSITIVE_INFINITY,
       // WARNING: Change only if you know what you are doing
       // Alerting system in Kibana requires Indexer to log sth once an hour
       maxTimeoutMs: 1 * 60 * 60_000,
@@ -202,7 +202,7 @@ export abstract class Indexer {
         childCount: this.children.length,
       })
     } catch (error) {
-      this.logger.error(`Failed to initialize indexer`, {
+      this.logger.error('Failed to initialize indexer', {
         error,
       })
     }

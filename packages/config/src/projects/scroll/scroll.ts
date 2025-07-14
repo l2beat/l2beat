@@ -1,16 +1,16 @@
 import {
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -19,7 +19,6 @@ import {
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'

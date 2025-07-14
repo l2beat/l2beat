@@ -15,6 +15,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
