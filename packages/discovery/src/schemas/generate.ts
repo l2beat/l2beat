@@ -1,4 +1,5 @@
-import { type Parser, toJsonSchema, v } from '@l2beat/validate'
+import { formatJson } from '@l2beat/shared-pure'
+import { toJsonSchema, v } from '@l2beat/validate'
 import {
   _ColorConfig,
   _ColorContract,
@@ -15,7 +16,6 @@ import {
   _StructureContract,
   _StructureContractField,
 } from '../discovery/config/StructureConfig'
-import { formatJson } from '@l2beat/shared-pure'
 
 export interface Schema {
   filepath: string
@@ -58,11 +58,11 @@ export async function generateAllSchemas(): Promise<Schema[]> {
   return [
     {
       filepath: 'schemas/config.v2.schema.json',
-      schema: formatJson(toJsonSchema((MergedConfig))),
+      schema: formatJson(toJsonSchema(MergedConfig)),
     },
     {
       filepath: 'schemas/contract.v2.schema.json',
-      schema: formatJson(toJsonSchema((MergedContract))),
+      schema: formatJson(toJsonSchema(MergedContract)),
     },
   ]
 }
