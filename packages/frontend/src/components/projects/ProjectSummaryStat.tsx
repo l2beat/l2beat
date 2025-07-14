@@ -9,7 +9,6 @@ import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 
 export interface ProjectSummaryStat {
-  key: string
   title: ReactNode
   value: ReactNode
   tooltip?: string
@@ -21,7 +20,6 @@ export function ProjectSummaryStat(props: ProjectSummaryStat) {
   const Comp = typeof props.title === 'string' ? 'span' : Slot
   return (
     <li
-      key={props.key}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,
