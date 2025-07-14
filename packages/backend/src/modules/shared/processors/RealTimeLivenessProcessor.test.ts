@@ -22,6 +22,25 @@ import type { AnomalyNotifier } from '../notifiers/AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 
 describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
+  describe(RealTimeLivenessProcessor.prototype.init.name, () => {
+    it('should init processor', async () => {
+      const config = createMockConfig(ProjectId('project-id'), [])
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase(),
+        mockObject<AnomalyNotifier>(),
+      )
+
+      const mockDeleteForArchivedProjects = mockFn().resolvesTo(undefined)
+      processor.deleteForArchivedProjects = mockDeleteForArchivedProjects
+
+      await processor.init()
+
+      expect(mockDeleteForArchivedProjects).toHaveBeenCalled()
+    })
+  })
+
   describe(RealTimeLivenessProcessor.prototype.processBlock.name, () => {
     it('should match liveness txs and detect anomalies', async () => {
       const block = mockObject<Block>({
@@ -521,7 +540,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
 
   describe(RealTimeLivenessProcessor.prototype.deleteForArchivedProjects
     .name, () => {
-    it('should match liveness txs and detect anomalies', async () => {
+    it('deletes anomalies for archived projects', async () => {
       const projectId = 'project-id'
       const config = createMockConfig(ProjectId(projectId), [], true)
 
