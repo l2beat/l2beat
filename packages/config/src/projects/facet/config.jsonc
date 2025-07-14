@@ -6,7 +6,7 @@
     "ethereum": {
       "initialAddresses": [
         "0x0000000000000b07ed001607f5263d85bf28ce4c",
-        "0x101e853255f3a0cA1dd3772d00893A103A6d0261",
+        "0x101e853255f3a0cA1dd3772d00893A103A6d0261"
         // "0x8F75466D69a52EF53C7363F38834bEfC027A2909", // deprecated
       ],
       "names": {
