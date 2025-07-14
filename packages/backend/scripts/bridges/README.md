@@ -17,7 +17,7 @@ pnpm bridges:cli --range=10
 ```
 - chains - Comma-separated list of chains, runs script only for them. If not provided will run for all chains. See chains.ts for possible values.
 ```
-pnpm bridges:cli --chain=ethereum,arbitrum
+pnpm bridges:cli --chains=ethereum,arbitrum
 ```
 - protocols - Comma-separated list of protocols, runs script only for them. If not provided will run for all protocols with decoders configured. See protocols.ts for possible values.
 ```
