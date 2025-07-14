@@ -2,9 +2,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
-import { WarningBar } from '~/components/WarningBar'dges/project/getBridgesProjectEntry'
-
+import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { BridgesProjectStats } from './BridgesProjectStats'
 
 interface Props {
