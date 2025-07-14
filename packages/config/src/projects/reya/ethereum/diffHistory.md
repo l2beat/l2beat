@@ -1,3 +1,792 @@
+Generated with discovered.json: 0xa4444e50dd70285af3fc8608f4445d8fad11f721
+
+# Diff at Mon, 14 Jul 2025 12:46:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22122787
+- current block number: 22122787
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22122787 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0x0003A96B27ce73505b43ea1b71a5aB06bec568C4"
++        "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4"
+      implementationNames.0x0003A96B27ce73505b43ea1b71a5aB06bec568C4:
+-        "OneStepProverHostIo"
+      implementationNames.eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4:
++        "OneStepProverHostIo"
+    }
+```
+
+```diff
+    EOA  (0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e) {
+    +++ description: None
+      address:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x07390626b8Bc2C04b1D93c7D246A0629198D7868) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      address:
+-        "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
++        "eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0x6c21303F5986180B1394d2C89f3e883890E2867b"
++        "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"
+      values.$pastUpgrades.0.2.0:
+-        "0x6c21303F5986180B1394d2C89f3e883890E2867b"
++        "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
++        "eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.executors.0:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      implementationNames.0x07390626b8Bc2C04b1D93c7D246A0629198D7868:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x6c21303F5986180B1394d2C89f3e883890E2867b:
+-        "UpgradeExecutor"
+      implementationNames.eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x6c21303F5986180B1394d2C89f3e883890E2867b:
++        "UpgradeExecutor"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
++        "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
+      implementationNames.0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB:
+-        "OneStepProverMemory"
+      implementationNames.eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB:
++        "OneStepProverMemory"
+    }
+```
+
+```diff
+    EOA  (0x28bB9385A588EF4747264D19B9A9F1603591680c) {
+    +++ description: None
+      address:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+    }
+```
+
+```diff
+    EOA  (0x29156F8dFfE8979F49E3a085dbb10477373a6051) {
+    +++ description: None
+      address:
+-        "0x29156F8dFfE8979F49E3a085dbb10477373a6051"
++        "eth:0x29156F8dFfE8979F49E3a085dbb10477373a6051"
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) {
+    +++ description: This contract implements view only utilities for validators.
+      address:
+-        "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF"
++        "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF"
+      implementationNames.0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF:
+-        "ValidatorUtils"
+      implementationNames.eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF:
++        "ValidatorUtils"
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5"
++        "eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5"
+      implementationNames.0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5:
+-        "OneStepProver0"
+      implementationNames.eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5:
++        "OneStepProver0"
+    }
+```
+
+```diff
+    EOA  (0x349f3839012DB2271e1BeC68F1668471D175Adb9) {
+    +++ description: None
+      address:
+-        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
++        "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+    }
+```
+
+```diff
+    contract Bridge (0x383c03c4EfF819E73409DbC690755a9992393814) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      address:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
+      values.$pastUpgrades.0.2.0:
+-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
+      values.activeOutbox:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.
++++ severity: HIGH
+      values.allowedDelayedInboxList.0:
+-        "0x672109752635177ebcb17F2C7e04575A709014BD"
++        "eth:0x672109752635177ebcb17F2C7e04575A709014BD"
++++ description: Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.
++++ severity: HIGH
+      values.allowedDelayedInboxList.1:
+-        "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
++        "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
++++ description: Can make calls as the bridge, steal all funds.
++++ severity: HIGH
+      values.allowedOutboxList.0:
+-        "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
++        "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory.0:
+-        "0x672109752635177ebcb17F2C7e04575A709014BD"
++        "eth:0x672109752635177ebcb17F2C7e04575A709014BD"
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory.1:
+-        "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
++        "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory.0:
+-        "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
++        "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
+      values.rollup:
+-        "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
+      values.sequencerInbox:
+-        "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
++        "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
+      implementationNames.0x383c03c4EfF819E73409DbC690755a9992393814:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F:
+-        "Bridge"
+      implementationNames.eth:0x383c03c4EfF819E73409DbC690755a9992393814:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F:
++        "Bridge"
+    }
+```
+
+```diff
+    contract Outbox (0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      address:
+-        "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
++        "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
++        "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
+      values.$pastUpgrades.0.2.0:
+-        "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
++        "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"
+      values.bridge:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.l2ToL1Sender:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollup:
+-        "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
+      implementationNames.0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC:
+-        "Outbox"
+      implementationNames.eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC:
++        "Outbox"
+    }
+```
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      address:
+-        "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
+      values.$admin:
+-        "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
++        "eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
+      values.$implementation.0:
+-        "0x9B56A789fEDD5df27dBaB53b085F7157397cA17D"
++        "eth:0x9B56A789fEDD5df27dBaB53b085F7157397cA17D"
+      values.$implementation.1:
+-        "0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34"
++        "eth:0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34"
+      values.$pastUpgrades.0.2.0:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "eth:0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
+      values.$pastUpgrades.0.2.1:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "eth:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+      values.$pastUpgrades.1.2.0:
+-        "0x9B56A789fEDD5df27dBaB53b085F7157397cA17D"
++        "eth:0x9B56A789fEDD5df27dBaB53b085F7157397cA17D"
+      values.$pastUpgrades.1.2.1:
+-        "0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34"
++        "eth:0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34"
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.bridge:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.challengeManager:
+-        "0x728B406A4809118533D96bB3b5C50712C99d8Fa5"
++        "eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5"
+      values.inbox:
+-        "0x672109752635177ebcb17F2C7e04575A709014BD"
++        "eth:0x672109752635177ebcb17F2C7e04575A709014BD"
+      values.loserStakeEscrow:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.outbox:
+-        "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
++        "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"
+      values.owner:
+-        "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
++        "eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
+      values.rollupEventInbox:
+-        "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
++        "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
+      values.sequencerInbox:
+-        "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
++        "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
+      values.stakeToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.validators.0:
+-        "0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
++        "eth:0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
+      values.validatorUtils:
+-        "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF"
++        "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF"
+      values.validatorWalletCreator:
+-        "0x9CAd81628aB7D8e239F1A5B497313341578c5F71"
++        "eth:0x9CAd81628aB7D8e239F1A5B497313341578c5F71"
+      implementationNames.0x448Bbd134dE1B23976073aB4F2915849b2dcD73A:
+-        "RollupProxy"
+      implementationNames.0x9B56A789fEDD5df27dBaB53b085F7157397cA17D:
+-        "RollupAdminLogic"
+      implementationNames.0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34:
+-        "RollupUserLogic"
+      implementationNames.eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A:
++        "RollupProxy"
+      implementationNames.eth:0x9B56A789fEDD5df27dBaB53b085F7157397cA17D:
++        "RollupAdminLogic"
+      implementationNames.eth:0x5607Ea4b5F6e3F610bD346B36D3143FFf46d1C34:
++        "RollupUserLogic"
+    }
+```
+
+```diff
+    EOA  (0x547D0F472309e4239b296D01e03bEDc101241a26) {
+    +++ description: None
+      address:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
+    }
+```
+
+```diff
+    EOA  (0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d) {
+    +++ description: None
+      address:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+    }
+```
+
+```diff
+    contract Inbox (0x672109752635177ebcb17F2C7e04575A709014BD) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      address:
+-        "0x672109752635177ebcb17F2C7e04575A709014BD"
++        "eth:0x672109752635177ebcb17F2C7e04575A709014BD"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"
++        "eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"
+      values.$pastUpgrades.0.2.0:
+-        "0x1162084C3C6575121146582Db5BE43189e8CEe6b"
++        "eth:0x1162084C3C6575121146582Db5BE43189e8CEe6b"
+      values.$pastUpgrades.1.2.0:
+-        "0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"
++        "eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C"
+      values.bridge:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.getProxyAdmin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.sequencerInbox:
+-        "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
++        "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
+      implementationNames.0x672109752635177ebcb17F2C7e04575A709014BD:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C:
+-        "Inbox"
+      implementationNames.eth:0x672109752635177ebcb17F2C7e04575A709014BD:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C:
++        "Inbox"
+    }
+```
+
+```diff
+    EOA  (0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2) {
+    +++ description: None
+      address:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      address:
+-        "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
++        "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0x734B78823c4d979045EC23F38B54A070df7769FF"
++        "eth:0x734B78823c4d979045EC23F38B54A070df7769FF"
+      values.$pastUpgrades.0.2.0:
+-        "0x873484Ba63353C8b71210ce123B465512d408B27"
++        "eth:0x873484Ba63353C8b71210ce123B465512d408B27"
+      values.$pastUpgrades.1.2.0:
+-        "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
++        "eth:0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"
+      values.$pastUpgrades.2.2.0:
+-        "0x734B78823c4d979045EC23F38B54A070df7769FF"
++        "eth:0x734B78823c4d979045EC23F38B54A070df7769FF"
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.batchPosters.0:
+-        "0x29156F8dFfE8979F49E3a085dbb10477373a6051"
++        "eth:0x29156F8dFfE8979F49E3a085dbb10477373a6051"
+      values.bridge:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.reader4844:
+-        "0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74"
++        "eth:0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74"
+      values.rollup:
+-        "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
+      implementationNames.0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x734B78823c4d979045EC23F38B54A070df7769FF:
+-        "SequencerInbox"
+      implementationNames.eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x734B78823c4d979045EC23F38B54A070df7769FF:
++        "SequencerInbox"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x728B406A4809118533D96bB3b5C50712C99d8Fa5) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      address:
+-        "0x728B406A4809118533D96bB3b5C50712C99d8Fa5"
++        "eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0x02E05A9245C5853f895daDcc3A8216C953C8736B"
++        "eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B"
+      values.$pastUpgrades.0.2.0:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
+      values.$pastUpgrades.1.2.0:
+-        "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
++        "eth:0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
+      values.$pastUpgrades.2.2.0:
+-        "0x02E05A9245C5853f895daDcc3A8216C953C8736B"
++        "eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B"
+      values.bridge:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.osp:
+-        "0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC"
++        "eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC"
+      values.resultReceiver:
+-        "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
+      values.sequencerInbox:
+-        "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
++        "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
+      implementationNames.0x728B406A4809118533D96bB3b5C50712C99d8Fa5:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x02E05A9245C5853f895daDcc3A8216C953C8736B:
+-        "ChallengeManager"
+      implementationNames.eth:0x728B406A4809118533D96bB3b5C50712C99d8Fa5:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x02E05A9245C5853f895daDcc3A8216C953C8736B:
++        "ChallengeManager"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9) {
+    +++ description: None
+      address:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.owner:
+-        "0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
++        "eth:0x07390626b8Bc2C04b1D93c7D246A0629198D7868"
+      implementationNames.0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9:
+-        "ProxyAdmin"
+      implementationNames.eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52) {
+    +++ description: None
+      address:
+-        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
++        "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC"
++        "eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC"
+      values.prover0:
+-        "0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5"
++        "eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5"
+      values.proverHostIo:
+-        "0x0003A96B27ce73505b43ea1b71a5aB06bec568C4"
++        "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4"
+      values.proverMath:
+-        "0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD"
++        "eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD"
+      values.proverMem:
+-        "0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
++        "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
+      implementationNames.0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC:
+-        "OneStepProofEntry"
+      implementationNames.eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC:
++        "OneStepProofEntry"
+    }
+```
+
+```diff
+    EOA  (0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836) {
+    +++ description: None
+      address:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    EOA  (0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621) {
+    +++ description: None
+      address:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+    }
+```
+
+```diff
+    EOA  (0xB65540bBA534E88EB4a5062D0E6519C07063b259) {
+    +++ description: None
+      address:
+-        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
++        "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+    }
+```
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      address:
+-        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
++        "eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x349f3839012DB2271e1BeC68F1668471D175Adb9"
++        "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9"
+      values.$members.1:
+-        "0xB65540bBA534E88EB4a5062D0E6519C07063b259"
++        "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+      values.$members.2:
+-        "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
+      values.$members.3:
+-        "0x28bB9385A588EF4747264D19B9A9F1603591680c"
++        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+      values.$members.4:
+-        "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
++        "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
+      values.$members.5:
+-        "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
++        "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
+      values.$members.6:
+-        "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
++        "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52"
+      values.$members.7:
+-        "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
++        "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.$members.8:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.$members.9:
+-        "0x547D0F472309e4239b296D01e03bEDc101241a26"
++        "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
+      implementationNames.0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c) {
+    +++ description: None
+      address:
+-        "0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
++        "eth:0xC3D92d18c9CcD418A5547C28a5c3be60E694EA3c"
+    }
+```
+
+```diff
+    contract OneStepProverMath (0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD"
++        "eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD"
+      implementationNames.0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD:
+-        "OneStepProverMath"
+      implementationNames.eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD:
++        "OneStepProverMath"
+    }
+```
+
+```diff
+    contract SocketVault_Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      address:
+-        "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
++        "eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7:
+-        "Vault"
+      implementationNames.eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0xf83bC4688979b13Da02CB94c76cEB169540760b5) {
+    +++ description: None
+      address:
+-        "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
++        "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0xFd9f59554351122b231F832a0e0A1aBb0604D7fd) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      address:
+-        "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
++        "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
+      values.$admin:
+-        "0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
++        "eth:0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9"
+      values.$implementation:
+-        "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
+      values.$pastUpgrades.0.2.0:
+-        "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
+      values.bridge:
+-        "0x383c03c4EfF819E73409DbC690755a9992393814"
++        "eth:0x383c03c4EfF819E73409DbC690755a9992393814"
+      values.rollup:
+-        "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
++        "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A"
+      implementationNames.0xFd9f59554351122b231F832a0e0A1aBb0604D7fd:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
+-        "RollupEventInbox"
+      implementationNames.eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
++        "RollupEventInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x0003A96B27ce73505b43ea1b71a5aB06bec568C4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x07390626b8Bc2C04b1D93c7D246A0629198D7868)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x383c03c4EfF819E73409DbC690755a9992393814)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x672109752635177ebcb17F2C7e04575A709014BD)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x728B406A4809118533D96bB3b5C50712C99d8Fa5)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x74627dd54FA6E94c87F12DBAdAEc275758f51dF9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract SocketVault_Reya (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0xFd9f59554351122b231F832a0e0A1aBb0604D7fd)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
 Generated with discovered.json: 0x3631c538a30e0cc16f789e5ba5872e5bc0972122
 
 # Diff at Fri, 04 Jul 2025 12:19:17 GMT:

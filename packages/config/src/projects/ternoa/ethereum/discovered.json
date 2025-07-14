@@ -6,7 +6,7 @@
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
-      "address": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
+      "address": "eth:0x129A94208bb3030D809c36849d43b50d13e0cACf",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -18,7 +18,7 @@
       ]
     },
     {
-      "address": "0x49015545B46B07082bd7faf2633643eae87710EC",
+      "address": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -59,13 +59,13 @@
       ]
     },
     {
-      "address": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0",
+      "address": "eth:0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Validium",
-      "address": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+      "address": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
       "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -78,26 +78,26 @@
       "sinceTimestamp": 1735650935,
       "sinceBlock": 21522690,
       "values": {
-        "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+        "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "$implementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
             "2024-12-31T13:15:35.000Z",
             "0x6fa3d7225201238d78388fafabea13b5a54c4f1f037d51071c39c624aa072511",
-            ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
+            ["eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
         "$upgradeCount": 1,
-        "admin": "0x49015545B46B07082bd7faf2633643eae87710EC",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "admin": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "0xB408a216927d31A27fd96176dbF1B825630f0301",
-        "forceBatchAddress": "0x49015545B46B07082bd7faf2633643eae87710EC",
+        "dataAvailabilityProtocol": "eth:0xB408a216927d31A27fd96176dbF1B825630f0301",
+        "forceBatchAddress": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
+        "gasTokenAddress": "eth:0x03Be5C903c727Ee2C8C4e9bc0AcC860Cca4715e2",
         "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
         "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
         "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
@@ -111,14 +111,14 @@
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",
-        "pendingAdmin": "0x0000000000000000000000000000000000000000",
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0x129A94208bb3030D809c36849d43b50d13e0cACf",
+        "trustedSequencer": "eth:0x129A94208bb3030D809c36849d43b50d13e0cACf",
         "trustedSequencerURL": "https://rpc-mainnet.zkevm.ternoa.network"
       },
       "fieldMeta": {
@@ -128,14 +128,14 @@
         }
       },
       "implementationNames": {
-        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": "PolygonTransparentProxy",
-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
+        "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": "PolygonTransparentProxy",
+        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Verifier",
-      "address": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+      "address": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
       "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
@@ -147,13 +147,13 @@
       "sinceBlock": 20984421,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
+        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PolygonDataCommittee",
-      "address": "0xB408a216927d31A27fd96176dbF1B825630f0301",
+      "address": "eth:0xB408a216927d31A27fd96176dbF1B825630f0301",
       "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
@@ -165,13 +165,13 @@
       "sinceTimestamp": 1735824851,
       "sinceBlock": 21537112,
       "values": {
-        "$admin": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
-        "$implementation": "0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11",
+        "$admin": "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
+        "$implementation": "eth:0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11",
         "$pastUpgrades": [
           [
             "2025-01-02T13:34:11.000Z",
             "0xa1d4a7b4eaff3accd51899984230d34d5219786f1de408d9ac6174552d852dad",
-            ["0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11"]
+            ["eth:0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11"]
           ]
         ],
         "$upgradeCount": 1,
@@ -181,21 +181,21 @@
         "members": [
           {
             "url": "https://dac.ternoa-mainnet.zeeve.online",
-            "addr": "0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"
+            "addr": "eth:0x4cbCa28910376fb203188acC5fCdDc8F3b91c4B0"
           }
         ],
-        "owner": "0x49015545B46B07082bd7faf2633643eae87710EC",
+        "owner": "eth:0x49015545B46B07082bd7faf2633643eae87710EC",
         "requiredAmountOfSignatures": 1
       },
       "implementationNames": {
-        "0xB408a216927d31A27fd96176dbF1B825630f0301": "TransparentUpgradeableProxy",
-        "0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11": "PolygonDataCommittee"
+        "eth:0xB408a216927d31A27fd96176dbF1B825630f0301": "TransparentUpgradeableProxy",
+        "eth:0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11": "PolygonDataCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
+      "address": "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -213,10 +213,10 @@
       "sinceBlock": 21537111,
       "values": {
         "$immutable": true,
-        "owner": "0x49015545B46B07082bd7faf2633643eae87710EC"
+        "owner": "eth:0x49015545B46B07082bd7faf2633643eae87710EC"
       },
       "implementationNames": {
-        "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b": "ProxyAdmin"
+        "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b": "ProxyAdmin"
       }
     }
   ],
@@ -404,5 +404,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x1eb13db8ecf293e63168780a2f346ee32059a329b32549636479a9304e3ae030"
+  "permissionsConfigHash": "0xda2e078b950454d7b408e15826d9a565ab8a8a27e2e41b287ac8886d755a3275"
 }

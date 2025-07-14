@@ -1,3 +1,491 @@
+Generated with discovered.json: 0x4929d61773765d64606c503addc067ea4f3edda3
+
+# Diff at Mon, 14 Jul 2025 12:45:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22823769
+- current block number: 22823769
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823769 (main branch discovery), not current.
+
+```diff
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+      address:
+-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      description:
+-        "A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type."
++        "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type."
+      values.FFLONK_VERIFIER:
+-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
++        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
+      values.PLONK_VERIFIER:
+-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
++        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
+      implementationNames.0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579:
+-        "DualVerifier"
+      implementationNames.eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579:
++        "DualVerifier"
+    }
+```
+
+```diff
+    contract GatewayTransactionFilterer (0x5540DE94485dB078025318428F813C5d88215823) {
+    +++ description: A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).
+      address:
+-        "0x5540DE94485dB078025318428F813C5d88215823"
++        "eth:0x5540DE94485dB078025318428F813C5d88215823"
+      description:
+-        "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3)."
++        "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3)."
+      values.$admin:
+-        "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"
++        "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"
+      values.$implementation:
+-        "0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde"
++        "eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde"
+      values.$pastUpgrades.0.2.0:
+-        "0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde"
++        "eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.0:
+-        "0x65e424504400d8923BD19dde480919a4C19adcD3"
++        "eth:0x65e424504400d8923BD19dde480919a4C19adcD3"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.1:
+-        "0xcbd7298D64d7855C5a5736B4D8c5650aeA829214"
++        "eth:0xcbd7298D64d7855C5a5736B4D8c5650aeA829214"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.2:
+-        "0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9"
++        "eth:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.3:
+-        "0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831"
++        "eth:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.4:
+-        "0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6"
++        "eth:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.5:
+-        "0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8"
++        "eth:0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.6:
+-        "0xa365401Dc76d077c702965ECc39CfbfE436A6167"
++        "eth:0xa365401Dc76d077c702965ECc39CfbfE436A6167"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.7:
+-        "0x7f124F72fB4f978798ffdedAD3332b0ce750F399"
++        "eth:0x7f124F72fB4f978798ffdedAD3332b0ce750F399"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.8:
+-        "0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7"
++        "eth:0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.9:
+-        "0x0ba2a65bb5CaB6b4b4CA797C4Aa825118a6A2A63"
++        "eth:0x0ba2a65bb5CaB6b4b4CA797C4Aa825118a6A2A63"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.10:
+-        "0x69653a812038424290EFd0e7Ae8DcFB2Bbf9c9b2"
++        "eth:0x69653a812038424290EFd0e7Ae8DcFB2Bbf9c9b2"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.11:
+-        "0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de"
++        "eth:0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.12:
+-        "0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474"
++        "eth:0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.13:
+-        "0x0000000000000000000000000000000000008006"
++        "eth:0x0000000000000000000000000000000000008006"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.14:
+-        "0x000000000000000000000000000000000000800f"
++        "eth:0x000000000000000000000000000000000000800f"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.15:
+-        "0x0000000000000000000000000000000000008014"
++        "eth:0x0000000000000000000000000000000000008014"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.16:
+-        "0x0000000000000000000000000000000000010000"
++        "eth:0x0000000000000000000000000000000000010000"
++++ description: Addresses that are blacklisted as target contracts for requestL2Transaction() calls.
+      values.blacklistedContracts.17:
+-        "0x0000000000000000000000000000000000010001"
++        "eth:0x0000000000000000000000000000000000010001"
+      values.BRIDGE_HUB:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.L1_ASSET_ROUTER:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.owner:
+-        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
++        "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Addresses that are whitelisted as senders for requestL2Transaction() calls.
+      values.whitelistedSenders.0:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ description: Addresses that are whitelisted as senders for requestL2Transaction() calls.
+      values.whitelistedSenders.1:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++++ description: Addresses that are whitelisted as senders for requestL2Transaction() calls.
+      values.whitelistedSenders.2:
+-        "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
++        "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      implementationNames.0x5540DE94485dB078025318428F813C5d88215823:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde:
+-        "GatewayTransactionFilterer"
+      implementationNames.eth:0x5540DE94485dB078025318428F813C5d88215823:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde:
++        "GatewayTransactionFilterer"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      address:
+-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
++        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
+      implementationNames.0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1:
+-        "L1VerifierPlonk"
+      implementationNames.eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1:
++        "L1VerifierPlonk"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6B0d492D08d436d3BBC7Cc873C03002686Aef734) {
+    +++ description: None
+      address:
+-        "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"
++        "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"
+      values.owner:
+-        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
++        "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      implementationNames.0x6B0d492D08d436d3BBC7Cc873C03002686Aef734:
+-        "ProxyAdmin"
+      implementationNames.eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract DiamondProxy (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      address:
+-        "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
++        "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
+      values.$implementation.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$implementation.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$implementation.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$implementation.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$pastUpgrades.0.2.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
+      values.$pastUpgrades.0.2.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
+      values.$pastUpgrades.0.2.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
+      values.$pastUpgrades.0.2.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+      values.$pastUpgrades.1.2.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
+      values.$pastUpgrades.1.2.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
+      values.$pastUpgrades.1.2.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
+      values.$pastUpgrades.1.2.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+      values.$pastUpgrades.2.2.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
+      values.$pastUpgrades.2.2.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
+      values.$pastUpgrades.2.2.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
+      values.$pastUpgrades.2.2.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+      values.$pastUpgrades.3.2.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$pastUpgrades.3.2.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$pastUpgrades.3.2.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$pastUpgrades.3.2.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facetAddresses.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.facetAddresses.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.facetAddresses.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.facetAddresses.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facets.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
+-        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
+-        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
+-        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
+-        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.facets.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
++++ severity: HIGH
+      values.getAdmin:
+-        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
++        "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      values.getBaseToken:
+-        "0x66A5cFB2e9c529f14FE6364Ad1075dF3a649C0A5"
++        "eth:0x66A5cFB2e9c529f14FE6364Ad1075dF3a649C0A5"
+      values.getBridgehub:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.getChainTypeManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "0x72213dfe8CA61B0A782970dCFebFb877778f9119"
++        "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119"
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
++        "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
++++ severity: HIGH
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getSettlementLayer:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0x5540DE94485dB078025318428F813C5d88215823"
++        "eth:0x5540DE94485dB078025318428F813C5d88215823"
+      values.getVerifier:
+-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      values.validators.0:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      implementationNames.0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9:
+-        "DiamondProxy"
+      implementationNames.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
+-        "AdminFacet"
+      implementationNames.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
+-        "GettersFacet"
+      implementationNames.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
+-        "MailboxFacet"
+      implementationNames.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
+-        "ExecutorFacet"
+      implementationNames.eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9:
++        "DiamondProxy"
+      implementationNames.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        "AdminFacet"
+      implementationNames.eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        "GettersFacet"
+      implementationNames.eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        "MailboxFacet"
+      implementationNames.eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        "ExecutorFacet"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      address:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      values.chainTypeManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.owner:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.validatorsVTL.0:
+-        "0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE"
++        "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE"
+      values.validatorsVTL.1:
+-        "0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
++        "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
+      implementationNames.0x8c0Bfc04AdA21fd496c55B8C50331f904306F564:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564:
++        "ValidatorTimelock"
+    }
+```
+
+```diff
+    EOA  (0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE) {
+    +++ description: None
+      address:
+-        "0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE"
++        "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE"
+    }
+```
+
+```diff
+    EOA  (0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF) {
+    +++ description: None
+      address:
+-        "0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
++        "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      address:
+-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
++        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
+      implementationNames.0xD5dBE903F5382B052317D326FA1a7B63710C6a5b:
+-        "L1VerifierFflonk"
+      implementationNames.eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b:
++        "L1VerifierFflonk"
+    }
+```
+
+```diff
+    EOA  (0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9) {
+    +++ description: None
+      address:
+-        "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9"
++        "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: None
+      address:
+-        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
++        "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      values.owner:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.tokenMultiplierSetter:
+-        "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9"
++        "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9"
+      implementationNames.0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3:
+-        "ChainAdminOwnable"
+      implementationNames.eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3:
++        "ChainAdminOwnable"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayTransactionFilterer (0x5540DE94485dB078025318428F813C5d88215823)
+    +++ description: A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x6B0d492D08d436d3BBC7Cc873C03002686Aef734)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DiamondProxy (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdminOwnable (0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x93908b186378e2c67fb1e31aa7b01f9c6d940194
 
 # Diff at Fri, 04 Jul 2025 12:19:01 GMT:

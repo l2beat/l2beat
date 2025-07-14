@@ -1,3 +1,3185 @@
+Generated with discovered.json: 0x10a7573babc9cee4288f32c052ac56869413ea81
+
+# Diff at Mon, 14 Jul 2025 12:46:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22844606
+- current block number: 22844606
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22844606 (main branch discovery), not current.
+
+```diff
+    contract WETH Vault (Kinto) (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94) {
+    +++ description: None
+      address:
+-        "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94"
++        "eth:0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94:
+-        "Vault"
+      implementationNames.eth:0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94:
++        "Vault"
+    }
+```
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      address:
+-        "0x053407DFA30267f6332f3c94a9e9F704A55e62CD"
++        "eth:0x053407DFA30267f6332f3c94a9e9F704A55e62CD"
+      values.capacitor__:
+-        "0x994a46a0C07330A30F55C13Bd31Ffe464bA5e26E"
++        "eth:0x994a46a0C07330A30F55C13Bd31Ffe464bA5e26E"
+      values.checkpointManager:
+-        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      values.fxChildTunnel:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.fxRoot:
+-        "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2"
++        "eth:0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.remoteNativeSwitchboard:
+-        "0x72fB18276f3C3c3FD3146F6163994ec02Fa1c9D1"
++        "eth:0x72fB18276f3C3c3FD3146F6163994ec02Fa1c9D1"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0x053407DFA30267f6332f3c94a9e9F704A55e62CD:
+-        "PolygonL1Switchboard"
+      implementationNames.eth:0x053407DFA30267f6332f3c94a9e9F704A55e62CD:
++        "PolygonL1Switchboard"
+    }
+```
+
+```diff
+    contract sdeUSD Vault (Reya) (0x0A5A19376064fED2A0A9f3120B2426c957BC289D) {
+    +++ description: None
+      address:
+-        "0x0A5A19376064fED2A0A9f3120B2426c957BC289D"
++        "eth:0x0A5A19376064fED2A0A9f3120B2426c957BC289D"
+      implementationNames.0x0A5A19376064fED2A0A9f3120B2426c957BC289D:
+-        ""
+      implementationNames.eth:0x0A5A19376064fED2A0A9f3120B2426c957BC289D:
++        ""
+    }
+```
+
+```diff
+    contract deUSD Vault (Reya) (0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E) {
+    +++ description: None
+      address:
+-        "0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E"
++        "eth:0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E"
+      implementationNames.0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E:
+-        ""
+      implementationNames.eth:0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E:
++        ""
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      address:
+-        "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA"
++        "eth:0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA"
+      values.capacitor__:
+-        "0x5E162Be0d9898F35B02D3bF774b45E4C48af1a70"
++        "eth:0x5E162Be0d9898F35B02D3bF774b45E4C48af1a70"
+      values.crossDomainMessenger__:
+-        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
++        "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.remoteNativeSwitchboard:
+-        "0x9Cf7443685827419B0067fb2471C24969EAA716C"
++        "eth:0x9Cf7443685827419B0067fb2471C24969EAA716C"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA:
+-        "OptimismSwitchboard"
+      implementationNames.eth:0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA:
++        "OptimismSwitchboard"
+    }
+```
+
+```diff
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a) {
+    +++ description: None
+      address:
+-        "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a"
++        "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      implementationNames.0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a:
+-        "CapacitorFactory"
+      implementationNames.eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a:
++        "CapacitorFactory"
+    }
+```
+
+```diff
+    contract DAI Vault (Kinto) (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5) {
+    +++ description: None
+      address:
+-        "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5"
++        "eth:0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5:
+-        "Vault"
+      implementationNames.eth:0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5:
++        "Vault"
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      address:
+-        "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287"
++        "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287"
+      values.capacitor__:
+-        "0xBA2CaBf4754745C822c2BDdE65aF836CF92E4354"
++        "eth:0xBA2CaBf4754745C822c2BDdE65aF836CF92E4354"
+      values.crossDomainMessenger__:
+-        "0x5456f02c08e9A018E42C39b351328E5AA864174A"
++        "eth:0x5456f02c08e9A018E42C39b351328E5AA864174A"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.remoteNativeSwitchboard:
+-        "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4"
++        "eth:0x1D6811553Aff8231aDd04A84F300b89E15D99EA4"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287:
+-        "OptimismSwitchboard"
+      implementationNames.eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287:
++        "OptimismSwitchboard"
+    }
+```
+
+```diff
+    contract USDT Vault (Zora) (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB) {
+    +++ description: None
+      address:
+-        "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB"
++        "eth:0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+      implementationNames.0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB:
+-        "Vault"
+      implementationNames.eth:0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB:
++        "Vault"
+    }
+```
+
+```diff
+    contract SolvBTC Vault (Polynomial) (0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E) {
+    +++ description: None
+      address:
+-        "0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E"
++        "eth:0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E"
+      implementationNames.0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E:
+-        ""
+      implementationNames.eth:0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E:
++        ""
+    }
+```
+
+```diff
+    contract WETH Vault (Polynomial) (0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a) {
+    +++ description: None
+      address:
+-        "0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a"
++        "eth:0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a"
+      implementationNames.0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a:
+-        ""
+      implementationNames.eth:0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a:
++        ""
+    }
+```
+
+```diff
+    contract PENDLE Vault (Kinto) (0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97) {
+    +++ description: None
+      address:
+-        "0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97"
++        "eth:0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
+      implementationNames.0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97:
+-        "Vault"
+      implementationNames.eth:0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDT Vault (Kinto) (0x1D18263107a138C7fb0De65b4a78d193ff9664c1) {
+    +++ description: None
+      address:
+-        "0x1D18263107a138C7fb0De65b4a78d193ff9664c1"
++        "eth:0x1D18263107a138C7fb0De65b4a78d193ff9664c1"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x1D18263107a138C7fb0De65b4a78d193ff9664c1:
+-        "Vault"
+      implementationNames.eth:0x1D18263107a138C7fb0De65b4a78d193ff9664c1:
++        "Vault"
+    }
+```
+
+```diff
+    contract WBTC Vault (Reya) (0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6) {
+    +++ description: None
+      address:
+-        "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6"
++        "eth:0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6:
+-        "Vault"
+      implementationNames.eth:0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6:
++        "Vault"
+    }
+```
+
+```diff
+    contract LyraMultisig (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      address:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65"
++        "eth:0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65"
+      values.$members.1:
+-        "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52"
++        "eth:0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52"
+      values.$members.2:
+-        "0x4cEa25e9c999E69F45765539783D149024f99F12"
++        "eth:0x4cEa25e9c999E69F45765539783D149024f99F12"
+      implementationNames.0x246d38588b16Dd877c558b245e6D5a711C649fCF:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract eBTC Vault (Derive) (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5) {
+    +++ description: None
+      address:
+-        "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5"
++        "eth:0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5:
+-        "Vault"
+      implementationNames.eth:0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5:
++        "Vault"
+    }
+```
+
+```diff
+    contract PAXG Vault (Kinto) (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2) {
+    +++ description: None
+      address:
+-        "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2"
++        "eth:0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2:
+-        "Vault"
+      implementationNames.eth:0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDe Vault (Derive) (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A) {
+    +++ description: None
+      address:
+-        "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A"
++        "eth:0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A:
+-        "Vault"
+      implementationNames.eth:0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A:
++        "Vault"
+    }
+```
+
+```diff
+    contract ENA Vault (Kinto) (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd) {
+    +++ description: None
+      address:
+-        "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd"
++        "eth:0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd:
+-        "Vault"
+      implementationNames.eth:0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd:
++        "Vault"
+    }
+```
+
+```diff
+    contract rsETH Vault (Derive) (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      address:
+-        "0x35d4D9bc79B0a543934b1769304B90d752691caD"
++        "eth:0x35d4D9bc79B0a543934b1769304B90d752691caD"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x35d4D9bc79B0a543934b1769304B90d752691caD:
+-        "Vault"
+      implementationNames.eth:0x35d4D9bc79B0a543934b1769304B90d752691caD:
++        "Vault"
+    }
+```
+
+```diff
+    contract SolvBTC Vault (Derive) (0x383a4EdB30E896b8d2d044Be87079D45c0EA7065) {
+    +++ description: None
+      address:
+-        "0x383a4EdB30E896b8d2d044Be87079D45c0EA7065"
++        "eth:0x383a4EdB30E896b8d2d044Be87079D45c0EA7065"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x383a4EdB30E896b8d2d044Be87079D45c0EA7065:
+-        "Vault"
+      implementationNames.eth:0x383a4EdB30E896b8d2d044Be87079D45c0EA7065:
++        "Vault"
+    }
+```
+
+```diff
+    contract WBTC Vault (Derive) (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    +++ description: None
+      address:
+-        "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab"
++        "eth:0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab:
+-        "Vault"
+      implementationNames.eth:0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab:
++        "Vault"
+    }
+```
+
+```diff
+    contract OLAS Vault (Derive) (0x412Ac6044401cDf1e9833B7056c14C74AA593D37) {
+    +++ description: None
+      address:
+-        "0x412Ac6044401cDf1e9833B7056c14C74AA593D37"
++        "eth:0x412Ac6044401cDf1e9833B7056c14C74AA593D37"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x412Ac6044401cDf1e9833B7056c14C74AA593D37:
+-        "Vault"
+      implementationNames.eth:0x412Ac6044401cDf1e9833B7056c14C74AA593D37:
++        "Vault"
+    }
+```
+
+```diff
+    contract sUSDe Vault (Kinto) (0x43b718Aa5e678b08615CA984cbe25f690B085b32) {
+    +++ description: None
+      address:
+-        "0x43b718Aa5e678b08615CA984cbe25f690B085b32"
++        "eth:0x43b718Aa5e678b08615CA984cbe25f690B085b32"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x43b718Aa5e678b08615CA984cbe25f690B085b32:
+-        "Vault"
+      implementationNames.eth:0x43b718Aa5e678b08615CA984cbe25f690B085b32:
++        "Vault"
+    }
+```
+
+```diff
+    contract AAVE Vault (Derive) (0x4421461239aE746127C13a19177656124433dC60) {
+    +++ description: None
+      address:
+-        "0x4421461239aE746127C13a19177656124433dC60"
++        "eth:0x4421461239aE746127C13a19177656124433dC60"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x4421461239aE746127C13a19177656124433dC60:
+-        "Vault"
+      implementationNames.eth:0x4421461239aE746127C13a19177656124433dC60:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58) {
+    +++ description: None
+      address:
+-        "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58"
++        "eth:0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58"
+    }
+```
+
+```diff
+    contract USDS Vault (Polynomial) (0x49bFcE41d0594acA7390eD0820d83Fda308c39a7) {
+    +++ description: None
+      address:
+-        "0x49bFcE41d0594acA7390eD0820d83Fda308c39a7"
++        "eth:0x49bFcE41d0594acA7390eD0820d83Fda308c39a7"
+      implementationNames.0x49bFcE41d0594acA7390eD0820d83Fda308c39a7:
+-        ""
+      implementationNames.eth:0x49bFcE41d0594acA7390eD0820d83Fda308c39a7:
++        ""
+    }
+```
+
+```diff
+    contract rswETH Vault (Derive) (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4) {
+    +++ description: None
+      address:
+-        "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4"
++        "eth:0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4:
+-        "Vault"
+      implementationNames.eth:0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0x4cEa25e9c999E69F45765539783D149024f99F12) {
+    +++ description: None
+      address:
+-        "0x4cEa25e9c999E69F45765539783D149024f99F12"
++        "eth:0x4cEa25e9c999E69F45765539783D149024f99F12"
+    }
+```
+
+```diff
+    contract GHO Vault (Kinto) (0x4F18853BE8C01d375889c02D61A77B476d3E59dd) {
+    +++ description: None
+      address:
+-        "0x4F18853BE8C01d375889c02D61A77B476d3E59dd"
++        "eth:0x4F18853BE8C01d375889c02D61A77B476d3E59dd"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x4F18853BE8C01d375889c02D61A77B476d3E59dd:
+-        "Vault"
+      implementationNames.eth:0x4F18853BE8C01d375889c02D61A77B476d3E59dd:
++        "Vault"
+    }
+```
+
+```diff
+    contract LDO Vault (Kinto) (0x54e60fef7c7f2f747900452D4151aF976EaeAb76) {
+    +++ description: None
+      address:
+-        "0x54e60fef7c7f2f747900452D4151aF976EaeAb76"
++        "eth:0x54e60fef7c7f2f747900452D4151aF976EaeAb76"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
+      implementationNames.0x54e60fef7c7f2f747900452D4151aF976EaeAb76:
+-        "Vault"
+      implementationNames.eth:0x54e60fef7c7f2f747900452D4151aF976EaeAb76:
++        "Vault"
+    }
+```
+
+```diff
+    contract wstETH Vault (Polynomial) (0x572A4080c16beD33Cf2E876ad969E2E35769EDB4) {
+    +++ description: None
+      address:
+-        "0x572A4080c16beD33Cf2E876ad969E2E35769EDB4"
++        "eth:0x572A4080c16beD33Cf2E876ad969E2E35769EDB4"
+      implementationNames.0x572A4080c16beD33Cf2E876ad969E2E35769EDB4:
+-        ""
+      implementationNames.eth:0x572A4080c16beD33Cf2E876ad969E2E35769EDB4:
++        ""
+    }
+```
+
+```diff
+    contract USDC Vault (Zora) (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8) {
+    +++ description: None
+      address:
+-        "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8"
++        "eth:0x58CDCf55f2c8660674F17561334F6370cbaDeEF8"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+      implementationNames.0x58CDCf55f2c8660674F17561334F6370cbaDeEF8:
+-        "Vault"
+      implementationNames.eth:0x58CDCf55f2c8660674F17561334F6370cbaDeEF8:
++        "Vault"
+    }
+```
+
+```diff
+    contract sDAI Vault (Kinto) (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85) {
+    +++ description: None
+      address:
+-        "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85"
++        "eth:0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85:
+-        "Vault"
+      implementationNames.eth:0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85:
++        "Vault"
+    }
+```
+
+```diff
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27) {
+    +++ description: None
+      address:
+-        "0x5C71beE4a6b0D617D8c3d107D331292741789E27"
++        "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      implementationNames.0x5C71beE4a6b0D617D8c3d107D331292741789E27:
+-        "Hasher"
+      implementationNames.eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27:
++        "Hasher"
+    }
+```
+
+```diff
+    contract cbETH Vault (Kinto) (0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C) {
+    +++ description: None
+      address:
+-        "0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C"
++        "eth:0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C:
+-        "Vault"
+      implementationNames.eth:0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0x5D973Ea995d14799E528B14472346bfDE21eAe2e) {
+    +++ description: None
+      address:
+-        "0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
++        "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+    }
+```
+
+```diff
+    contract USDT Vault (Derive) (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa) {
+    +++ description: None
+      address:
+-        "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
++        "eth:0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa:
+-        "Vault"
+      implementationNames.eth:0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0x5ECfd6968593159e5b4f06832857943409122849) {
+    +++ description: None
+      address:
+-        "0x5ECfd6968593159e5b4f06832857943409122849"
++        "eth:0x5ECfd6968593159e5b4f06832857943409122849"
+    }
+```
+
+```diff
+    contract cbBTC Vault (Derive) (0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50) {
+    +++ description: None
+      address:
+-        "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50"
++        "eth:0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50:
+-        "Vault"
+      implementationNames.eth:0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50:
++        "Vault"
+    }
+```
+
+```diff
+    contract sUSDe Vault (Reya) (0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3) {
+    +++ description: None
+      address:
+-        "0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3"
++        "eth:0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3"
+      implementationNames.0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3:
+-        ""
+      implementationNames.eth:0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3:
++        ""
+    }
+```
+
+```diff
+    contract sDAI Vault (Derive) (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142) {
+    +++ description: None
+      address:
+-        "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142"
++        "eth:0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142:
+-        "Vault"
+      implementationNames.eth:0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142:
++        "Vault"
+    }
+```
+
+```diff
+    contract sDAI Vault (Polynomial) (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc) {
+    +++ description: None
+      address:
+-        "0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc"
++        "eth:0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
++        "eth:0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      implementationNames.0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc:
+-        "Vault"
+      implementationNames.eth:0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc:
++        "Vault"
+    }
+```
+
+```diff
+    contract WETH Vault (Reya) (0x64dF894688c5052BeAdC35371cF69151Ebc5D658) {
+    +++ description: None
+      address:
+-        "0x64dF894688c5052BeAdC35371cF69151Ebc5D658"
++        "eth:0x64dF894688c5052BeAdC35371cF69151Ebc5D658"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.0x64dF894688c5052BeAdC35371cF69151Ebc5D658:
+-        "Vault"
+      implementationNames.eth:0x64dF894688c5052BeAdC35371cF69151Ebc5D658:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      address:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
+    }
+```
+
+```diff
+    contract USDC Vault (Derive) (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d) {
+    +++ description: None
+      address:
+-        "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d"
++        "eth:0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d:
+-        "Vault"
+      implementationNames.eth:0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDC Vault (Kinto) (0x755cD5d147036E11c76F1EeffDd94794fC265f0d) {
+    +++ description: None
+      address:
+-        "0x755cD5d147036E11c76F1EeffDd94794fC265f0d"
++        "eth:0x755cD5d147036E11c76F1EeffDd94794fC265f0d"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x755cD5d147036E11c76F1EeffDd94794fC265f0d:
+-        "Vault"
+      implementationNames.eth:0x755cD5d147036E11c76F1EeffDd94794fC265f0d:
++        "Vault"
+    }
+```
+
+```diff
+    contract LBTC Vault (Derive) (0x76624ff43D610F64177Bb9c194A2503642e9B803) {
+    +++ description: None
+      address:
+-        "0x76624ff43D610F64177Bb9c194A2503642e9B803"
++        "eth:0x76624ff43D610F64177Bb9c194A2503642e9B803"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x76624ff43D610F64177Bb9c194A2503642e9B803:
+-        "Vault"
+      implementationNames.eth:0x76624ff43D610F64177Bb9c194A2503642e9B803:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52) {
+    +++ description: None
+      address:
+-        "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52"
++        "eth:0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52"
+    }
+```
+
+```diff
+    EOA  (0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF) {
+    +++ description: None
+      address:
+-        "0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
++        "eth:0x7B5Ba9Df17Bc58F504B6Cf0D87d2f05B79a36cfF"
+    }
+```
+
+```diff
+    contract SNX Vault (Derive) (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592) {
+    +++ description: None
+      address:
+-        "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592"
++        "eth:0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592:
+-        "Vault"
+      implementationNames.eth:0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592:
++        "Vault"
+    }
+```
+
+```diff
+    contract DAI Vault (Derive) (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91) {
+    +++ description: None
+      address:
+-        "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91"
++        "eth:0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91:
+-        "Vault"
+      implementationNames.eth:0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91:
++        "Vault"
+    }
+```
+
+```diff
+    contract weETH Vault (Derive) (0x8180EcCC825b692ef65FF099a0A387743788bf78) {
+    +++ description: None
+      address:
+-        "0x8180EcCC825b692ef65FF099a0A387743788bf78"
++        "eth:0x8180EcCC825b692ef65FF099a0A387743788bf78"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0x8180EcCC825b692ef65FF099a0A387743788bf78:
+-        "Vault"
+      implementationNames.eth:0x8180EcCC825b692ef65FF099a0A387743788bf78:
++        "Vault"
+    }
+```
+
+```diff
+    contract rsETH Vault (Polynomial) (0x8309E63F777805f362d42f5B5f2D1A20287d5Df2) {
+    +++ description: None
+      address:
+-        "0x8309E63F777805f362d42f5B5f2D1A20287d5Df2"
++        "eth:0x8309E63F777805f362d42f5B5f2D1A20287d5Df2"
+      implementationNames.0x8309E63F777805f362d42f5B5f2D1A20287d5Df2:
+-        ""
+      implementationNames.eth:0x8309E63F777805f362d42f5B5f2D1A20287d5Df2:
++        ""
+    }
+```
+
+```diff
+    contract weETH Vault (Polynomial) (0x847579e12CFb96a3357d9C51e374330af61716C2) {
+    +++ description: None
+      address:
+-        "0x847579e12CFb96a3357d9C51e374330af61716C2"
++        "eth:0x847579e12CFb96a3357d9C51e374330af61716C2"
+      implementationNames.0x847579e12CFb96a3357d9C51e374330af61716C2:
+-        ""
+      implementationNames.eth:0x847579e12CFb96a3357d9C51e374330af61716C2:
++        ""
+    }
+```
+
+```diff
+    contract cbBTC Vault (Kinto) (0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9) {
+    +++ description: None
+      address:
+-        "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9"
++        "eth:0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9:
+-        "Vault"
+      implementationNames.eth:0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9:
++        "Vault"
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      address:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      values.capacitorFactory__:
+-        "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a"
++        "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a"
++++ description: Manages crosschain execution and -fees.
+      values.executionManager__:
+-        "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
++        "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
+      values.hasher__:
+-        "0x5C71beE4a6b0D617D8c3d107D331292741789E27"
++        "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27"
+      values.inboundSwitchboards.0:
+-        "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287"
++        "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287"
+      values.inboundSwitchboards.1:
+-        "0x053407DFA30267f6332f3c94a9e9F704A55e62CD"
++        "eth:0x053407DFA30267f6332f3c94a9e9F704A55e62CD"
+      values.inboundSwitchboards.2:
+-        "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe"
++        "eth:0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe"
+      values.inboundSwitchboards.3:
+-        "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA"
++        "eth:0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA"
+      values.inboundSwitchboards.4:
+-        "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
++        "eth:0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.outboundSwitchboards.0:
+-        "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287"
++        "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287"
+      values.outboundSwitchboards.1:
+-        "0x053407DFA30267f6332f3c94a9e9F704A55e62CD"
++        "eth:0x053407DFA30267f6332f3c94a9e9F704A55e62CD"
+      values.outboundSwitchboards.2:
+-        "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe"
++        "eth:0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe"
+      values.outboundSwitchboards.3:
+-        "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA"
++        "eth:0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA"
+      values.outboundSwitchboards.4:
+-        "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
++        "eth:0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.0:
+-        "0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D"
++        "eth:0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.1:
+-        "0x200AF8FCdD5246D70B369A98143Ac8930A077B7A"
++        "eth:0x200AF8FCdD5246D70B369A98143Ac8930A077B7A"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.2:
+-        "0x22d8360eB04F46195c7B02A66658C375948d8A99"
++        "eth:0x22d8360eB04F46195c7B02A66658C375948d8A99"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.3:
+-        "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181"
++        "eth:0xA621Bc5A9d13D39eb098865B723CEee71BB5C181"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.4:
+-        "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa"
++        "eth:0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.5:
+-        "0xCf814e58f1649F94d37E51f730D6bF72409fA09c"
++        "eth:0xCf814e58f1649F94d37E51f730D6bF72409fA09c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.6:
+-        "0xf71A92D4bEFc2e18671c3b20377d45729790e880"
++        "eth:0xf71A92D4bEFc2e18671c3b20377d45729790e880"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.7:
+-        "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166"
++        "eth:0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.8:
+-        "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B"
++        "eth:0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.9:
+-        "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3"
++        "eth:0x02D53793b18d032Cd94d745F7586C6F66F83f8e3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.10:
+-        "0x3553c0102684c20e2f8192d6F013c7242710b4b3"
++        "eth:0x3553c0102684c20e2f8192d6F013c7242710b4b3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.11:
+-        "0x280D208f0eE2f053A0441099bcBFf298bc8b9444"
++        "eth:0x280D208f0eE2f053A0441099bcBFf298bc8b9444"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.12:
+-        "0x37091ade7C4E1A914D3155449e25eE91DA08EbE4"
++        "eth:0x37091ade7C4E1A914D3155449e25eE91DA08EbE4"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.13:
+-        "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E"
++        "eth:0x68411d61adF1341A6392C87A93941FdD3EE7DF8E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.14:
+-        "0x8F4e67C61232167584333e23D7d67BD73d80a4F5"
++        "eth:0x8F4e67C61232167584333e23D7d67BD73d80a4F5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.15:
+-        "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660"
++        "eth:0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.16:
+-        "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5"
++        "eth:0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.17:
+-        "0xdCcFb24f983586144c085426dbfa3414045E19a3"
++        "eth:0xdCcFb24f983586144c085426dbfa3414045E19a3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.18:
+-        "0x6A769e25081396a49a6702758d0830920ac1163A"
++        "eth:0x6A769e25081396a49a6702758d0830920ac1163A"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.19:
+-        "0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
++        "eth:0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.20:
+-        "0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF"
++        "eth:0xaaDd94438f511aC22D35Ba7FC50849a9CD3e6AeF"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.21:
+-        "0x998d7C2257591cC38383B4F91474c5346111f2E6"
++        "eth:0x998d7C2257591cC38383B4F91474c5346111f2E6"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.22:
+-        "0x223033E1F905eEd161a7B2EBeb786a158156fb8D"
++        "eth:0x223033E1F905eEd161a7B2EBeb786a158156fb8D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.23:
+-        "0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
++        "eth:0x7E6dA87FE69306CaAED675fFe4e7dC0FfE3bFe4D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.24:
+-        "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3"
++        "eth:0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.25:
+-        "0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508"
++        "eth:0xF15d420bE7b27F1fA0D9487105658EdC3C0EA508"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.26:
+-        "0x3f66F272d33B764960779a301c4183306ae50e10"
++        "eth:0x3f66F272d33B764960779a301c4183306ae50e10"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.27:
+-        "0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D"
++        "eth:0xB49b8AAcD8396C49d9045f6bAb101aB32c59643D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.28:
+-        "0xb1178803A726e2077947754de9f2f0cbdA29A60F"
++        "eth:0xb1178803A726e2077947754de9f2f0cbdA29A60F"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.29:
+-        "0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27"
++        "eth:0xE7ADE6Dda067c501A3d4C938c36c310c55FBcc27"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.30:
+-        "0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1"
++        "eth:0xAc00056920EfF02831CAf0baF116ADf6B42D9ad1"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.31:
+-        "0x83C6d6597891Ad48cF5e0BA901De55120C37C6bE"
++        "eth:0x83C6d6597891Ad48cF5e0BA901De55120C37C6bE"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.32:
+-        "0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252"
++        "eth:0xe987a57DA7Ab112B1bDc7AA704E6EA943760d252"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.33:
+-        "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff"
++        "eth:0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.34:
+-        "0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96"
++        "eth:0x266abd77Da7F877cdf93c0dd5782cC61Fa29ac96"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.35:
+-        "0x73E0d4953c356a5Ca3A3D172739128776B2920b5"
++        "eth:0x73E0d4953c356a5Ca3A3D172739128776B2920b5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.36:
+-        "0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff"
++        "eth:0x642c4c33301EF5837ADa6E74F15Aa939f3951Fff"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.37:
+-        "0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8"
++        "eth:0x170fFDe318B514B029E1B1eC4F096C7e1bDeaeA8"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.38:
+-        "0xF5992B6A0dEa32dCF6BE7bfAf762A4D94f139Ea7"
++        "eth:0xF5992B6A0dEa32dCF6BE7bfAf762A4D94f139Ea7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.39:
+-        "0xE274dB6b891159547FbDC18b07412EE7F4B8d767"
++        "eth:0xE274dB6b891159547FbDC18b07412EE7F4B8d767"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.40:
+-        "0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67"
++        "eth:0xC331BEeC6e36c8Df4FDD7e432de95863E7f80d67"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.41:
+-        "0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0"
++        "eth:0xE2c2291B80BFC8Bd0e4fc8Af196Ae5fc9136aeE0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.42:
+-        "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2"
++        "eth:0xdE9D8c2d465669c661672d7945D4d4f5407d22E2"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.43:
+-        "0x32295769ea702BA9337EE5B65c6b42aFF75FEC62"
++        "eth:0x32295769ea702BA9337EE5B65c6b42aFF75FEC62"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.44:
+-        "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87"
++        "eth:0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.45:
+-        "0x3685306641fB02804E9384C3af09Fa9B62199d7e"
++        "eth:0x3685306641fB02804E9384C3af09Fa9B62199d7e"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.46:
+-        "0xA72bc51f800127621d4Ab541E7Bb70B86Fe88F0F"
++        "eth:0xA72bc51f800127621d4Ab541E7Bb70B86Fe88F0F"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.47:
+-        "0xDABF17a0f13290E85a347119deEb8539B41eF4eB"
++        "eth:0xDABF17a0f13290E85a347119deEb8539B41eF4eB"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.48:
+-        "0x876b81F74AD47cF10e5D62aAAc80f9E99f5587FC"
++        "eth:0x876b81F74AD47cF10e5D62aAAc80f9E99f5587FC"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.49:
+-        "0x519Bc0379CA9C4061a6006B4EAc419bC00017B3E"
++        "eth:0x519Bc0379CA9C4061a6006B4EAc419bC00017B3E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.50:
+-        "0x2B93891dc80ab9696814615f553fd15a3b98d3a2"
++        "eth:0x2B93891dc80ab9696814615f553fd15a3b98d3a2"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.51:
+-        "0xd0711b9eBE84b778483709CDe62BacFDBAE13623"
++        "eth:0xd0711b9eBE84b778483709CDe62BacFDBAE13623"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.52:
+-        "0x716c339F41eAcfE2dc4775052411394A2Ed04743"
++        "eth:0x716c339F41eAcfE2dc4775052411394A2Ed04743"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.53:
+-        "0xDBa83C0C654DB1cd914FA2710bA743e925B53086"
++        "eth:0xDBa83C0C654DB1cd914FA2710bA743e925B53086"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.54:
+-        "0x8843557Fd6005d617A735731BF1bAb0461af55E4"
++        "eth:0x8843557Fd6005d617A735731BF1bAb0461af55E4"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.55:
+-        "0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00"
++        "eth:0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.56:
+-        "0xA7384185a6428e6B0D33199256fE67b6fA5D8e40"
++        "eth:0xA7384185a6428e6B0D33199256fE67b6fA5D8e40"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.57:
+-        "0xfa8c07E28461eb7c65b33De024DB97eE4C052C97"
++        "eth:0xfa8c07E28461eb7c65b33De024DB97eE4C052C97"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.58:
+-        "0x1967F0F374Eed3c0152d9CF0541F814206964041"
++        "eth:0x1967F0F374Eed3c0152d9CF0541F814206964041"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.59:
+-        "0x12fBD04CB103c596B78110C70eEDF16821CBfcAE"
++        "eth:0x12fBD04CB103c596B78110C70eEDF16821CBfcAE"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.60:
+-        "0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c"
++        "eth:0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.61:
+-        "0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a"
++        "eth:0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.62:
+-        "0xAda55E4762c3663f90D55Dc6ACC073B012D1e6eA"
++        "eth:0xAda55E4762c3663f90D55Dc6ACC073B012D1e6eA"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.63:
+-        "0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a"
++        "eth:0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.64:
+-        "0xBF3233Ef07B9552578987e2A2d25F760fBf192e5"
++        "eth:0xBF3233Ef07B9552578987e2A2d25F760fBf192e5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.65:
+-        "0x54bd887d31A5119Bbc91426eD6289b8ACD2b7349"
++        "eth:0x54bd887d31A5119Bbc91426eD6289b8ACD2b7349"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.66:
+-        "0x6B3614474eE19FA9A2d6D2079a2D73c04E567310"
++        "eth:0x6B3614474eE19FA9A2d6D2079a2D73c04E567310"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.67:
+-        "0x4a43eD818411585fEAaf667a2D3E2605962084e0"
++        "eth:0x4a43eD818411585fEAaf667a2D3E2605962084e0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.68:
+-        "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5"
++        "eth:0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.69:
+-        "0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe"
++        "eth:0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.70:
+-        "0x83D8e248cAb7c6074dCc07EA25892F8022244c50"
++        "eth:0x83D8e248cAb7c6074dCc07EA25892F8022244c50"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.71:
+-        "0x91CE463148bD7695d4db41f4aA36088E502428F7"
++        "eth:0x91CE463148bD7695d4db41f4aA36088E502428F7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.72:
+-        "0xcb473D87A56b4609A695753711F727E5c4335cCf"
++        "eth:0xcb473D87A56b4609A695753711F727E5c4335cCf"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.73:
+-        "0x1aE19B11B71b1e232c43Fe65cB1d31E139Ac7A63"
++        "eth:0x1aE19B11B71b1e232c43Fe65cB1d31E139Ac7A63"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.74:
+-        "0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738"
++        "eth:0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.75:
+-        "0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276"
++        "eth:0xa1D11b141bb47eDb2c69B8ced4EFe80f62D1C276"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.76:
+-        "0x083Add2A9afa97Efb6412b293145ce965eCE3600"
++        "eth:0x083Add2A9afa97Efb6412b293145ce965eCE3600"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.77:
+-        "0x254691C06Da387c1050C726cF498eFdA89083820"
++        "eth:0x254691C06Da387c1050C726cF498eFdA89083820"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.78:
+-        "0x37C24e7081eb7f2B16bde81b556d082c0839F754"
++        "eth:0x37C24e7081eb7f2B16bde81b556d082c0839F754"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.79:
+-        "0x50D46c3BB529276aDe59a6678C14302D6B61C853"
++        "eth:0x50D46c3BB529276aDe59a6678C14302D6B61C853"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.80:
+-        "0x7Eee3241eC98ED0B47c8Bc0e9E3327B541BCDc1D"
++        "eth:0x7Eee3241eC98ED0B47c8Bc0e9E3327B541BCDc1D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.81:
+-        "0x00CE54B988D8C44bFCae4026C17c37c69C490A12"
++        "eth:0x00CE54B988D8C44bFCae4026C17c37c69C490A12"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.82:
+-        "0xaDA48ab8705Eb3904e5FA65D5622cd237a2341FF"
++        "eth:0xaDA48ab8705Eb3904e5FA65D5622cd237a2341FF"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.83:
+-        "0x49d446506D0f2db507AB4804563be9331BBc80E7"
++        "eth:0x49d446506D0f2db507AB4804563be9331BBc80E7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.84:
+-        "0x1b882b9E87ABd7DD9B9b689Bee10Ed6a040033D0"
++        "eth:0x1b882b9E87ABd7DD9B9b689Bee10Ed6a040033D0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.85:
+-        "0x3F0dAfEB6386c710617180b376c118D7EcD6aC89"
++        "eth:0x3F0dAfEB6386c710617180b376c118D7EcD6aC89"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.86:
+-        "0x42F23C6d344d0322e13f254B9a8E187335AFB409"
++        "eth:0x42F23C6d344d0322e13f254B9a8E187335AFB409"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.87:
+-        "0x56705F7F12D4e0433e26a20298fCd3532226d744"
++        "eth:0x56705F7F12D4e0433e26a20298fCd3532226d744"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.88:
+-        "0xA07EB173d58F7aF2b0267F2B5f6a091E01c17f85"
++        "eth:0xA07EB173d58F7aF2b0267F2B5f6a091E01c17f85"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.89:
+-        "0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F"
++        "eth:0xe38Dccb8Bd138c326E3Df926ADD9dE71a442837F"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.90:
+-        "0x457379de638CAFeB1759a22457fe893b288E2e89"
++        "eth:0x457379de638CAFeB1759a22457fe893b288E2e89"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.91:
+-        "0x2D733e70A377FcFc249d273095250762A93F3820"
++        "eth:0x2D733e70A377FcFc249d273095250762A93F3820"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.92:
+-        "0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35"
++        "eth:0xdb1c2F432e51824b33b9269C4b1Ff6190c1e5F35"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.93:
+-        "0xd48A35a853858e344aFCbEcCDBf8FCbFaF8e1501"
++        "eth:0xd48A35a853858e344aFCbEcCDBf8FCbFaF8e1501"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.94:
+-        "0xF391E487FE3958F0728436Af84455Fd4eBC9c7c9"
++        "eth:0xF391E487FE3958F0728436Af84455Fd4eBC9c7c9"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.95:
+-        "0x55033cb4583f5526704Ee4C197e99504E504712c"
++        "eth:0x55033cb4583f5526704Ee4C197e99504E504712c"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.96:
+-        "0xc706c946623C70B294b91Bd4961E91FaF7A74317"
++        "eth:0xc706c946623C70B294b91Bd4961E91FaF7A74317"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.97:
+-        "0x17a8Be056ca13B072AB908126D4BC38e09c7cc39"
++        "eth:0x17a8Be056ca13B072AB908126D4BC38e09c7cc39"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.98:
+-        "0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3"
++        "eth:0xBc978f47AD1122bdFE85855fcc40b3afdF4b5df3"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.99:
+-        "0x094570E556C8E58119E21f47759F02F50Ae3bB49"
++        "eth:0x094570E556C8E58119E21f47759F02F50Ae3bB49"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.100:
+-        "0x895b6c1413243562128a9281a7f8891640Ca073f"
++        "eth:0x895b6c1413243562128a9281a7f8891640Ca073f"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.101:
+-        "0x88A05556Af1a8a5BB5964c46Be9D56C379a5E155"
++        "eth:0x88A05556Af1a8a5BB5964c46Be9D56C379a5E155"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.102:
+-        "0x76ddfc271089e58Af68D8597D41aEF52Fb53EC3D"
++        "eth:0x76ddfc271089e58Af68D8597D41aEF52Fb53EC3D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.103:
+-        "0x80f5143AF6BF51B38C038BaFF71465Be9b48cAEe"
++        "eth:0x80f5143AF6BF51B38C038BaFF71465Be9b48cAEe"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.104:
+-        "0xFAB1efe6cA9435faEf9e29f40E575e27A74373A9"
++        "eth:0xFAB1efe6cA9435faEf9e29f40E575e27A74373A9"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.105:
+-        "0xE88F6b194BD3b43013710A785DDFF41454A19537"
++        "eth:0xE88F6b194BD3b43013710A785DDFF41454A19537"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.106:
+-        "0xCF83efEe74f61771AF78b05DeA847773D3952C33"
++        "eth:0xCF83efEe74f61771AF78b05DeA847773D3952C33"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.107:
+-        "0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D"
++        "eth:0x7FBCd72B6368f1771C9F6Ee16502C19b0AADBa1D"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.108:
+-        "0xE3255bb716d8BA81aA97Ff20c75b404D9844CBE1"
++        "eth:0xE3255bb716d8BA81aA97Ff20c75b404D9844CBE1"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.109:
+-        "0xf1807B621efC3B072d1203dD28C880BBEDc56161"
++        "eth:0xf1807B621efC3B072d1203dD28C880BBEDc56161"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.110:
+-        "0x92469EEf05a071B0e56275b23597b1b701C15a71"
++        "eth:0x92469EEf05a071B0e56275b23597b1b701C15a71"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.111:
+-        "0x6dED17643D7acFc0bE0e79ff6C4762F12AA5516E"
++        "eth:0x6dED17643D7acFc0bE0e79ff6C4762F12AA5516E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.112:
+-        "0xCE0AB493716d96C0979E0B708BeF1915F3B07e01"
++        "eth:0xCE0AB493716d96C0979E0B708BeF1915F3B07e01"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.113:
+-        "0x3390ca7A0D7C80871B05C3FeBbeEee91307a35ba"
++        "eth:0x3390ca7A0D7C80871B05C3FeBbeEee91307a35ba"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.114:
+-        "0x7E34B138e507570bDCC9b99230cFaA2745F0222C"
++        "eth:0x7E34B138e507570bDCC9b99230cFaA2745F0222C"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.115:
+-        "0x5deeAb623C6091A0A59E6d041dAAE9bDeFBfC203"
++        "eth:0x5deeAb623C6091A0A59E6d041dAAE9bDeFBfC203"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.116:
+-        "0x65A9b862671de5Df85EcE387220C6b10a17230f7"
++        "eth:0x65A9b862671de5Df85EcE387220C6b10a17230f7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.117:
+-        "0xC3875afddEde146DCfED7e72b2Ad12B853CA1241"
++        "eth:0xC3875afddEde146DCfED7e72b2Ad12B853CA1241"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.118:
+-        "0xBbA3095f6ACA17ff23Df466833D621cc91Db7675"
++        "eth:0xBbA3095f6ACA17ff23Df466833D621cc91Db7675"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.119:
+-        "0xb9703b625c3B846B58DFdaDBceF77e34a1C59965"
++        "eth:0xb9703b625c3B846B58DFdaDBceF77e34a1C59965"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.120:
+-        "0xf7a4a34d64E8fE4FCCffE2f3C985D43409Aa8c9a"
++        "eth:0xf7a4a34d64E8fE4FCCffE2f3C985D43409Aa8c9a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.121:
+-        "0x29ACa1443F28DceDEBf99173b37b5C1e814cA548"
++        "eth:0x29ACa1443F28DceDEBf99173b37b5C1e814cA548"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.122:
+-        "0x5366D4acCC96Ed297e30B8702FBC9b85daA3a459"
++        "eth:0x5366D4acCC96Ed297e30B8702FBC9b85daA3a459"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.123:
+-        "0xFb0c284CD9929eB5139eB027aD7497097Ba25C87"
++        "eth:0xFb0c284CD9929eB5139eB027aD7497097Ba25C87"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.124:
+-        "0x008244E37A90E090dc4abD70F37195075cbE8453"
++        "eth:0x008244E37A90E090dc4abD70F37195075cbE8453"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.125:
+-        "0xB1b7BC699cAEcB941e7377065c7CE82039889603"
++        "eth:0xB1b7BC699cAEcB941e7377065c7CE82039889603"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.126:
+-        "0x0c39a1b042AbfC68d10B78081AFE3F58a6523A35"
++        "eth:0x0c39a1b042AbfC68d10B78081AFE3F58a6523A35"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.127:
+-        "0x76C9129b44c637500c88760ADd2EbEF07472b549"
++        "eth:0x76C9129b44c637500c88760ADd2EbEF07472b549"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.128:
+-        "0x10ed00FDb26Ec6BE0183e6f14D8275d5898B0721"
++        "eth:0x10ed00FDb26Ec6BE0183e6f14D8275d5898B0721"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.129:
+-        "0x9d13F2b3B694DE6a1cF58edb5044454CAE3B84E4"
++        "eth:0x9d13F2b3B694DE6a1cF58edb5044454CAE3B84E4"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.130:
+-        "0xab722902681A260762084A78A2d8f19CfA6A46Ef"
++        "eth:0xab722902681A260762084A78A2d8f19CfA6A46Ef"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.131:
+-        "0x5D5a2999E91A336CA99da0cB636898ccB521f40a"
++        "eth:0x5D5a2999E91A336CA99da0cB636898ccB521f40a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.132:
+-        "0xb5d5E523905bB397bCAfB36B252535a255d3E23C"
++        "eth:0xb5d5E523905bB397bCAfB36B252535a255d3E23C"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.133:
+-        "0x1734067c2CDcFb81ef9672F80DA2D7bfC2CFAE73"
++        "eth:0x1734067c2CDcFb81ef9672F80DA2D7bfC2CFAE73"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.134:
+-        "0x12a4CC40a8F89E40F8C849c2F89741D5C9590a14"
++        "eth:0x12a4CC40a8F89E40F8C849c2F89741D5C9590a14"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.135:
+-        "0x94104d7801f30d2f9069118C65Fe63A3A11515B1"
++        "eth:0x94104d7801f30d2f9069118C65Fe63A3A11515B1"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.136:
+-        "0xA2bE759B86CeA53372C3e9a882047cdC3884D568"
++        "eth:0xA2bE759B86CeA53372C3e9a882047cdC3884D568"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.137:
+-        "0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
++        "eth:0x15f70f64438603e5872A4E81c7a8B5edB5D70d93"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.138:
+-        "0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
++        "eth:0x75695e8A56405dC60a0aFf07d1AF01A0baCA7188"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.139:
+-        "0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85"
++        "eth:0x1a0e7Efa0F74703A930B2b1Cb6565b1d8981dd85"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.140:
+-        "0x3Deb3254730eEF7c50fb5b133CA0EaeA2e59127d"
++        "eth:0x3Deb3254730eEF7c50fb5b133CA0EaeA2e59127d"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.141:
+-        "0x95c879322BA01e1c7Fe5EB3F3724C49C6aF7e426"
++        "eth:0x95c879322BA01e1c7Fe5EB3F3724C49C6aF7e426"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.142:
+-        "0x412CC246d703598e3705B9536B4Ec3c2039f6e5E"
++        "eth:0x412CC246d703598e3705B9536B4Ec3c2039f6e5E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.143:
+-        "0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD"
++        "eth:0x833a7FA0Ff734b2BA01e8d2126e127cf8f29eFaD"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.144:
+-        "0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5"
++        "eth:0x04bc61DBd949f068387cfC7a7fB95555bc66F5C5"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.145:
+-        "0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
++        "eth:0x9ED094fDe2a31BEd0278a4cfdb5528473baFe5a8"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.146:
+-        "0xD3a00E95658b05eBac3246e84f6583251dEd5D93"
++        "eth:0xD3a00E95658b05eBac3246e84f6583251dEd5D93"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.147:
+-        "0x88444394f970B6F21C4f5101003ea513dE3E5406"
++        "eth:0x88444394f970B6F21C4f5101003ea513dE3E5406"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.148:
+-        "0x67c97Bd542B3a7F1F1EcF85CBC4409421ccAe971"
++        "eth:0x67c97Bd542B3a7F1F1EcF85CBC4409421ccAe971"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.149:
+-        "0xBEF69d0acC388091c7C9702aCbFB3b8A873e239e"
++        "eth:0xBEF69d0acC388091c7C9702aCbFB3b8A873e239e"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.150:
+-        "0x96E1e9c80619D2038afe30450b3cBeCb2A7D94cd"
++        "eth:0x96E1e9c80619D2038afe30450b3cBeCb2A7D94cd"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.151:
+-        "0xB4e78DAEaE4aA911f2427FF4af4B10AFe70D9891"
++        "eth:0xB4e78DAEaE4aA911f2427FF4af4B10AFe70D9891"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.152:
+-        "0x134643Df54DCaaAf343505361D1Eac58A7400b3d"
++        "eth:0x134643Df54DCaaAf343505361D1Eac58A7400b3d"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.153:
+-        "0x8E8D89410000A993d2537d26366e1C3010AB90ff"
++        "eth:0x8E8D89410000A993d2537d26366e1C3010AB90ff"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.154:
+-        "0x5E72430EC945CCc183c34e2860FFC2b5bac712c2"
++        "eth:0x5E72430EC945CCc183c34e2860FFC2b5bac712c2"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.155:
+-        "0x15CEcd5190A43C7798dD2058308781D0662e678E"
++        "eth:0x15CEcd5190A43C7798dD2058308781D0662e678E"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.156:
+-        "0x7163FaC3fc420923810cCA5d15949c1523F69B4a"
++        "eth:0x7163FaC3fc420923810cCA5d15949c1523F69B4a"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.157:
+-        "0x432684E7e764343c836d9c78b9245aa774323E40"
++        "eth:0x432684E7e764343c836d9c78b9245aa774323E40"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.158:
+-        "0x4B4ed8b47EA37FB0230472fAdaFAF12658f05Ad7"
++        "eth:0x4B4ed8b47EA37FB0230472fAdaFAF12658f05Ad7"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.159:
+-        "0x52DB079d07fb8C2F5FA158C3311d877f3769B01e"
++        "eth:0x52DB079d07fb8C2F5FA158C3311d877f3769B01e"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.160:
+-        "0x376f76B657a384e980F6Ea96e885654eC8F3ED61"
++        "eth:0x376f76B657a384e980F6Ea96e885654eC8F3ED61"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.161:
+-        "0xB1dfE248EEfa405654b9ff7D470403452180b862"
++        "eth:0xB1dfE248EEfa405654b9ff7D470403452180b862"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.162:
+-        "0xa5D1802fBd730c158f8F6E8401c4d8b3001A8d33"
++        "eth:0xa5D1802fBd730c158f8F6E8401c4d8b3001A8d33"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.163:
+-        "0x3645C506F4E22eA2380B8c4fd5fA914F36dfc3b0"
++        "eth:0x3645C506F4E22eA2380B8c4fd5fA914F36dfc3b0"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.164:
+-        "0x4CC07BCB7949CAbAb7b19EC94267AF5C0e47AEdA"
++        "eth:0x4CC07BCB7949CAbAb7b19EC94267AF5C0e47AEdA"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.165:
+-        "0x47D5E4eCae70c9AD12eaDF469344B6B52a0ebCcE"
++        "eth:0x47D5E4eCae70c9AD12eaDF469344B6B52a0ebCcE"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.166:
+-        "0xec837c413c25B6952845551183ba8900cc543b95"
++        "eth:0xec837c413c25B6952845551183ba8900cc543b95"
+      values.transmitManager__:
+-        "0xeD037aFBffC65a94E9CC592947E851FB2f730341"
++        "eth:0xeD037aFBffC65a94E9CC592947E851FB2f730341"
+      implementationNames.0x943AC2775928318653e91d350574436A1b9b16f9:
+-        "Socket"
+      implementationNames.eth:0x943AC2775928318653e91d350574436A1b9b16f9:
++        "Socket"
+    }
+```
+
+```diff
+    EOA KintsugiFoundation (0x94561e98DD5E55271f91A103e4979aa6C493745E) {
+    +++ description: None
+      address:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E"
+    }
+```
+
+```diff
+    contract ETHFI Vault (Kinto) (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5) {
+    +++ description: None
+      address:
+-        "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5"
++        "eth:0x95d60E34aB2E626407d98dF8C240e6174e5D37E5"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0x95d60E34aB2E626407d98dF8C240e6174e5D37E5:
+-        "Vault"
+      implementationNames.eth:0x95d60E34aB2E626407d98dF8C240e6174e5D37E5:
++        "Vault"
+    }
+```
+
+```diff
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C) {
+    +++ description: None
+      address:
+-        "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
++        "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C:
+-        "ExecutionManagerDF"
+      implementationNames.eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C:
++        "ExecutionManagerDF"
+    }
+```
+
+```diff
+    EOA  (0x9eab2223d84060E212354BfA620BF687b6E9Ae20) {
+    +++ description: None
+      address:
+-        "0x9eab2223d84060E212354BfA620BF687b6E9Ae20"
++        "eth:0x9eab2223d84060E212354BfA620BF687b6E9Ae20"
+    }
+```
+
+```diff
+    EOA  (0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8) {
+    +++ description: None
+      address:
+-        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
++        "eth:0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+    }
+```
+
+```diff
+    contract SOL Vault (Kinto) (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8) {
+    +++ description: None
+      address:
+-        "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8"
++        "eth:0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8:
+-        "Vault"
+      implementationNames.eth:0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8:
++        "Vault"
+    }
+```
+
+```diff
+    contract LINK Vault (Kinto) (0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013) {
+    +++ description: None
+      address:
+-        "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013"
++        "eth:0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013:
+-        "Vault"
+      implementationNames.eth:0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013:
++        "Vault"
+    }
+```
+
+```diff
+    contract LOOKS Vault (Blast) (0xa83B4006c16DAeAb2718294696c0122519195137) {
+    +++ description: None
+      address:
+-        "0xa83B4006c16DAeAb2718294696c0122519195137"
++        "eth:0xa83B4006c16DAeAb2718294696c0122519195137"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13"
++        "eth:0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13"
+      implementationNames.0xa83B4006c16DAeAb2718294696c0122519195137:
+-        "Vault"
+      implementationNames.eth:0xa83B4006c16DAeAb2718294696c0122519195137:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDe Vault (Reya) (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35) {
+    +++ description: None
+      address:
+-        "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35"
++        "eth:0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35:
+-        "Vault"
+      implementationNames.eth:0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836) {
+    +++ description: None
+      address:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    }
+```
+
+```diff
+    contract xSolvBTC Vault (Derive) (0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856) {
+    +++ description: None
+      address:
+-        "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856"
++        "eth:0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856:
+-        "Vault"
+      implementationNames.eth:0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856:
++        "Vault"
+    }
+```
+
+```diff
+    EOA  (0xb69F2341F008f673F757B49104c165C8022CD0df) {
+    +++ description: None
+      address:
+-        "0xb69F2341F008f673F757B49104c165C8022CD0df"
++        "eth:0xb69F2341F008f673F757B49104c165C8022CD0df"
+    }
+```
+
+```diff
+    EOA  (0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65) {
+    +++ description: None
+      address:
+-        "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65"
++        "eth:0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65"
+    }
+```
+
+```diff
+    EOA MamoriLabs (0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B) {
+    +++ description: None
+      address:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+    }
+```
+
+```diff
+    EOA  (0xc31C4549356d46c37021393EeEb6f704B38061eC) {
+    +++ description: None
+      address:
+-        "0xc31C4549356d46c37021393EeEb6f704B38061eC"
++        "eth:0xc31C4549356d46c37021393EeEb6f704B38061eC"
+    }
+```
+
+```diff
+    contract wstETH Vault (Kinto) (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc) {
+    +++ description: None
+      address:
+-        "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc"
++        "eth:0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc:
+-        "Vault"
+      implementationNames.eth:0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc:
++        "Vault"
+    }
+```
+
+```diff
+    contract sUSDe Vault (Polynomial) (0xC6cfb996A7CFEB89813A68CD13942CD75553032b) {
+    +++ description: None
+      address:
+-        "0xC6cfb996A7CFEB89813A68CD13942CD75553032b"
++        "eth:0xC6cfb996A7CFEB89813A68CD13942CD75553032b"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
++        "eth:0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      implementationNames.0xC6cfb996A7CFEB89813A68CD13942CD75553032b:
+-        "Vault"
+      implementationNames.eth:0xC6cfb996A7CFEB89813A68CD13942CD75553032b:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDT Vault (Polynomial) (0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB) {
+    +++ description: None
+      address:
+-        "0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB"
++        "eth:0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB"
+      implementationNames.0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB:
+-        ""
+      implementationNames.eth:0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB:
++        ""
+    }
+```
+
+```diff
+    contract LooksRareMultisig (0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13) {
+    +++ description: None
+      address:
+-        "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13"
++        "eth:0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369"
++        "eth:0xDA9854b190A54c6c5088AB43a274caFAFF7cF369"
+      values.$members.1:
+-        "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58"
++        "eth:0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58"
+      values.$members.2:
+-        "0xb69F2341F008f673F757B49104c165C8022CD0df"
++        "eth:0xb69F2341F008f673F757B49104c165C8022CD0df"
+      values.$members.3:
+-        "0x5ECfd6968593159e5b4f06832857943409122849"
++        "eth:0x5ECfd6968593159e5b4f06832857943409122849"
+      values.$members.4:
+-        "0x9eab2223d84060E212354BfA620BF687b6E9Ae20"
++        "eth:0x9eab2223d84060E212354BfA620BF687b6E9Ae20"
+      implementationNames.0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ONDO Vault (Kinto) (0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD) {
+    +++ description: None
+      address:
+-        "0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD"
++        "eth:0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
+      implementationNames.0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD:
+-        "Vault"
+      implementationNames.eth:0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD:
++        "Vault"
+    }
+```
+
+```diff
+    contract XAUt Vault (Kinto) (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF) {
+    +++ description: None
+      address:
+-        "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF"
++        "eth:0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF:
+-        "Vault"
+      implementationNames.eth:0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF:
++        "Vault"
+    }
+```
+
+```diff
+    contract SPX Vault (Kinto) (0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8) {
+    +++ description: None
+      address:
+-        "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8"
++        "eth:0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8:
+-        "Vault"
+      implementationNames.eth:0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8:
++        "Vault"
+    }
+```
+
+```diff
+    contract WBTC Vault (Kinto) (0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36) {
+    +++ description: None
+      address:
+-        "0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36"
++        "eth:0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36:
+-        "Vault"
+      implementationNames.eth:0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36:
++        "Vault"
+    }
+```
+
+```diff
+    contract WETH Vault (Derive) (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    +++ description: None
+      address:
+-        "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e"
++        "eth:0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e:
+-        "Vault"
+      implementationNames.eth:0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e:
++        "Vault"
+    }
+```
+
+```diff
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD) {
+    +++ description: None
+      address:
+-        "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
++        "eth:0xD5a83a40F262E2247e6566171f9ADc76b745F5cD"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0xD5a83a40F262E2247e6566171f9ADc76b745F5cD:
+-        "FastSwitchboard"
+      implementationNames.eth:0xD5a83a40F262E2247e6566171f9ADc76b745F5cD:
++        "FastSwitchboard"
+    }
+```
+
+```diff
+    EOA  (0xDA9854b190A54c6c5088AB43a274caFAFF7cF369) {
+    +++ description: None
+      address:
+-        "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369"
++        "eth:0xDA9854b190A54c6c5088AB43a274caFAFF7cF369"
+    }
+```
+
+```diff
+    contract EIGEN Vault (Kinto) (0xdb161cdc9c11892922F7121a409b196f3b00e640) {
+    +++ description: None
+      address:
+-        "0xdb161cdc9c11892922F7121a409b196f3b00e640"
++        "eth:0xdb161cdc9c11892922F7121a409b196f3b00e640"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xdb161cdc9c11892922F7121a409b196f3b00e640:
+-        "Vault"
+      implementationNames.eth:0xdb161cdc9c11892922F7121a409b196f3b00e640:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDC Vault (Polynomial) (0xDE1617Ddb7C8A250A409D986930001985cfad76F) {
+    +++ description: None
+      address:
+-        "0xDE1617Ddb7C8A250A409D986930001985cfad76F"
++        "eth:0xDE1617Ddb7C8A250A409D986930001985cfad76F"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
++        "eth:0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      implementationNames.0xDE1617Ddb7C8A250A409D986930001985cfad76F:
+-        "Vault"
+      implementationNames.eth:0xDE1617Ddb7C8A250A409D986930001985cfad76F:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDe Vault (Kinto) (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e) {
+    +++ description: None
+      address:
+-        "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e"
++        "eth:0xdf34E61B6e7B9e348713d528fEB019d504d38c1e"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xdf34E61B6e7B9e348713d528fEB019d504d38c1e:
+-        "Vault"
+      implementationNames.eth:0xdf34E61B6e7B9e348713d528fEB019d504d38c1e:
++        "Vault"
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      address:
+-        "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe"
++        "eth:0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe"
+      values.bridge__:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      values.capacitor__:
+-        "0xf13012498D81bca8a1eE239dC4B52316F31890EE"
++        "eth:0xf13012498D81bca8a1eE239dC4B52316F31890EE"
+      values.inbox__:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.outbox__:
+-        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
++        "eth:0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.remoteNativeSwitchboard:
+-        "0xaB2F8c1588ACA57bC2909512B645a860C65770d3"
++        "eth:0xaB2F8c1588ACA57bC2909512B645a860C65770d3"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe:
+-        "ArbitrumL1Switchboard"
+      implementationNames.eth:0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe:
++        "ArbitrumL1Switchboard"
+    }
+```
+
+```diff
+    contract USD0++ Vault (Polynomial) (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F) {
+    +++ description: None
+      address:
+-        "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F"
++        "eth:0xDf9Fa2b420689384E8DD55a706262DC0ED37020F"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
++        "eth:0x9f76043B23125024Ce5f0Fb4AE707482107dd2a8"
+      implementationNames.0xDf9Fa2b420689384E8DD55a706262DC0ED37020F:
+-        "Vault"
+      implementationNames.eth:0xDf9Fa2b420689384E8DD55a706262DC0ED37020F:
++        "Vault"
+    }
+```
+
+```diff
+    contract USDC Vault (Reya) (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7) {
+    +++ description: None
+      address:
+-        "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
++        "eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7:
+-        "Vault"
+      implementationNames.eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7:
++        "Vault"
+    }
+```
+
+```diff
+    contract sUSDe Vault (Derive) (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      address:
+-        "0xE3E96892D30E0ee1a8131BAf87c891201F7137bf"
++        "eth:0xE3E96892D30E0ee1a8131BAf87c891201F7137bf"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0xE3E96892D30E0ee1a8131BAf87c891201F7137bf:
+-        "Vault"
+      implementationNames.eth:0xE3E96892D30E0ee1a8131BAf87c891201F7137bf:
++        "Vault"
+    }
+```
+
+```diff
+    contract USUAL Vault (Kinto) (0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF) {
+    +++ description: None
+      address:
+-        "0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF"
++        "eth:0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
++        "eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c"
+      implementationNames.0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF:
+-        "Vault"
+      implementationNames.eth:0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF:
++        "Vault"
+    }
+```
+
+```diff
+    contract cbBTC Vault (Polynomial) (0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7) {
+    +++ description: None
+      address:
+-        "0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7"
++        "eth:0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7"
+      implementationNames.0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7:
+-        ""
+      implementationNames.eth:0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7:
++        ""
+    }
+```
+
+```diff
+    contract weETH Vault (Kinto) (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397) {
+    +++ description: None
+      address:
+-        "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397"
++        "eth:0xeB66259d2eBC3ed1d3a98148f6298927d8A36397"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xeB66259d2eBC3ed1d3a98148f6298927d8A36397:
+-        "Vault"
+      implementationNames.eth:0xeB66259d2eBC3ed1d3a98148f6298927d8A36397:
++        "Vault"
+    }
+```
+
+```diff
+    contract wstETH Vault (Derive) (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3) {
+    +++ description: None
+      address:
+-        "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3"
++        "eth:0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
++        "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      implementationNames.0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3:
+-        "Vault"
+      implementationNames.eth:0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3:
++        "Vault"
+    }
+```
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      address:
+-        "0xeD037aFBffC65a94E9CC592947E851FB2f730341"
++        "eth:0xeD037aFBffC65a94E9CC592947E851FB2f730341"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.signatureVerifier__:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
+-        "0x943AC2775928318653e91d350574436A1b9b16f9"
++        "eth:0x943AC2775928318653e91d350574436A1b9b16f9"
+      implementationNames.0xeD037aFBffC65a94E9CC592947E851FB2f730341:
+-        "TransmitManager"
+      implementationNames.eth:0xeD037aFBffC65a94E9CC592947E851FB2f730341:
++        "TransmitManager"
+    }
+```
+
+```diff
+    contract  (0xeeF6520437A6545b4F325F6675C4CD49812d457b) {
+    +++ description: None
+      address:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      values.$implementation:
+-        "0xa8165F6a303A6C07Ce3C784b8ABCc595a04e6506"
++        "eth:0xa8165F6a303A6C07Ce3C784b8ABCc595a04e6506"
+      values.$members.0:
+-        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
++        "eth:0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      implementationNames.0xeeF6520437A6545b4F325F6675C4CD49812d457b:
+-        ""
+      implementationNames.0xa8165F6a303A6C07Ce3C784b8ABCc595a04e6506:
+-        ""
+      implementationNames.eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b:
++        ""
+      implementationNames.eth:0xa8165F6a303A6C07Ce3C784b8ABCc595a04e6506:
++        ""
+    }
+```
+
+```diff
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      address:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
++        "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+      values.$members.1:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.$members.2:
+-        "0x94561e98DD5E55271f91A103e4979aa6C493745E"
++        "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.$members.3:
+-        "0xc31C4549356d46c37021393EeEb6f704B38061eC"
++        "eth:0xc31C4549356d46c37021393EeEb6f704B38061eC"
+      implementationNames.0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98) {
+    +++ description: None
+      address:
+-        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
++        "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xeeF6520437A6545b4F325F6675C4CD49812d457b"
++        "eth:0xeeF6520437A6545b4F325F6675C4CD49812d457b"
+      implementationNames.0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98:
+-        "SignatureVerifier"
+      implementationNames.eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98:
++        "SignatureVerifier"
+    }
+```
+
+```diff
+    contract AAVE Vault (Kinto) (0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9) {
+    +++ description: None
+      address:
+-        "0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9"
++        "eth:0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
++        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      implementationNames.0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9:
+-        "Vault"
+      implementationNames.eth:0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9:
++        "Vault"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault (Kinto) (0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sdeUSD Vault (Reya) (0x0A5A19376064fED2A0A9f3120B2426c957BC289D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract deUSD Vault (Reya) (0x0b4447344fAAA340bcD2B0FdBD8f0CEcd161bC9E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CapacitorFactory (0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault (Kinto) (0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault (Zora) (0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SolvBTC Vault (Polynomial) (0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault (Polynomial) (0x1bF463463dd6747230Ee1bF9428376EBF1e2C23a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PENDLE Vault (Kinto) (0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault (Kinto) (0x1D18263107a138C7fb0De65b4a78d193ff9664c1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Vault (Reya) (0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LyraMultisig (0x246d38588b16Dd877c558b245e6D5a711C649fCF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract eBTC Vault (Derive) (0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PAXG Vault (Kinto) (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault (Derive) (0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ENA Vault (Kinto) (0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract rsETH Vault (Derive) (0x35d4D9bc79B0a543934b1769304B90d752691caD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SolvBTC Vault (Derive) (0x383a4EdB30E896b8d2d044Be87079D45c0EA7065)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Vault (Derive) (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OLAS Vault (Derive) (0x412Ac6044401cDf1e9833B7056c14C74AA593D37)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault (Kinto) (0x43b718Aa5e678b08615CA984cbe25f690B085b32)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AAVE Vault (Derive) (0x4421461239aE746127C13a19177656124433dC60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDS Vault (Polynomial) (0x49bFcE41d0594acA7390eD0820d83Fda308c39a7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract rswETH Vault (Derive) (0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GHO Vault (Kinto) (0x4F18853BE8C01d375889c02D61A77B476d3E59dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LDO Vault (Kinto) (0x54e60fef7c7f2f747900452D4151aF976EaeAb76)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault (Polynomial) (0x572A4080c16beD33Cf2E876ad969E2E35769EDB4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault (Zora) (0x58CDCf55f2c8660674F17561334F6370cbaDeEF8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault (Kinto) (0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hasher (0x5C71beE4a6b0D617D8c3d107D331292741789E27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbETH Vault (Kinto) (0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault (Derive) (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault (Derive) (0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault (Reya) (0x5F3B301B4967623fDb3AE52Bb8FF4dB01C460Cd3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault (Derive) (0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault (Polynomial) (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault (Reya) (0x64dF894688c5052BeAdC35371cF69151Ebc5D658)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault (Derive) (0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault (Kinto) (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LBTC Vault (Derive) (0x76624ff43D610F64177Bb9c194A2503642e9B803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SNX Vault (Derive) (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Vault (Derive) (0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault (Derive) (0x8180EcCC825b692ef65FF099a0A387743788bf78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract rsETH Vault (Polynomial) (0x8309E63F777805f362d42f5B5f2D1A20287d5Df2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault (Polynomial) (0x847579e12CFb96a3357d9C51e374330af61716C2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault (Kinto) (0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETHFI Vault (Kinto) (0x95d60E34aB2E626407d98dF8C240e6174e5D37E5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SOL Vault (Kinto) (0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LINK Vault (Kinto) (0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LOOKS Vault (Blast) (0xa83B4006c16DAeAb2718294696c0122519195137)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault (Reya) (0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract xSolvBTC Vault (Derive) (0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault (Kinto) (0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault (Polynomial) (0xC6cfb996A7CFEB89813A68CD13942CD75553032b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault (Polynomial) (0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LooksRareMultisig (0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ONDO Vault (Kinto) (0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XAUt Vault (Kinto) (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SPX Vault (Kinto) (0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Vault (Kinto) (0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault (Derive) (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FastSwitchboard (0xD5a83a40F262E2247e6566171f9ADc76b745F5cD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN Vault (Kinto) (0xdb161cdc9c11892922F7121a409b196f3b00e640)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault (Polynomial) (0xDE1617Ddb7C8A250A409D986930001985cfad76F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDe Vault (Kinto) (0xdf34E61B6e7B9e348713d528fEB019d504d38c1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USD0++ Vault (Polynomial) (0xDf9Fa2b420689384E8DD55a706262DC0ED37020F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault (Reya) (0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault (Derive) (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USUAL Vault (Kinto) (0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract cbBTC Vault (Polynomial) (0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract weETH Vault (Kinto) (0xeB66259d2eBC3ed1d3a98148f6298927d8A36397)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault (Derive) (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xeeF6520437A6545b4F325F6675C4CD49812d457b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignatureVerifier (0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AAVE Vault (Kinto) (0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xdb6af84eff834af94096993fd320acb8747d49d1
 
 # Diff at Fri, 04 Jul 2025 08:36:32 GMT:

@@ -1,3 +1,438 @@
+Generated with discovered.json: 0x72d7ee1e6771b1cff43359e9cedc6cb14869f2e5
+
+# Diff at Mon, 14 Jul 2025 12:45:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21778467
+- current block number: 21778467
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21778467 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3) {
+    +++ description: None
+      address:
+-        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
++        "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+      values.owner:
+-        "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
++        "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
+      implementationNames.0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3:
+-        "ProxyAdmin"
+      implementationNames.eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2) {
+    +++ description: None
+      address:
+-        "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
++        "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
+      values.$admin:
+-        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
++        "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+      values.$implementation:
+-        "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6"
++        "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6"
+      values.getBootCoordinator:
+-        "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5"
++        "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5"
+      values.getDonationAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.governanceAddress:
+-        "0xf1B3b124842555782F98bE08d1357ABb8013F11c"
++        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c"
+      values.hermezRollup:
+-        "0xA68D85dF56E733A06443306A095646317B5Fa633"
++        "eth:0xA68D85dF56E733A06443306A095646317B5Fa633"
+      values.tokenHEZ:
+-        "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
++        "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
+      implementationNames.0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2:
+-        "AdminUpgradeabilityProxy"
+      implementationNames.0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6:
+-        "HermezAuctionProtocol"
+      implementationNames.eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2:
++        "AdminUpgradeabilityProxy"
+      implementationNames.eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6:
++        "HermezAuctionProtocol"
+    }
+```
+
+```diff
+    EOA  (0x1DBA1131000664b884A1Ba238464159892252D3a) {
+    +++ description: None
+      address:
+-        "0x1DBA1131000664b884A1Ba238464159892252D3a"
++        "eth:0x1DBA1131000664b884A1Ba238464159892252D3a"
+    }
+```
+
+```diff
+    contract Verifier2048 (0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342) {
+    +++ description: None
+      address:
+-        "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342"
++        "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342"
+      implementationNames.0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342:
+-        "Verifier2048"
+      implementationNames.eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342:
++        "Verifier2048"
+    }
+```
+
+```diff
+    EOA  (0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92) {
+    +++ description: None
+      address:
+-        "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92"
++        "eth:0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92"
+    }
+```
+
+```diff
+    contract WithdrawalDelayer (0x392361427Ef5e17b69cFDd1294F31ab555c86124) {
+    +++ description: None
+      address:
+-        "0x392361427Ef5e17b69cFDd1294F31ab555c86124"
++        "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124"
+      values.getEmergencyCouncil:
+-        "0xe1bbC673E537053c3536310851C6554BcfcF11Cd"
++        "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd"
+      values.getHermezGovernanceAddress:
+-        "0xf1B3b124842555782F98bE08d1357ABb8013F11c"
++        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c"
+      values.hermezRollupAddress:
+-        "0xA68D85dF56E733A06443306A095646317B5Fa633"
++        "eth:0xA68D85dF56E733A06443306A095646317B5Fa633"
+      values.pendingEmergencyCouncil:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pendingGovernance:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x392361427Ef5e17b69cFDd1294F31ab555c86124:
+-        "WithdrawalDelayer"
+      implementationNames.eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124:
++        "WithdrawalDelayer"
+    }
+```
+
+```diff
+    EOA  (0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4) {
+    +++ description: None
+      address:
+-        "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
++        "eth:0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
+    }
+```
+
+```diff
+    contract Verifier400 (0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2) {
+    +++ description: None
+      address:
+-        "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2"
++        "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2"
+      implementationNames.0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2:
+-        "Verifier400"
+      implementationNames.eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2:
++        "Verifier400"
+    }
+```
+
+```diff
+    contract VerifierWithdraw (0x4464A1E499cf5443541da6728871af1D5C4920ca) {
+    +++ description: None
+      address:
+-        "0x4464A1E499cf5443541da6728871af1D5C4920ca"
++        "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca"
+      implementationNames.0x4464A1E499cf5443541da6728871af1D5C4920ca:
+-        "VerifierWithdraw"
+      implementationNames.eth:0x4464A1E499cf5443541da6728871af1D5C4920ca:
++        "VerifierWithdraw"
+    }
+```
+
+```diff
+    contract Hermez2 (0x6D85D79D69b7e190E671C16e8611997152bD3e95) {
+    +++ description: None
+      address:
+-        "0x6D85D79D69b7e190E671C16e8611997152bD3e95"
++        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"
+      values.hermezAuctionContract:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.hermezGovernanceAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.tokenHEZ:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.withdrawDelayerContract:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.withdrawVerifier:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x6D85D79D69b7e190E671C16e8611997152bD3e95:
+-        "Hermez"
+      implementationNames.eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95:
++        "Hermez"
+    }
+```
+
+```diff
+    EOA  (0x839395e20bbB182fa440d08F850E6c7A8f6F0780) {
+    +++ description: None
+      address:
+-        "0x839395e20bbB182fa440d08F850E6c7A8f6F0780"
++        "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780"
+    }
+```
+
+```diff
+    contract HermezAuctionProtocol2 (0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6) {
+    +++ description: None
+      address:
+-        "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6"
++        "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6"
+      values.getBootCoordinator:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getDonationAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.governanceAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.hermezRollup:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.tokenHEZ:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6:
+-        "HermezAuctionProtocol"
+      implementationNames.eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6:
++        "HermezAuctionProtocol"
+    }
+```
+
+```diff
+    contract Hermez (0xA68D85dF56E733A06443306A095646317B5Fa633) {
+    +++ description: None
+      address:
+-        "0xA68D85dF56E733A06443306A095646317B5Fa633"
++        "eth:0xA68D85dF56E733A06443306A095646317B5Fa633"
+      values.$admin:
+-        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
++        "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3"
+      values.$implementation:
+-        "0x6D85D79D69b7e190E671C16e8611997152bD3e95"
++        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"
+      values.$pastUpgrades.0.2.0:
+-        "0x6D85D79D69b7e190E671C16e8611997152bD3e95"
++        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"
+      values.hermezAuctionContract:
+-        "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
++        "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2"
+      values.hermezGovernanceAddress:
+-        "0xf1B3b124842555782F98bE08d1357ABb8013F11c"
++        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c"
+      values.rollupVerifiers.0.0:
+-        "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2"
++        "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2"
+      values.rollupVerifiers.1.0:
+-        "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342"
++        "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342"
+      values.tokenHEZ:
+-        "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
++        "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
+      values.withdrawDelayerContract:
+-        "0x392361427Ef5e17b69cFDd1294F31ab555c86124"
++        "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124"
+      values.withdrawVerifier:
+-        "0x4464A1E499cf5443541da6728871af1D5C4920ca"
++        "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca"
+      implementationNames.0xA68D85dF56E733A06443306A095646317B5Fa633:
+-        "AdminUpgradeabilityProxy"
+      implementationNames.0x6D85D79D69b7e190E671C16e8611997152bD3e95:
+-        "Hermez"
+      implementationNames.eth:0xA68D85dF56E733A06443306A095646317B5Fa633:
++        "AdminUpgradeabilityProxy"
+      implementationNames.eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95:
++        "Hermez"
+    }
+```
+
+```diff
+    EOA  (0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5) {
+    +++ description: None
+      address:
+-        "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5"
++        "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xe1bbC673E537053c3536310851C6554BcfcF11Cd) {
+    +++ description: None
+      address:
+-        "0xe1bbC673E537053c3536310851C6554BcfcF11Cd"
++        "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd"
+      values.$implementation:
+-        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      values.$members.0:
+-        "0x1DBA1131000664b884A1Ba238464159892252D3a"
++        "eth:0x1DBA1131000664b884A1Ba238464159892252D3a"
+      values.$members.1:
+-        "0x839395e20bbB182fa440d08F850E6c7A8f6F0780"
++        "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780"
+      values.$members.2:
+-        "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4"
++        "eth:0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4"
+      values.$members.3:
+-        "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92"
++        "eth:0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92"
+      values.$members.4:
+-        "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
++        "eth:0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
+      implementationNames.0xe1bbC673E537053c3536310851C6554BcfcF11Cd:
+-        "Proxy"
+      implementationNames.0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd:
++        "Proxy"
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4) {
+    +++ description: None
+      address:
+-        "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4"
++        "eth:0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4"
+    }
+```
+
+```diff
+    contract HermezGovernance (0xf1B3b124842555782F98bE08d1357ABb8013F11c) {
+    +++ description: None
+      address:
+-        "0xf1B3b124842555782F98bE08d1357ABb8013F11c"
++        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c"
+      implementationNames.0xf1B3b124842555782F98bE08d1357ABb8013F11c:
+-        "HermezGovernance"
+      implementationNames.eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c:
++        "HermezGovernance"
+    }
+```
+
+```diff
+    contract Timelock (0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3) {
+    +++ description: None
+      address:
+-        "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
++        "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
+      values.admin:
+-        "0xf1B3b124842555782F98bE08d1357ABb8013F11c"
++        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3:
+-        "Timelock"
+      implementationNames.eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3:
++        "Timelock"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HermezAuctionProtocol (0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier2048 (0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawalDelayer (0x392361427Ef5e17b69cFDd1294F31ab555c86124)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier400 (0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierWithdraw (0x4464A1E499cf5443541da6728871af1D5C4920ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hermez2 (0x6D85D79D69b7e190E671C16e8611997152bD3e95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HermezAuctionProtocol2 (0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hermez (0xA68D85dF56E733A06443306A095646317B5Fa633)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xe1bbC673E537053c3536310851C6554BcfcF11Cd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HermezGovernance (0xf1B3b124842555782F98bE08d1357ABb8013F11c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf2789aeb2caa82f5efb32f054e255b7103b66b64
 
 # Diff at Fri, 04 Jul 2025 12:19:03 GMT:
