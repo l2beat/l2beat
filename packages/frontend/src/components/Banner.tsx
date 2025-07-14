@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import type { ReactNode } from 'react'
 import { InfoIcon } from '~/icons/Info'
+import { Markdown } from './markdown/Markdown'
 
 const bannerVariants = cva(
   'flex gap-2 rounded-lg border px-6 py-2 text-label-value-13',
@@ -20,14 +20,14 @@ const bannerVariants = cva(
 )
 
 interface Props extends VariantProps<typeof bannerVariants> {
-  children: ReactNode
+  children: string
 }
 
 export function Banner({ children, type, centered }: Props) {
   return (
     <div className={bannerVariants({ type, centered })}>
       <InfoIcon className="size-[13px] shrink-0 fill-current" />
-      <div>{children}</div>
+      <Markdown>{children}</Markdown>
     </div>
   )
 }
