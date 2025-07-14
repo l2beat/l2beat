@@ -18,7 +18,6 @@ import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
-import { toAddress } from './toAddress'
 import type {
   ApiAbiEntry,
   ApiAddressEntry,
@@ -130,7 +129,7 @@ export function getProject(
             roles: roles,
             description: x.description,
             referencedBy: [],
-            address: toAddress(chain, x.address),
+            address: x.address,
           }
         })
         .sort(orderAddressEntries),
@@ -236,10 +235,10 @@ function contractFromDiscovery(
     proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
-    address: toAddress(chain, contract.address),
+    address: contract.address,
     fields,
     abis: [contract.address, ...implementations].map((address) => ({
-      address: toAddress(chain, address),
+      address: address,
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     implementationNames: contract.implementationNames,

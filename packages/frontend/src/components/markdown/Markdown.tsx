@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it'
-
+import { useId } from 'react'
 import { cn } from '~/utils/cn'
 import {
   glossaryPlugin,
@@ -71,7 +71,7 @@ export function processCollapsibleText(markdown: string): string {
   const collapsiblePattern = /\[([^:]+):\s*(.*?)\]/g
 
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
-    const uniqueId = crypto.randomUUID().replace(/-/g, '').substring(0, 12)
+    const uniqueId = useId()
     return `<button class="inline text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }
