@@ -1,32 +1,73 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  DATA_ON_CHAIN,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { formatExecutionDelay } from '../../common/formatDelays'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { opStackL2 } from '../../templates/opStack'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('facet')
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
+
+const FALLBACK_TIMEOUT_SECS = discovery.getContractValue<number>(
+  'Rollup',
+  'FALLBACK_TIMEOUT_SECS',
 )
 
-export const facet: ScalingProject = opStackL2({
-  reviewStatus: 'inReview',
+const MAX_CHALLENGE_SECS = discovery.getContractValue<number>(
+  'Rollup',
+  'MAX_CHALLENGE_SECS',
+)
+
+export const facet: ScalingProject = {
+  type: 'layer2',
+  id: ProjectId('facet'),
+  capability: 'universal',
   addedAt: UnixTime(1735889012), // 2025-01-03T01:36:52Z
-  discovery,
-  additionalBadges: [BADGES.Other.BasedSequencing],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  badges: [
+    BADGES.Other.BasedSequencing,
+    BADGES.DA.EthereumCalldata,
+    BADGES.VM.EVM,
+  ],
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: true,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: true,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/0xFacet/facet-op-succinct',
+    },
+  ),
+  discoveryInfo: getDiscoveryInfo([discovery]),
   display: {
     name: 'Facet',
     slug: 'facet',
     description:
       'Facet is a based rollup built on the OP stack. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
+    purposes: ['Universal'],
+    category: 'Optimistic Rollup',
     links: {
       websites: ['https://facet.org/'],
       bridges: ['https://facetswap.com/bridge'],
@@ -39,21 +80,37 @@ export const facet: ScalingProject = opStackL2({
       ],
     },
   },
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
-      tokens: ['ETH'],
-      description: 'Fast bridge contract.',
-    }),
-  ],
-  nonTemplateRiskView: {
-    stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW(0, FINALIZATION_PERIOD_SECONDS),
-    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  config: {
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
+        tokens: ['ETH'],
+        description: 'Fast bridge contract.',
+      }),
+    ],
   },
-  nonTemplateTechnology: {
+  riskView: {
+    stateValidation: {
+      ...RISK_VIEW.STATE_ZKP_OPTIMISTIC,
+      secondLine: formatExecutionDelay(MAX_CHALLENGE_SECS),
+    },
+    dataAvailability: {
+      ...DATA_ON_CHAIN,
+    },
+    exitWindow: {
+      value: 'Immutable',
+      description: 'Core contracts are immutable and cannot be upgraded.',
+      sentiment: 'good',
+    },
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
+    },
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
+      FALLBACK_TIMEOUT_SECS,
+    ),
+  },
+
+  technology: {
     operator: OPERATOR.DECENTRALIZED_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.CANONICAL_ORDERING('EOA inbox'),
     exitMechanisms: [
@@ -83,7 +140,6 @@ export const facet: ScalingProject = opStackL2({
       },
     ],
   },
-  architectureImage: 'facet',
   chainConfig: {
     name: 'facet',
     chainId: 1027303,
@@ -96,8 +152,15 @@ export const facet: ScalingProject = opStackL2({
       },
     ],
   },
-  genesisTimestamp: UnixTime(1733855495),
   milestones: [
+    {
+      title: 'SP1 proof system deployed',
+      url: 'https://etherscan.io/tx/0x2c76f9fb8d18290ae8d75b8bcfe6ee2bd5a7548983fa1d400f83ed9db11d0b84',
+      date: '2025-07-02T00:00:00Z',
+      type: 'general',
+      description:
+        'Facet launches its optimistic rollup contract with SP1 zk fault proofs.',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://x.com/0xFacet/status/1866610169620336761',
@@ -106,7 +169,4 @@ export const facet: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  usesEthereumBlobs: false, // uses calldata
-  isNodeAvailable: true,
-  nodeSourceLink: 'https://github.com/0xFacet/facet-node',
-})
+}
