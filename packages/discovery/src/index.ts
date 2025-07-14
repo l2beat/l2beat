@@ -99,6 +99,7 @@ export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { get$Implementations } from './discovery/utils/extractors'
+export { get$ImplementationsPublic } from './discovery/utils/extractorsPublic'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { readJsonc } from './discovery/utils/readJsonc'
@@ -121,4 +122,3 @@ export {
   getExplorerClient,
   type IEtherscanClient,
 } from './utils/IEtherscanClient'
-export { get$ImplementationsPublic } from './discovery/utils/extractorsPublic'
