@@ -2,6 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import {
   BlobClient,
   CelestiaApiClient,
+  CoingeckoClient,
   type HttpClient,
   RpcClient,
 } from '@l2beat/shared'
@@ -86,6 +87,15 @@ export class AllProviders {
         })
       }
 
+        const coingeckoClient = new CoingeckoClient({
+          apiKey: config.coingeckoApiKey,
+          logger,
+          sourceName: 'coingecko',
+          http,
+          callsPerMinute: config.coingeckoApiKey ? 400 : 10,
+          retryStrategy: 'SCRIPT',
+        })
+
       this.config.set(config.name, {
         config,
         providers: {
@@ -94,6 +104,7 @@ export class AllProviders {
           etherscanClient,
           blobClient,
           celestiaApiClient,
+          coingeckoClient,
         },
       })
     }
@@ -121,6 +132,7 @@ export class AllProviders {
         config.providers.baseProvider,
         config.providers.eventProvider,
         config.providers.etherscanClient,
+        config.providers.coingeckoClient,
         config.providers.celestiaApiClient,
         config.providers.blobClient,
         this.logger,

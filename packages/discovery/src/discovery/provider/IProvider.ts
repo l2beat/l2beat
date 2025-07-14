@@ -3,6 +3,7 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CoingeckoClient,
 } from '@l2beat/shared'
 import type {
   Bytes,
@@ -28,6 +29,7 @@ export interface RawProviders {
   baseProvider: providers.JsonRpcProvider
   eventProvider: providers.JsonRpcProvider
   etherscanClient: IEtherscanClient
+  coingeckoClient: CoingeckoClient
   celestiaApiClient?: CelestiaApiClient
   blobClient?: BlobClient
 }

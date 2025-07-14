@@ -1,6 +1,6 @@
 import { ProjectDatabase } from './ProjectDatabase'
 import { getProjects } from './processing/getProjects'
-import { getTokenList } from './tokens/tokens'
+import { getTokenListV2 } from './tokens/tokens'
 
 main()
 async function main() {
@@ -16,7 +16,7 @@ async function main() {
     .map((p) => p.chainConfig)
     .filter((c) => c !== undefined)
 
-  const tokenList = getTokenList(chains)
+  const tokenList = getTokenListV2(chains)
   for (const token of tokenList) {
     await db.saveToken(token)
   }

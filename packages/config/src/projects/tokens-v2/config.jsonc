@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "tokens-v2",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b"],
+      "overrides": {
+        "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b": {
+          // Cannot do - sadly
+          // "ignoreDiscovery": true,
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

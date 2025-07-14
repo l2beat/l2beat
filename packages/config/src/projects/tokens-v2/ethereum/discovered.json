@@ -1,0 +1,236 @@
+{
+  "name": "tokens-v2",
+  "chain": "ethereum",
+  "blockNumber": 22917511,
+  "configHash": "0x9106107fec1d34851b1ea10d352f82b8291ee1d93906dc6946bd08596b678a48",
+  "entries": [
+    {
+      "address": "0x0AE7242a776c416Ec198cEd9c87BBd54CdAaA948",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1e34d2C8c64Fd6De92143b09b3E3c8a8CAC599Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x21E89eA8d29E21453515273f3c218FA67Da151b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1639684033,
+      "sinceBlock": 13818154,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0x942A5b042b589B6Df8B4D4c056b6fe6003bf7161",
+          "0x1e34d2C8c64Fd6De92143b09b3E3c8a8CAC599Ac",
+          "0x2c4bB8D6F71b54C1a21E05Ca5fc9e29B63e02F19",
+          "0x21E89eA8d29E21453515273f3c218FA67Da151b0",
+          "0x0AE7242a776c416Ec198cEd9c87BBd54CdAaA948",
+          "0x2722d45EdD9f142661A4C075800456d4A4d43E88",
+          "0x3B2c3D10A01d5e5a8A2419184Bdf1066AA380294",
+          "0xEdDC81D008624CA4C5eA34BF31459AA11594D545"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xf01819cccbafd07f4c40e6c49634c2e5df327fc132828c7b613ef959bc338b54",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 146,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
+      "address": "0x2722d45EdD9f142661A4C075800456d4A4d43E88",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2c4bB8D6F71b54C1a21E05Ca5fc9e29B63e02F19",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3B2c3D10A01d5e5a8A2419184Bdf1066AA380294",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x942A5b042b589B6Df8B4D4c056b6fe6003bf7161",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Euler Token",
+      "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfd8a47fd16da347b7fd4426ca2a3804a970d026f737714fe61b2110247dbc8ff"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1640894681,
+      "sinceBlock": 13908728,
+      "values": {
+        "$immutable": true,
+        "$tokenData": {
+          "name": "Euler",
+          "coingeckoId": "euler",
+          "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
+          "symbol": "EUL",
+          "decimals": 18,
+          "deploymentTimestamp": 1640894681,
+          "coingeckoListingTimestamp": 1656028800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/26149/large/Coingecko_logo_%281%29.png?1706026067",
+          "chainId": 1,
+          "supply": "zero",
+          "source": "canonical"
+        },
+        "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DOMAIN_SEPARATOR": "0x033df809c37647aaca6909da290b9c07248dee4ccc343f47191e584a60295e75",
+        "getPastTotalSupply": [0, 0, 0, 0, 0],
+        "MINT_MAX_PERCENT": 2718,
+        "MINT_MIN_INTERVAL": 31536000,
+        "mintingRestrictedBefore": 1767225600,
+        "name": "Euler",
+        "symbol": "EUL",
+        "totalSupply": "27182818284590452353602874",
+        "treasury": "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992"
+      },
+      "errors": { "getPastTotalSupply": "Processing error occurred." },
+      "implementationNames": {
+        "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b": "Eul"
+      }
+    },
+    {
+      "address": "0xEdDC81D008624CA4C5eA34BF31459AA11594D545",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {
+    "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992": [
+      "constructor(address _singleton)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b": [
+      "constructor(string name, string symbol, uint256 totalSupply_, uint256 mintingRestrictedBefore_, address treasury_)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
+      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event TreasuryUpdated(address newTreasury)",
+      "function ADMIN_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function MINT_MAX_PERCENT() view returns (uint256)",
+      "function MINT_MIN_INTERVAL() view returns (uint256)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function delegate(address delegatee)",
+      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
+      "function delegates(address account) view returns (address)",
+      "function getPastTotalSupply(uint256 blockNumber) view returns (uint256)",
+      "function getPastVotes(address account, uint256 blockNumber) view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVotes(address account) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint()",
+      "function mintingRestrictedBefore() view returns (uint256)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function numCheckpoints(address account) view returns (uint32)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function treasury() view returns (address)",
+      "function updateTreasury(address newTreasury)"
+    ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+  },
+  "permissionsConfigHash": "0xf24333666e66bd147de901554424c5623d051c2a08d0c17f819dd4aa17518412"
+}
