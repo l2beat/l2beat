@@ -72,7 +72,6 @@ export {
   toDiscoveryOutput,
   toRawDiscoveryOutput,
 } from './discovery/output/toDiscoveryOutput'
-export { toPrettyJson } from './discovery/output/toPrettyJson'
 export type {
   ContractValue,
   DiscoveryOutput,
