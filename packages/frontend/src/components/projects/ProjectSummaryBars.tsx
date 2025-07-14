@@ -32,10 +32,7 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
     <div className="mb-3 space-y-2">
       {project.archivedAt && (
         <Banner type="neutral" centered>
-          <span className="md:hidden">This project is archived.</span>
-          <span className="hidden md:block">
-            This project is archived and no longer maintained.
-          </span>
+          This project is archived and no longer maintained.
         </Banner>
       )}
       {project.isUpcoming && <UpcomingBar />}
