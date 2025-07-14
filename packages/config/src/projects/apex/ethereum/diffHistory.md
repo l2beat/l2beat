@@ -840,28 +840,28 @@ discovery. Values are for block 21981180 (main branch discovery), not current.
 -        "operateStarknet"
 +        "interact"
       receivedPermissions.3.description:
-+        "Can regsiter new tokens for deposits and withdrawals."
++        "Can register new tokens for deposits and withdrawals."
       receivedPermissions.3.role:
 +        ".tokenAdmins"
       receivedPermissions.2.permission:
 -        "interact"
 +        "operateStarknet"
       receivedPermissions.2.description:
--        "Can regsiter new tokens for deposits and withdrawals."
+-        "Can register new tokens for deposits and withdrawals."
       receivedPermissions.2.role:
 +        ".operators"
       receivedPermissions.1.permission:
 -        "operateStarknet"
 +        "interact"
       receivedPermissions.1.description:
-+        "Can regsiter new tokens for deposits and withdrawals."
++        "Can register new tokens for deposits and withdrawals."
       receivedPermissions.1.role:
 +        ".tokenAdmins"
       receivedPermissions.0.permission:
 -        "interact"
 +        "operateStarknet"
       receivedPermissions.0.description:
--        "Can regsiter new tokens for deposits and withdrawals."
+-        "Can register new tokens for deposits and withdrawals."
       receivedPermissions.0.role:
 +        ".operators"
     }
@@ -955,7 +955,7 @@ discovery. Values are for block 21981180 (main branch discovery), not current.
     contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
     +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
       issuedPermissions:
--        [{"permission":"governStarknet","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","via":[]},{"permission":"governStarknet","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","via":[]},{"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","description":"manage the token admin role.","via":[]},{"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"operateStarknet","to":"0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb","via":[]},{"permission":"upgrade","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","delay":1209600,"via":[]},{"permission":"upgrade","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","delay":1209600,"via":[]}]
+-        [{"permission":"governStarknet","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","via":[]},{"permission":"governStarknet","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","via":[]},{"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can register new tokens for deposits and withdrawals.","via":[]},{"permission":"interact","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","description":"manage the token admin role.","via":[]},{"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"operateStarknet","to":"0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb","via":[]},{"permission":"upgrade","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","delay":1209600,"via":[]},{"permission":"upgrade","to":"0xef75e1199B0599BA823b7770AcE8eb34864a1D55","delay":1209600,"via":[]}]
     }
 ```
 
@@ -963,7 +963,7 @@ discovery. Values are for block 21981180 (main branch discovery), not current.
     contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
     +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
       issuedPermissions:
--        [{"permission":"governStarknet","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","via":[]},{"permission":"interact","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"operateStarknet","to":"0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169","via":[]},{"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"upgrade","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","delay":1209600,"via":[]}]
+-        [{"permission":"governStarknet","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","via":[]},{"permission":"interact","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can register new tokens for deposits and withdrawals.","via":[]},{"permission":"operateStarknet","to":"0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169","via":[]},{"permission":"operateStarknet","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","via":[]},{"permission":"upgrade","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","delay":1209600,"via":[]}]
     }
 ```
 
@@ -1260,7 +1260,7 @@ discovery. Values are for block 21872281 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"interact","to":"0xC532d2976209A56DdF4a99B844130f7c0daCa7B6","description":"manage the token admin role.","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
++        {"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can register new tokens for deposits and withdrawals.","via":[]}
       issuedPermissions.1.permission:
 -        "upgrade"
 +        "governStarknet"
@@ -1331,7 +1331,7 @@ discovery. Values are for block 21872281 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"operateStarknet","to":"0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
++        {"permission":"interact","to":"0x5751a83170BeA11fE7CdA5D599B04153C021f21A","description":"Can register new tokens for deposits and withdrawals.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x53c6Ec9640761c669B800088F097E01A8207Ac8b","description":"manage the token admin role.","via":[]}
       issuedPermissions.0.permission:
