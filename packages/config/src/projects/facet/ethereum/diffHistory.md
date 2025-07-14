@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xfea0321c7ff22255a3fb40ad0f4b9ebd69aac7f0
+Generated with discovered.json: 0x6a923fb5fdc8496b920e6491cf43f61c0a99ffd8
 
-# Diff at Wed, 09 Jul 2025 09:06:06 GMT:
+# Diff at Mon, 14 Jul 2025 21:33:00 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@9fc7d86984262816c25132a2cdce848ac9abc774 block: 22367347
-- current block number: 22880623
+- comparing to: main@60f5cc9397e697cfc4eb838fbfd7ee8479229944 block: 22367347
+- current block number: 22920123
 
 ## Description
 
@@ -32,7 +32,7 @@ Provide description of changes. This section will be preserved.
       sinceBlock:
 +        22833445
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorProposalId":0,"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorProposal":{"rootClaim":"0x502d6539c2a9a22d13bcc281c8b1f528a0f5ded3d89ccb46e645801d8b40c4a7","l1Head":"0x0000000000000000000000000000000000000000000000000000000000000000","proposer":"0x0000000000000000000000000000000000000000","l2BlockNumber":1467888,"parentIndex":0,"deadline":0,"resolvedAt":0,"proposalStatus":4,"resolutionStatus":1,"challenger":"0x0000000000000000000000000000000000000000","prover":"0x0000000000000000000000000000000000000000"},"getAnchorRoot":["0x502d6539c2a9a22d13bcc281c8b1f528a0f5ded3d89ccb46e645801d8b40c4a7",1467888],"getProposalsLength":28,"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1751459195,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","VERIFIER":"0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
++        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorProposalId":21,"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorProposal":{"rootClaim":"0x005025f50424292e146edb709aac573f2656d7bedf3d8334302f86ad33d2b4d5","l1Head":"0x9020cb07c64c5211ce9e580cd54c59d043300d43e2d2e57ec9a9f2eb8a07d963","proposer":"0x615452db5467849689E98a8C5C242A96cF768a94","l2BlockNumber":1505688,"parentIndex":20,"deadline":1752518399,"resolvedAt":1752518447,"proposalStatus":4,"resolutionStatus":1,"challenger":"0x0000000000000000000000000000000000000000","prover":"0x0000000000000000000000000000000000000000"},"getAnchorRoot":["0x005025f50424292e146edb709aac573f2656d7bedf3d8334302f86ad33d2b4d5",1505688],"getProposalsLength":50,"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1751459195,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","VERIFIER":"0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
       implementationNames:
 +        {"0x101e853255f3a0cA1dd3772d00893A103A6d0261":"Rollup"}
     }
@@ -64,6 +64,88 @@ Provide description of changes. This section will be preserved.
  ...-0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++++++
  .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++++
  4 files changed, 2774 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0xa1233c2DB638D41893a101B0e9dd44cb681270E8)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":".guardian"}
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":".guardian"}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 Generated with discovered.json: 0xe97e41029573e01c2c917e569473ceadea2f15f9
