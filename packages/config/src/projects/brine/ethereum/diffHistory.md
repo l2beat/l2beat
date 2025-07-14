@@ -478,7 +478,7 @@ discovery. Values are for block 21981345 (main branch discovery), not current.
     contract StarkExchange (0x1390f521A79BaBE99b69B37154D63D431da27A07) {
     +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
       issuedPermissions:
--        [{"permission":"governStarknet","to":"0x303775491494a08b07365938787274F742a81F63","via":[]},{"permission":"interact","to":"0x303775491494a08b07365938787274F742a81F63","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x4a5e124201c38bf7a618388A8185D3f5C8E9133f","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]},{"permission":"operateStarkEx","to":"0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25","via":[]},{"permission":"upgrade","to":"0x303775491494a08b07365938787274F742a81F63","via":[]}]
+-        [{"permission":"governStarknet","to":"0x303775491494a08b07365938787274F742a81F63","via":[]},{"permission":"interact","to":"0x303775491494a08b07365938787274F742a81F63","description":"manage the token admin role.","via":[]},{"permission":"interact","to":"0x4a5e124201c38bf7a618388A8185D3f5C8E9133f","description":"Can register new tokens for deposits and withdrawals.","via":[]},{"permission":"operateStarkEx","to":"0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25","via":[]},{"permission":"upgrade","to":"0x303775491494a08b07365938787274F742a81F63","via":[]}]
     }
 ```
 
@@ -630,7 +630,7 @@ discovery. Values are for block 19825361 (main branch discovery), not current.
       issuedPermissions.3:
 +        {"permission":"operateStarknet","to":"0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25","via":[]}
       issuedPermissions.2:
-+        {"permission":"interact","to":"0x4a5e124201c38bf7a618388A8185D3f5C8E9133f","description":"Can regsiter new tokens for deposits and withdrawals.","via":[]}
++        {"permission":"interact","to":"0x4a5e124201c38bf7a618388A8185D3f5C8E9133f","description":"Can register new tokens for deposits and withdrawals.","via":[]}
       issuedPermissions.1:
 +        {"permission":"interact","to":"0x303775491494a08b07365938787274F742a81F63","description":"manage the token admin role.","via":[]}
       issuedPermissions.0.permission:

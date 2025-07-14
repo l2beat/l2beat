@@ -7709,7 +7709,7 @@ Generated with discovered.json: 0x0b06620a2094a6e93f038629a2befd2aedf38699
 
 ## Description
 
-Starknet [upgrade v0.13.3](https://community.starknet.io/t/starknet-v0-13-3/115053) with new agggregator and StarknetOS programHashes.
+Starknet [upgrade v0.13.3](https://community.starknet.io/t/starknet-v0-13-3/115053) with new aggregator and StarknetOS programHashes.
 
 ## Watched changes
 
