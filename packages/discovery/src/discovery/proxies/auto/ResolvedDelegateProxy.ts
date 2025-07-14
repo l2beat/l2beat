@@ -1,5 +1,6 @@
 import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import type { Indexed, LogDescription } from 'ethers/lib/utils'
 /*
 Custom proxy introduced originally by Optimism team
 It stores (immutable) libAddressManager and implementation name
@@ -11,11 +12,9 @@ It does not have an owner
 
 */
 import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
-import type { Indexed, LogDescription } from 'ethers/lib/utils'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 async function getAddressManager(
   provider: IProvider,
@@ -41,7 +40,7 @@ async function getImplementationName(
     ),
   )
   const nameEncoded = (await provider.getStorage(address, slot)).toString()
-  const length = parseInt(nameEncoded.slice(-2), 16) / 2
+  const length = Number.parseInt(nameEncoded.slice(-2), 16) / 2
   if (length > 31) {
     throw new Error(
       'Unsupported long string. Please add more code to handle this case',

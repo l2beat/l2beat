@@ -9,7 +9,7 @@ import {
 describe(StarknetTotalSupplyProvider.name, () => {
   const BLOCK = 100
   const CHAIN = 'starknet'
-  const TOKENS = [`0x123`, `0x456`, `0x789`]
+  const TOKENS = ['0x123', '0x456', '0x789']
 
   describe(StarknetTotalSupplyProvider.prototype.getTotalSupplies.name, () => {
     it('performs call for each address', async () => {
@@ -68,9 +68,9 @@ describe(StarknetTotalSupplyProvider.name, () => {
         Logger.SILENT,
       )
 
-      await expect(
+      expect(() =>
         totalSupplyProvider.getTotalSupplies(TOKENS, BLOCK, CHAIN),
-      ).toBeRejectedWith(`Missing starknet client for ${CHAIN}`)
+      ).toThrow(`Missing starknet client for ${CHAIN}`)
     })
   })
 })

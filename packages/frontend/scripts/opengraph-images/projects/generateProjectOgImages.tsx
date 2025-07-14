@@ -1,7 +1,7 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import path from 'path'
 import type { Project } from '@l2beat/config'
 import { Resvg } from '@resvg/resvg-js'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import path from 'path'
 import satori from 'satori'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
 import { ps } from '~/server/projects'
@@ -57,7 +57,7 @@ async function generateProjectOgImage(
 ) {
   const svg = await satori(
     <ProjectOpengraphImage
-      baseUrl={`http://localhost:6464`}
+      baseUrl={'http://localhost:6464'}
       slug={project.slug}
       name={project.name}
       size={size}

@@ -1,7 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { Logger } from '@l2beat/backend-tools'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import {

@@ -54,7 +54,7 @@ export function createServer(logger: Logger) {
   }
 
   app.listen(port, () => {
-    appLogger.info(`Started`, {
+    appLogger.info('Started', {
       port,
     })
   })
@@ -77,13 +77,13 @@ function renderToHtml(data: RenderData, url: string) {
       .filter((x) => x !== undefined),
   )
   return template
-    .replace(`<!--app-head-->`, rendered.head)
-    .replace(`<!--app-html-->`, rendered.html)
+    .replace('<!--app-head-->', rendered.head)
+    .replace('<!--app-html-->', rendered.html)
     .replace(
-      `<!--ssr-data-->`,
+      '<!--ssr-data-->',
       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
-    .replace(`<!--env-data-->`, `window.__ENV__=${JSON.stringify(envData)}`)
+    .replace('<!--env-data-->', `window.__ENV__=${JSON.stringify(envData)}`)
 }
 
 function getTemplate(manifest: Manifest) {

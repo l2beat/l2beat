@@ -2,16 +2,15 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Config } from '../../config/types'
 
 import type { ApplicationModule } from '../../services/ApplicationModule'
+import { AlchemyClient } from '../../third-party/AlchemyClient'
+import { EtherscanClient } from '../../third-party/EtherscanClient'
+import { FourByteClient } from '../../third-party/FourByteClient'
+import { OpenChainClient } from '../../third-party/OpenChainClient'
 import { createDecoderRouter } from './createDecoderRouter'
 import { AddressService } from './domain/AddressService'
 import { ApiController } from './domain/ApiController'
 import { Decoder } from './domain/Decoder'
 import { SignatureService } from './domain/SignatureService'
-
-import { AlchemyClient } from '../../third-party/AlchemyClient'
-import { EtherscanClient } from '../../third-party/EtherscanClient'
-import { FourByteClient } from '../../third-party/FourByteClient'
-import { OpenChainClient } from '../../third-party/OpenChainClient'
 
 export function createDecoderModule(
   config: Config,

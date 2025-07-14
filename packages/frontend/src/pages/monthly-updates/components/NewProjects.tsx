@@ -25,7 +25,9 @@ export function NewProjects({ newProjects }: Props) {
 
 function NewProject({
   project,
-}: { project: EcosystemMonthlyUpdateEntry['newProjects'][number] }) {
+}: {
+  project: EcosystemMonthlyUpdateEntry['newProjects'][number]
+}) {
   return (
     <div
       key={project.id}

@@ -1,7 +1,7 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import path from 'path'
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import path from 'path'
 
 export function initTempalte(name: string) {
   const paths = getDiscoveryPaths()

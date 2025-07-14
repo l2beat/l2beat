@@ -108,10 +108,10 @@ function getLCSLength<T, U>(a: T[], b: U[]): number[][] {
       if (i === 0 || j === 0) {
         lcs[i]?.push(0)
       } else if (isDeepStrictEqual(a[i - 1], b[j - 1])) {
-        // biome-ignore lint/style/noNonNullAssertion: <explanation>
+        // biome-ignore lint/style/noNonNullAssertion: it's there
         lcs[i]?.push(1 + lcs[i - 1]![j - 1]!)
       } else {
-        // biome-ignore lint/style/noNonNullAssertion: <explanation>
+        // biome-ignore lint/style/noNonNullAssertion: it's there
         lcs[i]?.push(Math.max(lcs[i - 1]![j]!, lcs[i]![j - 1]!))
       }
     }

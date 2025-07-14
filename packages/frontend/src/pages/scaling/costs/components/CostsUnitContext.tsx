@@ -14,7 +14,7 @@ interface Props {
 }
 
 export function CostsUnitContextProvider({ children }: Props) {
-  const [unit, setUnit] = useLocalStorage<CostsUnit>(`costs-unit`, 'usd')
+  const [unit, setUnit] = useLocalStorage<CostsUnit>('costs-unit', 'usd')
   return (
     <CostsUnitContext.Provider
       value={{

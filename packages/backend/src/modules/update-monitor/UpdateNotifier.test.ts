@@ -1,17 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { ProjectService } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import type { DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,
   EthereumAddress,
+  formatAsAsciiTable,
   ProjectId,
   UnixTime,
-  formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { ProjectService } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import {
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
@@ -19,8 +18,8 @@ import {
 import type { UpdateMessagesService } from './UpdateMessagesService'
 import {
   type DailyReminderChainEntry,
-  UpdateNotifier,
   generateTemplatizedStatus,
+  UpdateNotifier,
 } from './UpdateNotifier'
 
 const BLOCK = 123

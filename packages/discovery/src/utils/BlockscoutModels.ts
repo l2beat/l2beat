@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
   Hash256,
-  UnixTime,
   type json,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 

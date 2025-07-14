@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { CelestiaApiClient, HttpClient, celestiaTools } from '@l2beat/shared'
+import { CelestiaApiClient, celestiaTools, HttpClient } from '@l2beat/shared'
 
 export async function findCelestiaNamespace(url: string, commitment: string) {
   const client = new CelestiaApiClient({

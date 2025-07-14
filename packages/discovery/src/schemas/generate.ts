@@ -11,10 +11,10 @@ import {
   _PermissionsConfig,
 } from '../discovery/config/PermissionConfig'
 import {
-  DiscoveryCustomType,
   _StructureConfig,
   _StructureContract,
   _StructureContractField,
+  DiscoveryCustomType,
 } from '../discovery/config/StructureConfig'
 
 export interface Schema {
@@ -22,7 +22,7 @@ export interface Schema {
   schema: string
 }
 
-export async function generateAllSchemas(): Promise<Schema[]> {
+export function generateAllSchemas(): Schema[] {
   const MergedField = v.object({
     ..._ContractPermissionField,
     ..._ColorContractField,

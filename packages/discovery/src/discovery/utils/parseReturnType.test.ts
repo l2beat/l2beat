@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { type TupleType, type Type, parseReturnType } from './parseReturnType'
+import { parseReturnType, type TupleType, type Type } from './parseReturnType'
 
 function BaseT(typeName: string): Type {
   return { kind: 'base', typeName }
@@ -27,8 +27,8 @@ describe(parseReturnType.name, () => {
     })
   }
 
-  it(`handles multiple solidity base types`, () => {
-    expect(parseReturnType(`(uint256, address, bytes32, uint256)`)).toEqual(
+  it('handles multiple solidity base types', () => {
+    expect(parseReturnType('(uint256, address, bytes32, uint256)')).toEqual(
       TupleT([
         TupleE(BaseT('uint256')),
         TupleE(BaseT('address')),
@@ -38,9 +38,9 @@ describe(parseReturnType.name, () => {
     )
   })
 
-  it(`handles multiple solidity base types with names`, () => {
+  it('handles multiple solidity base types with names', () => {
     expect(
-      parseReturnType(`(uint256 A, address B, bytes32 C, uint256 D)`),
+      parseReturnType('(uint256 A, address B, bytes32 C, uint256 D)'),
     ).toEqual(
       TupleT([
         TupleE(BaseT('uint256'), 'A'),
@@ -51,9 +51,9 @@ describe(parseReturnType.name, () => {
     )
   })
 
-  it(`handles multiple solidity base types with names, where one missing`, () => {
+  it('handles multiple solidity base types with names, where one missing', () => {
     expect(
-      parseReturnType(`(uint256 A, address, bytes32 C, uint256 D)`),
+      parseReturnType('(uint256 A, address, bytes32 C, uint256 D)'),
     ).toEqual(
       TupleT([
         TupleE(BaseT('uint256'), 'A'),
@@ -64,8 +64,8 @@ describe(parseReturnType.name, () => {
     )
   })
 
-  it(`handles arrays`, () => {
-    expect(parseReturnType(`(uint256[] A, address[4])`)).toEqual(
+  it('handles arrays', () => {
+    expect(parseReturnType('(uint256[] A, address[4])')).toEqual(
       TupleT([
         TupleE(ArrayT('dynamic', BaseT('uint256')), 'A'),
         TupleE(ArrayT(4, BaseT('address'))),
@@ -73,9 +73,9 @@ describe(parseReturnType.name, () => {
     )
   })
 
-  it(`handles tuples`, () => {
+  it('handles tuples', () => {
     expect(
-      parseReturnType(`(tuple(tuple(uint256[] A) XYZ, tuple(address[4])) ctx)`),
+      parseReturnType('(tuple(tuple(uint256[] A) XYZ, tuple(address[4])) ctx)'),
     ).toEqual(
       TupleT([
         TupleE(
@@ -92,9 +92,9 @@ describe(parseReturnType.name, () => {
     )
   })
 
-  it(`handles multiple solidity base types with names`, () => {
+  it('handles multiple solidity base types with names', () => {
     expect(
-      parseReturnType(`(TypeConverter1 A, Mapping B, TimeString C, uint256 D)`),
+      parseReturnType('(TypeConverter1 A, Mapping B, TimeString C, uint256 D)'),
     ).toEqual(
       TupleT([
         TupleE(BaseT('TypeConverter1'), 'A'),

@@ -3,7 +3,10 @@ import { SUPPORTED_CHAINS } from '@/chains'
 export function ChainDropdown({
   chain,
   setChain,
-}: { chain: string; setChain: (chain: string) => void }) {
+}: {
+  chain: string
+  setChain: (chain: string) => void
+}) {
   return (
     <div className="mb-5">
       <select

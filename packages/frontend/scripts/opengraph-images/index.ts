@@ -3,6 +3,7 @@ import path from 'node:path'
 import express from 'express'
 import { generateMainPageOgImages } from './projects/generateMainPageOgImages'
 import { generateProjectOgImages } from './projects/generateProjectOgImages'
+
 const ogImageSize = { width: 1200, height: 630 }
 
 async function main() {

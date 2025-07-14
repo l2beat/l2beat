@@ -128,8 +128,8 @@ async function testPage(page: string) {
   const size = response.headers.get('metrics-data-size')
 
   return {
-    duration: duration ? parseFloat(duration) : Infinity,
-    size: size ? parseInt(size) : Infinity,
+    duration: duration ? Number.parseFloat(duration) : Number.POSITIVE_INFINITY,
+    size: size ? Number.parseInt(size) : Number.POSITIVE_INFINITY,
   }
 }
 

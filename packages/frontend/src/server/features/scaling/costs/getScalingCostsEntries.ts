@@ -3,8 +3,8 @@ import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import {
-  type ProjectChanges,
   getProjectsChangeReport,
+  type ProjectChanges,
 } from '../../projects-change-report/getProjectsChangeReport'
 import {
   type CommonScalingEntry,
@@ -49,7 +49,7 @@ function getScalingCostEntry(
   const costPerUop =
     costs?.uopsCount && costs.usd.total
       ? costs.usd.total / costs.uopsCount
-      : Infinity
+      : Number.POSITIVE_INFINITY
 
   return {
     ...getCommonScalingEntry({ project, changes }),

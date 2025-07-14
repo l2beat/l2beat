@@ -1,8 +1,8 @@
-import { execSync } from 'child_process'
-import path from 'path'
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
+import { execSync } from 'child_process'
 import { boolean, command, flag, positional } from 'cmd-ts'
+import path from 'path'
 import { rimraf } from 'rimraf'
 import { getChainConfigs } from '../config/config.discovery'
 import { TEMPLATES_PATH } from '../discovery/analysis/TemplateService'
@@ -47,7 +47,7 @@ export const SingleDiscoveryCommand = command({
       overwriteCache,
     )
 
-    const rootFolder = `./cache/single-discovery`
+    const rootFolder = './cache/single-discovery'
     const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
     await rimraf(rootFolder)

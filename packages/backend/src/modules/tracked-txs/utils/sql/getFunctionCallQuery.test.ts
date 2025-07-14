@@ -62,7 +62,7 @@ describe(getFunctionCallQuery.name, () => {
       AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${range(2)
-          .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
+          .map(() => '(traces.to_address = ? AND traces.input LIKE ?)')
           .join(' OR ')}
       )
     WHERE

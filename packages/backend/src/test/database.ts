@@ -1,5 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { type Database, createDatabase } from '@l2beat/database'
+import { createDatabase, type Database } from '@l2beat/database'
 import { mockObject } from 'earl'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {

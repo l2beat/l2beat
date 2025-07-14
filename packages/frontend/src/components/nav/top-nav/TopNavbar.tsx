@@ -1,7 +1,7 @@
 import { Logo } from '~/components/Logo'
+import { VerticalSeparator } from '../../core/VerticalSeparator'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
 import { SocialLinks } from '../../SocialLinks'
-import { VerticalSeparator } from '../../core/VerticalSeparator'
 import { SmallSearchBarButton } from '../../search-bar/SearchBarButton'
 import type { NavGroup, NavLink } from '../types'
 import { TopNavLink } from './TopNavLink'
@@ -14,7 +14,11 @@ export function TopNavbar({
   logoLink,
   groups,
   sideLinks,
-}: { logoLink: string; groups: NavGroup[]; sideLinks: NavLink[] }) {
+}: {
+  logoLink: string
+  groups: NavGroup[]
+  sideLinks: NavLink[]
+}) {
   return (
     <div className="hidden h-17 border-divider border-b bg-header-primary text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">

@@ -1,6 +1,6 @@
-import fs from 'fs'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
+import fs from 'fs'
 
 interface RollupNamesMap {
   [key: string]: string

@@ -1,4 +1,4 @@
-import { Logger, getEnv } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import { CHAINS } from './chains'
@@ -154,7 +154,7 @@ const cmd = command({
       }
     }
 
-    logger.info(`Matching summary`, { protocols: transfersCountByProtocol })
+    logger.info('Matching summary', { protocols: transfersCountByProtocol })
 
     process.exit(0)
   },

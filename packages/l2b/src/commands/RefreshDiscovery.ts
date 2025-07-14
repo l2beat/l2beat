@@ -2,9 +2,9 @@ import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type ConfigRegistry,
-  TemplateService,
   getChainConfig,
   getDiscoveryPaths,
+  TemplateService,
 } from '@l2beat/discovery'
 import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -179,26 +179,27 @@ function reportStatus(
   logger.warn(report.join(' | '))
 }
 
-function colorMap(
-  toColor: string,
-  value: number,
-  multiplier: number = 1,
-): string {
+function colorMap(toColor: string, value: number, multiplier = 1): string {
   if (value < 0.125 * multiplier) {
     return chalk.grey(toColor)
-  } else if (value < 0.25 * multiplier) {
-    return chalk.red(toColor)
-  } else if (value < 0.375 * multiplier) {
-    return chalk.redBright(toColor)
-  } else if (value < 0.5 * multiplier) {
-    return chalk.magenta(toColor)
-  } else if (value < 0.625 * multiplier) {
-    return chalk.magentaBright(toColor)
-  } else if (value < 0.75 * multiplier) {
-    return chalk.yellow(toColor)
-  } else if (value < 0.875 * multiplier) {
-    return chalk.yellowBright(toColor)
-  } else {
-    return chalk.greenBright(toColor)
   }
+  if (value < 0.25 * multiplier) {
+    return chalk.red(toColor)
+  }
+  if (value < 0.375 * multiplier) {
+    return chalk.redBright(toColor)
+  }
+  if (value < 0.5 * multiplier) {
+    return chalk.magenta(toColor)
+  }
+  if (value < 0.625 * multiplier) {
+    return chalk.magentaBright(toColor)
+  }
+  if (value < 0.75 * multiplier) {
+    return chalk.yellow(toColor)
+  }
+  if (value < 0.875 * multiplier) {
+    return chalk.yellowBright(toColor)
+  }
+  return chalk.greenBright(toColor)
 }

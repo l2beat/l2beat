@@ -1,10 +1,9 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 export async function getOpticsBeaconProxy(
   provider: IProvider,

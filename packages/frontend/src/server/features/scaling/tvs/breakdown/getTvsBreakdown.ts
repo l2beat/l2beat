@@ -6,7 +6,7 @@ import type {
 } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
-import { type TokenId, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, type TokenId } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 import type { Address } from './extractAddressesFromTokenConfig'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'

@@ -100,9 +100,9 @@ export async function searchQuery(
 ): Promise<SearchResults> {
   if (isCodeSearchTerm(searchTerm)) {
     return await searchCodeQuery(project, searchTerm, selectedAddress)
-  } else if (isProjectSearchTerm(searchTerm)) {
-    return await searchProjectQuery(searchTerm)
-  } else {
-    return await serachContractQuery(project, searchTerm)
   }
+  if (isProjectSearchTerm(searchTerm)) {
+    return await searchProjectQuery(searchTerm)
+  }
+  return await serachContractQuery(project, searchTerm)
 }

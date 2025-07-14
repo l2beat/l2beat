@@ -1,8 +1,8 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { ConfigReader } from './ConfigReader'
-import { type StructureConfig, StructureContract } from './StructureConfig'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
+import { type StructureConfig, StructureContract } from './StructureConfig'
 
 export function buildSharedModuleIndex(
   config: StructureConfig,

@@ -1,10 +1,10 @@
 import type { Project } from '@l2beat/config'
-import { UnixTime, formatSeconds, notUndefined } from '@l2beat/shared-pure'
+import { formatSeconds, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { type CommonDaEntry, getCommonDaEntry } from '../getCommonDaEntry'
 import {
-  type ThroughputTableData,
   getDaThroughputTable,
+  type ThroughputTableData,
 } from './getDaThroughputTable'
 import { getThroughputSyncWarning } from './isThroughputSynced'
 
