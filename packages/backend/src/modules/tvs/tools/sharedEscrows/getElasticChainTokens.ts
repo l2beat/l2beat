@@ -128,6 +128,11 @@ export async function getElasticChainTokens(
         ? toCheckTotalSupply[index].address
         : '0x'
 
+      if (isEmptyAddress(address)) {
+        console.log(`Address is empty for ${project.id}-${id}`)
+        continue
+      }
+
       await localStorage.writeAddress(`${project.id}-${id}`, address)
       resolved.push({ id, address: EthereumAddress(address) })
     }
@@ -137,7 +142,11 @@ export async function getElasticChainTokens(
     if (isEmptyAddress(item.address)) return
 
     const token = l2Tokens.find((t) => t.id === item.id)
-    assert(token, `${item.id} not found`)
+    // assert(token, `${item.id} not found`)
+    if (!token) {
+      console.log(`Token ${item.id} not found`)
+      return
+    }
 
     const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
       escrow,
@@ -199,7 +208,11 @@ export async function getElasticChainTokens(
   if (escrow.sharedEscrow.tokensToAssignFromL1) {
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
-      assert(token, `${l1Token} not found`)
+      // assert(token, `${l1Token} not found`)
+      if (!token) {
+        console.log(`Token ${l1Token} not found`)
+        continue
+      }
       tokensToAssignFromL1.push(
         createEscrowToken(
           project,

@@ -86,6 +86,7 @@ export class LocalStorage implements DataStorage {
   }
 
   async writeAddress(id: string, address: string): Promise<void> {
+    console.log(`Writing address ${id} to ${address}`)
     this.addresses.set(id, address)
     this.saveToFile()
     return await Promise.resolve()

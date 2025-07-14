@@ -4,9 +4,10 @@
   "import": ["../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
-      "initialAddresses": ["0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b"],
+      "maxDepth": 1,
+      "initialAddresses": ["0xBA50933C268F567BDC86E1aC131BE072C6B0b71a"],
       "overrides": {
-        "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b": {
+        "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a": {
           // Cannot do - sadly
           // "ignoreDiscovery": true,
           "fields": {

@@ -1,136 +1,119 @@
 {
   "name": "tokens-v2",
   "chain": "ethereum",
-  "blockNumber": 22917511,
-  "configHash": "0x9106107fec1d34851b1ea10d352f82b8291ee1d93906dc6946bd08596b678a48",
+  "blockNumber": 22917802,
+  "configHash": "0x333d8a1bb798a83f629b5b856f06969c513d559882cc76eef59d140af969e818",
   "entries": [
     {
-      "address": "0x0AE7242a776c416Ec198cEd9c87BBd54CdAaA948",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x1e34d2C8c64Fd6De92143b09b3E3c8a8CAC599Ac",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x21E89eA8d29E21453515273f3c218FA67Da151b0",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "GnosisSafe",
-      "address": "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992",
+      "address": "0x7beC867a752dF5A61bC4266a90FA819B703bd801",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1639684033,
-      "sinceBlock": 13818154,
+      "sinceTimestamp": 1626311867,
+      "sinceBlock": 12828535,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x942A5b042b589B6Df8B4D4c056b6fe6003bf7161",
-          "0x1e34d2C8c64Fd6De92143b09b3E3c8a8CAC599Ac",
-          "0x2c4bB8D6F71b54C1a21E05Ca5fc9e29B63e02F19",
-          "0x21E89eA8d29E21453515273f3c218FA67Da151b0",
-          "0x0AE7242a776c416Ec198cEd9c87BBd54CdAaA948",
-          "0x2722d45EdD9f142661A4C075800456d4A4d43E88",
-          "0x3B2c3D10A01d5e5a8A2419184Bdf1066AA380294",
-          "0xEdDC81D008624CA4C5eA34BF31459AA11594D545"
+          "0xd4a67224B35A5792781c0DE779D35eCFF40a3263",
+          "0x3f3a65be563676f2644d57805d8d475c1387afc2",
+          "0xdC20eDBcD22C7ce1F399CE62d3b6e2707CA2cD74"
         ],
         "$threshold": 2,
-        "domainSeparator": "0xf01819cccbafd07f4c40e6c49634c2e5df327fc132828c7b613ef959bc338b54",
+        "domainSeparator": "0x8eab146d5aebcab4d1db23822cc5db76d7832d480145b253e33faa8e750c60ac",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 146,
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992": "GnosisSafeProxy",
+        "0x7beC867a752dF5A61bC4266a90FA819B703bd801": "Proxy",
         "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x2722d45EdD9f142661A4C075800456d4A4d43E88",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x2c4bB8D6F71b54C1a21E05Ca5fc9e29B63e02F19",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x3B2c3D10A01d5e5a8A2419184Bdf1066AA380294",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x942A5b042b589B6Df8B4D4c056b6fe6003bf7161",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Euler Token",
-      "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
+      "name": "ARPA Token",
+      "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a",
       "type": "Contract",
       "sourceHashes": [
-        "0xfd8a47fd16da347b7fd4426ca2a3804a970d026f737714fe61b2110247dbc8ff"
+        "0x7768858c56a3d71e1483dabefdfdb2f83e4022b28d39b92eea53178be8c29140"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1640894681,
-      "sinceBlock": 13908728,
+      "sinceTimestamp": 1555911970,
+      "sinceBlock": 7615623,
       "values": {
         "$immutable": true,
         "$tokenData": {
-          "name": "Euler",
-          "coingeckoId": "euler",
-          "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
-          "symbol": "EUL",
+          "name": "ARPA Token",
+          "coingeckoId": "arpa",
+          "address": "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a",
+          "symbol": "ARPA",
           "decimals": 18,
-          "deploymentTimestamp": 1640894681,
-          "coingeckoListingTimestamp": 1656028800,
+          "deploymentTimestamp": 1555911970,
+          "coingeckoListingTimestamp": 1573689600,
           "category": "other",
-          "iconUrl": "https://coin-images.coingecko.com/coins/images/26149/large/Coingecko_logo_%281%29.png?1706026067",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
           "chainId": 1,
           "supply": "zero",
           "source": "canonical"
         },
-        "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "decimals": 18,
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0x033df809c37647aaca6909da290b9c07248dee4ccc343f47191e584a60295e75",
-        "getPastTotalSupply": [0, 0, 0, 0, 0],
-        "MINT_MAX_PERCENT": 2718,
-        "MINT_MIN_INTERVAL": 31536000,
-        "mintingRestrictedBefore": 1767225600,
-        "name": "Euler",
-        "symbol": "EUL",
-        "totalSupply": "27182818284590452353602874",
-        "treasury": "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992"
+        "initalSupply": "1400000000000000000000000000",
+        "isOwner": false,
+        "maxSupply": "2000000000000000000000000000",
+        "name": "ARPA Token",
+        "owner": "0x7beC867a752dF5A61bC4266a90FA819B703bd801",
+        "paused": false,
+        "symbol": "ARPA",
+        "totalSupply": "1999999999987738539641704778"
       },
-      "errors": { "getPastTotalSupply": "Processing error occurred." },
       "implementationNames": {
-        "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b": "Eul"
+        "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a": "ARPAToken"
       }
-    },
-    {
-      "address": "0xEdDC81D008624CA4C5eA34BF31459AA11594D545",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x25Aa4a183800EcaB962d84ccC7ada58d4e126992": [
-      "constructor(address _singleton)"
+    "0x7beC867a752dF5A61bC4266a90FA819B703bd801": [
+      "constructor(address _masterCopy)"
+    ],
+    "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a": [
+      "function name() view returns (string)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function removeMinter(address minterAddress)",
+      "function decimals() view returns (uint8)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function minter(address) view returns (bool)",
+      "function unpause()",
+      "function mint(address to, uint256 value) returns (bool)",
+      "function burn(uint256 value)",
+      "function paused() view returns (bool)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function renounceOwnership()",
+      "function burnFrom(address from, uint256 value)",
+      "function pause()",
+      "function owner() view returns (address)",
+      "function isOwner() view returns (bool)",
+      "function symbol() view returns (string)",
+      "function addMinter(address minterAddress)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function initalSupply() view returns (uint256)",
+      "function maxSupply() view returns (uint256)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "constructor(address manager)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -180,57 +163,10 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b": [
-      "constructor(string name, string symbol, uint256 totalSupply_, uint256 mintingRestrictedBefore_, address treasury_)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
-      "event DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event TreasuryUpdated(address newTreasury)",
-      "function ADMIN_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function MINT_MAX_PERCENT() view returns (uint256)",
-      "function MINT_MIN_INTERVAL() view returns (uint256)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function checkpoints(address account, uint32 pos) view returns (tuple(uint32 fromBlock, uint224 votes))",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function delegate(address delegatee)",
-      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
-      "function delegates(address account) view returns (address)",
-      "function getPastTotalSupply(uint256 blockNumber) view returns (uint256)",
-      "function getPastVotes(address account, uint256 blockNumber) view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getVotes(address account) view returns (uint256)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint()",
-      "function mintingRestrictedBefore() view returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function numCheckpoints(address account) view returns (uint32)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
-      "function treasury() view returns (address)",
-      "function updateTreasury(address newTreasury)"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xf24333666e66bd147de901554424c5623d051c2a08d0c17f819dd4aa17518412"
+  "permissionsConfigHash": "0xdf0bd4d7d25cb387f2f3d2c560d0131ce9535320bd1dd858c128ec87fc168775"
 }
