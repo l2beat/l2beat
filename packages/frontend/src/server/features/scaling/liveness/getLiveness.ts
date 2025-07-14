@@ -231,12 +231,14 @@ function getAnomalies(
   }
 
   const filteredAnomalies = anomalies.filter((a) => {
-    const record = realTimeAnomalies.find((r) => r.start === a.timestamp)
-    const alreadyExists =
-      record?.start === a.timestamp &&
-      record?.subtype === a.subtype &&
-      record?.projectId === a.projectId
-    return !alreadyExists
+    const record = realTimeAnomalies.find(
+      (r) =>
+        r.start === a.timestamp &&
+        r.subtype === a.subtype &&
+        r.projectId === a.projectId,
+    )
+
+    return !record
   })
 
   return [
