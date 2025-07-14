@@ -1,3 +1,212 @@
+Generated with discovered.json: 0x42b8c66b155263313eedf328bf7db6b15787426c
+
+# Diff at Mon, 14 Jul 2025 12:45:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22666223
+- current block number: 22666223
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22666223 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0188485989e211eDde9e5ba5794a3c6a3429BDb4) {
+    +++ description: None
+      address:
+-        "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4"
++        "eth:0x0188485989e211eDde9e5ba5794a3c6a3429BDb4"
+    }
+```
+
+```diff
+    EOA  (0x36105564a3e70f3FB525Cd825d42393F9aD64AA3) {
+    +++ description: None
+      address:
+-        "0x36105564a3e70f3FB525Cd825d42393F9aD64AA3"
++        "eth:0x36105564a3e70f3FB525Cd825d42393F9aD64AA3"
+    }
+```
+
+```diff
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E) {
+    +++ description: None
+      address:
+-        "0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
++        "eth:0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
+      values.$admin:
+-        "0xb463603469Bf31f189E3F6625baf8378880Df14e"
++        "eth:0xb463603469Bf31f189E3F6625baf8378880Df14e"
+      values.$implementation:
+-        "0xB6cD7eD75c008d0033ED241872639a1D8a35020a"
++        "eth:0xB6cD7eD75c008d0033ED241872639a1D8a35020a"
+      values.$pastUpgrades.0.2.0:
+-        "0xB6cD7eD75c008d0033ED241872639a1D8a35020a"
++        "eth:0xB6cD7eD75c008d0033ED241872639a1D8a35020a"
+      values.feeRecipient:
+-        "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4"
++        "eth:0x0188485989e211eDde9e5ba5794a3c6a3429BDb4"
+      values.outerVerifier:
+-        "0xE990F8e3505391d2b42C80683d403A8371Ee88B9"
++        "eth:0xE990F8e3505391d2b42C80683d403A8371Ee88B9"
+      values.owner:
+-        "0xb463603469Bf31f189E3F6625baf8378880Df14e"
++        "eth:0xb463603469Bf31f189E3F6625baf8378880Df14e"
+      values.worker:
+-        "0x7545b173780F07BF9EFA7e1561bb35B52907974D"
++        "eth:0x7545b173780F07BF9EFA7e1561bb35B52907974D"
+      implementationNames.0x3B946743DEB7B6C97F05B7a31B23562448047E3E:
+-        "ERC1967Proxy"
+      implementationNames.0xB6cD7eD75c008d0033ED241872639a1D8a35020a:
+-        "UpaVerifier"
+      implementationNames.eth:0x3B946743DEB7B6C97F05B7a31B23562448047E3E:
++        "ERC1967Proxy"
+      implementationNames.eth:0xB6cD7eD75c008d0033ED241872639a1D8a35020a:
++        "UpaVerifier"
+    }
+```
+
+```diff
+    EOA  (0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7) {
+    +++ description: None
+      address:
+-        "0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7"
++        "eth:0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7"
+    }
+```
+
+```diff
+    EOA  (0x7545b173780F07BF9EFA7e1561bb35B52907974D) {
+    +++ description: None
+      address:
+-        "0x7545b173780F07BF9EFA7e1561bb35B52907974D"
++        "eth:0x7545b173780F07BF9EFA7e1561bb35B52907974D"
+    }
+```
+
+```diff
+    EOA  (0x937094ae4Cc930DBF387CA55d80e03586435E002) {
+    +++ description: None
+      address:
+-        "0x937094ae4Cc930DBF387CA55d80e03586435E002"
++        "eth:0x937094ae4Cc930DBF387CA55d80e03586435E002"
+    }
+```
+
+```diff
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e) {
+    +++ description: None
+      address:
+-        "0xb463603469Bf31f189E3F6625baf8378880Df14e"
++        "eth:0xb463603469Bf31f189E3F6625baf8378880Df14e"
+      values.$implementation:
+-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
++        "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+      values.$members.0:
+-        "0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D"
++        "eth:0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D"
+      values.$members.1:
+-        "0x937094ae4Cc930DBF387CA55d80e03586435E002"
++        "eth:0x937094ae4Cc930DBF387CA55d80e03586435E002"
+      values.$members.2:
+-        "0xBb9A51256d4ae71dE356e83058C69bc9a33e4324"
++        "eth:0xBb9A51256d4ae71dE356e83058C69bc9a33e4324"
+      values.$members.3:
+-        "0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e"
++        "eth:0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e"
+      values.$members.4:
+-        "0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5"
++        "eth:0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5"
+      values.$members.5:
+-        "0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7"
++        "eth:0x4Aa1D1B45F30725DF5Ba9d99DDa4c27f8dac6dd7"
+      values.$members.6:
+-        "0x36105564a3e70f3FB525Cd825d42393F9aD64AA3"
++        "eth:0x36105564a3e70f3FB525Cd825d42393F9aD64AA3"
+      implementationNames.0xb463603469Bf31f189E3F6625baf8378880Df14e:
+-        "GnosisSafeProxy"
+      implementationNames.0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        "GnosisSafeL2"
+      implementationNames.eth:0xb463603469Bf31f189E3F6625baf8378880Df14e:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e) {
+    +++ description: None
+      address:
+-        "0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e"
++        "eth:0xbB1de72013286C40c3a7E8468a5eAe2aE36EE10e"
+    }
+```
+
+```diff
+    EOA  (0xBb9A51256d4ae71dE356e83058C69bc9a33e4324) {
+    +++ description: None
+      address:
+-        "0xBb9A51256d4ae71dE356e83058C69bc9a33e4324"
++        "eth:0xBb9A51256d4ae71dE356e83058C69bc9a33e4324"
+    }
+```
+
+```diff
+    EOA  (0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5) {
+    +++ description: None
+      address:
+-        "0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5"
++        "eth:0xCA5C66933149d95fbA1050AAF7046b08A7F28AE5"
+    }
+```
+
+```diff
+    EOA  (0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D) {
+    +++ description: None
+      address:
+-        "0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D"
++        "eth:0xE3ac80DAe2a6e100A74bB179aBB65383e1B21B3D"
+    }
+```
+
+```diff
+    contract  (0xE990F8e3505391d2b42C80683d403A8371Ee88B9) {
+    +++ description: None
+      address:
+-        "0xE990F8e3505391d2b42C80683d403A8371Ee88B9"
++        "eth:0xE990F8e3505391d2b42C80683d403A8371Ee88B9"
+      implementationNames.0xE990F8e3505391d2b42C80683d403A8371Ee88B9:
+-        ""
+      implementationNames.eth:0xE990F8e3505391d2b42C80683d403A8371Ee88B9:
++        ""
+    }
+```
+
+```diff
++   Status: CREATED
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xE990F8e3505391d2b42C80683d403A8371Ee88B9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7bc5f160b64914eb447a9937561e6d114996da69
 
 # Diff at Fri, 04 Jul 2025 12:19:10 GMT:

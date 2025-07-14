@@ -1,6 +1,7 @@
 import type { ContractValue } from '@l2beat/discovery'
 import {
   assert,
+  ChainSpecificAddress,
   // assert,
   EthereumAddress,
   formatSeconds,
@@ -83,7 +84,7 @@ const preconfRouter = discovery.getContractValue(
 )
 
 assert(
-  preconfRouter === '0x0000000000000000000000000000000000000000',
+  preconfRouter === 'eth:0x0000000000000000000000000000000000000000',
   'preconf router is set, update sequencing sections',
 ) // also check this line:         require(p.blocks[0].signalSlots.length == 0, InvalidSignalSlots());
 
@@ -157,7 +158,7 @@ export const taiko: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+        inbox: EthereumAddress('0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a'),
         sequencers: [],
         topics: [
           '0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26', // BlockProposedV2
@@ -173,7 +174,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0xef16e845',
           functionSignature:
             'function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)',
@@ -188,7 +189,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0x648885fb',
           functionSignature:
             'function proposeBlockV2(bytes _params, bytes _txList) returns (tuple meta_)',
@@ -203,7 +204,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0x0c8f4a10',
           functionSignature:
             'function proposeBlocksV2(bytes[] _paramsArr, bytes[] _txListArr) returns (tuple[] metaArr_)',
@@ -218,7 +219,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0x47faad14',
           functionSignature:
             'function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)',
@@ -235,7 +236,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0x10d008bd',
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
@@ -250,7 +251,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0x440b6e18',
           functionSignature:
             'function proveBlocks(uint64[] _blockIds, bytes[] _inputs, bytes _batchProof)',
@@ -265,7 +266,7 @@ export const taiko: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0xc9cc2843',
           functionSignature:
             'function proveBatches(bytes _params, bytes _proof)',
@@ -279,7 +280,7 @@ export const taiko: ScalingProject = {
         uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
-          address: taikoL1ContractAddress,
+          address: ChainSpecificAddress.address(taikoL1ContractAddress),
           selector: '0x0cc62b42',
           functionSignature: 'function verifyBatches(uint64 _length)',
           sinceTimestamp: UnixTime(1747823664),

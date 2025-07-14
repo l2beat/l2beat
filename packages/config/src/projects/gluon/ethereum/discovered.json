@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "SpotData",
-      "address": "0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
+      "address": "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
       "type": "Contract",
       "sourceHashes": [
         "0x60956e4310b2c0f9e257be22fc2a90fd8fb33c31afde71e079637abfc2003cca"
@@ -17,19 +17,19 @@
       "values": {
         "$immutable": true,
         "currentGblockNumber": 46358,
-        "currentLogic": "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "currentLogic": "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 2,
         "nonce": 797,
         "submissionBlock": 19622320
       },
       "implementationNames": {
-        "0x0d283D685F0A741C463846176e4c8EFF90D3F9EC": "SpotData"
+        "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC": "SpotData"
       }
     },
     {
       "name": "RegistryData",
-      "address": "0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
+      "address": "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
       "type": "Contract",
       "sourceHashes": [
         "0xaace81ba02c18429f1f3bbdb0f3ed454c5a1e5b71c806bcafd468ccb0d895f0a"
@@ -39,17 +39,17 @@
       "sinceBlock": 8929683,
       "values": {
         "$immutable": true,
-        "currentLogic": "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "currentLogic": "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 0
       },
       "implementationNames": {
-        "0x0fC25C7931679B838209c484d49Df0Cb9E633C41": "RegistryData"
+        "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41": "RegistryData"
       }
     },
     {
       "name": "SpotLogic",
-      "address": "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+      "address": "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
       "type": "Contract",
       "sourceHashes": [
         "0xd2bd180f3e9f88c9860dc063c2c7980436adacaeca7a3598a05d26dacdb8ff76"
@@ -63,29 +63,29 @@
         "canSubmit": true,
         "confirmationDelay": 5,
         "currentGblockNumber": 46358,
-        "currentLogic": "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
-        "data": "0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
+        "currentLogic": "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D",
+        "data": "eth:0x0d283D685F0A741C463846176e4c8EFF90D3F9EC",
         "exitCounts": 0,
-        "extensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
-        "getExtensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "extensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getExtensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "hasBeenAbandoned": true,
         "id": 2,
         "isOn": false,
         "name": "17348474894813825882129073499594235812633677095075933050106463134462708016762",
-        "operator": "0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
+        "operator": "eth:0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
         "state": 0,
         "submissionInterval": 36,
-        "upgradeOperator": "0x0000000000000000000000000000000000000000",
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000",
         "visibilityDelay": 1
       },
       "implementationNames": {
-        "0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": "SpotLogic"
+        "eth:0x2D627FF93d32f5FEBb04d68409A889895B4aef2D": "SpotLogic"
       }
     },
     {
       "name": "RegistryLogic",
-      "address": "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+      "address": "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
       "type": "Contract",
       "sourceHashes": [
         "0x4684cbe7c244176dec5da5457624b1032bfa285743f6efcb53d6e1bd6d08f84c"
@@ -95,27 +95,27 @@
       "sinceBlock": 8929689,
       "values": {
         "$immutable": true,
-        "currentLogic": "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
-        "data": "0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "currentLogic": "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C",
+        "data": "eth:0x0fC25C7931679B838209c484d49Df0Cb9E633C41",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 0,
         "isOn": true,
-        "old": "0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
+        "old": "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
         "state": 1,
-        "upgradeOperator": "0x0000000000000000000000000000000000000000"
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C": "RegistryLogic"
+        "eth:0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C": "RegistryLogic"
       }
     },
     {
-      "address": "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+      "address": "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DerivativesData",
-      "address": "0x563052914Fd973a2305763269A106a7B0B6D50Cc",
+      "address": "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc",
       "type": "Contract",
       "sourceHashes": [
         "0x6a6c3e88d7035a123ae7218c83a0c2ae43ea59031938a1d2f84b5f10b0971799"
@@ -126,25 +126,25 @@
       "values": {
         "$immutable": true,
         "currentGblockNumber": 3272,
-        "currentLogic": "0xDfBFe895e07e5115773Cb9631CB2148114589caC",
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "currentLogic": "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 3,
         "name": "30095686778059018690877517746118158831983634621945428419321611611857758462194",
         "nonce": 529,
         "submissionBlock": 19643823
       },
       "implementationNames": {
-        "0x563052914Fd973a2305763269A106a7B0B6D50Cc": "DerivativesData"
+        "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc": "DerivativesData"
       }
     },
     {
-      "address": "0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
+      "address": "eth:0x5CcAAAE7Bea14E8e04FB0FC7ED16DF49d5678Eb8",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Gluon",
-      "address": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+      "address": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
       "type": "Contract",
       "sourceHashes": [
         "0xbeaf3aa965abd0080866e6b7678d9fcd01b57afbcb108dde7cec28201e9bf73b"
@@ -155,23 +155,23 @@
       "values": {
         "$immutable": true,
         "getOwners": [
-          "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
-          "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
         ],
         "owners": [
-          "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
-          "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
         ],
         "totalAppsCount": 4,
         "version": "1.1.0"
       },
       "implementationNames": {
-        "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB": "Gluon"
+        "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB": "Gluon"
       }
     },
     {
       "name": "ApiKeyRegistry",
-      "address": "0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
+      "address": "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0",
       "type": "Contract",
       "sourceHashes": [
         "0xe8ca5c8a73c3851118ee0c57955bbcb56f68bb600dec6bb2cfe1f45c3ad6983d"
@@ -182,19 +182,19 @@
       "values": {
         "$immutable": true,
         "getOwners": [
-          "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
-          "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
         ],
         "isOn": true,
         "version": "0.41.0"
       },
       "implementationNames": {
-        "0x7B70aCD346892736f9f6c7F4f196B07400a50Da0": "ApiKeyRegistry"
+        "eth:0x7B70aCD346892736f9f6c7F4f196B07400a50Da0": "ApiKeyRegistry"
       }
     },
     {
       "name": "StakeLogic",
-      "address": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+      "address": "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
       "type": "Contract",
       "sourceHashes": [
         "0xf3c0d8b3babd0cfa68d014bdf409a030133c362c1bef63195ca06e11afcd38bd"
@@ -207,18 +207,18 @@
         "$immutable": true,
         "activationInterval": 11520,
         "currentIntervalIndex": 25,
-        "currentLogic": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
-        "data": "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
-        "extensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
-        "getExtensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "currentLogic": "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+        "data": "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
+        "extensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getExtensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
         "getToBeDistributed": [0, "1345948284963741724516", 2727341811],
         "getTokens": [
-          "0x0000000000000000000000000000000000000000",
-          "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
         ],
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
-        "governanceToken": "0xBbff34E47E559ef680067a6B1c980639EEb64D24",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "governanceToken": "eth:0xBbff34E47E559ef680067a6B1c980639EEb64D24",
         "id": 1,
         "intervalSize": 172800,
         "isOn": true,
@@ -226,19 +226,19 @@
         "quorumPercentage": 50,
         "state": 1,
         "tokens": [
-          "0x0000000000000000000000000000000000000000",
-          "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+          "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
         ],
-        "upgradeOperator": "0x0000000000000000000000000000000000000000"
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4": "StakeLogic"
+        "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4": "StakeLogic"
       }
     },
     {
       "name": "StakeData",
-      "address": "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
+      "address": "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77",
       "type": "Contract",
       "sourceHashes": [
         "0x50df386c3dc507e245b90c20b9969b4fc26c4d36624723856d758d5f51347048"
@@ -248,22 +248,22 @@
       "sinceBlock": 8929704,
       "values": {
         "$immutable": true,
-        "currentLogic": "0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "currentLogic": "eth:0x84e34fD82FC368F1a072075114AdC4b552a7a1F4",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "id": 1
       },
       "implementationNames": {
-        "0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77": "StakeData"
+        "eth:0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77": "StakeData"
       }
     },
     {
-      "address": "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa",
+      "address": "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LegacyTokensExtension",
-      "address": "0xDA88EfA53c85Afa30564bb651A2E76b99a232082",
+      "address": "eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082",
       "type": "Contract",
       "sourceHashes": [
         "0x7842af2456839eaca09b5cc4cff3de4a54887bce623c2c1edf75642a996f048f"
@@ -274,30 +274,30 @@
       "values": {
         "$immutable": true,
         "getOwners": [
-          "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
-          "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
         ],
-        "getTokens": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"],
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "getTokens": ["eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"],
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "owners": [
-          "0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
-          "0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
+          "eth:0x4D2130d9D20428Dc249a1e938A0bcEA4b5B9ac1A",
+          "eth:0xaC01F01f51F0bdd012C1838Bd5ceF330E6c7FFCa"
         ],
-        "tokens": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"],
+        "tokens": ["eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"],
         "version": "2.0.2"
       },
       "implementationNames": {
-        "0xDA88EfA53c85Afa30564bb651A2E76b99a232082": "LegacyTokensExtension"
+        "eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082": "LegacyTokensExtension"
       }
     },
     {
-      "address": "0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
+      "address": "eth:0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DerivativesLogic",
-      "address": "0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+      "address": "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC",
       "type": "Contract",
       "sourceHashes": [
         "0x55d07767faeba9ec203367433b6cce8b8e03e7881cd40bc3112740eb6efcab7b"
@@ -310,27 +310,27 @@
         "abandonPoint": 40320,
         "canSubmit": true,
         "confirmationDelay": 5,
-        "currentLogic": "0xDfBFe895e07e5115773Cb9631CB2148114589caC",
-        "data": "0x563052914Fd973a2305763269A106a7B0B6D50Cc",
+        "currentLogic": "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC",
+        "data": "eth:0x563052914Fd973a2305763269A106a7B0B6D50Cc",
         "exitCounts": 0,
-        "extensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
-        "getExtensions": ["0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "extensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
+        "getExtensions": ["eth:0xDA88EfA53c85Afa30564bb651A2E76b99a232082"],
         "getSubChains": [],
-        "gluon": "0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
+        "gluon": "eth:0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB",
         "hasBeenAbandoned": true,
         "id": 3,
         "isOn": false,
         "name": "66123409299732210049441372196138309932984984378806555469286224562595162623009",
         "nullInstrument": 0,
-        "operator": "0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
+        "operator": "eth:0xdB2E992E3026C16b95299457a3F62636Bd67bf50",
         "state": 0,
         "subChains": [],
         "submissionInterval": 36,
-        "upgradeOperator": "0x0000000000000000000000000000000000000000",
+        "upgradeOperator": "eth:0x0000000000000000000000000000000000000000",
         "visibilityDelay": 1
       },
       "implementationNames": {
-        "0xDfBFe895e07e5115773Cb9631CB2148114589caC": "DerivativesLogic"
+        "eth:0xDfBFe895e07e5115773Cb9631CB2148114589caC": "DerivativesLogic"
       }
     }
   ],
@@ -698,5 +698,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xc716afa0acf3dae609ceb47765886203ddaf4104e99fb9de5d69658df53c70de"
+  "permissionsConfigHash": "0x54e009699bc683f838619d10a8c9de53e9e6bc24424a4883e68258b97730a053"
 }

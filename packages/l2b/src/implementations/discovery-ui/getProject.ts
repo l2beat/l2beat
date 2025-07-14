@@ -12,7 +12,7 @@ import {
   type TemplateService,
 } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
@@ -74,7 +74,7 @@ export function getProject(
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
           config.structure,
-          entry.address,
+          ChainSpecificAddress.address(entry.address),
         )
 
         if (entry.template !== undefined) {
@@ -86,7 +86,7 @@ export function getProject(
 
         const contractColorConfig = makeEntryColorConfig(
           config.color,
-          entry.address,
+          ChainSpecificAddress.address(entry.address),
           templateService.loadContractTemplateColor(entry.template),
         )
 
@@ -118,7 +118,10 @@ export function getProject(
       ),
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
-        .filter((x) => x.address !== EthereumAddress.ZERO)
+        .filter(
+          (x) =>
+            ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
+        )
         .map((x): ApiAddressEntry => {
           const roles = getRoles(x)
           return {

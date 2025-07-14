@@ -1,3 +1,1542 @@
+Generated with discovered.json: 0xeb187df25aae29ad573ee3ae2cdb580ca24914f8
+
+# Diff at Mon, 14 Jul 2025 13:11:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 348602301
+- current block number: 348602301
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 348602301 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0000000000000000000000000000000000000001) {
+    +++ description: None
+      address:
+-        "0x0000000000000000000000000000000000000001"
++        "arb1:0x0000000000000000000000000000000000000001"
+    }
+```
+
+```diff
+    EOA  (0x00000000000000000000000000000000000A4B86) {
+    +++ description: None
+      address:
+-        "0x00000000000000000000000000000000000A4B86"
++        "arb1:0x00000000000000000000000000000000000A4B86"
+    }
+```
+
+```diff
+    EOA bartek.eth-L2BEAT (0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae) {
+    +++ description: None
+      address:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      address:
+-        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
++        "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+      values.$admin:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      values.$implementation:
+-        "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"
++        "arb1:0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"
+      values.$pastUpgrades.0.2.0:
+-        "0x4bF6365278F340E759e7BB4732fE8B507784eAEB"
++        "arb1:0x4bF6365278F340E759e7BB4732fE8B507784eAEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x370ED500E9FEBC1ab05aC0A1617F8775aB80c48e"
++        "arb1:0x370ED500E9FEBC1ab05aC0A1617F8775aB80c48e"
+      values.$pastUpgrades.2.2.0:
+-        "0xEdE95739749BfA021134E41F520d784c99323D6B"
++        "arb1:0xEdE95739749BfA021134E41F520d784c99323D6B"
+      values.$pastUpgrades.3.2.0:
+-        "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"
++        "arb1:0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"
+      values.beaconProxyFactory:
+-        "0x3fE38087A94903A9D946fa1915e1772fe611000f"
++        "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f"
+      values.counterpartGateway:
+-        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
++        "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC"
+      values.router:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      implementationNames.0x09e9222E96E7B4AE2a407B98d48e330053351EEe:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x1DCf7D03574fbC7C205F41f2e116eE094a652e93:
+-        "L2ERC20Gateway"
+      implementationNames.arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x1DCf7D03574fbC7C205F41f2e116eE094a652e93:
++        "L2ERC20Gateway"
+    }
+```
+
+```diff
+    EOA  (0x0adc7D8eB4C01219858a579C9539780CD9575035) {
+    +++ description: None
+      address:
+-        "0x0adc7D8eB4C01219858a579C9539780CD9575035"
++        "arb1:0x0adc7D8eB4C01219858a579C9539780CD9575035"
+    }
+```
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      address:
+-        "0x1D62fFeB72e4c360CcBbacf7c965153b00260417"
++        "arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0x1D62fFeB72e4c360CcBbacf7c965153b00260417:
+-        "ArbitrumDAOConstitution"
+      implementationNames.arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417:
++        "ArbitrumDAOConstitution"
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      address:
+-        "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d"
++        "arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.recipientsData.0.recipients.0:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      implementationNames.0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d:
+-        "RewardDistributor"
+      implementationNames.arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d:
++        "RewardDistributor"
+    }
+```
+
+```diff
+    EOA EmilianoBonassi-Conduit (0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93) {
+    +++ description: None
+      address:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+    }
+```
+
+```diff
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+      address:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x41740588b86B4e0629b83A4e28786FF94361c3A3"
++        "arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3"
+      values.$pastUpgrades.0.2.0:
+-        "0x41740588b86B4e0629b83A4e28786FF94361c3A3"
++        "arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      values.accessControl.PROPOSER_ROLE.members.1:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.accessControl.PROPOSER_ROLE.members.2:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      values.Canceller.0:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++++ description: Executing proposals is only open to all addresses if this resolves to the 0x0 address
++++ severity: HIGH
+      values.Executor.0:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.Proposer.0:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      values.Proposer.1:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.Proposer.2:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      values.timelockAdminAC.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x41740588b86B4e0629b83A4e28786FF94361c3A3:
+-        "ArbitrumTimelock"
+      implementationNames.arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3:
++        "ArbitrumTimelock"
+    }
+```
+
+```diff
+    contract StandardArbERC20 (0x3f770Ac673856F105b586bb393d122721265aD46) {
+    +++ description: None
+      address:
+-        "0x3f770Ac673856F105b586bb393d122721265aD46"
++        "arb1:0x3f770Ac673856F105b586bb393d122721265aD46"
+      values.l1Address:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.l2Gateway:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      implementationNames.0x3f770Ac673856F105b586bb393d122721265aD46:
+-        "StandardArbERC20"
+      implementationNames.arb1:0x3f770Ac673856F105b586bb393d122721265aD46:
++        "StandardArbERC20"
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (0x3fE38087A94903A9D946fa1915e1772fe611000f) {
+    +++ description: None
+      address:
+-        "0x3fE38087A94903A9D946fa1915e1772fe611000f"
++        "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f"
+      values.beacon:
+-        "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333"
++        "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333"
+      implementationNames.0x3fE38087A94903A9D946fa1915e1772fe611000f:
+-        "BeaconProxyFactory"
+      implementationNames.arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f:
++        "BeaconProxyFactory"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      address:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.1:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.$members.2:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.$members.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+      values.$members.6:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.$members.7:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+      values.$members.8:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.9:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.$members.10:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.$members.11:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+      values.GnosisSafe_modules.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641:
+-        "GnosisSafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641:
++        "GnosisSafeProxy"
+      implementationNames.arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+      address:
+-        "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65"
++        "arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65"
+      values.counterpartGateway:
+-        "0xD3B5b60020504bc3489D6949d545893982BA3011"
++        "arb1:0xD3B5b60020504bc3489D6949d545893982BA3011"
+      values.l1Counterpart:
+-        "0xD3B5b60020504bc3489D6949d545893982BA3011"
++        "arb1:0xD3B5b60020504bc3489D6949d545893982BA3011"
+      values.l1Dai:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "arb1:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.l2Dai:
+-        "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
++        "arb1:0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1"
+      values.l2Router:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      implementationNames.0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65:
+-        "L2DaiGateway"
+      implementationNames.arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65:
++        "L2DaiGateway"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C) {
+    +++ description: Token governance contract for the Security Council member elections.
+      address:
+-        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
++        "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0xbD5016a7946a82b938242573ED63ccB8962A4acB"
++        "arb1:0xbD5016a7946a82b938242573ED63ccB8962A4acB"
+      values.$pastUpgrades.0.2.0:
+-        "0xbD5016a7946a82b938242573ED63ccB8962A4acB"
++        "arb1:0xbD5016a7946a82b938242573ED63ccB8962A4acB"
+      values.nomineeElectionGovernor:
+-        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
++        "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.securityCouncilManager:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      values.token:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548"
+      implementationNames.0x467923B9AE90BDB36BA88eCA11604D45F13b712C:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xbD5016a7946a82b938242573ED63ccB8962A4acB:
+-        "SecurityCouncilMemberElectionGovernor"
+      implementationNames.arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0xbD5016a7946a82b938242573ED63ccB8962A4acB:
++        "SecurityCouncilMemberElectionGovernor"
+    }
+```
+
+```diff
+    EOA yoav.eth-EF (0x475816ca2a31D601B4e336f5c2418A67978aBf09) {
+    +++ description: None
+      address:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      address:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      values.$admin:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      values.$implementation:
+-        "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"
++        "arb1:0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"
+      values.$pastUpgrades.0.2.0:
+-        "0xb30751052797AdBDdbF4847045E51E65e48BAF9c"
++        "arb1:0xb30751052797AdBDdbF4847045E51E65e48BAF9c"
+      values.$pastUpgrades.1.2.0:
+-        "0x176a9d89d235512Ad5CB4b6A0879D704D8315eF8"
++        "arb1:0x176a9d89d235512Ad5CB4b6A0879D704D8315eF8"
+      values.$pastUpgrades.2.2.0:
+-        "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"
++        "arb1:0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"
+      values.counterpartGateway:
+-        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "arb1:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      values.defaultGateway:
+-        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
++        "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+      values.router:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      implementationNames.0x5288c571Fd7aD117beA99bF60FE0846C4E84F933:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xe80eb0238029333e368e0bDDB7acDf1b9cb28278:
+-        "L2GatewayRouter"
+      implementationNames.arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0xe80eb0238029333e368e0bDDB7acDf1b9cb28278:
++        "L2GatewayRouter"
+    }
+```
+
+```diff
+    EOA DennisonBertram-Tally (0x59c8535419BbCb8AdFFDB3C835435E907e3B183B) {
+    +++ description: None
+      address:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+    }
+```
+
+```diff
+    EOA  (0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676) {
+    +++ description: None
+      address:
+-        "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676"
++        "arb1:0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676"
+    }
+```
+
+```diff
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      address:
+-        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
++        "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+      values.$admin:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      values.$implementation:
+-        "0x806421D09cDb253aa9d128a658e60c0B95eFFA01"
++        "arb1:0x806421D09cDb253aa9d128a658e60c0B95eFFA01"
+      values.$pastUpgrades.0.2.0:
+-        "0xb01dB0529B80B73a86ecD75Ae3559844319575E5"
++        "arb1:0xb01dB0529B80B73a86ecD75Ae3559844319575E5"
+      values.$pastUpgrades.1.2.0:
+-        "0xc4940069140142236D4065b866018f7b2BeC77fD"
++        "arb1:0xc4940069140142236D4065b866018f7b2BeC77fD"
+      values.$pastUpgrades.2.2.0:
+-        "0x0db4f16c99B0aE9b00fc09bF69b36c7d73c45CBE"
++        "arb1:0x0db4f16c99B0aE9b00fc09bF69b36c7d73c45CBE"
+      values.$pastUpgrades.3.2.0:
+-        "0xB642058A41D414D9De3F36D14051623e557f1052"
++        "arb1:0xB642058A41D414D9De3F36D14051623e557f1052"
+      values.$pastUpgrades.4.2.0:
+-        "0x806421D09cDb253aa9d128a658e60c0B95eFFA01"
++        "arb1:0x806421D09cDb253aa9d128a658e60c0B95eFFA01"
+      values.counterpartGateway:
+-        "0xd92023E9d9911199a6711321D1277285e6d4e2db"
++        "arb1:0xd92023E9d9911199a6711321D1277285e6d4e2db"
+      values.l1Weth:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "arb1:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.l2Weth:
+-        "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
++        "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+      values.router:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      implementationNames.0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x806421D09cDb253aa9d128a658e60c0B95eFFA01:
+-        "L2WethGateway"
+      implementationNames.arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x806421D09cDb253aa9d128a658e60c0B95eFFA01:
++        "L2WethGateway"
+    }
+```
+
+```diff
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318) {
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+      address:
+-        "0x6D2457a4ad276000A615295f7A80F79E48CcD318"
++        "arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318"
+      values.counterpartGateway:
+-        "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676"
++        "arb1:0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676"
+      values.l1Counterpart:
+-        "0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676"
++        "arb1:0x6142f1C8bBF02E6A6bd074E8d564c9A5420a0676"
+      values.l1Lpt:
+-        "0x58b6A8A3302369DAEc383334672404Ee733aB239"
++        "arb1:0x58b6A8A3302369DAEc383334672404Ee733aB239"
+      values.l2Lpt:
+-        "0x289ba1701C2F088cf0faf8B3705246331cB8A839"
++        "arb1:0x289ba1701C2F088cf0faf8B3705246331cB8A839"
+      values.l2Router:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      implementationNames.0x6D2457a4ad276000A615295f7A80F79E48CcD318:
+-        "L2LPTGateway"
+      implementationNames.arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318:
++        "L2LPTGateway"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad) {
+    +++ description: Token governance contract for the Security Council member removals.
+      address:
+-        "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
++        "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635"
++        "arb1:0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635"
+      values.$pastUpgrades.0.2.0:
+-        "0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635"
++        "arb1:0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635"
+      values.EXCLUDE_ADDRESS:
+-        "0x00000000000000000000000000000000000A4B86"
++        "arb1:0x00000000000000000000000000000000000A4B86"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.securityCouncilManager:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      values.token:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548"
+      implementationNames.0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635:
+-        "SecurityCouncilMemberRemovalGovernor"
+      implementationNames.arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635:
++        "SecurityCouncilMemberRemovalGovernor"
+    }
+```
+
+```diff
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a) {
+    +++ description: None
+      address:
+-        "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a"
++        "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a"
+      values.l1TimelockAddr:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "arb1:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+      values.RETRYABLE_TICKET_MAGIC:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
++        "arb1:0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      implementationNames.0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a:
+-        "UpgradeExecRouteBuilder"
+      implementationNames.arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a:
++        "UpgradeExecRouteBuilder"
+    }
+```
+
+```diff
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4) {
+    +++ description: Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+      address:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
++        "arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
+      values.$pastUpgrades.0.2.0:
+-        "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
++        "arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
+      values.EXCLUDE_ADDRESS:
+-        "0x00000000000000000000000000000000000A4B86"
++        "arb1:0x00000000000000000000000000000000000A4B86"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.timelock:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      values.token:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548"
+      implementationNames.0x789fC99093B09aD01C34DC7251D0C89ce743e5a4:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9:
+-        "L2ArbitrumGovernor"
+      implementationNames.arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9:
++        "L2ArbitrumGovernor"
+    }
+```
+
+```diff
+    EOA JohnMorrow-Gauntlet (0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67) {
+    +++ description: None
+      address:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+    }
+```
+
+```diff
+    EOA GriffGreen-Giveth (0x882c6FCb3D358b9d70B97c6999159cea64168B6F) {
+    +++ description: None
+      address:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+    }
+```
+
+```diff
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0) {
+    +++ description: Token governance contract for the Security Council nominee elections.
+      address:
+-        "0x8a1cDA8dee421cD06023470608605934c16A05a0"
++        "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0xd3Ae921B220bedC2f94a5968E25535a476A9518C"
++        "arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C"
+      values.$pastUpgrades.0.2.0:
+-        "0x8436A1bc9f9f9EB0cF1B51942C5657b60A40CCDD"
++        "arb1:0x8436A1bc9f9f9EB0cF1B51942C5657b60A40CCDD"
+      values.$pastUpgrades.1.2.0:
+-        "0xd3Ae921B220bedC2f94a5968E25535a476A9518C"
++        "arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C"
+      values.EXCLUDE_ADDRESS:
+-        "0x00000000000000000000000000000000000A4B86"
++        "arb1:0x00000000000000000000000000000000000A4B86"
+      values.nomineeVetter:
+-        "0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C"
++        "arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.securityCouncilManager:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      values.securityCouncilMemberElectionGovernor:
+-        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
++        "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+      values.token:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548"
+      implementationNames.0x8a1cDA8dee421cD06023470608605934c16A05a0:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xd3Ae921B220bedC2f94a5968E25535a476A9518C:
+-        "SecurityCouncilNomineeElectionGovernor"
+      implementationNames.arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C:
++        "SecurityCouncilNomineeElectionGovernor"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548) {
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+      address:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"
++        "arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"
+      values.$pastUpgrades.0.2.0:
+-        "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"
++        "arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"
+      values.l1Address:
+-        "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
++        "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0x912CE59144191C1204E64559FE8253a0e49E6548:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882:
+-        "L2ArbitrumToken"
+      implementationNames.arb1:0x912CE59144191C1204E64559FE8253a0e49E6548:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882:
++        "L2ArbitrumToken"
+    }
+```
+
+```diff
+    EOA StevenThornton-OpenZeppelin (0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC) {
+    +++ description: None
+      address:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    EOA GoncaloMagalhaes-Immunefi (0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8) {
+    +++ description: None
+      address:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
+```diff
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a) {
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+      address:
+-        "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
++        "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
+      values.SENTINEL_OWNERS:
+-        "0x0000000000000000000000000000000000000001"
++        "arb1:0x0000000000000000000000000000000000000001"
+      values.store:
+-        "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
++        "arb1:0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
+      implementationNames.0x9BF7b8884Fa381a45f8CB2525905fb36C996297a:
+-        "SecurityCouncilMemberSyncAction"
+      implementationNames.arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a:
++        "SecurityCouncilMemberSyncAction"
+    }
+```
+
+```diff
+    EOA  (0xa723C008e76E379c55599D2E4d93879BeaFDa79C) {
+    +++ description: None
+      address:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
++        "arb1:0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+    }
+```
+
+```diff
+    EOA  (0xa98290a7A282d8249544D35b288E160A5580D57E) {
+    +++ description: None
+      address:
+-        "0xa98290a7A282d8249544D35b288E160A5580D57E"
++        "arb1:0xa98290a7A282d8249544D35b288E160A5580D57E"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      address:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.1:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.$members.2:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.$members.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+      values.$members.6:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.$members.7:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+      values.$members.8:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.9:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.$members.10:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.$members.11:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+      values.GnosisSafe_modules.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941:
+-        "GnosisSafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941:
++        "GnosisSafeProxy"
+      implementationNames.arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1) {
+    +++ description: None
+      address:
+-        "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
++        "arb1:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+    }
+```
+
+```diff
+    EOA Michael Lewellen - blockaid (0xBBD2E01eFB88ce00F8f5b6B9a696966070089392) {
+    +++ description: None
+      address:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+    }
+```
+
+```diff
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649) {
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+      address:
+-        "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649"
++        "arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.recipientsData.0.recipients.0:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      implementationNames.0xbF5041Fc07E1c866D15c749156657B8eEd0fb649:
+-        "RewardDistributor"
+      implementationNames.arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649:
++        "RewardDistributor"
+    }
+```
+
+```diff
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+      address:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x41740588b86B4e0629b83A4e28786FF94361c3A3"
++        "arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3"
+      values.$pastUpgrades.0.2.0:
+-        "0x41740588b86B4e0629b83A4e28786FF94361c3A3"
++        "arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      implementationNames.0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x41740588b86B4e0629b83A4e28786FF94361c3A3:
+-        "ArbitrumTimelock"
+      implementationNames.arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3:
++        "ArbitrumTimelock"
+    }
+```
+
+```diff
+    EOA  (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      address:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "arb1:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+    }
+```
+
+```diff
+    EOA  (0xc43a77b64b34551beA865C9E85A116B444EF44B1) {
+    +++ description: None
+      address:
+-        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
++        "arb1:0xc43a77b64b34551beA865C9E85A116B444EF44B1"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C) {
+    +++ description: None
+      address:
+-        "0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C"
++        "arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6"
++        "arb1:0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6"
+      values.$members.1:
+-        "0xa98290a7A282d8249544D35b288E160A5580D57E"
++        "arb1:0xa98290a7A282d8249544D35b288E160A5580D57E"
+      values.$members.2:
+-        "0xc43a77b64b34551beA865C9E85A116B444EF44B1"
++        "arb1:0xc43a77b64b34551beA865C9E85A116B444EF44B1"
+      values.$members.3:
+-        "0x0adc7D8eB4C01219858a579C9539780CD9575035"
++        "arb1:0x0adc7D8eB4C01219858a579C9539780CD9575035"
+      values.$members.4:
+-        "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
++        "arb1:0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
+      implementationNames.0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C:
+-        "GnosisSafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C:
++        "GnosisSafeProxy"
+      implementationNames.arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+      address:
+-        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
++        "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"
++        "arb1:0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"
+      values.$pastUpgrades.0.2.0:
+-        "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"
++        "arb1:0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"
+      values.counterpartGateway:
+-        "0xbbcE8aA77782F13D4202a230d978F361B011dB27"
++        "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27"
+      values.router:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      implementationNames.0xCaD7828a19b363A2B44717AFB1786B5196974D8E:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056:
+-        "L2ReverseCustomGateway"
+      implementationNames.arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056:
++        "L2ReverseCustomGateway"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+      address:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"
++        "arb1:0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"
+      values.$pastUpgrades.0.2.0:
+-        "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"
++        "arb1:0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      values.executors.0:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      values.executors.1:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      implementationNames.0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115:
+-        "UpgradeExecutor"
+      implementationNames.arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115:
++        "UpgradeExecutor"
+    }
+```
+
+```diff
+    EOA  (0xD3B5b60020504bc3489D6949d545893982BA3011) {
+    +++ description: None
+      address:
+-        "0xD3B5b60020504bc3489D6949d545893982BA3011"
++        "arb1:0xD3B5b60020504bc3489D6949d545893982BA3011"
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+      address:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"
++        "arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"
+      values.$pastUpgrades.0.2.0:
+-        "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"
++        "arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"
+      values.cohortReplacerAC.0:
+-        "0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
++        "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C"
+      values.defaultAdminAC.0:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.0:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.1:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.2:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.3:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.4:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.5:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.6:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.7:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.8:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.9:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.10:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: LOW
+      values.getBothCohorts.11:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.getFirstCohort.0:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb1:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.getFirstCohort.1:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb1:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+      values.getFirstCohort.2:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb1:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.getFirstCohort.3:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb1:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+      values.getFirstCohort.4:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.getFirstCohort.5:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb1:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.getSecondCohort.0:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb1:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.getSecondCohort.1:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.getSecondCohort.2:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb1:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+      values.getSecondCohort.3:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb1:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.getSecondCohort.4:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb1:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.5:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.l2CoreGovTimelock:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      values.memberAdderAC.0:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.memberRemoverAC.0:
+-        "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
++        "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad"
+      values.memberRemoverAC.1:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.memberReplacerAC.0:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.memberRotatorAC.0:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      values.RETRYABLE_TICKET_MAGIC:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
++        "arb1:0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.router:
+-        "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a"
++        "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a"
+      values.securityCouncils.0.1:
+-        "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
++        "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
+      values.securityCouncils.0.0:
+-        "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
++        "arb1:0xF06E95eF589D9c38af242a8AAee8375f14023F85"
+      values.securityCouncils.1.1:
+-        "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
++        "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
+      values.securityCouncils.1.0:
+-        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
++        "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"
+      values.securityCouncils.2.1:
+-        "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
++        "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
+      values.securityCouncils.2.0:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "arb1:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+      values.securityCouncils.3.1:
+-        "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
++        "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a"
+      values.securityCouncils.3.0:
+-        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
++        "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"
+      implementationNames.0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64:
+-        "SecurityCouncilManager"
+      implementationNames.arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64:
++        "SecurityCouncilManager"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      address:
+-        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
++        "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0xd570aCE65C43af47101fC6250FD6fC63D1c22a86:
+-        "ProxyAdmin"
+      implementationNames.arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA fred - Arbitrum 2 (0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E) {
+    +++ description: None
+      address:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb1:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+    }
+```
+
+```diff
+    EOA  (0xd92023E9d9911199a6711321D1277285e6d4e2db) {
+    +++ description: None
+      address:
+-        "0xd92023E9d9911199a6711321D1277285e6d4e2db"
++        "arb1:0xd92023E9d9911199a6711321D1277285e6d4e2db"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      address:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0xdb216562328215E010F819B5aBe947bad4ca961e:
+-        "ProxyAdmin"
+      implementationNames.arb1:0xdb216562328215E010F819B5aBe947bad4ca961e:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2) {
+    +++ description: None
+      address:
+-        "0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
++        "arb1:0xdE82B19aA75d93EB9Fca9a284dD0EB643d5e35C2"
+    }
+```
+
+```diff
+    EOA gzeon-OffchainLabs (0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33) {
+    +++ description: None
+      address:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb1:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+    }
+```
+
+```diff
+    EOA  (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      address:
+-        "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
++        "arb1:0xE6841D92B0C345144506576eC13ECf5103aC7f49"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333) {
+    +++ description: None
+      address:
+-        "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333"
++        "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333"
+      values.implementation:
+-        "0x3f770Ac673856F105b586bb393d122721265aD46"
++        "arb1:0x3f770Ac673856F105b586bb393d122721265aD46"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      implementationNames.0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333:
+-        "UpgradeableBeacon"
+      implementationNames.arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333:
++        "UpgradeableBeacon"
+    }
+```
+
+```diff
+    EOA Certora 2 (0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D) {
+    +++ description: None
+      address:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb1:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+      address:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      values.$admin:
+-        "0xdb216562328215E010F819B5aBe947bad4ca961e"
++        "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e"
+      values.$implementation:
+-        "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
++        "arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
+      values.$pastUpgrades.0.2.0:
+-        "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
++        "arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"
+      values.EXCLUDE_ADDRESS:
+-        "0x00000000000000000000000000000000000A4B86"
++        "arb1:0x00000000000000000000000000000000000A4B86"
+      values.owner:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      values.timelock:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+      values.token:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548"
+      implementationNames.0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9:
+-        "L2ArbitrumGovernor"
+      implementationNames.arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9:
++        "L2ArbitrumGovernor"
+    }
+```
+
+```diff
+    EOA  (0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6) {
+    +++ description: None
+      address:
+-        "0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6"
++        "arb1:0xf3b0B40e54Be009C852dBD3577F34D1D27bC07F6"
+    }
+```
+
+```diff
+    EOA L1Timelock_l2alias (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      address:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb1:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC20Gateway (0x09e9222E96E7B4AE2a407B98d48e330053351EEe)
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+```
+
+```diff
++   Status: CREATED
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417)
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract L2Timelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0)
+    +++ description: Delays constitutional AIPs from the CoreGovernor by 8d.
+```
+
+```diff
++   Status: CREATED
+    contract StandardArbERC20 (0x3f770Ac673856F105b586bb393d122721265aD46)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxyFactory (0x3fE38087A94903A9D946fa1915e1772fe611000f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65)
+    +++ description: Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMemberElectionGovernor (0x467923B9AE90BDB36BA88eCA11604D45F13b712C)
+    +++ description: Token governance contract for the Security Council member elections.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewayRouter (0x5288c571Fd7aD117beA99bF60FE0846C4E84F933)
+    +++ description: Router managing token <–> gateway mapping on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B)
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318)
+    +++ description: Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMemberRemovalGovernor (0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad)
+    +++ description: Token governance contract for the Security Council member removals.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecRouteBuilder (0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryGovernor (0x789fC99093B09aD01C34DC7251D0C89ce743e5a4)
+    +++ description: Token governance contract used for creating non-constitutional AIPs, or “treasury proposals”, e.g., transferring founds out of the DAO Treasury. Also enforces the 3% quorum for proposals.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilNomineeElectionGovernor (0x8a1cDA8dee421cD06023470608605934c16A05a0)
+    +++ description: Token governance contract for the Security Council nominee elections.
+```
+
+```diff
++   Status: CREATED
+    contract L2ArbitrumToken (0x912CE59144191C1204E64559FE8253a0e49E6548)
+    +++ description: The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMemberSyncAction (0x9BF7b8884Fa381a45f8CB2525905fb36C996297a)
+    +++ description: Contract used by the security council management system to sync SecurityCouncil members between the L1 and the L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649)
+    +++ description: This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58)
+    +++ description: Delays treasury proposals from the TreasuryGovernor by 259200 seconds. Is used as the main recipient for the ETH from L2SurplusFee and L2BaseFee contracts.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ARBGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E)
+    +++ description: ARB sent from L2 to L1 is escrowed in this contract and minted on L1.
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827)
+    +++ description: This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC)
+    +++ description: This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9)
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.
+```
+
 Generated with discovered.json: 0xc695f6c8c337a92da19f33d78a888ac4ad8925c6
 
 # Diff at Mon, 14 Jul 2025 08:38:09 GMT:

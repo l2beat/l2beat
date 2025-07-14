@@ -1,3 +1,1876 @@
+Generated with discovered.json: 0xad6148caefbe136f4f76541b1ecc108f57c12b43
+
+# Diff at Mon, 14 Jul 2025 12:46:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22480922
+- current block number: 22480922
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22480922 (main branch discovery), not current.
+
+```diff
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      address:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
++        "eth:0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
+      values.$members.1:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.$members.2:
+-        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
++        "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0"
+      values.$members.3:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+      implementationNames.0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9) {
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+      address:
+-        "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9"
++        "eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9"
+      values.l1Token:
+-        "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0"
++        "eth:0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0"
+      values.starknet:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      implementationNames.0x023A2aAc5d0fa69E3243994672822BA43E34E5C9:
+-        "LordsL1Bridge"
+      implementationNames.eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9:
++        "LordsL1Bridge"
+    }
+```
+
+```diff
+    EOA  (0x030ceEE5D4CBc304287234720B11E00f47695755) {
+    +++ description: None
+      address:
+-        "0x030ceEE5D4CBc304287234720B11E00f47695755"
++        "eth:0x030ceEE5D4CBc304287234720B11E00f47695755"
+    }
+```
+
+```diff
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      address:
+-        "0x0437465dfb5B79726e35F08559B0cBea55bb585C"
++        "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C"
+      values.wards.0:
+-        "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
++        "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+      values.wards.1:
+-        "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"
++        "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"
+      values.wards.2:
+-        "0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
++        "eth:0xc238E3D63DfD677Fa0FA9985576f0945C581A266"
+      implementationNames.0x0437465dfb5B79726e35F08559B0cBea55bb585C:
+-        "L1Escrow"
+      implementationNames.eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C:
++        "L1Escrow"
+    }
+```
+
+```diff
+    EOA  (0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c) {
+    +++ description: None
+      address:
+-        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
++        "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+    }
+```
+
+```diff
+    EOA  (0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c) {
+    +++ description: None
+      address:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+    }
+```
+
+```diff
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60) {
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+      address:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++++ description: Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x64608BDF1867110f622391196989bF4cE37BBb33"
++        "eth:0x64608BDF1867110f622391196989bF4cE37BBb33"
+      values.$pastUpgrades.0.2.0:
+-        "0x64608BDF1867110f622391196989bF4cE37BBb33"
++        "eth:0x64608BDF1867110f622391196989bF4cE37BBb33"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.TOKEN_ADMIN.members.0:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+      values.accessControl.0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.getRegistry:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x64608BDF1867110f622391196989bF4cE37BBb33"
++        "eth:0x64608BDF1867110f622391196989bF4cE37BBb33"
++++ description: This role is actually the proxy upgrade admin role, but we already resolve it to $admin.
+      values.tokenAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0x0c5aE94f8939182F2D06097025324D1E537d5B60:
+-        "Proxy"
+      implementationNames.0x64608BDF1867110f622391196989bF4cE37BBb33:
+-        "StarkgateManager"
+      implementationNames.eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60:
++        "Proxy"
+      implementationNames.eth:0x64608BDF1867110f622391196989bF4cE37BBb33:
++        "StarkgateManager"
+    }
+```
+
+```diff
+    EOA  (0x10277B1922e56d1B69f4dCe5A35696C791F78cac) {
+    +++ description: None
+      address:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+    }
+```
+
+```diff
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812) {
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+      address:
+-        "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++        "eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812"
++++ description: Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
++        "eth:0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
+      values.$pastUpgrades.0.2.0:
+-        "0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"
++        "eth:0x642F04899B6cA155c2a5eAdD4e4ed634f1B07Dd7"
+      values.$pastUpgrades.1.2.0:
+-        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
++        "eth:0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove it as its role admin in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
++        "eth:0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC"
+      implementationNames.0x1268cc171c54F2000402DfF20E93E60DF4c96812:
+-        "Proxy"
+      implementationNames.0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC:
+-        "StarkgateRegistry"
+      implementationNames.eth:0x1268cc171c54F2000402DfF20E93E60DF4c96812:
++        "Proxy"
+      implementationNames.eth:0x39C3b4e670ACa8BC668e5A79680973e57a4C8CEC:
++        "StarkgateRegistry"
+    }
+```
+
+```diff
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361) {
+    +++ description: None
+      address:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.1:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.2:
+-        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
++        "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.$members.3:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.4:
+-        "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
++        "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
+      values.$members.5:
+-        "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
++        "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.7:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.8:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "eth:0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.9:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "eth:0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.10:
+-        "0x7A3a1bE19470919318aAD57ba162891a97e2982E"
++        "eth:0x7A3a1bE19470919318aAD57ba162891a97e2982E"
+      values.$members.11:
+-        "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
++        "eth:0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
+      implementationNames.0x15e8c684FD095d4796A0c0CF678554F4c1C7C361:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD) {
+    +++ description: None
+      address:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+    }
+```
+
+```diff
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++        "eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0xaec1fB35875a3816a5d09D61F086FeB6c252e096"
++        "eth:0xaec1fB35875a3816a5d09D61F086FeB6c252e096"
+      values.$pastUpgrades.1.2.0:
+-        "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
++        "eth:0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      values.$pastUpgrades.2.2.0:
+-        "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
++        "eth:0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      values.$pastUpgrades.3.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.4.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.5.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.6.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.7.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.bridgedToken:
+-        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
++        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x033796B61cD66eD49d22a786cbA12a8D76717302"
++        "eth:0x033796B61cD66eD49d22a786cbA12a8D76717302"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.secAgentAC.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      implementationNames.0x283751A21eafBFcD52297820D27C1f1963D9b5b4:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0x2871B956bC19D25961E9a7519f32D7fDaA21B403) {
+    +++ description: None
+      address:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+    }
+```
+
+```diff
+    EOA  (0x2914767E232FD7708ab06bA60dB16c36C555751d) {
+    +++ description: None
+      address:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d"
+    }
+```
+
+```diff
+    EOA  (0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7) {
+    +++ description: None
+      address:
+-        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
++        "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
+    }
+```
+
+```diff
+    EOA  (0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b) {
+    +++ description: None
+      address:
+-        "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
++        "eth:0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
+    }
+```
+
+```diff
+    EOA  (0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      address:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    }
+```
+
+```diff
+    EOA  (0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C) {
+    +++ description: None
+      address:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "eth:0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+    }
+```
+
+```diff
+    EOA  (0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F) {
+    +++ description: None
+      address:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+    }
+```
+
+```diff
+    EOA  (0x64F4396bb0669C72858Cc50C779b48EB25F45770) {
+    +++ description: None
+      address:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+    }
+```
+
+```diff
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++        "eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.bridgedToken:
+-        "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
++        "eth:0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x428144D0D0Dbf8b7bFbC44306a3386Aa95a24296"
++        "eth:0x428144D0D0Dbf8b7bFbC44306a3386Aa95a24296"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0x66ba83ba3D3AD296424a2258145d9910E9E40B7C:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0x7383DDEd70cCCFd99835612C4148fA986e9DE560) {
+    +++ description: None
+      address:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "eth:0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+    }
+```
+
+```diff
+    contract Starkware Multisig 4 (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5) {
+    +++ description: None
+      address:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x030ceEE5D4CBc304287234720B11E00f47695755"
++        "eth:0x030ceEE5D4CBc304287234720B11E00f47695755"
+      values.$members.1:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.$members.2:
+-        "0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
++        "eth:0x35FD2dD14D96Ed455356B892cd4b2fCdc7F44a7b"
+      implementationNames.0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x7A3a1bE19470919318aAD57ba162891a97e2982E) {
+    +++ description: None
+      address:
+-        "0x7A3a1bE19470919318aAD57ba162891a97e2982E"
++        "eth:0x7A3a1bE19470919318aAD57ba162891a97e2982E"
+    }
+```
+
+```diff
+    EOA  (0x804d60CB1ade94511f7915A2062948685Ca8C81f) {
+    +++ description: None
+      address:
+-        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
++        "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+    }
+```
+
+```diff
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      address:
+-        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
++        "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc"
++        "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc"
+      values.$members.1:
+-        "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5"
++        "eth:0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5"
+      values.$members.2:
+-        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
++        "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+      values.$members.3:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+      values.$members.4:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+      values.$members.5:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+      implementationNames.0x83C0A700114101D1283D1405E2c8f21D3F03e988:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5) {
+    +++ description: None
+      address:
+-        "0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5"
++        "eth:0x8e814672F5c559b15af2975fBf6Fab819A4B7Dd5"
+    }
+```
+
+```diff
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d) {
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+      address:
+-        "0x9F96fE0633eE838D0298E8b8980E6716bE81388d"
++        "eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d"
+      values.dai:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.escrow:
+-        "0x0437465dfb5B79726e35F08559B0cBea55bb585C"
++        "eth:0x0437465dfb5B79726e35F08559B0cBea55bb585C"
+      values.starkNet:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.wards.0:
+-        "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"
++        "eth:0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"
+      values.wards.1:
+-        "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
++        "eth:0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+      implementationNames.0x9F96fE0633eE838D0298E8b8980E6716bE81388d:
+-        "L1DAIBridge"
+      implementationNames.eth:0x9F96fE0633eE838D0298E8b8980E6716bE81388d:
++        "L1DAIBridge"
+    }
+```
+
+```diff
+    EOA  (0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc) {
+    +++ description: None
+      address:
+-        "0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc"
++        "eth:0xaDB26E60FA6e326B9Ee444D886B4B62EC7FA38fc"
+    }
+```
+
+```diff
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++        "eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin.0:
+-        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++        "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.$implementation:
+-        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
++        "eth:0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
+      values.$pastUpgrades.0.2.0:
+-        "0x0205172F25e791975edB4dEF203f3789B01f43bb"
++        "eth:0x0205172F25e791975edB4dEF203f3789B01f43bb"
+      values.$pastUpgrades.1.2.0:
+-        "0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"
++        "eth:0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"
+      values.$pastUpgrades.2.2.0:
+-        "0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"
++        "eth:0x5e70F3301bbBBB1DFA2c8d20D75b162aFa6Dbe37"
+      values.$pastUpgrades.3.2.0:
+-        "0x455603AD9ae671F6c1f0f746F24d7904cA603581"
++        "eth:0x455603AD9ae671F6c1f0f746F24d7904cA603581"
+      values.$pastUpgrades.4.2.0:
+-        "0x455603AD9ae671F6c1f0f746F24d7904cA603581"
++        "eth:0x455603AD9ae671F6c1f0f746F24d7904cA603581"
+      values.$pastUpgrades.5.2.0:
+-        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
++        "eth:0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
+      values.$pastUpgrades.6.2.0:
+-        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
++        "eth:0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
+      values.$pastUpgrades.7.2.0:
+-        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
++        "eth:0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.bridgedToken:
+-        "0x0000000000000000000000000000000000455448"
++        "eth:0x0000000000000000000000000000000000455448"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.implementation:
+-        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
++        "eth:0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
+      values.l2TokenContract:
+-        "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82"
++        "eth:0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.secAgentAC.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      implementationNames.0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419:
+-        "Proxy"
+      implementationNames.0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95:
+-        "StarknetEthBridge"
+      implementationNames.eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419:
++        "Proxy"
+      implementationNames.eth:0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95:
++        "StarknetEthBridge"
+    }
+```
+
+```diff
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0xaec1fB35875a3816a5d09D61F086FeB6c252e096"
++        "eth:0xaec1fB35875a3816a5d09D61F086FeB6c252e096"
+      values.$pastUpgrades.1.2.0:
+-        "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
++        "eth:0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      values.$pastUpgrades.2.2.0:
+-        "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
++        "eth:0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      values.$pastUpgrades.3.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.4.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.5.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.6.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.7.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.bridgedToken:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0xCc6d9c3Dd8A2A05B1075d55E5967F42296f16Bd0"
++        "eth:0xCc6d9c3Dd8A2A05B1075d55E5967F42296f16Bd0"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.secAgentAC.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      implementationNames.0xbb3400F107804DFB482565FF1Ec8D8aE66747605:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++        "eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"
++        "eth:0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.3.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.1:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.bridgedToken:
+-        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
++        "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x1713B7fA72079d4EDDf291103CcbE41E78a9615C"
++        "eth:0x1713B7fA72079d4EDDf291103CcbE41E78a9615C"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.secAdminAC.1:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      implementationNames.0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      address:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++++ description: Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.
++++ severity: HIGH
+      values.$admin.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++++ description: Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.
++++ severity: HIGH
+      values.$admin.1:
+-        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++        "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+      values.$implementation:
+-        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.$pastUpgrades.0.2.0:
+-        "0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b"
++        "eth:0xD8Cd77206fCb239BdDaaDDdA8C87CBFe7d67Ca2b"
+      values.$pastUpgrades.1.2.0:
+-        "0x944960b90381d76368aecE61F269bD99FFfd627e"
++        "eth:0x944960b90381d76368aecE61F269bD99FFfd627e"
+      values.$pastUpgrades.2.2.0:
+-        "0xDC109C4a1A3084Ed15A97692FBEF3e1FB32A6955"
++        "eth:0xDC109C4a1A3084Ed15A97692FBEF3e1FB32A6955"
+      values.$pastUpgrades.3.2.0:
+-        "0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"
++        "eth:0x2B3B750f1f10c85c8A6D476Fc209A8DC7E4Ca3F8"
+      values.$pastUpgrades.4.2.0:
+-        "0xE267213B0749Bb94c575F6170812c887330d9cE3"
++        "eth:0xE267213B0749Bb94c575F6170812c887330d9cE3"
+      values.$pastUpgrades.5.2.0:
+-        "0x739A654271c565839F0408546706bBea2F1FfE42"
++        "eth:0x739A654271c565839F0408546706bBea2F1FfE42"
+      values.$pastUpgrades.6.2.0:
+-        "0x16938E4b59297060484Fa56a12594d8D6F4177e8"
++        "eth:0x16938E4b59297060484Fa56a12594d8D6F4177e8"
+      values.$pastUpgrades.7.2.0:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "eth:0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
+      values.$pastUpgrades.8.2.0:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "eth:0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
+      values.$pastUpgrades.9.2.0:
+-        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.feeCollector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.operators.0:
+-        "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
++        "eth:0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
+      values.operators.1:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.verifier:
+-        "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
++        "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      implementationNames.0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4:
+-        "Proxy"
+      implementationNames.0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
+-        "Starknet"
+      implementationNames.eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4:
++        "Proxy"
+      implementationNames.eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
++        "Starknet"
+    }
+```
+
+```diff
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c) {
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+      address:
+-        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++        "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+      description:
+-        "A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions."
++        "A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions."
+      values.owner:
+-        "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
++        "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988"
+      implementationNames.0xCA112018fEB729458b628AadC8f996f9deCbCa0c:
+-        "DelayedExecutor"
+      implementationNames.eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c:
++        "DelayedExecutor"
+    }
+```
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin.0:
+-        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++        "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"
++        "eth:0x052C81F05595B5DeF4fdFEdbD7CA7b4A8a7B50C1"
+      values.$pastUpgrades.2.2.0:
+-        "0x7f2a18900A978D4390a3640e34739BB697777A71"
++        "eth:0x7f2a18900A978D4390a3640e34739BB697777A71"
+      values.$pastUpgrades.3.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.4.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.5.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.6.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.7.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
++        "eth:0xCA112018fEB729458b628AadC8f996f9deCbCa0c"
+      values.accessControl.UPGRADE_GOVERNOR.members.1:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.bridgedToken:
+-        "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766"
++        "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
++        "eth:0x15e8c684FD095d4796A0c0CF678554F4c1C7C361"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0xEB7e3917D6994A03C13405Ba42867f83D85F085d"
++        "eth:0xEB7e3917D6994A03C13405Ba42867f83D85F085d"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.secAgentAC.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      implementationNames.0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0xCe958D997F4a5824D4d503A128216322C6C223a0) {
+    +++ description: None
+      address:
+-        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
++        "eth:0xCe958D997F4a5824D4d503A128216322C6C223a0"
+    }
+```
+
+```diff
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.3.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.bridgedToken:
+-        "0xae78736Cd615f374D3085123A210448E74Fc6393"
++        "eth:0xae78736Cd615f374D3085123A210448E74Fc6393"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x34F7C385fD4F4540d5668f1bE3EDE0D3Bb1B9D4d"
++        "eth:0x34F7C385fD4F4540d5668f1bE3EDE0D3Bb1B9D4d"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8) {
+    +++ description: None
+      address:
+-        "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
++        "eth:0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
+    }
+```
+
+```diff
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.bridgedToken:
+-        "0xac3E018457B222d93114458476f3E3416Abbe38F"
++        "eth:0xac3E018457B222d93114458476f3E3416Abbe38F"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x635C207e3da73332282Aa2132058022520fA0179"
++        "eth:0x635C207e3da73332282Aa2132058022520fA0179"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++        "eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.bridgedToken:
+-        "0x853d955aCEf822Db058eb8505911ED77F175b99e"
++        "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0xACD89f99539A152B96E72DaEe6A7a3734AA5299a"
++        "eth:0xACD89f99539A152B96E72DaEe6A7a3734AA5299a"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++        "eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
++        "eth:0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.bridgedToken:
+-        "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
++        "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x6246A7a3012Dd35B0ed728e3c455aF2647385C80"
++        "eth:0x6246A7a3012Dd35B0ed728e3c455aF2647385C80"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb) {
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+      address:
+-        "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++        "eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
++++ description: Same as UPGRADE_ADMIN role and managed by `GOVERNANCE_ADMIN` access control role (see implementation).
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
++        "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.$pastUpgrades.0.2.0:
+-        "0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"
++        "eth:0x594cCaDF93F860dc42Cf9fd7bCea47Ff4d135D7A"
+      values.$pastUpgrades.1.2.0:
+-        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
++        "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
++        "eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff"
+      values.l2TokenContract:
+-        "0x8d591C2807316d992BbC3bB1A5C1821630589256"
++        "eth:0x8d591C2807316d992BbC3bB1A5C1821630589256"
+      values.manager:
+-        "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
++        "eth:0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+      values.maxTotalTokenBalance.0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9:
+-        {"value":1,"token":"0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"}
+      values.maxTotalTokenBalance.0x4c9EDD5852cd905f086C759E8383e09bff1E68B3:
+-        {"value":1,"token":"0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"}
+      values.maxTotalTokenBalance.0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91:
+-        {"value":1,"token":"0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"}
+      values.maxTotalTokenBalance.0x57e114B691Db790C35207b2e685D4A43181e6061:
+-        {"value":1,"token":"0x57e114B691Db790C35207b2e685D4A43181e6061"}
+      values.maxTotalTokenBalance.0x6c3ea9036406852006290770BEdFcAbA0e23A0e8:
+-        {"value":1,"token":"0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"}
+      values.maxTotalTokenBalance.0x808507121B80c02388fAd14726482e061B8da827:
+-        {"value":1,"token":"0x808507121B80c02388fAd14726482e061B8da827"}
+      values.maxTotalTokenBalance.0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83:
+-        {"value":1,"token":"0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"}
+      values.maxTotalTokenBalance.0x6985884C4392D348587B19cb9eAAf157F13271cd:
+-        {"value":1,"token":"0x6985884C4392D348587B19cb9eAAf157F13271cd"}
+      values.maxTotalTokenBalance.0xbf5495Efe5DB9ce00f80364C8B423567e58d2110:
+-        {"value":1,"token":"0xbf5495Efe5DB9ce00f80364C8B423567e58d2110"}
+      values.maxTotalTokenBalance.eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9:
++        {"value":1,"token":"eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"}
+      values.maxTotalTokenBalance.eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3:
++        {"value":1,"token":"eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3"}
+      values.maxTotalTokenBalance.eth:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91:
++        {"value":1,"token":"eth:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"}
+      values.maxTotalTokenBalance.eth:0x57e114B691Db790C35207b2e685D4A43181e6061:
++        {"value":1,"token":"eth:0x57e114B691Db790C35207b2e685D4A43181e6061"}
+      values.maxTotalTokenBalance.eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8:
++        {"value":1,"token":"eth:0x6c3ea9036406852006290770BEdFcAbA0e23A0e8"}
+      values.maxTotalTokenBalance.eth:0x808507121B80c02388fAd14726482e061B8da827:
++        {"value":1,"token":"eth:0x808507121B80c02388fAd14726482e061B8da827"}
+      values.maxTotalTokenBalance.eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83:
++        {"value":1,"token":"eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"}
+      values.maxTotalTokenBalance.eth:0x6985884C4392D348587B19cb9eAAf157F13271cd:
++        {"value":1,"token":"eth:0x6985884C4392D348587B19cb9eAAf157F13271cd"}
+      values.maxTotalTokenBalance.eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110:
++        {"value":1,"token":"eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110"}
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.secAgentAC.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      implementationNames.0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb:
+-        "Proxy"
+      implementationNames.0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff:
+-        "StarknetTokenBridge"
+      implementationNames.eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb:
++        "Proxy"
+      implementationNames.eth:0xf39d314C5aD7DC88958116dfA7d5ac095d563Aff:
++        "StarknetTokenBridge"
+    }
+```
+
+```diff
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++        "eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0xaec1fB35875a3816a5d09D61F086FeB6c252e096"
++        "eth:0xaec1fB35875a3816a5d09D61F086FeB6c252e096"
+      values.$pastUpgrades.1.2.0:
+-        "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
++        "eth:0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      values.$pastUpgrades.2.2.0:
+-        "0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
++        "eth:0x56e233d613743297CdD27fafc5c1f5c1DC2a381b"
+      values.$pastUpgrades.3.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.4.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.5.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.6.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.7.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      values.bridgedToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x217e808319ffCC1C5A6A463F7d8FA2dA48218196"
++        "eth:0x217e808319ffCC1C5A6A463F7d8FA2dA48218196"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.secAgentAC.0:
+-        "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
++        "eth:0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5"
+      implementationNames.0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0xF689688640E88160c07C6FC5cc63039F29EDe86b) {
+    +++ description: None
+      address:
+-        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
++        "eth:0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
+```diff
+    EOA  (0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8) {
+    +++ description: None
+      address:
+-        "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
++        "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
+    }
+```
+
+```diff
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B) {
+    +++ description: None
+      address:
+-        "0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
++        "eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x2914767E232FD7708ab06bA60dB16c36C555751d"
++        "eth:0x2914767E232FD7708ab06bA60dB16c36C555751d"
+      values.$members.1:
+-        "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
++        "eth:0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c"
+      values.$members.2:
+-        "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
++        "eth:0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F"
+      values.$members.3:
+-        "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
++        "eth:0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c"
+      values.$members.4:
+-        "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
++        "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
+      values.$members.5:
+-        "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
++        "eth:0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8"
+      values.$members.6:
+-        "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
++        "eth:0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD"
+      values.$members.7:
+-        "0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
++        "eth:0x10277B1922e56d1B69f4dCe5A35696C791F78cac"
+      values.$members.8:
+-        "0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
++        "eth:0x7383DDEd70cCCFd99835612C4148fA986e9DE560"
+      values.$members.9:
+-        "0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
++        "eth:0x590Cb94bE977a769d9E7D95D9eff8DeAe82e430C"
+      values.$members.10:
+-        "0x7A3a1bE19470919318aAD57ba162891a97e2982E"
++        "eth:0x7A3a1bE19470919318aAD57ba162891a97e2982E"
+      values.$members.11:
+-        "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
++        "eth:0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
+      implementationNames.0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+      address:
+-        "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++        "eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.$implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
++        "eth:0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
++        "eth:0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.$pastUpgrades.2.2.0:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.bridgedToken:
+-        "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
++        "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      values.implementation:
+-        "0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
++        "eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85"
+      values.l2TokenContract:
+-        "0x4bbDfbc7c046b4b9D7cf31B79647540C85b8EC79"
++        "eth:0x4bbDfbc7c046b4b9D7cf31B79647540C85b8EC79"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
++        "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      values.secAdminAC.0:
+-        "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
++        "eth:0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
+      implementationNames.0xf76e6bF9e2df09D0f854F045A3B724074dA1236B:
+-        "Proxy"
+      implementationNames.0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B:
++        "Proxy"
+      implementationNames.eth:0x6ad74D4B79A06A492C288eF66Ef868Dd981fdC85:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0) {
+    +++ description: None
+      address:
+-        "0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
++        "eth:0xfaECfa5E4180dd55D15396F804Fd00C6dbA233B0"
+    }
+```
+
+```diff
+    EOA  (0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90) {
+    +++ description: None
+      address:
+-        "0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
++        "eth:0xFf713991196F8a9D6838bA82C9Bb3579F8Cc0D90"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9)
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+```
+
+```diff
++   Status: CREATED
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C)
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60)
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812)
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Multisig 4 (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d)
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+```
+
+```diff
++   Status: CREATED
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419)
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c)
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+```
+
+```diff
++   Status: CREATED
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+```
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
 Generated with discovered.json: 0x79da2817a6d0f30802c0d4aa48b4bb67ec81ed29
 
 # Diff at Fri, 04 Jul 2025 12:19:23 GMT:

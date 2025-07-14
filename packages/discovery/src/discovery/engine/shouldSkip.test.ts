@@ -1,4 +1,8 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  Hash256,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ConfigReader } from '../config/ConfigReader'
 import { ConfigRegistry } from '../config/ConfigRegistry'
@@ -35,7 +39,7 @@ describe(shouldSkip.name, () => {
           {
             type: 'Contract',
             name: 'Foo',
-            address,
+            address: ChainSpecificAddress.from('eth', address.toString()),
             upgradeability: { type: 'immutable' },
           },
         ],

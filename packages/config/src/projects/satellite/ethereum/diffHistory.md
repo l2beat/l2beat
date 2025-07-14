@@ -1,3 +1,327 @@
+Generated with discovered.json: 0x1d97ca7f868e346a8998b1acf561d39d00e2b3a1
+
+# Diff at Mon, 14 Jul 2025 12:46:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20017695
+- current block number: 20017695
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017695 (main branch discovery), not current.
+
+```diff
+    EOA  (0x027c1882B975E2cd771AE068b0389FA38B9dda73) {
+    +++ description: None
+      address:
+-        "0x027c1882B975E2cd771AE068b0389FA38B9dda73"
++        "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73"
+    }
+```
+
+```diff
+    EOA  (0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b) {
+    +++ description: None
+      address:
+-        "0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b"
++        "eth:0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b"
+    }
+```
+
+```diff
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712) {
+    +++ description: None
+      address:
+-        "0x2d5d7d31F671F86C782533cc367F14109a082712"
++        "eth:0x2d5d7d31F671F86C782533cc367F14109a082712"
+      values.$admin:
+-        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      values.$implementation:
+-        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
++        "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      values.$pastUpgrades.0.2.0:
+-        "0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
++        "eth:0x4Fe2d119873790cc9e15F6cC53cae1C2eb2039dC"
+      values.$pastUpgrades.1.2.0:
+-        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
++        "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      values.gasCollector:
+-        "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC"
++        "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC"
+      values.implementation:
+-        "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
++        "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b"
+      values.owner:
+-        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x2d5d7d31F671F86C782533cc367F14109a082712:
+-        "AxelarGasServiceProxy"
+      implementationNames.0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b:
+-        "AxelarGasService"
+      implementationNames.eth:0x2d5d7d31F671F86C782533cc367F14109a082712:
++        "AxelarGasServiceProxy"
+      implementationNames.eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b:
++        "AxelarGasService"
+    }
+```
+
+```diff
+    EOA  (0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821) {
+    +++ description: None
+      address:
+-        "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821"
++        "eth:0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821"
+    }
+```
+
+```diff
+    EOA  (0x3f5876a2b06E54949aB106651Ab6694d0289b2b4) {
+    +++ description: None
+      address:
+-        "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4"
++        "eth:0x3f5876a2b06E54949aB106651Ab6694d0289b2b4"
+    }
+```
+
+```diff
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      address:
+-        "0x4F4495243837681061C4743b74B3eEdf548D56A5"
++        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5"
+      values.$implementation:
+-        "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
+      values.$pastUpgrades.0.2.0:
+-        "0x59C38B3A349BCf7e46b024Cddfb4778229609C28"
++        "eth:0x59C38B3A349BCf7e46b024Cddfb4778229609C28"
+      values.$pastUpgrades.1.2.0:
+-        "0xBD3e8d41874bC123fB6913a2a6c6C8984c71876c"
++        "eth:0xBD3e8d41874bC123fB6913a2a6c6C8984c71876c"
+      values.$pastUpgrades.2.2.0:
+-        "0xBc421722aDd7AD3cF23e7BbEFE709330bbfD6188"
++        "eth:0xBc421722aDd7AD3cF23e7BbEFE709330bbfD6188"
+      values.$pastUpgrades.3.2.0:
+-        "0x46E1F8E746ee9037fA42b3a718dcE6c36CB3f16f"
++        "eth:0x46E1F8E746ee9037fA42b3a718dcE6c36CB3f16f"
+      values.$pastUpgrades.4.2.0:
+-        "0x212207006e5Ae344481Fa34a6F4960EB0f302Ff5"
++        "eth:0x212207006e5Ae344481Fa34a6F4960EB0f302Ff5"
+      values.$pastUpgrades.5.2.0:
+-        "0xEd9938294aCF9EE52D097133CA2cAafF0C804F16"
++        "eth:0xEd9938294aCF9EE52D097133CA2cAafF0C804F16"
+      values.$pastUpgrades.6.2.0:
+-        "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
+      values.$pastUpgrades.7.2.0:
+-        "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
+      values.$pastUpgrades.8.2.0:
+-        "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
+      values.authModule:
+-        "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0"
++        "eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0"
+      values.governance:
+-        "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66"
++        "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66"
+      values.implementation:
+-        "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
++        "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098"
+      values.mintLimiter:
+-        "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68"
++        "eth:0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68"
+      values.tokenDeployer:
+-        "0xb28478319B64f8D47e19A120209A211D902F8b8f"
++        "eth:0xb28478319B64f8D47e19A120209A211D902F8b8f"
+      implementationNames.0x4F4495243837681061C4743b74B3eEdf548D56A5:
+-        "AxelarGatewayProxyMultisig"
+      implementationNames.0x99B5FA03a5ea4315725c43346e55a6A6fbd94098:
+-        "AxelarGateway"
+      implementationNames.eth:0x4F4495243837681061C4743b74B3eEdf548D56A5:
++        "AxelarGatewayProxyMultisig"
+      implementationNames.eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098:
++        "AxelarGateway"
+    }
+```
+
+```diff
+    EOA  (0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05) {
+    +++ description: None
+      address:
+-        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+    }
+```
+
+```diff
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC) {
+    +++ description: None
+      address:
+-        "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC"
++        "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC"
+      values.owner:
+-        "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
++        "eth:0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC:
+-        "Operators"
+      implementationNames.eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC:
++        "Operators"
+    }
+```
+
+```diff
+    EOA  (0x9256Fd872118ed3a97754B0fB42c15015d17E0CC) {
+    +++ description: None
+      address:
+-        "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC"
++        "eth:0x9256Fd872118ed3a97754B0fB42c15015d17E0CC"
+    }
+```
+
+```diff
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f) {
+    +++ description: None
+      address:
+-        "0xb28478319B64f8D47e19A120209A211D902F8b8f"
++        "eth:0xb28478319B64f8D47e19A120209A211D902F8b8f"
+      implementationNames.0xb28478319B64f8D47e19A120209A211D902F8b8f:
+-        "TokenDeployer"
+      implementationNames.eth:0xb28478319B64f8D47e19A120209A211D902F8b8f:
++        "TokenDeployer"
+    }
+```
+
+```diff
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68) {
+    +++ description: None
+      address:
+-        "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68"
++        "eth:0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68"
+      values.signerAccounts.0:
+-        "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4"
++        "eth:0x3f5876a2b06E54949aB106651Ab6694d0289b2b4"
+      values.signerAccounts.1:
+-        "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC"
++        "eth:0x9256Fd872118ed3a97754B0fB42c15015d17E0CC"
+      values.signerAccounts.2:
+-        "0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b"
++        "eth:0x1486157d505C7F7E546aD00E3E2Eee25BF665C9b"
+      values.signerAccounts.3:
+-        "0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821"
++        "eth:0x2eC991B5c0B742AbD9d2ea31fe6c14a85e91C821"
+      values.signerAccounts.4:
+-        "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f"
++        "eth:0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f"
+      values.signerAccounts.5:
+-        "0x027c1882B975E2cd771AE068b0389FA38B9dda73"
++        "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73"
+      implementationNames.0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68:
+-        "Multisig"
+      implementationNames.eth:0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68:
++        "Multisig"
+    }
+```
+
+```diff
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0) {
+    +++ description: None
+      address:
+-        "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0"
++        "eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0"
+      values.owner:
+-        "0x4F4495243837681061C4743b74B3eEdf548D56A5"
++        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0:
+-        "AxelarAuthWeighted"
+      implementationNames.eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0:
++        "AxelarAuthWeighted"
+    }
+```
+
+```diff
+    EOA  (0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f) {
+    +++ description: None
+      address:
+-        "0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f"
++        "eth:0xf505462A29E36E26f25Ef0175Ca1eCBa09CC118f"
+    }
+```
+
+```diff
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66) {
+    +++ description: None
+      address:
+-        "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66"
++        "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66"
+      values.gateway:
+-        "0x4F4495243837681061C4743b74B3eEdf548D56A5"
++        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5"
+      implementationNames.0xfDF36A30070ea0241d69052ea85ff44Ad0476a66:
+-        "InterchainGovernance"
+      implementationNames.eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66:
++        "InterchainGovernance"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGasService (0x2d5d7d31F671F86C782533cc367F14109a082712)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Gateway (0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGasServiceOperators (0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenDeployer (0xb28478319B64f8D47e19A120209A211D902F8b8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarAuthWeighted (0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InterchainGovernance (0xfDF36A30070ea0241d69052ea85ff44Ad0476a66)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xb2aed57baffc7fbf6464e8a37fc21f9b1bc05523
 
 # Diff at Fri, 04 Jul 2025 12:19:18 GMT:

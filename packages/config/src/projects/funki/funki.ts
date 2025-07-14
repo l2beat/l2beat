@@ -1,4 +1,9 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -16,13 +21,17 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('funki')
 const genesisTimestamp = UnixTime(1721211095)
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'sequencerInbox',
+const sequencerInbox = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'sequencerInbox',
+  ),
 )
-const sequencerAddress = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'batcherHash',
+const sequencerAddress = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'batcherHash',
+  ),
 )
 
 const daChallengeWindow = formatSeconds(
@@ -124,7 +133,7 @@ export const funki: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: l2OutputOracle.address,
+        address: ChainSpecificAddress.address(l2OutputOracle.address),
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',

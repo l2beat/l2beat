@@ -5,13 +5,13 @@
   "configHash": "0x0ee14a9c0b56e7d9a0f4e695b6299f8525799e1097f6b63227df194fabc0ed41",
   "entries": [
     {
-      "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
+      "address": "eth:0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "SplTokenSwap",
-      "address": "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
+      "address": "eth:0xeae57ce9cc1984F202e15e038B964bb8bdF7229a",
       "type": "Contract",
       "sourceHashes": [
         "0xa9306a9cf233bd50fb86a2e4aa8e1346513fe1efc80a25bf5706100e2f75b972"
@@ -21,11 +21,11 @@
       "sinceBlock": 10838129,
       "values": {
         "$immutable": true,
-        "owner": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
+        "owner": "eth:0x067D382e61c06Cea2815069D9D97fd3ee5df2361",
         "paused": false
       },
       "implementationNames": {
-        "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a": "SplTokenSwap"
+        "eth:0xeae57ce9cc1984F202e15e038B964bb8bdF7229a": "SplTokenSwap"
       }
     }
   ],
@@ -52,5 +52,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xbfd306a0c675fd9dff512945023d46b8e9b3ea595cbe218ce96e2d9c8feb1b99"
+  "permissionsConfigHash": "0x2b233c78b0bcf62b4f5f47efbfab83f2d2365b2375cd4fedd615fda76e688b8c"
 }

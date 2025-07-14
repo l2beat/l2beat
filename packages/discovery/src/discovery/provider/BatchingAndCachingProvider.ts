@@ -402,7 +402,7 @@ export class BatchingAndCachingProvider {
     for (const item of items) {
       for (const nested of item.items) {
         const topicLogs = byTopic.get(item.topic) ?? []
-        nested.logs.push(...topicLogs)
+        nested.logs = nested.logs.concat(topicLogs)
       }
     }
 

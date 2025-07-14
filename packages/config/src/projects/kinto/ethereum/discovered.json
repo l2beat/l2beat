@@ -6,24 +6,24 @@
   "entries": [
     {
       "name": "Hypernative",
-      "address": "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B",
+      "address": "eth:0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "KintoFoundation",
-      "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
+      "address": "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
+      "address": "eth:0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Bridger",
-      "address": "0x0f1b7bd7762662B23486320AA91F30312184f70C",
+      "address": "eth:0x0f1b7bd7762662B23486320AA91F30312184f70C",
       "type": "Contract",
       "sourceHashes": [
         "0xeeb4c186c20cc83c0dc547c387bbb8738f8a0b213ed2e8ecb325ad9326c326bc",
@@ -34,101 +34,101 @@
       "sinceTimestamp": 1710248135,
       "sinceBlock": 19419135,
       "values": {
-        "$admin": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-        "$implementation": "0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6",
+        "$admin": "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+        "$implementation": "eth:0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6",
         "$pastUpgrades": [
           [
             "2024-03-12T12:55:35.000Z",
             "0x5fe42b41ba3aafb36ec09d39284fdfc0d6df534b81488c7382ee8418fe620e62",
-            ["0x925eC66892261203536a4aede9CA8e8D0feeA4ad"]
+            ["eth:0x925eC66892261203536a4aede9CA8e8D0feeA4ad"]
           ],
           [
             "2024-03-13T12:31:35.000Z",
             "0xa1780c4191178aef57f3fc1a9d38a431d46fa163ed0436c839afade5dc91328e",
-            ["0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"]
+            ["eth:0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"]
           ],
           [
             "2024-03-15T01:29:11.000Z",
             "0xd52c14d572e45c1bd011844d136b7c492fc5ecb802e1c50f850c6662f3a7fccf",
-            ["0xE3641CbDAc5477C350c8FeAAF52Ddc021451A2aA"]
+            ["eth:0xE3641CbDAc5477C350c8FeAAF52Ddc021451A2aA"]
           ],
           [
             "2024-03-26T06:51:23.000Z",
             "0x1b0c58c017710ce99817ef751625accd468c9661ecff7984680eaf6e2150d968",
-            ["0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"]
+            ["eth:0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"]
           ],
           [
             "2024-05-21T00:55:23.000Z",
             "0xe8481050b8e1b2d41d1e79a89d004596c9f1ed6293e2a0b07e295d7104b72108",
-            ["0x3636617973f25a512676cb06876f0C885568664a"]
+            ["eth:0x3636617973f25a512676cb06876f0C885568664a"]
           ],
           [
             "2024-05-22T00:09:11.000Z",
             "0x80b6eb0ef3cabe648cfb4cd49f4c6efbdb3283f04682065f99f4c871c8315839",
-            ["0x0210AE8703F8c9A88D7050825bd8001E359CB4BA"]
+            ["eth:0x0210AE8703F8c9A88D7050825bd8001E359CB4BA"]
           ],
           [
             "2024-05-22T02:17:11.000Z",
             "0xa99267f3208e313084784d7da895d88acd4a86001483566f21f3073e0ee13039",
-            ["0x270f25127D7C48c956459e113aa81615CC30AeE2"]
+            ["eth:0x270f25127D7C48c956459e113aa81615CC30AeE2"]
           ],
           [
             "2024-06-22T21:24:59.000Z",
             "0xf174716076d1373e6ee74c5f2afc7aea9de184deb45b3c992d873160c0bf5355",
-            ["0xEEe82E92bA40A694409B4BDa3D7426188c61163e"]
+            ["eth:0xEEe82E92bA40A694409B4BDa3D7426188c61163e"]
           ],
           [
             "2024-07-22T20:12:59.000Z",
             "0x0298ee3f7f0e0ebb53b19939a06453013a051923a1f27e59362d93ec2012fc3f",
-            ["0x23559eB4Ad22c31940a929958B104821126F35b7"]
+            ["eth:0x23559eB4Ad22c31940a929958B104821126F35b7"]
           ],
           [
             "2024-08-06T21:07:23.000Z",
             "0x07dac4c8df3e4fbc7619636522e7f893296c5ef9a7dd3b5a28976d5eedf09fd4",
-            ["0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"]
+            ["eth:0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"]
           ],
           [
             "2024-09-26T17:41:47.000Z",
             "0x31a2c058d7ce91c9d1b526764cf6442a45bdf662d2725bf8535a167303250bec",
-            ["0x21D3921B50617BDef223207118950B0b577e4007"]
+            ["eth:0x21D3921B50617BDef223207118950B0b577e4007"]
           ],
           [
             "2024-12-17T00:38:35.000Z",
             "0x9e8c1bcb81d01c1d3ed8c7f0b34ac033d5838e341641a809a6a1ad101139e118",
-            ["0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6"]
+            ["eth:0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6"]
           ]
         ],
         "$upgradeCount": 12,
-        "angleSwapper": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
-        "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-        "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+        "angleSwapper": "eth:0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
+        "DAI": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "ETH": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        "owner": "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
         "paused": false,
-        "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
-        "senderAccount": "0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e",
-        "SOLV_BTC": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+        "PERMIT2": "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3",
+        "senderAccount": "eth:0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e",
+        "SOLV_BTC": "eth:0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
         "SOLV_BTC_POOL_ID": "0x488def4a346b409d5d57985a160cd216d29d4f555e1b716df4e04e2374d2d9f6",
-        "SOLV_SFT_WRAP_ROUTER": "0xe9eD7530427Cb41A56C9e004e00e074cCc168C44",
-        "stUSD": "0x0022228a2cc5E7eF0274A7Baa600d44da5aB5776",
-        "sUSDe": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-        "swapRouter": "0x0000000000001fF3684f28c67538d4D072C22734",
-        "USDA": "0x0000206329b97DB379d5E1Bf586BbDB969C63274",
-        "USDC": "0x0000000000000000000000000000000000000000",
-        "USDe": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
-        "USDM": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
-        "WBTC": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
-        "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "wstETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "wUSDM": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812"
+        "SOLV_SFT_WRAP_ROUTER": "eth:0xe9eD7530427Cb41A56C9e004e00e074cCc168C44",
+        "stUSD": "eth:0x0022228a2cc5E7eF0274A7Baa600d44da5aB5776",
+        "sUSDe": "eth:0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+        "swapRouter": "eth:0x0000000000001fF3684f28c67538d4D072C22734",
+        "USDA": "eth:0x0000206329b97DB379d5E1Bf586BbDB969C63274",
+        "USDC": "eth:0x0000000000000000000000000000000000000000",
+        "USDe": "eth:0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+        "USDM": "eth:0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+        "WBTC": "eth:0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+        "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "wstETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "wUSDM": "eth:0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812"
       },
       "implementationNames": {
-        "0x0f1b7bd7762662B23486320AA91F30312184f70C": "UUPSProxy",
-        "0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6": "Bridger"
+        "eth:0x0f1b7bd7762662B23486320AA91F30312184f70C": "UUPSProxy",
+        "eth:0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6": "Bridger"
       }
     },
     {
       "name": "Kinto Security Council",
-      "address": "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d",
+      "address": "eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -248,16 +248,16 @@
       "sinceBlock": 18772804,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
-          "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
-          "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2",
-          "0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B",
-          "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
-          "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
-          "0x356000Cec4fC967f8FC372381D983426760A0391",
-          "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+          "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
+          "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
+          "eth:0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2",
+          "eth:0x082CBA3929aD00EbB6d81ebE57B0BD24fBF3Fc6B",
+          "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
+          "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
+          "eth:0x356000Cec4fC967f8FC372381D983426760A0391",
+          "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E"
         ],
         "$threshold": 6,
         "domainSeparator": "0xfc0ed923efd6ca5c12613676f61ace65168a486c6ff550021738910aa5ea6f46",
@@ -268,8 +268,8 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       },
       "references": [
         {
@@ -280,7 +280,7 @@
     },
     {
       "name": "ValidatorUtils",
-      "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
+      "address": "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
       "type": "Contract",
       "template": "orbitstack/ValidatorUtils",
       "sourceHashes": [
@@ -292,12 +292,12 @@
       "sinceBlock": 18736154,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorUtils"
+        "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorUtils"
       }
     },
     {
       "name": "Ankr",
-      "address": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
+      "address": "eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -311,7 +311,7 @@
     },
     {
       "name": "OneStepProver0",
-      "address": "0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59",
+      "address": "eth:0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59",
       "type": "Contract",
       "template": "orbitstack/OneStepProver0",
       "sourceHashes": [
@@ -323,28 +323,28 @@
       "sinceBlock": 21049963,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59": "OneStepProver0"
+        "eth:0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59": "OneStepProver0"
       }
     },
     {
-      "address": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
+      "address": "eth:0x340487b92808B84c2bd97C87B590EE81267E04a7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Caldera",
-      "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
+      "address": "eth:0x356000Cec4fC967f8FC372381D983426760A0391",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4a3BB34aDE10127752015A6aF6136da15fde636A",
+      "address": "eth:0x4a3BB34aDE10127752015A6aF6136da15fde636A",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "RollupProxy",
-      "address": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+      "address": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
       "type": "Contract",
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
@@ -362,41 +362,41 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+        "$admin": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
         "$implementation": [
-          "0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB",
-          "0xa6f528c65569d903C20e7D2639ad343128B4FD27"
+          "eth:0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB",
+          "eth:0xa6f528c65569d903C20e7D2639ad343128B4FD27"
         ],
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
             [
-              "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
-              "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+              "eth:0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+              "eth:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
             ]
           ],
           [
             "2024-10-30T01:29:35.000Z",
             "0x81ed45f10aa3c6062d1d3ce5c6a2763c4e88e93e51d35665e94e33b2b04627ad",
             [
-              "0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB",
-              "0xa6f528c65569d903C20e7D2639ad343128B4FD27"
+              "eth:0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB",
+              "eth:0xa6f528c65569d903C20e7D2639ad343128B4FD27"
             ]
           ]
         ],
         "$upgradeCount": 2,
-        "anyTrustFastConfirmer": "0x0000000000000000000000000000000000000000",
+        "anyTrustFastConfirmer": "eth:0x0000000000000000000000000000000000000000",
         "arbOsFromWmRoot": "0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c",
         "baseStake": "100000000000000000",
-        "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "chainId": 7887,
-        "challengeManager": "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
+        "challengeManager": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
         "challenges": [
           {
             "challengeIndex": 1,
-            "asserter": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
-            "challenger": "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
+            "asserter": "eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
+            "challenger": "eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
             "challengedNode": 2161
           }
         ],
@@ -404,34 +404,34 @@
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
         "firstUnresolvedNode": 2688,
-        "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+        "inbox": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21107949,
         "latestConfirmed": 2687,
         "latestNodeCreated": 2700,
-        "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
+        "loserStakeEscrow": "eth:0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
-        "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
-        "owner": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+        "outbox": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
+        "owner": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
         "paused": false,
         "rollupDeploymentBlock": 18788587,
-        "rollupEventInbox": "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
-        "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+        "rollupEventInbox": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
+        "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "setValidatorCount": 4,
         "stakerCount": 1,
-        "stakeToken": "0x0000000000000000000000000000000000000000",
+        "stakeToken": "eth:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": "50000000000000000",
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
-          "0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
-          "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
-          "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
-          "0x944eB0a2829A859959586b10D54229278534a696",
-          "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
+          "eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
+          "eth:0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
+          "eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
+          "eth:0x944eB0a2829A859959586b10D54229278534a696",
+          "eth:0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
         ],
-        "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
-        "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
+        "validatorUtils": "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
+        "validatorWalletCreator": "eth:0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
         "wasmModuleRoot": "0x58a9512cf4096461f866446387e845c6573856ef603bba4e24cb1d89630a675c",
         "zombieAddress": [],
@@ -459,9 +459,9 @@
         }
       },
       "implementationNames": {
-        "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
-        "0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB": "RollupAdminLogic",
-        "0xa6f528c65569d903C20e7D2639ad343128B4FD27": "RollupUserLogic"
+        "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
+        "eth:0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB": "RollupAdminLogic",
+        "eth:0xa6f528c65569d903C20e7D2639ad343128B4FD27": "RollupUserLogic"
       },
       "usedTypes": [
         {
@@ -498,7 +498,7 @@
     },
     {
       "name": "RollupEventInbox",
-      "address": "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
+      "address": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
       "type": "Contract",
       "template": "orbitstack/RollupEventInbox",
       "sourceHashes": [
@@ -510,27 +510,27 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
+            ["eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"]
           ]
         ],
         "$upgradeCount": 1,
-        "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-        "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
+        "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
       },
       "implementationNames": {
-        "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F": "TransparentUpgradeableProxy",
-        "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": "RollupEventInbox"
+        "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F": "TransparentUpgradeableProxy",
+        "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": "RollupEventInbox"
       }
     },
     {
       "name": "OneStepProverHostIo",
-      "address": "0x551E2501074D80E22c5FfB69b5fd8ba2939593b7",
+      "address": "eth:0x551E2501074D80E22c5FfB69b5fd8ba2939593b7",
       "type": "Contract",
       "template": "orbitstack/OneStepProverHostIo",
       "sourceHashes": [
@@ -542,12 +542,12 @@
       "sinceBlock": 21049966,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x551E2501074D80E22c5FfB69b5fd8ba2939593b7": "OneStepProverHostIo"
+        "eth:0x551E2501074D80E22c5FfB69b5fd8ba2939593b7": "OneStepProverHostIo"
       }
     },
     {
       "name": "Hypernative2",
-      "address": "0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
+      "address": "eth:0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -561,7 +561,7 @@
     },
     {
       "name": "UpgradeExecutor",
-      "address": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+      "address": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
       "type": "Contract",
       "template": "orbitstack/UpgradeExecutor",
       "sourceHashes": [
@@ -591,13 +591,13 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0x6c21303F5986180B1394d2C89f3e883890E2867b"]
+            ["eth:0x6c21303F5986180B1394d2C89f3e883890E2867b"]
           ]
         ],
         "$upgradeCount": 1,
@@ -608,38 +608,38 @@
           },
           "ADMIN_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"]
+            "members": ["eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": ["0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
+            "members": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
-        "executors": ["0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
+        "executors": ["eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d"]
       },
       "implementationNames": {
-        "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "TransparentUpgradeableProxy",
-        "0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
+        "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "TransparentUpgradeableProxy",
+        "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
       },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
+      "address": "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Certora 1",
-      "address": "0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
+      "address": "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ChallengeManager",
-      "address": "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
+      "address": "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
       "type": "Contract",
       "template": "orbitstack/ChallengeManager",
       "sourceHashes": [
@@ -651,41 +651,41 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0xd14D9d4c8985763B5037A4f253977e059385660c",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0xd14D9d4c8985763B5037A4f253977e059385660c",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
+            ["eth:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"]
           ],
           [
             "2024-06-27T16:39:47.000Z",
             "0x9226b704344df97784d15fc6cdbcfef620f393011c803879e7ec2e8c875665b0",
-            ["0x122B88885F1f365B69CAd38B167B039fEd0Ba096"]
+            ["eth:0x122B88885F1f365B69CAd38B167B039fEd0Ba096"]
           ],
           [
             "2024-10-30T01:29:35.000Z",
             "0x81ed45f10aa3c6062d1d3ce5c6a2763c4e88e93e51d35665e94e33b2b04627ad",
-            ["0xd14D9d4c8985763B5037A4f253977e059385660c"]
+            ["eth:0xd14D9d4c8985763B5037A4f253977e059385660c"]
           ]
         ],
         "$upgradeCount": 3,
-        "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-        "osp": "0xEd696D87C351C2ef687c1c484c3e297B276a40d1",
-        "resultReceiver": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-        "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+        "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "osp": "eth:0xEd696D87C351C2ef687c1c484c3e297B276a40d1",
+        "resultReceiver": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+        "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "totalChallengesCreated": 1
       },
       "implementationNames": {
-        "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": "TransparentUpgradeableProxy",
-        "0xd14D9d4c8985763B5037A4f253977e059385660c": "ChallengeManager"
+        "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": "TransparentUpgradeableProxy",
+        "eth:0xd14D9d4c8985763B5037A4f253977e059385660c": "ChallengeManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Caldera2",
-      "address": "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
+      "address": "eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -699,7 +699,7 @@
     },
     {
       "name": "Outbox",
-      "address": "0x655761AD5FC251F414D6993A73184B0669F278c8",
+      "address": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
       "type": "Contract",
       "template": "orbitstack/Outbox",
       "sourceHashes": [
@@ -711,35 +711,35 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
+            ["eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"]
           ]
         ],
         "$upgradeCount": 1,
-        "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
         "l2ToL1EthBlock": 0,
         "l2ToL1OutputId": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "l2ToL1Sender": "0x0000000000000000000000000000000000000000",
+        "l2ToL1Sender": "eth:0x0000000000000000000000000000000000000000",
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
-        "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
+        "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"
       },
       "implementationNames": {
-        "0x655761AD5FC251F414D6993A73184B0669F278c8": "TransparentUpgradeableProxy",
-        "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": "Outbox"
+        "eth:0x655761AD5FC251F414D6993A73184B0669F278c8": "TransparentUpgradeableProxy",
+        "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": "Outbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+      "address": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -797,15 +797,15 @@
       "sinceBlock": 18788587,
       "values": {
         "$immutable": true,
-        "owner": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
+        "owner": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a"
       },
       "implementationNames": {
-        "0x74C717C01425eb475A5fC55d2A4a9045fC9800df": "ProxyAdmin"
+        "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df": "ProxyAdmin"
       }
     },
     {
       "name": "OneStepProverMemory",
-      "address": "0x778ca912Bd8b35dDA84852B47BA8624e08f640A6",
+      "address": "eth:0x778ca912Bd8b35dDA84852B47BA8624e08f640A6",
       "type": "Contract",
       "template": "orbitstack/OneStepProverMemory",
       "sourceHashes": [
@@ -817,12 +817,12 @@
       "sinceBlock": 21049964,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x778ca912Bd8b35dDA84852B47BA8624e08f640A6": "OneStepProverMemory"
+        "eth:0x778ca912Bd8b35dDA84852B47BA8624e08f640A6": "OneStepProverMemory"
       }
     },
     {
       "name": "ERC20Gateway",
-      "address": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+      "address": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
       "type": "Contract",
       "template": "orbitstack/ERC20Gateway",
       "sourceHashes": [
@@ -834,32 +834,32 @@
       "sinceTimestamp": 1702609595,
       "sinceBlock": 18788729,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02",
         "$pastUpgrades": [
           [
             "2023-12-15T03:06:35.000Z",
             "0xff7d995569e4a00193462406da253b8fb2fa14e8fddf5f79bed51180e6099c54",
-            ["0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]
+            ["eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02"]
           ]
         ],
         "$upgradeCount": 1,
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
-        "counterpartGateway": "0x87799989341A07F495287B1433eea98398FD73aA",
-        "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-        "l2BeaconProxyFactory": "0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185",
-        "router": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
-        "whitelist": "0x0000000000000000000000000000000000000000"
+        "counterpartGateway": "eth:0x87799989341A07F495287B1433eea98398FD73aA",
+        "inbox": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+        "l2BeaconProxyFactory": "eth:0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185",
+        "router": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
+        "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x7870D5398DB488c669B406fBE57b8d05b6A35e42": "TransparentUpgradeableProxy",
-        "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02": "L1ERC20Gateway"
+        "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42": "TransparentUpgradeableProxy",
+        "eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02": "L1ERC20Gateway"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "Bridge",
-      "address": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+      "address": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
       "type": "Contract",
       "template": "orbitstack/Bridge",
       "sourceHashes": [
@@ -876,30 +876,30 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
+            ["eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
           ]
         ],
         "$upgradeCount": 1,
-        "activeOutbox": "0x0000000000000000000000000000000000000000",
+        "activeOutbox": "eth:0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
-          "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-          "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
+          "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+          "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
-        "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
+        "allowedOutboxList": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
         "delayedMessageCount": 6357,
         "inboxHistory": [
-          "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-          "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
+          "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+          "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
-        "outboxHistory": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
-        "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+        "outboxHistory": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
+        "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+        "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
         "sequencerMessageCount": 4787,
         "sequencerReportedSubMessageCount": 874643
       },
@@ -922,29 +922,29 @@
         }
       },
       "implementationNames": {
-        "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "TransparentUpgradeableProxy",
-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": "Bridge"
+        "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "TransparentUpgradeableProxy",
+        "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": "Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x87799989341A07F495287B1433eea98398FD73aA",
+      "address": "eth:0x87799989341A07F495287B1433eea98398FD73aA",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e",
+      "address": "eth:0x89A01e3B2C3A16c3960EADc2ceFcCf2D3AA3F82e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x8A577165f8ef813296043d5f75fF2F2F2349afFd",
+      "address": "eth:0x8A577165f8ef813296043d5f75fF2F2F2349afFd",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MamoriLabs3",
-      "address": "0x944eB0a2829A859959586b10D54229278534a696",
+      "address": "eth:0x944eB0a2829A859959586b10D54229278534a696",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -958,18 +958,18 @@
     },
     {
       "name": "KintsugiFoundation",
-      "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E",
+      "address": "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185",
+      "address": "eth:0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OneStepProverMath",
-      "address": "0xacED35d61f71A804E7627b5622c267C8Ac31d38e",
+      "address": "eth:0xacED35d61f71A804E7627b5622c267C8Ac31d38e",
       "type": "Contract",
       "template": "orbitstack/OneStepProverMath",
       "sourceHashes": [
@@ -981,17 +981,17 @@
       "sinceBlock": 21049965,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xacED35d61f71A804E7627b5622c267C8Ac31d38e": "OneStepProverMath"
+        "eth:0xacED35d61f71A804E7627b5622c267C8Ac31d38e": "OneStepProverMath"
       }
     },
     {
-      "address": "0xad40f1440544475f4B70573a106F41dF1860598b",
+      "address": "eth:0xad40f1440544475f4B70573a106F41dF1860598b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Inbox",
-      "address": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+      "address": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
       "type": "Contract",
       "template": "orbitstack/Inbox",
       "sourceHashes": [
@@ -1003,68 +1003,68 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0x296339ED40ec80746b239b04dE943bb8619784b7",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0x296339ED40ec80746b239b04dE943bb8619784b7",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
+            ["eth:0x1162084C3C6575121146582Db5BE43189e8CEe6b"]
           ],
           [
             "2024-05-03T15:22:59.000Z",
             "0x3ad996252ae2a17bb0e7b5ec38eee0d104fd097da479cb3911b34d925f1750d7",
-            ["0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]
+            ["eth:0x518465d9f81bDE1e573f9bD2a6761F8ADaAFe73e"]
           ],
           [
             "2024-05-08T00:06:47.000Z",
             "0xec98dd39612eb11b2d7e15fc9961c34aba0796fd078989942636728ebeb888e3",
-            ["0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]
+            ["eth:0xc235c5194f2404234fc7C99b4dd15289BB735Cf5"]
           ],
           [
             "2025-05-06T15:50:47.000Z",
             "0xddb2100d0cbc866a1716fa96353d277877650256d07b0291b60814276f866e28",
-            ["0x296339ED40ec80746b239b04dE943bb8619784b7"]
+            ["eth:0x296339ED40ec80746b239b04dE943bb8619784b7"]
           ]
         ],
         "$upgradeCount": 4,
         "allowListEnabled": false,
-        "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-        "getProxyAdmin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "getProxyAdmin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "maxDataSize": 117964,
         "paused": false,
-        "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a"
+        "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a"
       },
       "implementationNames": {
-        "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": "TransparentUpgradeableProxy",
-        "0x296339ED40ec80746b239b04dE943bb8619784b7": "Inbox"
+        "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": "TransparentUpgradeableProxy",
+        "eth:0x296339ED40ec80746b239b04dE943bb8619784b7": "Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "MamoriLabs",
-      "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
+      "address": "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC",
+      "address": "eth:0xc31C4549356d46c37021393EeEb6f704B38061eC",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd",
+      "address": "eth:0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
+      "address": "eth:0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "GatewayRouter",
-      "address": "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
+      "address": "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
       "type": "Contract",
       "template": "orbitstack/GatewayRouter",
       "sourceHashes": [
@@ -1076,32 +1076,32 @@
       "sinceTimestamp": 1702609595,
       "sinceBlock": 18788729,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D",
         "$pastUpgrades": [
           [
             "2023-12-15T03:06:35.000Z",
             "0xff7d995569e4a00193462406da253b8fb2fa14e8fddf5f79bed51180e6099c54",
-            ["0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]
+            ["eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D"]
           ]
         ],
         "$upgradeCount": 1,
-        "counterpartGateway": "0x340487b92808B84c2bd97C87B590EE81267E04a7",
-        "defaultGateway": "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
-        "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-        "owner": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
-        "router": "0x0000000000000000000000000000000000000000",
-        "whitelist": "0x0000000000000000000000000000000000000000"
+        "counterpartGateway": "eth:0x340487b92808B84c2bd97C87B590EE81267E04a7",
+        "defaultGateway": "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+        "inbox": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
+        "owner": "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
+        "router": "eth:0x0000000000000000000000000000000000000000",
+        "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": "TransparentUpgradeableProxy",
-        "0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": "L1GatewayRouter"
+        "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": "TransparentUpgradeableProxy",
+        "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": "L1GatewayRouter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Turnkey Multisig",
-      "address": "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
+      "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1114,13 +1114,13 @@
       "sinceBlock": 20465349,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd",
-          "0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69",
-          "0x4a3BB34aDE10127752015A6aF6136da15fde636A",
-          "0xad40f1440544475f4B70573a106F41dF1860598b",
-          "0x8A577165f8ef813296043d5f75fF2F2F2349afFd"
+          "eth:0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd",
+          "eth:0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69",
+          "eth:0x4a3BB34aDE10127752015A6aF6136da15fde636A",
+          "eth:0xad40f1440544475f4B70573a106F41dF1860598b",
+          "eth:0x8A577165f8ef813296043d5f75fF2F2F2349afFd"
         ],
         "$threshold": 1,
         "domainSeparator": "0x1017bf71358efedb4c64ceeed5556da19ea82e08159858bc4e7a8b04deb4106c",
@@ -1131,17 +1131,17 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69",
+      "address": "eth:0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xe27f3f6db6824def1738b2aACe2672aC59046a39",
+      "address": "eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -1155,7 +1155,7 @@
     },
     {
       "name": "Venn2",
-      "address": "0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
+      "address": "eth:0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -1169,13 +1169,13 @@
     },
     {
       "name": "Venn/Ironblocks",
-      "address": "0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2",
+      "address": "eth:0xe52957E92a372d5a3B544F4C329b606f1A1b4bD2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OneStepProofEntry",
-      "address": "0xEd696D87C351C2ef687c1c484c3e297B276a40d1",
+      "address": "eth:0xEd696D87C351C2ef687c1c484c3e297B276a40d1",
       "type": "Contract",
       "template": "orbitstack/OneStepProofEntry",
       "sourceHashes": [
@@ -1187,18 +1187,18 @@
       "sinceBlock": 21049967,
       "values": {
         "$immutable": true,
-        "prover0": "0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59",
-        "proverHostIo": "0x551E2501074D80E22c5FfB69b5fd8ba2939593b7",
-        "proverMath": "0xacED35d61f71A804E7627b5622c267C8Ac31d38e",
-        "proverMem": "0x778ca912Bd8b35dDA84852B47BA8624e08f640A6"
+        "prover0": "eth:0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59",
+        "proverHostIo": "eth:0x551E2501074D80E22c5FfB69b5fd8ba2939593b7",
+        "proverMath": "eth:0xacED35d61f71A804E7627b5622c267C8Ac31d38e",
+        "proverMem": "eth:0x778ca912Bd8b35dDA84852B47BA8624e08f640A6"
       },
       "implementationNames": {
-        "0xEd696D87C351C2ef687c1c484c3e297B276a40d1": "OneStepProofEntry"
+        "eth:0xEd696D87C351C2ef687c1c484c3e297B276a40d1": "OneStepProofEntry"
       }
     },
     {
       "name": "Kinto Multisig",
-      "address": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "address": "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1218,12 +1218,12 @@
       "sinceBlock": 16818229,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
-          "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
-          "0x94561e98DD5E55271f91A103e4979aa6C493745E",
-          "0xc31C4549356d46c37021393EeEb6f704B38061eC"
+          "eth:0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
+          "eth:0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
+          "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
+          "eth:0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
         "$threshold": 3,
         "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
@@ -1234,13 +1234,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "SequencerInbox",
-      "address": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
+      "address": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
       "type": "Contract",
       "template": "orbitstack/SequencerInbox",
       "sourceHashes": [
@@ -1258,30 +1258,30 @@
       "sinceTimestamp": 1702607855,
       "sinceBlock": 18788587,
       "values": {
-        "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
-        "$implementation": "0xa5E09FfA33dd011F5B68aAA55F513D6773579f78",
+        "$admin": "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
+        "$implementation": "eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78",
         "$pastUpgrades": [
           [
             "2023-12-15T02:37:35.000Z",
             "0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8",
-            ["0x873484Ba63353C8b71210ce123B465512d408B27"]
+            ["eth:0x873484Ba63353C8b71210ce123B465512d408B27"]
           ],
           [
             "2024-06-27T16:39:47.000Z",
             "0x9226b704344df97784d15fc6cdbcfef620f393011c803879e7ec2e8c875665b0",
-            ["0x57411f5BA52531e8199066bC8EC650470A744883"]
+            ["eth:0x57411f5BA52531e8199066bC8EC650470A744883"]
           ],
           [
             "2025-05-06T15:50:47.000Z",
             "0xddb2100d0cbc866a1716fa96353d277877650256d07b0291b60814276f866e28",
-            ["0xa5E09FfA33dd011F5B68aAA55F513D6773579f78"]
+            ["eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78"]
           ]
         ],
         "$upgradeCount": 3,
         "batchCount": 4787,
-        "batchPosterManager": "0x0000000000000000000000000000000000000000",
-        "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
-        "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
+        "batchPosters": ["eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
+        "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -1302,8 +1302,8 @@
           "futureSeconds": 3600
         },
         "postsBlobs": false,
-        "reader4844": "0x9098e513950bC43184d39F4E283ECa137A3AF247",
-        "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+        "reader4844": "eth:0x9098e513950bC43184d39F4E283ECa137A3AF247",
+        "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
         "totalDelayedMessagesRead": 6355,
@@ -1316,8 +1316,8 @@
         }
       },
       "implementationNames": {
-        "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "TransparentUpgradeableProxy",
-        "0xa5E09FfA33dd011F5B68aAA55F513D6773579f78": "SequencerInbox"
+        "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "TransparentUpgradeableProxy",
+        "eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78": "SequencerInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
@@ -2103,5 +2103,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x76ec626164fcee5f5691ecc16f9aeedfbbd1226ad33ca32b00a2857cd28e6fe8"
+  "permissionsConfigHash": "0x8d7522bf880d8a7fc04e3b25b596692aceb44c06ebb3e882082d0bf0cdf5dc79"
 }
