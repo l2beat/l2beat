@@ -1,8 +1,8 @@
 import {
   ChainSpecificAddress,
   EthereumAddress,
-  UnixTime,
   formatSeconds,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   ESCROW,

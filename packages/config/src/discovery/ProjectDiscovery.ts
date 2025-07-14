@@ -15,8 +15,8 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   type LegacyTokenBridgedUsing,
-  UnixTime,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import isString from 'lodash/isString'
@@ -412,7 +412,7 @@ export class ProjectDiscovery {
     for (const account of accounts) {
       assert(
         isString(account) && ChainSpecificAddress.check(account),
-        `Values must be Ethereum addresses`,
+        'Values must be Ethereum addresses',
       )
       const address = ChainSpecificAddress(account)
       const isEOA = this.isEOA(address)

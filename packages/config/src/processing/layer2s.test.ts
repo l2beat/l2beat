@@ -1,11 +1,11 @@
 import { getChainShortName } from '@l2beat/discovery'
 import {
   assert,
+  assertUnreachable,
   ChainSpecificAddress,
   EthereumAddress,
-  UnixTime,
-  assertUnreachable,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'

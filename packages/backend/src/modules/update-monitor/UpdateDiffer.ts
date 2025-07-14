@@ -1,9 +1,11 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database, UpdateDiffRecord } from '@l2beat/database'
-import type {
-  DiscoveryDiff,
-  DiscoveryOutput,
-  EntryParameters,
+import {
+  type ConfigReader,
+  type DiscoveryDiff,
+  type DiscoveryOutput,
+  diffDiscovery,
+  type EntryParameters,
 } from '@l2beat/discovery'
 import {
   assert,

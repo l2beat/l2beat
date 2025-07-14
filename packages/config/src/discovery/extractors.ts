@@ -37,9 +37,11 @@ export function toAddressArray(
 ): ChainSpecificAddress[] {
   if (Array.isArray(value)) {
     return value.flatMap((v) => toAddressArray(v))
-  } else if (typeof value === 'object') {
+  }
+  if (typeof value === 'object') {
     return Object.values(value).flatMap((v) => toAddressArray(v))
-  } else if (typeof value === 'string') {
+  }
+  if (typeof value === 'string') {
     try {
       return [ChainSpecificAddress(value)]
     } catch {
