@@ -44,21 +44,21 @@ interface Props {
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--chart-pink))',
+    color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'hsl(var(--chart-cyan))',
+    color: 'var(--chart-cyan)',
     indicatorType: {
       shape: 'line',
     },
   },
   ethereum: {
     label: 'Ethereum',
-    color: 'hsl(var(--chart-ethereum))',
+    color: 'var(--chart-ethereum)',
     indicatorType: {
       shape: 'line',
     },

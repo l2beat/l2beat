@@ -431,5 +431,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7cd3eace0795fe1a80c52fedb74caa27f99acc4a937fd489145b37a82eb29db5"
+  "permissionsConfigHash": "0x263764165f1a35168ec6d501e1b1578bc8decbb983705c69e5d9fce1b7df3f0c"
 }

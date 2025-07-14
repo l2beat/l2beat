@@ -39,7 +39,7 @@ export function RiskBanner({
         className={cn(
           'flex flex-row items-stretch rounded-lg',
           size === 'regular' && 'h-16',
-          size === 'large' && 'h-[5.125rem]',
+          size === 'large' && 'h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
           warning && 'rounded-b-none',
           className,
@@ -68,7 +68,7 @@ export function RiskBanner({
             className={cn(
               'text-left',
               size === 'regular' && 'font-bold text-label-value-14',
-              size === 'large' && '!leading-none font-bold text-sm md:text-lg',
+              size === 'large' && 'font-bold text-sm leading-none! md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >

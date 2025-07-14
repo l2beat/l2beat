@@ -47,7 +47,7 @@ export interface ScalingProject {
   id: ProjectId
   /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
-  /** Is the project univeral or app specific (e.g. DEX) */
+  /** Is the project universal or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime

@@ -142,7 +142,7 @@ export function NavLayout({
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
-    env.NEXT_PUBLIC_PARTNERS && {
+    env.CLIENT_SIDE_PARTNERS && {
       type: 'multiple',
       title: 'Ecosystems',
       match: 'ecosystems',
@@ -201,7 +201,7 @@ export function NavLayout({
     {
       title: 'Jobs',
       href: externalLinks.jobs,
-      accessory: env.NEXT_PUBLIC_SHOW_HIRING_BADGE ? (
+      accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
         <HiringBadge />
       ) : undefined,
     },
@@ -223,7 +223,7 @@ export function NavLayout({
         <NavSidebar logoLink={logoLink} groups={groups} sideLinks={sideLinks} />
         <div
           className={cn(
-            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
+            'min-w-0 flex-1 has-data-hide-overflow-x:overflow-x-clip md:pt-5 lg:ml-3 lg:pt-0',
             childrenWrapperClassName,
           )}
         >

@@ -596,4 +596,18 @@ describe('getProjects', () => {
       })
     }
   })
+
+  describe('associated tokens can only have category other', () => {
+    for (const project of projects) {
+      if (!project.tvsConfig) {
+        continue
+      }
+      const associated = project.tvsConfig?.filter((t) => t.isAssociated)
+      for (const a of associated) {
+        it(`${project.name}: ${a.id}`, () => {
+          expect(a.category).toEqual('other')
+        })
+      }
+    }
+  })
 })

@@ -18,7 +18,7 @@ export function NoBridgeGrissiniDetailsPlaceholder({
   return (
     <div
       className={cn(
-        'flex flex-row items-stretch rounded bg-header-secondary',
+        'flex flex-row items-stretch rounded bg-header-secondary md:h-20.5',
         className,
       )}
     >

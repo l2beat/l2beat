@@ -86,7 +86,7 @@ export function EcosystemsTvsChart({
         meta={chartMeta}
         data={chartData}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
@@ -140,7 +140,7 @@ function Header({
   unit: string
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
         <EcosystemChartTimeRange range={range} />

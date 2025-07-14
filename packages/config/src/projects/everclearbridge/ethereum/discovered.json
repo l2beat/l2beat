@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "ethereum",
-  "blockNumber": 22397509,
+  "blockNumber": 22895905,
   "configHash": "0xf2d7369cea2cddf868fdbb8cc4616b4cbd3c372d444147823ddc072d72f72ba0",
   "entries": [
     {
@@ -143,6 +143,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xD976faAa19135dB4B846e43DdAaA9C66db842B7B",
           "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
           "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
@@ -153,8 +154,8 @@
         "domainSeparator": "0x64412860115383b11fa25f237671c0f1360620ce4cb4483a378e947a2eaf2d69",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 37,
+        "multisigThreshold": "2 of 6 (33%)",
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -204,11 +205,11 @@
         "FILL_INTENT_FOR_SOLVER_TYPEHASH": "0xce47b2c080dbcd8e420dc92bcf58f25f73f2e008a3b34ac41b9d468d1fb45d5a",
         "fillQueue": { "first": 1, "last": 0 },
         "gateway": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
-        "intentQueue": { "first": 3049, "last": 3048 },
+        "intentQueue": { "first": 9613, "last": 9612 },
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
         "messageGasLimit": 2000000,
         "messageReceiver": "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66",
-        "nonce": 3048,
+        "nonce": 9612,
         "owner": "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6",
         "paused": false,
         "PERMIT2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
@@ -249,6 +250,11 @@
       "implementationNames": {
         "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4": "XERC20Module"
       }
+    },
+    {
+      "address": "0xD976faAa19135dB4B846e43DdAaA9C66db842B7B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "",
@@ -526,5 +532,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xbe21026ad51732d7421ad94bd97c42fff43a798027757232394b65dc5b2de8d9"
+  "permissionsConfigHash": "0x1b75477a2f44185ef94ef6825e3e438403a6ade0894cd63c19b76d5de0e5d580"
 }

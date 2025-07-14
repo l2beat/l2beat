@@ -12,7 +12,7 @@ export function DiscoUiLink({ href }: { href: string }) {
         navigationMenuTriggerStyle(),
         'ring-brand ring-inset focus:ring-2',
         'flex h-8 flex-row items-center gap-1.5 px-2.5',
-        'bg-gradient-to-r from-[#854220] to-[#DE7B16]',
+        'bg-linear-to-r from-[#854220] to-[#DE7B16]',
       )}
     >
       <DiscoUiIcon className="h-[14px] w-[67px] fill-white" />

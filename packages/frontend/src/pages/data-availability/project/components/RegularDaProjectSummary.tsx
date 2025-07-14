@@ -59,36 +59,6 @@ export function RegularDaProjectSummary({ project }: Props) {
       ) : (
         <SingleBridgeDetails project={project} />
       )}
-      {/* Details row
-      <div className="mt-6 flex w-full flex-col gap-6 md:gap-8">
-        {project.discoUiHref && (
-          <div className="-mb-4 md:hidden">
-            <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
-            <div className="flex items-center justify-between">
-              <a
-                className="text-link text-xs underline"
-                href={project.discoUiHref}
-              >
-                Explore more in Discovery UI
-              </a>
-              <DiscoUiLink href={project.discoUiHref} />
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-col">
-          <div>
-            <div className="-mx-4 border-divider border-y px-4 md:hidden">
-              <MobileProjectLinks projectLinks={project.header.links} />
-            </div>
-          </div>
-          {hasMultipleBridges ? (
-            <MultipleBridgeDetails project={project} />
-          ) : (
-            <SingleBridgeDetails project={project} />
-          )}
-        </div>
-      </div> */}
     </section>
   )
 }

@@ -13,12 +13,12 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -72,13 +72,13 @@ export function MonthlyUpdateActivityChart({
   const range = getChartRange(chartData)
 
   return (
-    <PrimaryCard className="!rounded-lg border border-divider">
+    <PrimaryCard className="rounded-lg! border border-divider">
       <Header range={range} stats={stats} />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
@@ -123,11 +123,11 @@ function Header({
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">
-          <ChartTimeRange range={range} />
+          <EcosystemChartTimeRange range={range} />
         </div>
       </div>
       <div className="text-right">

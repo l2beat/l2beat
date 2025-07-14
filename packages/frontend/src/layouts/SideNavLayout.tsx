@@ -15,7 +15,7 @@ export function SideNavLayout({
       topChildren={<TopBanner className="2xlrounded-br-none lg:rounded-b-xl" />}
       childrenWrapperClassName={childrenWrapperClassName}
     >
-      <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0">
+      <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0">
         {children}
       </div>
       <Footer

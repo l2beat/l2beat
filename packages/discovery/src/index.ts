@@ -3,6 +3,7 @@ export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
 export {
   DiscoveryRegistry,
+  type DiscoveryBlockNumbers,
   getDependenciesToDiscoverForProject,
   modelPermissions,
   generateClingoForDiscoveries,

@@ -76,7 +76,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
-            className="!text-base !font-medium !leading-[100%]"
+            className="font-medium! text-base! leading-[100%]!"
             changeClassName="text-label-value-15 font-medium"
           >
             {project.header.activity.lastDayUops.toFixed(2)}

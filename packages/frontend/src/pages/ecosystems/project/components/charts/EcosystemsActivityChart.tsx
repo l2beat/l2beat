@@ -75,7 +75,7 @@ export function EcosystemsActivityChart({
       },
       ethereum: {
         label: 'Ethereum',
-        color: 'hsl(var(--chart-ethereum))',
+        color: 'var(--chart-ethereum)',
         indicatorType: {
           shape: 'line',
         },
@@ -105,7 +105,7 @@ export function EcosystemsActivityChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
@@ -182,7 +182,7 @@ function Header({
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">

@@ -1,7 +1,7 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 22615662,
+  "blockNumber": 22895933,
   "configHash": "0xaa12d2556b437804c9a9d8e84515e1dbbef47c94fbc4d09d5ee896ca20fdea64",
   "entries": [
     {
@@ -41,7 +41,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620738",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620742",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -373,7 +373,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -433,8 +433,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 22590843
+          "prevBoughtGas": 796584,
+          "prevBlockNum": 22890976
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
@@ -577,10 +577,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 21409200,
-        "latestOutputIndex": 11893,
-        "nextBlockNumber": 21411000,
-        "nextOutputIndex": 11894,
+        "latestBlockNumber": 23101200,
+        "latestOutputIndex": 12833,
+        "nextBlockNumber": 23103000,
+        "nextOutputIndex": 12834,
         "PROPOSER": "0xAF24199C29D5cc3fd298356137913A42847eA690",
         "startingBlockNumber": 0,
         "startingTimestamp": 1706027387,

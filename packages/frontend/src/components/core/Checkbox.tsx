@@ -54,7 +54,7 @@ const Checkbox = ({
           <CheckIcon
             className={cn(
               'size-5 stroke-[1.8px]',
-              '!stroke-surface-primary primary-card:!stroke-surface-secondary',
+              'primary-card:stroke-surface-secondary! stroke-surface-primary!',
             )}
           />
         </CheckboxPrimitive.Indicator>

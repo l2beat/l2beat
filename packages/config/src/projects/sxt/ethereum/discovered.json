@@ -1,7 +1,7 @@
 {
   "name": "sxt",
   "chain": "ethereum",
-  "blockNumber": 22593197,
+  "blockNumber": 22896156,
   "configHash": "0x279a5aec0947b9c1826daf95a64895db9ef03792603cfe4545028d16cee8e93d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -304,7 +304,7 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 9,
+        "getFirstUnprocessedPriorityTx": 14,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -313,20 +313,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x316d3f9ce882404af410ed896ccb6005f8b26fdeaf9bf0a65edd5f46e22018d5",
+        "getPriorityTreeRoot": "0x1bad31b0a3ce1e1fd3ba54afe97565fa73a3225a2f61492c822e00315c77dd71",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 22,
-        "getTotalBatchesExecuted": 22,
-        "getTotalBatchesVerified": 22,
-        "getTotalBlocksCommitted": 22,
-        "getTotalBlocksExecuted": 22,
-        "getTotalBlocksVerified": 22,
-        "getTotalPriorityTxs": 9,
+        "getTotalBatchesCommitted": 35,
+        "getTotalBatchesExecuted": 35,
+        "getTotalBatchesVerified": 35,
+        "getTotalBlocksCommitted": 35,
+        "getTotalBlocksExecuted": 35,
+        "getTotalBlocksVerified": 35,
+        "getTotalPriorityTxs": 14,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -474,7 +474,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 5,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -539,7 +539,8 @@
         "tokenMultiplierSetter": "0x27251a0185F0354C7D5BF0aF5fAA1A384712C6bd",
         "upgradeTimestamps": [
           { "_protocolVersion": 27, "_upgradeTimestamp": 1748264400 },
-          { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1748264400 }
+          { "_protocolVersion": 115964116992, "_upgradeTimestamp": 1748264400 },
+          { "_protocolVersion": 120259084288, "_upgradeTimestamp": 1752159600 }
         ]
       },
       "fieldMeta": {

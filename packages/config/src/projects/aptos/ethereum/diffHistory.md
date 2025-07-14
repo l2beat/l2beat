@@ -1,3 +1,80 @@
+Generated with discovered.json: 0x7375477f593bbac941a154f4fecfaf248eb87055
+
+# Diff at Wed, 09 Jul 2025 15:17:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 21723791
+- current block number: 22882445
+
+## Description
+
+Update LZ Multisig to a custom multisig contract that allows offchain signing with multichain onchain execution.
+
+## Watched changes
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         |  953 -------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |   35 -
+ .../aptos/ethereum/.flat/LayerZero Multisig.sol    | 1396 ++++++++++++++++++++
+ 3 files changed, 1396 insertions(+), 988 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21723791 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      name:
+-        "LayerZero Multisig"
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x2608bf160c939dd3a9c2cad2692ac70e5de6f793
 
 # Diff at Fri, 04 Jul 2025 12:18:52 GMT:

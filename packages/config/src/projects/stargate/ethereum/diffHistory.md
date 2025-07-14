@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xbb1a3ddf76a9498109f3df0f4129263637d3be6b
+
+# Diff at Wed, 09 Jul 2025 15:13:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 21723798
+- current block number: 22882446
+
+## Description
+
+Update LZ Multisig to a custom multisig contract that allows offchain signing with multichain onchain execution.
+
+## Watched changes
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+## Source code changes
+
+```diff
+.../LayerZero Multisig/GnosisSafe.sol => /dev/null |  953 -------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../stargate/ethereum/.flat/LayerZero Multisig.sol | 1396 ++++++++++++++++++++
+ 3 files changed, 1396 insertions(+), 988 deletions(-)
+```
+
 Generated with discovered.json: 0x18ac3cffa70e5492d935edfba702beec56466e45
 
 # Diff at Fri, 04 Jul 2025 12:19:22 GMT:
