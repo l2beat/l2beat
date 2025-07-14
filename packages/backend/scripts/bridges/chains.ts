@@ -52,7 +52,7 @@ export const CHAINS: Chain[] = [
     name: 'scroll',
     shortName: 'scr',
     callsPerMinute: 1000,
-    getTxUrl: (hash: string) => `hhttps://scrollscan.com/tx/${hash}`,
+    getTxUrl: (hash: string) => `https://scrollscan.com/tx/${hash}`,
   },
   {
     name: 'ink',
