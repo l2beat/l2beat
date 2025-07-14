@@ -1,4 +1,5 @@
 import { writeFileSync } from 'fs'
+import { formatJson } from '@l2beat/shared-pure'
 import { type Parser, toJsonSchema, v } from '@l2beat/validate'
 import {
   _ColorConfig,
@@ -16,17 +17,13 @@ import {
   _StructureContract,
   _StructureContractField,
 } from '../src/discovery/config/StructureConfig'
-import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 
-async function generateAndSaveSchema<T>(
-  baseSchema: Parser<T>,
-  filename: string,
-) {
+function generateAndSaveSchema<T>(baseSchema: Parser<T>, filename: string) {
   const schema = toJsonSchema(baseSchema)
-  writeFileSync(filename, await toPrettyJson(schema))
+  writeFileSync(filename, formatJson(schema))
 }
 
-async function main() {
+function main() {
   const MergedField = v.object({
     ..._ContractPermissionField,
     ..._ColorContractField,
@@ -59,8 +56,8 @@ async function main() {
     chains: v.record(v.string(), ChainConfig),
   })
 
-  await generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')
-  await generateAndSaveSchema(MergedContract, 'schemas/contract.v2.schema.json')
+  generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')
+  generateAndSaveSchema(MergedContract, 'schemas/contract.v2.schema.json')
 }
 
-main().catch(console.error)
+main()

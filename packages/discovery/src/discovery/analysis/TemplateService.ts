@@ -6,7 +6,12 @@ import {
   writeFileSync,
 } from 'fs'
 import path, { join } from 'path'
-import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  Hash256,
+  formatJson,
+} from '@l2beat/shared-pure'
 import type { Parser } from '@l2beat/validate'
 import {
   combineImplementationHashes,
@@ -21,7 +26,6 @@ import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
 import { hashJsonStable } from '../config/hashJsonStable'
-import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -296,7 +300,7 @@ export class TemplateService {
     }
   }
 
-  async ensureTemplateExists(templateId: string) {
+  ensureTemplateExists(templateId: string) {
     const templateDirPath = join(this.rootPath, TEMPLATES_PATH, templateId)
     const templatePath = join(templateDirPath, 'template.jsonc')
 
@@ -309,7 +313,7 @@ export class TemplateService {
         $schema: schemaProperty,
       }
 
-      writeFileSync(templatePath, await toPrettyJson(json))
+      writeFileSync(templatePath, formatJson(json))
 
       return true
     }
@@ -383,7 +387,7 @@ export class TemplateService {
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     const templatePath = join(resolvedRootPath, templateId)
     const shapePath = join(templatePath, 'shapes.json')
-    writeFileSync(shapePath, await toPrettyJson(shapes))
+    writeFileSync(shapePath, formatJson(shapes))
   }
 
   readShapeSchema(shapePath: string | undefined): ShapeSchema {
