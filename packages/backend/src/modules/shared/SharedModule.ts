@@ -43,18 +43,19 @@ export function createSharedModule(
     logger,
   )
 
-  const processor = new RealTimeLivenessProcessor(
+  const realTimeLivenessProcessor = new RealTimeLivenessProcessor(
     config,
     logger,
     db,
     anomaliesNotifier,
   )
+  const processors = [realTimeLivenessProcessor]
 
   const blockIndexer = new BlockIndexer({
     logger,
     minHeight: 1,
     parents: [eventIndexer],
-    processors: [processor],
+    processors,
     source: 'ethereum',
     mode: 'CONTINUOUS',
     blockProvider: providers.block.getBlockProvider('ethereum'),
@@ -69,6 +70,10 @@ export function createSharedModule(
     eventIndexer.start()
     blockIndexer.start()
     anomaliesNotifier?.start()
+
+    for (const processor of processors) {
+      processor.init()
+    }
   }
 
   return {
