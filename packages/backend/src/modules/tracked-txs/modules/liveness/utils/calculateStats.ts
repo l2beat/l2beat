@@ -9,7 +9,7 @@ type Stats = {
 export function calculateStats(intervals: Interval[]): Stats {
   const result: Stats = {
     averageInSeconds: 0,
-    minimumInSeconds: Infinity,
+    minimumInSeconds: Number.POSITIVE_INFINITY,
     maximumInSeconds: 0,
   }
 

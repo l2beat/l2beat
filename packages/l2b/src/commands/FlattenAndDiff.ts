@@ -1,10 +1,9 @@
-import { writeFileSync } from 'fs'
-import path from 'path'
 import { flattenStartingFrom } from '@l2beat/discovery'
 import { command, option, positional, string } from 'cmd-ts'
+import { writeFileSync } from 'fs'
+import path from 'path'
 import { getExplorer } from '../implementations/common/getExplorer'
 import { powerdiff } from '../implementations/powerdiff'
-import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
 import {
   chainName,
   explorerApiKey,
@@ -12,6 +11,7 @@ import {
   explorerType,
   explorerUrl,
 } from './args'
+import { DiffingModeType, DisplayModeType, diffContext } from './Powerdiff'
 import { EthereumAddressValue } from './types'
 
 export const FlattenAndDiff = command({

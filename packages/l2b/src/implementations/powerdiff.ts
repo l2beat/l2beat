@@ -1,10 +1,10 @@
+import { assert, slidingWindow } from '@l2beat/shared-pure'
+import Convert from 'ansi-to-html'
+import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
 import http from 'http'
 import path from 'path'
-import { assert, slidingWindow } from '@l2beat/shared-pure'
-import Convert from 'ansi-to-html'
-import chalk from 'chalk'
 import { splitIntoSubfiles } from './powerdiff/splitIntoFiles'
 import type { Configuration } from './powerdiff/types'
 
@@ -396,10 +396,10 @@ const HTML_END = '<br><br></body></html>'
 export function powerdiff(
   path1: string,
   path2: string,
-  difftasticPath: string = 'difft',
+  difftasticPath = 'difft',
   mode: DiffingMode = 'together',
   displayMode: DisplayMode = 'inline',
-  context: number = 3,
+  context = 3,
 ) {
   checkDeps()
   const htmlContent = diffToHtml(

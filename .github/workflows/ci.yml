@@ -210,16 +210,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
-
       - name: Setup Biome CLI
         uses: biomejs/setup-biome@v2
-
-      - name: Install biome-config package
-        run: pnpm install --filter @l2beat/biome-config
+        with:
+          version: 2.0.6
 
       - name: Run Biome
-        run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
+        run: biome ci

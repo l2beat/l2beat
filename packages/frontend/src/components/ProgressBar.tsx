@@ -14,7 +14,7 @@ export function ProgressBar({
   trackClassName,
 }: ProgressBarSVGProps) {
   return (
-    <div className={cn(`relative h-3 w-full`, className)}>
+    <div className={cn('relative h-3 w-full', className)}>
       {/* Background track */}
       <div
         className={cn(

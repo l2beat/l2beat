@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useState } from 'react'
-
 import type { Dispatch, SetStateAction } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useEventCallback } from './useEventCallback'
 import { useEventListener } from './useEventListener'
@@ -139,7 +138,7 @@ export function useLocalStorage<T>(
     window.dispatchEvent(new StorageEvent('local-storage', { key }))
   })
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: it's correct
+  // biome-ignore lint/correctness/useExhaustiveDependencies: it's ok
   useEffect(() => {
     setStoredValue(readValue())
   }, [key])

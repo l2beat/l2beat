@@ -1,5 +1,4 @@
-import { existsSync, writeFileSync } from 'node:fs'
-import { mkdirSync } from 'node:fs'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
@@ -94,7 +93,7 @@ export async function generateMainPageOgImages(
   for (const mainPage of mainPages) {
     const outputDir = path.join(
       process.cwd(),
-      `static/meta-images`,
+      'static/meta-images',
       mainPage.type ?? '',
       `/${mainPage.title.toLowerCase().split(' ').join('-')}`,
     )

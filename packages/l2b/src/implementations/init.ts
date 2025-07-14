@@ -1,11 +1,11 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs'
-import path from 'path'
 import { getDiscoveryPaths, readJsonc } from '@l2beat/discovery'
 import {
   type EthereumAddress,
   formatJson,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import path from 'path'
 
 interface ConfigSkeleton {
   chains?: Record<string, object>

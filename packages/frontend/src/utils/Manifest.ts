@@ -1,6 +1,6 @@
 import fs from 'fs'
-import path from 'path'
 import { imageSize } from 'image-size'
+import path from 'path'
 import { env } from '~/env'
 
 export interface ManifestJson {
@@ -41,20 +41,19 @@ export function getManifest(isProduction: boolean, rootDir: string) {
         return resolved
       },
     }
-  } else {
-    return {
-      getUrl(url: string) {
-        return url
-      },
-      getImage(url: string) {
-        const content = fs.readFileSync(path.join(rootDir, 'static', url))
-        const dimensions = imageSize(content)
-        return {
-          src: url,
-          width: dimensions.width,
-          height: dimensions.height,
-        }
-      },
-    }
+  }
+  return {
+    getUrl(url: string) {
+      return url
+    },
+    getImage(url: string) {
+      const content = fs.readFileSync(path.join(rootDir, 'static', url))
+      const dimensions = imageSize(content)
+      return {
+        src: url,
+        width: dimensions.width,
+        height: dimensions.height,
+      }
+    },
   }
 }

@@ -1,8 +1,4 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
-import { UnverifiedIcon } from '~/icons/Unverified'
-import { VerifiedIcon } from '~/icons/Verified'
-
 import {
   Tooltip,
   TooltipContent,
@@ -10,6 +6,9 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
 import { externalLinks } from '~/consts/externalLinks'
+import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
+import { UnverifiedIcon } from '~/icons/Unverified'
+import { VerifiedIcon } from '~/icons/Verified'
 
 type Props =
   | {

@@ -20,7 +20,7 @@ export function MilestoneIcon({ className, ...props }: SvgIconProps) {
         rx="1"
         transform="rotate(45 9.89941 1.41421)"
         strokeWidth="2"
-      ></rect>
+      />
     </svg>
   )
 }

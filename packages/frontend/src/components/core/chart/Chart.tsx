@@ -1,8 +1,7 @@
+import type { Milestone } from '@l2beat/config'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-
-import type { Milestone } from '@l2beat/config'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'

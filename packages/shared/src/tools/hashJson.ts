@@ -1,5 +1,5 @@
-import { createHash } from 'crypto'
 import { Hash256, type json } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 
 export function hashJson(value: json) {
   const message = JSON.stringify(value)

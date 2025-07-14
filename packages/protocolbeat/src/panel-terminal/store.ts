@@ -23,10 +23,10 @@ interface TerminalState {
   setDevMode: (devMode: boolean) => void
 
   killCommand: () => void
-  matchFlat: (project: string, address: string) => Promise<void>
-  matchProject: (project: string, address: string) => Promise<void>
+  matchFlat: (project: string, address: string) => void
+  matchProject: (project: string, address: string) => void
   discover: (project: string) => Promise<void>
-  downloadAllShapes: () => Promise<void>
+  downloadAllShapes: () => void
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -50,19 +50,19 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
         command: { ...state.command, stream: undefined, inFlight: false },
       }
     }),
-  matchFlat: async (project: string, address: string) => {
+  matchFlat: (project: string, address: string) => {
     executeStreaming(set, () => executeMatchFlat(project, address, 'templates'))
   },
-  matchProject: async (project: string, address: string) => {
+  matchProject: (project: string, address: string) => {
     executeStreaming(set, () => executeMatchFlat(project, address, 'projects'))
   },
-  downloadAllShapes: async () => {
+  downloadAllShapes: () => {
     executeStreaming(set, () => executeDownloadAllShapes())
   },
-  discover: async (project: string) => {
+  discover: (project: string): Promise<void> => {
     const chain = get().command.chain
     if (chain === undefined) {
-      return
+      return Promise.resolve()
     }
 
     return executeStreaming(set, () =>
@@ -71,7 +71,7 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   },
 }))
 
-async function executeStreaming(
+function executeStreaming(
   set: (
     update: (state: TerminalState) => TerminalState | Partial<TerminalState>,
   ) => void,

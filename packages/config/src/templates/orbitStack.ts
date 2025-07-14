@@ -2,9 +2,9 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import isEmpty from 'lodash/isEmpty'
@@ -17,10 +17,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
   pickWorseRisk,
+  RISK_VIEW,
   sumRisk,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -196,9 +196,8 @@ function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
       delaySeconds: result[2],
       futureSeconds: result[3],
     }
-  } else {
-    return result
   }
+  return result
 }
 
 export function getNitroGovernance(
@@ -247,7 +246,7 @@ function defaultStateValidation(
   minimumAssertionPeriod: number,
   currentRequiredStake: number,
   challengePeriod: number,
-  existFastConfirmer: boolean = false,
+  existFastConfirmer = false,
 ): ProjectScalingStateValidation {
   const categories: ProjectScalingStateValidationCategory[] = [
     {
@@ -494,7 +493,7 @@ function orbitStackCommon(
               tokens: trackedGasTokens ?? ['ETH'],
               description: trackedGasTokens
                 ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
-                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+                : 'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
               ...upgradeability,
             }),
             ...(templateVars.nonTemplateEscrows ?? []),
@@ -536,33 +535,32 @@ function orbitStackCommon(
               references: [],
               risks: [],
             } as ProjectTechnologyChoice
-          } else {
-            const buffer = templateVars.discovery.getContractValue<{
-              bufferBlocks: number
-              max: number
-              threshold: number
-              prevBlockNumber: number
-              replenishRateInBasis: number
-              prevSequencedBlockNumber: number
-            }>('SequencerInbox', 'buffer')
-
-            const basis = 10000 // hardcoded in SequencerInbox
-
-            return {
-              name: 'Buffered forced transactions',
-              description:
-                commonDescription +
-                ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message. Only messages processed with a delay greater than ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)} consume the buffer. The buffer is capped at ${formatSeconds(buffer.max * blockNumberOpcodeTimeSeconds)}. The replenish rate is currently set at ${formatSeconds((buffer.replenishRateInBasis / basis) * 1200)} every ${formatSeconds(1200)}. Even if the buffer is fully consumed, messages are still allowed to be delayed up to ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)}.`,
-              references: [
-                {
-                  title:
-                    'Sequencer and censorship resistance - Arbitrum documentation',
-                  url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer',
-                },
-              ],
-              risks: [],
-            } as ProjectTechnologyChoice
           }
+          const buffer = templateVars.discovery.getContractValue<{
+            bufferBlocks: number
+            max: number
+            threshold: number
+            prevBlockNumber: number
+            replenishRateInBasis: number
+            prevSequencedBlockNumber: number
+          }>('SequencerInbox', 'buffer')
+
+          const basis = 10000 // hardcoded in SequencerInbox
+
+          return {
+            name: 'Buffered forced transactions',
+            description:
+              commonDescription +
+              ` The time bound is defined to be the minimum between ${formatSeconds(selfSequencingDelaySeconds)} and the time left in the delay buffer. The delay buffer gets replenished over time and gets consumed every time the sequencer doesn't timely process a message. Only messages processed with a delay greater than ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)} consume the buffer. The buffer is capped at ${formatSeconds(buffer.max * blockNumberOpcodeTimeSeconds)}. The replenish rate is currently set at ${formatSeconds((buffer.replenishRateInBasis / basis) * 1200)} every ${formatSeconds(1200)}. Even if the buffer is fully consumed, messages are still allowed to be delayed up to ${formatSeconds(buffer.threshold * blockNumberOpcodeTimeSeconds)}.`,
+            references: [
+              {
+                title:
+                  'Sequencer and censorship resistance - Arbitrum documentation',
+                url: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer',
+              },
+            ],
+            risks: [],
+          } as ProjectTechnologyChoice
         })(),
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
@@ -901,7 +899,7 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
   daProvider: DAProvider,
-  isPostBoLD: boolean = false,
+  isPostBoLD = false,
 ): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -1069,34 +1067,33 @@ function getDAProvider(
         mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge: BADGES.DA.Celestia,
       }
-    } else
-      return {
-        riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
-        riskViewExitWindow: pickWorseRisk(
-          RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-          RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
-        ),
-        technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
-        layer: DA_LAYERS.CELESTIA,
-        bridge: DA_BRIDGES.BLOBSTREAM,
-        mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-        badge: BADGES.DA.CelestiaBlobstream,
-      }
-  } else {
-    const DAC = templateVars.discovery.getContractValue<{
-      membersCount: number
-      requiredSignatures: number
-    }>('SequencerInbox', 'dacKeyset')
-
-    return {
-      riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
-      riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
-      technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
-      layer: DA_LAYERS.DAC,
-      bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
-      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
-      badge: BADGES.DA.DAC,
     }
+    return {
+      riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
+      riskViewExitWindow: pickWorseRisk(
+        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+        RISK_VIEW.EXIT_WINDOW(0, BLOBSTREAM_DELAY_SECONDS),
+      ),
+      technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(true),
+      layer: DA_LAYERS.CELESTIA,
+      bridge: DA_BRIDGES.BLOBSTREAM,
+      mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+      badge: BADGES.DA.CelestiaBlobstream,
+    }
+  }
+  const DAC = templateVars.discovery.getContractValue<{
+    membersCount: number
+    requiredSignatures: number
+  }>('SequencerInbox', 'dacKeyset')
+
+  return {
+    riskViewDA: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+    riskViewExitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
+    technology: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+    layer: DA_LAYERS.DAC,
+    bridge: DA_BRIDGES.DAC_MEMBERS(DAC),
+    mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
+    badge: BADGES.DA.DAC,
   }
 }
 

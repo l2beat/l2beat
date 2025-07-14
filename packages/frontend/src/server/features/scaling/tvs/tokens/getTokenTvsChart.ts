@@ -6,7 +6,7 @@ import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
-import { TvsChartRange, rangeToResolution } from '../utils/range'
+import { rangeToResolution, TvsChartRange } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),

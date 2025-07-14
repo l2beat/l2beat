@@ -1,8 +1,8 @@
+import Head from 'next/head'
+import { useState } from 'react'
 import { BlockDetails } from '@/components/blockDetails'
 import { TransactionList } from '@/components/transactionList'
 import type { BlockWithChain } from '@/types'
-import Head from 'next/head'
-import { useState } from 'react'
 import { BlockForm } from '../components/blockForm'
 
 export default function HomePage() {

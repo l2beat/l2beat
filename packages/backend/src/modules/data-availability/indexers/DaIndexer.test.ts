@@ -1,4 +1,3 @@
-import { createHash } from 'crypto'
 import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
@@ -8,6 +7,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import { expect, mockFn, mockObject } from 'earl'
 import type {
   BlockDaIndexedConfig,

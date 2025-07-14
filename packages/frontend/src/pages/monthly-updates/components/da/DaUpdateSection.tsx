@@ -1,10 +1,10 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
+import { MonthlyUpdateThroughputChart } from '../charts/MonthlyUpdateThroughputChart'
+import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 import { NewProjects } from '../NewProjects'
 import { News } from '../News'
 import { ProjectUpdateSection } from '../ProjectUpdateSection'
-import { MonthlyUpdateThroughputChart } from '../charts/MonthlyUpdateThroughputChart'
-import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 
 interface Props {
   daLayer: DaMonthlyUpdateEntry

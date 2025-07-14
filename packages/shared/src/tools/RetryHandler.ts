@@ -61,7 +61,7 @@ export class RetryHandler {
       logger,
       initialRetryDelayMs: 1000,
       maxRetries: 3, // 1 2 4
-      maxRetryDelayMs: Infinity,
+      maxRetryDelayMs: Number.POSITIVE_INFINITY,
     })
 
   static UNRELIABLE_API = (logger: Logger) =>
@@ -69,7 +69,7 @@ export class RetryHandler {
       logger,
       initialRetryDelayMs: 5000,
       maxRetries: 7, // 5 10 20 40 80 160 320
-      maxRetryDelayMs: Infinity,
+      maxRetryDelayMs: Number.POSITIVE_INFINITY,
     })
 
   static SCRIPT = (logger: Logger) =>
@@ -77,7 +77,7 @@ export class RetryHandler {
       logger: logger,
       initialRetryDelayMs: 1,
       maxRetries: 3,
-      maxRetryDelayMs: Infinity,
+      maxRetryDelayMs: Number.POSITIVE_INFINITY,
     })
 
   static TEST = (logger: Logger) =>
@@ -85,6 +85,6 @@ export class RetryHandler {
       logger: logger,
       initialRetryDelayMs: 1,
       maxRetries: 1,
-      maxRetryDelayMs: Infinity,
+      maxRetryDelayMs: Number.POSITIVE_INFINITY,
     })
 }

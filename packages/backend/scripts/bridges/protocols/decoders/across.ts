@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { type Log, decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
+import { decodeEventLog, encodeEventTopics, type Log, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Receive } from '../../types/Receive'
 import type { Send } from '../../types/Send'
@@ -41,6 +41,7 @@ function decoder(chain: Chain, log: Log): Send | Receive | undefined {
       destination: destination
         ? destination.chainShortName
         : data.args.destinationChainId.toString(),
+      blockNumber: log.blockNumber ?? undefined,
       txHash: log.transactionHash ?? undefined,
       type: 'FundsDeposited',
       matchingId: data.args.depositId.toString(),
@@ -72,6 +73,7 @@ function decoder(chain: Chain, log: Log): Send | Receive | undefined {
       origin: origin
         ? origin.chainShortName
         : data.args.originChainId.toString(),
+      blockNumber: log.blockNumber ?? undefined,
       txHash: log.transactionHash ?? undefined,
       type: 'FilledRelay',
       matchingId: data.args.depositId.toString(),

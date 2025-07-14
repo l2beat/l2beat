@@ -42,7 +42,11 @@ function GovernanceLink({
   href,
   bankImage,
   className,
-}: { href: string; bankImage: ImageParams; className?: string }) {
+}: {
+  href: string
+  bankImage: ImageParams
+  className?: string
+}) {
   return (
     <EcosystemWidget
       className={cn('flex flex-col overflow-hidden pt-0!', className)}
@@ -80,7 +84,11 @@ function DelegateToL2BEATLink({
   href,
   backgroundImage,
   className,
-}: { href: string; backgroundImage: string; className?: string }) {
+}: {
+  href: string
+  backgroundImage: string
+  className?: string
+}) {
   return (
     <EcosystemWidget asChild>
       <CustomLink
@@ -96,7 +104,7 @@ function DelegateToL2BEATLink({
           className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-linear-to-r from-black"></div>
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-linear-to-r from-black" />
         <div className="relative flex h-full flex-col justify-center">
           <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Governance
@@ -113,7 +121,10 @@ function DelegateToL2BEATLink({
 function ProposalsLink({
   href,
   className,
-}: { href: string; className?: string }) {
+}: {
+  href: string
+  className?: string
+}) {
   return (
     <EcosystemWidget asChild>
       <CustomLink

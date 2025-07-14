@@ -3,9 +3,6 @@ import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
-import { DarkThemeToggle } from '../../DarkThemeToggle'
-import { Logo } from '../../Logo'
-import { SocialLinks } from '../../SocialLinks'
 import {
   Collapsible,
   CollapsibleContent,
@@ -24,6 +21,9 @@ import {
   SidebarHeader,
   SidebarSeparator,
 } from '../../core/Sidebar'
+import { DarkThemeToggle } from '../../DarkThemeToggle'
+import { Logo } from '../../Logo'
+import { SocialLinks } from '../../SocialLinks'
 import { MobileNavTriggerClose } from '../mobile/MobileNavTrigger'
 import type { NavGroup, NavLink } from '../types'
 
@@ -99,7 +99,9 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
 
 function NavCollapsibleItem({
   group,
-}: { group: Extract<NavGroup, { type: 'multiple' }> }) {
+}: {
+  group: Extract<NavGroup, { type: 'multiple' }>
+}) {
   const pathname = usePathname()
   const allGroupLinks = useMemo(
     () => [...group.links, ...(group.secondaryLinks ?? [])],

@@ -1,5 +1,5 @@
 import { ProjectService } from '@l2beat/config'
-import { assert, ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, ProjectId } from '@l2beat/shared-pure'
 import { CirculatingSupplyAmountIndexer } from '../../modules/tvs/indexers/CirculatingSupplyAmountIndexer'
 import {
   extractPricesAndAmounts,

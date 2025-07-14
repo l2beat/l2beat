@@ -1,4 +1,3 @@
-import { createHash } from 'crypto'
 import type { Logger } from '@l2beat/backend-tools'
 import type { BlobsInBlock } from '@l2beat/shared'
 import {
@@ -8,6 +7,7 @@ import {
   type Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { createHash } from 'crypto'
 import { BigNumber, type providers } from 'ethers'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { isRevert } from '../utils/isRevert'
@@ -15,9 +15,9 @@ import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { CacheEntry } from './DiscoveryCache'
 import type { ContractDeployment, RawProviders } from './IProvider'
 import type { LowLevelProvider } from './LowLevelProvider'
+import type { MulticallClient } from './multicall/MulticallClient'
 import type { ReorgAwareCache } from './ReorgAwareCache'
 import { ProviderMeasurement, ProviderStats } from './Stats'
-import type { MulticallClient } from './multicall/MulticallClient'
 
 interface ScheduledCall {
   resolve: (value: Bytes) => void
@@ -81,7 +81,7 @@ export class BatchingAndCachingProvider {
     return result
   }
 
-  async call(
+  call(
     address: EthereumAddress,
     data: Bytes,
     blockNumber: number,
@@ -114,9 +114,8 @@ export class BatchingAndCachingProvider {
       this.stats.mark(ProviderMeasurement.CALL, duration)
       if (cached === REVERT_MARKER_VALUE) {
         throw new Error('Execution reverted')
-      } else {
-        return Bytes.fromHex(cached)
       }
+      return Bytes.fromHex(cached)
     }
 
     try {
@@ -531,11 +530,10 @@ export class BatchingAndCachingProvider {
       this.stats.mark(ProviderMeasurement.GET_DEPLOYMENT, duration)
       if (cached === UNDEFINED_MARKER_VALUE) {
         return undefined
-      } else {
-        const parsed = parseCacheEntry(cached)
-        parsed.timestamp = UnixTime(parsed.timestamp)
-        return parsed
       }
+      const parsed = parseCacheEntry(cached)
+      parsed.timestamp = UnixTime(parsed.timestamp)
+      return parsed
     }
     const deployment = await this.provider.getDeployment(address)
     if (deployment !== undefined) {
@@ -643,8 +641,7 @@ async function getAllLogs(
         getAllLogs(provider, address, topics, midPoint + 1, toBlock),
       ])
       return a.concat(b)
-    } else {
-      throw e
     }
+    throw e
   }
 }

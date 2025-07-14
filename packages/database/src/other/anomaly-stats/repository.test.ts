@@ -102,17 +102,19 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     })
   })
 
-  describe(AnomalyStatsRepository.prototype.getLatestByProjectIdAndSubtype
-    .name, () => {
-    it('should return latest for project and subtype', async () => {
-      const result = await repository.getLatestByProjectIdAndSubtype(
-        PROJECT_B,
-        'proofSubmissions',
-      )
+  describe(
+    AnomalyStatsRepository.prototype.getLatestByProjectIdAndSubtype.name,
+    () => {
+      it('should return latest for project and subtype', async () => {
+        const result = await repository.getLatestByProjectIdAndSubtype(
+          PROJECT_B,
+          'proofSubmissions',
+        )
 
-      expect(result).toEqual(DATA[1])
-    })
-  })
+        expect(result).toEqual(DATA[1])
+      })
+    },
+  )
 
   describe(AnomalyStatsRepository.prototype.getLatestStats.name, () => {
     it('should return latest stats', async () => {

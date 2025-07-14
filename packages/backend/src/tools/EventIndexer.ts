@@ -4,7 +4,7 @@ import { type RawData, WebSocket } from 'ws'
 import { NewHeadsEvent } from './types'
 
 export class EventIndexer extends RootIndexer {
-  private blockNumber: number = 0
+  private blockNumber = 0
   private reconnectTimeout: NodeJS.Timeout | undefined = undefined
 
   constructor(
@@ -18,7 +18,7 @@ export class EventIndexer extends RootIndexer {
     super(logger.tag({ chain: source, project: source }))
   }
 
-  override async initialize() {
+  override initialize() {
     const ws = this.createdWebSocket()
 
     ws.on('open', () => {

@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, LivenessRecord } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
-import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
+import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
   type SavedConfiguration,

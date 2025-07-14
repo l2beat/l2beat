@@ -74,7 +74,7 @@ function groupByTimestampAndProjectId(
   allProjects: Project[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
-  let minTimestamp = Infinity
+  let minTimestamp = Number.POSITIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
   const [daLayerRecords, projectRecords] = partition(
     records,

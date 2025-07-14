@@ -1,6 +1,6 @@
 import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type VerifierStatusRecord, toRecord, toRow } from './entity'
+import { toRecord, toRow, type VerifierStatusRecord } from './entity'
 
 export class VerifierStatusRepository extends BaseRepository {
   async upsert(record: VerifierStatusRecord): Promise<void> {

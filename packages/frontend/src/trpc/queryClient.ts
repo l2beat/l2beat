@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { QueryClient, defaultShouldDehydrateQuery } from '@tanstack/react-query'
+import { defaultShouldDehydrateQuery, QueryClient } from '@tanstack/react-query'
 
 export const createQueryClient = () =>
   new QueryClient({

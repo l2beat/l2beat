@@ -28,7 +28,7 @@ export class BlockTargetIndexer extends RootIndexer {
     )
   }
 
-  override async initialize() {
+  override initialize() {
     this.clock.onNewHour(() => this.requestTick())
     this.requestTick()
     return Promise.resolve(undefined)

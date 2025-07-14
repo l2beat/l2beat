@@ -34,7 +34,7 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
 
     assert(
       $.configurations.every((c) => c.properties.daLayer === $.daLayer),
-      `DaLayer mismatch detected in configurations`,
+      'DaLayer mismatch detected in configurations',
     )
   }
 

@@ -77,14 +77,13 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
         {explore}
       </p>
     )
-  } else {
-    return (
-      <p className="inline-flex items-baseline gap-1 whitespace-nowrap font-mono text-coffee-400 text-xs">
-        <strong>{value.name ?? 'Unknown'}</strong>
-        {toShortenedAddress(value.address)}
-        {copy}
-        {explore}
-      </p>
-    )
   }
+  return (
+    <p className="inline-flex items-baseline gap-1 whitespace-nowrap font-mono text-coffee-400 text-xs">
+      <strong>{value.name ?? 'Unknown'}</strong>
+      {toShortenedAddress(value.address)}
+      {copy}
+      {explore}
+    </p>
+  )
 }

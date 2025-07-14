@@ -1,11 +1,11 @@
-import { existsSync, readFileSync } from 'fs'
-import { join } from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
 import {

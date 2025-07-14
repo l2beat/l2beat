@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { CONTRACTS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
