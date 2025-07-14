@@ -114,16 +114,19 @@ body:has(.reading) {
   --brand: #ecb0fb;
   --background: #000000;
   --background-reading: #000000;
+  --surface-primary: #17191f;
   --surface-secondary: #3b3f45;
   --surface-tertiary: #484d54;
   --header-primary: #1a1c20;
   --header-secondary: #23262b;
   --icon-secondary: #62666c;
+  --overlay: #00000099;
   --divider: #40444c;
   --link-stroke: #1e304b;
   --link: #66b2ff;
   --scrollbar: #3f444c;
 
+  --row-highlight: #9521bf66;
   --row-highlight-no-opacity: #3c2742;
 
   /* Chart colors */
