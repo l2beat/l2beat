@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { Popover } from './Popover'
 import { FilterIcon } from './icons/FilterIcon'
+import { Popover } from './Popover'
 
 export interface FilterButtonProps {
   values: string[]

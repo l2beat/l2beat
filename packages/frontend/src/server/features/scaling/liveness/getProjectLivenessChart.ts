@@ -125,8 +125,8 @@ export async function getProjectLivenessChart({
 }
 
 function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
-  let min = Infinity
-  let max = -Infinity
+  let min = Number.POSITIVE_INFINITY
+  let max = Number.NEGATIVE_INFINITY
   let weightedSum = 0
   let totalCount = 0
   for (const entry of entries) {

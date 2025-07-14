@@ -91,24 +91,24 @@ interface TimelineEvent {
 
 // Enums
 enum ProposalState {
-  Pending,
-  Active,
-  Canceled,
-  Defeated,
-  Succeeded,
-  Queued,
-  Expired,
-  Executed,
+  Pending = 0,
+  Active = 1,
+  Canceled = 2,
+  Defeated = 3,
+  Succeeded = 4,
+  Queued = 5,
+  Expired = 6,
+  Executed = 7,
 }
 
 enum UpgradeState {
-  None,
-  LegalVetoPeriod,
-  Waiting,
-  ExecutionPending,
-  Ready,
-  Expired,
-  Done,
+  None = 0,
+  LegalVetoPeriod = 1,
+  Waiting = 2,
+  ExecutionPending = 3,
+  Ready = 4,
+  Expired = 5,
+  Done = 6,
 }
 
 export class ZkGovProposalAnalyzer {
@@ -151,7 +151,7 @@ export class ZkGovProposalAnalyzer {
       let upgradeInfo: UpgradeInfo | null = null
       let upgradeState: UpgradeState | null = null
       let upgradeStatus: UpgradeStatusInfo | null = null
-      let l2BlockTimestamp: number = 0
+      let l2BlockTimestamp = 0
 
       if (proposalState === ProposalState.Executed) {
         executionInfo = await this.findProposalExecutedInfo(proposalId)

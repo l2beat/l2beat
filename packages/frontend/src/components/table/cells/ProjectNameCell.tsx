@@ -1,10 +1,10 @@
-import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
 import { useIsMobile } from '~/hooks/useIsMobile'

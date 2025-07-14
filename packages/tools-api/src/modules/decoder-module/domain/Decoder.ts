@@ -8,9 +8,9 @@ import type {
   DecodedValue,
   Value,
 } from './DecodedResult'
-import type { ISignatureService } from './SignatureService'
 import { decode } from './decode'
 import { plugins } from './plugins/plugins'
+import type { ISignatureService } from './SignatureService'
 
 export interface Transaction {
   to?: Address

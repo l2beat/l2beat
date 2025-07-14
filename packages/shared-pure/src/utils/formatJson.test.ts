@@ -29,8 +29,8 @@ describe(formatJson.name, () => {
     expect(formatJson(1e-9).trimEnd()).toEqual('1e-9')
     expect(formatJson(-1e-9).trimEnd()).toEqual('-1e-9')
     expect(formatJson(Number.NaN).trimEnd()).toEqual('null')
-    expect(formatJson(Infinity).trimEnd()).toEqual('null')
-    expect(formatJson(-Infinity).trimEnd()).toEqual('null')
+    expect(formatJson(Number.POSITIVE_INFINITY).trimEnd()).toEqual('null')
+    expect(formatJson(Number.NEGATIVE_INFINITY).trimEnd()).toEqual('null')
     expect(() => formatJson(1n)).toThrow()
   })
 

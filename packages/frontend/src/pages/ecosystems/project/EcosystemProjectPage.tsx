@@ -8,11 +8,11 @@ import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
-import { EcosystemPageHeader } from './components/EcosystemPageHeader'
-import { EcosystemProjectPageTables } from './components/EcosystemProjectPageTables'
 import { EcosystemsActivityChart } from './components/charts/EcosystemsActivityChart'
 import { EcosystemsProjectsChart } from './components/charts/EcosystemsProjectsChart'
 import { EcosystemsTvsChart } from './components/charts/EcosystemsTvsChart'
+import { EcosystemPageHeader } from './components/EcosystemPageHeader'
+import { EcosystemProjectPageTables } from './components/EcosystemProjectPageTables'
 import { EcosystemBuildOnLink } from './components/widgets/EcosystemBuildOnLink'
 import { EcosystemGovernanceLinks } from './components/widgets/EcosystemGovernanceLinks'
 import { EcosystemLearnMoreLink } from './components/widgets/EcosystemLearnMoreLink'
@@ -23,6 +23,7 @@ import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsB
 import { EcosystemToken } from './components/widgets/EcosystemToken'
 import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
 import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
+
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
   queryState: DehydratedState
@@ -47,7 +48,7 @@ export function EcosystemProjectPage({
                 'ecosystem-spacing': '0.75rem',
               }}
             />
-            <div className="-z-1 -translate-y-1/2 absolute top-44 right-[20%] h-[400vh] w-screen translate-x-1/2 bg-radial-[closest-side] from-(--ecosystem-primary) via-(--ecosystem-secondary) via-25% to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw-15rem)]"></div>
+            <div className="-z-1 -translate-y-1/2 absolute top-44 right-[20%] h-[400vh] w-screen translate-x-1/2 bg-radial-[closest-side] from-(--ecosystem-primary) via-(--ecosystem-secondary) via-25% to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw-15rem)]" />
             <div>
               <EcosystemPageHeader
                 logo={ecosystem.logo}

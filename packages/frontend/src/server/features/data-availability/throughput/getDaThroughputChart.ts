@@ -120,8 +120,8 @@ export function groupByTimestampAndDaLayerId(
   records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
-  let minTimestamp = Infinity
-  let maxTimestamp = -Infinity
+  let minTimestamp = Number.POSITIVE_INFINITY
+  let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(

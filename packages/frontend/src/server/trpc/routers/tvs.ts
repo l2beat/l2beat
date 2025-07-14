@@ -1,14 +1,14 @@
 import {
-  RecategorisedTvsChartDataParams,
   getRecategorisedTvsChart,
+  RecategorisedTvsChartDataParams,
 } from '~/server/features/scaling/tvs/getRecategorisedTvsChartData'
 import {
-  TvsChartDataParams,
   getTvsChart,
+  TvsChartDataParams,
 } from '~/server/features/scaling/tvs/getTvsChartData'
 import {
-  TokenTvsChartParams,
   getTokenTvsChart,
+  TokenTvsChartParams,
 } from '~/server/features/scaling/tvs/tokens/getTokenTvsChart'
 import { procedure, router } from '../trpc'
 

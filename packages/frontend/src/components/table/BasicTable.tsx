@@ -11,6 +11,7 @@ import React from 'react'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'
+import { SortingArrows } from './sorting/SortingArrows'
 import {
   Table,
   TableBody,
@@ -21,7 +22,6 @@ import {
   TableRow,
 } from './Table'
 import { TableEmptyState } from './TableEmptyState'
-import { SortingArrows } from './sorting/SortingArrows'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import {
   getRowClassNames,

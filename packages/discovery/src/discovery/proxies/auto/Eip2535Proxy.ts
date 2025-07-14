@@ -8,10 +8,9 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import { utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
+import type { ProxyDetails } from '../types'
 
 async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
   const abi = new utils.Interface([

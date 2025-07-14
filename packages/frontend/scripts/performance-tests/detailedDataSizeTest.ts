@@ -172,7 +172,7 @@ function getSSRSize(value: unknown, depth = 0): SSRSize {
       biggestElement: Object.fromEntries(
         Object.entries(biggestElement).map(([key, value]) => [
           key,
-          getSSRSize(value, Infinity),
+          getSSRSize(value, Number.POSITIVE_INFINITY),
         ]),
       ),
       elements,
@@ -209,12 +209,12 @@ function getDepth() {
     return 0
   }
 
-  return parseInt(depth)
+  return Number.parseInt(depth)
 }
 
 function parseSize(ssr: SSRSize) {
   if (typeof ssr === 'string') {
-    return parseInt(ssr)
+    return Number.parseInt(ssr)
   }
-  return parseInt(ssr.size)
+  return Number.parseInt(ssr.size)
 }

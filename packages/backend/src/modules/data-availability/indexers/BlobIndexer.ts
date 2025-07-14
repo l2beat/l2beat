@@ -1,10 +1,10 @@
 import type { DaProvider } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
+import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import type { BlobService } from '../services/BlobService'
 
 export interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {

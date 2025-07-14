@@ -1,7 +1,8 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
 export interface ValueSecuredBreakdownProps {
@@ -80,11 +81,11 @@ export function ValueSecuredBreakdownTooltipContent({
                       'size-3 rounded bg-rose-500 dark:bg-rose-700',
                       v.className,
                     )}
-                  ></div>
+                  />
                   <span>{v.title}</span>
                 </span>
                 <span className="font-medium">
-                  {((v.value / total) * 100).toFixed(2)}%
+                  {formatPercent(v.value / total)}
                 </span>
               </div>
             ),

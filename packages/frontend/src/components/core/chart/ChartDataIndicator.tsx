@@ -27,7 +27,9 @@ export function ChartDataIndicator({ type, backgroundColor }: Props) {
 
 function SquareShape({
   backgroundColor,
-}: { backgroundColor: string | undefined }) {
+}: {
+  backgroundColor: string | undefined
+}) {
   return (
     <div className="size-3 shrink-0 rounded-sm" style={{ backgroundColor }} />
   )

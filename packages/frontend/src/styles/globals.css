@@ -181,8 +181,9 @@ body:has(.reading) {
   --font-roboto-serif: "Roboto Serif", serif;
   --font-roboto-serif-ext: "Roboto Serif Ext", "Roboto Serif", serif;
   --font-lora: "Lora", serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 
   --text-\*: initial;
   --text-3xs: 10px;

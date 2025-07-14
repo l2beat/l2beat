@@ -3,9 +3,9 @@ import {
   assert,
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   type UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,

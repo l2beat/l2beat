@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { RpcClient } from '../../clients'
-import { TotalSupplyProvider, encodeTotalSupply } from './TotalSupplyProvider'
+import { encodeTotalSupply, TotalSupplyProvider } from './TotalSupplyProvider'
 
 describe(TotalSupplyProvider.name, () => {
   const BLOCK = 100

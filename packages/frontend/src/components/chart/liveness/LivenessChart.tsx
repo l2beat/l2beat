@@ -1,11 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import {
-  type TrackedTxsConfigSubtype,
   assertUnreachable,
+  type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -19,6 +18,7 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 
 interface LivenessChartDataPoint {

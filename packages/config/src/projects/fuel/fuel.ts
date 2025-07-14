@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -12,8 +12,8 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
@@ -322,7 +322,7 @@ export const fuel: ScalingProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `a contract receives a malicious code upgrade. There is no delay on upgrades.`,
+        text: 'a contract receives a malicious code upgrade. There is no delay on upgrades.',
         isCritical: true,
       },
       {

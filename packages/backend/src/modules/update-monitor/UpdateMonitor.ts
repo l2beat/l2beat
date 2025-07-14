@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import {
   type ConfigReader,
   type ConfigRegistry,
@@ -7,24 +8,22 @@ import {
   diffDiscovery,
   hashJsonStable,
 } from '@l2beat/discovery'
+import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import {
   assert,
+  assertUnreachable,
   type ChainConverter,
   ChainId,
   UnixTime,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
-
-import type { Database } from '@l2beat/database'
-import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
-import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
 import { findUnknownEntries } from './utils/findUnknownEntries'
 
@@ -289,7 +288,7 @@ export class UpdateMonitor {
     for (const contract of discovery.entries) {
       if (contract.errors !== undefined) {
         for (const [field, error] of Object.entries(contract.errors)) {
-          logger.warn(`There was an error during discovery`, {
+          logger.warn('There was an error during discovery', {
             field,
             error,
           })

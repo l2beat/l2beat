@@ -1,16 +1,16 @@
 import {
   ChainId,
   EthereumAddress,
+  formatLargeNumber,
   ProjectId,
   UnixTime,
-  formatLargeNumber,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -18,7 +18,6 @@ import {
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
@@ -90,11 +89,10 @@ function formatMaxTotalBalanceString(
     '115792089237316195423570985008687907853269984665640564039457584007913129639935'
   ) {
     return 'There is no bridge cap.'
-  } else {
-    return `The current bridge cap is ${formatLargeNumber(
-      maxTotalBalance / 10 ** decimals,
-    )} ${ticker}.`
   }
+  return `The current bridge cap is ${formatLargeNumber(
+    maxTotalBalance / 10 ** decimals,
+  )} ${ticker}.`
 }
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(

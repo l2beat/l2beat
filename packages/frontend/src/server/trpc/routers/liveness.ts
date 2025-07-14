@@ -1,6 +1,6 @@
 import {
-  ProjectLivenessChartParams,
   getProjectLivenessChart,
+  ProjectLivenessChartParams,
 } from '~/server/features/scaling/liveness/getProjectLivenessChart'
 import { procedure, router } from '../trpc'
 

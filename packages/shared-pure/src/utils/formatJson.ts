@@ -58,7 +58,8 @@ function fits(doc: Word[], offset: number, remainingWidth: number): boolean {
     const word = doc[i]
     if (word.type === WordType.Line) {
       break
-    } else if (word.type === WordType.Text) {
+    }
+    if (word.type === WordType.Text) {
       width += word.value.length
       if (width > remainingWidth) {
         return false
@@ -70,11 +71,11 @@ function fits(doc: Word[], offset: number, remainingWidth: number): boolean {
 }
 
 function renderDocument(doc: Word[], config: FormatConfiguration): string {
-  let result: string = ''
+  let result = ''
 
-  let nest: number = 0
-  let currentLineSize: number = 0
-  let flatMode: boolean = false
+  let nest = 0
+  let currentLineSize = 0
+  let flatMode = false
   const flatModeStack: boolean[] = []
 
   for (const [i, word] of doc.entries()) {

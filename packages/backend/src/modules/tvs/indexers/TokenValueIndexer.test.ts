@@ -1,10 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
-import type { TokenValueRecord } from '@l2beat/database'
+import type { Database, TokenValueRecord } from '@l2beat/database'
 import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { Database } from '@l2beat/database'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -204,9 +202,9 @@ describe(TokenValueIndexer.name, () => {
       const token: TvsToken = {
         mode: 'auto' as const,
         id: TokenId('id'),
-        priceId: `token`,
-        symbol: `symbol`,
-        name: `Token`,
+        priceId: 'token',
+        symbol: 'symbol',
+        name: 'Token',
         amount: {
           type: 'totalSupply',
           address: EthereumAddress(
