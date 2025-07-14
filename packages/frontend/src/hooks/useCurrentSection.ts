@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useEventListener } from './useEventListener'
 import { useIsMobile } from './useIsMobile'
 
-const DEFAULT_THRESHOLD = `30%`
+const DEFAULT_THRESHOLD = `20%`
 
 type ThresholdValue = `${number}%` | `${number}px`
 

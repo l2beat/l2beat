@@ -46,7 +46,7 @@ export function BridgesProjectPage({
             )}
 
             <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:pt-[18px]">
-              <ProjectHeader project={projectEntry} className="mb-6" />
+              <ProjectHeader project={projectEntry} className="pb-6" />
               <ProjectSummaryBars project={projectEntry} />
 
               {projectEntry.header.description && (

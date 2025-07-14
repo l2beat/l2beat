@@ -17,8 +17,10 @@ interface Props {
 
 export function ProjectHeader({ project, ongoingAnomaly, className }: Props) {
   return (
-    <div className="flex gap-6 max-md:flex-col md:items-center">
-      <h1 className={cn('flex items-center justify-start gap-3', className)}>
+    <div
+      className={cn('flex gap-6 max-md:flex-col md:items-center', className)}
+    >
+      <h1 className="flex items-center justify-start gap-3">
         {project.slug && (
           <img
             width={32}

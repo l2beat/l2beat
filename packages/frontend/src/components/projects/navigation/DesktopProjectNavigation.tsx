@@ -80,10 +80,10 @@ export function DesktopProjectNavigation({
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="font-bold text-lg">{project.title}</span>
+            <span className="text-label-value-18">{project.title}</span>
           </div>
           {project.isUnderReview && (
-            <UnderReviewCallout small className="mt-2" />
+            <UnderReviewCallout withoutDescription className="mt-2" />
           )}
           {projectVariants && projectVariants.length > 1 && (
             <div className="mt-2 pl-5">
@@ -113,6 +113,7 @@ export function DesktopProjectNavigation({
         <ProjectNavigationList
           sections={sections}
           isUnderReview={project.isUnderReview}
+          currentSection={currentSection}
           style={isSummarySection === false ? style : undefined}
         />
       </div>
@@ -124,13 +125,14 @@ function ProjectNavigationList({
   sections,
   isUnderReview,
   style,
+  currentSection,
 }: Pick<ProjectNavigationProps, 'sections'> & {
   isUnderReview: boolean | undefined
+  currentSection: HTMLElement | undefined
   style?: CSSProperties
 }) {
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
-  const currentSection = useCurrentSection()
 
   const scrollToItem = useCallback(
     (item: HTMLElement, overflowingContainer: HTMLElement) =>
@@ -162,10 +164,10 @@ function ProjectNavigationList({
       <a
         href="#"
         className={cn(
-          'flex flex-row items-center gap-1.5 transition-opacity hover:opacity-100',
-          currentSection &&
-            currentSection.id !== 'summary' &&
-            'opacity-60 dark:opacity-80',
+          'flex flex-row items-center gap-1.5 transition-colors hover:text-primary',
+          currentSection && currentSection.id === 'summary'
+            ? 'text-primary'
+            : 'text-secondary',
         )}
       >
         <SummaryIcon className="size-5" />
@@ -183,13 +185,17 @@ function ProjectNavigationList({
             <a
               href={`#${section.id}`}
               ref={selected ? currentMenuEntry : null}
-              className={cn(
-                'flex flex-row items-center gap-1.5 transition-opacity hover:opacity-100',
-                !selected && 'opacity-60',
-              )}
+              className="group flex flex-row items-center gap-1.5"
             >
               <NavigationListIndex index={i + 1} selected={selected} />
-              <span>{section.title}</span>
+              <span
+                className={cn(
+                  'text-label-value-14 hover:text-primary',
+                  selected ? 'text-primary' : 'text-secondary',
+                )}
+              >
+                {section.title}
+              </span>
             </a>
             {section.subsections && (
               <div className="flex flex-col">
@@ -213,10 +219,10 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-5 shrink-0 items-center justify-center rounded text-center font-medium text-2xs',
+        'flex size-5 shrink-0 items-center justify-center rounded text-center text-label-value-12',
         props.selected
           ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-white'
-          : 'bg-surface-primary',
+          : 'bg-surface-tertiary text-secondary group-hover:text-primary',
       )}
     >
       <span>{props.index}</span>
