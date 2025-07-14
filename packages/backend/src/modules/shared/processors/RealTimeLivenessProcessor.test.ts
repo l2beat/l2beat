@@ -574,7 +574,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
 function createMockConfig(
   projectId: ProjectId,
   configurations: TrackedTxConfigEntry[],
-  isArchived: boolean = false,
+  isArchived = false,
 ): Config {
   return mockObject<Config>({
     trackedTxsConfig: mockObject<TrackedTxsConfig>({
