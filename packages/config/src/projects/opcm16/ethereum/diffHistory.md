@@ -1,3 +1,49 @@
+Generated with discovered.json: 0x0ae860dc7687ad187520710c228cf8ebf20219db
+
+# Diff at Fri, 11 Jul 2025 13:15:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6f02976fdd9466dab085b947bf3c4d28ccef1010 block: 22796150
+- current block number: 22896167
+
+## Description
+
+MIPS64 verified and relative (PreimageOracle) discovered.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22796150 (main branch discovery), not current.
+
+```diff
+    contract MIPS64 (0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a) {
+    +++ description: None
+      name:
+-        ""
++        "MIPS64"
+      unverified:
+-        true
+      values.oracle:
++        "0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3"
+      values.stateVersion:
++        7
+      values.version:
++        "1.4.0-patch.2"
+      implementationNames.0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a:
+-        ""
++        "MIPS64"
+      sourceHashes:
++        ["0x4cb0db3ab622eb010a64351dfd58c389cab9241c930e73b450bfd321193837eb"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
 Generated with discovered.json: 0x6017668d3ac327d1574427f8736ba6c8b8a1fc82
 
 # Diff at Fri, 04 Jul 2025 12:19:12 GMT:

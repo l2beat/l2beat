@@ -112,7 +112,7 @@ const SelectContent = ({
         className={cn(
           'p-1',
           position === 'popper' &&
-            'h-[--radix-select-trigger-height] w-full min-w-[--radix-select-trigger-width]',
+            'h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)',
         )}
       >
         {children}
@@ -145,7 +145,7 @@ const SelectItem = ({
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex w-full cursor-pointer select-none items-center rounded-lg px-2.5 py-2 pr-9 font-medium text-xs outline-none transition-colors focus:bg-surface-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 md:text-sm',
+      'relative flex w-full cursor-pointer select-none items-center rounded-lg px-2.5 py-2 pr-9 font-medium text-xs outline-none transition-colors focus:bg-surface-secondary data-disabled:pointer-events-none data-disabled:opacity-50 md:text-sm',
       className,
     )}
     {...props}

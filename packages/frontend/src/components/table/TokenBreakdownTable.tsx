@@ -32,7 +32,7 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
       <TableHeader>
         <TableHeaderRow
           key={headers.id}
-          className="!border-0 md:bg-surface-secondary"
+          className="border-0! md:bg-surface-secondary"
         >
           {headers.headers.map((header) => (
             <TableHead

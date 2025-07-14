@@ -23,12 +23,7 @@ export function EcosystemGovernanceLinks({
   className,
 }: Props) {
   return (
-    <div
-      className={cn(
-        'grid gap-[--spacing] sm:grid-cols-2 sm:grid-rows-2',
-        className,
-      )}
-    >
+    <div className={cn('grid gap-1 sm:grid-cols-2 sm:grid-rows-2', className)}>
       <GovernanceLink
         href={links.review}
         bankImage={links.bankImage}
@@ -54,7 +49,7 @@ function GovernanceLink({
 }) {
   return (
     <EcosystemWidget
-      className={cn('!pt-0 flex flex-col overflow-hidden', className)}
+      className={cn('flex flex-col overflow-hidden pt-0!', className)}
     >
       <div className="relative flex h-full select-none items-center justify-between gap-2 text-primary">
         <div className="flex flex-col justify-center whitespace-nowrap">
@@ -109,7 +104,7 @@ function DelegateToL2BEATLink({
           className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black" />
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-linear-to-r from-black" />
         <div className="relative flex h-full flex-col justify-center">
           <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Governance

@@ -36,15 +36,7 @@ export const fraxferry: Bridge = {
     category: 'Liquidity Network',
   },
   config: {
-    associatedTokens: [
-      'FRAX.legacy',
-      'FRAX',
-      'frxETH',
-      'sfrxETH',
-      'FPI',
-      'FPIS',
-      'sFRAX.legacy',
-    ],
+    associatedTokens: ['FRAX', 'FPIS'],
     escrows: [
       {
         address: EthereumAddress('0x85c5f05Ae4CB68190C695a22b292C3bA90696128'),

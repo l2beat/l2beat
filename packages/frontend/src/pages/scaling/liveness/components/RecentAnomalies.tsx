@@ -128,12 +128,7 @@ function AnomalyCollapsible({
             )
           })}
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          className="mb-3 w-full py-1"
-          asChild
-        >
+        <Button variant="outline" size="sm" className="w-full py-1" asChild>
           <a href={`/scaling/projects/${projectWithAnomalies.slug}#liveness`}>
             See more details
           </a>

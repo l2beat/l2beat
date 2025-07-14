@@ -143,6 +143,7 @@ import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
+import { pepeunchained2 } from '../projects/pepeunchained2/pepeunchained2'
 import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
 import { polygonpos } from '../projects/polygon-pos/polygon-pos'
@@ -369,6 +370,7 @@ export const layer2s: ScalingProject[] = [
   payy,
   penchain,
   pepeunchained,
+  pepeunchained2,
   phala,
   plumenetwork,
   polygonmiden,

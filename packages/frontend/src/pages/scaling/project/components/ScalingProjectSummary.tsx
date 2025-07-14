@@ -76,7 +76,7 @@ export function ProjectScalingSummary({ project }: Props) {
                 )}
               </div>
             ) : null}
-            <HorizontalSeparator className="max-md:-mx-4 md:!my-6 my-4 max-md:w-screen md:hidden" />
+            <HorizontalSeparator className="max-md:-mx-4 my-4 max-md:w-screen md:my-6! md:hidden" />
 
             <div className="max-md:hidden">
               <DesktopProjectLinks
@@ -91,10 +91,10 @@ export function ProjectScalingSummary({ project }: Props) {
                 detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
                 archivedAt={project.archivedAt}
               />
-              <HorizontalSeparator className="max-md:-mx-4 md:!my-6 my-4 max-md:w-screen md:hidden" />
+              <HorizontalSeparator className="max-md:-mx-4 my-4 max-md:w-screen md:my-6! md:hidden" />
               <ProjectScalingStats
                 project={project}
-                className="md:order-first md:col-span-2 [@media(min-width:1000px)]:order-none"
+                className="md:order-first md:col-span-2 [@media(min-width:1000px)]:order-0"
               />
             </div>
           </div>

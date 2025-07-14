@@ -117,7 +117,7 @@ export function getScalingLivenessColumns(hideType?: boolean) {
         )
       },
       meta: {
-        cellClassName: '!pr-4',
+        cellClassName: 'pr-4!',
       },
     }),
   ])

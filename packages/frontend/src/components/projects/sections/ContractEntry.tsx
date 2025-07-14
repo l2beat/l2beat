@@ -69,7 +69,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
       icon={icon}
       body={
         <>
-          <div className="!leading-[1.15] flex flex-wrap items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2 leading-[1.15]!">
             <strong
               id={contract.name}
               className="word-break-word scroll-mt-14 md:scroll-mt-10"

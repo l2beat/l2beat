@@ -164,15 +164,17 @@ export const acrossV3: Bridge = {
       name: 'Principle of operation',
       description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are later reimbursed from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers).
 
-Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. This is called a 'root bundle', which contains a merkle root of all Relayer reimbursements and an obligatory bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halts finalization of the root bundle and escalates the dispute to the UMA DVM.
+Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). On most SpokePools, relayers can also specify a preference for their chain of reimbursement at fill time. A permissioned proposer (or data worker) collects data about fills by relayers and then posts an assertion to the HubPool on Ethereum. This is called a 'root bundle', which contains 3 merkle roots, chiefly a merkle root of all proposed Relayer reimbursements.
+
+A root bundle proposal must be accompanied by a bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halts finalization of the root bundle and escalates the dispute to the UMA DVM.
 
 UMA settles disputes by UMA token voting, with a commit- and reveal phase of ${umaDelay} each. A settlement slashes the stake of the losing party and rewards the winning party with both bond amounts minus fees.
 
-On finalization, a rootBundle can be 1) relayed to remote SpokePools and 2) executed. Execution at a chosen SpokePool contract allows Relayers to be reimbursed.
+On finalization, a rootBundle can be 1) relayed to remote SpokePools and 2) executed. Execution of a relayerRefundLeaf (via a merkle proof) at its specified SpokePool contract refunds the relayer.
 
 Relaying a rootBundle to a SpokePool is either done via canonical bridges or via a zk light client that is proven in the SP1Helios contract (based on the SP1 zkVM and the Helios Ethereum light client).
 
-Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges and others using adapters. For some chains, liquidity is not rebalanced and relayers are always reimbursed where the user deposited their funds.`,
+The permissioned proposer of the root bundle can also propose rebalancing liquidity used for reimbursements between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools). This is done via canonical chain bridges and other bridges (e.g. Circle CCTP) using adapters. For some chains, liquidity is not rebalanced and relayers are always reimbursed where the user deposited their funds.`,
       references: [
         {
           title: 'Across V4 Architecture',

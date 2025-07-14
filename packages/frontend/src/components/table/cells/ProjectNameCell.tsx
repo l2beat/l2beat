@@ -32,7 +32,7 @@ export function ProjectNameCell({
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
-        <PrimaryValueCell className="!leading-none font-bold">
+        <PrimaryValueCell className="font-bold leading-none!">
           <NameWithProjectInfoTooltip
             withInfoTooltip={withInfoTooltip}
             project={project}
@@ -83,7 +83,7 @@ export function ProjectNameCell({
         )}
       </div>
       {project.nameSecondLine && (
-        <span className="block font-medium text-[0.8125rem] text-secondary leading-[0.9375rem]">
+        <span className="block font-medium text-[0.8125rem] text-secondary leading-3.75">
           {project.nameSecondLine}
         </span>
       )}
@@ -126,9 +126,9 @@ function NameWithProjectInfoTooltip({
         <TooltipContent className="flex flex-col gap-2">
           <span className="text-heading-18">What is {projectName}?</span>
           <p>{project.description}</p>
-          <div className="!max-w-screen-xs flex flex-row flex-wrap">
+          <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
             {project.badges?.map((badge, key) => (
-              <ProjectBadge key={key} badge={badge} className="!h-16" />
+              <ProjectBadge key={key} badge={badge} className="h-16!" />
             ))}
           </div>
         </TooltipContent>

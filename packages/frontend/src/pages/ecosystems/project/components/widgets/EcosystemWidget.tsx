@@ -11,7 +11,7 @@ export function EcosystemWidget({
   className?: string
 }) {
   return (
-    <PrimaryCard asChild={asChild} className={cn('!rounded-lg', className)}>
+    <PrimaryCard asChild={asChild} className={cn('rounded-lg!', className)}>
       {children}
     </PrimaryCard>
   )

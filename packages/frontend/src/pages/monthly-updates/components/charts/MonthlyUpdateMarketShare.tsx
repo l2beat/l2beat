@@ -11,7 +11,7 @@ export function MarketShare({
   }
 
   return (
-    <div className="font-medium text-[--project-primary] text-xs ">
+    <div className="font-medium text-(--project-primary) text-xs">
       {formatPercent(marketShare)} scaling market share
     </div>
   )

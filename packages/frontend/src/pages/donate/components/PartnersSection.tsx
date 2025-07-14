@@ -57,7 +57,7 @@ export function EcosystemTierCard({
       className="group hover:-translate-y-1 transform transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
     >
       <a href={`/ecosystems/${partner.slug}`} className="block">
-        <div className="relative h-40 cursor-pointer overflow-hidden rounded bg-gradient-radial from-[--ecosystem-secondary] to-[--ecosystem-primary] shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
+        <div className="relative h-40 cursor-pointer overflow-hidden rounded bg-radial-[closest-side] from-(--ecosystem-secondary) to-(--ecosystem-primary) shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
           {/* Background pattern/texture overlay */}
           <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
 
@@ -87,7 +87,7 @@ export function EcosystemTierCard({
                 alt={partner.project.name}
               />
             </div>
-            <div className="-translate-x-full pointer-events-none absolute inset-0 transform bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+            <div className="-translate-x-full pointer-events-none absolute inset-0 transform bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
           </div>
 
           <div className="ease absolute inset-x-6 bottom-4 flex translate-y-full items-center justify-center rounded border border-link-stroke bg-surface-primary p-3 font-medium text-primary text-xs leading-none transition-[opacity,transform] duration-200 ease-in-out max-md:translate-y-0 md:bottom-6 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
@@ -95,7 +95,7 @@ export function EcosystemTierCard({
           </div>
 
           {/* Subtle shine effect on hover */}
-          <div className="-translate-x-full absolute inset-0 transform bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
+          <div className="-translate-x-full absolute inset-0 transform bg-linear-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
         </div>
       </a>
     </div>

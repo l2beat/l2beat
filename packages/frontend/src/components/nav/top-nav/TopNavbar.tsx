@@ -20,7 +20,7 @@ export function TopNavbar({
   sideLinks: NavLink[]
 }) {
   return (
-    <div className="hidden h-[4.25rem] border-divider border-b bg-header-primary text-base lg:block">
+    <div className="hidden h-17 border-divider border-b bg-header-primary text-base lg:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
