@@ -56,6 +56,7 @@ export const EVMTransactionResponse = z.object({
 const EVMTransactionReceipt = z.object({
   logs: z.array(
     z.object({
+      address: z.string(),
       topics: z.array(z.string()),
       data: z.string(),
     }),

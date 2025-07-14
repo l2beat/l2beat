@@ -767,5 +767,11 @@ const mockTx = (to: string | undefined) => ({
 })
 
 const mockReceipt = {
-  logs: [{ topics: ['0xabcd', '0xdcba'], data: '0x1234' }],
+  logs: [
+    {
+      topics: ['0xabcd', '0xdcba'],
+      data: '0x1234',
+      address: EthereumAddress.random(),
+    },
+  ],
 }
