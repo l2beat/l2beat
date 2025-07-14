@@ -210,17 +210,17 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-ethereum))',
+          color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line' },
         },
         projectTarget: {
           label: 'Target capacity',
-          color: 'hsl(var(--chart-ethereum-secondary))',
+          color: 'var(--chart-ethereum-secondary)',
           indicatorType: { shape: 'line', strokeDasharray: '9 3' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-ethereum))',
+          color: 'var(--chart-ethereum)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -228,12 +228,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-fuchsia))',
+          color: 'var(--chart-fuchsia)',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-fuchsia))',
+          color: 'var(--chart-fuchsia)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -241,12 +241,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-sky))',
+          color: 'var(--chart-sky)',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-sky))',
+          color: 'var(--chart-sky)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -254,12 +254,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-lime))',
+          color: 'var(--chart-lime)',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-lime))',
+          color: 'var(--chart-lime)',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta

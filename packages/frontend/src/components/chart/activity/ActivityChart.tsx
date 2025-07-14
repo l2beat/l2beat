@@ -83,7 +83,7 @@ export function ActivityChart({
     },
     ethereum: {
       label: 'Ethereum',
-      color: 'hsl(var(--chart-ethereum))',
+      color: 'var(--chart-ethereum)',
       indicatorType: {
         shape: 'line',
       },
@@ -249,11 +249,11 @@ export function ActivityCustomTooltip({
 function typeToColor(type: ActivityChartType) {
   switch (type) {
     case 'Rollups':
-      return 'hsl(var(--chart-pink))'
+      return 'var(--chart-pink)'
     case 'ValidiumsAndOptimiums':
-      return 'hsl(var(--chart-cyan))'
+      return 'var(--chart-cyan)'
     case 'Others':
-      return 'hsl(var(--chart-yellow))'
+      return 'var(--chart-yellow)'
     default:
       assertUnreachable(type)
   }

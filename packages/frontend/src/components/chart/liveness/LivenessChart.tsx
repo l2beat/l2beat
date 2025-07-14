@@ -45,14 +45,14 @@ export function LivenessChart({
   const chartMeta = {
     range: {
       label: 'Min&max submission interval',
-      color: 'hsl(var(--chart-pink-stroke-gradient-1))',
+      color: 'var(--chart-pink-stroke-gradient-1)',
       indicatorType: {
         shape: 'line',
       },
     },
     avg: {
       label: 'Average interval',
-      color: 'hsl(var(--chart-pink))',
+      color: 'var(--chart-pink)',
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
@@ -75,7 +75,7 @@ export function LivenessChart({
           isAnimationActive={false}
           stroke="url(#strokeRange)"
           strokeWidth={2}
-          fill="hsl(var(--chart-pink-fill-gradient))"
+          fill="var(--chart-pink-fill-gradient)"
           fillOpacity={0.4}
           connectNulls
         />
@@ -83,7 +83,7 @@ export function LivenessChart({
           dataKey="avg"
           isAnimationActive={false}
           strokeWidth={2}
-          stroke="hsl(var(--chart-pink))"
+          stroke="var(--chart-pink)"
           fill="none"
           strokeDasharray="5 5"
           connectNulls
@@ -99,7 +99,7 @@ export function LivenessChart({
         <ReferenceArea
           x1={lastValidTimestamp}
           x2={lastTimestamp}
-          fill="hsl(var(--negative))"
+          fill="var(--negative)"
           fillOpacity={0.2}
         />
         <ChartTooltip content={<LivenessCustomTooltip subtype={subtype} />} />

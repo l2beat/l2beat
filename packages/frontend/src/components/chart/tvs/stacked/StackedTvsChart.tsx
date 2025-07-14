@@ -35,17 +35,17 @@ interface Props {
 const chartMeta = {
   canonical: {
     label: 'Canonical',
-    color: 'hsl(var(--chart-stacked-purple))',
+    color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   native: {
     label: 'Native',
-    color: 'hsl(var(--chart-stacked-pink))',
+    color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   external: {
     label: 'External',
-    color: 'hsl(var(--chart-stacked-yellow))',
+    color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta

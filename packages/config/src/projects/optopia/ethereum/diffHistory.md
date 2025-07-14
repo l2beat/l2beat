@@ -244,7 +244,7 @@ Generated with discovered.json: 0x94a5d2cd04288907be23c4060534370420d05aee
 
 ## Description
 
-For some reason the ERC20Factory has a EOA as the implementation contract. Ignored as it shows as implementation unverified on frontend and it's unusuable anyway.
+For some reason the ERC20Factory has a EOA as the implementation contract. Ignored as it shows as implementation unverified on frontend and it's unusable anyway.
 
 ## Config/verification related changes
 

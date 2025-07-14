@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress, formatJson } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'
@@ -11,7 +11,6 @@ import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { flattenDiscoveredSources } from './flattenDiscoveredSource'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
-import { toPrettyJson } from './toPrettyJson'
 import type { DiscoveryOutput } from './types'
 
 export interface SaveDiscoveryResultOptions {
@@ -72,7 +71,7 @@ export async function saveDiscoveredJson(
   rootPath: string,
   discoveryFilename: string | undefined = undefined,
 ): Promise<void> {
-  const json = await toPrettyJson(discoveryOutput)
+  const json = formatJson(discoveryOutput)
   const outputPath = discoveryFilename ?? 'discovered.json'
   await writeFile(posix.join(rootPath, outputPath), json)
 }

@@ -27,32 +27,32 @@ import { formatNumber } from '~/utils/number-format/formatNumber'
 const chartMeta = {
   calldata: {
     label: 'Calldata',
-    color: 'hsl(var(--chart-stacked-blue))',
+    color: 'var(--chart-stacked-blue)',
     indicatorType: { shape: 'square' },
   },
   blobs: {
     label: 'Blobs',
-    color: 'hsl(var(--chart-stacked-yellow))',
+    color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
   compute: {
     label: 'Compute',
-    color: 'hsl(var(--chart-stacked-pink))',
+    color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   overhead: {
     label: 'Overhead',
-    color: 'hsl(var(--chart-stacked-purple))',
+    color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   posted: {
     label: 'Data posted',
-    color: 'hsl(var(--chart-emerald))',
+    color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line' },
   },
   notSyncedPosted: {
     label: 'Data posted (not synced)',
-    color: 'hsl(var(--chart-emerald))',
+    color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line', strokeDasharray: '3 3' },
   },
 } satisfies ChartMeta

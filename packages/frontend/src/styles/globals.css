@@ -7,7 +7,7 @@
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--scrollbar)) transparent;
+  scrollbar-color: var(--scrollbar) transparent;
 }
 
 html:has(.smooth-scroll) {
@@ -40,133 +40,132 @@ body:has(.reading) {
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --primary: 260deg 7.69% 7.65%;
-  --primary-invert: 0deg 0% 98%;
-  --secondary: 222deg 8.21% 40.6%;
-  --positive: 124deg 100% 22.7%;
-  --warning: 44.9deg 100% 33.5%;
-  --negative: 0deg 100% 42%;
-  --brand: 285deg 62.7% 52.7%;
-  --background: 230deg 13.6% 91.4%;
-  --background-reading: 0deg 0% 98%;
-  --surface-primary: 0deg 0% 98%;
-  --surface-secondary: 230deg 13.6% 91.4%;
-  --surface-tertiary: 223deg 15.9% 82.7%;
-  --header-primary: 0deg 0% 100%;
-  --header-secondary: 230deg 21.4% 94.5%;
-  --icon-secondary: 222deg 8.21% 40.6%;
-  --overlay: 231deg 30.4% 13.5% / 60%;
-  --divider: 223deg 15.9% 82.7%;
-  --link-stroke: 212deg 100% 86.5%;
-  --link: 223deg 69% 50.6%;
-  --scrollbar: 221deg 8.84% 57.8%;
+  --primary: #131215;
+  --primary-invert: #fafafa;
+  --secondary: #5f6470;
+  --positive: #007408;
+  --warning: #ab8000;
+  --negative: #d70000;
+  --brand: #9621bf;
+  --background: #e6e7ec;
+  --background-reading: #fafafa;
+  --surface-primary: #fafafa;
+  --surface-secondary: #e6e7ec;
+  --surface-tertiary: #ccd0da;
+  --header-primary: #ffffff;
+  --header-secondary: #eeeff4;
+  --icon-secondary: #5f6470;
+  --overlay: #181b2d99;
+  --divider: #ccd0da;
+  --link-stroke: #badaff;
+  --link: #2a5bd8;
+  --scrollbar: #8a909d;
 
-  --row-highlight: 284deg 86.6% 67.8% / 0.4;
-  --row-highlight-no-opacity: 284deg 80.3% 86.1%;
+  --row-highlight: #ce66f466;
+  --row-highlight-no-opacity: #e9bff8;
 
   /* Chart colors */
-  --chart-ethereum: 223deg 69% 50.6%;
-  --chart-ethereum-secondary: 212deg 100% 66.3%;
-  --chart-pink: 321deg 84.3% 60%;
-  --chart-cyan: 180deg 50.2% 42.5%;
-  --chart-yellow: 44.9deg 100% 33.5%;
-  --chart-emerald: 151deg 90% 48%;
-  --chart-fuchsia: 284deg 86.6% 67.8%;
-  --chart-lime: 97.7deg 78.8% 61.2%;
-  --chart-sky: 200deg 91.1% 64.9%;
+  --chart-ethereum: #2a5bd8;
+  --chart-ethereum-secondary: #53a3ff;
+  --chart-pink: #ef43b3;
+  --chart-cyan: #36a3a3;
+  --chart-yellow: #ab8000;
+  --chart-emerald: #0ce97e;
+  --chart-fuchsia: #ce66f4;
+  --chart-lime: #a9f964;
+  --chart-sky: #50bfff;
 
-  --chart-stacked-pink: 320deg 100% 63.7%;
-  --chart-stacked-yellow: 45deg 100% 51.4%;
-  --chart-stacked-purple: 266deg 57.7% 52.7%;
-  --chart-stacked-blue: 220deg 100% 57.5%;
+  --chart-stacked-pink: #ff45b5;
+  --chart-stacked-yellow: #ffc300;
+  --chart-stacked-purple: #9576d1;
+  --chart-stacked-blue: #3385ff;
 
   /* Chart gradients */
 
-  --chart-ethereum-fill-gradient: 217deg 77.8% 49.4%;
-  --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
-  --chart-ethereum-stroke-gradient-2: 223deg 69% 50.6%;
+  --chart-ethereum-fill-gradient: #3482f6;
+  --chart-ethereum-stroke-gradient-1: #66b2ff;
+  --chart-ethereum-stroke-gradient-2: #5d82cf;
 
-  --chart-pink-fill-gradient: 302deg 100% 68.6%;
-  --chart-pink-stroke-gradient-1: 266deg 57.7% 52.7%;
-  --chart-pink-stroke-gradient-2: 321deg 84.3% 60%;
+  --chart-pink-fill-gradient: #f464e8;
+  --chart-pink-stroke-gradient-1: #9576d1;
+  --chart-pink-stroke-gradient-2: #ef43b3;
 
-  --chart-cyan-fill-gradient: 190deg 73.6% 55.5%;
-  --chart-cyan-stroke-gradient-1: 180deg 50.2% 42.5%;
-  --chart-cyan-stroke-gradient-2: 191deg 70.8% 37.6%;
+  --chart-cyan-fill-gradient: #40cbe3;
+  --chart-cyan-stroke-gradient-1: #36a3a3;
+  --chart-cyan-stroke-gradient-2: #367bb8;
 
-  --chart-yellow-fill-gradient: 53.8deg 70.9% 56.9%;
-  --chart-yellow-stroke-gradient-1: 44.9deg 100% 33.5%;
-  --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
+  --chart-yellow-fill-gradient: #e7c34e;
+  --chart-yellow-stroke-gradient-1: #ab8000;
+  --chart-yellow-stroke-gradient-2: #b68f36;
 
-  --chart-emerald-fill-gradient: 151deg 90.2% 64.1%;
-  --chart-lime-fill-gradient: 98.1deg 100% 44.5%;
-  --chart-fuchsia-fill-gradient: 302deg 100% 68.6%;
-  --chart-sky-fill-gradient: 200deg 91.1% 64.9%;
+  --chart-emerald-fill-gradient: #53f6b2;
+  --chart-lime-fill-gradient: #6ffb00;
+  --chart-fuchsia-fill-gradient: #f464e8;
+  --chart-sky-fill-gradient: #50bfff;
 }
 
 .dark {
-  --primary: 0deg 0% 98%;
-  --primary-invert: 260deg 7.69% 7.65%;
-  --secondary: 223deg 8.04% 56.1%;
-  --positive: 145deg 81.2% 43.7%;
-  --warning: 45deg 100% 51.4%;
-  --negative: 0deg 100% 50%;
-  --brand: 284deg 87.1% 75.7%;
-  --background: 0deg 0% 0%;
-  --background-reading: 0deg 0% 0%;
-  --surface-primary: 225deg 14.8% 10.6%;
-  --surface-secondary: 222deg 8.06% 24.3%;
-  --surface-tertiary: 220deg 7.89% 29.8%;
-  --header-primary: 225deg 14.8% 10.6%;
-  --header-secondary: 222deg 16% 15.9%;
-  --icon-secondary: 222deg 8.21% 40.6%;
-  --overlay: 0deg 0% 0% / 60%;
-  --divider: 226deg 14.3% 28.8%;
-  --link-stroke: 217deg 56.3% 18.8%;
-  --link: 212deg 100% 66.3%;
-  --scrollbar: 225deg 13.7% 28.6%;
+  --primary: #fafafa;
+  --primary-invert: #131215;
+  --secondary: #868b98;
+  --positive: #15ca60;
+  --warning: #ffc107;
+  --negative: #ff0000;
+  --brand: #ecb0fb;
+  --background: #000000;
+  --background-reading: #000000;
+  --surface-primary: #17191f;
+  --surface-secondary: #3b3f45;
+  --surface-tertiary: #484d54;
+  --header-primary: #1a1c20;
+  --header-secondary: #23262b;
+  --icon-secondary: #62666c;
+  --overlay: #00000099;
+  --divider: #40444c;
+  --link-stroke: #1e304b;
+  --link: #66b2ff;
+  --scrollbar: #3f444c;
 
-  --row-highlight: 284deg 70.5% 43.9% / 0.4;
-  --row-highlight-no-opacity: 281deg 51.6% 25.1%;
+  --row-highlight: #9521bf66;
+  --row-highlight-no-opacity: #3c2742;
 
   /* Chart colors */
-  --chart-ethereum: 212deg 100% 56.1%;
-  --chart-ethereum-secondary: 223deg 69% 50.6%;
-  --chart-pink: 284deg 87.1% 75.7%;
-  --chart-cyan: 190deg 73.6% 55.5%;
-  --chart-yellow: 54.2deg 70.9% 56.9%;
-  --chart-emerald: 151deg 90.2% 48%;
-  --chart-fuchsia: 285deg 62.7% 52.7%;
-  --chart-lime: 111deg 100% 37.8%;
-  --chart-sky: 200deg 91.6% 72%;
+  --chart-ethereum: #3387ff;
+  --chart-ethereum-secondary: #5d82cf;
+  --chart-pink: #ecb0fb;
+  --chart-cyan: #40cbe3;
+  --chart-yellow: #e7c34e;
+  --chart-emerald: #0ce97e;
+  --chart-fuchsia: #a65ec4;
+  --chart-lime: #61ff12;
+  --chart-sky: #66ccff;
 
-  --chart-stacked-pink: 320deg 100% 63.7%;
-  --chart-stacked-yellow: 45deg 100% 51.4%;
-  --chart-stacked-purple: 266deg 57.7% 52.7%;
-  --chart-stacked-blue: 220deg 100% 57.5%;
+  --chart-stacked-pink: #ff45b5;
+  --chart-stacked-yellow: #ffc300;
+  --chart-stacked-purple: #9576d1;
+  --chart-stacked-blue: #3385ff;
 
   /* Chart gradients */
+  --chart-ethereum-fill-gradient: #1b4466;
+  --chart-ethereum-stroke-gradient-1: #66b2ff;
+  --chart-ethereum-stroke-gradient-2: #3482f6;
 
-  --chart-ethereum-fill-gradient: 214deg 72.4% 28.4%;
-  --chart-ethereum-stroke-gradient-1: 212deg 100% 66.3%;
-  --chart-ethereum-stroke-gradient-2: 217deg 77.8% 49.4%;
+  --chart-pink-fill-gradient: #76476d;
+  --chart-pink-stroke-gradient-1: #ecb0fb;
+  --chart-pink-stroke-gradient-2: #ef43b3;
 
-  --chart-pink-fill-gradient: 313deg 40.1% 38.6%;
-  --chart-pink-stroke-gradient-1: 284deg 87.1% 75.7%;
-  --chart-pink-stroke-gradient-2: 321deg 84.3% 60%;
+  --chart-cyan-fill-gradient: #45737c;
+  --chart-cyan-stroke-gradient-1: #36a3a3;
+  --chart-cyan-stroke-gradient-2: #40cbe3;
 
-  --chart-cyan-fill-gradient: 193deg 55.1% 36.7%;
-  --chart-cyan-stroke-gradient-1: 180deg 50.2% 42.5%;
-  --chart-cyan-stroke-gradient-2: 190deg 73.6% 55.5%;
+  --chart-yellow-fill-gradient: #9f8742;
+  --chart-yellow-stroke-gradient-1: #ffd100;
+  --chart-yellow-stroke-gradient-2: #b68f36;
 
-  --chart-yellow-fill-gradient: 50.1deg 59% 40.2%;
-  --chart-yellow-stroke-gradient-1: 45.1deg 100% 52%;
-  --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
-
-  --chart-emerald-fill-gradient: 163deg 93.5% 24.3%;
-  --chart-lime-fill-gradient: 97.8deg 96.7% 64.3%;
-  --chart-fuchsia-fill-gradient: 313deg 40.1% 38.6%;
-  --chart-sky-fill-gradient: 200deg 91.6% 72%;
+  --chart-emerald-fill-gradient: #107d47;
+  --chart-lime-fill-gradient: #c7fd89;
+  --chart-fuchsia-fill-gradient: #76476d;
+  --chart-sky-fill-gradient: #66ccff;
 }
 
 @theme inline {
@@ -425,33 +424,33 @@ body:has(.reading) {
   --color-n-stone-200: #f0d8bd;
   --color-n-stone-900: #593522;
 
-  --color-primary: hsl(var(--primary));
-  --color-primary-invert: hsl(var(--primary-invert));
-  --color-secondary: hsl(var(--secondary));
-  --color-positive: hsl(var(--positive));
-  --color-warning: hsl(var(--warning));
-  --color-negative: hsl(var(--negative));
-  --color-brand: hsl(var(--brand));
-  --color-background: hsl(var(--background));
-  --color-background-reading: hsl(var(--background-reading));
-  --color-surface-primary: hsl(var(--surface-primary));
-  --color-surface-secondary: hsl(var(--surface-secondary));
-  --color-surface-tertiary: hsl(var(--surface-tertiary));
-  --color-header-secondary: hsl(var(--header-secondary));
-  --color-header-primary: hsl(var(--header-primary));
-  --color-icon-secondary: hsl(var(--icon-secondary));
-  --color-overlay: hsl(var(--overlay));
-  --color-divider: hsl(var(--divider));
-  --color-link: hsl(var(--link));
-  --color-link-stroke: hsl(var(--link-stroke));
-  --color-chart-ethereum: hsl(var(--chart-ethereum));
-  --color-chart-fuchsia: hsl(var(--chart-fuchsia));
-  --color-chart-lime: hsl(var(--chart-lime));
-  --color-chart-sky: hsl(var(--chart-sky));
-  --color-chart-stacked-blue: hsl(var(--chart-stacked-blue));
-  --color-chart-stacked-yellow: hsl(var(--chart-stacked-yellow));
-  --color-chart-stacked-pink: hsl(var(--chart-stacked-pink));
-  --color-chart-stacked-purple: hsl(var(--chart-stacked-purple));
+  --color-primary: var(--primary);
+  --color-primary-invert: var(--primary-invert);
+  --color-secondary: var(--secondary);
+  --color-positive: var(--positive);
+  --color-warning: var(--warning);
+  --color-negative: var(--negative);
+  --color-brand: var(--brand);
+  --color-background: var(--background);
+  --color-background-reading: var(--background-reading);
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-tertiary: var(--surface-tertiary);
+  --color-header-secondary: var(--header-secondary);
+  --color-header-primary: var(--header-primary);
+  --color-icon-secondary: var(--icon-secondary);
+  --color-overlay: var(--overlay);
+  --color-divider: var(--divider);
+  --color-link: var(--link);
+  --color-link-stroke: var(--link-stroke);
+  --color-chart-ethereum: var(--chart-ethereum);
+  --color-chart-fuchsia: var(--chart-fuchsia);
+  --color-chart-lime: var(--chart-lime);
+  --color-chart-sky: var(--chart-sky);
+  --color-chart-stacked-blue: var(--chart-stacked-blue);
+  --color-chart-stacked-yellow: var(--chart-stacked-yellow);
+  --color-chart-stacked-pink: var(--chart-stacked-pink);
+  --color-chart-stacked-purple: var(--chart-stacked-purple);
 
   --z-1: 1;
   --z-10: 10;
@@ -548,10 +547,10 @@ body:has(.reading) {
       background-color: transparent;
     }
     12% {
-      background-color: hsl(var(--row-highlight));
+      background-color: var(--row-highlight);
     }
     32% {
-      background-color: hsl(var(--row-highlight));
+      background-color: var(--row-highlight);
     }
     44% {
       background-color: transparent;
@@ -560,10 +559,10 @@ body:has(.reading) {
       background-color: transparent;
     }
     64% {
-      background-color: hsl(var(--row-highlight));
+      background-color: var(--row-highlight);
     }
     84% {
-      background-color: hsl(var(--row-highlight));
+      background-color: var(--row-highlight);
     }
     96% {
       background-color: transparent;
@@ -575,31 +574,31 @@ body:has(.reading) {
 
   @keyframes row-highlight-no-opacity {
     0% {
-      background-color: hsl(var(--surface-primary));
+      background-color: var(--surface-primary);
     }
     12% {
-      background-color: hsl(var(--row-highlight-no-opacity));
+      background-color: var(--row-highlight-no-opacity);
     }
     32% {
-      background-color: hsl(var(--row-highlight-no-opacity));
+      background-color: var(--row-highlight-no-opacity);
     }
     44% {
-      background-color: hsl(var(--surface-primary));
+      background-color: var(--surface-primary);
     }
     52% {
-      background-color: hsl(var(--surface-primary));
+      background-color: var(--surface-primary);
     }
     64% {
-      background-color: hsl(var(--row-highlight-no-opacity));
+      background-color: var(--row-highlight-no-opacity);
     }
     84% {
-      background-color: hsl(var(--row-highlight-no-opacity));
+      background-color: var(--row-highlight-no-opacity);
     }
     96% {
-      background-color: hsl(var(--surface-primary));
+      background-color: var(--surface-primary);
     }
     100% {
-      background-color: hsl(var(--surface-primary));
+      background-color: var(--surface-primary);
     }
   }
 }
