@@ -88,9 +88,10 @@ export function TerminalPanel() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => {
-              discover(project)
-              queryClient.invalidateQueries({
-                queryKey: ['projects', project],
+              discover(project).then(() => {
+                queryClient.invalidateQueries({
+                  queryKey: ['projects', project],
+                })
               })
             }}
             disabled={command.inFlight}

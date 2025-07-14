@@ -25,7 +25,7 @@ interface TerminalState {
   killCommand: () => void
   matchFlat: (project: string, address: string) => void
   matchProject: (project: string, address: string) => void
-  discover: (project: string) => void
+  discover: (project: string) => Promise<void>
   downloadAllShapes: () => void
 }
 
@@ -59,10 +59,10 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   downloadAllShapes: () => {
     executeStreaming(set, () => executeDownloadAllShapes())
   },
-  discover: (project: string) => {
+  discover: (project: string): Promise<void> => {
     const chain = get().command.chain
     if (chain === undefined) {
-      return
+      return Promise.resolve()
     }
 
     return executeStreaming(set, () =>

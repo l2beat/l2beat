@@ -58,8 +58,9 @@ export function BottomBar() {
           return
         }
 
-        discover(project)
-        queryClient.invalidateQueries({ queryKey: ['projects', project] })
+        discover(project).then(() => {
+          queryClient.invalidateQueries({ queryKey: ['projects', project] })
+        })
       }
     }
 
