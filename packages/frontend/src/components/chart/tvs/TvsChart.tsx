@@ -34,7 +34,7 @@ interface Props {
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
   const chartMeta = {
     value: {
-      color: 'hsl(var(--chart-pink))',
+      color: 'var(--chart-pink)',
       indicatorType: { shape: 'line' },
       label: unit.toUpperCase(),
     },
