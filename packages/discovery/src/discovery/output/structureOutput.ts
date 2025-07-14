@@ -8,12 +8,12 @@ import { getChainShortName } from '../../config/config.discovery'
 import { recalculateSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { hashJsonStable } from '../config/hashJsonStable'
+import type { StructureConfig } from '../config/StructureConfig'
 import {
   migrateImplementationNames,
   migrateValues,
 } from './chainSpecificMigration'
 import type { EntryParameters, StructureOutput } from './types'
-import { StructureConfig } from '../config/StructureConfig'
 
 export function getStructureOutput(
   config: StructureConfig,

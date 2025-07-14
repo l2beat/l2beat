@@ -12,6 +12,16 @@ export interface DiscoveryDiff {
   type?: 'created' | 'deleted'
 }
 
+function addressCompare(a: string, b: string): boolean {
+  const lhs = a.includes(':')
+    ? ChainSpecificAddress.address(ChainSpecificAddress(a))
+    : a
+  const rhs = b.includes(':')
+    ? ChainSpecificAddress.address(ChainSpecificAddress(b))
+    : b
+  return lhs.toLowerCase() === rhs.toLowerCase()
+}
+
 export function diffDiscovery(
   previous: EntryParameters[],
   current: EntryParameters[],
@@ -20,8 +30,8 @@ export function diffDiscovery(
   const modifiedOrDeleted: DiscoveryDiff[] = []
 
   for (const previousContract of previous) {
-    const currentContract = current.find(
-      (d) => d.address === previousContract.address,
+    const currentContract = current.find((d) =>
+      addressCompare(d.address.toString(), previousContract.address.toString()),
     )
     if (currentContract === undefined) {
       if (previousContract.proxyType !== 'EOA') {

@@ -3,6 +3,7 @@ import {
   assert,
   ChainSpecificAddress,
   type EthereumAddress,
+  formatJson,
 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
