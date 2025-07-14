@@ -6,7 +6,8 @@
       "!**/node_modules/**",
       "!**/.cache/**",
       "!**/dist/**",
-      "!**/build/**"
+      "!**/build/**",
+      "!docs/**"
     ]
   },
   "formatter": {
