@@ -1,11 +1,8 @@
-import { EmergencyIcon } from '~/icons/Emergency'
 import {
-  type UnderReviewStatus,
   getUnderReviewText,
+  type UnderReviewStatus,
 } from '~/utils/project/underReview'
-import { WarningBar } from '../WarningBar'
-import { ArchivedBar } from './ArchivedBar'
-import { UnderReviewBar } from './UnderReviewBar'
+import { Banner } from '../Banner'
 import { UpcomingBar } from './UpcomingBar'
 
 interface Project {
@@ -33,32 +30,34 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
 
   return (
     <div className="mb-3 space-y-2">
-      {project.archivedAt && <ArchivedBar />}
+      {project.archivedAt && (
+        <Banner type="neutral" centered>
+          <span className="md:hidden">This project is archived.</span>
+          <span className="hidden md:block">
+            This project is archived and no longer maintained.
+          </span>
+        </Banner>
+      )}
       {project.isUpcoming && <UpcomingBar />}
       {project.underReviewStatus && (
-        <UnderReviewBar text={getUnderReviewText(project.underReviewStatus)} />
+        <Banner type="warning">
+          {getUnderReviewText(project.underReviewStatus)}
+        </Banner>
       )}
       {project.header?.warning && (
-        <WarningBar
-          text={project.header.warning}
-          color="yellow"
-          className="w-full items-center justify-center p-2.5 text-xs md:text-base"
-        />
+        <Banner type="warning" centered>
+          {project.header.warning}
+        </Banner>
       )}
       {project.header?.redWarning && (
-        <WarningBar
-          text={project.header.redWarning}
-          color="red"
-          className="w-full items-center justify-center p-2.5 text-xs md:text-base"
-        />
+        <Banner type="negative" centered>
+          {project.header.redWarning}
+        </Banner>
       )}
       {project.header?.emergencyWarning && (
-        <WarningBar
-          text={project.header.emergencyWarning}
-          icon={EmergencyIcon}
-          color="yellow"
-          className="w-full items-center justify-center p-2.5 text-xs md:text-base"
-        />
+        <Banner type="warning" centered>
+          {project.header.emergencyWarning}
+        </Banner>
       )}
     </div>
   )
