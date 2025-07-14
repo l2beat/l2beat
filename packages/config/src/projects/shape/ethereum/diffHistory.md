@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x2ae282eb841872180834b8105d215c6c0568f92c
+
+# Diff at Mon, 14 Jul 2025 08:02:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0dc82cd5064c9c6dc9fb20e2291a8bb6b2048e27 block: 22731117
+- current block number: 22731117
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22731117 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0x319322906beAdf69dF5d4607169c63D692B1aDC1) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      description:
+-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
 Generated with discovered.json: 0xb4c6072d4d5d39f30139a79cdda4178740837e40
 
 # Diff at Fri, 04 Jul 2025 12:19:19 GMT:

@@ -19,7 +19,7 @@
         "0xa4526e33eb750144164c05badf980525f867cae82e7db6e108b17aeb61b99924"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "sinceTimestamp": 1706811599,
       "sinceBlock": 19135323,
       "values": {
