@@ -24,10 +24,12 @@ export const pepeunchained2: ScalingProject = underReviewL2({
       socialMedia: ['https://x.com/pepe_unchained'],
     },
   },
+  associatedTokens: ['PEPU'],
   chainConfig: {
     name: 'pepeunchained2',
     gasTokens: ['PEPU'],
     chainId: 97741,
+    sinceTimestamp: UnixTime(1748891003),
     apis: [
       {
         type: 'rpc',
