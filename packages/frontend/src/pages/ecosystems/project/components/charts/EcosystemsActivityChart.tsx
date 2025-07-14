@@ -75,7 +75,7 @@ export function EcosystemsActivityChart({
       },
       ethereum: {
         label: 'Ethereum',
-        color: 'hsl(var(--chart-ethereum))',
+        color: 'var(--chart-ethereum)',
         indicatorType: {
           shape: 'line',
         },
