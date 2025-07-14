@@ -121,3 +121,4 @@ export {
   getExplorerClient,
   type IEtherscanClient,
 } from './utils/IEtherscanClient'
+export { get$ImplementationsPublic } from './discovery/utils/extractorsPublic'
