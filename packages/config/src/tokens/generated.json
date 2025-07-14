@@ -1585,6 +1585,20 @@
       "supply": "zero"
     },
     {
+      "name": "DIAToken",
+      "coingeckoId": "dia-data",
+      "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
+      "symbol": "DIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1574868479,
+      "coingeckoListingTimestamp": 1596412800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "digitalbits",
       "coingeckoId": "digitalbits",
       "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27",

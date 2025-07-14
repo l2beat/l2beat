@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
@@ -29,6 +29,7 @@ export const lasernet: ScalingProject = underReviewL2({
       ],
     },
   },
+  associatedTokens: ['DIA'],
   chainConfig: {
     name: 'lasernet',
     gasTokens: ['DIA'],
@@ -49,4 +50,12 @@ export const lasernet: ScalingProject = underReviewL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
+  escrows: [
+      {
+        address: EthereumAddress('0x1eeE9b9F024188E54930D2927d7a28e66E7649a7'), // bridge
+        sinceTimestamp: UnixTime(1741964363),
+        tokens: ['DIA'],
+        chain: 'ethereum',
+      },
+    ],
 })

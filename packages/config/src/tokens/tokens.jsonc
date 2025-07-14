@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "DIA",
+      "address": "0x84ca8bc7997272c7cfb4d0cd3d55cd942b3c9419"
+    },
+    {
       "symbol": "EUL",
       "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b"
     },
