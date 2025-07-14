@@ -518,18 +518,51 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
       expect(mockNotifier.anomalyRecovered).toHaveBeenCalled()
     })
   })
+
+  describe(RealTimeLivenessProcessor.prototype.deleteForArchivedProjects
+    .name, () => {
+    it('should match liveness txs and detect anomalies', async () => {
+      const projectId = 'project-id'
+      const config = createMockConfig(ProjectId(projectId), [], true)
+
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getProjectIds: mockFn().resolvesTo([projectId]),
+        deleteByProjectId: mockFn().resolvesTo(undefined),
+      })
+
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase({
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+        mockObject<AnomalyNotifier>(),
+      )
+
+      await processor.deleteForArchivedProjects()
+
+      expect(realTimeAnomaliesRepository.getProjectIds).toHaveBeenCalled()
+
+      expect(
+        realTimeAnomaliesRepository.deleteByProjectId,
+      ).toHaveBeenCalledWith([projectId])
+    })
+  })
 })
 
 function createMockConfig(
   projectId: ProjectId,
   configurations: TrackedTxConfigEntry[],
+  isArchived: boolean = false,
 ): Config {
   return mockObject<Config>({
     trackedTxsConfig: mockObject<TrackedTxsConfig>({
       projects: [
         {
           id: projectId,
-          isArchived: false,
+          isArchived,
           configurations,
         },
       ],

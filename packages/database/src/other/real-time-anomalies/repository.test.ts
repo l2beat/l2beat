@@ -137,6 +137,13 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     })
   })
 
+  describe(RealTimeAnomaliesRepository.prototype.getProjectIds.name, () => {
+    it('should return all projectIds', async () => {
+      const results = await repository.getProjectIds()
+      expect(results).toEqualUnsorted([PROJECT_A, PROJECT_B])
+    })
+  })
+
   describe(RealTimeAnomaliesRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
@@ -144,6 +151,16 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       const results = await repository.getAll()
 
       expect(results).toEqual([])
+    })
+  })
+
+  describe(RealTimeAnomaliesRepository.prototype.deleteByProjectId.name, () => {
+    it('should delete all rows', async () => {
+      await repository.deleteByProjectId([PROJECT_B])
+
+      const results = await repository.getAll()
+
+      expect(results).toEqual([DATA[0]])
     })
   })
 })

@@ -27,6 +27,7 @@ import type { BlockProcessor } from '../types'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
   private logger: Logger
+  private trackedTxsConfig: TrackedTxsConfig
   private transfers: (TrackedTxLivenessConfig & {
     params: TrackedTxTransferConfig
   })[] = []
@@ -50,7 +51,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
     assert(config.trackedTxsConfig, 'TrackedTxsConfig is required')
 
+    this.trackedTxsConfig = config.trackedTxsConfig
     this.mapConfigurations(config.trackedTxsConfig)
+  }
+
+  async init() {
+    await this.deleteForArchivedProjects()
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
@@ -346,5 +352,29 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         params: TrackedTxSharedBridgeConfig
       } => c.params.formula === 'sharedBridge',
     )
+  }
+
+  async deleteForArchivedProjects() {
+    const archivedProjectIds = this.trackedTxsConfig.projects
+      .filter((project) => project.isArchived)
+      .map((project) => project.id.toString())
+
+    const projectIdsInDb = await this.db.realTimeAnomalies.getProjectIds()
+
+    const projectIdsToDelete = projectIdsInDb.filter((id: string) =>
+      archivedProjectIds.includes(id),
+    )
+
+    if (projectIdsToDelete.length === 0) {
+      return
+    }
+
+    const deletedCount =
+      await this.db.realTimeAnomalies.deleteByProjectId(projectIdsToDelete)
+
+    this.logger.info(`Deleted ${deletedCount} records for archived projects`, {
+      projectIds: projectIdsToDelete,
+      count: deletedCount,
+    })
   }
 }
