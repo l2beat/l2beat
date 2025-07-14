@@ -28,6 +28,7 @@ export const pepeunchained2: ScalingProject = underReviewL2({
     name: 'pepeunchained2',
     gasTokens: ['PEPU'],
     chainId: 97741,
+    sinceTimestamp: UnixTime(1748891003),
     apis: [
       {
         type: 'rpc',
