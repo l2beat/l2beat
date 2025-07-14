@@ -1,5 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
+import assert from 'assert'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
@@ -43,6 +44,16 @@ const cmd = command({
     const logger = Logger.INFO
     const env = getEnv()
 
+    if (args.chains)
+      if (
+        !args.chains
+          ?.split(',')
+          .every((c) => CHAINS.find((cc) => cc.name === c))
+      ) {
+        console.error('ERROR: Unrecognized chain')
+        process.exit(1)
+      }
+
     const chains = args.chains
       ? CHAINS.filter((c) => args.chains?.split(',').includes(c.name))
       : CHAINS
@@ -58,6 +69,16 @@ const cmd = command({
         retryStrategy: 'RELIABLE',
       }),
     }))
+
+    if (args.protocols)
+      if (
+        !args.protocols
+          ?.split(',')
+          .every((p) => PROTOCOLS.find((pp) => pp.name === p))
+      ) {
+        console.error('ERROR: Unrecognized protocol')
+        process.exit(1)
+      }
 
     const protocols = args.protocols
       ? PROTOCOLS.filter((p) => args.protocols?.split(',').includes(p.name))
@@ -83,7 +104,7 @@ const cmd = command({
 
       for (const l of logs) {
         for (const decoder of decoders) {
-          const decoded = decoder(r, logToViemLog(l))
+          const decoded = await decoder(r, logToViemLog(l))
           if (decoded) {
             transfers.push(decoded)
           }
@@ -124,6 +145,20 @@ const cmd = command({
       }
     }
 
+    for (const t of transfers) {
+      const getTxUrl = CHAINS.find(
+        (c) => c.shortName === t.token.split(':')[0],
+      )?.getTxUrl
+
+      logger.info(`${t.direction} via ${t.protocol}`, {
+        token: t.token,
+        amount: t.amount,
+        ...(t.direction === 'send' ? { destination: t.destination } : {}),
+        ...(t.direction === 'receive' ? { origin: t.origin } : {}),
+        ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
+      })
+    }
+
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
       for (const [id, mm] of Array.from(Object.entries(m))) {
         if (mm.send.length === 0 || mm.receive.length === 0) continue
@@ -131,14 +166,10 @@ const cmd = command({
         logger.info(`${protocol} ID: ${id}`)
 
         for (const t of [...mm.send, ...mm.receive]) {
-          const getTxUrl = CHAINS.find(
-            (c) => c.shortName === t.token.split(':')[0],
-          )?.getTxUrl
           logger.info(t.direction, {
             token: t.token,
             amount: t.amount,
             ...(t.txHash ? { tx: t.txHash } : {}),
-            ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
           })
         }
       }
