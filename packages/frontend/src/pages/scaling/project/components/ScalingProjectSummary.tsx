@@ -7,15 +7,14 @@ import {
   ValueSecuredBreakdownTooltipContent,
 } from '~/components/breakdown/ValueSecuredBreakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
