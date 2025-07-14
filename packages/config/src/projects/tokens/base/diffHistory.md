@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x384c3cebac32ee6107ba75b1812789a57904ea43
+
+# Diff at Thu, 10 Jul 2025 15:33:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f69ff944dc2501a54a7c05f54d37308d5262553d block: 30861907
+- current block number: 32674389
+
+## Description
+
+update: added base bridge module and new member to wOETH timelock executor
+
+## Watched changes
+
+```diff
+    contract SafeL2 (0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.$members.0:
++        "0x052c01a2a88fa6Cba8Fc2DBEf39a442A140a35e3"
+      values.GnosisSafe_modules.0:
++        "0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
+      values.multisigThreshold:
+-        "2 of 8 (25%)"
++        "2 of 9 (22%)"
+    }
+```
+
 Generated with discovered.json: 0x24c1af6fd42636d6f810aea4b17d8392c472ab48
 
 # Diff at Thu, 05 Jun 2025 08:23:04 GMT:
