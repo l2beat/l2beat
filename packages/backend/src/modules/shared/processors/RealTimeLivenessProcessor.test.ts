@@ -540,37 +540,39 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
     })
   })
 
-  describe(RealTimeLivenessProcessor.prototype.deleteForArchivedProjects
-    .name, () => {
-    it('deletes anomalies for archived projects', async () => {
-      const projectId = 'project-id'
-      const config = createMockConfig(ProjectId(projectId), [], true)
+  describe(
+    RealTimeLivenessProcessor.prototype.deleteForArchivedProjects.name,
+    () => {
+      it('deletes anomalies for archived projects', async () => {
+        const projectId = 'project-id'
+        const config = createMockConfig(ProjectId(projectId), [], true)
 
-      const realTimeAnomaliesRepository = mockObject<
-        Database['realTimeAnomalies']
-      >({
-        getProjectIds: mockFn().resolvesTo([projectId]),
-        deleteByProjectId: mockFn().resolvesTo(undefined),
+        const realTimeAnomaliesRepository = mockObject<
+          Database['realTimeAnomalies']
+        >({
+          getProjectIds: mockFn().resolvesTo([projectId]),
+          deleteByProjectId: mockFn().resolvesTo(undefined),
+        })
+
+        const processor = new RealTimeLivenessProcessor(
+          config,
+          Logger.SILENT,
+          mockDatabase({
+            realTimeAnomalies: realTimeAnomaliesRepository,
+          }),
+          mockObject<AnomalyNotifier>(),
+        )
+
+        await processor.deleteForArchivedProjects()
+
+        expect(realTimeAnomaliesRepository.getProjectIds).toHaveBeenCalled()
+
+        expect(
+          realTimeAnomaliesRepository.deleteByProjectId,
+        ).toHaveBeenCalledWith([projectId])
       })
-
-      const processor = new RealTimeLivenessProcessor(
-        config,
-        Logger.SILENT,
-        mockDatabase({
-          realTimeAnomalies: realTimeAnomaliesRepository,
-        }),
-        mockObject<AnomalyNotifier>(),
-      )
-
-      await processor.deleteForArchivedProjects()
-
-      expect(realTimeAnomaliesRepository.getProjectIds).toHaveBeenCalled()
-
-      expect(
-        realTimeAnomaliesRepository.deleteByProjectId,
-      ).toHaveBeenCalledWith([projectId])
-    })
-  })
+    },
+  )
 })
 
 function createMockConfig(
