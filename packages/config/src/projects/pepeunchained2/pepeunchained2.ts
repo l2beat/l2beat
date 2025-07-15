@@ -62,7 +62,7 @@ export const pepeunchained2: ScalingProject = orbitStackL2({
       description:
         'Pepe Unchained migrates their optimium from op stack to orbit stack.',
       url: 'https://x.com/pepe_unchained/status/1928485153132916993',
-      date: '2025-07-24T00:00:00Z',
+      date: '2025-06-T02:00:00Z',
       type: 'general',
     },
   ],
