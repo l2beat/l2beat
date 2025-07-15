@@ -537,7 +537,7 @@ discovery. Values are for block 21387773 (main branch discovery), not current.
     contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
     +++ description: None
       fieldMeta:
-+        {"accessControl":{"severity":"MEDIUM","description":"Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()","type":"PERMISSION"}}
++        {"accessControl":{"severity":"MEDIUM","description":"Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging functions; ADMIN_ROLE can setWethAddress()","type":"PERMISSION"}}
     }
 ```
 
@@ -1093,7 +1093,7 @@ Generated with discovered.json: 0x318ed27da4a4ee3c26b9a1b4767fea204abb68fe
 ## Description
 
 New EOA is given the GOVERNANCE_ROLE in the bridge contract.
-Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()
+Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging functions; ADMIN_ROLE can setWethAddress()
 
 ## Watched changes
 
