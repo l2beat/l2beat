@@ -3,6 +3,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/languageJoin'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { Square } from '../Square'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
@@ -83,12 +84,17 @@ export function TokenBreakdownTooltipContent({
                 >
                   <span className="flex items-center gap-1">
                     <Square variant={v.variant} size="small" />
-                    <span className="font-medium text-label-value-14">
+                    <span className="font-medium text-label-value-15">
                       {v.title}
                     </span>
                   </span>
-                  <span className="font-medium text-label-value-15">
-                    {formatPercent(v.value / total)}
+                  <span>
+                    <span className="mr-1 font-bold text-label-value-15">
+                      {formatCurrency(v.value, 'usd')}
+                    </span>
+                    <span className="font-medium text-label-value-15 text-secondary">
+                      ({formatPercent(v.value / total)})
+                    </span>
                   </span>
                 </div>
               ),

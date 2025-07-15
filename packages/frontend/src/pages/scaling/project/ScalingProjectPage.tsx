@@ -44,7 +44,7 @@ export function ScalingProjectPage({
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
+            <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-5">
               <ProjectHeader
                 project={projectEntry}
                 ongoingAnomaly={projectEntry.header.ongoingAnomaly}
