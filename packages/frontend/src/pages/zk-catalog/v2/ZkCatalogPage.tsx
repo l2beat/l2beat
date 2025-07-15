@@ -15,7 +15,7 @@ export function ZkCatalogPage({ ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <ZkCatalogHeader />
-        {!env.NEXT_PUBLIC_ZK_CATALOG_V2 ? (
+        {!env.CLIENT_SIDE_ZK_CATALOG_V2 ? (
           <WorkInProgressNotice />
         ) : (
           <ZkCatalogTable entries={props.entries} />
