@@ -33,6 +33,7 @@ export function TypeInfo({ stacks, children }: TypeInfoProps) {
           if (!providerProps) return null
           return (
             <TypeTooltip
+              key={stack}
               Icon={providerProps.Icon}
               text={
                 providerProps.text ??

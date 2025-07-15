@@ -205,10 +205,10 @@ export const scroll: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+        inbox: EthereumAddress('0xa13BAF47339d63B743e7Da8741db5456DAc1E556'),
         sequencers: [
-          '0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B',
-          '0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858',
+          EthereumAddress('0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B'),
+          EthereumAddress('0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858'),
         ],
       },
     ],

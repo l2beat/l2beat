@@ -2,6 +2,7 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -595,10 +596,9 @@ function getDaTracking(
     const validatorTimelock =
       templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
-    const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      'validatorsVTL',
-    )
+    const validatorsVTL = templateVars.discovery.getContractValue<
+      ChainSpecificAddress[]
+    >('ValidatorTimelock', 'validatorsVTL')
 
     const inboxDeploymentBlockNumber =
       templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
@@ -609,7 +609,7 @@ function getDaTracking(
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
         inbox: validatorTimelock,
-        sequencers: validatorsVTL,
+        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
       },
     ]
   }

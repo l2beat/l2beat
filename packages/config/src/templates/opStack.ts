@@ -1,7 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
-  EthereumAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -123,7 +123,7 @@ interface OpStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  l1StandardBridgeEscrow?: EthereumAddress
+  l1StandardBridgeEscrow?: ChainSpecificAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   optimismPortalPremintedTokens?: string[]
@@ -305,7 +305,7 @@ function opStackCommon(
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: portal.address,
+          address: ChainSpecificAddress.address(portal.address),
           tokens: optimismPortalTokens,
           premintedTokens: templateVars.optimismPortalPremintedTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -315,7 +315,7 @@ function opStackCommon(
         }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: l1StandardBridgeEscrow,
+          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -370,7 +370,7 @@ function getDaTracking(
     ).isSequencerSendingBlobTx
 
   if (usesBlobs) {
-    const sequencerInbox = systemConfig.getContractValue<string>(
+    const sequencerInbox = systemConfig.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'sequencerInbox',
     )
@@ -381,7 +381,7 @@ function getDaTracking(
         'startBlock',
       ) ?? 0
 
-    const sequencer = systemConfig.getContractValue<string>(
+    const sequencer = systemConfig.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'batcherHash',
     )
@@ -391,8 +391,8 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxStartBlock,
-        inbox: sequencerInbox,
-        sequencers: [sequencer],
+        inbox: ChainSpecificAddress.address(sequencerInbox),
+        sequencers: [ChainSpecificAddress.address(sequencer)],
       },
     ]
   }
@@ -850,8 +850,10 @@ function getTechnology(
   explorerUrl: string | undefined,
   daProvider: DAProvider | undefined,
 ): ProjectScalingTechnology {
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = ChainSpecificAddress.address(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+    ),
   )
 
   const portal = getOptimismPortal(templateVars)
@@ -1156,11 +1158,15 @@ function getTrackedTxs(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = ChainSpecificAddress.address(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+    ),
   )
-  const sequencerAddress = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  const sequencerAddress = ChainSpecificAddress.address(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+    ),
   )
 
   switch (fraudProofType) {
@@ -1189,7 +1195,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: l2OutputOracle.address,
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
             selector: '0x9aaab648',
             functionSignature:
               'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
@@ -1226,7 +1232,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: disputeGameFactory.address,
+            address: ChainSpecificAddress.address(disputeGameFactory.address),
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

@@ -1,3 +1,404 @@
+Generated with discovered.json: 0x7f7f23e6036406e36a0d31094c896de4424efd97
+
+# Diff at Mon, 14 Jul 2025 12:45:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22431228
+- current block number: 22431228
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431228 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F) {
+    +++ description: None
+      address:
+-        "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F"
++        "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F"
+    }
+```
+
+```diff
+    EOA  (0x13A9594a2696D3c35F9D6E4Be6b332f699C57801) {
+    +++ description: None
+      address:
+-        "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
++        "eth:0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
+    }
+```
+
+```diff
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D) {
+    +++ description: None
+      address:
+-        "0x1715a3E4A142d8b698131108995174F37aEBA10D"
++        "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D"
+      values.$admin:
+-        "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
++        "eth:0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
+      values.$implementation:
+-        "0xB7DF1E00ae030e966E635ede273625240546B873"
++        "eth:0xB7DF1E00ae030e966E635ede273625240546B873"
+      values.$pastUpgrades.0.2.0:
+-        "0xB7DF1E00ae030e966E635ede273625240546B873"
++        "eth:0xB7DF1E00ae030e966E635ede273625240546B873"
+      values.bridgeContract:
+-        "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
++        "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
+      values.implementation:
+-        "0xB7DF1E00ae030e966E635ede273625240546B873"
++        "eth:0xB7DF1E00ae030e966E635ede273625240546B873"
+      values.mediatorContractOnOtherSide:
+-        "0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef"
++        "eth:0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef"
+      values.owner:
+-        "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
++        "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+      values.tokenFactory:
+-        "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02"
++        "eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02"
+      values.upgradeabilityOwner:
+-        "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
++        "eth:0x13A9594a2696D3c35F9D6E4Be6b332f699C57801"
+      implementationNames.0x1715a3E4A142d8b698131108995174F37aEBA10D:
+-        "EternalStorageProxy"
+      implementationNames.0xB7DF1E00ae030e966E635ede273625240546B873:
+-        "ForeignOmnibridge"
+      implementationNames.eth:0x1715a3E4A142d8b698131108995174F37aEBA10D:
++        "EternalStorageProxy"
+      implementationNames.eth:0xB7DF1E00ae030e966E635ede273625240546B873:
++        "ForeignOmnibridge"
+    }
+```
+
+```diff
+    EOA  (0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c) {
+    +++ description: None
+      address:
+-        "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c"
++        "eth:0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c"
+    }
+```
+
+```diff
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      address:
+-        "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
++        "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
+      values.$admin:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
++        "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+      values.$implementation:
+-        "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
++        "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
++++ description: Array of the signers in the validator multisig
+      values.$members.0:
+-        "0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0"
++        "eth:0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0"
++++ description: Array of the signers in the validator multisig
+      values.$members.1:
+-        "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c"
++        "eth:0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c"
++++ description: Array of the signers in the validator multisig
+      values.$members.2:
+-        "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD"
++        "eth:0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD"
++++ description: Array of the signers in the validator multisig
+      values.$members.3:
+-        "0xfB18Da3bCA8057eB05aab6e77a32925949093533"
++        "eth:0xfB18Da3bCA8057eB05aab6e77a32925949093533"
++++ description: Array of the signers in the validator multisig
+      values.$members.4:
+-        "0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa"
++        "eth:0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa"
++++ description: Array of the signers in the validator multisig
+      values.$members.5:
+-        "0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E"
++        "eth:0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E"
++++ description: Array of the signers in the validator multisig
+      values.$members.6:
+-        "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C"
++        "eth:0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C"
++++ description: Array of the signers in the validator multisig
+      values.$members.7:
+-        "0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
++        "eth:0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
+      values.$pastUpgrades.0.2.0:
+-        "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
++        "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
+      values.F_ADDR:
+-        "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+      values.implementation:
+-        "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
++        "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"
+      values.owner:
+-        "0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f"
++        "eth:0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f"
+      values.upgradeabilityOwner:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
++        "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+      implementationNames.0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d:
+-        "EternalStorageProxy"
+      implementationNames.0x95B303987A60C71504D99Aa1b13B4DA07b0790ab:
+-        "BridgeValidators"
+      implementationNames.eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d:
++        "EternalStorageProxy"
+      implementationNames.eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab:
++        "BridgeValidators"
+    }
+```
+
+```diff
+    EOA  (0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539) {
+    +++ description: None
+      address:
+-        "0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539"
++        "eth:0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539"
+    }
+```
+
+```diff
+    EOA  (0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f) {
+    +++ description: None
+      address:
+-        "0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f"
++        "eth:0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f"
+    }
+```
+
+```diff
+    EOA  (0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef) {
+    +++ description: None
+      address:
+-        "0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef"
++        "eth:0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef"
+    }
+```
+
+```diff
+    EOA  (0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E) {
+    +++ description: None
+      address:
+-        "0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E"
++        "eth:0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E"
+    }
+```
+
+```diff
+    EOA  (0x610094aB29D1bf683719d2Ce3495d8635A47bfc6) {
+    +++ description: None
+      address:
+-        "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
++        "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+    }
+```
+
+```diff
+    contract WETHOmnibridgeRouter (0x8AC4ae65b3656e26dC4e0e69108B392283350f55) {
+    +++ description: None
+      address:
+-        "0x8AC4ae65b3656e26dC4e0e69108B392283350f55"
++        "eth:0x8AC4ae65b3656e26dC4e0e69108B392283350f55"
+      values.bridge:
+-        "0x1715a3E4A142d8b698131108995174F37aEBA10D"
++        "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D"
+      values.owner:
+-        "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
++        "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+      implementationNames.0x8AC4ae65b3656e26dC4e0e69108B392283350f55:
+-        "WETHOmnibridgeRouter"
+      implementationNames.eth:0x8AC4ae65b3656e26dC4e0e69108B392283350f55:
++        "WETHOmnibridgeRouter"
+    }
+```
+
+```diff
+    contract TokenFactory (0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02) {
+    +++ description: None
+      address:
+-        "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02"
++        "eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02"
+      values.owner:
+-        "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
++        "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+      values.tokenImage:
+-        "0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
++        "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
+      implementationNames.0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02:
+-        "TokenFactory"
+      implementationNames.eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02:
++        "TokenFactory"
+    }
+```
+
+```diff
+    contract PermittableToken (0xA1077a294dDE1B09bB078844df40758a5D0f9a27) {
+    +++ description: None
+      address:
+-        "0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
++        "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
+      values.bridgeContract:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539"
++        "eth:0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539"
+      implementationNames.0xA1077a294dDE1B09bB078844df40758a5D0f9a27:
+-        "PermittableToken"
+      implementationNames.eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27:
++        "PermittableToken"
+    }
+```
+
+```diff
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c) {
+    +++ description: None
+      address:
+-        "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
++        "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
+      values.$admin:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
++        "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+      values.$implementation:
+-        "0xe98699957d3504aCD57ffF861E4b77b57eB02467"
++        "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467"
+      values.$pastUpgrades.0.2.0:
+-        "0xe98699957d3504aCD57ffF861E4b77b57eB02467"
++        "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467"
+      values.implementation:
+-        "0xe98699957d3504aCD57ffF861E4b77b57eB02467"
++        "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467"
+      values.messageSender:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F"
++        "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F"
+      values.upgradeabilityOwner:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
++        "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+      values.validatorContract:
+-        "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
++        "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
+      implementationNames.0xd0764FAe29E0a6a96fF685f71CfC685456D5636c:
+-        "EternalStorageProxy"
+      implementationNames.0xe98699957d3504aCD57ffF861E4b77b57eB02467:
+-        "ForeignAMB"
+      implementationNames.eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c:
++        "EternalStorageProxy"
+      implementationNames.eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467:
++        "ForeignAMB"
+    }
+```
+
+```diff
+    EOA  (0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD) {
+    +++ description: None
+      address:
+-        "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD"
++        "eth:0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD"
+    }
+```
+
+```diff
+    EOA  (0xDf5d165A7EB95D26355c56d53799B7da1240e585) {
+    +++ description: None
+      address:
+-        "0xDf5d165A7EB95D26355c56d53799B7da1240e585"
++        "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585"
+    }
+```
+
+```diff
+    EOA  (0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa) {
+    +++ description: None
+      address:
+-        "0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa"
++        "eth:0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa"
+    }
+```
+
+```diff
+    EOA  (0xe3B95d0143956A8E643FA29a0795FC4162A41F69) {
+    +++ description: None
+      address:
+-        "0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
++        "eth:0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
+    }
+```
+
+```diff
+    EOA  (0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0) {
+    +++ description: None
+      address:
+-        "0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0"
++        "eth:0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0"
+    }
+```
+
+```diff
+    EOA  (0xfB18Da3bCA8057eB05aab6e77a32925949093533) {
+    +++ description: None
+      address:
+-        "0xfB18Da3bCA8057eB05aab6e77a32925949093533"
++        "eth:0xfB18Da3bCA8057eB05aab6e77a32925949093533"
+    }
+```
+
+```diff
+    EOA  (0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C) {
+    +++ description: None
+      address:
+-        "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C"
++        "eth:0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ForeignOmnibridge (0x1715a3E4A142d8b698131108995174F37aEBA10D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators (0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d)
+    +++ description: Custom multisignature contract for Validator addresses.
+```
+
+```diff
++   Status: CREATED
+    contract WETHOmnibridgeRouter (0x8AC4ae65b3656e26dC4e0e69108B392283350f55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenFactory (0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermittableToken (0xA1077a294dDE1B09bB078844df40758a5D0f9a27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignAMB (0xd0764FAe29E0a6a96fF685f71CfC685456D5636c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9c7bb8d744322ef006dc6239a2d751abce2b3bfe
 
 # Diff at Fri, 04 Jul 2025 12:19:16 GMT:

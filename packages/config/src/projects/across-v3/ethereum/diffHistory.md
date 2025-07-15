@@ -1,3 +1,2475 @@
+Generated with discovered.json: 0xd310ddc1e5fd122c7d63a6232b2cf50d8f6d3e7a
+
+# Diff at Mon, 14 Jul 2025 12:44:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22867011
+- current block number: 22867011
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22867011 (main branch discovery), not current.
+
+```diff
+    contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac) {
+    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take 1d each.
+      address:
+-        "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
++        "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.migratedAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.previousVotingContract:
+-        "0x8B1631ab830d11531aE83725fDa4D86012eCCd77"
++        "eth:0x8B1631ab830d11531aE83725fDa4D86012eCCd77"
+      values.slashingLibrary:
+-        "0x9a406ba5a99983250Fd663947b3c968D387ce5cd"
++        "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd"
+      values.votingToken:
+-        "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
++        "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      implementationNames.0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac:
+-        "VotingV2"
+      implementationNames.eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac:
++        "VotingV2"
+    }
+```
+
+```diff
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
++        "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_STANDARD_BRIDGE:
+-        "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
++        "eth:0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0xdC40a14d9abd6F410226f1E6de71aE03441ca506"
++        "eth:0xdC40a14d9abd6F410226f1E6de71aE03441ca506"
+      values.usdcToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x024F2fC31CBDD8de17194b1892c834f98Ef5169b:
+-        "Zora_Adapter"
+      implementationNames.eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b:
++        "Zora_Adapter"
+    }
+```
+
+```diff
+    contract Soneium_Adapter (0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
++        "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_OP_USDC_BRIDGE:
+-        "0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb"
++        "eth:0xC67A8c5f22b40274Ca7C4A56Db89569Ee2AD3FAb"
+      values.L1_STANDARD_BRIDGE:
+-        "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607"
++        "eth:0xeb9bf100225c214Efc3E7C651ebbaDcF85177607"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f"
++        "eth:0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2:
+-        "OP_Adapter"
+      implementationNames.eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2:
++        "OP_Adapter"
+    }
+```
+
+```diff
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
++        "eth:0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
+      values.cctpTokenMessenger:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.L1_DAI:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.L1_ERC20_GATEWAY_ROUTER:
+-        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "eth:0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+      values.L1_INBOX:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      values.L2_REFUND_L2_ADDRESS:
+-        "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
++        "eth:0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210:
+-        "Arbitrum_Adapter"
+      implementationNames.eth:0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210:
++        "Arbitrum_Adapter"
+    }
+```
+
+```diff
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
++        "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_STANDARD_BRIDGE:
+-        "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
++        "eth:0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x592C1299e0F8331D81A28C0FC7352Da24eDB444a"
++        "eth:0x592C1299e0F8331D81A28C0FC7352Da24eDB444a"
+      values.usdcToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x188F8C95B7cfB7993B53a4F643efa687916f73fA:
+-        "Redstone_Adapter"
+      implementationNames.eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA:
++        "Redstone_Adapter"
+    }
+```
+
+```diff
+    contract HubPoolStore (0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61) {
+    +++ description: Simple data store used by the Universal_Adapter to store message calldata hashes. The content of this calldata can be proven by Ethereum zk light clients on remote chains and then executed to relay root bundles or arbitrary messages.
+      address:
+-        "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61"
++        "eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61"
+      values.hubPool:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      implementationNames.0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61:
+-        "HubPoolStore"
+      implementationNames.eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61:
++        "HubPoolStore"
+    }
+```
+
+```diff
+    EOA  (0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05) {
+    +++ description: None
+      address:
+-        "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
+    }
+```
+
+```diff
+    contract Universal_Adapter (0x22001f37B586792F25Ef9d19d99537C6446e0833) {
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain.
+      address:
+-        "0x22001f37B586792F25Ef9d19d99537C6446e0833"
++        "eth:0x22001f37B586792F25Ef9d19d99537C6446e0833"
+      description:
+-        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the 0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain."
++        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain."
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.DATA_STORE:
+-        "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61"
++        "eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x22001f37B586792F25Ef9d19d99537C6446e0833:
+-        "Universal_Adapter"
+      implementationNames.eth:0x22001f37B586792F25Ef9d19d99537C6446e0833:
++        "Universal_Adapter"
+    }
+```
+
+```diff
+    EOA  (0x2bAaA41d155ad8a4126184950B31F50A1513cE25) {
+    +++ description: None
+      address:
+-        "0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
++        "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
+    }
+```
+
+```diff
+    contract Scroll_Adapter (0x2DA799c2223c6ffB595e578903AE6b95839160d8) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x2DA799c2223c6ffB595e578903AE6b95839160d8"
++        "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8"
+      values.L1_GATEWAY_ROUTER:
+-        "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
++        "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6"
+      values.L1_SCROLL_MESSENGER:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      values.L2_GAS_PRICE_ORACLE:
+-        "0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
++        "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a"
+      implementationNames.0x2DA799c2223c6ffB595e578903AE6b95839160d8:
+-        "Scroll_Adapter"
+      implementationNames.eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8:
++        "Scroll_Adapter"
+    }
+```
+
+```diff
+    contract Boba_Adapter (0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3"
++        "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3"
+      values.l1StandardBridge:
+-        "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
++        "eth:0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00"
+      values.l1Weth:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.messenger:
+-        "0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
++        "eth:0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
+      implementationNames.0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3:
+-        "Boba_Adapter"
+      implementationNames.eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3:
++        "Boba_Adapter"
+    }
+```
+
+```diff
+    EOA  (0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5) {
+    +++ description: None
+      address:
+-        "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5"
++        "eth:0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5"
+    }
+```
+
+```diff
+    contract AcrossConfigStore (0x3B03509645713718B78951126E0A6de6f10043f5) {
+    +++ description: Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data.
+      address:
+-        "0x3B03509645713718B78951126E0A6de6f10043f5"
++        "eth:0x3B03509645713718B78951126E0A6de6f10043f5"
+      values.owner:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      implementationNames.0x3B03509645713718B78951126E0A6de6f10043f5:
+-        "AcrossConfigStore"
+      implementationNames.eth:0x3B03509645713718B78951126E0A6de6f10043f5:
++        "AcrossConfigStore"
+    }
+```
+
+```diff
+    contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE) {
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
+      address:
+-        "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
++        "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
+      values.getAllRegisteredContracts.0:
+-        "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
++        "eth:0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
+      values.getAllRegisteredContracts.1:
+-        "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944"
++        "eth:0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944"
+      values.getAllRegisteredContracts.2:
+-        "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1"
++        "eth:0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1"
+      values.getAllRegisteredContracts.3:
+-        "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759"
++        "eth:0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759"
+      values.getAllRegisteredContracts.4:
+-        "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5"
++        "eth:0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5"
+      values.getAllRegisteredContracts.5:
+-        "0x4E3168Ea1082f3dda1694646B5EACdeb572009F1"
++        "eth:0x4E3168Ea1082f3dda1694646B5EACdeb572009F1"
+      values.getAllRegisteredContracts.6:
+-        "0xE1Ee8D4C5dBA1c221840c08f6Cf42154435B9D52"
++        "eth:0xE1Ee8D4C5dBA1c221840c08f6Cf42154435B9D52"
+      values.getAllRegisteredContracts.7:
+-        "0xc0b19570370478EDE5F2e922c5D31FAf1D5f90EA"
++        "eth:0xc0b19570370478EDE5F2e922c5D31FAf1D5f90EA"
+      values.getAllRegisteredContracts.8:
+-        "0xaBBee9fC7a882499162323EEB7BF6614193312e3"
++        "eth:0xaBBee9fC7a882499162323EEB7BF6614193312e3"
+      values.getAllRegisteredContracts.9:
+-        "0x3605Ec11BA7bD208501cbb24cd890bC58D2dbA56"
++        "eth:0x3605Ec11BA7bD208501cbb24cd890bC58D2dbA56"
+      values.getAllRegisteredContracts.10:
+-        "0x306B19502c833C1522Fbc36C9dd7531Eda35862B"
++        "eth:0x306B19502c833C1522Fbc36C9dd7531Eda35862B"
+      values.getAllRegisteredContracts.11:
+-        "0x1477C532A5054e0879EaFBD6004208c2065Bc21f"
++        "eth:0x1477C532A5054e0879EaFBD6004208c2065Bc21f"
+      values.getAllRegisteredContracts.12:
+-        "0x3a93E863cb3adc5910E6cea4d51f132E8666654F"
++        "eth:0x3a93E863cb3adc5910E6cea4d51f132E8666654F"
+      values.getAllRegisteredContracts.13:
+-        "0x516f595978D87B67401DaB7AfD8555c3d28a3Af4"
++        "eth:0x516f595978D87B67401DaB7AfD8555c3d28a3Af4"
+      values.getAllRegisteredContracts.14:
+-        "0xeFA41F506EAA5c24666d4eE40888bA18FA60a1c7"
++        "eth:0xeFA41F506EAA5c24666d4eE40888bA18FA60a1c7"
+      values.getAllRegisteredContracts.15:
+-        "0xC843538d70ee5d28C5A80A75bb94C28925bB1cf2"
++        "eth:0xC843538d70ee5d28C5A80A75bb94C28925bB1cf2"
+      values.getAllRegisteredContracts.16:
+-        "0xf32219331A03D99C98Adf96D43cc312353003531"
++        "eth:0xf32219331A03D99C98Adf96D43cc312353003531"
+      values.getAllRegisteredContracts.17:
+-        "0x4AA79c00240a2094Ff3fa6CF7c67f521f32D84a2"
++        "eth:0x4AA79c00240a2094Ff3fa6CF7c67f521f32D84a2"
+      values.getAllRegisteredContracts.18:
+-        "0xECFE06574B4A23A6476AD1f2568166BD1857E7c5"
++        "eth:0xECFE06574B4A23A6476AD1f2568166BD1857E7c5"
+      values.getAllRegisteredContracts.19:
+-        "0xE4256C47a3b27a969F25de8BEf44eCA5F2552bD5"
++        "eth:0xE4256C47a3b27a969F25de8BEf44eCA5F2552bD5"
+      values.getAllRegisteredContracts.20:
+-        "0x1c3f1A342c8D9591D9759220d114C685FD1cF6b8"
++        "eth:0x1c3f1A342c8D9591D9759220d114C685FD1cF6b8"
+      values.getAllRegisteredContracts.21:
+-        "0xEAA081a9fad4607CdF046fEA7D4BF3DfEf533282"
++        "eth:0xEAA081a9fad4607CdF046fEA7D4BF3DfEf533282"
+      values.getAllRegisteredContracts.22:
+-        "0x2E918f0F18A69CFda3333C146A81e8100C85D8B0"
++        "eth:0x2E918f0F18A69CFda3333C146A81e8100C85D8B0"
+      values.getAllRegisteredContracts.23:
+-        "0xfA3AA7EE08399A4cE0B4921c85AB7D645Ccac669"
++        "eth:0xfA3AA7EE08399A4cE0B4921c85AB7D645Ccac669"
+      values.getAllRegisteredContracts.24:
+-        "0xCA44D9e1eB0b27A0B56CdbebF4198DE5C2e6F7D0"
++        "eth:0xCA44D9e1eB0b27A0B56CdbebF4198DE5C2e6F7D0"
+      values.getAllRegisteredContracts.25:
+-        "0xa1005DB6516A097E562ad7506CF90ebb511f5604"
++        "eth:0xa1005DB6516A097E562ad7506CF90ebb511f5604"
+      values.getAllRegisteredContracts.26:
+-        "0x45c4DBD73294c5d8DDF6E5F949BE4C505E6E9495"
++        "eth:0x45c4DBD73294c5d8DDF6E5F949BE4C505E6E9495"
+      values.getAllRegisteredContracts.27:
+-        "0xd6fc1A7327210b7Fe33Ef2514B44979719424A1d"
++        "eth:0xd6fc1A7327210b7Fe33Ef2514B44979719424A1d"
+      values.getAllRegisteredContracts.28:
+-        "0xda0943251079eB9f517668fdB372fC6AE299D898"
++        "eth:0xda0943251079eB9f517668fdB372fC6AE299D898"
+      values.getAllRegisteredContracts.29:
+-        "0xf215778F3a5e7Ab6A832e71d87267Dd9a9aB0037"
++        "eth:0xf215778F3a5e7Ab6A832e71d87267Dd9a9aB0037"
+      values.getAllRegisteredContracts.30:
+-        "0xeAddB6AD65dcA45aC3bB32f88324897270DA0387"
++        "eth:0xeAddB6AD65dcA45aC3bB32f88324897270DA0387"
+      values.getAllRegisteredContracts.31:
+-        "0x267D46e71764ABaa5a0dD45260f95D9c8d5b8195"
++        "eth:0x267D46e71764ABaa5a0dD45260f95D9c8d5b8195"
+      values.getAllRegisteredContracts.32:
+-        "0xd81028a6fbAAaf604316F330b20D24bFbFd14478"
++        "eth:0xd81028a6fbAAaf604316F330b20D24bFbFd14478"
+      values.getAllRegisteredContracts.33:
+-        "0x2862A798B3DeFc1C24b9c0d241BEaF044C45E585"
++        "eth:0x2862A798B3DeFc1C24b9c0d241BEaF044C45E585"
+      values.getAllRegisteredContracts.34:
+-        "0x94C7cab26c04B76D9Ab6277a0960781b90f74294"
++        "eth:0x94C7cab26c04B76D9Ab6277a0960781b90f74294"
+      values.getAllRegisteredContracts.35:
+-        "0x7c4090170aeADD54B1a0DbAC2C8D08719220A435"
++        "eth:0x7c4090170aeADD54B1a0DbAC2C8D08719220A435"
+      values.getAllRegisteredContracts.36:
+-        "0xaD3cceebeFfCdC3576dE56811d0A6D164BF9A5A1"
++        "eth:0xaD3cceebeFfCdC3576dE56811d0A6D164BF9A5A1"
+      values.getAllRegisteredContracts.37:
+-        "0xaB3Aa2768Ba6c5876B2552a6F9b70E54aa256175"
++        "eth:0xaB3Aa2768Ba6c5876B2552a6F9b70E54aa256175"
+      values.getAllRegisteredContracts.38:
+-        "0x48546bDD57D34Cb110f011Cdd1CcaaE75Ee17a70"
++        "eth:0x48546bDD57D34Cb110f011Cdd1CcaaE75Ee17a70"
+      values.getAllRegisteredContracts.39:
+-        "0x182d5993106573A95a182AB3A77c892713fFDA56"
++        "eth:0x182d5993106573A95a182AB3A77c892713fFDA56"
+      values.getAllRegisteredContracts.40:
+-        "0xD50fbace72352C2e15E0986b8Ad2599627B5c340"
++        "eth:0xD50fbace72352C2e15E0986b8Ad2599627B5c340"
+      values.getAllRegisteredContracts.41:
+-        "0x14a046c066266da6b8b8C4D2de4AfBEeCd53a262"
++        "eth:0x14a046c066266da6b8b8C4D2de4AfBEeCd53a262"
+      values.getAllRegisteredContracts.42:
+-        "0x496B179D5821d1a8B6C875677e3B89a9229AAB77"
++        "eth:0x496B179D5821d1a8B6C875677e3B89a9229AAB77"
+      values.getAllRegisteredContracts.43:
+-        "0x287a1bA52e030459F163f48b2Ae468a085003A07"
++        "eth:0x287a1bA52e030459F163f48b2Ae468a085003A07"
+      values.getAllRegisteredContracts.44:
+-        "0x5A7f8F8B0E912BBF8525bc3fb2ae46E70Db9516B"
++        "eth:0x5A7f8F8B0E912BBF8525bc3fb2ae46E70Db9516B"
+      values.getAllRegisteredContracts.45:
+-        "0x4F1424Cef6AcE40c0ae4fc64d74B734f1eAF153C"
++        "eth:0x4F1424Cef6AcE40c0ae4fc64d74B734f1eAF153C"
+      values.getAllRegisteredContracts.46:
+-        "0xb33E3b8f5a172776730B0945206D6f75a2491307"
++        "eth:0xb33E3b8f5a172776730B0945206D6f75a2491307"
+      values.getAllRegisteredContracts.47:
+-        "0x4E2697b3deEc9Cac270Be97e254EC1a791588770"
++        "eth:0x4E2697b3deEc9Cac270Be97e254EC1a791588770"
+      values.getAllRegisteredContracts.48:
+-        "0xCdf99b9acE35e6414d802E97ed75ecfEe99A6f62"
++        "eth:0xCdf99b9acE35e6414d802E97ed75ecfEe99A6f62"
+      values.getAllRegisteredContracts.49:
+-        "0xF796059731942aB6317E1bD5a8E98eF1f6D345b1"
++        "eth:0xF796059731942aB6317E1bD5a8E98eF1f6D345b1"
+      values.getAllRegisteredContracts.50:
+-        "0xdf739f0219fA1A9288fc4c790304c8a3E928544C"
++        "eth:0xdf739f0219fA1A9288fc4c790304c8a3E928544C"
+      values.getAllRegisteredContracts.51:
+-        "0x9E929a85282fB0555C19Ed70942B952827Ca4B0B"
++        "eth:0x9E929a85282fB0555C19Ed70942B952827Ca4B0B"
+      values.getAllRegisteredContracts.52:
+-        "0x384e239a2B225865558774b005C3d6eC29f8cE70"
++        "eth:0x384e239a2B225865558774b005C3d6eC29f8cE70"
+      values.getAllRegisteredContracts.53:
+-        "0x4E8d60A785c2636A63c5Bd47C7050d21266c8B43"
++        "eth:0x4E8d60A785c2636A63c5Bd47C7050d21266c8B43"
+      values.getAllRegisteredContracts.54:
+-        "0x6618Ff5a7dcea49F1AADA3BaFde3e87fe28D1303"
++        "eth:0x6618Ff5a7dcea49F1AADA3BaFde3e87fe28D1303"
+      values.getAllRegisteredContracts.55:
+-        "0x964Be01cCe200e168c4ba960a764cBEBa8C01200"
++        "eth:0x964Be01cCe200e168c4ba960a764cBEBa8C01200"
+      values.getAllRegisteredContracts.56:
+-        "0x9bB1f39b6DB45BD087046385a43EAb7b60C52e7D"
++        "eth:0x9bB1f39b6DB45BD087046385a43EAb7b60C52e7D"
+      values.getAllRegisteredContracts.57:
+-        "0x0388f65C185a7E7D857BB142185381d97a4bc747"
++        "eth:0x0388f65C185a7E7D857BB142185381d97a4bc747"
+      values.getAllRegisteredContracts.58:
+-        "0x161fa1ac2D93832C3F77c8b5879Cb4dC56d958a7"
++        "eth:0x161fa1ac2D93832C3F77c8b5879Cb4dC56d958a7"
+      values.getAllRegisteredContracts.59:
+-        "0x14A415Dd90B63c791C5dc544594605c8bC13Bc8D"
++        "eth:0x14A415Dd90B63c791C5dc544594605c8bC13Bc8D"
+      values.getAllRegisteredContracts.60:
+-        "0x1066E9D2E372d01A0F57bB6f231D34Ce4CEd228e"
++        "eth:0x1066E9D2E372d01A0F57bB6f231D34Ce4CEd228e"
+      values.getAllRegisteredContracts.61:
+-        "0xa24Ba528Be99024f7F7C227b55cBb265ecf0C078"
++        "eth:0xa24Ba528Be99024f7F7C227b55cBb265ecf0C078"
+      values.getAllRegisteredContracts.62:
+-        "0xd60139B287De1408f8388f5f57fC114Fb4B03328"
++        "eth:0xd60139B287De1408f8388f5f57fC114Fb4B03328"
+      values.getAllRegisteredContracts.63:
+-        "0x8E51Ad4EeB19693751a9A3E36b8F098D891Ddc7f"
++        "eth:0x8E51Ad4EeB19693751a9A3E36b8F098D891Ddc7f"
+      values.getAllRegisteredContracts.64:
+-        "0x144A3290C9Db859939F085E3EC9A5C321FC713aF"
++        "eth:0x144A3290C9Db859939F085E3EC9A5C321FC713aF"
+      values.getAllRegisteredContracts.65:
+-        "0xDB2E7F6655de37822c3020a8988351CC76caDAD5"
++        "eth:0xDB2E7F6655de37822c3020a8988351CC76caDAD5"
+      values.getAllRegisteredContracts.66:
+-        "0x6DA66C15823cFf681DaD6963fBD325a520362958"
++        "eth:0x6DA66C15823cFf681DaD6963fBD325a520362958"
+      values.getAllRegisteredContracts.67:
+-        "0xb82756f9853A148A2390a08AaD30BabCDc22f068"
++        "eth:0xb82756f9853A148A2390a08AaD30BabCDc22f068"
+      values.getAllRegisteredContracts.68:
+-        "0xdF68acF496Db55f4A882a0371c489D739173fbEc"
++        "eth:0xdF68acF496Db55f4A882a0371c489D739173fbEc"
+      values.getAllRegisteredContracts.69:
+-        "0x02bD62088A02668F29102B06E4925791Cd0fe4C5"
++        "eth:0x02bD62088A02668F29102B06E4925791Cd0fe4C5"
+      values.getAllRegisteredContracts.70:
+-        "0x45788a369f3083c02b942aEa02DBa25C466a773F"
++        "eth:0x45788a369f3083c02b942aEa02DBa25C466a773F"
+      values.getAllRegisteredContracts.71:
+-        "0x52f83ACA94904b3590669E3525d25ec75cDFf798"
++        "eth:0x52f83ACA94904b3590669E3525d25ec75cDFf798"
+      values.getAllRegisteredContracts.72:
+-        "0xfDF90C4104c1dE34979235e6AE080528266a14a3"
++        "eth:0xfDF90C4104c1dE34979235e6AE080528266a14a3"
+      values.getAllRegisteredContracts.73:
+-        "0xb40BA94747c59d076B3c189E3A031547492013da"
++        "eth:0xb40BA94747c59d076B3c189E3A031547492013da"
+      values.getAllRegisteredContracts.74:
+-        "0x46f5E363e69798a74c8422BFb9EDB63e3FB0f08a"
++        "eth:0x46f5E363e69798a74c8422BFb9EDB63e3FB0f08a"
+      values.getAllRegisteredContracts.75:
+-        "0x8F92465991e1111F012F24A55AE2B0742F82dd7b"
++        "eth:0x8F92465991e1111F012F24A55AE2B0742F82dd7b"
+      values.getAllRegisteredContracts.76:
+-        "0x885c5fCB4D3B574A39f6750F962a3b52600ad728"
++        "eth:0x885c5fCB4D3B574A39f6750F962a3b52600ad728"
+      values.getAllRegisteredContracts.77:
+-        "0xd9af2d7E4cF86aAfBCf688a47Bd6b95Da9F7c838"
++        "eth:0xd9af2d7E4cF86aAfBCf688a47Bd6b95Da9F7c838"
+      values.getAllRegisteredContracts.78:
+-        "0x0f4e2a456aAfc0068a0718E3107B88d2e8f2bfEF"
++        "eth:0x0f4e2a456aAfc0068a0718E3107B88d2e8f2bfEF"
+      values.getAllRegisteredContracts.79:
+-        "0x312Ecf2854f73a3Ff616e3CDBC05E2Ff6A98d1f0"
++        "eth:0x312Ecf2854f73a3Ff616e3CDBC05E2Ff6A98d1f0"
+      values.getAllRegisteredContracts.80:
+-        "0x0Ee5Bb3dEAe8a44FbDeB269941f735793F8312Ef"
++        "eth:0x0Ee5Bb3dEAe8a44FbDeB269941f735793F8312Ef"
+      values.getAllRegisteredContracts.81:
+-        "0xCef85b352CCD7a446d94AEeeA02dD11622289954"
++        "eth:0xCef85b352CCD7a446d94AEeeA02dD11622289954"
+      values.getAllRegisteredContracts.82:
+-        "0x56BaBEcb3dCaC063697fE38AB745c10181c56fA6"
++        "eth:0x56BaBEcb3dCaC063697fE38AB745c10181c56fA6"
+      values.getAllRegisteredContracts.83:
+-        "0x4F8d7bFFe8a2428A313b737001311Ad302a60dF4"
++        "eth:0x4F8d7bFFe8a2428A313b737001311Ad302a60dF4"
+      values.getAllRegisteredContracts.84:
+-        "0x10E018C01792705BefB7A757628C2947E38B9426"
++        "eth:0x10E018C01792705BefB7A757628C2947E38B9426"
+      values.getAllRegisteredContracts.85:
+-        "0xb2AEa0DE92Acff7e1146333F776db42E5d004128"
++        "eth:0xb2AEa0DE92Acff7e1146333F776db42E5d004128"
+      values.getAllRegisteredContracts.86:
+-        "0x0D1bA751BaDe6d7BB54CF4F05D2dC0A9f45605e5"
++        "eth:0x0D1bA751BaDe6d7BB54CF4F05D2dC0A9f45605e5"
+      values.getAllRegisteredContracts.87:
+-        "0x0759883acF042A54fAb083378b0395F773A79767"
++        "eth:0x0759883acF042A54fAb083378b0395F773A79767"
+      values.getAllRegisteredContracts.88:
+-        "0x32F0405834C4b50be53199628C45603Cea3A28aA"
++        "eth:0x32F0405834C4b50be53199628C45603Cea3A28aA"
+      values.getAllRegisteredContracts.89:
+-        "0xC9E6C106C65eDD67C83CC6e3bCd18bf8d2Ebf182"
++        "eth:0xC9E6C106C65eDD67C83CC6e3bCd18bf8d2Ebf182"
+      values.getAllRegisteredContracts.90:
+-        "0x9c9Ee67586FaF80aFE147306FB858AF4Ec2212a4"
++        "eth:0x9c9Ee67586FaF80aFE147306FB858AF4Ec2212a4"
+      values.getAllRegisteredContracts.91:
+-        "0x12d21cb3E544de60Edb434A43ae7ef0715bee6cc"
++        "eth:0x12d21cb3E544de60Edb434A43ae7ef0715bee6cc"
+      values.getAllRegisteredContracts.92:
+-        "0xeCFe987D8C103a3EC2041774E4514ED0614fB42C"
++        "eth:0xeCFe987D8C103a3EC2041774E4514ED0614fB42C"
+      values.getAllRegisteredContracts.93:
+-        "0x67F4deC415Ce95F8e66d63C926605d16f8d1b4e4"
++        "eth:0x67F4deC415Ce95F8e66d63C926605d16f8d1b4e4"
+      values.getAllRegisteredContracts.94:
+-        "0x7FBE19088B011A9dE0e3a327D7C681028F065616"
++        "eth:0x7FBE19088B011A9dE0e3a327D7C681028F065616"
+      values.getAllRegisteredContracts.95:
+-        "0xB1a3E5a8d642534840bFC50c6417F9566E716cc7"
++        "eth:0xB1a3E5a8d642534840bFC50c6417F9566E716cc7"
+      values.getAllRegisteredContracts.96:
+-        "0xC73a3831B4A91Ab05f9171c0ef0BEc9545cDeCf5"
++        "eth:0xC73a3831B4A91Ab05f9171c0ef0BEc9545cDeCf5"
+      values.getAllRegisteredContracts.97:
+-        "0xbc044745F137D4693c2Aa823C760f855254faD42"
++        "eth:0xbc044745F137D4693c2Aa823C760f855254faD42"
+      values.getAllRegisteredContracts.98:
+-        "0xF8eF02C10C473CA5E48b10c62ba4d46115dd2288"
++        "eth:0xF8eF02C10C473CA5E48b10c62ba4d46115dd2288"
+      values.getAllRegisteredContracts.99:
+-        "0x6F4DD6F2dD3aCb85e4903c3307e18A35D59537c0"
++        "eth:0x6F4DD6F2dD3aCb85e4903c3307e18A35D59537c0"
+      values.getAllRegisteredContracts.100:
+-        "0x5917C41a355D16D3950FE12299Ce6DFc1b54cD54"
++        "eth:0x5917C41a355D16D3950FE12299Ce6DFc1b54cD54"
+      values.getAllRegisteredContracts.101:
+-        "0x5fbD22d64A1bD27b77e0f9d6e8831510439e947A"
++        "eth:0x5fbD22d64A1bD27b77e0f9d6e8831510439e947A"
+      values.getAllRegisteredContracts.102:
+-        "0xe79dd3BDfb7868DedD00108FecaF12F94eB113B8"
++        "eth:0xe79dd3BDfb7868DedD00108FecaF12F94eB113B8"
+      values.getAllRegisteredContracts.103:
+-        "0xa1Da681EA4b03ab826D33B7a9774222Ae175322F"
++        "eth:0xa1Da681EA4b03ab826D33B7a9774222Ae175322F"
+      values.getAllRegisteredContracts.104:
+-        "0x77482A8488a1cA8EdFAc67277b0eB99591106f05"
++        "eth:0x77482A8488a1cA8EdFAc67277b0eB99591106f05"
+      values.getAllRegisteredContracts.105:
+-        "0x73220345bD37C6897dA959AE6205254be5da4dD8"
++        "eth:0x73220345bD37C6897dA959AE6205254be5da4dD8"
+      values.getAllRegisteredContracts.106:
+-        "0xdd0acE85FcdC46d6430C7F24d56A0A80277AD8D2"
++        "eth:0xdd0acE85FcdC46d6430C7F24d56A0A80277AD8D2"
+      values.getAllRegisteredContracts.107:
+-        "0x7bc1476eeD521c083Ec84D2894a7B7f738c93b3b"
++        "eth:0x7bc1476eeD521c083Ec84D2894a7B7f738c93b3b"
+      values.getAllRegisteredContracts.108:
+-        "0xCbbA8c0645ffb8aA6ec868f6F5858F2b0eAe34DA"
++        "eth:0xCbbA8c0645ffb8aA6ec868f6F5858F2b0eAe34DA"
+      values.getAllRegisteredContracts.109:
+-        "0xeF4Db4AF6189aae295a680345e07E00d25ECBAAb"
++        "eth:0xeF4Db4AF6189aae295a680345e07E00d25ECBAAb"
+      values.getAllRegisteredContracts.110:
+-        "0x10D00f5788C39a2Bf248ADfa2863Fa55d83dcE36"
++        "eth:0x10D00f5788C39a2Bf248ADfa2863Fa55d83dcE36"
+      values.getAllRegisteredContracts.111:
+-        "0x8484381906425E3AFe30CDD48bFc4ed7CC1499D4"
++        "eth:0x8484381906425E3AFe30CDD48bFc4ed7CC1499D4"
+      values.getAllRegisteredContracts.112:
+-        "0xeE44aE0cff6E9E62F26add74784E573bD671F144"
++        "eth:0xeE44aE0cff6E9E62F26add74784E573bD671F144"
+      values.getAllRegisteredContracts.113:
+-        "0xee7f8088d2e67C5b10EB94732F4bB6E26968AC82"
++        "eth:0xee7f8088d2e67C5b10EB94732F4bB6E26968AC82"
+      values.getAllRegisteredContracts.114:
+-        "0xb9942AA8983d41e53b68209BeA596A6004321E77"
++        "eth:0xb9942AA8983d41e53b68209BeA596A6004321E77"
+      values.getAllRegisteredContracts.115:
+-        "0x52B21a720D5eBeFc7EFA802c7DEAB7c08Eb10F39"
++        "eth:0x52B21a720D5eBeFc7EFA802c7DEAB7c08Eb10F39"
+      values.getAllRegisteredContracts.116:
+-        "0x772665dce7b347A867F42bcA93587b5400Ae2576"
++        "eth:0x772665dce7b347A867F42bcA93587b5400Ae2576"
+      values.getAllRegisteredContracts.117:
+-        "0x2dE7A5157693a895ae8E55b1e935e23451a77cB3"
++        "eth:0x2dE7A5157693a895ae8E55b1e935e23451a77cB3"
+      values.getAllRegisteredContracts.118:
+-        "0xcA9C3d3fA9419C49465e04C49dD38C054fD94712"
++        "eth:0xcA9C3d3fA9419C49465e04C49dD38C054fD94712"
+      values.getAllRegisteredContracts.119:
+-        "0xc07dE54Aa905A644Ab67F6E3b0d40150Bf825Ca3"
++        "eth:0xc07dE54Aa905A644Ab67F6E3b0d40150Bf825Ca3"
+      values.getAllRegisteredContracts.120:
+-        "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
++        "eth:0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
+      values.getAllRegisteredContracts.121:
+-        "0xbD1463F02f61676d53fd183C2B19282BFF93D099"
++        "eth:0xbD1463F02f61676d53fd183C2B19282BFF93D099"
+      values.getAllRegisteredContracts.122:
+-        "0x767058F11800FBA6A682E73A6e79ec5eB74Fac8c"
++        "eth:0x767058F11800FBA6A682E73A6e79ec5eB74Fac8c"
+      values.getAllRegisteredContracts.123:
+-        "0x799c9518Ea434bBdA03d4C0EAa58d644b768d3aB"
++        "eth:0x799c9518Ea434bBdA03d4C0EAa58d644b768d3aB"
+      values.getAllRegisteredContracts.124:
+-        "0x1C7a921808a8054C7ac2a3A3112823803eC97Ce4"
++        "eth:0x1C7a921808a8054C7ac2a3A3112823803eC97Ce4"
+      values.getAllRegisteredContracts.125:
+-        "0x60E5db98d156B68bC079795096D8599d12F2DcA6"
++        "eth:0x60E5db98d156B68bC079795096D8599d12F2DcA6"
+      values.getAllRegisteredContracts.126:
+-        "0x91436EB8038ecc12c60EE79Dfe011EdBe0e6C777"
++        "eth:0x91436EB8038ecc12c60EE79Dfe011EdBe0e6C777"
+      values.getAllRegisteredContracts.127:
+-        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"
++        "eth:0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"
+      values.getAllRegisteredContracts.128:
+-        "0xe7B0D6A9943bB8CD8cd323368450AD74474bB1b7"
++        "eth:0xe7B0D6A9943bB8CD8cd323368450AD74474bB1b7"
+      values.getAllRegisteredContracts.129:
+-        "0xcA2531b9CD04daf0c9114D853e7A83D8528f20bD"
++        "eth:0xcA2531b9CD04daf0c9114D853e7A83D8528f20bD"
+      values.getAllRegisteredContracts.130:
+-        "0x7C62e5c39b7b296f4f2244e7EB51bea57ed26e4B"
++        "eth:0x7C62e5c39b7b296f4f2244e7EB51bea57ed26e4B"
+      values.getAllRegisteredContracts.131:
+-        "0xf35a80E4705C56Fd345E735387c3377baCcd8189"
++        "eth:0xf35a80E4705C56Fd345E735387c3377baCcd8189"
+      values.getAllRegisteredContracts.132:
+-        "0x4060dBA72344DA74EDaEEAe51a71a57F7E96b6b4"
++        "eth:0x4060dBA72344DA74EDaEEAe51a71a57F7E96b6b4"
+      values.getAllRegisteredContracts.133:
+-        "0xeE3Afe347D5C74317041E2618C49534dAf887c24"
++        "eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24"
+      values.getAllRegisteredContracts.134:
+-        "0x8fE658AeB8d55fd1F3E157Ff8B316E232ffFF372"
++        "eth:0x8fE658AeB8d55fd1F3E157Ff8B316E232ffFF372"
+      values.getAllRegisteredContracts.135:
+-        "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5"
++        "eth:0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5"
+      values.getAllRegisteredContracts.136:
+-        "0x34dF79AB1F3Cb70445834e71D725f83A6d3e03eb"
++        "eth:0x34dF79AB1F3Cb70445834e71D725f83A6d3e03eb"
+      values.getAllRegisteredContracts.137:
+-        "0xbCA5D4BF2bE2f18a964334A378219CAaB192F0BF"
++        "eth:0xbCA5D4BF2bE2f18a964334A378219CAaB192F0BF"
+      values.getAllRegisteredContracts.138:
+-        "0x89477Dd602f69c59Eb6B8e5C059F041a32ae4017"
++        "eth:0x89477Dd602f69c59Eb6B8e5C059F041a32ae4017"
+      values.getAllRegisteredContracts.139:
+-        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"
++        "eth:0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"
+      values.getAllRegisteredContracts.140:
+-        "0xC75dd1b2A04d5aFF1E2779Ccc5624174a2c8cb7f"
++        "eth:0xC75dd1b2A04d5aFF1E2779Ccc5624174a2c8cb7f"
+      values.getAllRegisteredContracts.141:
+-        "0x86838871562B82C071ec57F7CA50879532678F42"
++        "eth:0x86838871562B82C071ec57F7CA50879532678F42"
+      values.getAllRegisteredContracts.142:
+-        "0xFEc7C6AA64fDD17f456028e0B411f5c3877ADa5e"
++        "eth:0xFEc7C6AA64fDD17f456028e0B411f5c3877ADa5e"
+      values.getAllRegisteredContracts.143:
+-        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+      values.getAllRegisteredContracts.144:
+-        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      values.getAllRegisteredContracts.145:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.getAllRegisteredContracts.146:
+-        "0x9B40E25dDd4518F36c50ce8AEf53Ee527419D55d"
++        "eth:0x9B40E25dDd4518F36c50ce8AEf53Ee527419D55d"
+      values.getMember.0:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      implementationNames.0x3e532e6222afe9Bcf02DCB87216802c75D5113aE:
+-        "Registry"
+      implementationNames.eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE:
++        "Registry"
+    }
+```
+
+```diff
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
+      address:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.namedAddresses.0.address:
+-        "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
++        "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
+      values.namedAddresses.1.address:
+-        "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
++        "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
+      values.namedAddresses.2.address:
+-        "0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A"
++        "eth:0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A"
+      values.namedAddresses.3.address:
+-        "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
++        "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+      values.namedAddresses.4.address:
+-        "0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
++        "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
+      values.namedAddresses.5.address:
+-        "0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
++        "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
+      values.namedAddresses.6.address:
+-        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"
++        "eth:0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"
+      values.namedAddresses.7.address:
+-        "0xeE3Afe347D5C74317041E2618C49534dAf887c24"
++        "eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24"
+      values.namedAddresses.8.address:
+-        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"
++        "eth:0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"
+      values.namedAddresses.9.address:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.namedAddresses.10.address:
+-        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      implementationNames.0x40f941E48A552bF496B154Af6bf55725f18D77c3:
+-        "Finder"
+      implementationNames.eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3:
++        "Finder"
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+      address:
+-        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.governor:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.token:
+-        "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
++        "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      implementationNames.0x50efaC9619225d7fB4703C5872da978849B6E7cC:
+-        "ProposerV2"
+      implementationNames.eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC:
++        "ProposerV2"
+    }
+```
+
+```diff
+    contract Ethereum_Adapter (0x527E872a5c3f0C7c24Fe33F2593cFB890a285084) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084"
++        "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084"
+      implementationNames.0x527E872a5c3f0C7c24Fe33F2593cFB890a285084:
+-        "Ethereum_Adapter"
+      implementationNames.eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084:
++        "Ethereum_Adapter"
+    }
+```
+
+```diff
+    contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF) {
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
+      address:
+-        "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
++        "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+      values.getMember.0:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.getMember.1:
+-        "0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
++        "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.timerAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.withdrawer:
+-        "0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
++        "eth:0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
+      implementationNames.0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF:
+-        "Store"
+      implementationNames.eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF:
++        "Store"
+    }
+```
+
+```diff
+    contract Linea_Adapter (0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
++        "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
+      values.cctpTokenMessenger:
+-        "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"
++        "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"
+      values.L1_MESSAGE_SERVICE:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      values.L1_TOKEN_BRIDGE:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787:
+-        "Linea_Adapter"
+      implementationNames.eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787:
++        "Linea_Adapter"
+    }
+```
+
+```diff
+    EOA  (0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a) {
+    +++ description: None
+      address:
+-        "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
++        "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+    }
+```
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+      address:
+-        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
++        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      values.$admin:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      values.$implementation:
+-        "0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
++        "eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
+      values.$pastUpgrades.0.2.0:
+-        "0xA667498F46457548f1D3ad557340b95Fdb290148"
++        "eth:0xA667498F46457548f1D3ad557340b95Fdb290148"
+      values.$pastUpgrades.1.2.0:
+-        "0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9"
++        "eth:0x326510c1bf9d85Fb73d0AB8d20Aa5BbE9c7561e9"
+      values.$pastUpgrades.2.2.0:
+-        "0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184"
++        "eth:0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184"
+      values.$pastUpgrades.3.2.0:
+-        "0x90438AD3d81a0739ce1Cb20C73564682388c5FdD"
++        "eth:0x90438AD3d81a0739ce1Cb20C73564682388c5FdD"
+      values.$pastUpgrades.4.2.0:
+-        "0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"
++        "eth:0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"
+      values.$pastUpgrades.5.2.0:
+-        "0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"
++        "eth:0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"
+      values.$pastUpgrades.6.2.0:
+-        "0x48Dcf75EA18233BA947E4480dCd70594720449C1"
++        "eth:0x48Dcf75EA18233BA947E4480dCd70594720449C1"
+      values.$pastUpgrades.7.2.0:
+-        "0xD576931ab0bDC3dfdc2c041d3C7b9d2ED0c6dd9a"
++        "eth:0xD576931ab0bDC3dfdc2c041d3C7b9d2ED0c6dd9a"
+      values.$pastUpgrades.8.2.0:
+-        "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a"
++        "eth:0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a"
+      values.$pastUpgrades.9.2.0:
+-        "0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
++        "eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
+      values.crossDomainAdmin:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++++ severity: HIGH
+      values.owner:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      values.withdrawalRecipient:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      values.wrappedNativeToken:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5:
+-        "ERC1967Proxy"
+      implementationNames.0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80:
+-        "Ethereum_SpokePool"
+      implementationNames.eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5:
++        "ERC1967Proxy"
+      implementationNames.eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80:
++        "Ethereum_SpokePool"
+    }
+```
+
+```diff
+    contract ZkStack_CustomGasToken_Adapter (0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
++        "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
+      values.BRIDGE_HUB:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.CUSTOM_GAS_TOKEN:
+-        "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a"
++        "eth:0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a"
+      values.CUSTOM_GAS_TOKEN_FUNDER:
+-        "0x0d57392895Db5aF3280e9223323e20F3951E81B1"
++        "eth:0x0d57392895Db5aF3280e9223323e20F3951E81B1"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.L2_REFUND_ADDRESS:
+-        "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
++        "eth:0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
+      values.USDC_SHARED_BRIDGE:
+-        "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
++        "eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf:
+-        "ZkStack_CustomGasToken_Adapter"
+      implementationNames.eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf:
++        "ZkStack_CustomGasToken_Adapter"
+    }
+```
+
+```diff
+    contract Alephzero_Adapter (0x6F4083304C2cA99B077ACE06a5DcF670615915Af) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
++        "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.CUSTOM_GAS_TOKEN:
+-        "0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe"
++        "eth:0xdD0ae774F7E300CdAA4EA371cD55169665Ee6AFe"
+      values.CUSTOM_GAS_TOKEN_FUNDER:
+-        "0x0d57392895Db5aF3280e9223323e20F3951E81B1"
++        "eth:0x0d57392895Db5aF3280e9223323e20F3951E81B1"
+      values.L1_ERC20_GATEWAY_ROUTER:
+-        "0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812"
++        "eth:0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812"
+      values.L1_INBOX:
+-        "0x56D8EC76a421063e1907503aDd3794c395256AEb"
++        "eth:0x56D8EC76a421063e1907503aDd3794c395256AEb"
+      values.L2_REFUND_L2_ADDRESS:
+-        "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
++        "eth:0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
+      values.usdcToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x6F4083304C2cA99B077ACE06a5DcF670615915Af:
+-        "Arbitrum_CustomGasToken_Adapter"
+      implementationNames.eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af:
++        "Arbitrum_CustomGasToken_Adapter"
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+      address:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.emergencyProposer:
+-        "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.getMember.0:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.getMember.1:
+-        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      values.getMember.2:
+-        "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.proposer:
+-        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      implementationNames.0x7b292034084A41B9D441B71b6E3557Edd0463fa8:
+-        "GovernorV2"
+      implementationNames.eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8:
++        "GovernorV2"
+    }
+```
+
+```diff
+    contract Ink_Adapter (0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
++        "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_OP_USDC_BRIDGE:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_STANDARD_BRIDGE:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "eth:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "eth:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2:
+-        "OP_Adapter"
+      implementationNames.eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2:
++        "OP_Adapter"
+    }
+```
+
+```diff
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      address:
+-        "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a"
++        "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5"
++        "eth:0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5"
+      values.$members.1:
+-        "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
++        "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
+      values.$members.2:
+-        "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
+      values.$members.3:
+-        "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
++        "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
+      implementationNames.0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe) {
+    +++ description: None
+      address:
+-        "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
++        "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
+    }
+```
+
+```diff
+    EOA  (0x868CF19464e17F76D6419ACC802B122c22D2FD34) {
+    +++ description: None
+      address:
+-        "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
++        "eth:0x868CF19464e17F76D6419ACC802B122c22D2FD34"
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.
+      address:
+-        "0x8692B776d1Ff0664177c90465038056Dc64f8991"
++        "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
+      values.avatar:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      values.collateral:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.escalationManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.getGuard:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.guard:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.optimisticOracleV3:
+-        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+      values.owner:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      values.target:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      values.ZodiacModule_avatar:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      values.ZodiacModule_guard:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.ZodiacModule_target:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      implementationNames.0x8692B776d1Ff0664177c90465038056Dc64f8991:
+-        "OptimisticGovernor"
+      implementationNames.eth:0x8692B776d1Ff0664177c90465038056Dc64f8991:
++        "OptimisticGovernor"
+    }
+```
+
+```diff
+    contract WorldChain_Adapter (0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
++        "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
+      values.cctpTokenMessenger:
+-        "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"
++        "eth:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d"
+      values.L1_STANDARD_BRIDGE:
+-        "0x470458C91978D2d929704489Ad730DC3E3001113"
++        "eth:0x470458C91978D2d929704489Ad730DC3E3001113"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0xf931a81D18B1766d15695ffc7c1920a62b7e710a"
++        "eth:0xf931a81D18B1766d15695ffc7c1920a62b7e710a"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1:
+-        "WorldChain_Adapter"
+      implementationNames.eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1:
++        "WorldChain_Adapter"
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+      address:
+-        "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      description:
+-        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
+      values.executor:
+-        "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a"
++        "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a"
+      values.governor:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.token:
+-        "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
++        "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      implementationNames.0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748:
+-        "EmergencyProposer"
+      implementationNames.eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748:
++        "EmergencyProposer"
+    }
+```
+
+```diff
+    EOA  (0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9) {
+    +++ description: None
+      address:
+-        "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9"
++        "eth:0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9"
+    }
+```
+
+```diff
+    contract FixedSlashSlashingLibrary (0x9a406ba5a99983250Fd663947b3c968D387ce5cd) {
+    +++ description: Stores slashing parameters and calculates slashing amounts based on that (UMA protocol).
+      address:
+-        "0x9a406ba5a99983250Fd663947b3c968D387ce5cd"
++        "eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd"
+      implementationNames.0x9a406ba5a99983250Fd663947b3c968D387ce5cd:
+-        "FixedSlashSlashingLibrary"
+      implementationNames.eth:0x9a406ba5a99983250Fd663947b3c968D387ce5cd:
++        "FixedSlashSlashingLibrary"
+    }
+```
+
+```diff
+    EOA  (0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D) {
+    +++ description: None
+      address:
+-        "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D"
++        "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D"
+    }
+```
+
+```diff
+    contract Solana_Adapter (0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
++        "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
+      values.cctpMessageTransmitter:
+-        "0x0a992d191DEeC32aFe36203Ad87D7d289a738F81"
++        "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81"
+      values.cctpTokenMessenger:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.SOLANA_SPOKE_POOL_ADDRESS:
+-        "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
++        "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+      values.SOLANA_USDC_ADDRESS:
+-        "0xaBc97431B1Bbe4C2D2f6E0E47ca60203452f5d61"
++        "eth:0xaBc97431B1Bbe4C2D2f6E0E47ca60203452f5d61"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3:
+-        "Solana_Adapter"
+      implementationNames.eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3:
++        "Solana_Adapter"
+    }
+```
+
+```diff
+    contract ZkStack_Adapter (0xA374585E6062517Ee367ee5044946A6fBe17724f) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xA374585E6062517Ee367ee5044946A6fBe17724f"
++        "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f"
+      values.BRIDGE_HUB:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.L2_REFUND_ADDRESS:
+-        "0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
++        "eth:0x07aE8551Be970cB1cCa11Dd7a11F47Ae82e70E67"
+      values.SHARED_BRIDGE:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      implementationNames.0xA374585E6062517Ee367ee5044946A6fBe17724f:
+-        "ZkStack_Adapter"
+      implementationNames.eth:0xA374585E6062517Ee367ee5044946A6fBe17724f:
++        "ZkStack_Adapter"
+    }
+```
+
+```diff
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xb4AeF0178f5725392A26eE18684C2aB62adc912e"
++        "eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e"
+      values.cctpTokenMessenger:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.DEPOSIT_MANAGER:
+-        "0x401F6c983eA34274ec46f84D70b31C151321188b"
++        "eth:0x401F6c983eA34274ec46f84D70b31C151321188b"
+      values.ERC20_PREDICATE:
+-        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      values.FX_STATE_SENDER:
+-        "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2"
++        "eth:0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2"
+      values.L1_MATIC:
+-        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
++        "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.ROOT_CHAIN_MANAGER:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xb4AeF0178f5725392A26eE18684C2aB62adc912e:
+-        "Polygon_Adapter"
+      implementationNames.eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e:
++        "Polygon_Adapter"
+    }
+```
+
+```diff
+    contract Across Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      address:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
++        "eth:0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
+      values.$members.1:
+-        "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
++        "eth:0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
+      values.$members.2:
+-        "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9"
++        "eth:0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9"
+      values.$members.3:
+-        "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
++        "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
+      values.$members.4:
+-        "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
++        "eth:0x868CF19464e17F76D6419ACC802B122c22D2FD34"
+      values.GnosisSafe_modules.0:
+-        "0x8692B776d1Ff0664177c90465038056Dc64f8991"
++        "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
+      implementationNames.0xB524735356985D2f267FA010D681f061DfF03715:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xB524735356985D2f267FA010D681f061DfF03715:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      address:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      values.Adapters.1:
+-        "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084"
++        "eth:0x527E872a5c3f0C7c24Fe33F2593cFB890a285084"
+      values.Adapters.10:
+-        "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b"
++        "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b"
+      values.Adapters.56:
+-        "0x22001f37B586792F25Ef9d19d99537C6446e0833"
++        "eth:0x22001f37B586792F25Ef9d19d99537C6446e0833"
+      values.Adapters.130:
+-        "0xFADcC43096756e1527306FD92982FEbBe3c629Fa"
++        "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa"
+      values.Adapters.137:
+-        "0xb4AeF0178f5725392A26eE18684C2aB62adc912e"
++        "eth:0xb4AeF0178f5725392A26eE18684C2aB62adc912e"
+      values.Adapters.232:
+-        "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
++        "eth:0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf"
+      values.Adapters.288:
+-        "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3"
++        "eth:0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3"
+      values.Adapters.324:
+-        "0xA374585E6062517Ee367ee5044946A6fBe17724f"
++        "eth:0xA374585E6062517Ee367ee5044946A6fBe17724f"
+      values.Adapters.480:
+-        "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
++        "eth:0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
+      values.Adapters.690:
+-        "0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
++        "eth:0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
+      values.Adapters.1135:
+-        "0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
++        "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
+      values.Adapters.1868:
+-        "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
++        "eth:0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2"
+      values.Adapters.8453:
+-        "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c"
++        "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c"
+      values.Adapters.34443:
+-        "0xf1B59868697f3925b72889ede818B9E7ba0316d0"
++        "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0"
+      values.Adapters.41455:
+-        "0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
++        "eth:0x6F4083304C2cA99B077ACE06a5DcF670615915Af"
+      values.Adapters.42161:
+-        "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
++        "eth:0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210"
+      values.Adapters.57073:
+-        "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
++        "eth:0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2"
+      values.Adapters.59144:
+-        "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
++        "eth:0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787"
+      values.Adapters.81457:
+-        "0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
++        "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
+      values.Adapters.534352:
+-        "0x2DA799c2223c6ffB595e578903AE6b95839160d8"
++        "eth:0x2DA799c2223c6ffB595e578903AE6b95839160d8"
+      values.Adapters.7777777:
+-        "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
++        "eth:0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+      values.Adapters.34268394551451:
+-        "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
++        "eth:0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
+      values.bondToken:
+-        "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+      values.CrossChainContracts.1:
+-        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
++        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      values.CrossChainContracts.10:
+-        "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
++        "eth:0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+      values.CrossChainContracts.56:
+-        "0x4e8E101924eDE233C13e2D8622DC8aED2872d505"
++        "eth:0x4e8E101924eDE233C13e2D8622DC8aED2872d505"
+      values.CrossChainContracts.130:
+-        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
++        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.137:
+-        "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
++        "eth:0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+      values.CrossChainContracts.232:
+-        "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12"
++        "eth:0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12"
+      values.CrossChainContracts.288:
+-        "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
++        "eth:0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
+      values.CrossChainContracts.324:
+-        "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
++        "eth:0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
+      values.CrossChainContracts.480:
+-        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
++        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.690:
+-        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
++        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.1135:
+-        "0x9552a0a6624A23B848060AE5901659CDDa1f83f8"
++        "eth:0x9552a0a6624A23B848060AE5901659CDDa1f83f8"
+      values.CrossChainContracts.1868:
+-        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
++        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.8453:
+-        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
++        "eth:0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.34443:
+-        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
++        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.41455:
+-        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
++        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.42161:
+-        "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
++        "eth:0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
+      values.CrossChainContracts.57073:
+-        "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4"
++        "eth:0xeF684C38F94F48775959ECf2012D7E864ffb9dd4"
+      values.CrossChainContracts.59144:
+-        "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
++        "eth:0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
+      values.CrossChainContracts.81457:
+-        "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1"
++        "eth:0x2D509190Ed0172ba588407D4c2df918F955Cc6E1"
+      values.CrossChainContracts.534352:
+-        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
++        "eth:0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.7777777:
+-        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
++        "eth:0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+      values.CrossChainContracts.34268394551451:
+-        "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
++        "eth:0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.lpTokenFactory:
+-        "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"
++        "eth:0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d"
++++ severity: HIGH
+      values.owner:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      values.protocolFeeCaptureAddress:
+-        "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D"
++        "eth:0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D"
+      values.spokePool:
+-        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
++        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      values.timerAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.weth:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0xc186fA914353c44b2E33eBE05f21846F1048bEda:
+-        "HubPool"
+      implementationNames.eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda:
++        "HubPool"
+    }
+```
+
+```diff
+    EOA  (0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d) {
+    +++ description: None
+      address:
+-        "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
++        "eth:0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
+    }
+```
+
+```diff
+    contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570) {
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+      address:
+-        "0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
++        "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      implementationNames.0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570:
+-        "IdentifierWhitelist"
+      implementationNames.eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570:
++        "IdentifierWhitelist"
+    }
+```
+
+```diff
+    contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7) {
+    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
+      address:
+-        "0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
++        "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
+      values.getWhitelist.0:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.getWhitelist.1:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.getWhitelist.2:
+-        "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D"
++        "eth:0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D"
+      values.getWhitelist.3:
+-        "0xeca82185adCE47f39c684352B0439f030f860318"
++        "eth:0xeca82185adCE47f39c684352B0439f030f860318"
+      values.getWhitelist.4:
+-        "0x261b45D85cCFeAbb11F022eBa346ee8D1cd488c0"
++        "eth:0x261b45D85cCFeAbb11F022eBa346ee8D1cd488c0"
+      values.getWhitelist.5:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.getWhitelist.6:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      values.getWhitelist.7:
+-        "0x758A43EE2BFf8230eeb784879CdcFF4828F2544D"
++        "eth:0x758A43EE2BFf8230eeb784879CdcFF4828F2544D"
+      values.getWhitelist.8:
+-        "0xBD2F0Cd039E0BFcf88901C98c0bFAc5ab27566e3"
++        "eth:0xBD2F0Cd039E0BFcf88901C98c0bFAc5ab27566e3"
+      values.getWhitelist.9:
+-        "0x19D97D8fA813EE2f51aD4B4e04EA08bAf4DFfC28"
++        "eth:0x19D97D8fA813EE2f51aD4B4e04EA08bAf4DFfC28"
+      values.getWhitelist.10:
+-        "0x3832d2F059E55934220881F831bE501D180671A7"
++        "eth:0x3832d2F059E55934220881F831bE501D180671A7"
+      values.getWhitelist.11:
+-        "0x967da4048cD07aB37855c090aAF366e4ce1b9F48"
++        "eth:0x967da4048cD07aB37855c090aAF366e4ce1b9F48"
+      values.getWhitelist.12:
+-        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
++        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      values.getWhitelist.13:
+-        "0x0AaCfbeC6a24756c20D41914F2caba817C0d8521"
++        "eth:0x0AaCfbeC6a24756c20D41914F2caba817C0d8521"
+      values.getWhitelist.14:
+-        "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
++        "eth:0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+      values.getWhitelist.15:
+-        "0x514910771AF9Ca656af840dff83E8264EcF986CA"
++        "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
+      values.getWhitelist.16:
+-        "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
++        "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
+      values.getWhitelist.17:
+-        "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
++        "eth:0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      values.getWhitelist.18:
+-        "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
++        "eth:0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+      values.getWhitelist.19:
+-        "0xBb2b8038a1640196FbE3e38816F3e67Cba72D940"
++        "eth:0xBb2b8038a1640196FbE3e38816F3e67Cba72D940"
+      values.getWhitelist.20:
+-        "0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"
++        "eth:0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc"
+      values.getWhitelist.21:
+-        "0xd3d2E2692501A5c9Ca623199D38826e513033a17"
++        "eth:0xd3d2E2692501A5c9Ca623199D38826e513033a17"
+      values.getWhitelist.22:
+-        "0x88D97d199b9ED37C29D846d00D443De980832a22"
++        "eth:0x88D97d199b9ED37C29D846d00D443De980832a22"
+      values.getWhitelist.23:
+-        "0xa117000000f279D81A1D3cc75430fAA017FA5A2e"
++        "eth:0xa117000000f279D81A1D3cc75430fAA017FA5A2e"
+      values.getWhitelist.24:
+-        "0x0954906da0Bf32d5479e25f46056d22f08464cab"
++        "eth:0x0954906da0Bf32d5479e25f46056d22f08464cab"
+      values.getWhitelist.25:
+-        "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b"
++        "eth:0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b"
+      values.getWhitelist.26:
+-        "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
++        "eth:0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
+      values.getWhitelist.27:
+-        "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272"
++        "eth:0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272"
+      values.getWhitelist.28:
+-        "0x0f7F961648aE6Db43C75663aC7E5414Eb79b5704"
++        "eth:0x0f7F961648aE6Db43C75663aC7E5414Eb79b5704"
+      values.getWhitelist.29:
+-        "0xba100000625a3754423978a60c9317c58a424e3D"
++        "eth:0xba100000625a3754423978a60c9317c58a424e3D"
+      values.getWhitelist.30:
+-        "0x7e7E112A68d8D2E221E11047a72fFC1065c38e1a"
++        "eth:0x7e7E112A68d8D2E221E11047a72fFC1065c38e1a"
+      values.getWhitelist.31:
+-        "0x0000000000095413afC295d19EDeb1Ad7B71c952"
++        "eth:0x0000000000095413afC295d19EDeb1Ad7B71c952"
+      values.getWhitelist.32:
+-        "0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074"
++        "eth:0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074"
+      values.getWhitelist.33:
+-        "0x24A6A37576377F63f194Caa5F518a60f45b42921"
++        "eth:0x24A6A37576377F63f194Caa5F518a60f45b42921"
+      values.getWhitelist.34:
+-        "0xb753428af26E81097e7fD17f40c88aaA3E04902c"
++        "eth:0xb753428af26E81097e7fD17f40c88aaA3E04902c"
+      values.getWhitelist.35:
+-        "0x1b40183EFB4Dd766f11bDa7A7c3AD8982e998421"
++        "eth:0x1b40183EFB4Dd766f11bDa7A7c3AD8982e998421"
+      values.getWhitelist.36:
+-        "0x853d955aCEf822Db058eb8505911ED77F175b99e"
++        "eth:0x853d955aCEf822Db058eb8505911ED77F175b99e"
+      values.getWhitelist.37:
+-        "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0"
++        "eth:0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0"
+      values.getWhitelist.38:
+-        "0x0258F474786DdFd37ABCE6df6BBb1Dd5dfC4434a"
++        "eth:0x0258F474786DdFd37ABCE6df6BBb1Dd5dfC4434a"
+      values.getWhitelist.39:
+-        "0x0391D2021f89DC339F60Fff84546EA23E337750f"
++        "eth:0x0391D2021f89DC339F60Fff84546EA23E337750f"
+      values.getWhitelist.40:
+-        "0x69BbE2FA02b4D90A944fF328663667DC32786385"
++        "eth:0x69BbE2FA02b4D90A944fF328663667DC32786385"
+      values.getWhitelist.41:
+-        "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
++        "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
+      values.getWhitelist.42:
+-        "0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651"
++        "eth:0x1571eD0bed4D987fe2b498DdBaE7DFA19519F651"
+      values.getWhitelist.43:
+-        "0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9"
++        "eth:0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9"
+      values.getWhitelist.44:
+-        "0xa47c8bf37f92aBed4A126BDA807A7b7498661acD"
++        "eth:0xa47c8bf37f92aBed4A126BDA807A7b7498661acD"
+      values.getWhitelist.45:
+-        "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C"
++        "eth:0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C"
+      values.getWhitelist.46:
+-        "0x48Fb253446873234F2fEBbF9BdeAA72d9d387f94"
++        "eth:0x48Fb253446873234F2fEBbF9BdeAA72d9d387f94"
+      values.getWhitelist.47:
+-        "0xBA11D00c5f74255f56a5E366F4F77f5A186d7f55"
++        "eth:0xBA11D00c5f74255f56a5E366F4F77f5A186d7f55"
+      values.getWhitelist.48:
+-        "0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F"
++        "eth:0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F"
+      values.getWhitelist.49:
+-        "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44"
++        "eth:0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44"
+      values.getWhitelist.50:
+-        "0x2ba592F78dB6436527729929AAf6c908497cB200"
++        "eth:0x2ba592F78dB6436527729929AAf6c908497cB200"
+      values.getWhitelist.51:
+-        "0xC4C2614E694cF534D407Ee49F8E44D125E4681c4"
++        "eth:0xC4C2614E694cF534D407Ee49F8E44D125E4681c4"
+      values.getWhitelist.52:
+-        "0xBBc2AE13b23d715c30720F079fcd9B4a74093505"
++        "eth:0xBBc2AE13b23d715c30720F079fcd9B4a74093505"
+      values.getWhitelist.53:
+-        "0x69e8b9528CABDA89fe846C67675B5D73d463a916"
++        "eth:0x69e8b9528CABDA89fe846C67675B5D73d463a916"
+      values.getWhitelist.54:
+-        "0x5dbcF33D8c2E976c6b560249878e6F1491Bca25c"
++        "eth:0x5dbcF33D8c2E976c6b560249878e6F1491Bca25c"
+      values.getWhitelist.55:
+-        "0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919"
++        "eth:0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919"
+      values.getWhitelist.56:
+-        "0xc00e94Cb662C3520282E6f5717214004A7f26888"
++        "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888"
+      values.getWhitelist.57:
+-        "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
++        "eth:0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
+      values.getWhitelist.58:
+-        "0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF"
++        "eth:0xdBdb4d16EdA451D0503b854CF79D55697F90c8DF"
+      values.getWhitelist.59:
+-        "0xa1faa113cbE53436Df28FF0aEe54275c13B40975"
++        "eth:0xa1faa113cbE53436Df28FF0aEe54275c13B40975"
+      values.getWhitelist.60:
+-        "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
++        "eth:0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
+      values.getWhitelist.61:
+-        "0x408e41876cCCDC0F92210600ef50372656052a38"
++        "eth:0x408e41876cCCDC0F92210600ef50372656052a38"
+      values.getWhitelist.62:
+-        "0xD533a949740bb3306d119CC777fa900bA034cd52"
++        "eth:0xD533a949740bb3306d119CC777fa900bA034cd52"
+      values.getWhitelist.63:
+-        "0xD291E7a03283640FDc51b121aC401383A46cC623"
++        "eth:0xD291E7a03283640FDc51b121aC401383A46cC623"
+      values.getWhitelist.64:
+-        "0x87d73E916D7057945c9BcD8cdd94e42A6F47f776"
++        "eth:0x87d73E916D7057945c9BcD8cdd94e42A6F47f776"
+      values.getWhitelist.65:
+-        "0x888888435FDe8e7d4c54cAb67f206e4199454c60"
++        "eth:0x888888435FDe8e7d4c54cAb67f206e4199454c60"
+      values.getWhitelist.66:
+-        "0x44564d0bd94343f72E3C8a0D22308B7Fa71DB0Bb"
++        "eth:0x44564d0bd94343f72E3C8a0D22308B7Fa71DB0Bb"
+      values.getWhitelist.67:
+-        "0x3472A5A71965499acd81997a54BBA8D852C6E53d"
++        "eth:0x3472A5A71965499acd81997a54BBA8D852C6E53d"
+      values.getWhitelist.68:
+-        "0x383518188C0C6d7730D91b2c03a03C837814a899"
++        "eth:0x383518188C0C6d7730D91b2c03a03C837814a899"
+      values.getWhitelist.69:
+-        "0x875773784Af8135eA0ef43b5a374AaD105c5D39e"
++        "eth:0x875773784Af8135eA0ef43b5a374AaD105c5D39e"
+      values.getWhitelist.70:
+-        "0x6810e776880C02933D47DB1b9fc05908e5386b96"
++        "eth:0x6810e776880C02933D47DB1b9fc05908e5386b96"
+      values.getWhitelist.71:
+-        "0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e"
++        "eth:0x0cEC1A9154Ff802e7934Fc916Ed7Ca50bDE6844e"
+      values.getWhitelist.72:
+-        "0xad32A8e6220741182940c5aBF610bDE99E737b2D"
++        "eth:0xad32A8e6220741182940c5aBF610bDE99E737b2D"
+      values.getWhitelist.73:
+-        "0x956F47F50A910163D8BF957Cf5846D573E7f87CA"
++        "eth:0x956F47F50A910163D8BF957Cf5846D573E7f87CA"
+      values.getWhitelist.74:
+-        "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B"
++        "eth:0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B"
+      values.getWhitelist.75:
+-        "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d"
++        "eth:0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d"
+      values.getWhitelist.76:
+-        "0xbEa98c05eEAe2f3bC8c3565Db7551Eb738c8CCAb"
++        "eth:0xbEa98c05eEAe2f3bC8c3565Db7551Eb738c8CCAb"
+      values.getWhitelist.77:
+-        "0x8888801aF4d980682e47f1A9036e589479e835C5"
++        "eth:0x8888801aF4d980682e47f1A9036e589479e835C5"
+      values.getWhitelist.78:
+-        "0x4104b135DBC9609Fc1A9490E61369036497660c8"
++        "eth:0x4104b135DBC9609Fc1A9490E61369036497660c8"
+      values.getWhitelist.79:
+-        "0xfe9A29aB92522D14Fc65880d817214261D8479AE"
++        "eth:0xfe9A29aB92522D14Fc65880d817214261D8479AE"
+      values.getWhitelist.80:
+-        "0x86772b1409b61c639EaAc9Ba0AcfBb6E238e5F83"
++        "eth:0x86772b1409b61c639EaAc9Ba0AcfBb6E238e5F83"
+      values.getWhitelist.81:
+-        "0x6123B0049F904d730dB3C36a31167D9d4121fA6B"
++        "eth:0x6123B0049F904d730dB3C36a31167D9d4121fA6B"
+      values.getWhitelist.82:
+-        "0x2d94AA3e47d9D5024503Ca8491fcE9A2fB4DA198"
++        "eth:0x2d94AA3e47d9D5024503Ca8491fcE9A2fB4DA198"
+      values.getWhitelist.83:
+-        "0x7815bDa662050D84718B988735218CFfd32f75ea"
++        "eth:0x7815bDa662050D84718B988735218CFfd32f75ea"
+      values.getWhitelist.84:
+-        "0xbbBBBBB5AA847A2003fbC6b5C16DF0Bd1E725f61"
++        "eth:0xbbBBBBB5AA847A2003fbC6b5C16DF0Bd1E725f61"
+      values.getWhitelist.85:
+-        "0x5166E09628b696285E3A151e84FB977736a83575"
++        "eth:0x5166E09628b696285E3A151e84FB977736a83575"
+      values.getWhitelist.86:
+-        "0xB0e1fc65C1a741b4662B813eB787d369b8614Af1"
++        "eth:0xB0e1fc65C1a741b4662B813eB787d369b8614Af1"
+      values.getWhitelist.87:
+-        "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
++        "eth:0xbC396689893D065F41bc2C6EcbeE5e0085233447"
+      values.getWhitelist.88:
+-        "0x3Ec8798B81485A254928B70CDA1cf0A2BB0B74D7"
++        "eth:0x3Ec8798B81485A254928B70CDA1cf0A2BB0B74D7"
+      values.getWhitelist.89:
+-        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
++        "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+      values.getWhitelist.90:
+-        "0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb"
++        "eth:0x6f40d4A6237C257fff2dB00FA0510DeEECd303eb"
+      values.getWhitelist.91:
+-        "0x8A9C67fee641579dEbA04928c4BC45F66e26343A"
++        "eth:0x8A9C67fee641579dEbA04928c4BC45F66e26343A"
+      values.getWhitelist.92:
+-        "0xD34a24006b862f4E9936c506691539D6433aD297"
++        "eth:0xD34a24006b862f4E9936c506691539D6433aD297"
+      values.getWhitelist.93:
+-        "0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89"
++        "eth:0x0b15Ddf19D47E6a86A56148fb4aFFFc6929BcB89"
+      values.getWhitelist.94:
+-        "0xbA8A621b4a54e61C442F5Ec623687e2a942225ef"
++        "eth:0xbA8A621b4a54e61C442F5Ec623687e2a942225ef"
+      values.getWhitelist.95:
+-        "0xc4E15973E6fF2A35cC804c2CF9D2a1b817a8b40F"
++        "eth:0xc4E15973E6fF2A35cC804c2CF9D2a1b817a8b40F"
+      values.getWhitelist.96:
+-        "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
++        "eth:0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
+      values.getWhitelist.97:
+-        "0xef5Fa9f3Dede72Ec306dfFf1A7eA0bB0A2F7046F"
++        "eth:0xef5Fa9f3Dede72Ec306dfFf1A7eA0bB0A2F7046F"
+      values.getWhitelist.98:
+-        "0xaa61D5dec73971CD4a026ef2820bB87b4a4Ed8d6"
++        "eth:0xaa61D5dec73971CD4a026ef2820bB87b4a4Ed8d6"
+      values.getWhitelist.99:
+-        "0x752Efadc0a7E05ad1BCCcDA22c141D01a75EF1e4"
++        "eth:0x752Efadc0a7E05ad1BCCcDA22c141D01a75EF1e4"
+      values.getWhitelist.100:
+-        "0xEd1480d12bE41d92F36f5f7bDd88212E381A3677"
++        "eth:0xEd1480d12bE41d92F36f5f7bDd88212E381A3677"
+      values.getWhitelist.101:
+-        "0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5"
++        "eth:0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5"
+      values.getWhitelist.102:
+-        "0xDC59ac4FeFa32293A95889Dc396682858d52e5Db"
++        "eth:0xDC59ac4FeFa32293A95889Dc396682858d52e5Db"
+      values.getWhitelist.103:
+-        "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A"
++        "eth:0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A"
+      values.getWhitelist.104:
+-        "0xa5f2211B9b8170F694421f2046281775E8468044"
++        "eth:0xa5f2211B9b8170F694421f2046281775E8468044"
+      values.getWhitelist.105:
+-        "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
++        "eth:0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
+      values.getWhitelist.106:
+-        "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      implementationNames.0xdBF90434dF0B98219f87d112F37d74B1D90758c7:
+-        "AddressWhitelist"
+      implementationNames.eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7:
++        "AddressWhitelist"
+    }
+```
+
+```diff
+    contract Base_Adapter (0xE1421233BF7158A19f89F17c9735F9cbd3D9529c) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c"
++        "eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c"
+      values.cctpTokenMessenger:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.L1_STANDARD_BRIDGE:
+-        "0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
++        "eth:0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
++        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xE1421233BF7158A19f89F17c9735F9cbd3D9529c:
+-        "Base_Adapter"
+      implementationNames.eth:0xE1421233BF7158A19f89F17c9735F9cbd3D9529c:
++        "Base_Adapter"
+    }
+```
+
+```diff
+    contract Optimism_Adapter (0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b"
++        "eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b"
+      values.cctpTokenMessenger:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.DAI:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.DAI_OPTIMISM_BRIDGE:
+-        "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F"
++        "eth:0x10E6593CDda8c58a1d0f14C5164B376352a55f2F"
+      values.L1_STANDARD_BRIDGE:
+-        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
++        "eth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
++        "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.SNX:
+-        "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
++        "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
+      values.SNX_OPTIMISM_BRIDGE:
+-        "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F"
++        "eth:0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b:
+-        "Optimism_Adapter"
+      implementationNames.eth:0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b:
++        "Optimism_Adapter"
+    }
+```
+
+```diff
+    contract AcrossBondToken (ABT) (0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea) {
+    +++ description: A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals.
+      address:
+-        "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+      values.hubPool:
+-        "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      values.owner:
+-        "0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
++++ severity: HIGH
+      values.proposers.0:
+-        "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
++        "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
+      implementationNames.0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea:
+-        "BondToken"
+      implementationNames.eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea:
++        "BondToken"
+    }
+```
+
+```diff
+    contract SkinnyOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
+    +++ description: Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.
+      address:
+-        "0xeE3Afe347D5C74317041E2618C49534dAf887c24"
++        "eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.timerAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xeE3Afe347D5C74317041E2618C49534dAf887c24:
+-        "SkinnyOptimisticOracle"
+      implementationNames.eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24:
++        "SkinnyOptimisticOracle"
+    }
+```
+
+```diff
+    contract Lisk_Adapter (0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
++        "eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_OP_USDC_BRIDGE:
+-        "0xE3622468Ea7dD804702B56ca2a4f88C0936995e6"
++        "eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6"
+      values.L1_STANDARD_BRIDGE:
+-        "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
++        "eth:0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB"
++        "eth:0x31B72D76FB666844C41EdF08dF0254875Dbb7edB"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b:
+-        "OP_Adapter"
+      implementationNames.eth:0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b:
++        "OP_Adapter"
+    }
+```
+
+```diff
+    contract Mode_Adapter (0xf1B59868697f3925b72889ede818B9E7ba0316d0) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xf1B59868697f3925b72889ede818B9E7ba0316d0"
++        "eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_STANDARD_BRIDGE:
+-        "0x735aDBbE72226BD52e818E7181953f42E3b0FF21"
++        "eth:0x735aDBbE72226BD52e818E7181953f42E3b0FF21"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f"
++        "eth:0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xf1B59868697f3925b72889ede818B9E7ba0316d0:
+-        "Mode_Adapter"
+      implementationNames.eth:0xf1B59868697f3925b72889ede818B9E7ba0316d0:
++        "Mode_Adapter"
+    }
+```
+
+```diff
+    contract Blast_Adapter (0xF2bEf5E905AAE0295003ab14872F811E914EdD81) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
++        "eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
+      values.cctpTokenMessenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.L1_BLAST_BRIDGE:
+-        "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
++        "eth:0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
+      values.L1_DAI:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.L1_STANDARD_BRIDGE:
+-        "0x697402166Fbf2F22E970df8a6486Ef171dbfc524"
++        "eth:0x697402166Fbf2F22E970df8a6486Ef171dbfc524"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"
++        "eth:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xF2bEf5E905AAE0295003ab14872F811E914EdD81:
+-        "Blast_Adapter"
+      implementationNames.eth:0xF2bEf5E905AAE0295003ab14872F811E914EdD81:
++        "Blast_Adapter"
+    }
+```
+
+```diff
+    EOA  (0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c) {
+    +++ description: None
+      address:
+-        "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
++        "eth:0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
+    }
+```
+
+```diff
+    contract DoctorWho_Adapter (0xFADcC43096756e1527306FD92982FEbBe3c629Fa) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      address:
+-        "0xFADcC43096756e1527306FD92982FEbBe3c629Fa"
++        "eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa"
+      values.cctpTokenMessenger:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.L1_STANDARD_BRIDGE:
+-        "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
++        "eth:0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA"
+      values.L1_WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.MESSENGER:
+-        "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
++        "eth:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6"
+      values.usdcToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xFADcC43096756e1527306FD92982FEbBe3c629Fa:
+-        "DoctorWho_Adapter"
+      implementationNames.eth:0xFADcC43096756e1527306FD92982FEbBe3c629Fa:
++        "DoctorWho_Adapter"
+    }
+```
+
+```diff
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE) {
+    +++ description: Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.
+      address:
+-        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+      values.cachedOracle:
+-        "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
++        "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
+      values.defaultCurrency:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.finder:
+-        "0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      values.owner:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      implementationNames.0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE:
+-        "OptimisticOracleV3"
+      implementationNames.eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE:
++        "OptimisticOracleV3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac)
+    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take 1d each.
+```
+
+```diff
++   Status: CREATED
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Soneium_Adapter (0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract HubPoolStore (0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61)
+    +++ description: Simple data store used by the Universal_Adapter to store message calldata hashes. The content of this calldata can be proven by Ethereum zk light clients on remote chains and then executed to relay root bundles or arbitrary messages.
+```
+
+```diff
++   Status: CREATED
+    contract Universal_Adapter (0x22001f37B586792F25Ef9d19d99537C6446e0833)
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the eth:0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain.
+```
+
+```diff
++   Status: CREATED
+    contract Scroll_Adapter (0x2DA799c2223c6ffB595e578903AE6b95839160d8)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Boba_Adapter (0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract AcrossConfigStore (0x3B03509645713718B78951126E0A6de6f10043f5)
+    +++ description: Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data.
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE)
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
+```
+
+```diff
++   Status: CREATED
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3)
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
+```
+
+```diff
++   Status: CREATED
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+```
+
+```diff
++   Status: CREATED
+    contract Ethereum_Adapter (0x527E872a5c3f0C7c24Fe33F2593cFB890a285084)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF)
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
+```
+
+```diff
++   Status: CREATED
+    contract Linea_Adapter (0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5)
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_CustomGasToken_Adapter (0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Alephzero_Adapter (0x6F4083304C2cA99B077ACE06a5DcF670615915Af)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8)
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+```
+
+```diff
++   Status: CREATED
+    contract Ink_Adapter (0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991)
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.
+```
+
+```diff
++   Status: CREATED
+    contract WorldChain_Adapter (0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+```
+
+```diff
++   Status: CREATED
+    contract FixedSlashSlashingLibrary (0x9a406ba5a99983250Fd663947b3c968D387ce5cd)
+    +++ description: Stores slashing parameters and calculates slashing amounts based on that (UMA protocol).
+```
+
+```diff
++   Status: CREATED
+    contract Solana_Adapter (0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract ZkStack_Adapter (0xA374585E6062517Ee367ee5044946A6fBe17724f)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Across Multisig (0xB524735356985D2f267FA010D681f061DfF03715)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda)
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+```
+
+```diff
++   Status: CREATED
+    contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570)
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+```
+
+```diff
++   Status: CREATED
+    contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7)
+    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
+```
+
+```diff
++   Status: CREATED
+    contract Base_Adapter (0xE1421233BF7158A19f89F17c9735F9cbd3D9529c)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Optimism_Adapter (0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract AcrossBondToken (ABT) (0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea)
+    +++ description: A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals.
+```
+
+```diff
++   Status: CREATED
+    contract SkinnyOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24)
+    +++ description: Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.
+```
+
+```diff
++   Status: CREATED
+    contract Lisk_Adapter (0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Mode_Adapter (0xf1B59868697f3925b72889ede818B9E7ba0316d0)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract Blast_Adapter (0xF2bEf5E905AAE0295003ab14872F811E914EdD81)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract DoctorWho_Adapter (0xFADcC43096756e1527306FD92982FEbBe3c629Fa)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE)
+    +++ description: Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.
+```
+
 Generated with discovered.json: 0x64ab6887390487b6249dc7e7781de4a348253a25
 
 # Diff at Mon, 07 Jul 2025 14:54:42 GMT:

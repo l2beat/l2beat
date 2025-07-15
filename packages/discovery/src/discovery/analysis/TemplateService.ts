@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   formatJson,
   Hash256,
@@ -264,7 +265,7 @@ export class TemplateService {
       const sourcesHash = Hash256(hash)
       const matchingTemplates = this.findMatchingTemplatesByHash(
         sourcesHash,
-        contract.address,
+        ChainSpecificAddress.address(contract.address),
       )
 
       if (

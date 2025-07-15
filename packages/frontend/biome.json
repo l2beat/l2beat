@@ -16,7 +16,8 @@
         "useExhaustiveDependencies": "error",
         "useHookAtTopLevel": "error",
         "noChildrenProp": "error",
-        "noVoidElementsWithChildren": "error"
+        "noVoidElementsWithChildren": "error",
+        "useJsxKeyInIterable": "error"
       },
       "suspicious": {
         "noDuplicateJsxProps": "error"

@@ -1,3 +1,4 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { resolveCategory } from '../analysis/category'
 import type { TemplateService } from '../analysis/TemplateService'
 import type {
@@ -12,7 +13,7 @@ import type {
   StructureEntry,
   StructureOutput,
 } from '../output/types'
-import { get$Implementations } from '../utils/extractors'
+import { get$ImplementationsPublic } from '../utils/extractorsPublic'
 import { interpolateString } from '../utils/interpolateString'
 
 export function colorize(
@@ -25,7 +26,7 @@ export function colorize(
   for (const e of structure.entries) {
     const entryConfig = makeEntryColorConfig(
       config,
-      e.address,
+      ChainSpecificAddress.address(e.address),
       templateService.loadContractTemplateColor(e.template),
     )
 
@@ -51,9 +52,12 @@ function getReferences(
     result.push(...entryConfig.references)
   }
 
-  const addresses = [entry.address, ...get$Implementations(entry.values)]
+  const addresses = [entry.address, ...get$ImplementationsPublic(entry.values)]
   for (const address of addresses) {
-    const manualSourcePath = entryConfig.manualSourcePaths[address.toString()]
+    const manualSourcePath =
+      entryConfig.manualSourcePaths[
+        ChainSpecificAddress.address(address).toString()
+      ]
     if (manualSourcePath === undefined) {
       continue
     }

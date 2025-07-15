@@ -29,6 +29,7 @@ export const powerloom: ScalingProject = underReviewL2({
       ],
     },
   },
+  associatedTokens: ['POWER'],
   chainConfig: {
     name: 'powerloom',
     gasTokens: ['POWER'],

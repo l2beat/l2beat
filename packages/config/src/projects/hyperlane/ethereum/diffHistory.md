@@ -1,3 +1,1152 @@
+Generated with discovered.json: 0xd599b0ef5edb94e58473cb8798f9d746a0d203bb
+
+# Diff at Mon, 14 Jul 2025 12:45:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22866629
+- current block number: 22866629
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22866629 (main branch discovery), not current.
+
+```diff
+    EOA  (0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961) {
+    +++ description: None
+      address:
+-        "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961"
++        "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961"
+    }
+```
+
+```diff
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+      address:
+-        "0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e"
++        "eth:0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e"
+      description:
+-        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message."
++        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message."
+      values.modules.0:
+-        "0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50"
++        "eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50"
+      values.modules.1:
+-        "0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
++        "eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
++++ description: The modules and threshold of a random bridging tx from eclipse to ethereum.
+      values.modulesAndThreshold.0.1:
+-        "0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
++        "eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
++++ description: The modules and threshold of a random bridging tx from eclipse to ethereum.
+      values.modulesAndThreshold.0.0:
+-        "0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50"
++        "eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50"
+      implementationNames.0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e:
+-        "StaticAggregationIsm"
+      implementationNames.eth:0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e:
++        "StaticAggregationIsm"
+    }
+```
+
+```diff
+    EOA  (0x2C073004A6e4f37377F848193d6433260Ebe9b99) {
+    +++ description: None
+      address:
+-        "0x2C073004A6e4f37377F848193d6433260Ebe9b99"
++        "eth:0x2C073004A6e4f37377F848193d6433260Ebe9b99"
+    }
+```
+
+```diff
+    EOA  (0x2f43Ac3cD6A22E4Ba20d3d18d116b1f9420eD84B) {
+    +++ description: None
+      address:
+-        "0x2f43Ac3cD6A22E4Ba20d3d18d116b1f9420eD84B"
++        "eth:0x2f43Ac3cD6A22E4Ba20d3d18d116b1f9420eD84B"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08) {
+    +++ description: None
+      address:
+-        "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
++        "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
+      values.owner:
+-        "0xCEA8039076E35a825854c5C2f85659430b06ec96"
++        "eth:0xCEA8039076E35a825854c5C2f85659430b06ec96"
+      implementationNames.0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08:
+-        "ProxyAdmin"
+      implementationNames.eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc) {
+    +++ description: None
+      address:
+-        "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++        "eth:0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
+    }
+```
+
+```diff
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6) {
+    +++ description: None
+      address:
+-        "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
++        "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x478be6076f31E9666123B9721D0B6631baD944AF"
++        "eth:0x478be6076f31E9666123B9721D0B6631baD944AF"
+      values.$members.1:
+-        "0x5dd9a0814022A61777938263308EBB336174f13D"
++        "eth:0x5dd9a0814022A61777938263308EBB336174f13D"
+      values.$members.2:
+-        "0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba"
++        "eth:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba"
+      values.$members.3:
+-        "0x5b73A98165778BCCE72979B4EE3faCdb31728b8E"
++        "eth:0x5b73A98165778BCCE72979B4EE3faCdb31728b8E"
+      values.$members.4:
+-        "0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
++        "eth:0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
+      values.$members.5:
+-        "0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599"
++        "eth:0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599"
+      values.$members.6:
+-        "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961"
++        "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961"
+      values.$members.7:
+-        "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B"
++        "eth:0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B"
+      values.$members.8:
+-        "0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5"
++        "eth:0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5"
+      implementationNames.0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x3b548E88BA3259A6f45DEeA91449cdda5cF164b3) {
+    +++ description: None
+      address:
+-        "0x3b548E88BA3259A6f45DEeA91449cdda5cF164b3"
++        "eth:0x3b548E88BA3259A6f45DEeA91449cdda5cF164b3"
+    }
+```
+
+```diff
+    EOA  (0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599) {
+    +++ description: None
+      address:
+-        "0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599"
++        "eth:0x3b7f8f68A4FD0420FeA2F42a1eFc53422f205599"
+    }
+```
+
+```diff
+    EOA  (0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad) {
+    +++ description: None
+      address:
+-        "0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad"
++        "eth:0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad"
+    }
+```
+
+```diff
+    EOA  (0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f) {
+    +++ description: None
+      address:
+-        "0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f"
++        "eth:0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f"
+    }
+```
+
+```diff
+    EOA  (0x478be6076f31E9666123B9721D0B6631baD944AF) {
+    +++ description: None
+      address:
+-        "0x478be6076f31E9666123B9721D0B6631baD944AF"
++        "eth:0x478be6076f31E9666123B9721D0B6631baD944AF"
+    }
+```
+
+```diff
+    EOA  (0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5) {
+    +++ description: None
+      address:
+-        "0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5"
++        "eth:0x483fd7284A696343FEc0819DDF2cf7E06E8A06E5"
+    }
+```
+
+```diff
+    EOA  (0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb) {
+    +++ description: None
+      address:
+-        "0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb"
++        "eth:0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb"
+    }
+```
+
+```diff
+    EOA  (0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97) {
+    +++ description: None
+      address:
+-        "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++        "eth:0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
+    }
+```
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      address:
+-        "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
++        "eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xD5c0D17cCb9071D27a4F7eD8255F59989b9aee0d"
++        "eth:0xD5c0D17cCb9071D27a4F7eD8255F59989b9aee0d"
+      values.$members.1:
+-        "0x3b548E88BA3259A6f45DEeA91449cdda5cF164b3"
++        "eth:0x3b548E88BA3259A6f45DEeA91449cdda5cF164b3"
+      values.$members.2:
+-        "0x861FC61a961F8AFDf115B8DE274101B9ECea2F26"
++        "eth:0x861FC61a961F8AFDf115B8DE274101B9ECea2F26"
+      values.$members.3:
+-        "0x82950a6356316272dF1928C72F5F0A44D9673c88"
++        "eth:0x82950a6356316272dF1928C72F5F0A44D9673c88"
+      values.$members.4:
+-        "0x9F500DF92175b2Ac36F8d443382B219d211D354A"
++        "eth:0x9F500DF92175b2Ac36F8d443382B219d211D354A"
+      values.$members.5:
+-        "0x2C073004A6e4f37377F848193d6433260Ebe9b99"
++        "eth:0x2C073004A6e4f37377F848193d6433260Ebe9b99"
+      values.$members.6:
+-        "0xFae231524539698f1D136d7b21E3B4144CDbF2a3"
++        "eth:0xFae231524539698f1D136d7b21E3B4144CDbF2a3"
+      values.$members.7:
+-        "0x2f43Ac3cD6A22E4Ba20d3d18d116b1f9420eD84B"
++        "eth:0x2f43Ac3cD6A22E4Ba20d3d18d116b1f9420eD84B"
+      values.$members.8:
+-        "0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
++        "eth:0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
+      values.$members.9:
+-        "0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba"
++        "eth:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba"
+      implementationNames.0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A) {
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
+      address:
+-        "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      values.$admin:
+-        "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      values.$implementation:
+-        "0x7A294add0Ec417E6AA99541B4A2F1c92590E846a"
++        "eth:0x7A294add0Ec417E6AA99541B4A2F1c92590E846a"
+      values.$pastUpgrades.0.2.0:
+-        "0x7A294add0Ec417E6AA99541B4A2F1c92590E846a"
++        "eth:0x7A294add0Ec417E6AA99541B4A2F1c92590E846a"
+      values.hook:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.interchainSecurityModule:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.mailbox:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.owner:
+-        "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
++        "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      values.wrappedToken:
+-        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
++        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      implementationNames.0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7A294add0Ec417E6AA99541B4A2F1c92590E846a:
+-        "HypERC20Collateral"
+      implementationNames.eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x7A294add0Ec417E6AA99541B4A2F1c92590E846a:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
+    EOA  (0x5b73A98165778BCCE72979B4EE3faCdb31728b8E) {
+    +++ description: None
+      address:
+-        "0x5b73A98165778BCCE72979B4EE3faCdb31728b8E"
++        "eth:0x5b73A98165778BCCE72979B4EE3faCdb31728b8E"
+    }
+```
+
+```diff
+    EOA  (0x5dd9a0814022A61777938263308EBB336174f13D) {
+    +++ description: None
+      address:
+-        "0x5dd9a0814022A61777938263308EBB336174f13D"
++        "eth:0x5dd9a0814022A61777938263308EBB336174f13D"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543) {
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
+      address:
+-        "0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      values.$admin:
+-        "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      values.$implementation:
+-        "0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7"
++        "eth:0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7"
+      values.$pastUpgrades.0.2.0:
+-        "0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7"
++        "eth:0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7"
+      values.hook:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.interchainSecurityModule:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.mailbox:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.owner:
+-        "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
++        "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      values.wrappedToken:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      implementationNames.0x647C621CEb36853Ef6A907E397Adf18568E70543:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7:
+-        "HypERC20Collateral"
+      implementationNames.eth:0x647C621CEb36853Ef6A907E397Adf18568E70543:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
+    EOA  (0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA) {
+    +++ description: None
+      address:
+-        "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA"
++        "eth:0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659) {
+    +++ description: None
+      address:
+-        "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      values.owner:
+-        "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
++        "eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
+      implementationNames.0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659:
+-        "ProxyAdmin"
+      implementationNames.eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x7C96179df8619E49B389784ECDBBcA7090a5D08F) {
+    +++ description: None
+      address:
+-        "0x7C96179df8619E49B389784ECDBBcA7090a5D08F"
++        "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F"
+    }
+```
+
+```diff
+    EOA  (0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898) {
+    +++ description: None
+      address:
+-        "0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898"
++        "eth:0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898"
+    }
+```
+
+```diff
+    EOA  (0x82950a6356316272dF1928C72F5F0A44D9673c88) {
+    +++ description: None
+      address:
+-        "0x82950a6356316272dF1928C72F5F0A44D9673c88"
++        "eth:0x82950a6356316272dF1928C72F5F0A44D9673c88"
+    }
+```
+
+```diff
+    EOA  (0x861FC61a961F8AFDf115B8DE274101B9ECea2F26) {
+    +++ description: None
+      address:
+-        "0x861FC61a961F8AFDf115B8DE274101B9ECea2F26"
++        "eth:0x861FC61a961F8AFDf115B8DE274101B9ECea2F26"
+    }
+```
+
+```diff
+    EOA  (0x95A2115018b84cfe0630C16CCA277E1569a84BEf) {
+    +++ description: None
+      address:
+-        "0x95A2115018b84cfe0630C16CCA277E1569a84BEf"
++        "eth:0x95A2115018b84cfe0630C16CCA277E1569a84BEf"
+    }
+```
+
+```diff
+    EOA  (0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f) {
+    +++ description: None
+      address:
+-        "0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f"
++        "eth:0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f"
+    }
+```
+
+```diff
+    EOA  (0x9F500DF92175b2Ac36F8d443382B219d211D354A) {
+    +++ description: None
+      address:
+-        "0x9F500DF92175b2Ac36F8d443382B219d211D354A"
++        "eth:0x9F500DF92175b2Ac36F8d443382B219d211D354A"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780) {
+    +++ description: None
+      address:
+-        "0x9Fca159607687AE26367d66166e680A930af0780"
++        "eth:0x9Fca159607687AE26367d66166e680A930af0780"
+      values.owner:
+-        "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
++        "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
+      implementationNames.0x9Fca159607687AE26367d66166e680A930af0780:
+-        "ProxyAdmin"
+      implementationNames.eth:0x9Fca159607687AE26367d66166e680A930af0780:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+      address:
+-        "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c"
++        "eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c"
+      description:
+-        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse."
++        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse."
++++ severity: HIGH
+      values.modules.0:
+-        "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++++ severity: HIGH
+      values.modules.1:
+-        "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
++        "eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
++++ description: The modules and threshold of a random bridging tx from eclipse to ethereum.
+      values.modulesAndThreshold.0.1:
+-        "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
++        "eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
++++ description: The modules and threshold of a random bridging tx from eclipse to ethereum.
+      values.modulesAndThreshold.0.0:
+-        "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+      implementationNames.0xA2d8EBB801c632517Ff35b97Dea0685abc41494c:
+-        "StaticAggregationIsm"
+      implementationNames.eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c:
++        "StaticAggregationIsm"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e) {
+    +++ description: None
+      address:
+-        "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
++        "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xaC011Fe273794Ab1E07538CFA8099f2599103F64"
++        "eth:0xaC011Fe273794Ab1E07538CFA8099f2599103F64"
+      values.$members.1:
+-        "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424"
++        "eth:0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424"
+      values.$members.2:
+-        "0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad"
++        "eth:0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad"
+      values.$members.3:
+-        "0xEd700310D77BfBC3D2d962d11254861a6748cb3e"
++        "eth:0xEd700310D77BfBC3D2d962d11254861a6748cb3e"
+      values.$members.4:
+-        "0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898"
++        "eth:0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898"
+      values.$members.5:
+-        "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8"
++        "eth:0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8"
+      values.$members.6:
+-        "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA"
++        "eth:0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA"
+      implementationNames.0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba) {
+    +++ description: None
+      address:
+-        "0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba"
++        "eth:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba"
+    }
+```
+
+```diff
+    EOA  (0xaC011Fe273794Ab1E07538CFA8099f2599103F64) {
+    +++ description: None
+      address:
+-        "0xaC011Fe273794Ab1E07538CFA8099f2599103F64"
++        "eth:0xaC011Fe273794Ab1E07538CFA8099f2599103F64"
+    }
+```
+
+```diff
+    contract UnknownIsm (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50) {
+    +++ description: None
+      address:
+-        "0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50"
++        "eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50"
+      implementationNames.0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50:
+-        ""
+      implementationNames.eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50:
++        ""
+    }
+```
+
+```diff
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896) {
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+      address:
+-        "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
++        "eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896"
++++ severity: HIGH
+      values.validators.0:
+-        "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++        "eth:0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++++ severity: HIGH
+      values.validators.1:
+-        "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++        "eth:0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++++ severity: HIGH
+      values.validators.2:
+-        "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++        "eth:0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++++ severity: HIGH
+      values.validators.3:
+-        "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++        "eth:0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.3:
+-        "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++        "eth:0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.2:
+-        "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++        "eth:0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.1:
+-        "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++        "eth:0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.0:
+-        "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++        "eth:0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
+      implementationNames.0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896:
+-        "StaticMerkleRootMultisigIsm"
+      implementationNames.eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896:
++        "StaticMerkleRootMultisigIsm"
+    }
+```
+
+```diff
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+      address:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.$admin:
+-        "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      values.$implementation:
+-        "0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455"
++        "eth:0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455"
+      values.$pastUpgrades.0.2.0:
+-        "0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455"
++        "eth:0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455"
+      values.defaultHook:
+-        "0x571f1435613381208477ac5d6974310d88AC7cB7"
++        "eth:0x571f1435613381208477ac5d6974310d88AC7cB7"
++++ description: The default ISM contract that is used for all destination contracts that do not override it.
+      values.defaultIsm:
+-        "0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e"
++        "eth:0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e"
+      values.owner:
+-        "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
++        "eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
+      values.requiredHook:
+-        "0x8B05BF30F6247a90006c5837eA63C7905D79e6d8"
++        "eth:0x8B05BF30F6247a90006c5837eA63C7905D79e6d8"
+      implementationNames.0xc005dc82818d67AF737725bD4bf75435d065D239:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455:
+-        "Mailbox"
+      implementationNames.eth:0xc005dc82818d67AF737725bD4bf75435d065D239:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455:
++        "Mailbox"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09) {
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+      address:
+-        "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      values.$admin:
+-        "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      values.$implementation:
+-        "0x5ADdEB216C6dB923b4DE9449A27120da9F399021"
++        "eth:0x5ADdEB216C6dB923b4DE9449A27120da9F399021"
+      values.$pastUpgrades.0.2.0:
+-        "0x5ADdEB216C6dB923b4DE9449A27120da9F399021"
++        "eth:0x5ADdEB216C6dB923b4DE9449A27120da9F399021"
+      values.hook:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.interchainSecurityModule:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.mailbox:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.owner:
+-        "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
++        "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      values.wrappedToken:
+-        "0x19e099B7aEd41FA52718D780dDA74678113C0b32"
++        "eth:0x19e099B7aEd41FA52718D780dDA74678113C0b32"
+      implementationNames.0xc2495f3183F043627CAECD56dAaa726e3B2D9c09:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x5ADdEB216C6dB923b4DE9449A27120da9F399021:
+-        "HypERC20Collateral"
+      implementationNames.eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x5ADdEB216C6dB923b4DE9449A27120da9F399021:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
+    EOA  (0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA) {
+    +++ description: None
+      address:
+-        "0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
++        "eth:0xc3E966E79eF1aA4751221F55fB8A36589C24C0cA"
+    }
+```
+
+```diff
+    EOA  (0xcb3bD5d7C40844fb599c14413F281A0241C45DFB) {
+    +++ description: None
+      address:
+-        "0xcb3bD5d7C40844fb599c14413F281A0241C45DFB"
++        "eth:0xcb3bD5d7C40844fb599c14413F281A0241C45DFB"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96) {
+    +++ description: None
+      address:
+-        "0xCEA8039076E35a825854c5C2f85659430b06ec96"
++        "eth:0xCEA8039076E35a825854c5C2f85659430b06ec96"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x95A2115018b84cfe0630C16CCA277E1569a84BEf"
++        "eth:0x95A2115018b84cfe0630C16CCA277E1569a84BEf"
+      values.$members.1:
+-        "0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb"
++        "eth:0x4A4e996Dd8F36Dcf46b30A7F97877da922323EEb"
+      values.$members.2:
+-        "0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f"
++        "eth:0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f"
+      values.$members.3:
+-        "0x7C96179df8619E49B389784ECDBBcA7090a5D08F"
++        "eth:0x7C96179df8619E49B389784ECDBBcA7090a5D08F"
+      values.$members.4:
+-        "0xcb3bD5d7C40844fb599c14413F281A0241C45DFB"
++        "eth:0xcb3bD5d7C40844fb599c14413F281A0241C45DFB"
+      values.$members.5:
+-        "0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f"
++        "eth:0x9eaC7114D1a1EaBc4732A886795cFD9E6E35843f"
+      implementationNames.0xCEA8039076E35a825854c5C2f85659430b06ec96:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xCEA8039076E35a825854c5C2f85659430b06ec96:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B) {
+    +++ description: None
+      address:
+-        "0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B"
++        "eth:0xd00d6A31485C93c597D1d8231eeeE0ed17B9844B"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c) {
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
+      address:
+-        "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
++        "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
+      values.$admin:
+-        "0x9Fca159607687AE26367d66166e680A930af0780"
++        "eth:0x9Fca159607687AE26367d66166e680A930af0780"
+      values.$implementation:
+-        "0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e"
++        "eth:0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e"
+      values.$pastUpgrades.0.2.0:
+-        "0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e"
++        "eth:0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e"
+      values.hook:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.interchainSecurityModule:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.mailbox:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.owner:
+-        "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
++        "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
+      values.wrappedToken:
+-        "0x9Ba021B0a9b958B5E75cE9f6dff97C7eE52cb3E6"
++        "eth:0x9Ba021B0a9b958B5E75cE9f6dff97C7eE52cb3E6"
+      implementationNames.0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e:
+-        "HypERC20Collateral"
+      implementationNames.eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
+    EOA  (0xD5c0D17cCb9071D27a4F7eD8255F59989b9aee0d) {
+    +++ description: None
+      address:
+-        "0xD5c0D17cCb9071D27a4F7eD8255F59989b9aee0d"
++        "eth:0xD5c0D17cCb9071D27a4F7eD8255F59989b9aee0d"
+    }
+```
+
+```diff
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8) {
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+      address:
+-        "0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
++        "eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
+      description:
+-        "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse."
++        "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse."
+      values.$implementation:
+-        "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67"
++        "eth:0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67"
++++ severity: HIGH
+      values.module:
+-        "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c"
++        "eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c"
++++ severity: HIGH
+      values.owner:
+-        "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
++        "eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
+      implementationNames.0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8:
+-        "DomainRoutingIsm"
+      implementationNames.0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67:
+-        "DomainRoutingIsm"
+      implementationNames.eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8:
++        "DomainRoutingIsm"
+      implementationNames.eth:0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67:
++        "DomainRoutingIsm"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7) {
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+      address:
+-        "0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+      values.$admin:
+-        "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      values.$implementation:
+-        "0xe8CC4FF9203196A90734d2C4328B83775486163C"
++        "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C"
+      values.$pastUpgrades.0.2.0:
+-        "0xe8CC4FF9203196A90734d2C4328B83775486163C"
++        "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C"
+      values.hook:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.interchainSecurityModule:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.mailbox:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.owner:
+-        "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
++        "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6"
+      values.wrappedToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0xe1De9910fe71cC216490AC7FCF019e13a34481D7:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xe8CC4FF9203196A90734d2C4328B83775486163C:
+-        "HypERC20Collateral"
+      implementationNames.eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xe8CC4FF9203196A90734d2C4328B83775486163C:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
+    EOA  (0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424) {
+    +++ description: None
+      address:
+-        "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424"
++        "eth:0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424"
+    }
+```
+
+```diff
+    EOA  (0xEa83086a62617A7228ce4206FAe2ea8b0ab23513) {
+    +++ description: None
+      address:
+-        "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++        "eth:0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
+    }
+```
+
+```diff
+    EOA  (0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0) {
+    +++ description: None
+      address:
+-        "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++        "eth:0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
+    }
+```
+
+```diff
+    EOA  (0xEd700310D77BfBC3D2d962d11254861a6748cb3e) {
+    +++ description: None
+      address:
+-        "0xEd700310D77BfBC3D2d962d11254861a6748cb3e"
++        "eth:0xEd700310D77BfBC3D2d962d11254861a6748cb3e"
+    }
+```
+
+```diff
+    contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2) {
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+      address:
+-        "0xef899e92DA472E014bE795Ecce948308958E25A2"
++        "eth:0xef899e92DA472E014bE795Ecce948308958E25A2"
+      values.$admin:
+-        "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
++        "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
+      values.$implementation:
+-        "0x0371AE4960FC4Dd8ef08464080331573D386D6b4"
++        "eth:0x0371AE4960FC4Dd8ef08464080331573D386D6b4"
+      values.$pastUpgrades.0.2.0:
+-        "0x0371AE4960FC4Dd8ef08464080331573D386D6b4"
++        "eth:0x0371AE4960FC4Dd8ef08464080331573D386D6b4"
+      values.hook:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.interchainSecurityModule:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.mailbox:
+-        "0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      values.owner:
+-        "0xCEA8039076E35a825854c5C2f85659430b06ec96"
++        "eth:0xCEA8039076E35a825854c5C2f85659430b06ec96"
+      values.wrappedToken:
+-        "0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88"
++        "eth:0x917ceE801a67f933F2e6b33fC0cD1ED2d5909D88"
+      implementationNames.0xef899e92DA472E014bE795Ecce948308958E25A2:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x0371AE4960FC4Dd8ef08464080331573D386D6b4:
+-        "HypERC20Collateral"
+      implementationNames.eth:0xef899e92DA472E014bE795Ecce948308958E25A2:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x0371AE4960FC4Dd8ef08464080331573D386D6b4:
++        "HypERC20Collateral"
+    }
+```
+
+```diff
+    EOA  (0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8) {
+    +++ description: None
+      address:
+-        "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8"
++        "eth:0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8"
+    }
+```
+
+```diff
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e) {
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
+      address:
+-        "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++++ severity: HIGH
+      values.validators.0:
+-        "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++        "eth:0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++++ severity: HIGH
+      values.validators.1:
+-        "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++        "eth:0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++++ severity: HIGH
+      values.validators.2:
+-        "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++        "eth:0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++++ severity: HIGH
+      values.validators.3:
+-        "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++        "eth:0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.3:
+-        "0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++        "eth:0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.2:
+-        "0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++        "eth:0xEa83086a62617A7228ce4206FAe2ea8b0ab23513"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.1:
+-        "0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++        "eth:0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97"
++++ description: Validators and threshold of a random USDC message from Eclipse to Ethereum.
+      values.validatorsAndThreshold.0.0:
+-        "0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
++        "eth:0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc"
+      implementationNames.0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e:
+-        "StaticMessageIdMultisigIsm"
+      implementationNames.eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e:
++        "StaticMessageIdMultisigIsm"
+    }
+```
+
+```diff
+    EOA  (0xFae231524539698f1D136d7b21E3B4144CDbF2a3) {
+    +++ description: None
+      address:
+-        "0xFae231524539698f1D136d7b21E3B4144CDbF2a3"
++        "eth:0xFae231524539698f1D136d7b21E3B4144CDbF2a3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A)
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543)
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UnknownIsm (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09)
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c)
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7)
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2)
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
+```
+
 Generated with discovered.json: 0x472d075f54cd3da26b23135e954c3c7ea7c33c67
 
 # Diff at Mon, 07 Jul 2025 10:10:04 GMT:

@@ -5,13 +5,13 @@
   "configHash": "0x41f335bdaa71d6f9c40b014907267119ab9db3efc17656f6ba5a06ab41883aea",
   "entries": [
     {
-      "address": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+      "address": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "GasOracle",
-      "address": "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0",
+      "address": "eth:0x0BdF6139F2841A7856Ca154D851182C52F5b96e0",
       "type": "Contract",
       "sourceHashes": [
         "0x61437d07b213292a6639ca58a2549f8fec70a7497940aba88e8d137a2b23e5a1"
@@ -22,15 +22,15 @@
       "values": {
         "$immutable": true,
         "chainId": 1,
-        "owner": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622"
+        "owner": "eth:0x349a438CCF81a663661cb74DbE8e3C88Bc12e622"
       },
       "implementationNames": {
-        "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": "GasOracle"
+        "eth:0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": "GasOracle"
       }
     },
     {
       "name": "AllbridgeMessenger",
-      "address": "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA",
+      "address": "eth:0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA",
       "type": "Contract",
       "sourceHashes": [
         "0xb232ad1147747fd0ac80fb67952fcf5297e1a534c2009196849b29ac950afdcf"
@@ -42,25 +42,25 @@
         "$immutable": true,
         "chainId": 1,
         "otherChainIds": "0x0000010101010101010101010101000000000000000000000000000000000000",
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "implementationNames": {
-        "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": "Messenger"
+        "eth:0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": "Messenger"
       }
     },
     {
-      "address": "0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5",
+      "address": "eth:0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x349a438CCF81a663661cb74DbE8e3C88Bc12e622",
+      "address": "eth:0x349a438CCF81a663661cb74DbE8e3C88Bc12e622",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OldAllbridgeMessenger",
-      "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+      "address": "eth:0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -68,17 +68,17 @@
       "sinceBlock": 15493337,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50": ""
+        "eth:0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50": ""
       }
     },
     {
-      "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
+      "address": "eth:0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LPBridge",
-      "address": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
+      "address": "eth:0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
       "type": "Contract",
       "sourceHashes": [
         "0x814861bc3f9f100efbeb6a574409097f4080e9c4765d678fca86ffa46e453d7f"
@@ -90,23 +90,23 @@
         "$immutable": true,
         "canSwap": 1,
         "chainId": 1,
-        "DAI_POOL": "0x0000000000000000000000000000000000000000",
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
-        "USDC_POOL": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
-        "USDT_POOL": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D"
+        "DAI_POOL": "eth:0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "USDC_POOL": "eth:0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
+        "USDT_POOL": "eth:0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D"
       },
       "implementationNames": {
-        "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": "Bridge"
+        "eth:0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": "Bridge"
       }
     },
     {
-      "address": "0x7234dB900E907398EdfAdA744d5Bf8A842B335BA",
+      "address": "eth:0x7234dB900E907398EdfAdA744d5Bf8A842B335BA",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Pool",
-      "address": "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
+      "address": "eth:0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D",
       "type": "Contract",
       "template": "allbridge/pool",
       "sourceHashes": [
@@ -147,22 +147,22 @@
         "getPrice": 9991,
         "getY": [15321818409498, 10834771943831, 8846936597764, 7661951001941],
         "name": "Allbridge LP",
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",
         "reserves": 4153716049,
-        "router": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
+        "router": "eth:0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
         "symbol": "LP-USDT",
-        "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "token": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "tokenBalance": 2145668868,
         "totalSupply": 4218193646,
         "vUsdBalance": 2073423661
       },
       "implementationNames": {
-        "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D": "Pool"
+        "eth:0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D": "Pool"
       }
     },
     {
       "name": "WormholeMessenger",
-      "address": "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74",
+      "address": "eth:0x7f02294f065A605C8D21D9812b8d1De7E5E1da74",
       "type": "Contract",
       "sourceHashes": [
         "0xd907a740abab7d5003a704cad4c8273b66cd185386078939c9c8abccec6ec131"
@@ -174,20 +174,20 @@
         "$immutable": true,
         "chainId": 1,
         "otherChainIds": "0x0000010001010100010101010001000000000000000000000000000000000000",
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "implementationNames": {
-        "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": "WormholeMessenger"
+        "eth:0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": "WormholeMessenger"
       }
     },
     {
-      "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
+      "address": "eth:0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Validator",
-      "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
+      "address": "eth:0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -195,12 +195,12 @@
       "sinceBlock": 13597354,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x93746538D4519C809827205Bd1C2c7a0E15bd74b": ""
+        "eth:0x93746538D4519C809827205Bd1C2c7a0E15bd74b": ""
       }
     },
     {
       "name": "OldLPBridge",
-      "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
+      "address": "eth:0xA314330482f325D38A83B492EF6B006224a3bea9",
       "type": "Contract",
       "sourceHashes": [
         "0x227ed0f9173e33afccdd9e79a6d7d760104d62875552f49b4ef2a9c7c7431ba6"
@@ -210,18 +210,18 @@
       "sinceBlock": 15493360,
       "values": {
         "$immutable": true,
-        "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
+        "allbridgeMessenger": "eth:0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
         "chainId": 1,
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
-        "wormholeMessenger": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "wormholeMessenger": "eth:0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F"
       },
       "implementationNames": {
-        "0xA314330482f325D38A83B492EF6B006224a3bea9": "Bridge"
+        "eth:0xA314330482f325D38A83B492EF6B006224a3bea9": "Bridge"
       }
     },
     {
       "name": "Pool",
-      "address": "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
+      "address": "eth:0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d",
       "type": "Contract",
       "template": "allbridge/pool",
       "sourceHashes": [
@@ -262,27 +262,27 @@
         "getPrice": 9990,
         "getY": [8370172284637, 5919013395777, 4833109718998, 4185782357610],
         "name": "Allbridge LP",
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0",
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",
         "reserves": 2620332167,
-        "router": "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
+        "router": "eth:0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e",
         "symbol": "LP-USDC",
-        "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "token": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "tokenBalance": 1436492331,
         "totalSupply": 2818059940,
         "vUsdBalance": 1382929179
       },
       "implementationNames": {
-        "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d": "Pool"
+        "eth:0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d": "Pool"
       }
     },
     {
-      "address": "0xb7C522Adb3429e2C7474df324c7a3744A5803414",
+      "address": "eth:0xb7C522Adb3429e2C7474df324c7a3744A5803414",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "FeeOracle",
-      "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
+      "address": "eth:0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -290,15 +290,15 @@
       "sinceBlock": 13594973,
       "values": {
         "$immutable": true,
-        "owner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+        "owner": "eth:0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
       },
       "implementationNames": {
-        "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6": ""
+        "eth:0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6": ""
       }
     },
     {
       "name": "TokenBridge",
-      "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
+      "address": "eth:0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
       "type": "Contract",
       "sourceHashes": [
         "0x130012988c91475c96e6c32d27893406b8a1837f48f56d47571e53852d863a6d"
@@ -312,35 +312,35 @@
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
-              "0xF62e459Aa6a959c4224A7315F85e4703f462918A"
+              "eth:0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
+              "eth:0xF62e459Aa6a959c4224A7315F85e4703f462918A"
             ]
           },
           "BRIDGE_MANAGER": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
+            "members": ["eth:0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
           },
           "TOKEN_MANAGER": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
+            "members": ["eth:0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"]
           },
           "STOP_MANAGER": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"]
+            "members": ["eth:0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"]
           }
         },
-        "feeCollector": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
-        "feeOracle": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
-        "unlockSigner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
-        "validator": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b"
+        "feeCollector": "eth:0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
+        "feeOracle": "eth:0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
+        "unlockSigner": "eth:0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E",
+        "validator": "eth:0x93746538D4519C809827205Bd1C2c7a0E15bd74b"
       },
       "implementationNames": {
-        "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": "Bridge"
+        "eth:0xBBbD1BbB4f9b936C3604906D7592A644071dE884": "Bridge"
       }
     },
     {
       "name": "CctpBridge",
-      "address": "0xC51397b75B783E31469bFaADE79913F3f82210d6",
+      "address": "eth:0xC51397b75B783E31469bFaADE79913F3f82210d6",
       "type": "Contract",
       "sourceHashes": [
         "0x2953fb7cbb1c9e0950eac2b3e6206de8087063655779e90a024f7aaf8f31d55c"
@@ -353,15 +353,15 @@
         "adminFeeShareBP": 10,
         "chainId": 1,
         "getDomainByChainId": [5],
-        "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
+        "owner": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "implementationNames": {
-        "0xC51397b75B783E31469bFaADE79913F3f82210d6": "CctpBridge"
+        "eth:0xC51397b75B783E31469bFaADE79913F3f82210d6": "CctpBridge"
       }
     },
     {
       "name": "OldWormholeMessenger",
-      "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
+      "address": "eth:0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -369,11 +369,11 @@
       "sinceBlock": 15521726,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F": ""
+        "eth:0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F": ""
       }
     },
     {
-      "address": "0xF62e459Aa6a959c4224A7315F85e4703f462918A",
+      "address": "eth:0xF62e459Aa6a959c4224A7315F85e4703f462918A",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -712,5 +712,5 @@
   "usedTemplates": {
     "allbridge/pool": "0x94bdaf7fc9fbaf2bb00cc10c613ffa3d5071237ca06484553d2fc8ebb80a8289"
   },
-  "permissionsConfigHash": "0x98930cd06165d162900b90801422090472b3878e2dad9ab1fb22e533cf790248"
+  "permissionsConfigHash": "0x2379416dc7914334f1a156376a8d8ee6a15f476333a9528fed9a482b9d0dd212"
 }

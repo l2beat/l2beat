@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -34,11 +35,11 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'finalizationPeriodSeconds',
 )
 
-const sequencerAddress = EthereumAddress(
+const sequencerAddress = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'batcherHash'),
 )
 
-const sequencerInbox = EthereumAddress(
+const sequencerInbox = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
@@ -128,8 +129,8 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: sequencerAddress,
-          to: sequencerInbox,
+          from: ChainSpecificAddress.address(sequencerAddress),
+          to: ChainSpecificAddress.address(sequencerInbox),
           sinceTimestamp: UnixTime(1734388655),
         },
       },
@@ -140,7 +141,7 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: ChainSpecificAddress.address(l2OutputOracle.address),
           selector: '0x9ad84880',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
@@ -155,7 +156,7 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: ChainSpecificAddress.address(l2OutputOracle.address),
           selector: '0x59c3e00a', // non-optimistic mode
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
@@ -169,7 +170,7 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: ChainSpecificAddress.address(l2OutputOracle.address),
           selector: '0x9aaab648', // optimistic mode
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
