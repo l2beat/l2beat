@@ -10,6 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
+import type { ZkCatalogTagType } from './common/zkCatalogTags'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -213,7 +214,7 @@ export type BadgeFilterId =
 
 export interface ZkCatalogTag {
   id: string
-  type: string
+  type: ZkCatalogTagType
   name: string
   description: string
 }

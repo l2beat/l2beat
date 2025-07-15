@@ -11,6 +11,7 @@ import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
+import { TechStackCell } from '../components/TechStackCell'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
@@ -76,6 +77,13 @@ export const zkCatalogColumns = [
           ))}
         </div>
       )
+    },
+  }),
+  columnHelper.accessor((row) => row.techStack, {
+    id: 'tech-stack',
+    header: 'Tech stack',
+    cell: (ctx) => {
+      return <TechStackCell techStack={ctx.row.original.techStack} />
     },
   }),
   columnHelper.accessor((row) => row.trustedSetup, {

@@ -25,6 +25,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry {
   }
   attesters: (ZkCatalogAttester & { icon: string })[]
   trustedSetup: ProjectProofSystem['trustedSetup']
+  techStack: ProjectProofSystem['techStack']
 }
 
 export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
@@ -100,6 +101,7 @@ function getZkCatalogEntry(
       (a) => a?.id,
     ),
     trustedSetup: project.proofSystem.trustedSetup,
+    techStack: project.proofSystem.techStack,
     projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
   }
 }
