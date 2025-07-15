@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6e988abe312ae8806af65802d7f3f4cd1fc94a98
+
+# Diff at Tue, 15 Jul 2025 10:05:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22779924
+- current block number: 22923858
+
+## Description
+
+MS member change.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 2 (0x9C4a57Feb77e294Fd7BF5EBE9AB01CAA0a90A110) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993"
++        "eth:0x1c870776B168A9ffAE80c51f050C611eDd246741"
+    }
+```
+
 Generated with discovered.json: 0x06b8809205a4b063daf2c81f483a8126e45eca9d
 
 # Diff at Mon, 14 Jul 2025 12:44:48 GMT:
