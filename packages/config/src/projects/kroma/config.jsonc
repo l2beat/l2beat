@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "kroma",
   "import": ["../globalConfig.jsonc"],
+  "archived": true,
   "chains": {
     "ethereum": {
       "sharedModules": ["shared-sp1"],
@@ -31,6 +32,16 @@
         "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
       },
       "overrides": {
+        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35":{
+          "fields": {
+            "sequencerInbox": {
+              "handler": {
+                "type": "hardcoded", // handler cannot handle, project archived
+                "value": "0xfF00000000000000000000000000000000000255"
+              }
+            }
+          }
+        },
         "0xe57E217d8ed498992452791622711B866403E950": {
           "description": "Escrows a pool of KRO used as validator rewards by the AssetManager.",
           "ignoreRelatives": ["KGH"]
