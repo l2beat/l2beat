@@ -1,11 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
-import { orbitStackL2 } from '../../templates/orbitStack'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('pepeunchained2')
 
