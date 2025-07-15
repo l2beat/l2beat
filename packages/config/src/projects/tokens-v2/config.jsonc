@@ -5,15 +5,155 @@
   "chains": {
     "ethereum": {
       "maxDepth": 1,
-      "initialAddresses": ["0xBA50933C268F567BDC86E1aC131BE072C6B0b71a"],
+      "initialAddresses": [
+        "0xbf5495efe5db9ce00f80364c8b423567e58d2110", // ezETH
+        "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811", // pzETH
+        "0xdb25f211ab05b1c97d595516f45794528a807ad8", // EURS
+        "0xdC035D45d973E3EC169d2276DDab16f1e407384F", // USDS
+        "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB" // stAZUR
+      ],
       "overrides": {
-        "0xBA50933C268F567BDC86E1aC131BE072C6B0b71a": {
-          // Cannot do - sadly
-          // "ignoreDiscovery": true,
+        "0xbf5495efe5db9ce00f80364c8b423567e58d2110": {
+          "ignoreRelatives": ["roleManager", "$admin"],
           "fields": {
             "$tokenData": {
               "handler": {
                 "type": "ERC20Data"
+              }
+            }
+          }
+        },
+        "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": {
+          "ignoreMethods": [
+            "convertToAssets",
+            "convertToShares",
+            "farmIdsContains",
+            "previewDeposit",
+            "previewMint",
+            "previewRedeem",
+            "previewWithdraw",
+            "rewardData"
+          ],
+          "ignoreRelatives": [
+            "asset",
+            "$admin",
+            "defaultCollateral",
+            "depositStrategy",
+            "rebalanceStrategy",
+            "withdrawalStrategy",
+            "subvaultAt",
+            "symbioticAdapter"
+          ],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data"
+              }
+            }
+          }
+        },
+        "0xdb25f211ab05b1c97d595516f45794528a807ad8": {
+          "ignoreMethods": ["calculateFee"],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "overrides": { "category": "stablecoin" },
+                "type": "ERC20Data"
+              }
+            }
+          }
+        },
+        "0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+          "ignoreMethods": ["proxiableUUID"],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": { "category": "stablecoin" }
+              }
+            }
+          }
+        },
+        "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB": {
+          "ignoreMethods": [
+            "calculateWithdrawalAmount",
+            "withdrawalRequests",
+            "underlying"
+          ],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "coingeckoId": "azuro-protocol" // the staked version is not on CG
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "arbitrum": {
+      "maxDepth": 1,
+      "initialAddresses": [
+        "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91", // W
+        "0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d", // USDY
+        "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872" // BUIDL
+      ],
+      "overrides": {
+        "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": {
+          "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "source": "external",
+                  "supply": "totalSupply",
+                  "bridgedUsing": {
+                    "bridges": [
+                      {
+                        "name": "Wormhole",
+                        "slug": "portal"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d": {
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "source": "external",
+                  "supply": "totalSupply",
+                  "bridgedUsing": {
+                    "bridges": [
+                      {
+                        "name": "Layer Zero v2 OFT",
+                        "slug": "layerzerov2oft"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": {
+          "ignoreMethods": ["getDSService", "proxiableUUID"],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "source": "native",
+                  "supply": "totalSupply" // minted by operators on each chain
+                }
               }
             }
           }

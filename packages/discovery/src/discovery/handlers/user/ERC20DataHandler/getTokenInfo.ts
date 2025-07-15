@@ -1,11 +1,9 @@
 import {
   assert,
-  Bytes,
   type CoingeckoId,
   type EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
 import type { IProvider } from '../../../provider/IProvider'
 
 export async function getTokenInfo(
@@ -47,46 +45,34 @@ export async function getTokenInfo(
   }
 }
 
-const ABI = [
-  'function aggregate(tuple(address target, bytes callData)[] calls) view returns (uint256 blockNumber, logger, bytes[] returnData)',
-  'function name() view returns (string)',
-  'function symbol() view returns (string)',
-  'function decimals() view returns (uint8)',
-]
-const CODER = new utils.Interface(ABI)
-
-const ZERO_BYTES = Bytes.fromHex('0x')
-
 async function getName(provider: IProvider, address: EthereumAddress) {
-  const data = Bytes.fromHex('0x06fdde03') // name()
+  const name = await provider.callMethod<string>(
+    address,
+    'function name() view returns (string)',
+    [],
+  )
 
-  const name = await provider.call(address, data)
-
-  assert(!name.equals(ZERO_BYTES), 'Could not find name for token')
-
-  return CODER.decodeFunctionResult('name', name.toString())[0] as string
+  return name
 }
 
 async function getSymbol(provider: IProvider, address: EthereumAddress) {
-  const data = Bytes.fromHex('0x95d89b41') // symbol()
+  const symbol = await provider.callMethod<string>(
+    address,
+    'function symbol() view returns (string)',
+    [],
+  )
 
-  const symbol = await provider.call(address, data)
-
-  assert(!symbol.equals(ZERO_BYTES), 'Could not find symbol for token')
-
-  return CODER.decodeFunctionResult('symbol', symbol.toString())[0] as string
+  return symbol
 }
 
 async function getDecimals(provider: IProvider, address: EthereumAddress) {
-  const data = Bytes.fromHex('0x313ce567') // decimals()
-
-  const decimals = await provider.call(address, data)
-
-  assert(!decimals.equals(ZERO_BYTES), 'Could not find decimals for token')
-
-  return Number.parseInt(
-    CODER.decodeFunctionResult('decimals', decimals.toString())[0] as string,
+  const decimals = await provider.callMethod<number>(
+    address,
+    'function decimals() view returns (uint8)',
+    [],
   )
+
+  return decimals
 }
 
 function getImageUrl(
@@ -138,9 +124,15 @@ async function getCoingeckoListingTimestamp(
     `No price history found for token: ${coingeckoId.toString()}`,
   )
 
+  const [firstPrice] = coingeckoPriceHistoryData.prices
+
+  assert(
+    firstPrice,
+    `No price history found for token: ${coingeckoId.toString()}`,
+  )
+
   const firstCoingeckoPriceTimestamp = UnixTime(
-    // biome-ignore lint/style/noNonNullAssertion: check above
-    Math.floor(coingeckoPriceHistoryData.prices[0]!.date.getTime() / 1000),
+    Math.floor(new Date(firstPrice.date).getTime() / 1000),
   )
 
   return firstCoingeckoPriceTimestamp
