@@ -32,7 +32,7 @@
         "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
       },
       "overrides": {
-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35":{
+        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": {
           "fields": {
             "sequencerInbox": {
               "handler": {
