@@ -4665,6 +4665,20 @@
       "supply": "zero"
     },
     {
+      "name": "RDO Token",
+      "coingeckoId": "reddio",
+      "address": "0x57240C3E140f98abe315CA8E0213c7a77F34A334",
+      "symbol": "RDO",
+      "decimals": 18,
+      "deploymentTimestamp": 1748013347,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55332/large/reddio.png?1745470527",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Reef.finance",
       "coingeckoId": "reef",
       "address": "0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf",
