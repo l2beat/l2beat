@@ -90,7 +90,9 @@ export function DesktopProjectNavigation({
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="text-label-value-18">{project.title}</span>
+            <span className="font-bold text-label-value-18">
+              {project.title}
+            </span>
           </div>
           {project.isUnderReview && (
             <UnderReviewCallout withoutDescription className="mt-2" />
