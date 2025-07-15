@@ -343,9 +343,13 @@ export class ConfigReader {
    * @notice Top-level only, won't reach into nested-grouping folders
    */
   getProjectsInGroup(group: string): string[] {
-    return this.enumerateProjectDirectories().filter((projectPath) => {
+    return this.enumerateProjectDirectories().flatMap((projectPath) => {
+      const basename = path.basename(projectPath)
       const parentDir = path.basename(path.dirname(projectPath))
-      return parentDir === `(${group})`
+      if (parentDir === `(${group})`) {
+        return [basename]
+      }
+      return []
     })
   }
 

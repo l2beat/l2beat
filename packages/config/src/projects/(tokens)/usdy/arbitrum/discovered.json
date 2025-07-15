@@ -1,0 +1,250 @@
+{
+  "name": "usdy",
+  "chain": "arbitrum",
+  "blockNumber": 357988572,
+  "configHash": "0x099405d223029d82515878ed33b3335963a356e6f2848d76a37d50af32522d97",
+  "entries": [
+    {
+      "name": "USDY",
+      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x9c3f55931bf03c46f6a9bde3a662dc24117676cc7e49c8e0af2365e511b8b92b",
+        "0x43a5711ce2edb57c1a757db5b3ca553200f976c92f71bde014acdb5c74b0bdfb"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1723057357,
+      "sinceBlock": 240467591,
+      "values": {
+        "$admin": "0xB7bCC4Af60Fb5267946DEFF1fe373989995352B2",
+        "$implementation": "0x5692349f8e7081E2ad0bA629E01761b43187304C",
+        "$pastUpgrades": [
+          [
+            "2024-08-07T19:02:37.000Z",
+            "0x028b1b24a7e5ee1d09e3a11ebaab1f9a979d7b50fa3fff3eee12bcceaa2a9ac4",
+            ["0x5692349f8e7081E2ad0bA629E01761b43187304C"]
+          ]
+        ],
+        "$tokenData": {
+          "name": "Ondo U.S. Dollar Yield",
+          "coingeckoId": "ondo-us-dollar-yield",
+          "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+          "symbol": "USDY",
+          "decimals": 18,
+          "deploymentTimestamp": 1723057357,
+          "coingeckoListingTimestamp": 1699401600,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+          "chainId": 42161,
+          "supply": "totalSupply",
+          "source": "external",
+          "bridgedUsing": {
+            "bridges": [
+              { "name": "Layer Zero v2 OFT", "slug": "layerzerov2oft" }
+            ]
+          }
+        },
+        "$upgradeCount": 1,
+        "blocklist": "0xb9123f09D44e6DF568726835233727A6e0FF16A2",
+        "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
+        "currentTerms": "",
+        "decimals": 18,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "LIST_CONFIGURER_ROLE": "0xa74faf88a584437bd0449f37007060732f2e252b1607e7286651c9b6c1a74cba",
+        "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+        "name": "Ondo U.S. Dollar Yield",
+        "paused": false,
+        "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "sanctionsList": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+        "symbol": "USDY",
+        "totalSupply": "5404212513925110000000000"
+      },
+      "implementationNames": {
+        "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": "TokenProxy",
+        "0x5692349f8e7081E2ad0bA629E01761b43187304C": "USDY"
+      }
+    },
+    {
+      "name": "SanctionsList",
+      "address": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6ff4139499fdefb67721856dc72ea50826fbb36826ee4c22cfaedefd9adcf067"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1646884628,
+      "sinceBlock": 7676728,
+      "values": {
+        "$immutable": true,
+        "name": "Chainalysis sanctions oracle",
+        "owner": "0xDF900dC8991474ab9d69F2c3b9C900c055fb36CD"
+      },
+      "implementationNames": {
+        "0x40C57923924B5c5c5455c48D93317139ADDaC8fb": "SanctionsList"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xB7bCC4Af60Fb5267946DEFF1fe373989995352B2",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xf944f88083f41ff959fefbdcd6fc3ae633692b072b8497fb14cbdd843eded490"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1723057357,
+      "sinceBlock": 240467591,
+      "values": {
+        "$immutable": true,
+        "owner": "0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D"
+      },
+      "implementationNames": {
+        "0xB7bCC4Af60Fb5267946DEFF1fe373989995352B2": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "Blocklist",
+      "address": "0xb9123f09D44e6DF568726835233727A6e0FF16A2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3eee07d873905b39824016ff6608d2dfc39d19501223b1cbd056e5dc63ff050e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1723056060,
+      "sinceBlock": 240462430,
+      "values": {
+        "$immutable": true,
+        "name": "Ondo Finance Blocklist Oracle",
+        "owner": "0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "0xb9123f09D44e6DF568726835233727A6e0FF16A2": "Blocklist"
+      }
+    }
+  ],
+  "abis": {
+    "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": [
+      "constructor(address _logic, address _admin, bytes _data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x40C57923924B5c5c5455c48D93317139ADDaC8fb": [
+      "constructor()",
+      "event NonSanctionedAddress(address indexed addr)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SanctionedAddress(address indexed addr)",
+      "event SanctionedAddressesAdded(address[] addrs)",
+      "event SanctionedAddressesRemoved(address[] addrs)",
+      "function addToSanctionsList(address[] newSanctions)",
+      "function isSanctioned(address addr) view returns (bool)",
+      "function isSanctionedVerbose(address addr) returns (bool)",
+      "function name() pure returns (string)",
+      "function owner() view returns (address)",
+      "function removeFromSanctionsList(address[] removeSanctions)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x5692349f8e7081E2ad0bA629E01761b43187304C": [
+      "constructor()",
+      "error BlockedAccount()",
+      "error BlocklistZeroAddress()",
+      "error SanctionedAccount()",
+      "error SanctionsListZeroAddress()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event BlocklistSet(address oldBlocklist, address newBlocklist)",
+      "event Initialized(uint8 version)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SanctionsListSet(address oldSanctionsList, address newSanctionsList)",
+      "event TermsUpdated(string oldTerms, string newTerms)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function BURNER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function LIST_CONFIGURER_ROLE() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function blocklist() view returns (address)",
+      "function burn(uint256 amount)",
+      "function burn(address from, uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function currentTerms() view returns (string)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(string name, string symbol)",
+      "function initialize(string name, string symbol, address blocklist, address sanctionsList)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function sanctionsList() view returns (address)",
+      "function setBlocklist(address blocklist)",
+      "function setSanctionsList(address sanctionsList)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function unpause()",
+      "function updateTerm(string newTerm)"
+    ],
+    "0xB7bCC4Af60Fb5267946DEFF1fe373989995352B2": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xb9123f09D44e6DF568726835233727A6e0FF16A2": [
+      "constructor()",
+      "event BlockedAddressesAdded(address[] accounts)",
+      "event BlockedAddressesRemoved(address[] accounts)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function addToBlocklist(address[] accounts)",
+      "function isBlocked(address addr) view returns (bool)",
+      "function name() pure returns (string)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function removeFromBlocklist(address[] accounts)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+  },
+  "permissionsConfigHash": "0x9ad143c93b884d81608793d4a9b786c23a2c52e71e548ca6c1c81febb5ae07ea"
+}

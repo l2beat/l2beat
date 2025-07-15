@@ -1,0 +1,290 @@
+{
+  "name": "ez-eth",
+  "chain": "ethereum",
+  "blockNumber": 22925267,
+  "configHash": "0x0b681a31dcfe0a64e279efae3c5f12f7f7fad9e772e9065cd64be8766212cbfc",
+  "entries": [
+    {
+      "name": "RoleManager",
+      "address": "0x4994EFc62101A9e3F885d872514c2dC7b3235849",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
+        "0x6d8568c1d8508b9d77d9312e5c190339790ea4a8798e727b44b06e2931d2658c"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1701811055,
+      "sinceBlock": 18722770,
+      "values": {
+        "$admin": "0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982",
+        "$implementation": "0xF39D85893eeD84339B3C0B724D46cA70f12dE5E2",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T21:17:35.000Z",
+            "0x9331b1a305e77b53fcf6012be4571275fccc747f51806fb4700c02617d9f913a",
+            ["0x09aA40B6e0e768a04d650302e1879DCED6b7666E"]
+          ],
+          [
+            "2024-02-28T20:28:47.000Z",
+            "0xb9c400e19395e1f9eee38a8cb86453a18ca1b86e79db5a410a5ac492a8a6c0a3",
+            ["0x8e70eFC8f2a7B08193eC4E5295849C97f2a84A73"]
+          ],
+          [
+            "2024-06-11T13:39:59.000Z",
+            "0xe576365fd7cc2ed36e94225188d9c2a712681dab573a12d791eb22088da46408",
+            ["0x8F96d3B21f775b634FF9053eBA2a8cB71110037D"]
+          ],
+          [
+            "2024-08-06T15:44:35.000Z",
+            "0x0ca3d1f37bf6d603981992a239f92ea35d458820c4e95888fd8197d85bceab24",
+            ["0xC33755A8f08255C58A283cD35Dfd56cFd0f76096"]
+          ],
+          [
+            "2024-09-04T17:54:23.000Z",
+            "0x516c8e7d4587fea2d71c9d535421dacc5c2ef080255b14ada7ce322d9fa916c9",
+            ["0x2d2ED89F15d6F1dd95d46EBD2b9163545BD4c5f3"]
+          ],
+          [
+            "2025-04-11T19:24:11.000Z",
+            "0xd2cac9721f19cf36cde7c119b676074bdb9014c6f470ed81275677c2b8f82715",
+            ["0xa3e6849784b029E219c8247928A8B7A674b345F3"]
+          ],
+          [
+            "2025-06-13T17:21:35.000Z",
+            "0x539bc83f4e0a7c51a8f482e889b8833082f6984a9622a58ee4afa6f36e0fa498",
+            ["0xF39D85893eeD84339B3C0B724D46cA70f12dE5E2"]
+          ]
+        ],
+        "$upgradeCount": 7,
+        "BRIDGE_ADMIN": "0x7d61affb77d4847fb7ed1aa1837313fe7cff9524de0388714b3afb2334f1c8d9",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DEPOSIT_WITHDRAW_PAUSER": "0x381f0869cbcb6248e6fffbe44170ce68c8e237bb2b894637dd8b5ead3a90ac64",
+        "EIGEN_LAYER_REWARDS_ADMIN": "0x2818f6c98e5e41238423ef5aec0aeaa0647fc3c83a5ac2a31a3ca53da500ed5e",
+        "EMERGENCY_AVS_ETH_SLASH_TRACKING_ADMIN": "0xe2306c3613c6bb2c8751c41fbe5dc401d0a1c1fcae651922953410f8831909eb",
+        "EMERGENCY_CHECKPOINT_TRACKING_ADMIN": "0xd534fc940174d42b26d2c8b2a7b50435ef7c56f6efb6c23a35be027405491296",
+        "EMERGENCY_WITHDRAW_TRACKING_ADMIN": "0xe6339ec197977980988f9578648ff24c6ae316f346bafaca5d99b304c4f02019",
+        "ERC20_REWARD_ADMIN": "0xce088eb4daf8e00559f6efaf5033e4a20a999465aef63939fc8291590e8b68f5",
+        "NATIVE_ETH_RESTAKE_ADMIN": "0xe0c9b0afde038f1612cf25a9a50d0cc426fb91764673c34a47386568b26e1973",
+        "OPERATOR_DELEGATOR_ADMIN": "0x9b9a548aa2ba34e30a47878c06bae11c39c3dd5d938ef6b753c528ab93bd6178",
+        "ORACLE_ADMIN": "0xa8d944a5277d6a203f114d020d26918a390f167b089a46be4fca9da716d23783",
+        "PRICE_FEED_SENDER": "0xd907a75d7f010f54d40445f238c47d32be78c7d74fe6c7cb00ad1a030e5a4310",
+        "RESTAKE_MANAGER_ADMIN": "0x62929bb83c08258143b690639c95d6a1af635a6fe1efdc47ec862aa3aecd13b2",
+        "RX_ETH_MINTER_BURNER": "0x99a2b826efe74b18e139d0e8c752fad8ff60b7bd6f715f246d3981b65164d6a0",
+        "TOKEN_ADMIN": "0x74088672d183ee797e5da8fa05521697933bd36698c07546fac57bdf4023d877",
+        "WITHDRAW_QUEUE_ADMIN": "0xdd58f75cfee9aff701c6de9ccba92271983aadf74a34d8dfcc225f3221e4bec1",
+        "WITHDRAW_QUEUE_REBALANCE_ADMIN": "0x677336ba643aa5483c4f4533b34fb5c22d428da72f7c9c89dc7bdfbf66c52a1c"
+      },
+      "implementationNames": {
+        "0x4994EFc62101A9e3F885d872514c2dC7b3235849": "TransparentUpgradeableProxy",
+        "0xF39D85893eeD84339B3C0B724D46cA70f12dE5E2": "RoleManager"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x1c9416031605fbda74b5da95a290e00995eaed2f6f6ba85ff2681131efe940a0"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x4994EFc62101A9e3F885d872514c2dC7b3235849",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1701811031,
+      "sinceBlock": 18722768,
+      "values": {
+        "$immutable": true,
+        "owner": "0x81F6e9914136Da1A1d3b1eFd14F7E0761c3d4cc7"
+      },
+      "implementationNames": {
+        "0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982": "ProxyAdmin"
+      }
+    },
+    {
+      "name": "EzEthToken",
+      "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
+        "0xa8e9f180ef81d5b199440aa49bc0e39c74dd551d29934400210f55f5ec3c10f6"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1701811163,
+      "sinceBlock": 18722779,
+      "values": {
+        "_deprecated_paused": false,
+        "$admin": "0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982",
+        "$implementation": "0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C",
+        "$pastUpgrades": [
+          [
+            "2023-12-05T21:19:23.000Z",
+            "0xaf05c89f7b29f1dd7eff4bbf87807308ca2a3ad96a64e75011339fbd34c6a207",
+            ["0x67D4E4031Efc2288df1E257CA2d5c596d8Bd86ae"]
+          ],
+          [
+            "2023-12-06T03:06:35.000Z",
+            "0x51426833f5f5564d438c83ad262717466fa45c5dad6812cee46773516de98606",
+            ["0x1e756B7bCca7B26FB9D85344B3525F5559bbacb0"]
+          ],
+          [
+            "2024-06-11T13:39:59.000Z",
+            "0xe576365fd7cc2ed36e94225188d9c2a712681dab573a12d791eb22088da46408",
+            ["0x680A7937c59b19E2d38b86Ef47e9C2e415043dED"]
+          ],
+          [
+            "2025-04-11T19:24:11.000Z",
+            "0xd2cac9721f19cf36cde7c119b676074bdb9014c6f470ed81275677c2b8f82715",
+            ["0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C"]
+          ]
+        ],
+        "$tokenData": {
+          "name": "Renzo Restaked ETH",
+          "coingeckoId": "renzo-restaked-eth",
+          "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+          "symbol": "ezETH",
+          "decimals": 18,
+          "deploymentTimestamp": 1701811163,
+          "coingeckoListingTimestamp": 1706140800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+          "chainId": 1,
+          "supply": "zero",
+          "source": "canonical"
+        },
+        "$upgradeCount": 4,
+        "decimals": 18,
+        "name": "Renzo Restaked ETH",
+        "roleManager": "0x4994EFc62101A9e3F885d872514c2dC7b3235849",
+        "symbol": "ezETH",
+        "totalSupply": "318233137714748074431658"
+      },
+      "implementationNames": {
+        "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": "TransparentUpgradeableProxy",
+        "0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C": "EzEthToken"
+      }
+    }
+  ],
+  "abis": {
+    "0x4994EFc62101A9e3F885d872514c2dC7b3235849": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982": [
+      "constructor(address initialOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C": [
+      "constructor()",
+      "error InvalidZeroInput()",
+      "error NotEzETHMinterBurner()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Initialized(uint8 version)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function _deprecated_paused() view returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(address from, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address _roleManager)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function roleManager() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xF39D85893eeD84339B3C0B724D46cA70f12dE5E2": [
+      "constructor()",
+      "error InvalidZeroInput()",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function BRIDGE_ADMIN() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DEPOSIT_WITHDRAW_PAUSER() view returns (bytes32)",
+      "function EIGEN_LAYER_REWARDS_ADMIN() view returns (bytes32)",
+      "function EMERGENCY_AVS_ETH_SLASH_TRACKING_ADMIN() view returns (bytes32)",
+      "function EMERGENCY_CHECKPOINT_TRACKING_ADMIN() view returns (bytes32)",
+      "function EMERGENCY_WITHDRAW_TRACKING_ADMIN() view returns (bytes32)",
+      "function ERC20_REWARD_ADMIN() view returns (bytes32)",
+      "function NATIVE_ETH_RESTAKE_ADMIN() view returns (bytes32)",
+      "function OPERATOR_DELEGATOR_ADMIN() view returns (bytes32)",
+      "function ORACLE_ADMIN() view returns (bytes32)",
+      "function PRICE_FEED_SENDER() view returns (bytes32)",
+      "function RESTAKE_MANAGER_ADMIN() view returns (bytes32)",
+      "function RX_ETH_MINTER_BURNER() view returns (bytes32)",
+      "function TOKEN_ADMIN() view returns (bytes32)",
+      "function WITHDRAW_QUEUE_ADMIN() view returns (bytes32)",
+      "function WITHDRAW_QUEUE_REBALANCE_ADMIN() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address roleManagerAdmin)",
+      "function isBridgeAdmin(address potentialAddress) view returns (bool)",
+      "function isDepositWithdrawPauser(address potentialAddress) view returns (bool)",
+      "function isERC20RewardsAdmin(address potentialAddress) view returns (bool)",
+      "function isEigenLayerRewardsAdmin(address potentialAddress) view returns (bool)",
+      "function isEmergencyCheckpointTrackingAdmin(address potentialAddress) view returns (bool)",
+      "function isEmergencyTrackAVSEthSlashingAdmin(address potentialAddress) view returns (bool)",
+      "function isEmergencyWithdrawTrackingAdmin(address potentialAddress) view returns (bool)",
+      "function isEzETHMinterBurner(address potentialAddress) view returns (bool)",
+      "function isNativeEthRestakeAdmin(address potentialAddress) view returns (bool)",
+      "function isOperatorDelegatorAdmin(address potentialAddress) view returns (bool)",
+      "function isOracleAdmin(address potentialAddress) view returns (bool)",
+      "function isPriceFeedSender(address potentialAddress) view returns (bool)",
+      "function isRestakeManagerAdmin(address potentialAddress) view returns (bool)",
+      "function isRoleManagerAdmin(address potentialAddress) view returns (bool)",
+      "function isTokenAdmin(address potentialAddress) view returns (bool)",
+      "function isWithdrawQueueAdmin(address potentialAddress) view returns (bool)",
+      "function isWithdrawQueueRebalanceAdmin(address potentialAddress) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+  },
+  "permissionsConfigHash": "0x01336b05b8f79eb6d4e7d7dc43fb0cf4d31344ca757e9856c47fc9221f08720f"
+}
