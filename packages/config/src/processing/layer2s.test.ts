@@ -255,7 +255,10 @@ describe('layer2s', () => {
             const discovery = new ProjectDiscovery(project.id.toString())
             addresses.forEach((a) => {
               discovery.getContractByAddress(
-                ChainSpecificAddress.from(discovery.chain, a),
+                ChainSpecificAddress.from(
+                  getChainShortName(discovery.chain),
+                  a,
+                ),
               )
             })
           }
