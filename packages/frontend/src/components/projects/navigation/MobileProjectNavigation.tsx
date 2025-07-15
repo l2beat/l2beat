@@ -24,9 +24,10 @@ export function MobileProjectNavigation({ sections }: Props) {
   )
 
   useEffect(() => {
-    if (!selectedItem.current || !overflowContainer.current) return
+    if (!selectedItem.current || !overflowContainer.current || !currentSection)
+      return
     scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [scrollToItem])
+  }, [scrollToItem, currentSection])
 
   if (sections.length === 0) return null
 
