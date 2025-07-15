@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "EURS",
+  "import": ["../../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "maxAddresses": 1,
+      "initialAddresses": ["0xdb25f211ab05b1c97d595516f45794528a807ad8"],
+      "overrides": {
+        "0xdb25f211ab05b1c97d595516f45794528a807ad8": {
+          "ignoreMethods": ["calculateFee"],
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "overrides": { "category": "stablecoin" },
+                "type": "ERC20Data"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

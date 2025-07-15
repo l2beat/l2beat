@@ -22,6 +22,127 @@ const JustImport = v.object({ import: v.array(v.string()).optional() })
 export class ConfigReader {
   private importedCache = new Map<string, JustImport>()
 
+  /**
+   * Cache for already resolved project directories. The key is the project name, the
+   * value is the absolute directory that contains the project files (its basename
+   * equals the project name).
+   */
+  private readonly projectPathCache = new Map<string, string>()
+
+  /**
+   * Some directories are used only for grouping purposes (e.g. `(tokens)` in
+   * `projects/(tokens)/usdc`). These should be completely transparent for the
+   * discovery tooling.  We treat every directory whose name **starts with** `(`
+   * and **ends with** `)` as such a *grouping folder* – mirroring the behaviour
+   * of [Next.js routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#grouping).  All public methods that previously
+   * assumed `rootPath/<project>` now rely on {@link resolveProjectPath} to find
+   * the actual directory of a project regardless of the grouping folders.
+   */
+  private isGroupingFolder(dirName: string): boolean {
+    return dirName.startsWith('(') && dirName.endsWith(')')
+  }
+
+  /**
+   * Locate the on-disk directory for a given project. The search rules are:
+   * 1. Direct child of `rootPath` (legacy layout).
+   * 2. Recursively within any *grouping folder* (a directory wrapped in
+   *    parentheses). Only grouping folders are traversed – other regular
+   *    directories are treated as leaf project directories to keep the search
+   *    space small.
+   *
+   * Throws if the project cannot be found or if there are multiple matches.
+   */
+  private resolveProjectPath(project: string): string {
+    const cached = this.projectPathCache.get(project)
+    if (cached !== undefined) {
+      return cached
+    }
+
+    // 1. Fast path – direct child of root (must contain config.jsonc)
+    const direct = path.join(this.rootPath, project)
+    if (
+      fileExistsCaseSensitive(direct) &&
+      existsSync(path.join(direct, 'config.jsonc'))
+    ) {
+      this.projectPathCache.set(project, direct)
+      return direct
+    }
+
+    // 2. Breadth-first search within grouping folders
+    const queue: string[] = [this.rootPath]
+    const matches: string[] = []
+
+    while (queue.length > 0) {
+      const current = queue.shift()
+      if (current === undefined) {
+        continue
+      }
+      const entries = readdirSync(current, { withFileTypes: true })
+      for (const entry of entries) {
+        if (!entry.isDirectory()) continue
+        if (entry.name.startsWith('_')) continue // keep existing behaviour
+
+        const full = path.join(current, entry.name)
+
+        if (
+          entry.name === project &&
+          fileExistsCaseSensitive(full) &&
+          existsSync(path.join(full, 'config.jsonc'))
+        ) {
+          matches.push(full)
+        } else if (this.isGroupingFolder(entry.name)) {
+          queue.push(full)
+        }
+      }
+    }
+    if (matches.length === 0) {
+      throw new Error('Project not found, check if case matches')
+    }
+    if (matches.length > 1) {
+      const locations = matches.map((m) => path.relative(this.rootPath, m))
+      throw new Error(
+        `Multiple projects named "${project}" found in grouping folders: ${locations.join(', ')}`,
+      )
+    }
+
+    // matches[0] is defined because we checked matches.length above
+    const match = matches[0] as string
+    this.projectPathCache.set(project, match)
+    return match
+  }
+
+  /**
+   * Recursively gathers absolute paths of all *project* directories – these are
+   * directories that are **not** grouping folders (their name does **not** start
+   * with `(`) and are direct children of either `rootPath` or any grouping
+   * folder below it.
+   */
+  private enumerateProjectDirectories(): string[] {
+    const result: string[] = []
+    const stack: string[] = [this.rootPath]
+
+    while (stack.length > 0) {
+      const current = stack.pop()
+      if (current === undefined) continue
+
+      const entries = readdirSync(current, { withFileTypes: true })
+      for (const entry of entries) {
+        if (!entry.isDirectory()) continue
+        if (entry.name.startsWith('_')) continue
+
+        const full = path.join(current, entry.name)
+
+        if (this.isGroupingFolder(entry.name)) {
+          stack.push(full)
+        } else {
+          result.push(full)
+        }
+      }
+    }
+
+    return result
+  }
+
   constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): ConfigRegistry {
@@ -48,15 +169,10 @@ export class ConfigReader {
   }
 
   readRawConfig(name: string) {
+    const basePath = this.resolveProjectPath(name)
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, name)),
+      fileExistsCaseSensitive(basePath),
       'Project not found, check if case matches',
-    )
-
-    const basePath = path.join(this.rootPath, name)
-    assert(
-      fileExistsCaseSensitive(path.join(basePath)),
-      'Chain not found in project, check if case matches',
     )
 
     const contents = readJsonc(path.join(basePath, 'config.jsonc'))
@@ -80,17 +196,19 @@ export class ConfigReader {
   }
 
   readDiscovery(name: string, chain: string): DiscoveryOutput {
+    const projectPath = this.resolveProjectPath(name)
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, name)),
+      fileExistsCaseSensitive(projectPath),
       'Project not found, check if case matches',
     )
+    const chainPath = path.join(projectPath, chain)
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, name, chain)),
+      fileExistsCaseSensitive(chainPath),
       'Chain not found in project, check if case matches',
     )
 
     const contents = readFileSync(
-      path.join(this.rootPath, name, chain, 'discovered.json'),
+      path.join(chainPath, 'discovered.json'),
       'utf-8',
     )
 
@@ -111,11 +229,9 @@ export class ConfigReader {
   // discovered.json file. Most of the time you want to use
   // readAllDiscoveredProjects()
   readAllConfiguredProjects(): { project: string; chains: string[] }[] {
-    return readdirSync(path.join(this.rootPath), { withFileTypes: true })
-      .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
-      .map((projectDir) => {
-        const projectPath = path.join(this.rootPath, projectDir.name)
-
+    return this.enumerateProjectDirectories()
+      .map((projectPath) => {
+        const projectName = path.basename(projectPath)
         try {
           const parsed = readJsonc(path.join(projectPath, 'config.jsonc'))
           assert(
@@ -123,13 +239,12 @@ export class ConfigReader {
               typeof parsed.chains === 'object' &&
               parsed.chains !== null,
           )
-
           return {
-            project: projectDir.name,
+            project: projectName,
             chains: Object.keys(parsed.chains),
           }
         } catch {
-          return { project: projectDir.name, chains: [] }
+          return { project: projectName, chains: [] }
         }
       })
       .filter((x) => x.chains.length > 0)
@@ -139,17 +254,16 @@ export class ConfigReader {
   // discovered.json. Most of the time this is what you want to use. We assume
   // that projects that have a discovered.json are also configured.
   readAllDiscoveredProjects(): { project: string; chains: string[] }[] {
-    return readdirSync(path.join(this.rootPath), { withFileTypes: true })
-      .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
-      .map((projectDir) => {
-        const projectPath = path.join(this.rootPath, projectDir.name)
+    return this.enumerateProjectDirectories()
+      .map((projectPath) => {
+        const projectName = path.basename(projectPath)
         const chains = readdirSync(projectPath, { withFileTypes: true })
           .filter((x) => x.isDirectory())
           .map((x) => x.name)
           .filter((chain) =>
             existsSync(path.join(projectPath, chain, 'discovered.json')),
           )
-        return { project: projectDir.name, chains }
+        return { project: projectName, chains }
       })
       .filter((x) => x.chains.length > 0)
   }
@@ -169,11 +283,18 @@ export class ConfigReader {
   }
 
   readAllDiscoveredChainsForProject(name: string) {
-    if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
+    let projectPath: string
+    try {
+      projectPath = this.resolveProjectPath(name)
+    } catch {
       return []
     }
 
-    const parsed = readJsonc(path.join(this.rootPath, name, 'config.jsonc'))
+    if (!existsSync(path.join(projectPath, 'config.jsonc'))) {
+      return []
+    }
+
+    const parsed = readJsonc(path.join(projectPath, 'config.jsonc'))
     assert(
       'chains' in parsed &&
         typeof parsed.chains === 'object' &&
@@ -181,24 +302,26 @@ export class ConfigReader {
     )
     const chains = Object.keys(parsed.chains)
     const result = chains.filter((chain) =>
-      existsSync(path.join(this.rootPath, name, chain, 'discovered.json')),
+      existsSync(path.join(projectPath, chain, 'discovered.json')),
     )
 
     return result
   }
 
   readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {
+    const projectPath = this.resolveProjectPath(name)
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, name)),
+      fileExistsCaseSensitive(projectPath),
       'Project not found, check if case matches',
     )
+    const chainPath = path.join(projectPath, chain)
     assert(
-      fileExistsCaseSensitive(path.join(this.rootPath, name, chain)),
+      fileExistsCaseSensitive(chainPath),
       'Chain not found in project, check if case matches',
     )
 
     const content = readFileSync(
-      path.join(this.rootPath, name, chain, 'diffHistory.md'),
+      path.join(chainPath, 'diffHistory.md'),
       'utf-8',
     )
     const hashLine = content.split('\n')[0]
@@ -209,7 +332,7 @@ export class ConfigReader {
   }
 
   getProjectPath(project: string): string {
-    return path.join(this.rootPath, project)
+    return this.resolveProjectPath(project)
   }
 
   getProjectChainPath(project: string, chain: string): string {

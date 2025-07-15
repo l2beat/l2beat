@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  ConfigReader,
   type DiscoveryOutput,
   discover,
   getChainConfig,
@@ -7,7 +8,7 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { readFileSync } from 'fs'
-import path, { join, relative } from 'path'
+import path, { relative } from 'path'
 import { rimraf } from 'rimraf'
 
 export async function rediscoverStructureOnBlock(
@@ -21,10 +22,14 @@ export async function rediscoverStructureOnBlock(
     `Rediscovering ${projectName} on ${chain} at block ${blockNumber}... `,
   )
   const paths = getDiscoveryPaths()
+  const configReader = new ConfigReader(paths.discovery)
   const discoveryFolder =
     '.' +
     path.sep +
-    relative(process.cwd(), join(paths.discovery, projectName, chain))
+    relative(
+      process.cwd(),
+      configReader.getProjectChainPath(projectName, chain),
+    )
 
   // Remove any old sources we fetched before, so that their count doesn't grow
   await rimraf(`${discoveryFolder}/.code@*`, { glob: true })

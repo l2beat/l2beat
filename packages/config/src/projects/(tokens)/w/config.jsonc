@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "W",
+  "import": ["../../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "maxAddresses": 1,
+      "initialAddresses": ["0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"],
+      "overrides": {
+        "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": {
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "source": "external",
+                  "supply": "totalSupply",
+                  "bridgedUsing": {
+                    "bridges": [
+                      {
+                        "name": "Wormhole",
+                        "slug": "portal"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

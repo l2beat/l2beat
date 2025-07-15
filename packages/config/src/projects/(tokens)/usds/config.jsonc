@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "USDS",
+  "import": ["../../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "maxAddresses": 1,
+      "initialAddresses": ["0xdC035D45d973E3EC169d2276DDab16f1e407384F"],
+      "overrides": {
+        "0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": { "category": "stablecoin" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

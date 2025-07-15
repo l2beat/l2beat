@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ezETH",
+  "import": ["../../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "maxAddresses": 1,
+      "initialAddresses": ["0xbf5495efe5db9ce00f80364c8b423567e58d2110"],
+      "overrides": {
+        "0xbf5495efe5db9ce00f80364c8b423567e58d2110": {
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "USDY",
+  "import": ["../../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "maxAddresses": 1,
+      "initialAddresses": ["0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d"],
+      "overrides": {
+        "0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d": {
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "source": "external",
+                  "supply": "totalSupply",
+                  "bridgedUsing": {
+                    "bridges": [
+                      {
+                        "name": "Layer Zero v2 OFT",
+                        "slug": "layerzerov2oft"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

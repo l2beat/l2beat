@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "BUIDL",
+  "import": ["../../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "maxAddresses": 1,
+      "initialAddresses": ["0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872"],
+      "overrides": {
+        "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": {
+          "fields": {
+            "$tokenData": {
+              "handler": {
+                "type": "ERC20Data",
+                "overrides": {
+                  "source": "native",
+                  "supply": "totalSupply" // minted by operators on each chain
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
