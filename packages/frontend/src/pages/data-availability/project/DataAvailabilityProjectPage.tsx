@@ -41,7 +41,7 @@ export function DataAvailabilityProjectPage({
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:pt-[18px]">
+            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
               <ProjectHeader project={entry} className="pb-6" />
               <ProjectSummaryBars
                 project={{
@@ -59,7 +59,7 @@ export function DataAvailabilityProjectPage({
             {isNavigationEmpty ? (
               <ProjectDetails items={entry.sections} />
             ) : (
-              <div className="gap-x-6 md:flex">
+              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
                 <div className="w-full">
                   {entry.entryType === 'ethereum' ? (
                     <EthereumDaProjectSummary project={entry} />

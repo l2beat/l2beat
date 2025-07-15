@@ -3,13 +3,13 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
-import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
+import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
@@ -41,7 +41,7 @@ export function ScalingProjectPage({
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:pt-[18px]">
+            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
               <ProjectHeader
                 project={projectEntry}
                 ongoingAnomaly={projectEntry.header.ongoingAnomaly}
@@ -58,8 +58,8 @@ export function ScalingProjectPage({
             {isNavigationEmpty ? (
               <ProjectDetails items={projectEntry.sections} />
             ) : (
-              <div className="gap-x-6 md:flex">
-                <div className="w-full">
+              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+                <div>
                   <ProjectScalingSummary project={projectEntry} />
 
                   {projectEntry.header.category === 'Other' &&

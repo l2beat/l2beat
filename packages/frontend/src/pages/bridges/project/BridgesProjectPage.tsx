@@ -45,7 +45,7 @@ export function BridgesProjectPage({
               </div>
             )}
 
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:pt-[18px]">
+            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
               <ProjectHeader project={projectEntry} className="pb-6" />
               <ProjectSummaryBars project={projectEntry} />
 
@@ -66,7 +66,7 @@ export function BridgesProjectPage({
             {isNavigationEmpty ? (
               <ProjectDetails items={projectEntry.sections} />
             ) : (
-              <div className="gap-x-6 md:flex">
+              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
                 <div className="w-full">
                   <BridgesProjectSummary project={projectEntry} />
 
