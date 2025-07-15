@@ -7,7 +7,7 @@ export const boojum: BaseProject = {
   slug: 'boojum',
   name: 'Boojum',
   shortName: undefined,
-  addedAt: UnixTime.fromDate(new Date('2025-11-08')),
+  addedAt: UnixTime.fromDate(new Date('2025-07-11')),
   display: {
     description:
       'Boojum is a zk proving system for EraVM programs built by Matter Labs to prove ZKsync Era state transition.',
