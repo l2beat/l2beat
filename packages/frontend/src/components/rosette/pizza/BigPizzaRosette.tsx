@@ -112,7 +112,7 @@ function RosetteTooltipContent() {
       <SentimentText
         sentiment={selectedRisk.sentiment ?? 'neutral'}
         vibrant={true}
-        className="mb-2 flex items-center gap-1 text-heading-18"
+        className="mb-2 flex items-center gap-1 font-medium text-heading-18"
       >
         {selectedRisk.value}
       </SentimentText>

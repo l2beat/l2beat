@@ -254,7 +254,11 @@ function RiskCell(props: {
         props.className,
       )}
     >
-      <SentimentText sentiment={props.sentiment ?? 'neutral'} vibrant>
+      <SentimentText
+        sentiment={props.sentiment ?? 'neutral'}
+        vibrant
+        className="font-medium"
+      >
         {props.value}
       </SentimentText>
     </td>

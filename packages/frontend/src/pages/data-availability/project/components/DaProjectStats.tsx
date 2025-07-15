@@ -11,19 +11,21 @@ import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,
 } from '~/server/features/data-availability/project/getDaProjectEntry'
+import { cn } from '~/utils/cn'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
   stats: (ProjectSummaryStatProps & { key: string })[]
+  className?: string
 }
 const GROUPS = 4
 
-export function DaProjectStats({ stats }: Props) {
+export function DaProjectStats({ stats, className }: Props) {
   const chunked = chunkArray(stats, GROUPS)
 
   return (
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+    <div className={cn('grid grid-cols-1 gap-3 md:grid-cols-4', className)}>
       {chunked.map((statGroup, i) => {
         const isLastGroup = i === chunked.length - 1
 

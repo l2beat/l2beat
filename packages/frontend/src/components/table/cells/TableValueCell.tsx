@@ -53,7 +53,10 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
     <TableLink href={href}>
       <TwoRowCell>
         <TwoRowCell.First className="flex items-center gap-1">
-          <SentimentText sentiment={value.sentiment ?? 'neutral'}>
+          <SentimentText
+            sentiment={value.sentiment ?? 'neutral'}
+            className="font-medium"
+          >
             {value.value}
           </SentimentText>
           {value.warning && (

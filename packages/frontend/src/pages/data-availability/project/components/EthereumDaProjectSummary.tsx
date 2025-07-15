@@ -37,18 +37,16 @@ export function EthereumDaProjectSummary({ project }: Props) {
       data-role="project-section"
       className="w-full border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
     >
-      <div className="space-y-6">
-        <DaProjectStats stats={stats} />
+      <DaProjectStats stats={stats} className="mb-6" />
 
-        <InfoCallout
-          title={project.header.callout.title}
-          description={project.header.callout.description}
-        />
+      <InfoCallout
+        title={project.header.callout.title}
+        description={project.header.callout.description}
+      />
 
-        <div className="-mx-4 !mt-0 px-4 md:hidden">
-          <HorizontalSeparator className="-mx-4 w-[calc(100%+2rem)]" />
-          <MobileProjectLinks projectLinks={project.header.links} />
-        </div>
+      <div className="-mx-4 !mt-0 px-4 md:hidden">
+        <HorizontalSeparator className="-mx-4 w-[calc(100%+2rem)]" />
+        <MobileProjectLinks projectLinks={project.header.links} />
       </div>
     </section>
   )
