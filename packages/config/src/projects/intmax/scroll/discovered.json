@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "scroll",
-  "blockNumber": 17127533,
+  "blockNumber": 17230449,
   "configHash": "0xe23617605f7a3708b788b36b160b7420f5985a6871f2b9e1efb3702b1e4f7c1c",
   "entries": [
     {
@@ -89,7 +89,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 4,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -174,5 +174,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x9636e4252d5d998655d9c777fba7bc8d66f7305d9d23997f7c3581bab26dbdcb"
+  "permissionsConfigHash": "0x4df2b23b19bbc4005c2d1ef916750c2d3df297ac8d83df5496ee5f43bcf7fd68"
 }

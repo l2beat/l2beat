@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "blockNumber": 22894361,
+  "blockNumber": 22923714,
   "configHash": "0x9392986c4bdb9357c44b8f16182fc6bc3d9796c235d9e1966d4a913e0ecdbb9d",
   "entries": [
     {
@@ -128,7 +128,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 2,
+        "getCurrentPeriod": 3,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -218,7 +218,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -307,16 +307,6 @@
       }
     },
     {
-      "address": "0xe72A023C6969afeAbC184822276c1Be1D048Bc21",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xe8562B27634A738Eb64C9baBE9efe993B5243295",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Liquidity",
       "address": "0xF65e73aAc9182e353600a916a6c7681F810f79C3",
       "type": "Contract",
@@ -348,13 +338,7 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6"]
           },
-          "WITHDRAWAL": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0xe8562B27634A738Eb64C9baBE9efe993B5243295",
-              "0xe72A023C6969afeAbC184822276c1Be1D048Bc21"
-            ]
-          }
+          "WITHDRAWAL": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] }
         },
         "amlPermitter": "0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E",
         "contribution": "0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2",
@@ -390,10 +374,10 @@
           "0xeb6a853c7b43f5b2b28c58c2093515fa9c0ed77fd44696cdc6ba08f203ab6c17",
           "0x73c4c536a230e606807abb0b95a9d6ed8ed2b2ca361e54fcf7a48ba8bb26a59c"
         ],
-        "getLastDepositId": 3101,
-        "getLastRelayedDepositId": 3101,
+        "getLastDepositId": 3723,
+        "getLastRelayedDepositId": 3723,
         "getNativeTokenIndex": 0,
-        "paused": false,
+        "paused": true,
         "RELAY_LIMIT": 450,
         "RELAYER": "0xab4f864e5201b0fde9b5ee3e4cf96384802b0ffdfcf7f9de4699ce21a30afc4f",
         "rollup": "0x16f4BFeb925e748ef4Af8ce96E48d4B78Ec9da47",
@@ -960,5 +944,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Liquidity": "0x3c9c66ca364e227370b44af90dc91d42334eba615afca4238408bdad8f4fef21"
   },
-  "permissionsConfigHash": "0x9636e4252d5d998655d9c777fba7bc8d66f7305d9d23997f7c3581bab26dbdcb"
+  "permissionsConfigHash": "0x4df2b23b19bbc4005c2d1ef916750c2d3df297ac8d83df5496ee5f43bcf7fd68"
 }
