@@ -1,10 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
@@ -25,7 +25,7 @@ export const zkCatalogColumns = [
             {ctx.row.original.name}
           </div>
           {ctx.row.original.creator && (
-            <div className="text-[13px] text-secondary leading-normal">
+            <div className="font-medium text-[13px] text-secondary leading-normal">
               {ctx.row.original.creator}
             </div>
           )}
@@ -62,7 +62,13 @@ export const zkCatalogColumns = [
       return (
         <div>
           {ctx.row.original.attesters.map((attester) => (
-            <div key={attester.id}>
+            <div key={attester.id} className="flex items-center gap-1.5">
+              <img
+                src={attester.icon}
+                alt={attester.name}
+                width={16}
+                height={16}
+              />
               <span className="font-semibold text-xs leading-none">
                 {attester.name}
               </span>

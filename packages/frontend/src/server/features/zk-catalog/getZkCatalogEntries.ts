@@ -1,12 +1,12 @@
 import type { Project, ProjectProofSystem } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
-import { assert, type ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import {
-  type SevenDayTvsBreakdown,
   get7dTvsBreakdown,
+  type SevenDayTvsBreakdown,
 } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
@@ -23,7 +23,7 @@ export interface ZkCatalogEntry extends CommonProjectEntry {
     unsuccessfulCount: number
     notVerifiedCount: number
   }
-  attesters: ZkCatalogAttester[]
+  attesters: (ZkCatalogAttester & { icon: string })[]
   trustedSetup: ProjectProofSystem['trustedSetup']
 }
 
@@ -93,7 +93,9 @@ function getZkCatalogEntry(
     },
     attesters: uniqBy(
       project.proofSystem.verifierHashes
-        .flatMap((v) => v.attesters)
+        .flatMap((v) =>
+          v.attesters?.map((a) => ({ ...a, icon: getProjectIcon(a.id) })),
+        )
         .filter(notUndefined),
       (a) => a?.id,
     ),
