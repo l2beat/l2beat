@@ -5,7 +5,6 @@ import {
   flatteningHash,
   get$ImplementationsPublic,
   getChainFullName,
-  getChainShortName,
 } from '@l2beat/discovery'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
