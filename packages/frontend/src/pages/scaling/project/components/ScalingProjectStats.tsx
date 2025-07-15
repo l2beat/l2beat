@@ -51,7 +51,7 @@ export function ProjectScalingStats({ project, className }: Props) {
               </Tooltip>
             )}
             <ValueWithPercentageChange
-              className="!text-base !font-medium !leading-[100%]"
+              className="!text-base !font-medium !leading-[100%] text-nowrap"
               changeClassName="text-label-value-14 font-bold"
               change={project.header.tvs.breakdown.totalChange}
             >
