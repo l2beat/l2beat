@@ -113,7 +113,7 @@ function ChartContainer<T extends { timestamp: number }>({
         ref={ref}
         className={cn(
           chartContainerClassNames,
-          '2xlh-[258px] 2xlmin-h-[258px] h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px]',
+          'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]',
           className,
         )}
         {...props}
