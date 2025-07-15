@@ -674,8 +674,8 @@ body:has(.reading) {
 
 @utility scrollbar-hide {
   &::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
 }
