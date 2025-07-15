@@ -1,5 +1,4 @@
 import compact from 'lodash/compact'
-import { env } from 'process'
 import { HiringBadge } from '~/components/badge/HiringBadge'
 import { SidebarProvider } from '~/components/core/Sidebar'
 import { Footer } from '~/components/Footer'
@@ -9,6 +8,7 @@ import type { NavGroup } from '~/components/nav/types'
 import { TopBanner } from '~/components/TopBanner'
 import { externalLinks } from '~/consts/externalLinks'
 import { PARTNERS_ORDER } from '~/consts/partnersOrder'
+import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
 import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
@@ -27,7 +27,7 @@ export function SideNavLayout({
   childrenWrapperClassName?: string
 }) {
   const topChildren = (
-    <TopBanner className='lg:rounded-b-xl 2xl:rounded-br-none' />
+    <TopBanner className="lg:rounded-b-xl 2xl:rounded-br-none" />
   )
   return (
     <SidebarProvider>
@@ -45,7 +45,7 @@ export function SideNavLayout({
             childrenWrapperClassName,
           )}
         >
-          <div className='hidden lg:mr-3 lg:block 2xl:mr-0'>{topChildren}</div>
+          <div className="hidden lg:mr-3 lg:block 2xl:mr-0">{topChildren}</div>
           <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0">
             {children}
           </div>

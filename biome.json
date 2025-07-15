@@ -84,7 +84,8 @@
               "node:console": "Do not use console",
               "assert": "Use assert from @l2beat/shared-pure",
               "node:assert": "Use assert from @l2beat/shared-pure",
-              "lodash": "Use lodash/{module}"
+              "lodash": "Use lodash/{module}",
+              "process": "Do not use process"
             }
           }
         }
