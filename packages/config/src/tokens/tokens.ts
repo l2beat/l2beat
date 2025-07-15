@@ -40,21 +40,24 @@ export function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
 
-  const supportedChains =
-    configReader.readAllDiscoveredChainsForProject('tokens-v2')
+  const tokensDiscoveryProjects = configReader.getProjectsInGroup('tokens')
 
-  for (const chain of chains) {
-    if (!supportedChains.includes(chain.name)) {
-      continue
-    }
+  for (const tokenDiscovery of tokensDiscoveryProjects) {
+    const chainsSupportedByToken =
+      configReader.readAllDiscoveredChainsForProject(tokenDiscovery)
 
-    const discovery = new ProjectDiscovery('tokens-v2', chain.name)
+    for (const chain of chains) {
+      if (!chainsSupportedByToken.includes(chain.name)) {
+        continue
+      }
 
-    const tokensFromDiscovery = discovery.get$TokenData()
-    for (const token of tokensFromDiscovery) {
-      const generatedToken = GeneratedToken.parse(token)
-      const formattedToken = toToken(generatedToken, chains)
-      tokens.push(formattedToken)
+      const discovery = new ProjectDiscovery(tokenDiscovery, chain.name)
+      const tokensFromDiscovery = discovery.get$TokenData()
+      for (const token of tokensFromDiscovery) {
+        const generatedToken = GeneratedToken.parse(token)
+        const formattedToken = toToken(generatedToken, chains)
+        tokens.push(formattedToken)
+      }
     }
   }
 

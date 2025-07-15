@@ -339,6 +339,13 @@ export class ConfigReader {
     return path.join(this.getProjectPath(project), chain)
   }
 
+  getProjectsInGroup(group: string): string[] {
+    return this.enumerateProjectDirectories().filter((projectPath) => {
+      const parentDir = path.basename(path.dirname(projectPath))
+      return parentDir === `(${group})`
+    })
+  }
+
   resolveImports(
     basePath: string,
     imports: string[],
