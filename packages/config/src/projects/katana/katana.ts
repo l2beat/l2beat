@@ -47,6 +47,9 @@ export const katana: ScalingProject = {
     BADGES.Infra.AggLayer,
     BADGES.Stack.OPStack,
   ],
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
+  },
   display: {
     name: 'Katana',
     slug: 'katana',
