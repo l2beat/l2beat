@@ -17,6 +17,9 @@ import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
 
+const paths = getDiscoveryPaths()
+const configReader = new ConfigReader(paths.discovery)
+
 // A list of onchain projects that are not L2s (or prelaunch) or bridges
 // (so we don't show them on the frontend), but we still
 // want to monitor using discovery.
@@ -32,16 +35,13 @@ export const onChainProjects: string[] = [
   'espresso',
   'dydx',
   'tokens',
-  'tokens-v2',
   'gateway',
   'hibachi',
   'opcm16',
+  ...configReader.getProjectsInGroup('tokens'),
 ]
 
 describe('discovery config.jsonc', () => {
-  const paths = getDiscoveryPaths()
-
-  const configReader = new ConfigReader(paths.discovery)
   const templateService = new TemplateService(paths.discovery)
 
   const chainConfigs = configReader

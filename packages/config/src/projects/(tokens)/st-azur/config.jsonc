@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
-  "name": "pzETH",
+  "name": "stAZUR",
   "import": ["../../globalConfig.jsonc"],
   "chains": {
     "ethereum": {

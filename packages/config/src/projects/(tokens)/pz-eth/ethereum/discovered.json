@@ -1,8 +1,8 @@
 {
   "name": "pz-eth",
   "chain": "ethereum",
-  "blockNumber": 22925269,
-  "configHash": "0x7beec7ca5638f67744f0ebd04ac9d777876084b68abf44d7342755d094952340",
+  "blockNumber": 22925382,
+  "configHash": "0xec72ab69f67e2f24dafb3835473d9dfe6a06a247bee93f25b51038f76fc3bdfc",
   "entries": [
     {
       "name": "RatiosStrategy",
@@ -44,7 +44,7 @@
         "stEthPerToken": "1208258465628105706",
         "symbol": "wstETH",
         "tokensPerStEth": "827637486885023538",
-        "totalSupply": "3431463281648009977595616"
+        "totalSupply": "3431469712391283074228506"
       },
       "implementationNames": {
         "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -103,8 +103,6 @@
         "$upgradeCount": 4,
         "ADD_SUBVAULT_ROLE": "0xae944fcb809c01a95e89b6931e61939dd0bbb790c044c20197d070090098c3a2",
         "asset": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "convertToAssets": [0, 1, 2, 3, 4],
-        "convertToShares": [0, 0, 1, 2, 3],
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultCollateral": "0xC329400492c6ff2438472D4651Ad17389fCb843a",
@@ -116,58 +114,11 @@
         "farmCount": 0,
         "farmIdAt": [],
         "farmIds": [],
-        "farmIdsContains": [false, false, false, false, false],
         "limit": "80000000024518790233583",
         "name": "Renzo Restaked LST ",
-        "previewDeposit": [0, 0, 1, 2, 3],
-        "previewMint": [0, 2, 3, 4, 5],
-        "previewRedeem": [0, 1, 2, 3, 4],
-        "previewWithdraw": [0, 1, 2, 3, 4],
         "REBALANCE_ROLE": "0x2c09deb013d6a86a9063c95b5e2b10937d1128a3937347eb7e00408ed9fb1a9c",
         "rebalanceStrategy": "0x3aA61E6196fb3eb1170E578ad924898624f54ad6",
         "REMOVE_SUBVAULT_ROLE": "0x5e9c3ed0ef5487d8cda3fc51646c35847fdc0325200c5a21a159b36d8cba882e",
-        "rewardData": [
-          [
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            0,
-            0,
-            "0x"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            0,
-            0,
-            "0x"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            0,
-            0,
-            "0x"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            0,
-            0,
-            "0x"
-          ],
-          [
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            "0x0000000000000000000000000000000000000000",
-            0,
-            0,
-            "0x"
-          ]
-        ],
         "SET_ADAPTER_ROLE": "0xf2e7ea90350f51c371470888fa66eef25113ab1613606afc7de17fa5ee9605d2",
         "SET_DEFAULT_COLLATERAL_ROLE": "0x52a2e0e4c67d823979c1b45c7474d67476e3760d4e4797c5ad3a000c3e72a9cf",
         "SET_FARM_ROLE": "0x4c30aa7f742e0a14ed7755cb202fc37abe01363d805182186c7cfe8f8a15d64c",
@@ -186,16 +137,6 @@
         "totalSupply": "11085658830496977788645",
         "withdrawalPause": false,
         "withdrawalStrategy": "0x3aA61E6196fb3eb1170E578ad924898624f54ad6"
-      },
-      "errors": {
-        "convertToAssets": "Processing error occurred.",
-        "convertToShares": "Processing error occurred.",
-        "farmIdsContains": "Processing error occurred.",
-        "previewDeposit": "Processing error occurred.",
-        "previewMint": "Processing error occurred.",
-        "previewRedeem": "Processing error occurred.",
-        "previewWithdraw": "Processing error occurred.",
-        "rewardData": "Processing error occurred."
       },
       "implementationNames": {
         "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": "TransparentUpgradeableProxy",
@@ -223,7 +164,7 @@
         "symbol": "DC_wstETH",
         "totalDebt": 0,
         "totalRepaidDebt": 0,
-        "totalSupply": "68074912906699616122990"
+        "totalSupply": "68080929831229270244112"
       },
       "implementationNames": {
         "0xC329400492c6ff2438472D4651Ad17389fCb843a": "DefaultCollateral",

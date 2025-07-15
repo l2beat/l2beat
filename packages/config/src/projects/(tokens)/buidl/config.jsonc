@@ -8,6 +8,7 @@
       "initialAddresses": ["0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872"],
       "overrides": {
         "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": {
+          "ignoreMethods": ["getDSService", "proxiableUUID"],
           "fields": {
             "$tokenData": {
               "handler": {
