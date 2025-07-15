@@ -1,5 +1,6 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
@@ -10,6 +11,8 @@ import { projectDetailsToNavigationSections } from '~/components/projects/naviga
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { AboutSection } from '~/components/projects/sections/AboutSection'
+import { BadgesSection } from '~/components/projects/sections/BadgesSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
@@ -35,19 +38,31 @@ export function ScalingProjectPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
-          <div className="smooth-scroll">
+          <div className="smooth-scroll max-md:bg-surface-primary">
             {!isNavigationEmpty && (
               <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
+            <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
               <ProjectHeader
                 project={projectEntry}
                 ongoingAnomaly={projectEntry.header.ongoingAnomaly}
-                className="pb-6"
               />
               <ProjectSummaryBars project={projectEntry} />
+              {projectEntry.header.badges && (
+                <BadgesSection
+                  badges={projectEntry.header.badges}
+                  className="mb-4 md:hidden"
+                />
+              )}
+              {projectEntry.header.description && (
+                <AboutSection
+                  description={projectEntry.header.description}
+                  className="md:hidden"
+                />
+              )}
+              <HorizontalSeparator className="my-4 md:hidden" />
               <div className="mb-3 max-md:hidden">
                 <DesktopProjectLinks
                   projectLinks={projectEntry.header.links}

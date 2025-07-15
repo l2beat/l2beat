@@ -37,7 +37,7 @@ export function ProjectSummaryBars({
   }
 
   return (
-    <div className="space-y-2 pb-3">
+    <div className="mb-3 space-y-2">
       {showBridgesWarning && (
         <Banner type="warning" centered>
           <p>

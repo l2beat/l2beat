@@ -1,9 +1,18 @@
+import { cn } from '~/utils/cn'
 import { ReadMore } from '../../ReadMore'
 
-export function AboutSection({ description }: { description: string }) {
+export function AboutSection({
+  description,
+  className,
+}: {
+  description: string
+  className?: string
+}) {
   return (
-    <div className="flex flex-1 flex-col gap-2 text-base">
-      <h2 className="text-secondary text-subtitle-12 uppercase">About</h2>
+    <div className={cn('flex flex-1 flex-col gap-2 text-base', className)}>
+      <h2 className="text-secondary text-subtitle-12 uppercase max-md:hidden">
+        About
+      </h2>
       <p className="text-paragraph-13">
         <ReadMore onlyOnMobile>{description}</ReadMore>
       </p>

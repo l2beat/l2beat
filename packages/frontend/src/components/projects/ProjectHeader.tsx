@@ -11,13 +11,15 @@ interface Project {
 interface Props {
   project: Project
   ongoingAnomaly?: 'single' | 'multiple'
-  className?: string
 }
 
-export function ProjectHeader({ project, ongoingAnomaly, className }: Props) {
+export function ProjectHeader({ project, ongoingAnomaly }: Props) {
   return (
     <div
-      className={cn('flex gap-6 max-md:flex-col md:items-center', className)}
+      className={cn(
+        'flex gap-6 max-md:flex-col md:items-center',
+        ongoingAnomaly ? 'mb-4' : 'mb-6',
+      )}
     >
       <h1 className="flex items-center justify-start gap-3">
         {project.slug && (

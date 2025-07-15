@@ -35,14 +35,14 @@ export function DataAvailabilityProjectPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
-          <div className="smooth-scroll">
+          <div className="smooth-scroll max-md:bg-surface-primary">
             {!isNavigationEmpty && (
               <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
-              <ProjectHeader project={entry} className="pb-6" />
+            <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
+              <ProjectHeader project={entry} />
               <ProjectSummaryBars
                 project={{
                   archivedAt: entry.archivedAt,
