@@ -5,7 +5,6 @@ import {
   flatteningHash,
   get$ImplementationsPublic,
   getChainFullName,
-  getChainShortName,
 } from '@l2beat/discovery'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
@@ -111,14 +110,10 @@ export function getAllCode(
   const allAddresses = discoveries.flatMap((discovery) =>
     discovery.entries
       .filter((e) => e.type === 'Contract')
-      .map((entry) => ({
-        chain: getChainShortName(discovery.chain),
-        address: entry.address,
-      })),
+      .map((entry) => entry.address),
   )
 
-  for (const { chain, address } of allAddresses) {
-    const fullAddress = `${chain}:${address}`
+  for (const fullAddress of allAddresses) {
     try {
       const { entryName, codePaths } = getCodePaths(
         paths,
