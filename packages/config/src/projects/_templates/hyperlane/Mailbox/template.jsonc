@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.",
+  "ignoreRelatives": ["defaultHook", "requiredHook"],
+  "ignoreMethods": ["latestDispatchedId", "nonce"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them."
+        }
+      ]
+    },
+    "defaultIsm": {
+      "description": "The default ISM contract that is used for all destination contracts that do not override it.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "verify messages for destination contracts that do not specify a custom ISM."
+        }
+      ]
+    }
+  }
+}
