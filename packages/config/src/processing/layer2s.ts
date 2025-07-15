@@ -134,7 +134,6 @@ import { optimism } from '../projects/optimism/optimism'
 import { optopia } from '../projects/optopia/optopia'
 import { orderly } from '../projects/orderly/orderly'
 import { ozean } from '../projects/ozean/ozean'
-import { palm } from '../projects/palm/palm'
 import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
@@ -361,7 +360,6 @@ export const layer2s: ScalingProject[] = [
   optopia,
   orderly,
   ozean,
-  palm,
   pandasea,
   paradex,
   parallel,
