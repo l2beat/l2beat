@@ -311,6 +311,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
   },
   milestones: [
     {
+      title: 'ArbOS 40, Callisto Upgrade',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/13108804573775967668959825241666341617107666532012387058509418598838035461528?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2025-06-18T00:00:00Z',
+      type: 'general',
+    },
+    {
       title: 'Timeboost transaction ordering policy introduced',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/14881197137069494959448952699217598923721993392617887469969318742509097999570?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
       date: '2025-04-29T00:00:00Z',

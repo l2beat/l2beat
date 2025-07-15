@@ -52,12 +52,14 @@ export function ProjectScalingStats({ project, className }: Props) {
 
     project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
       <ProjectStat
+        key="gas-tokens"
         title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
         value={project.header.gasTokens.join(', ')}
       />
     ) : undefined,
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectStat
+        key="stage"
         title="Stage"
         className="md:gap-2.5"
         valueClassName="max-md:-mt-0.5"
@@ -84,10 +86,18 @@ export function ProjectScalingStats({ project, className }: Props) {
       value={project.header.purposes.join(', ')}
     />,
     project.header.hostChain ? (
-      <ProjectStat title="Host chain" value={project.header.hostChain} />
+      <ProjectStat
+        key="host-chain"
+        title="Host chain"
+        value={project.header.hostChain}
+      />
     ) : undefined,
     project.header.chainId ? (
-      <ProjectStat title="Chain ID" value={project.header.chainId} />
+      <ProjectStat
+        key="chain-id"
+        title="Chain ID"
+        value={project.header.chainId}
+      />
     ) : undefined,
   ])
 
