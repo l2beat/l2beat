@@ -30,12 +30,6 @@ export class ERC20DataHandler implements Handler {
     const supply = getSupply(provider.chain, entry)
     const category = entry?.category ?? 'other'
 
-    // Jesus - whatever it does
-    // assert(
-    //   entry.address !== undefined,
-    //   'Native asset detected - configure manually',
-    // )
-
     const coinList = await provider.raw('coingecko-coinList', (raw) =>
       raw.coingeckoClient.getCoinList({
         includePlatform: true,
@@ -51,7 +45,6 @@ export class ERC20DataHandler implements Handler {
     const info = await getTokenInfo(
       provider,
       address,
-      // entry.symbol,
       CoingeckoId(coingeckoId),
       entry?.deploymentTimestamp,
     )

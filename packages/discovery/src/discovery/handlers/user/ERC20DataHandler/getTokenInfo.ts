@@ -9,7 +9,6 @@ import type { IProvider } from '../../../provider/IProvider'
 export async function getTokenInfo(
   provider: IProvider,
   address: EthereumAddress,
-  // symbolFromConfig: string,
   coingeckoId: CoingeckoId,
   deploymentTimestampOverride?: UnixTime,
 ) {
@@ -28,11 +27,6 @@ export async function getTokenInfo(
     getDeploymentTimestamp(provider, address, deploymentTimestampOverride),
     getCoingeckoListingTimestamp(provider, coingeckoId),
   ])
-
-  // assert(
-  //   symbolFromConfig === symbolFromConfig,
-  //   ` symbol mismatch  ${symbolFromConfig} !== ${symbolFromConfig}`,
-  // )
 
   return {
     name,
@@ -98,9 +92,7 @@ async function getDeploymentTimestamp(
   return contractCreationTimestamp?.timestamp
 }
 
-// Remove it
-// Deployment of the first L2
-export const MIN_TIMESTAMP_FOR_TVL = UnixTime.fromDate(
+const FIRST_L2_DEPLOYMENT_TIMESTAMP = UnixTime.fromDate(
   new Date('2019-11-14T00:00:00Z'),
 )
 
@@ -114,7 +106,7 @@ async function getCoingeckoListingTimestamp(
       raw.coingeckoClient.getCoinMarketChartRange(
         coingeckoId,
         'usd',
-        MIN_TIMESTAMP_FOR_TVL,
+        FIRST_L2_DEPLOYMENT_TIMESTAMP,
         UnixTime.now(),
       ),
   )

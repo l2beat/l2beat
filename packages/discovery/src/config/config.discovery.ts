@@ -66,8 +66,8 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
     ]),
     coingeckoApiKey: env.optionalString([
-      `COINGECKO_API_KEY_FOR_DISCOVERY`,
-      `COINGECKO_API_KEY`,
+      'COINGECKO_API_KEY_FOR_DISCOVERY',
+      'COINGECKO_API_KEY',
     ]),
     multicall: chainConfig.multicall,
     explorer:

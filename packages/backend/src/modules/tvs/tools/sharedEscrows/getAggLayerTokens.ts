@@ -101,7 +101,6 @@ export async function getAggLayerTokens(
         response,
       )
       if (isEmptyAddress(address)) {
-        console.log(`Address is empty for ${project.id}-${id}`)
         continue
       }
       await localStorage.writeAddress(`${project.id}-${id}`, address)
@@ -116,7 +115,6 @@ export async function getAggLayerTokens(
       const token = l2Tokens.find((t) => t.id === item.id)
       // assert(token, `${item.id} not found`)
       if (!token) {
-        console.log(`Token ${item.id} not found`)
         return
       }
 
@@ -237,7 +235,6 @@ export async function getAggLayerTokens(
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       // assert(token, `${l1Token} not found`)
       if (!token) {
-        console.log(`Token ${l1Token} not found`)
         continue
       }
       tokensToAssignFromL1.push(

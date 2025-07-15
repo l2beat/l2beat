@@ -87,14 +87,14 @@ export class AllProviders {
         })
       }
 
-        const coingeckoClient = new CoingeckoClient({
-          apiKey: config.coingeckoApiKey,
-          logger,
-          sourceName: 'coingecko',
-          http,
-          callsPerMinute: config.coingeckoApiKey ? 400 : 10,
-          retryStrategy: 'SCRIPT',
-        })
+      const coingeckoClient = new CoingeckoClient({
+        apiKey: config.coingeckoApiKey,
+        logger,
+        sourceName: 'coingecko',
+        http,
+        callsPerMinute: config.coingeckoApiKey ? 400 : 10,
+        retryStrategy: 'SCRIPT',
+      })
 
       this.config.set(config.name, {
         config,

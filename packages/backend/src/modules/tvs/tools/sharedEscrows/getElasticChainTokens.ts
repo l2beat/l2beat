@@ -129,7 +129,6 @@ export async function getElasticChainTokens(
         : '0x'
 
       if (isEmptyAddress(address)) {
-        console.log(`Address is empty for ${project.id}-${id}`)
         continue
       }
 
@@ -144,7 +143,6 @@ export async function getElasticChainTokens(
     const token = l2Tokens.find((t) => t.id === item.id)
     // assert(token, `${item.id} not found`)
     if (!token) {
-      console.log(`Token ${item.id} not found`)
       return
     }
 
@@ -210,7 +208,6 @@ export async function getElasticChainTokens(
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       // assert(token, `${l1Token} not found`)
       if (!token) {
-        console.log(`Token ${l1Token} not found`)
         continue
       }
       tokensToAssignFromL1.push(
