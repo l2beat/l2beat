@@ -74,7 +74,7 @@ export function TokenBreakdownTooltipContent({
       {total === 0 ? (
         <span>No data</span>
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           {values.map(
             (v, i) =>
               v.value > 0 && (
@@ -83,7 +83,11 @@ export function TokenBreakdownTooltipContent({
                   className="flex items-center justify-between gap-x-6"
                 >
                   <span className="flex items-center gap-1">
-                    <Square variant={v.variant} size="small" />
+                    <Square
+                      variant={v.variant}
+                      size="small"
+                      className="-top-px relative"
+                    />
                     <span className="font-medium text-label-value-15">
                       {v.title}
                     </span>

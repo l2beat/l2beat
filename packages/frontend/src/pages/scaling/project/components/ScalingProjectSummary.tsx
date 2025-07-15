@@ -118,6 +118,7 @@ export function ProjectScalingSummary({ project }: Props) {
                     canonical={project.header.tvs?.breakdown?.canonical ?? 0}
                     external={project.header.tvs?.breakdown?.external ?? 0}
                     native={project.header.tvs?.breakdown?.native ?? 0}
+                    change={project.header.tvs?.breakdown?.totalChange ?? 0}
                     tvsWarnings={[]}
                   />
                 </TooltipContent>
