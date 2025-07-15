@@ -88,7 +88,7 @@ export const sp1: BaseProject = {
       {
         snarkProofSystem: ZK_CATALOG_TAGS.SNARK.Groth16Gnark,
         setups: [TRUSTED_SETUPS.SP1Groth16],
-      }
+      },
     ],
     verifierHashes: [
       {
@@ -114,6 +114,7 @@ export const sp1: BaseProject = {
           ProjectId('witness'),
           ProjectId('xlayer'),
           ProjectId('taiko'),
+          ProjectId('facet'),
         ],
       },
       {
@@ -136,11 +137,12 @@ export const sp1: BaseProject = {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
         proofSystem: ZK_CATALOG_TAGS.SNARK.Groth16Gnark,
         knownDeployments: [
+          'https://etherscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
           'https://arbiscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
           'https://gnosisscan.io/address/0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('hibachi'), ProjectId('omni')],
+        usedBy: [ProjectId('hibachi'), ProjectId('omni'), ProjectId('facet')],
       },
     ],
   },
