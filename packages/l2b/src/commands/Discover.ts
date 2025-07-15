@@ -106,11 +106,11 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
         : chains.filter((chain) => chain === chainQuery)
 
     const matchingChains = chainsToCheck.filter((chain) => {
-        const query = EthereumAddress.check(projectQuery)
-          ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
-          : projectQuery
+      const query = EthereumAddress.check(projectQuery)
+        ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
+        : projectQuery
 
-        return predicate(query, project)
+      return predicate(query, project)
     })
 
     for (const chain of matchingChains) {
@@ -124,10 +124,7 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
   return result
 }
 
-type Predicate = (
-  needle: string,
-  haystackProject: string,
-) => boolean
+type Predicate = (needle: string, haystackProject: string) => boolean
 
 function projectPredicate(
   needleProject: string,
@@ -140,11 +137,9 @@ function addressPredicate(
   needleAddress: string,
   haystackProject: string,
 ): boolean {
-    const address = ChainSpecificAddress(needleAddress)
-    const chain = getChainFullName(ChainSpecificAddress.chain(address))
+  const address = ChainSpecificAddress(needleAddress)
+  const chain = getChainFullName(ChainSpecificAddress.chain(address))
   const discovery = configReader.readDiscovery(haystackProject, chain)
 
-  return (
-    discovery.entries.find((c) => c.address === address) !== undefined
-  )
+  return discovery.entries.find((c) => c.address === address) !== undefined
 }
