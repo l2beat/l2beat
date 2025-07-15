@@ -71,7 +71,7 @@ export function TokenBreakdownTooltipContent({
   return (
     <div className="space-y-2 max-md:max-w-xs">
       {total === 0 ? (
-        <span>No tokens</span>
+        <span>No data</span>
       ) : (
         <div className="flex flex-col gap-2">
           {values.map(

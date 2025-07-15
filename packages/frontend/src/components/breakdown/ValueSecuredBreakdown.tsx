@@ -44,7 +44,7 @@ export function ValueSecuredBreakdownTooltipContent({
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
   if (total === 0) {
-    return 'No tokens'
+    return 'No data'
   }
   const values = [
     {
