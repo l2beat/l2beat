@@ -604,17 +604,6 @@ export class ProjectDiscovery {
     )
   }
 
-  // TODO(radomski): Remove this
-  getEntryByChainSpecificAddress(
-    chainSpecificAddress: ChainSpecificAddress,
-  ): EntryParameters | undefined {
-    const [chain, address] = chainSpecificAddress.toString().split(':')
-    const entries = this.projectAndDependentDiscoveries
-      .filter((discovery) => discovery.chain === chain)
-      .flatMap((discovery) => discovery.entries)
-    return entries.find((entry) => entry.address === address)
-  }
-
   getEntryByAddress(
     address: ChainSpecificAddress,
   ): EntryParameters | undefined {
@@ -857,14 +846,9 @@ export class ProjectDiscovery {
       return 0
     }
 
-    // TODO(radomski): This does not work, replace it with getEntryByAdrress
     const permissions = entry.receivedPermissions.map((p) => p.from)
     const priority = permissions.reduce((acc, permission) => {
-      return (
-        acc +
-        (this.getEntryByChainSpecificAddress(permission)?.category?.priority ??
-          0)
-      )
+      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
     }, 0)
 
     return priority
