@@ -307,6 +307,7 @@ export async function getScalingProjectEntry(
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
+        defaultRange: project.archivedAt ? 'max' : '1y',
       },
     })
   }
@@ -321,6 +322,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
         projectName: project.name,
+        defaultRange: project.archivedAt ? 'max' : '1y',
       },
     })
   }
@@ -340,6 +342,7 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         trackedTransactions,
+        defaultRange: project.archivedAt ? 'max' : '1y',
       },
     })
   }
