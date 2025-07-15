@@ -23,10 +23,19 @@ import generated from './generated.json'
 import { GeneratedToken } from './types'
 
 export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
+  const tokens: LegacyToken[] = []
+
+  tokens.push(...getGeneratedTokenList(chains))
+  tokens.push(...getDiscoveryTokenList(chains))
+
+  return tokens
+}
+
+function getGeneratedTokenList(chains: ChainConfig[]): LegacyToken[] {
   return generated.tokens.map((t) => toToken(GeneratedToken.parse(t), chains))
 }
 
-export function getTokenListV2(chains: ChainConfig[]): LegacyToken[] {
+function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
   const tokens: LegacyToken[] = []
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
@@ -36,7 +45,6 @@ export function getTokenListV2(chains: ChainConfig[]): LegacyToken[] {
 
   for (const chain of chains) {
     if (!supportedChains.includes(chain.name)) {
-      console.log(`Skipping ${chain.name} because it has not been discovered.`)
       continue
     }
 
