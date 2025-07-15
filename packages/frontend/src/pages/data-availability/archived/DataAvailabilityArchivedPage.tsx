@@ -6,7 +6,7 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import {
