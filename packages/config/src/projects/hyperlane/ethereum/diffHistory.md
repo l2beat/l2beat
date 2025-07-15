@@ -1,3 +1,142 @@
+Generated with discovered.json: 0x566d891344a28a2016b891b4e856644facc9cdb8
+
+# Diff at Tue, 15 Jul 2025 10:33:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22866629
+- current block number: 22923900
+
+## Description
+
+New default ISM, pausableISM verified. No changes for the risks.
+
+created templates for some more contracts.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x2eA653968633b1c91d35f62821fc019158B214dC","description":"manage the domain -> ISM contract mapping.","role":".owner"}
+      receivedPermissions.1:
+-        {"permission":"interact","from":"eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8","description":"manage the domain -> ISM contract mapping.","role":".owner"}
+    }
+```
+
+```diff
+    EOA  (0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33","description":"pause and unpause the ISM.","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50)
+    +++ description: None
+```
+
+```diff
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
++++ description: The default ISM contract that is used for all destination contracts that do not override it.
+      values.defaultIsm:
+-        "eth:0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e"
++        "eth:0x69d39cd0B60d47460F30f0bD5200f9C46E924Ce1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0x2eA653968633b1c91d35f62821fc019158B214dC)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (0x69d39cd0B60d47460F30f0bD5200f9C46E924Ce1)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0x2eA653968633b1c91d35f62821fc019158B214dC,eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33] ISM contracts successfully verify a message.
+```
+
+```diff
++   Status: CREATED
+    contract PausableIsm (0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33)
+    +++ description: Simple ISM that implements `verify()` and returns true if not paused, false otherwise. This allows its owner (eth:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba) to pause any system for which this ISMs verification is needed.
+```
+
+## Source code changes
+
+```diff
+.../hyperlane/ethereum/.flat/PausableIsm.sol       | 241 +++++++++++++++++++++
+ .../StaticAggregationIsm_default.sol}              |   0
+ 2 files changed, 241 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22866629 (main branch discovery), not current.
+
+```diff
+    contract StaticAggregationIsm (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e) {
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+      name:
+-        "StaticAggregationIsm_default"
++        "StaticAggregationIsm"
+      description:
+-        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message."
++        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
+      values.modules:
+-        ["eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50","eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"]
+      values.threshold:
+-        2
+    }
+```
+
+```diff
+    contract  (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50) {
+    +++ description: None
+      name:
+-        "UnknownIsm"
++        ""
+    }
+```
+
+```diff
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+      template:
++        "hyperlane/Mailbox"
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8) {
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+      fieldMeta.module.description:
++        "the module that is routed to for the origin chain Eclipse."
+      template:
++        "hyperlane/DomainRoutingIsm"
+    }
+```
+
 Generated with discovered.json: 0xd599b0ef5edb94e58473cb8798f9d746a0d203bb
 
 # Diff at Mon, 14 Jul 2025 12:45:11 GMT:

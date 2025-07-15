@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "DIA",
+      "address": "0x84ca8bc7997272c7cfb4d0cd3d55cd942b3c9419"
+    },
+    {
       "symbol": "EUL",
       "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b"
     },
@@ -1471,7 +1475,7 @@
     },
     {
       "symbol": "PEPU",
-      "address": "0xadd39272e83895e7d3f244f696b7a25635f34234"
+      "address": "0x93aA0ccD1e5628d3A841C4DbdF602D9eb04085d6"
     },
     {
       "symbol": "PERP",

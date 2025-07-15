@@ -13,7 +13,7 @@ import {
 import {
   assert,
   ChainSpecificAddress,
-  EthereumAddress,
+  type EthereumAddress,
   type LegacyTokenBridgedUsing,
   notUndefined,
   UnixTime,
@@ -308,9 +308,7 @@ export class ProjectDiscovery {
       return contracts[0]
     }
 
-    const contract = identifier.includes(':')
-      ? this.getContractByChainSpecificAddress(ChainSpecificAddress(identifier))
-      : this.getContractByAddress(ChainSpecificAddress(identifier))
+    const contract = this.getContractByAddress(ChainSpecificAddress(identifier))
     assert(
       contract,
       `No contract of ${identifier} address found (${this.projectName})`,
@@ -327,9 +325,7 @@ export class ProjectDiscovery {
       return contracts.length === 1
     }
 
-    const contract = identifier.includes(':')
-      ? this.getContractByChainSpecificAddress(ChainSpecificAddress(identifier))
-      : this.getContractByAddress(ChainSpecificAddress(identifier))
+    const contract = this.getContractByAddress(ChainSpecificAddress(identifier))
     return contract !== undefined
   }
 
@@ -431,7 +427,7 @@ export class ProjectDiscovery {
       const url = `${explorerUrl}/address/${raw}`
 
       result.push({
-        address: ChainSpecificAddress.address(address),
+        address: raw,
         type,
         isVerified,
         name,
@@ -596,15 +592,6 @@ export class ProjectDiscovery {
     return contracts.find((contract) => contract.address === address)
   }
 
-  getContractByChainSpecificAddress(
-    address: ChainSpecificAddress,
-  ): EntryParameters | undefined {
-    const contracts = this.getPrefixedContracts({
-      includeDependentDiscoveries: true,
-    })
-    return contracts[address]
-  }
-
   getEOAByAddress(
     address: string | ChainSpecificAddress,
   ): EntryParameters | undefined {
@@ -617,23 +604,12 @@ export class ProjectDiscovery {
     )
   }
 
-  getEntryByChainSpecificAddress(
-    chainSpecificAddress: ChainSpecificAddress,
-  ): EntryParameters | undefined {
-    const [chain, address] = chainSpecificAddress.toString().split(':')
-    const entries = this.projectAndDependentDiscoveries
-      .filter((discovery) => discovery.chain === chain)
-      .flatMap((discovery) => discovery.entries)
-    return entries.find((entry) => entry.address === address)
-  }
-
   getEntryByAddress(
     address: ChainSpecificAddress,
   ): EntryParameters | undefined {
-    const entries = this.discoveries.flatMap((discovery) => discovery.entries)
-    return entries.find(
-      (entry) => entry.address === ChainSpecificAddress(address.toString()),
-    )
+    return this.projectAndDependentDiscoveries
+      .flatMap((discovery) => discovery.entries)
+      .find((entry) => entry.address === address)
   }
 
   private getContractByName(name: string): EntryParameters[] {
@@ -819,8 +795,7 @@ export class ProjectDiscovery {
 
   formatViaPath(path: ResolvedPermissionPath, skipName = false): string {
     const name =
-      this.getContractByChainSpecificAddress(path.address)?.name ??
-      path.address.toString()
+      this.getContractByAddress(path.address)?.name ?? path.address.toString()
 
     const result = skipName ? [] : [name]
     if (path.delay) {
@@ -851,23 +826,16 @@ export class ProjectDiscovery {
     const addressStrings = s.match(ethereumAddressRegex) ?? []
     const addresses = addressStrings.map((a) =>
       a.includes(':')
-        ? ChainSpecificAddress.address(ChainSpecificAddress(a))
-        : EthereumAddress(a),
+        ? ChainSpecificAddress(a)
+        : ChainSpecificAddress.from(getChainShortName(this.chain), a),
     )
 
     for (const address of addresses) {
-      const createdAddress = ChainSpecificAddress.from(
-        getChainShortName(this.chain),
-        address,
-      )
-      const contract = this.getContractByAddress(createdAddress)
+      const contract = this.getContractByAddress(address)
       if (contract !== undefined && contract.name !== undefined) {
-        s = s.replace(createdAddress, contract.name)
+        s = s.replace(address, contract.name)
       } else {
-        s = s.replace(
-          createdAddress,
-          ChainSpecificAddress.address(createdAddress),
-        )
+        s = s.replace(address, ChainSpecificAddress.address(address))
       }
     }
     return s
@@ -880,11 +848,7 @@ export class ProjectDiscovery {
 
     const permissions = entry.receivedPermissions.map((p) => p.from)
     const priority = permissions.reduce((acc, permission) => {
-      return (
-        acc +
-        (this.getEntryByChainSpecificAddress(permission)?.category?.priority ??
-          0)
-      )
+      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
     }, 0)
 
     return priority

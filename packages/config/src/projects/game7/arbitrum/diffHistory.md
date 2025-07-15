@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x9dd47e78346ca9f3c29c54e02f2d7db08c2bfdcd
+
+# Diff at Tue, 15 Jul 2025 11:01:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 356573936
+- current block number: 357933310
+
+## Description
+
+USDC escrow ownership txfered to Conduit (from EOA).
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x401eCb1D350407f13ba348573E5630B83638E30D) {
+    +++ description: None
+      values.owner:
+-        "arb1:0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176"
++        "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
+    }
+```
+
+```diff
+    contract L1OrbitUSDCGateway (0x404922a9B29b4a5205a6074AbA31A7392BD28944) {
+    +++ description: Orbit stack specific escrow (gateway) for Circle USDC that uses the canonical bridge for messaging but is governed externally.
+      values.owner:
+-        "arb1:0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176"
++        "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944","role":"admin","via":[{"address":"arb1:0x401eCb1D350407f13ba348573E5630B83638E30D"}]}
+      directlyReceivedPermissions.0:
++        {"permission":"act","from":"arb1:0x401eCb1D350407f13ba348573E5630B83638E30D","role":".owner"}
+    }
+```
+
 Generated with discovered.json: 0x20260e62feeb03ce0df82e4b898912c965906cf9
 
 # Diff at Mon, 14 Jul 2025 12:44:16 GMT:
