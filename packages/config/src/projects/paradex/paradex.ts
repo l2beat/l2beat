@@ -1,21 +1,20 @@
 import {
   EthereumAddress,
-  ProjectId,
-  UnixTime,
   formatLargeNumber,
   formatSeconds,
+  ProjectId,
+  UnixTime,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { formatExecutionDelay } from '../../common/formatDelays'
@@ -75,7 +74,7 @@ export const paradex: ScalingProject = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    stack: 'SN Stack',
+    stacks: ['SN Stack'],
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
@@ -93,9 +92,6 @@ export const paradex: ScalingProject = {
     liveness: {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -134,8 +130,10 @@ export const paradex: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
-        sequencers: ['0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'],
+        inbox: EthereumAddress('0xF338cad020D506e8e3d9B4854986E0EcE6C23640'),
+        sequencers: [
+          EthereumAddress('0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2'),
+        ],
       },
     ],
     trackedTxs: [
@@ -278,12 +276,6 @@ export const paradex: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'Starknet',
-      minTimestamp: UnixTime(1725811667),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

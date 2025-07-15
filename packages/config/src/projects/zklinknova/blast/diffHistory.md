@@ -1,3 +1,366 @@
+Generated with discovered.json: 0x31ec52c112d80fde1cad6ee76c51aeda7816f034
+
+# Diff at Mon, 14 Jul 2025 12:47:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 16435499
+- current block number: 16435499
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16435499 (main branch discovery), not current.
+
+```diff
+    EOA  (0x17887788E01A1192a26F636Cfcfc033c7Bb42348) {
+    +++ description: None
+      address:
+-        "0x17887788E01A1192a26F636Cfcfc033c7Bb42348"
++        "blastmainnet:0x17887788E01A1192a26F636Cfcfc033c7Bb42348"
+    }
+```
+
+```diff
+    EOA  (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9) {
+    +++ description: None
+      address:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "blastmainnet:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    }
+```
+
+```diff
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD) {
+    +++ description: None
+      address:
+-        "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
++        "blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
+      values.$admin:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      values.$implementation:
+-        "0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"
++        "blastmainnet:0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"
+      values.$pastUpgrades.0.2.0:
+-        "0x35E808DB3A37eec12ecF6A22Cc951C9F867f1D64"
++        "blastmainnet:0x35E808DB3A37eec12ecF6A22Cc951C9F867f1D64"
+      values.$pastUpgrades.1.2.0:
+-        "0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"
++        "blastmainnet:0xDe4Be50Bfe9503180231357Eab19d709F8F73C66"
+      values.forwardFeeAllocator:
+-        "0x0000000000000000000000000000000000000000"
++        "blastmainnet:0x0000000000000000000000000000000000000000"
+      values.gateway:
+-        "0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      values.getGateway:
+-        "0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      values.getGovernor:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      values.owner:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      implementationNames.0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD:
+-        "ERC1967Proxy"
+      implementationNames.0xDe4Be50Bfe9503180231357Eab19d709F8F73C66:
+-        "ZkLink"
+      implementationNames.blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD:
++        "ERC1967Proxy"
+      implementationNames.blastmainnet:0xDe4Be50Bfe9503180231357Eab19d709F8F73C66:
++        "ZkLink"
+    }
+```
+
+```diff
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1) {
+    +++ description: None
+      address:
+-        "0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      values.$admin:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      values.$implementation:
+-        "0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"
++        "blastmainnet:0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"
+      values.$pastUpgrades.0.2.0:
+-        "0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"
++        "blastmainnet:0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD"
+      values.getRemoteGateway:
+-        "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
++        "blastmainnet:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
+      values.MESSAGE_SERVICE:
+-        "0x4200000000000000000000000000000000000007"
++        "blastmainnet:0x4200000000000000000000000000000000000007"
+      values.owner:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      values.ZKLINK:
+-        "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
++        "blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
+      implementationNames.0x3f64e2e09732969813904a8473074CFADeE66AF1:
+-        "ERC1967Proxy"
+      implementationNames.0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD:
+-        "OptimismL2Gateway"
+      implementationNames.blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1:
++        "ERC1967Proxy"
+      implementationNames.blastmainnet:0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD:
++        "OptimismL2Gateway"
+    }
+```
+
+```diff
+    EOA  (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5) {
+    +++ description: None
+      address:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "blastmainnet:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    }
+```
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      address:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "blastmainnet:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "blastmainnet:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.1:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "blastmainnet:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "blastmainnet:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.3:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "blastmainnet:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      values.$members.4:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "blastmainnet:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+      values.$members.5:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "blastmainnet:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.6:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "blastmainnet:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+      values.$members.7:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "blastmainnet:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      implementationNames.0x730200f698cc8Ff16C00F4E8520Fd780B916D50E:
+-        "GnosisSafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E:
++        "GnosisSafeProxy"
+      implementationNames.blastmainnet:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10) {
+    +++ description: None
+      address:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "blastmainnet:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    }
+```
+
+```diff
+    EOA  (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db) {
+    +++ description: None
+      address:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "blastmainnet:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b) {
+    +++ description: None
+      address:
+-        "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
++        "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+      values.$admin:
+-        "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+      values.$implementation:
+-        "0xc24864769346073f5fEf0386A18734F0eF5503F5"
++        "blastmainnet:0xc24864769346073f5fEf0386A18734F0eF5503F5"
+      values.$pastUpgrades.0.2.0:
+-        "0x4D7012d5C62c351804CCe49c2d7C09A401fD3deC"
++        "blastmainnet:0x4D7012d5C62c351804CCe49c2d7C09A401fD3deC"
+      values.$pastUpgrades.1.2.0:
+-        "0xc24864769346073f5fEf0386A18734F0eF5503F5"
++        "blastmainnet:0xc24864769346073f5fEf0386A18734F0eF5503F5"
+      values.l2Bridge:
+-        "0x17887788E01A1192a26F636Cfcfc033c7Bb42348"
++        "blastmainnet:0x17887788E01A1192a26F636Cfcfc033c7Bb42348"
+      values.l2TokenBeacon:
+-        "0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9"
++        "blastmainnet:0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9"
+      implementationNames.0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xc24864769346073f5fEf0386A18734F0eF5503F5:
+-        "L1ERC20Bridge"
+      implementationNames.blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b:
++        "TransparentUpgradeableProxy"
+      implementationNames.blastmainnet:0xc24864769346073f5fEf0386A18734F0eF5503F5:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      address:
+-        "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+      values.owner:
+-        "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
++        "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E"
+      implementationNames.0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19:
+-        "ProxyAdmin"
+      implementationNames.blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xC75EFCffEE930706daec5CaCA012551f6a1845D7) {
+    +++ description: None
+      address:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "blastmainnet:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+    }
+```
+
+```diff
+    EOA  (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5) {
+    +++ description: None
+      address:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "blastmainnet:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    EOA  (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92) {
+    +++ description: None
+      address:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "blastmainnet:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    EOA  (0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9) {
+    +++ description: None
+      address:
+-        "0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9"
++        "blastmainnet:0xf7866c804932c93BFcc6f6f8B965bF52a2377bd9"
+    }
+```
+
+```diff
+    EOA  (0xF801886AE2e127A269B0F11892edb54F692d02dF) {
+    +++ description: None
+      address:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "blastmainnet:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x93a68943b669522577113ccb8863b9243952db5e
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 16435499
+- current block number: 16435499
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16435499 (main branch discovery), not current.
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "blast:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
++        "blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
+      receivedPermissions.1.from:
+-        "blast:0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      receivedPermissions.2.via.0.address:
+-        "blast:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+      receivedPermissions.2.from:
+-        "blast:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
++        "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+      directlyReceivedPermissions.0.from:
+-        "blast:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "blast:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
++        "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+    }
+```
+
 Generated with discovered.json: 0x13d6420aa5eb72feba2102a06ee896b9aca98e2d
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

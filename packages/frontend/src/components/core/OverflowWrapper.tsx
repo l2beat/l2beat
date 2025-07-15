@@ -1,7 +1,9 @@
 import clamp from 'lodash/clamp'
 import type React from 'react'
 import { useEffect, useRef, useState } from 'react'
+import { useEventCallback } from '~/hooks/useEventCallback'
 import { useEventListener } from '~/hooks/useEventListener'
+import { useResizeObserver } from '~/hooks/useResizeObserver'
 
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
@@ -10,6 +12,7 @@ import { mergeRefs } from '~/utils/mergeRefs'
 interface OverflowWrapperProps {
   children: React.ReactNode
   childrenClassName?: string
+  childrenRef?: React.RefObject<HTMLDivElement | null>
   className?: string
   ref?: React.RefObject<HTMLDivElement | null>
 }
@@ -21,6 +24,7 @@ export const OverflowWrapper = ({
   ref,
   children,
   childrenClassName,
+  childrenRef,
   className,
   ...rest
 }: OverflowWrapperProps) => {
@@ -28,7 +32,7 @@ export const OverflowWrapper = ({
 
   const contentRef = useRef<HTMLDivElement>(null)
 
-  function onArrowClick(dir: 'left' | 'right') {
+  const onArrowClick = useEventCallback((dir: 'left' | 'right') => {
     if (!contentRef.current) return
     const content = contentRef.current
 
@@ -48,9 +52,9 @@ export const OverflowWrapper = ({
       left: scrollBy,
       behavior: 'smooth',
     })
-  }
+  })
 
-  const onScroll = () => {
+  const updateArrows = useEventCallback(() => {
     if (!contentRef.current) return
     const content = contentRef.current
 
@@ -68,12 +72,14 @@ export const OverflowWrapper = ({
             ? 'left'
             : 'both'
     setVisibleArrows(visibleArrows)
-  }
+  })
 
-  useEffect(onScroll, [])
+  useEffect(updateArrows, [])
 
-  useEventListener('scroll', onScroll, contentRef)
-  useEventListener('resize', onScroll)
+  useEventListener('scroll', updateArrows, contentRef)
+  useEventListener('resize', updateArrows)
+
+  useResizeObserver({ ref: childrenRef, onResize: updateArrows })
 
   return (
     <div className={cn('relative', className)} {...rest}>
@@ -81,7 +87,7 @@ export const OverflowWrapper = ({
         title="Scroll left"
         onClick={() => onArrowClick('left')}
         className={cn(
-          '-left-px pointer-events-none absolute inset-y-0 z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity duration-300',
+          '-left-px pointer-events-none absolute inset-y-0 z-10 w-6 bg-linear-to-r opacity-0 transition-opacity duration-300',
           (visibleArrows === 'left' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}
@@ -107,7 +113,7 @@ export const OverflowWrapper = ({
         title="Scroll right"
         onClick={() => onArrowClick('right')}
         className={cn(
-          '-right-px pointer-events-none absolute inset-y-0 z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity duration-200',
+          '-right-px pointer-events-none absolute inset-y-0 z-10 w-6 bg-linear-to-l opacity-0 transition-opacity duration-200',
           (visibleArrows === 'right' || visibleArrows === 'both') &&
             'pointer-events-auto opacity-100',
         )}

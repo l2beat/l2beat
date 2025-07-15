@@ -1,8 +1,8 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import { TokenCombobox } from '~/components/TokenCombobox'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
+import { TokenCombobox } from '~/components/TokenCombobox'
 import type {
   ProjectToken,
   ProjectTokens,
@@ -96,7 +96,7 @@ function DefaultChart({
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
-    range: timeRange,
+    range: { type: timeRange },
     excludeAssociatedTokens: false,
   })
 

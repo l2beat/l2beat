@@ -11,6 +11,12 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+
+export type DaThroughputChart = {
+  data: DaThroughputDataPoint[]
+  syncStatus?: Record<string, number>
+}
+
 export type DaThroughputDataPoint = [
   timestamp: number,
   ethereum: number,
@@ -28,13 +34,13 @@ export type DaThroughputChartParams = v.infer<typeof DaThroughputChartParams>
 export async function getDaThroughputChart({
   range,
   includeScalingOnly,
-}: DaThroughputChartParams): Promise<DaThroughputDataPoint[]> {
+}: DaThroughputChartParams): Promise<DaThroughputChart> {
   if (env.MOCK) {
-    return getMockDaThroughputChartData({ range, includeScalingOnly })
+    return { data: getMockDaThroughputChartData({ range, includeScalingOnly }) }
   }
   const db = getDb()
-  const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const resolution = rangeToResolution({ type: range })
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
   const throughput = includeScalingOnly
@@ -48,50 +54,74 @@ export async function getDaThroughputChart({
       )
 
   if (throughput.length === 0) {
-    return []
+    return { data: [] }
   }
   const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
     throughput,
     resolution,
   )
 
-  const lastEigenDAData = Object.entries(grouped).findLast(([_, values]) => {
-    return values.eigenda && values.eigenda > 0
-  })
+  const lastDataForLayers: Record<
+    string,
+    { timestamp: number; value: number }
+  > = {}
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValue = Object.entries(grouped).findLast(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    if (lastValue) {
+      const [timestamp, value] = lastValue
+      lastDataForLayers[layer] = {
+        timestamp: Number(timestamp),
+        value: value[layer] ?? 0,
+      }
+    }
+  }
 
   const timestamps = generateTimestamps(
     [minTimestamp, maxTimestamp],
     resolution,
   )
-  return timestamps.map((timestamp) => {
-    const timestampValues = grouped[timestamp]
+  const data: DaThroughputDataPoint[] = timestamps.map((timestamp) => {
+    const timestampValues = grouped[timestamp] ?? {}
 
-    // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to fill the gaps with the last known value for most recent data
-    let eigenda = timestampValues?.eigenda ?? 0
-    if (
-      includeScalingOnly &&
-      lastEigenDAData &&
-      timestamp > Number(lastEigenDAData[0])
-    ) {
-      eigenda = lastEigenDAData[1]['eigenda'] ?? 0
+    const layerValues: Record<string, number | undefined> = {}
+    for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+      const lastData = lastDataForLayers[layer]
+      const isSynced = lastData && timestamp <= lastData.timestamp
+      if (isSynced) {
+        layerValues[layer] = timestampValues[layer]
+        continue
+      }
+
+      layerValues[layer] = lastData?.value
     }
 
     return [
       timestamp,
-      timestampValues?.ethereum ?? 0,
-      timestampValues?.celestia ?? 0,
-      timestampValues?.avail ?? 0,
-      eigenda,
+      layerValues.ethereum ?? 0,
+      layerValues.celestia ?? 0,
+      layerValues.avail ?? 0,
+      layerValues.eigenda ?? 0,
     ]
   })
+  return {
+    data,
+    syncStatus: Object.fromEntries(
+      Object.entries(lastDataForLayers).map(([layer, { timestamp }]) => [
+        layer,
+        timestamp,
+      ]),
+    ),
+  }
 }
 
 export function groupByTimestampAndDaLayerId(
   records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
-  let minTimestamp = Infinity
-  let maxTimestamp = -Infinity
+  let minTimestamp = Number.POSITIVE_INFINITY
+  let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(
@@ -126,7 +156,7 @@ export function groupByTimestampAndDaLayerId(
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {
-  const days = rangeToDays(range) ?? 730
+  const days = rangeToDays({ type: range }) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 

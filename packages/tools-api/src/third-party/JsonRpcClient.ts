@@ -6,7 +6,7 @@ export interface JsonRpcRequest {
 }
 
 export class JsonRpcClient {
-  private id: number = 0
+  private id = 0
 
   async call(url: string, request: JsonRpcRequest): Promise<unknown> {
     const res = await fetch(url, {

@@ -21,8 +21,8 @@ import { getActivityLatestUops } from '../activity/getActivityLatestTps'
 import { getActivitySyncWarning } from '../activity/utils/isActivitySynced'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
 import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 
@@ -59,7 +59,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   stage: ProjectScalingStage
   category: ProjectScalingCategory
   purposes: ProjectScalingPurpose[]
-  stack: ProjectScalingStack | undefined
+  stacks: ProjectScalingStack[] | undefined
   dataAvailability: ProjectScalingDa | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
@@ -124,7 +124,7 @@ export function getScalingSummaryEntry(
         : project.scalingStage,
     capability: project.scalingInfo.capability,
     category: project.scalingInfo.type,
-    stack: project.scalingInfo.stack,
+    stacks: project.scalingInfo.stacks,
     dataAvailability: project.scalingDa,
     purposes: project.scalingInfo.purposes,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,

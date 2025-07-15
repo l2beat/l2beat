@@ -4,11 +4,11 @@ import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
-import { PercentChange } from '../../PercentChange'
-import { Skeleton } from '../../core/Skeleton'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '../../core/Skeleton'
+import { PercentChange } from '../../PercentChange'
 import type { ChartUnit } from '../types'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
@@ -24,7 +24,7 @@ export function BridgesTvsChart() {
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
   })

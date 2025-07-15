@@ -1,3 +1,381 @@
+Generated with discovered.json: 0x285f41122141b854b334411bc576501779f97f60
+
+# Diff at Mon, 14 Jul 2025 12:47:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 133041012
+- current block number: 133041012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+    EOA  (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9) {
+    +++ description: None
+      address:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "oeth:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    }
+```
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      address:
+-        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
++        "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      values.$implementation:
+-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
++        "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+      values.$members.0:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "oeth:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.$members.1:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "oeth:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "oeth:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.3:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "oeth:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.4:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "oeth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.5:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "oeth:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+      values.$members.6:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "oeth:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.7:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "oeth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      implementationNames.0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9:
+-        "GnosisSafeProxy"
+      implementationNames.0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        "GnosisSafeL2"
+      implementationNames.oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      address:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b) {
+    +++ description: None
+      address:
+-        "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
++        "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
+      values.$admin:
+-        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
++        "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      values.$implementation:
+-        "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"
++        "oeth:0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"
+      values.$pastUpgrades.0.2.0:
+-        "0xebdA7f097EF976e8E82FA11F05ef1906f3068105"
++        "oeth:0xebdA7f097EF976e8E82FA11F05ef1906f3068105"
+      values.$pastUpgrades.1.2.0:
+-        "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"
++        "oeth:0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"
+      values.forwardFeeAllocator:
+-        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
++        "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      values.gateway:
+-        "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+      values.getGateway:
+-        "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+      values.getGovernor:
+-        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
++        "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      values.owner:
+-        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
++        "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      implementationNames.0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b:
+-        "ERC1967Proxy"
+      implementationNames.0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E:
+-        "ZkLink"
+      implementationNames.oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b:
++        "ERC1967Proxy"
+      implementationNames.oeth:0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E:
++        "ZkLink"
+    }
+```
+
+```diff
+    EOA  (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5) {
+    +++ description: None
+      address:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "oeth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA) {
+    +++ description: None
+      address:
+-        "0x5Bd51296423A9079b931414C1De65e7057326EaA"
++        "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA"
+      values.$admin:
+-        "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
+      values.$implementation:
+-        "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"
++        "oeth:0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"
+      values.$pastUpgrades.0.2.0:
+-        "0x683669E5B6cDc6636673a5f7ddB68E20812216F5"
++        "oeth:0x683669E5B6cDc6636673a5f7ddB68E20812216F5"
+      values.$pastUpgrades.1.2.0:
+-        "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"
++        "oeth:0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"
+      values.l2Bridge:
+-        "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15"
++        "oeth:0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15"
+      values.l2TokenBeacon:
+-        "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d"
++        "oeth:0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d"
+      implementationNames.0x5Bd51296423A9079b931414C1De65e7057326EaA:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8:
+-        "L1ERC20Bridge"
+      implementationNames.oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA:
++        "TransparentUpgradeableProxy"
+      implementationNames.oeth:0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15) {
+    +++ description: None
+      address:
+-        "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15"
++        "oeth:0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15"
+    }
+```
+
+```diff
+    EOA  (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10) {
+    +++ description: None
+      address:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "oeth:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    }
+```
+
+```diff
+    EOA  (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db) {
+    +++ description: None
+      address:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "oeth:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      address:
+-        "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
+      values.owner:
+-        "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
++        "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
+      implementationNames.0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4:
+-        "ProxyAdmin"
+      implementationNames.oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
+    +++ description: None
+      address:
+-        "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+      values.$admin:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      values.$implementation:
+-        "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"
++        "oeth:0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"
+      values.$pastUpgrades.0.2.0:
+-        "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"
++        "oeth:0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"
+      values.getRemoteGateway:
+-        "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
++        "oeth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
+      values.MESSAGE_SERVICE:
+-        "0x4200000000000000000000000000000000000007"
++        "oeth:0x4200000000000000000000000000000000000007"
+      values.owner:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "oeth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      values.ZKLINK:
+-        "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
++        "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
+      implementationNames.0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c:
+-        "ERC1967Proxy"
+      implementationNames.0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e:
+-        "OptimismL2Gateway"
+      implementationNames.oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c:
++        "ERC1967Proxy"
+      implementationNames.oeth:0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e:
++        "OptimismL2Gateway"
+    }
+```
+
+```diff
+    EOA  (0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d) {
+    +++ description: None
+      address:
+-        "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d"
++        "oeth:0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d"
+    }
+```
+
+```diff
+    EOA  (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5) {
+    +++ description: None
+      address:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "oeth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    EOA  (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5) {
+    +++ description: None
+      address:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "oeth:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    EOA  (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92) {
+    +++ description: None
+      address:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "oeth:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    EOA  (0xF801886AE2e127A269B0F11892edb54F692d02dF) {
+    +++ description: None
+      address:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "oeth:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x5Bd51296423A9079b931414C1De65e7057326EaA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL2Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xbddaa93f509b712c0f23d1051c536da16f19f1e6
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 133041012
+- current block number: 133041012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "optimism:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
++        "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
+      receivedPermissions.1.via.0.address:
+-        "optimism:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
+      receivedPermissions.1.from:
+-        "optimism:0x5Bd51296423A9079b931414C1De65e7057326EaA"
++        "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA"
+      directlyReceivedPermissions.0.from:
+-        "optimism:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
+    }
+```
+
+```diff
+    EOA  (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "optimism:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "optimism:0x5Bd51296423A9079b931414C1De65e7057326EaA"
++        "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA"
+    }
+```
+
 Generated with discovered.json: 0xc1e61ab6f4e52b5081e6a264f79be6ff5a21fba0
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

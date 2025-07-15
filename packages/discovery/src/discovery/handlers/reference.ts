@@ -1,7 +1,6 @@
+import type { EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { ContractValue } from '../output/types'
-
-import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../provider/IProvider'
 import type { HandlerResult } from './Handler'
 

@@ -1,7 +1,7 @@
 import type { ApiQuery, DecodedResult } from '@l2beat/tools-api/types'
 
 export function decode(query: ApiQuery): Promise<DecodedResult> {
-  return callDecode(getQueryParams(query))
+  return callDecode(getFullQueryUrl(getQueryParams(query)))
 }
 
 export function getQueryParams(query: ApiQuery) {
@@ -14,10 +14,7 @@ export function getQueryParams(query: ApiQuery) {
   return search.toString()
 }
 
-export async function callDecode(queryParams: string) {
-  const data = localStorage.getItem('data')
-  queryParams = queryParams.replace('0xLOCALSTORAGE', data ?? '0x')
-  const query = new URLSearchParams(queryParams)
+export async function callDecode(query: URLSearchParams) {
   const body = {
     hash: query.get('hash') ?? undefined,
     data: query.get('data') ?? undefined,
@@ -37,4 +34,10 @@ export async function callDecode(queryParams: string) {
   })
   const json = await res.json()
   return json as DecodedResult
+}
+
+export function getFullQueryUrl(queryParams: string): URLSearchParams {
+  const data = localStorage.getItem('data')
+  queryParams = queryParams.replace('0xLOCALSTORAGE', data ?? '0x')
+  return new URLSearchParams(queryParams)
 }

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
 import type { AddressFieldValue } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { useCopy } from '../hooks/useCopy'
 import { IconCopy } from '../icons/IconCopy'
 import { IconLink } from '../icons/IconLink'
 import { IconTick } from '../icons/IconTick'
@@ -15,26 +15,16 @@ export interface AddressDisplayProps {
 
 export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
   const select = usePanelStore((state) => state.select)
-  const [copied, setCopied] = useState(false)
-
   const [chain, address] = value.address.split(':')
 
-  useEffect(() => {
-    if (copied) {
-      if (address) {
-        void navigator.clipboard.writeText(address)
-      }
-      const timeout = setTimeout(() => setCopied(false), 1000)
-      return () => clearTimeout(timeout)
-    }
-  }, [value, copied, setCopied])
+  const { copied, copy: copyToClipboard } = useCopy()
 
   const copy = (
     <button
       className="block h-4 w-4"
       onClick={(e) => {
         e.preventDefault()
-        setCopied(true)
+        copyToClipboard(address ?? value.address)
       }}
     >
       {!copied && (
@@ -87,14 +77,13 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
         {explore}
       </p>
     )
-  } else {
-    return (
-      <p className="inline-flex items-baseline gap-1 whitespace-nowrap font-mono text-coffee-400 text-xs">
-        <strong>{value.name ?? 'Unknown'}</strong>
-        {toShortenedAddress(value.address)}
-        {copy}
-        {explore}
-      </p>
-    )
   }
+  return (
+    <p className="inline-flex items-baseline gap-1 whitespace-nowrap font-mono text-coffee-400 text-xs">
+      <strong>{value.name ?? 'Unknown'}</strong>
+      {toShortenedAddress(value.address)}
+      {copy}
+      {explore}
+    </p>
+  )
 }

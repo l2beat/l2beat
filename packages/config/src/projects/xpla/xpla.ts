@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const xpla: ScalingProject = upcomingL2({
       "XPLA is a global content powerhouse acting as the hub for digital media. The zkXPLA chain, built on ZKsync's ZK Stack technology, will optimize the deployment of games by publishers and developers and offer a seamless end-to-end gaming environment.",
     purposes: ['Universal', 'Gaming'],
     category: 'Validium',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://xpla.io'],
       bridges: ['https://vault.xpla.io/'],
@@ -22,5 +22,8 @@ export const xpla: ScalingProject = upcomingL2({
       repositories: ['https://github.com/xpladev'],
       socialMedia: ['https://x.com/XPLA_Official'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

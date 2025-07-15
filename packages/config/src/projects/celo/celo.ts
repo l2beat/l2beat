@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -28,11 +28,15 @@ export const celo: ScalingProject = opStackL2({
     description:
       'Celo is an Ethereum Optimium based on the OP stack, scaling real-world solutions & leading a thriving new digital economy for all.',
     category: 'Other',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://celo.org/'],
       documentation: ['https://docs.celo.org/'],
-      explorers: ['https://explorer.celo.org/mainnet/', 'https://celoscan.io'],
+      explorers: [
+        'https://explorer.celo.org/mainnet/',
+        'https://celoscan.io',
+        'https://celo.blockscout.com/',
+      ],
       repositories: ['https://github.com/celo-org'],
       socialMedia: [
         'https://x.com/Celo',
@@ -40,9 +44,6 @@ export const celo: ScalingProject = opStackL2({
         'https://blog.celo.org/',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['CELO'],

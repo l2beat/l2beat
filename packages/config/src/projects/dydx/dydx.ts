@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -98,7 +98,7 @@ export const dydx: ScalingProject = {
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://dydx.exchange/'],
@@ -129,9 +129,6 @@ export const dydx: ScalingProject = {
     liveness: {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {

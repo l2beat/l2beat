@@ -1,6 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import type { EntryParameters } from '../output/types'
-import type { ContractValue } from '../output/types'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import type { ContractValue, EntryParameters } from '../output/types'
 
 export function interpolateModelTemplate(
   content: string,
@@ -62,9 +61,7 @@ export function tryCastingToName(
 }
 
 export function quoteEthereumAddress(value: string) {
-  return EthereumAddress.checkIgnoringCase(value)
-    ? `"${value.toLowerCase()}"`
-    : value
+  return ChainSpecificAddress.check(value) ? `"${value.toLowerCase()}"` : value
 }
 
 // Clingo ids need to start with a lowercase letter

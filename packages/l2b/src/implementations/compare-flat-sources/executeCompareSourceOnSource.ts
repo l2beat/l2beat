@@ -1,15 +1,15 @@
-import path from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   type DiscoveryPaths,
-  type HashedFileContent,
   estimateSimilarity,
+  type HashedFileContent,
 } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
+import path from 'path'
 import {
-  type Project,
   computeStackSimilarity,
   decodeProjectPath,
+  type Project,
 } from './common'
 import { colorMap } from './output'
 
@@ -17,7 +17,7 @@ export interface CompareSourceOnSourceCommand {
   projectPath: string
   paths: DiscoveryPaths
   forceTable: boolean
-  logger: CliLogger
+  logger: Logger
 }
 
 export async function executeCompareSourceOnSource(
@@ -37,10 +37,10 @@ export async function executeCompareSourceOnSource(
   )
   for (const source of base.sources) {
     const mostSimmilar = findMostSimmilarContract(source, projects)
-    command.logger.logLine(`${path.basename(source.path)}`)
+    command.logger.info(`${path.basename(source.path)}`)
     for (const [i, e] of mostSimmilar.entries()) {
-      const prefix = i === mostSimmilar.length - 1 ? `└─` : `├─`
-      command.logger.logLine(
+      const prefix = i === mostSimmilar.length - 1 ? '└─' : '├─'
+      command.logger.info(
         `${prefix} [${colorMap(e.similarity)}] in ${e.chain}:${
           e.projectName
         }:${path.basename(e.path)}`,

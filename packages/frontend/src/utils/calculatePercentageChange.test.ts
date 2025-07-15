@@ -22,8 +22,8 @@ describe('calculatePercentageChange', () => {
   })
 
   it('returns 0 for invalid change values', () => {
-    expect(calculatePercentageChange(Infinity, 100)).toEqual(0)
-    expect(calculatePercentageChange(NaN, 100)).toEqual(0)
+    expect(calculatePercentageChange(Number.POSITIVE_INFINITY, 100)).toEqual(0)
+    expect(calculatePercentageChange(Number.NaN, 100)).toEqual(0)
   })
 })
 
@@ -34,6 +34,17 @@ describe('formatPercent', () => {
 
   it('formats values greater than or equal to 100 with no decimal places', () => {
     expect(formatPercent(1)).toEqual('100%')
+  })
+
+  it('formats close values correctly', () => {
+    const values = [
+      { value: 0.9999943793529054, expected: '99.9%' },
+      { value: 0.0999943793529054, expected: '9.99%' },
+    ]
+
+    for (const { value, expected } of values) {
+      expect(formatPercent(value)).toEqual(expected)
+    }
   })
 
   it('formats values greater than or equal to 10 with one decimal place', () => {

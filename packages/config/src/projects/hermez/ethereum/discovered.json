@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "ProxyAdmin",
-      "address": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+      "address": "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
       "type": "Contract",
       "sourceHashes": [
         "0x228d39e9354fb4359c868bd34cc144e1f4449270e99b6b6c29077f7cdc43b6ac"
@@ -15,12 +15,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+          "from": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA68D85dF56E733A06443306A095646317B5Fa633",
+          "from": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
           "role": "admin"
         }
       ],
@@ -28,15 +28,15 @@
       "sinceBlock": 12093588,
       "values": {
         "$immutable": true,
-        "owner": "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
+        "owner": "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3"
       },
       "implementationNames": {
-        "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": "ProxyAdmin"
+        "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": "ProxyAdmin"
       }
     },
     {
       "name": "HermezAuctionProtocol",
-      "address": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+      "address": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
       "type": "Contract",
       "sourceHashes": [
         "0xdb3bef89a228d50af48f4cf15733111b6aafeed38fb487368076047f0272b282",
@@ -46,38 +46,38 @@
       "sinceTimestamp": 1616482443,
       "sinceBlock": 12093592,
       "values": {
-        "$admin": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
-        "$implementation": "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
+        "$admin": "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+        "$implementation": "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "BLOCKS_PER_SLOT": 40,
         "bootCoordinatorURL": "https://api.hermez.io",
         "genesisBlock": 12094000,
         "getAllocationRatio": [4000, 4000, 2000],
-        "getBootCoordinator": "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
+        "getBootCoordinator": "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
         "getClosedAuctionSlots": 2,
-        "getDonationAddress": "0x0000000000000000000000000000000000000000",
+        "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
         "getOpenAuctionSlots": 4320,
         "getOutbidding": 1000,
         "getSlotDeadline": 40,
-        "governanceAddress": "0xf1B3b124842555782F98bE08d1357ABb8013F11c",
-        "hermezRollup": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "governanceAddress": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "hermezRollup": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
-        "tokenHEZ": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
+        "tokenHEZ": "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
       },
       "implementationNames": {
-        "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": "AdminUpgradeabilityProxy",
-        "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
+        "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": "AdminUpgradeabilityProxy",
+        "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
       }
     },
     {
-      "address": "0x1DBA1131000664b884A1Ba238464159892252D3a",
+      "address": "eth:0x1DBA1131000664b884A1Ba238464159892252D3a",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Verifier2048",
-      "address": "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342",
+      "address": "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342",
       "type": "Contract",
       "sourceHashes": [
         "0xf51a7f57b93c2b8b3a62b0b15a896614822a2eeedc4b52a8758d8b0028b5f18c"
@@ -87,17 +87,17 @@
       "sinceBlock": 12373414,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": "Verifier2048"
+        "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": "Verifier2048"
       }
     },
     {
-      "address": "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
+      "address": "eth:0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "WithdrawalDelayer",
-      "address": "0x392361427Ef5e17b69cFDd1294F31ab555c86124",
+      "address": "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124",
       "type": "Contract",
       "sourceHashes": [
         "0xeb5db1557fd4c8a14866a14626b87afcfdfc2738ea4efdb0ea9c87ec09240233"
@@ -107,29 +107,29 @@
       "sinceBlock": 12093599,
       "values": {
         "$immutable": true,
-        "getEmergencyCouncil": "0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
+        "getEmergencyCouncil": "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
         "getEmergencyModeStartingTime": 0,
-        "getHermezGovernanceAddress": "0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "getHermezGovernanceAddress": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
         "getWithdrawalDelay": 3600,
-        "hermezRollupAddress": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+        "hermezRollupAddress": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
         "isEmergencyMode": false,
         "MAX_EMERGENCY_MODE_TIME": 15724800,
         "MAX_WITHDRAWAL_DELAY": 1209600,
-        "pendingEmergencyCouncil": "0x0000000000000000000000000000000000000000",
-        "pendingGovernance": "0x0000000000000000000000000000000000000000"
+        "pendingEmergencyCouncil": "eth:0x0000000000000000000000000000000000000000",
+        "pendingGovernance": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x392361427Ef5e17b69cFDd1294F31ab555c86124": "WithdrawalDelayer"
+        "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124": "WithdrawalDelayer"
       }
     },
     {
-      "address": "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4",
+      "address": "eth:0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Verifier400",
-      "address": "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2",
+      "address": "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2",
       "type": "Contract",
       "sourceHashes": [
         "0x2d871d2a619c09cbe52344e2d3ce4cf8c55ae1a347abd9ea45a4bda5a7381b46"
@@ -139,12 +139,12 @@
       "sinceBlock": 12373413,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": "Verifier400"
+        "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": "Verifier400"
       }
     },
     {
       "name": "VerifierWithdraw",
-      "address": "0x4464A1E499cf5443541da6728871af1D5C4920ca",
+      "address": "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca",
       "type": "Contract",
       "sourceHashes": [
         "0x1470a04ef17f2a5136c4d367b0e3f4cba6f020f03a73a27eaae5f22e65aa44a7"
@@ -154,12 +154,12 @@
       "sinceBlock": 12373429,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x4464A1E499cf5443541da6728871af1D5C4920ca": "VerifierWithdraw"
+        "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": "VerifierWithdraw"
       }
     },
     {
       "name": "Hermez2",
-      "address": "0x6D85D79D69b7e190E671C16e8611997152bD3e95",
+      "address": "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95",
       "type": "Contract",
       "sourceHashes": [
         "0xe05e5b424accc7b17ae5ca45336522f973eef578dd74429d02aed898b86a59f2"
@@ -178,8 +178,8 @@
         "forgeL1L2BatchTimeout": 0,
         "getChainId": 1,
         "HERMEZ_NETWORK_HASH": "0xbe287413178bfeddef8d9753ad4be825ae998706a6dabff23978b59dccaea0ad",
-        "hermezAuctionContract": "0x0000000000000000000000000000000000000000",
-        "hermezGovernanceAddress": "0x0000000000000000000000000000000000000000",
+        "hermezAuctionContract": "eth:0x0000000000000000000000000000000000000000",
+        "hermezGovernanceAddress": "eth:0x0000000000000000000000000000000000000000",
         "lastForgedBatch": 0,
         "lastIdx": 0,
         "lastL1L2Batch": 0,
@@ -190,25 +190,25 @@
         "registerTokensCount": 0,
         "rollupVerifiers": [],
         "rollupVerifiersLength": 0,
-        "tokenHEZ": "0x0000000000000000000000000000000000000000",
+        "tokenHEZ": "eth:0x0000000000000000000000000000000000000000",
         "tokenList": [],
         "VERSION_HASH": "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6",
         "withdrawalDelay": 0,
-        "withdrawDelayerContract": "0x0000000000000000000000000000000000000000",
-        "withdrawVerifier": "0x0000000000000000000000000000000000000000"
+        "withdrawDelayerContract": "eth:0x0000000000000000000000000000000000000000",
+        "withdrawVerifier": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
+        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
       }
     },
     {
-      "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+      "address": "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "HermezAuctionProtocol2",
-      "address": "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
+      "address": "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6",
       "type": "Contract",
       "sourceHashes": [
         "0x476ed86f075a8dece66465dd7b3861cbdafe66b401883c61cb0a73d9b01dde22"
@@ -222,24 +222,24 @@
         "bootCoordinatorURL": "",
         "genesisBlock": 0,
         "getAllocationRatio": [0, 0, 0],
-        "getBootCoordinator": "0x0000000000000000000000000000000000000000",
+        "getBootCoordinator": "eth:0x0000000000000000000000000000000000000000",
         "getClosedAuctionSlots": 0,
-        "getDonationAddress": "0x0000000000000000000000000000000000000000",
+        "getDonationAddress": "eth:0x0000000000000000000000000000000000000000",
         "getOpenAuctionSlots": 0,
         "getOutbidding": 0,
         "getSlotDeadline": 0,
-        "governanceAddress": "0x0000000000000000000000000000000000000000",
-        "hermezRollup": "0x0000000000000000000000000000000000000000",
+        "governanceAddress": "eth:0x0000000000000000000000000000000000000000",
+        "hermezRollup": "eth:0x0000000000000000000000000000000000000000",
         "INITIAL_MINIMAL_BIDDING": "1000000000000000000000000",
-        "tokenHEZ": "0x0000000000000000000000000000000000000000"
+        "tokenHEZ": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
+        "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": "HermezAuctionProtocol"
       }
     },
     {
       "name": "Hermez",
-      "address": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+      "address": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
       "type": "Contract",
       "sourceHashes": [
         "0xdb3bef89a228d50af48f4cf15733111b6aafeed38fb487368076047f0272b282",
@@ -249,13 +249,13 @@
       "sinceTimestamp": 1616482490,
       "sinceBlock": 12093596,
       "values": {
-        "$admin": "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
-        "$implementation": "0x6D85D79D69b7e190E671C16e8611997152bD3e95",
+        "$admin": "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3",
+        "$implementation": "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95",
         "$pastUpgrades": [
           [
             "2021-05-13T08:02:37.000Z",
             "0x57ad65625027cd8324566421b6b838c4eccbc76dcad9c837d76beb841d5dc70c",
-            ["0x6D85D79D69b7e190E671C16e8611997152bD3e95"]
+            ["eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95"]
           ]
         ],
         "$upgradeCount": 1,
@@ -268,8 +268,8 @@
         "forgeL1L2BatchTimeout": 16,
         "getChainId": 1,
         "HERMEZ_NETWORK_HASH": "0xbe287413178bfeddef8d9753ad4be825ae998706a6dabff23978b59dccaea0ad",
-        "hermezAuctionContract": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
-        "hermezGovernanceAddress": "0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "hermezAuctionContract": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+        "hermezGovernanceAddress": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
         "lastForgedBatch": 7631,
         "lastIdx": 12816,
         "lastL1L2Batch": 17039009,
@@ -279,29 +279,29 @@
         "nextL1ToForgeQueue": 7626,
         "registerTokensCount": 33,
         "rollupVerifiers": [
-          ["0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2", 400, 32],
-          ["0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342", 2048, 32]
+          ["eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2", 400, 32],
+          ["eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342", 2048, 32]
         ],
         "rollupVerifiersLength": 2,
-        "tokenHEZ": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
+        "tokenHEZ": "eth:0xEEF9f339514298C6A857EfCfC1A762aF84438dEE",
         "VERSION_HASH": "0xc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc6",
         "withdrawalDelay": 259200,
-        "withdrawDelayerContract": "0x392361427Ef5e17b69cFDd1294F31ab555c86124",
-        "withdrawVerifier": "0x4464A1E499cf5443541da6728871af1D5C4920ca"
+        "withdrawDelayerContract": "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124",
+        "withdrawVerifier": "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca"
       },
       "implementationNames": {
-        "0xA68D85dF56E733A06443306A095646317B5Fa633": "AdminUpgradeabilityProxy",
-        "0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
+        "eth:0xA68D85dF56E733A06443306A095646317B5Fa633": "AdminUpgradeabilityProxy",
+        "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": "Hermez"
       }
     },
     {
-      "address": "0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
+      "address": "eth:0xc3867Da55e14b722Ab2A8E9fa4e39F51F5e03dE5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "GnosisSafe",
-      "address": "0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
+      "address": "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -314,13 +314,13 @@
       "sinceBlock": 12080648,
       "values": {
         "$immutable": false,
-        "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$implementation": "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "$members": [
-          "0x1DBA1131000664b884A1Ba238464159892252D3a",
-          "0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
-          "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
-          "0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
-          "0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
+          "eth:0x1DBA1131000664b884A1Ba238464159892252D3a",
+          "eth:0x839395e20bbB182fa440d08F850E6c7A8f6F0780",
+          "eth:0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
+          "eth:0x2d3C8Ad3E6eE92D2e278B42db0FD7Aa99424bB92",
+          "eth:0x3Ac6Cb2CcFd8c8aAe3BA31D7ED44C20d241B16A4"
         ],
         "$threshold": 3,
         "domainSeparator": "0xa8d350af38a90d0f1848de5f721e6c5da3772e7ba783935a096c423702921edf",
@@ -332,18 +332,18 @@
         "VERSION": "1.1.1"
       },
       "implementationNames": {
-        "0xe1bbC673E537053c3536310851C6554BcfcF11Cd": "Proxy",
-        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
+        "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd": "Proxy",
+        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": "GnosisSafe"
       }
     },
     {
-      "address": "0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
+      "address": "eth:0xEA479628a2236865dcc01c0F9DF7d5955Ac602e4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "HermezGovernance",
-      "address": "0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+      "address": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
       "type": "Contract",
       "sourceHashes": [
         "0x3bedb01d2286bb466957d9f521a78ce6f362ce7e6dc31764db9db2a96bf4203d"
@@ -356,12 +356,12 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0xf1B3b124842555782F98bE08d1357ABb8013F11c": "HermezGovernance"
+        "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c": "HermezGovernance"
       }
     },
     {
       "name": "Timelock",
-      "address": "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3",
+      "address": "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3",
       "type": "Contract",
       "sourceHashes": [
         "0x4b401c52fd30ceef4f84c7f5910ab91f15b73d9292a0cccb6fc59ab6a7cc8a1a"
@@ -371,15 +371,15 @@
       "sinceBlock": 12087731,
       "values": {
         "$immutable": true,
-        "admin": "0xf1B3b124842555782F98bE08d1357ABb8013F11c",
+        "admin": "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c",
         "delay": 604800,
         "GRACE_PERIOD": 1209600,
         "MAXIMUM_DELAY": 2592000,
         "MINIMUM_DELAY": 172800,
-        "pendingAdmin": "0x0000000000000000000000000000000000000000"
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": "Timelock"
+        "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": "Timelock"
       }
     }
   ],
@@ -670,5 +670,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x880d7aa720d915451716cefc5ebfbfb518b800b6e38107cb974da479656a20bf"
+  "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24"
 }

@@ -1,9 +1,10 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/languageJoin'
 import { Square } from '../Square'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
 export interface TokenBreakdownProps {
@@ -83,10 +84,12 @@ export function TokenBreakdownTooltipContent({
                 >
                   <span className="flex items-center gap-1">
                     <Square variant={v.variant} size="small" />
-                    <span className="label-value-14-medium">{v.title}</span>
+                    <span className="font-medium text-label-value-14">
+                      {v.title}
+                    </span>
                   </span>
-                  <span className="label-value-15-medium">
-                    {((v.value / total) * 100).toFixed(2)}%
+                  <span className="font-medium text-label-value-15">
+                    {formatPercent(v.value / total)}
                   </span>
                 </div>
               ),

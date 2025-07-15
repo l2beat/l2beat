@@ -1,3 +1,352 @@
+Generated with discovered.json: 0x71a5465c32e737ddfe1f295190a91fd8c11f6bd4
+
+# Diff at Tue, 15 Jul 2025 10:07:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22567327
+- current block number: 22923880
+
+## Description
+
+this [proposal upgrades several contracts](https://tools.l2beat.com/decoder-new/?hash=0x988dc1a723573a0c42b9f66c67951e5bd33ed34e3008de44b13bba5c30537521&data=AwA) and is labeled 'refactor' by the proposer.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        65
++        66
+    }
+```
+
+Generated with discovered.json: 0x5f07edc9f21c1226bf5aafb36ed91f46db9db0b4
+
+# Diff at Mon, 14 Jul 2025 12:44:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22567327
+- current block number: 22567327
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567327 (main branch discovery), not current.
+
+```diff
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa) {
+    +++ description: None
+      address:
+-        "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa"
++        "eth:0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa"
+      values.allMembers.0:
+-        "0x894107B7b5051409f279E8300774B2f62Febe057"
++        "eth:0x894107B7b5051409f279E8300774B2f62Febe057"
+      values.allMembers.1:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "eth:0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.allMembers.2:
+-        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
++        "eth:0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.allMembers.3:
+-        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
++        "eth:0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+      values.chainportCongress:
+-        "0xB6b4C7aC240b1f176c5589d064733066a83884a1"
++        "eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1"
+      values.getAllMemberAddresses.0:
+-        "0x894107B7b5051409f279E8300774B2f62Febe057"
++        "eth:0x894107B7b5051409f279E8300774B2f62Febe057"
+      values.getAllMemberAddresses.1:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "eth:0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.getAllMemberAddresses.2:
+-        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
++        "eth:0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.getAllMemberAddresses.3:
+-        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
++        "eth:0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+      implementationNames.0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa:
+-        "ChainportCongressMembersRegistry"
+      implementationNames.eth:0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa:
++        "ChainportCongressMembersRegistry"
+    }
+```
+
+```diff
+    EOA  (0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd) {
+    +++ description: None
+      address:
+-        "0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
++        "eth:0x38B9cf22343C417C99e9AF4Aee06897ff1A85cDd"
+    }
+```
+
+```diff
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
+    +++ description: None
+      address:
+-        "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9"
++        "eth:0x450aD18B4442ce2972Af2a7A12439984db4Afaf9"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x894107B7b5051409f279E8300774B2f62Febe057"
++        "eth:0x894107B7b5051409f279E8300774B2f62Febe057"
+      values.$members.1:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "eth:0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.$members.2:
+-        "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
++        "eth:0xD2238E8c085E5059F8DFC52256530210bc7250F6"
+      implementationNames.0x450aD18B4442ce2972Af2a7A12439984db4Afaf9:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x450aD18B4442ce2972Af2a7A12439984db4Afaf9:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      address:
+-        "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
++        "eth:0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+      values.owner:
+-        "0xB6b4C7aC240b1f176c5589d064733066a83884a1"
++        "eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1"
+      implementationNames.0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F:
+-        "ProxyAdmin"
+      implementationNames.eth:0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      address:
+-        "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
++        "eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+      values.$admin:
+-        "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
++        "eth:0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
+      values.$implementation:
+-        "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
++        "eth:0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
+      values.$pastUpgrades.0.2.0:
+-        "0x93307C7dE0f1B54814135f06321639A9f5c7dDFF"
++        "eth:0x93307C7dE0f1B54814135f06321639A9f5c7dDFF"
+      values.$pastUpgrades.1.2.0:
+-        "0xF7362aF99Cc1f48a1e50D304ed23BAf8f9Fd16f2"
++        "eth:0xF7362aF99Cc1f48a1e50D304ed23BAf8f9Fd16f2"
+      values.$pastUpgrades.2.2.0:
+-        "0x21AEbe5B5b7A33930b3c5c10fbd77117501a9552"
++        "eth:0x21AEbe5B5b7A33930b3c5c10fbd77117501a9552"
+      values.$pastUpgrades.3.2.0:
+-        "0xE317bF1cf456875f37F1d1c5A63848d0Ab25653C"
++        "eth:0xE317bF1cf456875f37F1d1c5A63848d0Ab25653C"
+      values.$pastUpgrades.4.2.0:
+-        "0xF8EfC927502c4645d147dEE742637BaF5B4318B0"
++        "eth:0xF8EfC927502c4645d147dEE742637BaF5B4318B0"
+      values.$pastUpgrades.5.2.0:
+-        "0x6609d8d915153A18768199468c89A9B0e27581a6"
++        "eth:0x6609d8d915153A18768199468c89A9B0e27581a6"
+      values.$pastUpgrades.6.2.0:
+-        "0x77FA6b67b5fC1cC6116082981D1Db098B8980843"
++        "eth:0x77FA6b67b5fC1cC6116082981D1Db098B8980843"
+      values.$pastUpgrades.7.2.0:
+-        "0x5D6F289A6A31c618A600d61984140877991E90f7"
++        "eth:0x5D6F289A6A31c618A600d61984140877991E90f7"
+      values.$pastUpgrades.8.2.0:
+-        "0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568"
++        "eth:0x4899eB3c7db4c3b31Ee412fBcf2cfbA60Ca5C568"
+      values.$pastUpgrades.9.2.0:
+-        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
++        "eth:0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
+      values.$pastUpgrades.10.2.0:
+-        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
++        "eth:0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
+      values.$pastUpgrades.11.2.0:
+-        "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
++        "eth:0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
+      implementationNames.0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x118cbd7a4769846AD4928598D1f805a509Cc8c0d:
+-        ""
+      implementationNames.eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x118cbd7a4769846AD4928598D1f805a509Cc8c0d:
++        ""
+    }
+```
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      address:
+-        "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19"
++        "eth:0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
++        "eth:0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+      values.$members.1:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "eth:0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+      values.$members.2:
+-        "0x894107B7b5051409f279E8300774B2f62Febe057"
++        "eth:0x894107B7b5051409f279E8300774B2f62Febe057"
+      implementationNames.0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA EOAVault5 (0x873089bC765a1C0AFAd48e34fCd305d17D81be87) {
+    +++ description: None
+      address:
+-        "0x873089bC765a1C0AFAd48e34fCd305d17D81be87"
++        "eth:0x873089bC765a1C0AFAd48e34fCd305d17D81be87"
+    }
+```
+
+```diff
+    EOA  (0x894107B7b5051409f279E8300774B2f62Febe057) {
+    +++ description: None
+      address:
+-        "0x894107B7b5051409f279E8300774B2f62Febe057"
++        "eth:0x894107B7b5051409f279E8300774B2f62Febe057"
+    }
+```
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      address:
+-        "0xB6b4C7aC240b1f176c5589d064733066a83884a1"
++        "eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1"
+      values.getMembersRegistry:
+-        "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa"
++        "eth:0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa"
+      implementationNames.0xB6b4C7aC240b1f176c5589d064733066a83884a1:
+-        "ChainportCongress"
+      implementationNames.eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1:
++        "ChainportCongress"
+    }
+```
+
+```diff
+    EOA  (0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7) {
+    +++ description: None
+      address:
+-        "0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
++        "eth:0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7"
+    }
+```
+
+```diff
+    EOA EOAVault3 (0xD2238E8c085E5059F8DFC52256530210bc7250F6) {
+    +++ description: None
+      address:
+-        "0xD2238E8c085E5059F8DFC52256530210bc7250F6"
++        "eth:0xD2238E8c085E5059F8DFC52256530210bc7250F6"
+    }
+```
+
+```diff
+    EOA  (0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609) {
+    +++ description: None
+      address:
+-        "0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
++        "eth:0xdd37184C6BF02Aea66Ed3eCb8fcccfeADF801609"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xefcc99e1fbccb81bd35016288c6eb6e5352be81c
+
+# Diff at Fri, 04 Jul 2025 12:18:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22567327
+- current block number: 22567327
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567327 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
++        "eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"
+    }
+```
+
 Generated with discovered.json: 0x660a8ce1696124e3f80ff922afe4a1552a912b6a
 
 # Diff at Mon, 26 May 2025 13:41:50 GMT:

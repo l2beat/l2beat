@@ -2,7 +2,7 @@
 // passes smhasher so it's not cryptographically secure. If you need anything
 // even semi-strong use sha2.
 // Based on: https://gist.github.com/jlevy/c246006675becc446360a798e2b2d781
-export function cyrb64(str: string, seed: number = 0) {
+export function cyrb64(str: string, seed = 0) {
   let h1 = 0xdeadbeef ^ seed
   let h2 = 0x41c6ce57 ^ seed
 

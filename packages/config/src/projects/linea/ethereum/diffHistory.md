@@ -1,3 +1,982 @@
+Generated with discovered.json: 0x82cbb884284c44c28083af94df05646fe9d55b71
+
+# Diff at Mon, 14 Jul 2025 12:45:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22673062
+- current block number: 22673062
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22673062 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      address:
+-        "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      values.$admin:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      values.$implementation:
+-        "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
++        "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
+      values.$pastUpgrades.0.2.0:
+-        "0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"
++        "eth:0x6ccfD65b0b14F67259C77Ca6267104e058dDB292"
+      values.$pastUpgrades.1.2.0:
+-        "0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"
++        "eth:0xd52c09E67aF3BE0977B52b4817366e9BaB5dCFA2"
+      values.$pastUpgrades.2.2.0:
+-        "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
++        "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_ALL_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_ALL_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_INITIATE_TOKEN_BRIDGING_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_INITIATE_TOKEN_BRIDGING_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_COMPLETE_TOKEN_BRIDGING_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_COMPLETE_TOKEN_BRIDGING_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.SET_CUSTOM_CONTRACT_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.SET_CUSTOM_CONTRACT_ROLE.members.1:
+-        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
++        "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.accessControl.REMOVE_RESERVED_TOKEN_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.REMOVE_RESERVED_TOKEN_ROLE.members.1:
+-        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
++        "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.accessControl.SET_MESSAGE_SERVICE_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.SET_REMOTE_TOKENBRIDGE_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.SET_RESERVED_TOKEN_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.SET_RESERVED_TOKEN_ROLE.members.1:
+-        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
++        "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.defaultAdminAC.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.messageService:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      values.remoteSender:
+-        "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
++        "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
+      values.tokenBeacon:
+-        "0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
++        "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
+      implementationNames.0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34:
+-        "TokenBridge"
+      implementationNames.eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34:
++        "TokenBridge"
+    }
+```
+
+```diff
+    EOA  (0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2) {
+    +++ description: None
+      address:
+-        "0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
++        "eth:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
+    }
+```
+
+```diff
+    EOA  (0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE) {
+    +++ description: None
+      address:
+-        "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
+    }
+```
+
+```diff
+    EOA  (0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) {
+    +++ description: None
+      address:
+-        "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
++        "eth:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
+    }
+```
+
+```diff
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D) {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      address:
+-        "0x3697bD0bC6C050135b8321F989a5316eACbF367D"
++        "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D"
+      description:
+-        "A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address."
++        "A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address."
+      values.target:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      implementationNames.0x3697bD0bC6C050135b8321F989a5316eACbF367D:
+-        "CallForwardingProxy"
+      implementationNames.eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D:
++        "CallForwardingProxy"
+    }
+```
+
+```diff
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763) {
+    +++ description: Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.
+      address:
+-        "0x36f274C1C197F277EA3C57859729398FCc8a3763"
++        "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763"
+      values.bridge:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.eip712Domain.verifyingContract:
+-        "0x36f274C1C197F277EA3C57859729398FCc8a3763"
++        "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763"
+      implementationNames.0x36f274C1C197F277EA3C57859729398FCc8a3763:
+-        "BridgedToken"
+      implementationNames.eth:0x36f274C1C197F277EA3C57859729398FCc8a3763:
++        "BridgedToken"
+    }
+```
+
+```diff
+    EOA  (0x3acC729EdE75355EDab57aB82bEb32011cB1B079) {
+    +++ description: None
+      address:
+-        "0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
++        "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
+    }
+```
+
+```diff
+    contract PlonkVerifierMainnetFull (0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7) {
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+      address:
+-        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
++        "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
+      implementationNames.0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7:
+-        "PlonkVerifierMainnetFull"
+      implementationNames.eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7:
++        "PlonkVerifierMainnetFull"
+    }
+```
+
+```diff
+    EOA  (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8) {
+    +++ description: None
+      address:
+-        "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
++        "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+    }
+```
+
+```diff
+    EOA  (0x46d2F319fd42165D4318F099E143dEA8124E9E3e) {
+    +++ description: None
+      address:
+-        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
++        "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+    }
+```
+
+```diff
+    EOA  (0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB) {
+    +++ description: None
+      address:
+-        "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
++        "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
+    }
+```
+
+```diff
+    EOA  (0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4) {
+    +++ description: None
+      address:
+-        "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
++        "eth:0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
+    }
+```
+
+```diff
+    EOA  (0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754) {
+    +++ description: None
+      address:
+-        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
++        "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+    }
+```
+
+```diff
+    EOA  (0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5) {
+    +++ description: None
+      address:
+-        "0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5"
++        "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5"
+    }
+```
+
+```diff
+    EOA  (0x5822D8457c00FB82203918ED92907b935B9D40AE) {
+    +++ description: None
+      address:
+-        "0x5822D8457c00FB82203918ED92907b935B9D40AE"
++        "eth:0x5822D8457c00FB82203918ED92907b935B9D40AE"
+    }
+```
+
+```diff
+    EOA  (0x727833aB68F32a7f2ab96f15aD67336660eCBBD0) {
+    +++ description: None
+      address:
+-        "0x727833aB68F32a7f2ab96f15aD67336660eCBBD0"
++        "eth:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0"
+    }
+```
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      address:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
++        "eth:0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
+      values.$members.1:
+-        "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "eth:0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
+      values.$members.2:
+-        "0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5"
++        "eth:0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5"
+      values.$members.3:
+-        "0x5822D8457c00FB82203918ED92907b935B9D40AE"
++        "eth:0x5822D8457c00FB82203918ED92907b935B9D40AE"
+      values.$members.4:
+-        "0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
++        "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
+      values.$members.5:
+-        "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
++        "eth:0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
+      values.$members.6:
+-        "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
++        "eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
+      values.$members.7:
+-        "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
++        "eth:0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
+      values.GnosisSafe_modules.0:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+      implementationNames.0x892bb7EeD71efB060ab90140e7825d8127991DD3:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x9376c137AF5124FFc39bD8940A3D88D1cd508992) {
+    +++ description: None
+      address:
+-        "0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
++        "eth:0x9376c137AF5124FFc39bD8940A3D88D1cd508992"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB) {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      address:
+-        "0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
++        "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
+      description:
+-        "A beacon with an upgradeable implementation currently set as 0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation."
++        "A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation."
+      values.implementation:
+-        "0x36f274C1C197F277EA3C57859729398FCc8a3763"
++        "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763"
+      values.owner:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      implementationNames.0x971f46a2852d11D59dbF0909e837cfd06f357DeB:
+-        "UpgradeableBeacon"
+      implementationNames.eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB:
++        "UpgradeableBeacon"
+    }
+```
+
+```diff
+    EOA  (0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451) {
+    +++ description: None
+      address:
+-        "0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
++        "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
+    }
+```
+
+```diff
+    EOA  (0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1) {
+    +++ description: None
+      address:
+-        "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
++        "eth:0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
+    }
+```
+
+```diff
+    EOA  (0xB4dAebe4D01f467701F95f0196fc29033c54dBcb) {
+    +++ description: None
+      address:
+-        "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
++        "eth:0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
+    }
+```
+
+```diff
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) {
+    +++ description: None
+      address:
+-        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
++        "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
++        "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079"
+      values.$members.1:
+-        "0x727833aB68F32a7f2ab96f15aD67336660eCBBD0"
++        "eth:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0"
+      values.$members.2:
+-        "0xF112a2438a4e08836046D587350f9315C0eAE300"
++        "eth:0xF112a2438a4e08836046D587350f9315C0eAE300"
+      values.$members.3:
+-        "0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
++        "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451"
+      values.$members.4:
+-        "0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
++        "eth:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
+      implementationNames.0xB8F5524D73f549Cf14A0587a3C7810723f9c0051:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+      address:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      values.$admin:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      values.$implementation:
+-        "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
++        "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
+      values.$pastUpgrades.0.2.0:
+-        "0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"
++        "eth:0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"
+      values.$pastUpgrades.1.2.0:
+-        "0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"
++        "eth:0xE8f627df6Cb02e415b2e6d6e112323BD269b4706"
+      values.$pastUpgrades.2.2.0:
+-        "0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3"
++        "eth:0x4c8d4Ce72afAA417d1F7E833725FdB4E793cd6b3"
+      values.$pastUpgrades.3.2.0:
+-        "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"
++        "eth:0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"
+      values.$pastUpgrades.4.2.0:
+-        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
++        "eth:0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
+      values.$pastUpgrades.5.2.0:
+-        "0x934Dd4C63E285551CEceF8459103554D0096c179"
++        "eth:0x934Dd4C63E285551CEceF8459103554D0096c179"
+      values.$pastUpgrades.6.2.0:
+-        "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"
++        "eth:0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"
+      values.$pastUpgrades.7.2.0:
+-        "0x1825242411792536469Cbb5843fd27Ce3e9e583A"
++        "eth:0x1825242411792536469Cbb5843fd27Ce3e9e583A"
+      values.$pastUpgrades.8.2.0:
+-        "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
++        "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.OPERATOR_ROLE.members.0:
+-        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
++        "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+      values.accessControl.OPERATOR_ROLE.members.1:
+-        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
++        "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      values.accessControl.RATE_LIMIT_SETTER_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_MANAGER.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.VERIFIER_SETTER_ROLE.members.0:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      values.accessControl.PAUSE_ALL_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_L1_L2_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_L2_L1_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_ALL_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_L1_L2_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_L2_L1_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_BLOB_SUBMISSION_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_BLOB_SUBMISSION_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PAUSE_FINALIZATION_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.UNPAUSE_FINALIZATION_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.USED_RATE_LIMIT_RESETTER_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.VERIFIER_UNSETTER_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.defaultAdminAC.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.fallbackOperator:
+-        "0x3697bD0bC6C050135b8321F989a5316eACbF367D"
++        "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D"
+      values.Operators.0:
+-        "0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
++        "eth:0x46d2F319fd42165D4318F099E143dEA8124E9E3e"
+      values.Operators.1:
+-        "0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
++        "eth:0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754"
+      values.sender:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.0:
+-        "0xED39C0C41A7651006953AB58Ecb3039363620995"
++        "eth:0xED39C0C41A7651006953AB58Ecb3039363620995"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.3:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.4:
+-        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
++        "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.5:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.6:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.7:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.8:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.9:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.10:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.11:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.12:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.13:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.14:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.15:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.16:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.17:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.18:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.19:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xd19d4B5d358258f05D7B411E21A1460D11B0876F:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0:
+-        "LineaRollup"
+      implementationNames.eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0:
++        "LineaRollup"
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      address:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.PROPOSER_ROLE.members.1:
+-        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
++        "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.cancellerAC.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.executorAC.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.proposerAC.0:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.proposerAC.1:
+-        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
++        "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.timelockAdminAC.0:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      implementationNames.0xd6B95c960779c72B8C6752119849318E5d550574:
+-        "TimeLock"
+      implementationNames.eth:0xd6B95c960779c72B8C6752119849318E5d550574:
++        "TimeLock"
+    }
+```
+
+```diff
+    contract PlonkVerifierMainnetFull (0xED39C0C41A7651006953AB58Ecb3039363620995) {
+    +++ description: None
+      address:
+-        "0xED39C0C41A7651006953AB58Ecb3039363620995"
++        "eth:0xED39C0C41A7651006953AB58Ecb3039363620995"
+      implementationNames.0xED39C0C41A7651006953AB58Ecb3039363620995:
+-        "PlonkVerifierMainnetFull"
+      implementationNames.eth:0xED39C0C41A7651006953AB58Ecb3039363620995:
++        "PlonkVerifierMainnetFull"
+    }
+```
+
+```diff
+    EOA  (0xF112a2438a4e08836046D587350f9315C0eAE300) {
+    +++ description: None
+      address:
+-        "0xF112a2438a4e08836046D587350f9315C0eAE300"
++        "eth:0xF112a2438a4e08836046D587350f9315C0eAE300"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      address:
+-        "0xF24f1DC519d88246809B660eb56D94048575d083"
++        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+      values.avatar:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.getGuard:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.guard:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.multisend:
+-        "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761"
++        "eth:0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761"
+      values.owner:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.pausers:
+-        "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
++        "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      values.roles.roles.1.members.0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8:
+-        true
+      values.roles.roles.1.members.eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8:
++        true
+      values.roles.roles.1.targets.0xd19d4B5d358258f05D7B411E21A1460D11B0876F:
+-        {"clearance":"Function","options":"None"}
+      values.roles.roles.1.targets.0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319:
+-        {"clearance":"Function","options":"None"}
+      values.roles.roles.1.targets.0x504A330327A089d8364C4ab3811Ee26976d388ce:
+-        {"clearance":"Function","options":"None"}
+      values.roles.roles.1.targets.eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F:
++        {"clearance":"Function","options":"None"}
+      values.roles.roles.1.targets.eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319:
++        {"clearance":"Function","options":"None"}
+      values.roles.roles.1.targets.eth:0x504A330327A089d8364C4ab3811Ee26976d388ce:
++        {"clearance":"Function","options":"None"}
+      values.roles.roles.1.functions.0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319:
+-        {"pause()":{"options":"None","wildcarded":true,"parameters":[]}}
+      values.roles.roles.1.functions.0x504A330327A089d8364C4ab3811Ee26976d388ce:
+-        {"pause()":{"options":"None","wildcarded":true,"parameters":[]}}
+      values.roles.roles.1.functions.0xd19d4B5d358258f05D7B411E21A1460D11B0876F:
+-        {"pauseByType(uint8)":{"options":"None","wildcarded":true,"parameters":[]}}
+      values.roles.roles.1.functions.eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319:
++        {"pause()":{"options":"None","wildcarded":true,"parameters":[]}}
+      values.roles.roles.1.functions.eth:0x504A330327A089d8364C4ab3811Ee26976d388ce:
++        {"pause()":{"options":"None","wildcarded":true,"parameters":[]}}
+      values.roles.roles.1.functions.eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F:
++        {"pauseByType(uint8)":{"options":"None","wildcarded":true,"parameters":[]}}
+      values.target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.ZodiacModule_avatar:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      values.ZodiacModule_guard:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.ZodiacModule_modules.0:
+-        "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
++        "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+      values.ZodiacModule_target:
+-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+      implementationNames.0xF24f1DC519d88246809B660eb56D94048575d083:
+-        "Roles"
+      implementationNames.eth:0xF24f1DC519d88246809B660eb56D94048575d083:
++        "Roles"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      address:
+-        "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      values.owner:
+-        "0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      implementationNames.0xF5058616517C068C7b8c7EbC69FF636Ade9066d6:
+-        "ProxyAdmin"
+      implementationNames.eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6:
++        "ProxyAdmin"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319)
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+```
+
+```diff
++   Status: CREATED
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763)
+    +++ description: Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
++   Status: CREATED
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB)
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+```
+
+```diff
++   Status: CREATED
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F)
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574)
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0xED39C0C41A7651006953AB58Ecb3039363620995)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xe92de2ef8956dd39f3816bc745167e8e5459129c
+
+# Diff at Fri, 04 Jul 2025 12:19:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22673062
+- current block number: 22673062
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22673062 (main branch discovery), not current.
+
+```diff
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D) {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      receivedPermissions.0.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
+```diff
+    EOA  (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF24f1DC519d88246809B660eb56D94048575d083"
++        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+    }
+```
+
+```diff
+    EOA  (0x46d2F319fd42165D4318F099E143dEA8124E9E3e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
+```diff
+    EOA  (0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.from:
+-        "ethereum:0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
++        "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
+      receivedPermissions.2.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.3.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.4.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.5.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.6.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.7.via.1.address:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      receivedPermissions.7.from:
+-        "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.8.via.1.address:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      receivedPermissions.8.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
 Generated with discovered.json: 0xbb32dad497b3f3d10f705237f59f3503b54dd98e
 
 # Diff at Tue, 10 Jun 2025 08:47:10 GMT:

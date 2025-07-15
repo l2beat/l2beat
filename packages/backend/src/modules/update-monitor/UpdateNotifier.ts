@@ -1,25 +1,24 @@
 import type { Logger } from '@l2beat/backend-tools'
+import { type ProjectScalingStack, ProjectService } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import {
   assert,
   type ChainConverter,
   type ChainId,
   type EthereumAddress,
+  formatAsAsciiTable,
   ProjectId,
   UnixTime,
-  formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-
-import { ProjectService } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import {
   type Channel,
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
-import type { UpdateMessagesService } from './UpdateMessagesService'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
+import type { UpdateMessagesService } from './UpdateMessagesService'
 import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
@@ -277,10 +276,10 @@ export async function generateTemplatizedStatus(): Promise<string> {
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 
-  const stacks: string[] = [
+  const stacks: ProjectScalingStack[] = [
     ...new Set(
       scaling
-        .map((p) => p.scalingInfo.stack?.toString())
+        .flatMap((p) => p.scalingInfo.stacks)
         .filter((p) => p !== undefined),
     ),
   ]
@@ -293,7 +292,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
 
   for (const stack of stacks) {
     const isFullyTemplatized = scaling
-      .filter((p) => p.scalingInfo.stack === stack)
+      .filter((p) => p.scalingInfo.stacks?.includes(stack))
       .map((p) => p.discoveryInfo.isDiscoDriven)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length

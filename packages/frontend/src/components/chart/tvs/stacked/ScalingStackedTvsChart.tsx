@@ -2,11 +2,10 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { Checkbox } from '~/components/core/Checkbox'
+import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-
-import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import type { TvsProjectFilter } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -16,6 +15,7 @@ import type { ChartUnit } from '../../types'
 import { TvsChartHeader } from '../TvsChartHeader'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
 import { StackedTvsChart } from './StackedTvsChart'
+
 interface Props {
   milestones: Milestone[]
   entries: ScalingTvsEntry[]
@@ -44,7 +44,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   }, [entries, filters, tab])
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     excludeAssociatedTokens,
     filter,
   })

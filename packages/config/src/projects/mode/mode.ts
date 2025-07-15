@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -31,9 +31,6 @@ export const mode: ScalingProject = opStackL2({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['MODE'],
@@ -71,14 +68,6 @@ export const mode: ScalingProject = opStackL2({
       type: 'general',
     },
   ],
-  finality: {
-    type: 'OPStack',
-    l2BlockTimeSeconds: 2,
-    minTimestamp: UnixTime(1710386375),
-    genesisTimestamp: UnixTime(1700167583),
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   chainConfig: {
     name: 'mode',
     chainId: 34443,

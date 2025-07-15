@@ -1,3 +1,1014 @@
+Generated with discovered.json: 0x92be6fbca56c0e06d4b914b980c80c737941d068
+
+# Diff at Mon, 14 Jul 2025 12:47:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22865710
+- current block number: 22865710
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865710 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0000000000000000000000000000000000010003) {
+    +++ description: None
+      address:
+-        "0x0000000000000000000000000000000000010003"
++        "eth:0x0000000000000000000000000000000000010003"
+    }
+```
+
+```diff
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      address:
+-        "0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      values.$implementation.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$implementation.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$implementation.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$implementation.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$pastUpgrades.0.2.0:
+-        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
++        "eth:0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.$pastUpgrades.0.2.1:
+-        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
++        "eth:0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.$pastUpgrades.0.2.2:
+-        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
++        "eth:0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.$pastUpgrades.0.2.3:
+-        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
++        "eth:0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.$pastUpgrades.1.2.0:
+-        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
++        "eth:0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.$pastUpgrades.1.2.1:
+-        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
++        "eth:0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.$pastUpgrades.1.2.2:
+-        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
++        "eth:0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.$pastUpgrades.1.2.3:
+-        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
++        "eth:0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.$pastUpgrades.2.2.0:
+-        "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
++        "eth:0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
+      values.$pastUpgrades.2.2.1:
+-        "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
++        "eth:0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
+      values.$pastUpgrades.2.2.2:
+-        "0x5575218cECd370E1d630d1AdB03c254B0B376821"
++        "eth:0x5575218cECd370E1d630d1AdB03c254B0B376821"
+      values.$pastUpgrades.2.2.3:
+-        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
++        "eth:0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
+      values.$pastUpgrades.3.2.0:
+-        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
++        "eth:0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
+      values.$pastUpgrades.3.2.1:
+-        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
++        "eth:0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
+      values.$pastUpgrades.3.2.2:
+-        "0x36b026c39125964D99596CE302866B5A59E4dE27"
++        "eth:0x36b026c39125964D99596CE302866B5A59E4dE27"
+      values.$pastUpgrades.3.2.3:
+-        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
++        "eth:0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+      values.$pastUpgrades.4.2.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
+      values.$pastUpgrades.4.2.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
+      values.$pastUpgrades.4.2.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
+      values.$pastUpgrades.4.2.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+      values.$pastUpgrades.5.2.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$pastUpgrades.5.2.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$pastUpgrades.5.2.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$pastUpgrades.5.2.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facetAddresses.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.facetAddresses.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.facetAddresses.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.facetAddresses.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facets.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
+-        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
+-        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
+-        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
+-        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.facets.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
++++ severity: HIGH
+      values.getAdmin:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.getBaseToken:
+-        "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0"
++        "eth:0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0"
+      values.getBridgehub:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.getChainTypeManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "0x8f50d93B9955B285f787043B30B5F51D09bE0120"
++        "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120"
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
++        "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
++++ severity: HIGH
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getSettlementLayer:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
+      values.getVerifier:
+-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      values.validators.0:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      values.validators.1:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      implementationNames.0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3:
+-        "DiamondProxy"
+      implementationNames.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
+-        "AdminFacet"
+      implementationNames.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
+-        "GettersFacet"
+      implementationNames.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
+-        "MailboxFacet"
+      implementationNames.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
+-        "ExecutorFacet"
+      implementationNames.eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3:
++        "DiamondProxy"
+      implementationNames.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        "AdminFacet"
+      implementationNames.eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        "GettersFacet"
+      implementationNames.eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        "MailboxFacet"
+      implementationNames.eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        "ExecutorFacet"
+    }
+```
+
+```diff
+    EOA  (0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF) {
+    +++ description: None
+      address:
+-        "0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
++        "eth:0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
+    }
+```
+
+```diff
+    EOA  (0x0F44bac3ec514BE912aa4359017593B35E868d74) {
+    +++ description: None
+      address:
+-        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
++        "eth:0x0F44bac3ec514BE912aa4359017593B35E868d74"
+    }
+```
+
+```diff
+    EOA  (0x14574dfC6B7aF658c5033BA95673864947956521) {
+    +++ description: None
+      address:
+-        "0x14574dfC6B7aF658c5033BA95673864947956521"
++        "eth:0x14574dfC6B7aF658c5033BA95673864947956521"
+    }
+```
+
+```diff
+    EOA  (0x20719Abd2E63518e68D30a295388cAd6B542dCEf) {
+    +++ description: None
+      address:
+-        "0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
++        "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
+    }
+```
+
+```diff
+    EOA  (0x3b6036d410cA018661324766680674921a8b2d89) {
+    +++ description: None
+      address:
+-        "0x3b6036d410cA018661324766680674921a8b2d89"
++        "eth:0x3b6036d410cA018661324766680674921a8b2d89"
+    }
+```
+
+```diff
+    EOA  (0x4cc87B0A504047967CeD9A955431B3229237e7de) {
+    +++ description: None
+      address:
+-        "0x4cc87B0A504047967CeD9A955431B3229237e7de"
++        "eth:0x4cc87B0A504047967CeD9A955431B3229237e7de"
+    }
+```
+
+```diff
+    EOA  (0x50B238788747B26c408681283D148659F9da7Cf9) {
+    +++ description: None
+      address:
+-        "0x50B238788747B26c408681283D148659F9da7Cf9"
++        "eth:0x50B238788747B26c408681283D148659F9da7Cf9"
+    }
+```
+
+```diff
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+      address:
+-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      description:
+-        "A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type."
++        "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type."
+      values.FFLONK_VERIFIER:
+-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
++        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
+      values.PLONK_VERIFIER:
+-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
++        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
+      implementationNames.0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579:
+-        "DualVerifier"
+      implementationNames.eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579:
++        "DualVerifier"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      address:
+-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
++        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
+      implementationNames.0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1:
+-        "L1VerifierPlonk"
+      implementationNames.eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1:
++        "L1VerifierPlonk"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      address:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      values.owner:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.validatorsVTL.0:
+-        "0x4cc87B0A504047967CeD9A955431B3229237e7de"
++        "eth:0x4cc87B0A504047967CeD9A955431B3229237e7de"
+      values.validatorsVTL.1:
+-        "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
++        "eth:0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
+      implementationNames.0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E:
++        "ValidatorTimelock"
+    }
+```
+
+```diff
+    EOA  (0x78325837C780788Ce6afF7883FdF68890010Fe30) {
+    +++ description: None
+      address:
+-        "0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+    }
+```
+
+```diff
+    EOA  (0x7f413262Cb811B034d077d9184b5Efda6943f2c3) {
+    +++ description: None
+      address:
+-        "0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
++        "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      address:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      values.chainTypeManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.owner:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.validatorsVTL.0:
+-        "0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
+      values.validatorsVTL.1:
+-        "0x78325837C780788Ce6afF7883FdF68890010Fe30"
++        "eth:0x78325837C780788Ce6afF7883FdF68890010Fe30"
+      implementationNames.0x8c0Bfc04AdA21fd496c55B8C50331f904306F564:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564:
++        "ValidatorTimelock"
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (0x8f50d93B9955B285f787043B30B5F51D09bE0120) {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      address:
+-        "0x8f50d93B9955B285f787043B30B5F51D09bE0120"
++        "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120"
+      description:
+-        "Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion."
++        "Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion."
+      values.bridge:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      values.vectorx:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      implementationNames.0x8f50d93B9955B285f787043B30B5F51D09bE0120:
+-        "AvailL1DAValidator"
+      implementationNames.eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120:
++        "AvailL1DAValidator"
+    }
+```
+
+```diff
+    EOA  (0x90E10C37d8d9e854e7775B0069728642A1F88610) {
+    +++ description: None
+      address:
+-        "0x90E10C37d8d9e854e7775B0069728642A1F88610"
++        "eth:0x90E10C37d8d9e854e7775B0069728642A1F88610"
+    }
+```
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      address:
+-        "0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x50B238788747B26c408681283D148659F9da7Cf9"
++        "eth:0x50B238788747B26c408681283D148659F9da7Cf9"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      values.accessControl.WHITELISTED_ROLE.members.0:
+-        "0x0000000000000000000000000000000000010003"
++        "eth:0x0000000000000000000000000000000000010003"
+      values.accessControl.WHITELISTED_ROLE.members.1:
+-        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
++        "eth:0x0F44bac3ec514BE912aa4359017593B35E868d74"
+      values.accessControl.SUPERUSER_ROLE.members.0:
+-        "0x50B238788747B26c408681283D148659F9da7Cf9"
++        "eth:0x50B238788747B26c408681283D148659F9da7Cf9"
+      values.defaultAdminAC.0:
+-        "0x50B238788747B26c408681283D148659F9da7Cf9"
++        "eth:0x50B238788747B26c408681283D148659F9da7Cf9"
+      values.defaultAdminAC.1:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++++ description: Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.
+      values.whitelistedContractsAC.0:
+-        "0x0000000000000000000000000000000000010003"
++        "eth:0x0000000000000000000000000000000000010003"
++++ description: Addresses with this role are on the whitelist as contract targets for requestL2Transaction() calls. The L2AssetRouter is whitelisted here so that users can bridge assets.
+      values.whitelistedContractsAC.1:
+-        "0x0F44bac3ec514BE912aa4359017593B35E868d74"
++        "eth:0x0F44bac3ec514BE912aa4359017593B35E868d74"
++++ description: Addresses with this role are on the whitelist as senders for requestL2Transaction() calls.
+      values.whitelistedSendersAC.0:
+-        "0x50B238788747B26c408681283D148659F9da7Cf9"
++        "eth:0x50B238788747B26c408681283D148659F9da7Cf9"
+      implementationNames.0x9D06B34adc3026eF876e4DABb859C424DbDA3063:
+-        "SophonTransactionFilterer"
+      implementationNames.eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063:
++        "SophonTransactionFilterer"
+    }
+```
+
+```diff
+    EOA  (0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA) {
+    +++ description: None
+      address:
+-        "0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
++        "eth:0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      address:
+-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
++        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
+      implementationNames.0xD5dBE903F5382B052317D326FA1a7B63710C6a5b:
+-        "L1VerifierFflonk"
+      implementationNames.eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b:
++        "L1VerifierFflonk"
+    }
+```
+
+```diff
+    EOA  (0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69) {
+    +++ description: None
+      address:
+-        "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
++        "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
+    }
+```
+
+```diff
+    EOA  (0xe14828E4405239dD331F194F1B7883eeD73bCBF3) {
+    +++ description: None
+      address:
+-        "0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
++        "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      address:
+-        "0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      values.owner:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.tokenMultiplierSetter:
+-        "0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
++        "eth:0xe14828E4405239dD331F194F1B7883eeD73bCBF3"
+      implementationNames.0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3:
+-        "ChainAdmin"
+      implementationNames.eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3:
++        "ChainAdmin"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      address:
+-        "0xe4644b6d106A18062344c0A853666bc0B8f052d1"
++        "eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
++        "eth:0x0BA5557075B4E30bA409B01797c9c78b3Ce192bF"
+      values.$members.1:
+-        "0x3b6036d410cA018661324766680674921a8b2d89"
++        "eth:0x3b6036d410cA018661324766680674921a8b2d89"
+      values.$members.2:
+-        "0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
++        "eth:0x20719Abd2E63518e68D30a295388cAd6B542dCEf"
+      values.$members.3:
+-        "0x14574dfC6B7aF658c5033BA95673864947956521"
++        "eth:0x14574dfC6B7aF658c5033BA95673864947956521"
+      values.$members.4:
+-        "0x90E10C37d8d9e854e7775B0069728642A1F88610"
++        "eth:0x90E10C37d8d9e854e7775B0069728642A1F88610"
+      values.$members.5:
+-        "0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
++        "eth:0x7f413262Cb811B034d077d9184b5Efda6943f2c3"
+      values.$members.6:
+-        "0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
++        "eth:0xd89b0f620E0C72BD82e0447dE07FB0A0Abe01F69"
+      implementationNames.0xe4644b6d106A18062344c0A853666bc0B8f052d1:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xe4644b6d106A18062344c0A853666bc0B8f052d1:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA) {
+    +++ description: None
+      address:
+-        "0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
++        "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
+    }
+```
+
+```diff
+    EOA  (0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f) {
+    +++ description: None
+      address:
+-        "0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
++        "eth:0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f"
+    }
+```
+
+```diff
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987) {
+    +++ description: None
+      address:
+-        "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
++        "eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
+      values.$admin:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      values.$implementation:
+-        "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB"
++        "eth:0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB"
+      values.$pastUpgrades.0.2.0:
+-        "0x86dF12f51E3531689e0615bb2F739ddf01337715"
++        "eth:0x86dF12f51E3531689e0615bb2F739ddf01337715"
+      values.$pastUpgrades.1.2.0:
+-        "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB"
++        "eth:0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB"
+      values.admin:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      values.BRIDGE_HUB:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.L1_USDC_TOKEN:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.owner:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xf553E6D903AA43420ED7e3bc2313bE9286A8F987:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB:
+-        "L1USDCBridge"
+      implementationNames.eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB:
++        "L1USDCBridge"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract AvailL1DAValidator (0x8f50d93B9955B285f787043B30B5F51D09bE0120)
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+```
+
+```diff
++   Status: CREATED
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063)
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCBridge (0xf553E6D903AA43420ED7e3bc2313bE9286A8F987)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xd26ed9de4ce586014c0fccdd9da83f0f25dea8da
+
+# Diff at Mon, 07 Jul 2025 07:04:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 22593196
+- current block number: 22865710
+
+## Description
+
+standard zk stack v28 upgrade.
+
+## Watched changes
+
+```diff
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$implementation.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$implementation.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$implementation.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$implementation.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$pastUpgrades.5:
++        ["2025-07-01T18:54:59.000Z","0x3fb1153770857ac1714eb72d2cc7a76ebf1160bb8e844e8aa08164c72a25d419",["0x431449e2a28A69122860A4956A3f7191eE15aFBC","0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22","0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec","0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.facetAddresses.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.facetAddresses.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.facetAddresses.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.facetAddresses.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facets.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4:
+-        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4:
+-        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f:
+-        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490:
+-        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.facets.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.getL2BootloaderBytecodeHash:
+-        "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd"
++        "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67"
++        "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e"
+      values.getL2EvmEmulatorBytecodeHash:
+-        "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba"
++        "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da"
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        115964116992
++        120259084288
+      values.getSemverProtocolVersion.1:
+-        27
++        28
+      values.getVerifier:
+-        "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0"
++        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      implementationNames.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4:
+-        "AdminFacet"
+      implementationNames.0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4:
+-        "GettersFacet"
+      implementationNames.0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f:
+-        "MailboxFacet"
+      implementationNames.0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490:
+-        "ExecutorFacet"
+      implementationNames.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        "AdminFacet"
+      implementationNames.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        "GettersFacet"
+      implementationNames.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        "MailboxFacet"
+      implementationNames.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        "ExecutorFacet"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0)
+    +++ description: A router contract for verifiers. Routes verification requests to 0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF or 0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.3:
++        {"_protocolVersion":120259084288,"_upgradeTimestamp":1750942800}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../sophon/ethereum/{.flat@22593196 => .flat}/DualVerifier.sol |  2 +-
+ .../ethereum/{.flat@22593196 => .flat}/L1VerifierFflonk.sol    |  6 +++---
+ .../ethereum/{.flat@22593196 => .flat}/L1VerifierPlonk.sol     | 10 +++++-----
+ .../{.flat@22593196 => .flat}/SophonZkEvm/AdminFacet.1.sol     |  2 +-
+ .../{.flat@22593196 => .flat}/SophonZkEvm/ExecutorFacet.4.sol  |  2 +-
+ .../{.flat@22593196 => .flat}/SophonZkEvm/GettersFacet.2.sol   |  2 +-
+ .../{.flat@22593196 => .flat}/SophonZkEvm/MailboxFacet.3.sol   |  2 +-
+ 7 files changed, 13 insertions(+), 13 deletions(-)
+```
+
+Generated with discovered.json: 0x5b5cc67f706f9e6c1c7f072c24845e04281fa9a7
+
+# Diff at Fri, 04 Jul 2025 12:19:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22593196
+- current block number: 22593196
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593196 (main branch discovery), not current.
+
+```diff
+    EOA  (0x4cc87B0A504047967CeD9A955431B3229237e7de) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
+```diff
+    EOA  (0x50B238788747B26c408681283D148659F9da7Cf9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
+      receivedPermissions.1.from:
+-        "ethereum:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+    }
+```
+
+```diff
+    EOA  (0x78325837C780788Ce6afF7883FdF68890010Fe30) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+    }
+```
+
+```diff
+    contract SophonTransactionFilterer (0x9D06B34adc3026eF876e4DABb859C424DbDA3063) {
+    +++ description: A contract implementing the ITransactionFilterer interface, able to whitelist transactions based on sender- OR contractL2 (target) addresses. The whitelist is defined in AccessControl roles.
+      receivedPermissions.0.from:
+-        "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+    }
+```
+
+```diff
+    EOA  (0xCD0b5A01Abe9C14f6EFbC610C02ECf0FB69855dA) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    EOA  (0xe14828E4405239dD331F194F1B7883eeD73bCBF3) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+    }
+```
+
+```diff
+    contract SophonZkEvmAdmin (0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+    }
+```
+
+```diff
+    contract SophonChainAdminMultisig (0xe4644b6d106A18062344c0A853666bc0B8f052d1) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+      receivedPermissions.0.from:
+-        "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
++        "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3"
+      receivedPermissions.1.from:
+-        "ethereum:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
++        "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
++        "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3"
+    }
+```
+
+```diff
+    EOA  (0xf3b07F6744e06cd5074b7D15ed2c33760837CE1f) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
+Generated with discovered.json: 0x3ac80ab8c1d9b26dffd5f9750d042fa9706ce456
+
+# Diff at Thu, 03 Jul 2025 10:57:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22593196
+- current block number: 22593196
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593196 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
 Generated with discovered.json: 0x82dd96bdcd5cacc9367b2cce0386921c7152ab88
 
 # Diff at Wed, 25 Jun 2025 07:17:30 GMT:

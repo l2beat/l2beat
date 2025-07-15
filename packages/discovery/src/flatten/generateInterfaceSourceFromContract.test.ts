@@ -1,9 +1,9 @@
 import { expect } from 'earl'
+import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import {
   ParsedFilesManager,
   type TopLevelDeclaration,
 } from './ParsedFilesManager'
-import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 
 describe(generateInterfaceSourceFromContract.name, () => {
   it('generates interface from contract', () => {
@@ -79,6 +79,25 @@ interface E {
     function B(uint256 element) external returns (uint256);
     function X() external returns (uint256);
     function XYZ(address receiver) external payable returns (uint256);
+}`
+    expect(result).toEqual(expected)
+  })
+
+  it('generates corrects overrides', () => {
+    const source = String.raw`contract E {
+            function A(uint256 element) override returns (uint256) { return element + 1; }
+            function X() override(C1) returns (uint256) { return 1234; }
+            function XYZ(address receiver) override(C1, C2) payable public returns (uint256);
+        }`
+    const entry = fromSource(source, 'E')
+
+    const result = generateInterfaceSourceFromContract(entry)
+
+    const expected = String.raw`// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
+interface E {
+    function A(uint256 element) external override returns (uint256);
+    function X() external override(C1) returns (uint256);
+    function XYZ(address receiver) external payable override(C1, C2) returns (uint256);
 }`
     expect(result).toEqual(expected)
   })

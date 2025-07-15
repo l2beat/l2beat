@@ -192,27 +192,29 @@ describe(IndexerService.name, () => {
     ])
   })
 
-  it(IndexerService.prototype.updateConfigurationsCurrentHeight
-    .name, async () => {
-    const indexerConfigurationsRepository = mockObject<
-      Database['indexerConfiguration']
-    >({
-      updateCurrentHeights: async () => undefined,
-    })
+  it(
+    IndexerService.prototype.updateConfigurationsCurrentHeight.name,
+    async () => {
+      const indexerConfigurationsRepository = mockObject<
+        Database['indexerConfiguration']
+      >({
+        updateCurrentHeights: async () => undefined,
+      })
 
-    const indexerService = new IndexerService(
-      mockDatabase({
-        indexerState: mockObject(),
-        indexerConfiguration: indexerConfigurationsRepository,
-      }),
-    )
+      const indexerService = new IndexerService(
+        mockDatabase({
+          indexerState: mockObject(),
+          indexerConfiguration: indexerConfigurationsRepository,
+        }),
+      )
 
-    await indexerService.updateConfigurationsCurrentHeight('indexer', 123)
+      await indexerService.updateConfigurationsCurrentHeight('indexer', 123)
 
-    expect(
-      indexerConfigurationsRepository.updateCurrentHeights,
-    ).toHaveBeenOnlyCalledWith('indexer', 123)
-  })
+      expect(
+        indexerConfigurationsRepository.updateCurrentHeights,
+      ).toHaveBeenOnlyCalledWith('indexer', 123)
+    },
+  )
 
   it(IndexerService.prototype.deleteConfigurations.name, async () => {
     const indexerConfigurationsRepository = mockObject<

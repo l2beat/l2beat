@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
@@ -8,7 +7,8 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
-import { TableLink } from '~/components/table/TableLink'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import {
@@ -16,8 +16,8 @@ import {
   TypeInfo,
 } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { sortStages } from '~/components/table/sorting/sortStages'
+import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ScalingSummaryTableRow } from '../../utils/toTableRows'
@@ -48,7 +48,7 @@ export const scalingSummaryColumns = [
     cell: (ctx) => (
       <TwoRowCell>
         <TwoRowCell.First>
-          <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
         </TwoRowCell.First>
         {ctx.row.original.capability === 'appchain' && (
           <TwoRowCell.Second>
@@ -197,8 +197,12 @@ export const scalingSummaryOthersColumns = [
   ...scalingSummaryValidiumAndOptimiumsColumns.slice(5),
 ]
 
-export const scalingSummaryUnderReviewColumns = [
-  ...scalingSummaryColumns.slice(0, 3),
+export const scalingSummaryNotReviewedColumns = [
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+    { ignoreUnderReviewIcon: true },
+  ),
   ...scalingSummaryColumns.slice(4, 5),
   ...scalingSummaryColumns.slice(6, 8),
 ]

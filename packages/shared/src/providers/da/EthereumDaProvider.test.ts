@@ -14,20 +14,11 @@ describe(EthereumDaProvider.name, () => {
       const versionedHash2 = '0x0123'
 
       const txHash = '0xtx1'
-      const mockLogFilters = [
-        {
-          address: 'inbox1',
-          topics: ['topic1-1', 'topic1-2'],
-        },
-        {
-          address: 'inbox2',
-          topics: ['topic2-1', 'topic2-2'],
-        },
-      ]
 
       const mockRpcClient = mockObject<RpcClient>({
         getBlock: mockFn().resolvesTo({
           timestamp: UnixTime.fromDate(mockDate),
+          number: 1,
           transactions: [
             {
               hash: txHash,
@@ -53,14 +44,9 @@ describe(EthereumDaProvider.name, () => {
         'ethereum',
       )
 
-      const result = await provider.getBlobs(1, 1, mockLogFilters)
+      const result = await provider.getBlobs(1, 1)
 
-      expect(mockRpcClient.getLogs).toHaveBeenCalledWith(
-        1,
-        1,
-        ['inbox1', 'inbox2'],
-        ['topic1-1', 'topic1-2', 'topic2-1', 'topic2-2'],
-      )
+      expect(mockRpcClient.getLogs).toHaveBeenCalledWith(1, 1)
 
       expect(result).toEqual([
         {
@@ -70,6 +56,7 @@ describe(EthereumDaProvider.name, () => {
           sequencer: '0xfrom1',
           topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
+          blockNumber: 1,
           size: 131072n,
         } as EthereumBlob,
         {
@@ -79,90 +66,94 @@ describe(EthereumDaProvider.name, () => {
           sequencer: '0xfrom1',
           topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
+          blockNumber: 1,
           size: 131072n,
         } as EthereumBlob,
       ])
     })
   })
 
-  describe(EthereumDaProvider.prototype.getBlobsByVersionedHashesAndBlockNumber
-    .name, () => {
-    it('should return blobs for given versioned hashes', async () => {
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
-      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
+  describe(
+    EthereumDaProvider.prototype.getBlobsByVersionedHashesAndBlockNumber.name,
+    () => {
+      it('should return blobs for given versioned hashes', async () => {
+        const kzgCommitment1 = generateKzgCommitment()
+        const kzgCommitment2 = generateKzgCommitment()
+        const versionedHash1 =
+          '0x01' + utils.sha256(kzgCommitment1).substring(4)
 
-      const mockRpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
-      })
+        const mockRpcClient = mockObject<RpcClient>({
+          getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
+        })
 
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlockSidecar: mockFn().resolvesTo([
+        const mockBeaconChainClient = mockObject<BeaconChainClient>({
+          getBlockSidecar: mockFn().resolvesTo([
+            {
+              kzg_commitment: kzgCommitment1,
+              data: 'blob1',
+            },
+            {
+              kzg_commitment: kzgCommitment2,
+              data: 'blob2',
+            },
+          ]),
+        })
+
+        const provider = new EthereumDaProvider(
+          mockBeaconChainClient,
+          mockRpcClient,
+          'ethereum',
+        )
+
+        const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
+          [versionedHash1],
+          1,
+        )
+
+        expect(result).toEqual([
           {
             kzg_commitment: kzgCommitment1,
             data: 'blob1',
           },
-          {
-            kzg_commitment: kzgCommitment2,
-            data: 'blob2',
-          },
-        ]),
+        ])
       })
 
-      const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
-        mockRpcClient,
-        'ethereum',
-      )
+      it('should return empty array for no versioned hashes', async () => {
+        const kzgCommitment1 = generateKzgCommitment()
+        const kzgCommitment2 = generateKzgCommitment()
 
-      const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
-        [versionedHash1],
-        1,
-      )
+        const mockRpcClient = mockObject<RpcClient>({
+          getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
+        })
 
-      expect(result).toEqual([
-        {
-          kzg_commitment: kzgCommitment1,
-          data: 'blob1',
-        },
-      ])
-    })
+        const mockBeaconChainClient = mockObject<BeaconChainClient>({
+          getBlockSidecar: mockFn().resolvesTo([
+            {
+              kzg_commitment: kzgCommitment1,
+              data: 'blob1',
+            },
+            {
+              kzg_commitment: kzgCommitment2,
+              data: 'blob2',
+            },
+          ]),
+        })
 
-    it('should return empty array for no versioned hashes', async () => {
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
+        const provider = new EthereumDaProvider(
+          mockBeaconChainClient,
+          mockRpcClient,
+          'ethereum',
+        )
 
-      const mockRpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: mockFn().resolvesTo('blockId'),
+        const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
+          [],
+          1,
+        )
+
+        expect(result).toEqual([])
       })
-
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlockSidecar: mockFn().resolvesTo([
-          {
-            kzg_commitment: kzgCommitment1,
-            data: 'blob1',
-          },
-          {
-            kzg_commitment: kzgCommitment2,
-            data: 'blob2',
-          },
-        ]),
-      })
-
-      const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
-        mockRpcClient,
-        'ethereum',
-      )
-
-      const result = await provider.getBlobsByVersionedHashesAndBlockNumber(
-        [],
-        1,
-      )
-
-      expect(result).toEqual([])
-    })
-  })
+    },
+  )
 
   describe(EthereumDaProvider.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {

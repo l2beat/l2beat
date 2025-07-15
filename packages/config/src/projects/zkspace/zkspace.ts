@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -48,7 +48,7 @@ export const zkspace: ScalingProject = {
     description:
       'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
-    stack: 'ZKsync Lite',
+    stacks: ['ZKsync Lite'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://zkbase.org/'],
@@ -66,9 +66,6 @@ export const zkspace: ScalingProject = {
     liveness: {
       explanation:
         'ZK Space is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   config: {

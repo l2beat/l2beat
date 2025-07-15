@@ -1,3 +1,1695 @@
+Generated with discovered.json: 0x9980f3a054c277d4b485b9b9df008f57ac9cf9e9
+
+# Diff at Tue, 15 Jul 2025 10:46:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22865648
+- current block number: 22924075
+
+## Description
+
+validator checkpoint reward decreased, 1 vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "53870967741900000000000"
++        "37108000000000000000000"
+      values.currentValidatorSetSize:
+-        102
++        103
+    }
+```
+
+Generated with discovered.json: 0x28533632e3fd3314abe52e3d2d2b42c7ff6e919e
+
+# Diff at Mon, 14 Jul 2025 12:45:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22865648
+- current block number: 22865648
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865648 (main branch discovery), not current.
+
+```diff
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f) {
+    +++ description: None
+      address:
+-        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
++        "eth:0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+      values.$pastUpgrades.0.2.0:
+-        "0x46cA157573005281774be9be9a4187cce4ec1871"
++        "eth:0x46cA157573005281774be9be9a4187cce4ec1871"
+      values.$pastUpgrades.1.2.0:
+-        "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"
++        "eth:0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"
+      values.$pastUpgrades.2.2.0:
+-        "0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
++        "eth:0xb86357daD9c3567dD70862a5b49fFFaFb0F094Ac"
+      values.$pastUpgrades.3.2.0:
+-        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
++        "eth:0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.MANAGER_ROLE.members.0:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.implementation:
+-        "0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
++        "eth:0xCFA65db73cB45D458d0a98006d3d558b5e1F021d"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f:
+-        "ERC1155PredicateProxy"
+      implementationNames.0xCFA65db73cB45D458d0a98006d3d558b5e1F021d:
+-        "ERC1155Predicate"
+      implementationNames.eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f:
++        "ERC1155PredicateProxy"
+      implementationNames.eth:0xCFA65db73cB45D458d0a98006d3d558b5e1F021d:
++        "ERC1155Predicate"
+    }
+```
+
+```diff
+    EOA  (0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03) {
+    +++ description: None
+      address:
+-        "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
++        "eth:0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
+    }
+```
+
+```diff
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35) {
+    +++ description: None
+      address:
+-        "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35"
++        "eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35"
+      implementationNames.0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35:
+-        "CustomPredicate"
+      implementationNames.eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35:
++        "CustomPredicate"
+    }
+```
+
+```diff
+    EOA  (0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529) {
+    +++ description: None
+      address:
+-        "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
++        "eth:0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
+    }
+```
+
+```diff
+    EOA  (0x21A5418009C5d70db1552e7206Ed884F9Adb903A) {
+    +++ description: None
+      address:
+-        "0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
++        "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
+    }
+```
+
+```diff
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      address:
+-        "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4"
++        "eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4"
+      values.rootChainManager:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      implementationNames.0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4:
+-        "ERC20EscrowPredicate"
+      implementationNames.eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4:
++        "ERC20EscrowPredicate"
+    }
+```
+
+```diff
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE) {
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+      address:
+-        "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
++        "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.REGISTRATIONS.0:
+-        "0x401F6c983eA34274ec46f84D70b31C151321188b"
++        "eth:0x401F6c983eA34274ec46f84D70b31C151321188b"
+      values.REGISTRATIONS.1:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.REGISTRATIONS.2:
+-        "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7"
++        "eth:0x6566115bC9Aa71f8DbC2004A656B5956C55726a7"
+      values.REGISTRATIONS.3:
+-        "0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1"
++        "eth:0xb9516057dC40C92F91B6EbB2E3d04288cd0446F1"
+      values.REGISTRATIONS.4:
+-        "0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c"
++        "eth:0x0D29aDA4c818A9f089107201eaCc6300e56E0d5c"
+      values.REGISTRATIONS.5:
+-        "0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2"
++        "eth:0xfe5e5D361b2ad62c541bAb87C45a0B9B018389a2"
+      values.REGISTRATIONS.6:
+-        "0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2"
++        "eth:0xA0557234eB7b3c503388202D3768Cfa2f1AE9Dc2"
+      values.REGISTRATIONS.7:
+-        "0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55"
++        "eth:0xb6Ec8B0a52C1BAe5B6Aa890cD0Ec9704398d0D55"
+      values.REGISTRATIONS.8:
+-        "0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
++        "eth:0x8beDD90e52dF8BB663B9eF5C2ca42E7adC27C9b5"
+      implementationNames.0x28e4F3a7f651294B9564800b2D01f35189A5bFbE:
+-        "StateSender"
+      implementationNames.eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE:
++        "StateSender"
+    }
+```
+
+```diff
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922) {
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+      address:
+-        "0x2A88696e0fFA76bAA1338F2C74497cC013495922"
++        "eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922"
+      values.$implementation:
+-        "0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168"
++        "eth:0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168"
+      values.exitNft:
+-        "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca"
++        "eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca"
+      values.implementation:
+-        "0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168"
++        "eth:0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x2A88696e0fFA76bAA1338F2C74497cC013495922:
+-        "WithdrawManagerProxy"
+      implementationNames.0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168:
+-        "WithdrawManager"
+      implementationNames.eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922:
++        "WithdrawManagerProxy"
+      implementationNames.eth:0x6F8a42cf6f3CE657B66A9d5849f1251dE7a35168:
++        "WithdrawManager"
+    }
+```
+
+```diff
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7) {
+    +++ description: None
+      address:
+-        "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
++        "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
++        "eth:0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+      values.$pastUpgrades.0.2.0:
+-        "0xbf3d5d13b3Cb79A6173394046973C34A60Ac8A41"
++        "eth:0xbf3d5d13b3Cb79A6173394046973C34A60Ac8A41"
+      values.$pastUpgrades.1.2.0:
+-        "0x62414D03084EeB269E18C970a21f45D2967F0170"
++        "eth:0x62414D03084EeB269E18C970a21f45D2967F0170"
+      values.$pastUpgrades.2.2.0:
+-        "0x4c2aA63BF1d867fbAD14f1d505481c16e4862201"
++        "eth:0x4c2aA63BF1d867fbAD14f1d505481c16e4862201"
+      values.$pastUpgrades.3.2.0:
+-        "0xDb161A896Be50a020B636D6B60DA7c59817412a5"
++        "eth:0xDb161A896Be50a020B636D6B60DA7c59817412a5"
+      values.$pastUpgrades.4.2.0:
+-        "0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
++        "eth:0x985Dbac75cf625dD6baB03Da784CF0D51B4bEcef"
+      values.$pastUpgrades.5.2.0:
+-        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
++        "eth:0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+      values.implementation:
+-        "0xFD47E7d657b07B071C3362bBCe908a70895EE747"
++        "eth:0xFD47E7d657b07B071C3362bBCe908a70895EE747"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x2d641867411650cd05dB93B59964536b1ED5b1B7:
+-        "MintableERC1155PredicateProxy"
+      implementationNames.0xFD47E7d657b07B071C3362bBCe908a70895EE747:
+-        "MintableERC1155Predicate"
+      implementationNames.eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7:
++        "MintableERC1155PredicateProxy"
+      implementationNames.eth:0xFD47E7d657b07B071C3362bBCe908a70895EE747:
++        "MintableERC1155Predicate"
+    }
+```
+
+```diff
+    EOA  (0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6) {
+    +++ description: None
+      address:
+-        "0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+    }
+```
+
+```diff
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71) {
+    +++ description: None
+      address:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      values.erc20Predicate:
+-        "0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
++        "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
+      values.erc721Predicate:
+-        "0x36C2503d53C6948331144b85D1e74a3B96731d1b"
++        "eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b"
+      values.getChildChainAndStateSender.0:
+-        "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861"
++        "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861"
+      values.getChildChainAndStateSender.1:
+-        "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
++        "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      values.getDepositManagerAddress:
+-        "0x401F6c983eA34274ec46f84D70b31C151321188b"
++        "eth:0x401F6c983eA34274ec46f84D70b31C151321188b"
+      values.getSlashingManagerAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getStakeManagerAddress:
+-        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+      values.getValidatorShareAddress:
+-        "0x7e94d6cAbb20114b22a088d828772645f68CC67B"
++        "eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B"
+      values.getWethTokenAddress:
+-        "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8"
++        "eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8"
+      values.getWithdrawManagerAddress:
+-        "0x2A88696e0fFA76bAA1338F2C74497cC013495922"
++        "eth:0x2A88696e0fFA76bAA1338F2C74497cC013495922"
+      values.governance:
+-        "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
++        "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
+      implementationNames.0x33a02E6cC863D393d6Bf231B697b82F6e499cA71:
+-        "Registry"
+      implementationNames.eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71:
++        "Registry"
+    }
+```
+
+```diff
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b) {
+    +++ description: None
+      address:
+-        "0x36C2503d53C6948331144b85D1e74a3B96731d1b"
++        "eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b"
+      implementationNames.0x36C2503d53C6948331144b85D1e74a3B96731d1b:
+-        "ERC721PredicateBurnOnly"
+      implementationNames.eth:0x36C2503d53C6948331144b85D1e74a3B96731d1b:
++        "ERC721PredicateBurnOnly"
+    }
+```
+
+```diff
+    EOA  (0x39415255619783A2E71fcF7d8f708A951d92e1b6) {
+    +++ description: None
+      address:
+-        "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
++        "eth:0x39415255619783A2E71fcF7d8f708A951d92e1b6"
+    }
+```
+
+```diff
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b) {
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+      address:
+-        "0x401F6c983eA34274ec46f84D70b31C151321188b"
++        "eth:0x401F6c983eA34274ec46f84D70b31C151321188b"
+      values.$implementation:
+-        "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
++        "eth:0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
+      values.childChain:
+-        "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861"
++        "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861"
+      values.governance:
+-        "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
++        "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
+      values.implementation:
+-        "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
++        "eth:0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.registry:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      values.rootChain:
+-        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      values.stateSender:
+-        "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
++        "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      implementationNames.0x401F6c983eA34274ec46f84D70b31C151321188b:
+-        "DepositManagerProxy"
+      implementationNames.0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc:
+-        "DepositManager"
+      implementationNames.eth:0x401F6c983eA34274ec46f84D70b31C151321188b:
++        "DepositManagerProxy"
+      implementationNames.eth:0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc:
++        "DepositManager"
+    }
+```
+
+```diff
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    +++ description: None
+      address:
+-        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
++        "eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+      values.$pastUpgrades.0.2.0:
+-        "0xC760DefB87E5194E62b282c2a76CBCe4766d7345"
++        "eth:0xC760DefB87E5194E62b282c2a76CBCe4766d7345"
+      values.$pastUpgrades.1.2.0:
+-        "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"
++        "eth:0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"
+      values.$pastUpgrades.2.2.0:
+-        "0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
++        "eth:0xb774EBbeF817390483FEA5bEd0F0cB0EDEBE4065"
+      values.$pastUpgrades.3.2.0:
+-        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
++        "eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.MANAGER_ROLE.members.0:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.implementation:
+-        "0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
++        "eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf:
+-        "ERC20PredicateProxy"
+      implementationNames.0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB:
+-        "ERC20Predicate"
+      implementationNames.eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf:
++        "ERC20PredicateProxy"
+      implementationNames.eth:0xB1fd4ae726c64A793588001EB465c46BD1BdF1cB:
++        "ERC20Predicate"
+    }
+```
+
+```diff
+    EOA  (0x427cEB53c3532835CcfdBbE4c533286e15d3576E) {
+    +++ description: None
+      address:
+-        "0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
++        "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
+    +++ description: None
+      address:
+-        "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5"
++        "eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5"
+      values.rootChainManager:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      implementationNames.0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5:
+-        "PolygonERC20MintBurnPredicate"
+      implementationNames.eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5:
++        "PolygonERC20MintBurnPredicate"
+    }
+```
+
+```diff
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F) {
+    +++ description: None
+      address:
+-        "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F"
++        "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F"
+      values.getApproved.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getApproved.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getApproved.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getApproved.3:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+      values.ownerOf.0:
+-        "0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
++        "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
+      values.ownerOf.1:
+-        "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
++        "eth:0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
+      values.ownerOf.2:
+-        "0x62a8029CDAf8576e337b86187B82474EFcE712d8"
++        "eth:0x62a8029CDAf8576e337b86187B82474EFcE712d8"
+      values.ownerOf.3:
+-        "0xf748a187303940856A367D57Dc45D1ac4A597305"
++        "eth:0xf748a187303940856A367D57Dc45D1ac4A597305"
+      implementationNames.0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F:
+-        "StakingNFT"
+      implementationNames.eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F:
++        "StakingNFT"
+    }
+```
+
+```diff
+    contract RootChainInitialImplementation (0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84) {
+    +++ description: None
+      address:
+-        "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84"
++        "eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84"
+      values.owner:
+-        "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+      implementationNames.0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84:
+-        "RootChain"
+      implementationNames.eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84:
++        "RootChain"
+    }
+```
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      address:
+-        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
++        "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
+      values.$pastUpgrades.0.2.0:
+-        "0x9a6bC66Ce2E008D59654bc0053Ce2d01f09C8B90"
++        "eth:0x9a6bC66Ce2E008D59654bc0053Ce2d01f09C8B90"
+      values.$pastUpgrades.1.2.0:
+-        "0xf58Ec2F599EC32f2aE104984F41C1fB1377ECEBa"
++        "eth:0xf58Ec2F599EC32f2aE104984F41C1fB1377ECEBa"
+      values.$pastUpgrades.2.2.0:
+-        "0xB955EE20A7F1D6F9bD68805e6EefE2cBc5d8220D"
++        "eth:0xB955EE20A7F1D6F9bD68805e6EefE2cBc5d8220D"
+      values.$pastUpgrades.3.2.0:
+-        "0xd8EeB76bf9FEc7Efe3772383d5f38fd02243E56C"
++        "eth:0xd8EeB76bf9FEc7Efe3772383d5f38fd02243E56C"
+      values.$pastUpgrades.4.2.0:
+-        "0xd6F5c46d4E1a02f9D145cEe41d2F8AF30D8d2d76"
++        "eth:0xd6F5c46d4E1a02f9D145cEe41d2F8AF30D8d2d76"
+      values.$pastUpgrades.5.2.0:
+-        "0x644A0A4a4a9892f57Af7dFF1Db23cE2A235A255e"
++        "eth:0x644A0A4a4a9892f57Af7dFF1Db23cE2A235A255e"
+      values.$pastUpgrades.6.2.0:
+-        "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"
++        "eth:0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963"
+      values.$pastUpgrades.7.2.0:
+-        "0x97a3500083348A147F419b8a65717909762c389f"
++        "eth:0x97a3500083348A147F419b8a65717909762c389f"
+      values.$pastUpgrades.8.2.0:
+-        "0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
++        "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
+      values.eventsHub:
+-        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      values.extensionCode:
+-        "0xef49Ea6996073752b6840CDA34773FFA78F78166"
++        "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166"
+      values.getRegistry:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      values.governance:
+-        "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
++        "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
+      values.implementation:
+-        "0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
++        "eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c"
+      values.logger:
+-        "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B"
++        "eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B"
+      values.migration:
+-        "0x29e7DF7b6A1B2b07b731457f499E1696c60E2C4e"
++        "eth:0x29e7DF7b6A1B2b07b731457f499E1696c60E2C4e"
+      values.NFTContract:
+-        "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F"
++        "eth:0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.ownerOf.0:
+-        "0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
++        "eth:0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
+      values.ownerOf.1:
+-        "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
++        "eth:0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
+      values.ownerOf.2:
+-        "0x62a8029CDAf8576e337b86187B82474EFcE712d8"
++        "eth:0x62a8029CDAf8576e337b86187B82474EFcE712d8"
+      values.ownerOf.3:
+-        "0xf748a187303940856A367D57Dc45D1ac4A597305"
++        "eth:0xf748a187303940856A367D57Dc45D1ac4A597305"
+      values.registry:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      values.rootChain:
+-        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      values.token:
+-        "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
++        "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
+      values.tokenMatic:
+-        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
++        "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+      values.validatorShareFactory:
+-        "0xc4FA447A0e77Eff9717b09C057B40570813bb642"
++        "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642"
+      implementationNames.0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908:
+-        "StakeManagerProxy"
+      implementationNames.0x3AD88467E40399dc6Ae10427f8B0842348d9076c:
+-        "StakeManager"
+      implementationNames.eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908:
++        "StakeManagerProxy"
+      implementationNames.eth:0x3AD88467E40399dc6Ae10427f8B0842348d9076c:
++        "StakeManager"
+    }
+```
+
+```diff
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966) {
+    +++ description: None
+      address:
+-        "0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
++        "eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966"
+      implementationNames.0x626fb210bf50e201ED62cA2705c16DE2a53DC966:
+-        "ERC20PredicateBurnOnly"
+      implementationNames.eth:0x626fb210bf50e201ED62cA2705c16DE2a53DC966:
++        "ERC20PredicateBurnOnly"
+    }
+```
+
+```diff
+    EOA  (0x62a8029CDAf8576e337b86187B82474EFcE712d8) {
+    +++ description: None
+      address:
+-        "0x62a8029CDAf8576e337b86187B82474EFcE712d8"
++        "eth:0x62a8029CDAf8576e337b86187B82474EFcE712d8"
+    }
+```
+
+```diff
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b) {
+    +++ description: None
+      address:
+-        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0x0672777617CAA1E778083a4f74eBC997262C9EdD"
++        "eth:0x0672777617CAA1E778083a4f74eBC997262C9EdD"
+      values.$pastUpgrades.0.2.0:
+-        "0x762540dB57aBdB6d32E5B5b8856986C0418A3b82"
++        "eth:0x762540dB57aBdB6d32E5B5b8856986C0418A3b82"
+      values.$pastUpgrades.1.2.0:
+-        "0x0672777617CAA1E778083a4f74eBC997262C9EdD"
++        "eth:0x0672777617CAA1E778083a4f74eBC997262C9EdD"
+      values.implementation:
+-        "0x0672777617CAA1E778083a4f74eBC997262C9EdD"
++        "eth:0x0672777617CAA1E778083a4f74eBC997262C9EdD"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.registry:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      implementationNames.0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b:
+-        "EventsHubProxy"
+      implementationNames.0x0672777617CAA1E778083a4f74eBC997262C9EdD:
+-        "EventsHub"
+      implementationNames.eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b:
++        "EventsHubProxy"
+      implementationNames.eth:0x0672777617CAA1E778083a4f74eBC997262C9EdD:
++        "EventsHub"
+    }
+```
+
+```diff
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48) {
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+      address:
+-        "0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
++        "eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48"
+      values.$implementation:
+-        "0x98165b71cdDea047C0A49413350C40571195fd07"
++        "eth:0x98165b71cdDea047C0A49413350C40571195fd07"
+      values.implementation:
+-        "0x98165b71cdDea047C0A49413350C40571195fd07"
++        "eth:0x98165b71cdDea047C0A49413350C40571195fd07"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48:
+-        "GovernanceProxy"
+      implementationNames.0x98165b71cdDea047C0A49413350C40571195fd07:
+-        "Governance"
+      implementationNames.eth:0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48:
++        "GovernanceProxy"
+      implementationNames.eth:0x98165b71cdDea047C0A49413350C40571195fd07:
++        "Governance"
+    }
+```
+
+```diff
+    contract ValidatorShare (0x7e94d6cAbb20114b22a088d828772645f68CC67B) {
+    +++ description: None
+      address:
+-        "0x7e94d6cAbb20114b22a088d828772645f68CC67B"
++        "eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B"
+      values.eventsHub:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
++        "eth:0x32bdc6A4e8C654dF65503CBb0eDc82B4Ce9158e6"
+      values.polToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.stakeManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.stakingLogger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x7e94d6cAbb20114b22a088d828772645f68CC67B:
+-        "ValidatorShare"
+      implementationNames.eth:0x7e94d6cAbb20114b22a088d828772645f68CC67B:
++        "ValidatorShare"
+    }
+```
+
+```diff
+    EOA  (0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25) {
+    +++ description: None
+      address:
+-        "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
++        "eth:0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
+    }
+```
+
+```diff
+    EOA  (0x80D63799b1e08a80f73FB7a83264b5c31600bF3a) {
+    +++ description: None
+      address:
+-        "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
++        "eth:0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
+      address:
+-        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
++        "eth:0xeB185ED8f664D105903EF434E5becd214a8AC874"
+      values.$pastUpgrades.0.2.0:
+-        "0xb6a508B418d49080Ce4AE4F140e585A0f95C1326"
++        "eth:0xb6a508B418d49080Ce4AE4F140e585A0f95C1326"
+      values.$pastUpgrades.1.2.0:
+-        "0x499a865ac595e6167482d2bd5A224876baB85ab4"
++        "eth:0x499a865ac595e6167482d2bd5A224876baB85ab4"
+      values.$pastUpgrades.2.2.0:
+-        "0x54006763154c764da4AF42a8c3cfc25Ea29765D5"
++        "eth:0x54006763154c764da4AF42a8c3cfc25Ea29765D5"
+      values.$pastUpgrades.3.2.0:
+-        "0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
++        "eth:0x3129B90fB7bF58A0B36226f2e6547B89C0BbdE42"
+      values.$pastUpgrades.4.2.0:
+-        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
++        "eth:0xeB185ED8f664D105903EF434E5becd214a8AC874"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.MANAGER_ROLE.members.0:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.implementation:
+-        "0xeB185ED8f664D105903EF434E5becd214a8AC874"
++        "eth:0xeB185ED8f664D105903EF434E5becd214a8AC874"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30:
+-        "EtherPredicateProxy"
+      implementationNames.0xeB185ED8f664D105903EF434E5becd214a8AC874:
+-        "EtherPredicate"
+      implementationNames.eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30:
++        "EtherPredicateProxy"
+      implementationNames.eth:0xeB185ED8f664D105903EF434E5becd214a8AC874:
++        "EtherPredicate"
+    }
+```
+
+```diff
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287) {
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+      address:
+-        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      values.$implementation:
+-        "0x536c55cFe4892E581806e10b38dFE8083551bd03"
++        "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03"
+      values.constructorArgs._proxyTo:
+-        "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84"
++        "eth:0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84"
+      values.constructorArgs._registry:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      values.implementation:
+-        "0x536c55cFe4892E581806e10b38dFE8083551bd03"
++        "eth:0x536c55cFe4892E581806e10b38dFE8083551bd03"
+      values.owner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287:
+-        "RootChainProxy"
+      implementationNames.0x536c55cFe4892E581806e10b38dFE8083551bd03:
+-        "RootChain"
+      implementationNames.eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287:
++        "RootChainProxy"
+      implementationNames.eth:0x536c55cFe4892E581806e10b38dFE8083551bd03:
++        "RootChain"
+    }
+```
+
+```diff
+    EOA  (0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602) {
+    +++ description: None
+      address:
+-        "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
++        "eth:0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
+    }
+```
+
+```diff
+    EOA  (0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF) {
+    +++ description: None
+      address:
+-        "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
++        "eth:0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      address:
+-        "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
++        "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
++        "eth:0xba31389292f7EdfC7b60B937b97014b4C354689b"
+      values.$pastUpgrades.0.2.0:
+-        "0x3Bf44AD2e36f39572175C72C1D0Fa85933c6E0b6"
++        "eth:0x3Bf44AD2e36f39572175C72C1D0Fa85933c6E0b6"
+      values.$pastUpgrades.1.2.0:
+-        "0x9b02a268fBb66Eb24AC9557DAEbA7aa6f04A89c2"
++        "eth:0x9b02a268fBb66Eb24AC9557DAEbA7aa6f04A89c2"
+      values.$pastUpgrades.2.2.0:
+-        "0xa0451a72f243A5173ea604B43B5F61EE76376551"
++        "eth:0xa0451a72f243A5173ea604B43B5F61EE76376551"
+      values.$pastUpgrades.3.2.0:
+-        "0x71A1666727Ea5A9B32C23cB09ABa29954e7a4a78"
++        "eth:0x71A1666727Ea5A9B32C23cB09ABa29954e7a4a78"
+      values.$pastUpgrades.4.2.0:
+-        "0x58aDFa7960bf7Cf39965B46D796Fe66CD8f38283"
++        "eth:0x58aDFa7960bf7Cf39965B46D796Fe66CD8f38283"
+      values.$pastUpgrades.5.2.0:
+-        "0x7FBd00c577cAA70318BCF1c6c11e23732823b387"
++        "eth:0x7FBd00c577cAA70318BCF1c6c11e23732823b387"
+      values.$pastUpgrades.6.2.0:
+-        "0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
++        "eth:0x34AF15A166def1d89D38a70120Ea33CD8cc10C45"
+      values.$pastUpgrades.7.2.0:
+-        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
++        "eth:0xba31389292f7EdfC7b60B937b97014b4C354689b"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.MANAGER_ROLE.members.0:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.implementation:
+-        "0xba31389292f7EdfC7b60B937b97014b4C354689b"
++        "eth:0xba31389292f7EdfC7b60B937b97014b4C354689b"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x932532aA4c0174b8453839A6E44eE09Cc615F2b7:
+-        "MintableERC721PredicateProxy"
+      implementationNames.0xba31389292f7EdfC7b60B937b97014b4C354689b:
+-        "MintableERC721Predicate"
+      implementationNames.eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7:
++        "MintableERC721PredicateProxy"
+      implementationNames.eth:0xba31389292f7EdfC7b60B937b97014b4C354689b:
++        "MintableERC721Predicate"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      address:
+-        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
++        "eth:0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+      values.$pastUpgrades.0.2.0:
+-        "0xFdc26CDA2d2440d0E83CD1DeE8E8bE48405806DC"
++        "eth:0xFdc26CDA2d2440d0E83CD1DeE8E8bE48405806DC"
+      values.$pastUpgrades.1.2.0:
+-        "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"
++        "eth:0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"
+      values.$pastUpgrades.2.2.0:
+-        "0xab00328234bC22430c78847094A68a6836574fFB"
++        "eth:0xab00328234bC22430c78847094A68a6836574fFB"
+      values.$pastUpgrades.3.2.0:
+-        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
++        "eth:0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+      values.implementation:
+-        "0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
++        "eth:0x94D40724d6aA4AB313065006E4bA8CA448dcDfae"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0x9923263fA127b3d1484cFD649df8f1831c2A74e4:
+-        "MintableERC20PredicateProxy"
+      implementationNames.0x94D40724d6aA4AB313065006E4bA8CA448dcDfae:
+-        "MintableERC20Predicate"
+      implementationNames.eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4:
++        "MintableERC20PredicateProxy"
+      implementationNames.eth:0x94D40724d6aA4AB313065006E4bA8CA448dcDfae:
++        "MintableERC20Predicate"
+    }
+```
+
+```diff
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77) {
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+      address:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0x639f13D5f30B47c792b6851238c05D0b623C77DE"
++        "eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE"
+      values.$pastUpgrades.0.2.0:
+-        "0xD4888faB8bd39A663B63161F5eE1Eae31a25B653"
++        "eth:0xD4888faB8bd39A663B63161F5eE1Eae31a25B653"
+      values.$pastUpgrades.1.2.0:
+-        "0x0BfF34272aF650632236703a3D6d8e3c133421Cb"
++        "eth:0x0BfF34272aF650632236703a3D6d8e3c133421Cb"
+      values.$pastUpgrades.2.2.0:
+-        "0x4015ccad9218b109d3339B356392C6EE8438e5d0"
++        "eth:0x4015ccad9218b109d3339B356392C6EE8438e5d0"
+      values.$pastUpgrades.3.2.0:
+-        "0xEcFdefe1D67f93d3C154B67FD9d4ba62aB820DeA"
++        "eth:0xEcFdefe1D67f93d3C154B67FD9d4ba62aB820DeA"
+      values.$pastUpgrades.4.2.0:
+-        "0x296AC8fb39279BbcFF6eDc9FddF1d2f4aEa1631b"
++        "eth:0x296AC8fb39279BbcFF6eDc9FddF1d2f4aEa1631b"
+      values.$pastUpgrades.5.2.0:
+-        "0x7CfA0f105a4922E89666D7D63689d9C9b1eA7a19"
++        "eth:0x7CfA0f105a4922E89666D7D63689d9C9b1eA7a19"
+      values.$pastUpgrades.6.2.0:
+-        "0x6866FE89723713282BF6aB2fb8f03b0ee1833ABE"
++        "eth:0x6866FE89723713282BF6aB2fb8f03b0ee1833ABE"
+      values.$pastUpgrades.7.2.0:
+-        "0x6aBB753C1893194DE4a83c6e8B4EadFc105Fd5f5"
++        "eth:0x6aBB753C1893194DE4a83c6e8B4EadFc105Fd5f5"
+      values.$pastUpgrades.8.2.0:
+-        "0x37D26DC2890b35924b40574BAc10552794771997"
++        "eth:0x37D26DC2890b35924b40574BAc10552794771997"
+      values.$pastUpgrades.9.2.0:
+-        "0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
++        "eth:0x1633012a2cB27eFBC2944f2E43b9197Bc3964359"
+      values.$pastUpgrades.10.2.0:
+-        "0x8F372f5404514cec63A3F88BAac772Cc620F2281"
++        "eth:0x8F372f5404514cec63A3F88BAac772Cc620F2281"
+      values.$pastUpgrades.11.2.0:
+-        "0x639f13D5f30B47c792b6851238c05D0b623C77DE"
++        "eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE"
+      values.checkpointManagerAddress:
+-        "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      values.childChainManagerAddress:
+-        "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa"
++        "eth:0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa"
+      values.ETHER_ADDRESS:
+-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
++        "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      values.implementation:
+-        "0x639f13D5f30B47c792b6851238c05D0b623C77DE"
++        "eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE"
+      values.PREDICATES.0:
+-        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      values.PREDICATES.1:
+-        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+      values.PREDICATES.2:
+-        "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
++        "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
+      values.PREDICATES.3:
+-        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+      values.PREDICATES.4:
+-        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      values.PREDICATES.5:
+-        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      values.PREDICATES.6:
+-        "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
++        "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+      values.PREDICATES.7:
+-        "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35"
++        "eth:0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35"
+      values.PREDICATES.8:
+-        "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70"
++        "eth:0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70"
+      values.PREDICATES.9:
+-        "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4"
++        "eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4"
+      values.PREDICATES.10:
+-        "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
++        "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+      values.PREDICATES.11:
+-        "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5"
++        "eth:0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.stateSenderAddress:
+-        "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
++        "eth:0x28e4F3a7f651294B9564800b2D01f35189A5bFbE"
+      implementationNames.0xA0c68C638235ee32657e8f720a23ceC1bFc77C77:
+-        "RootChainManagerProxy"
+      implementationNames.0x639f13D5f30B47c792b6851238c05D0b623C77DE:
+-        "RootChainManager"
+      implementationNames.eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77:
++        "RootChainManagerProxy"
+      implementationNames.eth:0x639f13D5f30B47c792b6851238c05D0b623C77DE:
++        "RootChainManager"
+    }
+```
+
+```diff
+    EOA  (0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78) {
+    +++ description: None
+      address:
+-        "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
++        "eth:0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    }
+```
+
+```diff
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8) {
+    +++ description: None
+      address:
+-        "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8"
++        "eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8"
+      implementationNames.0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8:
+-        "MaticWETH"
+      implementationNames.eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8:
++        "MaticWETH"
+    }
+```
+
+```diff
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: Contains logging and getter functions about staking.
+      address:
+-        "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B"
++        "eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B"
+      values.getStakerDetails.0.4:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.registry:
+-        "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
++        "eth:0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
+      implementationNames.0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B:
+-        "StakingInfo"
+      implementationNames.eth:0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B:
++        "StakingInfo"
+    }
+```
+
+```diff
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa) {
+    +++ description: None
+      address:
+-        "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa"
++        "eth:0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa"
+      implementationNames.0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa:
+-        "MerklePatriciaProof"
+      implementationNames.eth:0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa:
++        "MerklePatriciaProof"
+    }
+```
+
+```diff
+    EOA  (0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc) {
+    +++ description: None
+      address:
+-        "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
++        "eth:0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
+    }
+```
+
+```diff
+    EOA  (0xb771380f912E4b5F6beDdf81314C383c13F16ab5) {
+    +++ description: None
+      address:
+-        "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
++        "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+    }
+```
+
+```diff
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642) {
+    +++ description: None
+      address:
+-        "0xc4FA447A0e77Eff9717b09C057B40570813bb642"
++        "eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642"
+      implementationNames.0xc4FA447A0e77Eff9717b09C057B40570813bb642:
+-        "ValidatorShareFactory"
+      implementationNames.eth:0xc4FA447A0e77Eff9717b09C057B40570813bb642:
++        "ValidatorShareFactory"
+    }
+```
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      address:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      implementationNames.0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf:
+-        "Timelock"
+      implementationNames.eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf:
++        "Timelock"
+    }
+```
+
+```diff
+    EOA  (0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a) {
+    +++ description: None
+      address:
+-        "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
++        "eth:0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
+    }
+```
+
+```diff
+    contract  (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861) {
+    +++ description: None
+      address:
+-        "0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861"
++        "eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861"
+      implementationNames.0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861:
+-        ""
+      implementationNames.eth:0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861:
++        ""
+    }
+```
+
+```diff
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68) {
+    +++ description: None
+      address:
+-        "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
++        "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+      values.$admin:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"
++        "eth:0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"
+      values.$pastUpgrades.0.2.0:
+-        "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"
++        "eth:0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"
+      values.implementation:
+-        "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"
++        "eth:0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"
+      values.proxyOwner:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      implementationNames.0xDB2382413bCb9c2F1B6b62B52238558266361D68:
+-        "ChainExitERC1155PredicateProxy"
+      implementationNames.0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f:
+-        "ChainExitERC1155Predicate"
+      implementationNames.eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68:
++        "ChainExitERC1155PredicateProxy"
+      implementationNames.eth:0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f:
++        "ChainExitERC1155Predicate"
+    }
+```
+
+```diff
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca) {
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+      address:
+-        "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca"
++        "eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca"
+      implementationNames.0xDF74156420Bd57ab387B195ed81EcA36F9fABAca:
+-        "ExitNFT"
+      implementationNames.eth:0xDF74156420Bd57ab387B195ed81EcA36F9fABAca:
++        "ExitNFT"
+    }
+```
+
+```diff
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD) {
+    +++ description: None
+      address:
+-        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+      values.$admin:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      values.$implementation:
+-        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
++        "eth:0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+      values.$pastUpgrades.0.2.0:
+-        "0x9aaae29879c95eD732babaBEa4cAe20A6D931DbB"
++        "eth:0x9aaae29879c95eD732babaBEa4cAe20A6D931DbB"
+      values.$pastUpgrades.1.2.0:
+-        "0xf3f08b74B63d0C008Cea903ee59b346bF1d5e4Cd"
++        "eth:0xf3f08b74B63d0C008Cea903ee59b346bF1d5e4Cd"
+      values.$pastUpgrades.2.2.0:
+-        "0x637315199D6dcB7190BbfAcFB1E1cCe7f9632714"
++        "eth:0x637315199D6dcB7190BbfAcFB1E1cCe7f9632714"
+      values.$pastUpgrades.3.2.0:
+-        "0xB272B6D99858B0EfB079946942006727fe105201"
++        "eth:0xB272B6D99858B0EfB079946942006727fe105201"
+      values.$pastUpgrades.4.2.0:
+-        "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"
++        "eth:0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"
+      values.$pastUpgrades.5.2.0:
+-        "0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
++        "eth:0x9F5B43C0d6d57a76E5B24CE05E11b70C3C7eA8Ec"
+      values.$pastUpgrades.6.2.0:
+-        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
++        "eth:0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+      values.implementation:
+-        "0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
++        "eth:0x02Bc987f54B54bf18Ca6E20a13e57508ec561072"
+      values.proxyOwner:
+-        "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
++        "eth:0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
+      implementationNames.0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD:
+-        "ERC721PredicateProxy"
+      implementationNames.0x02Bc987f54B54bf18Ca6E20a13e57508ec561072:
+-        "ERC721Predicate"
+      implementationNames.eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD:
++        "ERC721PredicateProxy"
+      implementationNames.eth:0x02Bc987f54B54bf18Ca6E20a13e57508ec561072:
++        "ERC721Predicate"
+    }
+```
+
+```diff
+    EOA  (0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE) {
+    +++ description: None
+      address:
+-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
++        "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+    }
+```
+
+```diff
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166) {
+    +++ description: None
+      address:
+-        "0xef49Ea6996073752b6840CDA34773FFA78F78166"
++        "eth:0xef49Ea6996073752b6840CDA34773FFA78F78166"
+      values.eventsHub:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.extensionCode:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.governance:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.logger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.NFTContract:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
++        "eth:0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+      values.registry:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rootChain:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.token:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.validatorShareFactory:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xef49Ea6996073752b6840CDA34773FFA78F78166:
+-        "StakeManagerExtension"
+      implementationNames.eth:0xef49Ea6996073752b6840CDA34773FFA78F78166:
++        "StakeManagerExtension"
+    }
+```
+
+```diff
+    EOA  (0xf748a187303940856A367D57Dc45D1ac4A597305) {
+    +++ description: None
+      address:
+-        "0xf748a187303940856A367D57Dc45D1ac4A597305"
++        "eth:0xf748a187303940856A367D57Dc45D1ac4A597305"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      address:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
++        "eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
++        "eth:0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
+      values.$members.1:
+-        "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
++        "eth:0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
+      values.$members.2:
+-        "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
++        "eth:0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
+      values.$members.3:
+-        "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
++        "eth:0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
+      values.$members.4:
+-        "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
++        "eth:0x39415255619783A2E71fcF7d8f708A951d92e1b6"
+      values.$members.5:
+-        "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
++        "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+      values.$members.6:
+-        "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
++        "eth:0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
+      values.$members.7:
+-        "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
++        "eth:0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
+      values.$members.8:
+-        "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
++        "eth:0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
+      implementationNames.0xFa7D2a996aC6350f4b56C043112Da0366a59b74c:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xFa7D2a996aC6350f4b56C043112Da0366a59b74c:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ERC1155Predicate (0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CustomPredicate (0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StateSender (0x28e4F3a7f651294B9564800b2D01f35189A5bFbE)
+    +++ description: Smart contract allowing whitelisted addresses to send messages to contracts on the child chain.
+```
+
+```diff
++   Status: CREATED
+    contract WithdrawManager (0x2A88696e0fFA76bAA1338F2C74497cC013495922)
+    +++ description: Contract handling users’ withdrawal finalization for tokens escrowed in DepositManager.
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC1155Predicate (0x2d641867411650cd05dB93B59964536b1ED5b1B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0x33a02E6cC863D393d6Bf231B697b82F6e499cA71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC721PredicateBurnOnly (0x36C2503d53C6948331144b85D1e74a3B96731d1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositManager (0x401F6c983eA34274ec46f84D70b31C151321188b)
+    +++ description: Contract to deposit and escrow ETH, ERC20 or ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingNFT (0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChainInitialImplementation (0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20PredicateBurnOnly (0x626fb210bf50e201ED62cA2705c16DE2a53DC966)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EventsHub (0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x6e7a5820baD6cebA8Ef5ea69c0C92EbbDAc9CE48)
+    +++ description: Simple contract that allows the owner to call an `update` function on arbitrary contracts.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShare (0x7e94d6cAbb20114b22a088d828772645f68CC67B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChain (0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287)
+    +++ description: Contract storing chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the validators.
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootChainManager (0xA0c68C638235ee32657e8f720a23ceC1bFc77C77)
+    +++ description: Main configuration contract to manage tokens, token types, escrows (predicates) for given token types. It also serves as an entry point for deposits and withdrawals effectively acting as a token router.
+```
+
+```diff
++   Status: CREATED
+    contract MaticWETH (0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B)
+    +++ description: Contains logging and getter functions about staking.
+```
+
+```diff
++   Status: CREATED
+    contract MerklePatriciaProof (0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorShareFactory (0xc4FA447A0e77Eff9717b09C057B40570813bb642)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xD9c7C4ED4B66858301D0cb28Cc88bf655Fe34861)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainExitERC1155Predicate (0xDB2382413bCb9c2F1B6b62B52238558266361D68)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExitNFT (0xDF74156420Bd57ab387B195ed81EcA36F9fABAca)
+    +++ description: NFTs used to represent a withdrawal in the withdrawal PriorityQueue (Only used for tokens initially deposited via DepositManager).
+```
+
+```diff
++   Status: CREATED
+    contract ERC721Predicate (0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeManagerExtension (0xef49Ea6996073752b6840CDA34773FFA78F78166)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xbb7650af53d46f3e6046799ec47229c546dc4df7
+
+# Diff at Mon, 07 Jul 2025 06:52:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 22767964
+- current block number: 22865648
+
+## Description
+
+minus 1 vali.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        102
+    }
+```
+
+Generated with discovered.json: 0x47bcc5055a83a369d3f7b794ff73f9c9839999ff
+
+# Diff at Fri, 04 Jul 2025 12:19:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22767964
+- current block number: 22767964
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22767964 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x401F6c983eA34274ec46f84D70b31C151321188b"
++        "eth:0x401F6c983eA34274ec46f84D70b31C151321188b"
+      receivedPermissions.1.from:
+-        "ethereum:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      receivedPermissions.2.from:
+-        "ethereum:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+      receivedPermissions.3.from:
+-        "ethereum:0x2d641867411650cd05dB93B59964536b1ED5b1B7"
++        "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+      receivedPermissions.4.from:
+-        "ethereum:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      receivedPermissions.5.from:
+-        "ethereum:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+      receivedPermissions.6.from:
+-        "ethereum:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      receivedPermissions.7.from:
+-        "ethereum:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      receivedPermissions.8.from:
+-        "ethereum:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
++        "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
+      receivedPermissions.9.from:
+-        "ethereum:0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      receivedPermissions.10.from:
+-        "ethereum:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      receivedPermissions.11.from:
+-        "ethereum:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xDB2382413bCb9c2F1B6b62B52238558266361D68"
++        "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+    }
+```
+
 Generated with discovered.json: 0xd72e618e15f1e09891b28933bab5153388efe21c
 
 # Diff at Mon, 23 Jun 2025 15:16:53 GMT:

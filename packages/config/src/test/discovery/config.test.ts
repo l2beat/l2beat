@@ -1,16 +1,22 @@
-import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
-  TemplateService,
   colorize,
   combineStructureAndColor,
-  generateClingoForProject,
+  DiscoveryRegistry,
+  generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   makeEntryStructureConfig,
+  TemplateService,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
@@ -32,6 +38,7 @@ export const onChainProjects: string[] = [
   'tokens',
   'gateway',
   'hibachi',
+  'opcm16',
 ]
 
 describe('discovery config.jsonc', () => {
@@ -173,7 +180,7 @@ describe('discovery config.jsonc', () => {
           for (const entry of discovery.entries) {
             const fields = makeEntryStructureConfig(
               c.structure,
-              entry.address,
+              ChainSpecificAddress.address(entry.address),
             ).fields
             for (const [key, value] of Object.entries(fields)) {
               if (
@@ -235,21 +242,34 @@ describe('discovery config.jsonc', () => {
   })
 
   it('model-permissions is up to date', () => {
-    for (const c of chainConfigs ?? []) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
-      const clingoInput = generateClingoForProject(
+    for (const c of chainConfigs) {
+      const dependencies = getDependenciesToDiscoverForProject(
         c.name,
+        configReader,
+      )
+      const discoveries = new DiscoveryRegistry()
+      for (const dependency of dependencies) {
+        const discovery = configReader.readDiscovery(
+          dependency.project,
+          dependency.chain,
+        )
+        discoveries.set(dependency.project, dependency.chain, discovery)
+      }
+      const clingoInput = generateClingoForDiscoveries(
+        discoveries,
         configReader,
         templateService,
       )
       const hash = generatePermissionConfigHash(clingoInput)
       assert(
-        hash === discovery.permissionsConfigHash,
+        hash ===
+          discoveries.get(c.name, c.chain)?.discoveryOutput
+            .permissionsConfigHash,
         [
           '',
           `Permissions model of "${c.name}" is not up to date.`,
           `Run \`l2b model-permissions ${c.name}\`.`,
-          `or to refresh all projects: \`l2b model-permissions all\`.`,
+          'or to refresh all projects: \`l2b model-permissions all\`.',
           '',
         ].join('\n\n'),
       )

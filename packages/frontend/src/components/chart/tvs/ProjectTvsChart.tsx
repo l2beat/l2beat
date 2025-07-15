@@ -7,9 +7,9 @@ import type {
 } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
-import { TokenCombobox } from '../../TokenCombobox'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { TokenCombobox } from '../../TokenCombobox'
 import type { ChartUnit } from '../types'
 import { ProjectTokenChart } from './ProjectTokenChart'
 import type { TvsChartDataPoint } from './TvsChart'
@@ -85,7 +85,7 @@ function DefaultChart({
   token,
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: { type: 'projects', projectIds: [projectId] },
     excludeAssociatedTokens: false,
   })

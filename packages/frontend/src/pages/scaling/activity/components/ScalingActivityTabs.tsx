@@ -1,10 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import {
-  OthersInfo,
-  RollupsInfo,
-  UnderReviewInfo,
-  ValidiumsAndOptimiumsInfo,
-} from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingActivityChart } from '~/components/chart/activity/ScalingActivityChart'
 import {
@@ -14,6 +8,12 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  NotReviewedInfo,
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -33,7 +33,7 @@ export function ScalingActivityTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
+    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -49,7 +49,7 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.underReview,
+            ...props.notReviewed,
           ]}
         />
         <UopsExplorerLink />
@@ -66,10 +66,10 @@ export function ScalingActivityTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.underReview.length > 0 && (
-            <DirectoryTabsTrigger value="underReview">
-              Under initial review
-              <CountBadge>{entries.underReview.length - 1}</CountBadge>
+          {entries.notReviewed.length > 0 && (
+            <DirectoryTabsTrigger value="notReviewed">
+              Not reviewed
+              <CountBadge>{entries.notReviewed.length - 1}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
@@ -115,9 +115,9 @@ export function ScalingActivityTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
-            <UnderReviewInfo />
-            <ScalingActivityTable entries={entries.underReview} underReview />
+          <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
+            <NotReviewedInfo />
+            <ScalingActivityTable entries={entries.notReviewed} notReviewed />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

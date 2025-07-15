@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -16,10 +21,11 @@ const trackedTxsSince = UnixTime(1742940287)
 const v26UpgradeTS = UnixTime(1743095267)
 const bridge = discovery.getContract('L1NativeTokenVault')
 const isL2AssetRouterWhitelisted =
-  discovery.getContractValue<EthereumAddress[]>(
+  discovery.getContractValue<ChainSpecificAddress[]>(
     'SophonTransactionFilterer',
     'whitelistedContractsAC',
-  )[0] === EthereumAddress('0x0000000000000000000000000000000000010003')
+  )[0] ===
+  ChainSpecificAddress('eth:0x0000000000000000000000000000000000010003')
 const assetBridgingWhitelistedText = isL2AssetRouterWhitelisted
   ? ' The L2AssetRouter contract is currently whitelisted as a target in the TransactionFilterer which allows users to queue withdrawals that use the canonical bridge from L1.'
   : ''
@@ -84,7 +90,7 @@ export const sophon: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: [
         'ETH',
         'USDT',
@@ -152,7 +158,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address/0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f#code#F1#L472',
+          url: 'https://etherscan.io/address/0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec#code#F1#L472',
         },
         {
           title: 'TransactionFilterer',

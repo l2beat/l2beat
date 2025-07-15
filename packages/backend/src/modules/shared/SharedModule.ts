@@ -3,15 +3,18 @@ import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
 import { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import type { Providers } from '../../providers/Providers'
+import type { Clock } from '../../tools/Clock'
 import { EventIndexer } from '../../tools/EventIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockIndexer } from './indexers/BlockIndexer'
+import { AnomalyNotifier } from './notifiers/AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './processors/RealTimeLivenessProcessor'
 
 export function createSharedModule(
   config: Config,
   logger: Logger,
+  clock: Clock,
   providers: Providers,
   db: Database,
 ): ApplicationModule | undefined {
@@ -20,8 +23,14 @@ export function createSharedModule(
     return
   }
 
-  const discordClient = config.discord.anomaliesWebhookUrl
-    ? new DiscordWebhookClient(config.discord.anomaliesWebhookUrl)
+  const anomaliesNotifier = config.discord.anomaliesWebhookUrl
+    ? new AnomalyNotifier(
+        logger,
+        clock,
+        new DiscordWebhookClient(config.discord.anomaliesWebhookUrl),
+        db,
+        config.discord.anomaliesMinDuration,
+      )
     : undefined
 
   logger = logger.tag({ feature: 'shared', module: 'shared' })
@@ -34,18 +43,19 @@ export function createSharedModule(
     logger,
   )
 
-  const processor = new RealTimeLivenessProcessor(
+  const realTimeLivenessProcessor = new RealTimeLivenessProcessor(
     config,
     logger,
     db,
-    discordClient,
+    anomaliesNotifier,
   )
+  const processors = [realTimeLivenessProcessor]
 
   const blockIndexer = new BlockIndexer({
     logger,
     minHeight: 1,
     parents: [eventIndexer],
-    processors: [processor],
+    processors,
     source: 'ethereum',
     mode: 'CONTINUOUS',
     blockProvider: providers.block.getBlockProvider('ethereum'),
@@ -59,6 +69,11 @@ export function createSharedModule(
     logger.info('Starting...')
     eventIndexer.start()
     blockIndexer.start()
+    anomaliesNotifier?.start()
+
+    for (const processor of processors) {
+      processor.init()
+    }
   }
 
   return {

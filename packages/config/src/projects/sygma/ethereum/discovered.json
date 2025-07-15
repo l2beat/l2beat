@@ -5,18 +5,18 @@
   "configHash": "0x3d53d85ea1cd7888be87487f8e82dd85aaa74a985ed01db4c588bf4cc1eee23b",
   "entries": [
     {
-      "address": "0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
+      "address": "eth:0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x197C57440A30cB28103ab27CB1b0dC86E5907ADA",
+      "address": "eth:0x197C57440A30cB28103ab27CB1b0dC86E5907ADA",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "FeeHandlerRouter",
-      "address": "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
+      "address": "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
       "type": "Contract",
       "sourceHashes": [
         "0x57d2aa380d47a54717ec0de4d2ce6f34d5618f91a876226f60828e03036c07bb"
@@ -25,23 +25,23 @@
       "sinceTimestamp": 1701074999,
       "sinceBlock": 18661897,
       "values": {
-        "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "$immutable": true,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xde79695d5cefF7c324552B3ecbe6165f77FCdF53"]
+            "members": ["eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": "FeeHandlerRouter"
+        "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF": "FeeHandlerRouter"
       }
     },
     {
       "name": "Permissionless Generic Handler",
-      "address": "0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
+      "address": "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
       "type": "Contract",
       "sourceHashes": [
         "0x6cbae46385d34a7539ed992fd427d294cf815bc599a5b8814ba0272276864f21"
@@ -50,17 +50,17 @@
       "sinceTimestamp": 1697118143,
       "sinceBlock": 18334705,
       "values": {
-        "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "$immutable": true,
         "MAX_FEE": 1000000
       },
       "implementationNames": {
-        "0x31282123E7bcd947e2c1Bc364d564839574fAdCD": "PermissionlessGenericHandler"
+        "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD": "PermissionlessGenericHandler"
       }
     },
     {
       "name": "Bridge",
-      "address": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+      "address": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
       "type": "Contract",
       "sourceHashes": [
         "0x70d800f2dae04f7c3240cdf754404e86a486cea0a8591eec762e903d2eec5c77"
@@ -69,42 +69,42 @@
       "sinceTimestamp": 1686658607,
       "sinceBlock": 17471016,
       "values": {
-        "_accessControl": "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
+        "_accessControl": "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
         "_domainID": 1,
-        "_feeHandler": "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
-        "_MPCAddress": "0x6731987e651675aF87442Ed2F1719EDF937B51d7",
+        "_feeHandler": "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
+        "_MPCAddress": "eth:0x6731987e651675aF87442Ed2F1719EDF937B51d7",
         "$immutable": true,
-        "handler1": "0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
-        "handler2": "0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
+        "handler1": "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
+        "handler2": "eth:0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
         "paused": false
       },
       "implementationNames": {
-        "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": "Bridge"
+        "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": "Bridge"
       }
     },
     {
-      "address": "0x5a288b42dC222190D8cF5014A330c978ee42A5df",
+      "address": "eth:0x5a288b42dC222190D8cF5014A330c978ee42A5df",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x6731987e651675aF87442Ed2F1719EDF937B51d7",
+      "address": "eth:0x6731987e651675aF87442Ed2F1719EDF937B51d7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+      "address": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x86a73a594f74C76a6eB8F9E728d992D03252f60f",
+      "address": "eth:0x86a73a594f74C76a6eB8F9E728d992D03252f60f",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "BasicFeeHandler",
-      "address": "0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7",
+      "address": "eth:0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7",
       "type": "Contract",
       "sourceHashes": [
         "0x057a9fc15bc757cf2e6b63ad07391d1629be177ca6f4c1af91bc407b7a7ef4c9"
@@ -113,28 +113,28 @@
       "sinceTimestamp": 1701075143,
       "sinceBlock": 18661909,
       "values": {
-        "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
-        "_feeHandlerRouterAddress": "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "_feeHandlerRouterAddress": "eth:0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
         "$immutable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7": "BasicFeeHandler"
+        "eth:0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7": "BasicFeeHandler"
       }
     },
     {
-      "address": "0xa399460Ce767b06297457178D2F9F8f144017E77",
+      "address": "eth:0xa399460Ce767b06297457178D2F9F8f144017E77",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xacc0268a75280192897a78C706C9FBA2d2b851C4",
+      "address": "eth:0xacc0268a75280192897a78C706C9FBA2d2b851C4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Community Multisig",
-      "address": "0xc4d8b2F5501C765dE0C5E12550118F397B197D05",
+      "address": "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -147,14 +147,14 @@
       "sinceBlock": 16991929,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
-          "0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
-          "0xa399460Ce767b06297457178D2F9F8f144017E77",
-          "0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
-          "0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
-          "0x86a73a594f74C76a6eB8F9E728d992D03252f60f"
+          "eth:0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",
+          "eth:0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
+          "eth:0xa399460Ce767b06297457178D2F9F8f144017E77",
+          "eth:0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
+          "eth:0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
+          "eth:0x86a73a594f74C76a6eB8F9E728d992D03252f60f"
         ],
         "$threshold": 4,
         "domainSeparator": "0xc5ef62da8fa57e68638ae614d9898bce59fbef8acf03bfa5c2e4759716981ada",
@@ -165,18 +165,18 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xc4d8b2F5501C765dE0C5E12550118F397B197D05": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
+      "address": "eth:0xC6458dedf35231F524ED9d7E0DF77A60b9E08676",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ERC20 Bridge Handler",
-      "address": "0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
+      "address": "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
       "type": "Contract",
       "sourceHashes": [
         "0x6f164184a36f7f6b52d39867d75472915b53a643e2fca4319619d7f76706905e"
@@ -185,22 +185,22 @@
       "sinceTimestamp": 1686658619,
       "sinceBlock": 17471017,
       "values": {
-        "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "_bridgeAddress": "eth:0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
         "$immutable": true,
         "defaultDecimals": 18
       },
       "implementationNames": {
-        "0xC832588193cd5ED2185daDA4A531e0B26eC5B830": "ERC20Handler"
+        "eth:0xC832588193cd5ED2185daDA4A531e0B26eC5B830": "ERC20Handler"
       }
     },
     {
-      "address": "0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
+      "address": "eth:0xd85b34B2Fe1eC7815B6dF659372382A8FA229677",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Admin Multisig",
-      "address": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+      "address": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -213,13 +213,13 @@
       "sinceBlock": 17464490,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xacc0268a75280192897a78C706C9FBA2d2b851C4",
-          "0x5a288b42dC222190D8cF5014A330c978ee42A5df",
-          "0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
-          "0x197C57440A30cB28103ab27CB1b0dC86E5907ADA",
-          "0x86a73a594f74C76a6eB8F9E728d992D03252f60f"
+          "eth:0xacc0268a75280192897a78C706C9FBA2d2b851C4",
+          "eth:0x5a288b42dC222190D8cF5014A330c978ee42A5df",
+          "eth:0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
+          "eth:0x197C57440A30cB28103ab27CB1b0dC86E5907ADA",
+          "eth:0x86a73a594f74C76a6eB8F9E728d992D03252f60f"
         ],
         "$threshold": 3,
         "domainSeparator": "0x2093ad87aee89f2fba108781963df2f9a6358b2e675a80bdf56368e539d66ab6",
@@ -230,18 +230,18 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
+      "address": "eth:0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "AccessControlSegregator",
-      "address": "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
+      "address": "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E",
       "type": "Contract",
       "sourceHashes": [
         "0xffa23c6121a2e1d41ad45b0ea97f759dbbc6b73bc7e8d810590d9cb36b3dfb2b"
@@ -252,23 +252,23 @@
       "values": {
         "$immutable": true,
         "GRANT_ACCESS_SIG": "0xa973ec93",
-        "role_changeAccessControl": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_changeFeeHandler": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_endKeyGen": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_grantAccess": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_pauseTransfers": "0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
-        "role_refreshKey": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_retry": "0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
-        "role_setBurnable": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_setDepositNonce": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_setForwarder": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_setResource": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_startKeyGen": "0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
-        "role_unpauseTransfers": "0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
-        "role_Withdraw": "0xc4d8b2F5501C765dE0C5E12550118F397B197D05"
+        "role_changeAccessControl": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_changeFeeHandler": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_endKeyGen": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_grantAccess": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_pauseTransfers": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+        "role_refreshKey": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_retry": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+        "role_setBurnable": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_setDepositNonce": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_setForwarder": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_setResource": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_startKeyGen": "eth:0xde79695d5cefF7c324552B3ecbe6165f77FCdF53",
+        "role_unpauseTransfers": "eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049",
+        "role_Withdraw": "eth:0xc4d8b2F5501C765dE0C5E12550118F397B197D05"
       },
       "implementationNames": {
-        "0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": "AccessControlSegregator"
+        "eth:0xf433EfDf1Fb438F9d79D1E71dF2c2bdeAc95e28E": "AccessControlSegregator"
       }
     }
   ],
@@ -462,5 +462,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x4c00585c22044315ac347b37459da1e27472069de95fc394f6d5e4c6217c215e"
+  "permissionsConfigHash": "0x46bc4b9bcdd94b9623043b6c96bd388e29e73a51902df6dc82357804baf5e882"
 }

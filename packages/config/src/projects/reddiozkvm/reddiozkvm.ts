@@ -53,6 +53,7 @@ export const reddiozkvm: ScalingProject = {
       'Reddio proudly announces the launch of its Mainnet Alpha, bringing the world’s first GPU-Accelerated Parallel EVM architecture to live production. Purpose-built for compute-intensive and AI-native applications, Reddio opens a new frontier of speed and programmability within Ethereum’s ecosystem.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
+    stacks: ['SN Stack'],
     links: {
       websites: ['https://reddio.com/'],
       bridges: [

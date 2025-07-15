@@ -2,9 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import { PercentChange } from '~/components/PercentChange'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -27,8 +24,11 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -39,21 +39,21 @@ import type { ChartUnit } from '../types'
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--chart-pink))',
+    color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'hsl(var(--chart-cyan))',
+    color: 'var(--chart-cyan)',
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'hsl(var(--chart-yellow))',
+    color: 'var(--chart-yellow)',
     indicatorType: {
       shape: 'line',
     },
@@ -63,7 +63,10 @@ const chartMeta = {
 export function ScalingSummaryTvsChart({
   unit,
   timeRange,
-}: { unit: ChartUnit; timeRange: TvsChartRange }) {
+}: {
+  unit: ChartUnit
+  timeRange: TvsChartRange
+}) {
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },
@@ -147,13 +150,13 @@ function CustomTooltip({
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <div className={tooltipContentVariants()}>
-      <div className="!w-[158px] [@media(min-width:600px)]:!w-60 flex flex-col">
-        <div className="label-value-14-medium mb-3 text-secondary">
+      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
+        <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })
             : formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
-        <div className="heading-16 mb-1.5 flex w-full items-center justify-between gap-2">
+        <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
           <span className="[@media(min-width:600px)]:hidden">Total</span>
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
@@ -175,11 +178,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="label-value-15-medium whitespace-nowrap">
+                <span className="whitespace-nowrap font-medium text-label-value-15">
                   {formatCurrency(entry.value, 'usd')}
                 </span>
               </div>

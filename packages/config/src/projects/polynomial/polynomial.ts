@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,9 +13,6 @@ export const polynomial: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit, BADGES.Infra.Superchain],
   additionalPurposes: ['Exchange'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Polynomial',
     slug: 'polynomial',
@@ -43,14 +40,6 @@ export const polynomial: ScalingProject = opStackL2({
       },
     ],
   },
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1718038175),
-    minTimestamp: UnixTime(1718049059),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'analyze',
-  },
   isNodeAvailable: 'UnderReview',
   genesisTimestamp: UnixTime(1718038307),
   milestones: [
@@ -63,6 +52,21 @@ export const polynomial: ScalingProject = opStackL2({
     },
   ],
   nonTemplateEscrows: [
+    {
+      address: EthereumAddress('0x8309E63F777805f362d42f5B5f2D1A20287d5Df2'),
+      sinceTimestamp: UnixTime(1751017763),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['rsETH'],
+      chain: 'ethereum',
+    },
     {
       address: EthereumAddress('0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7'),
       sinceTimestamp: UnixTime(1748903783),

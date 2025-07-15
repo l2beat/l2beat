@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../../templates/underReview'
@@ -16,7 +16,7 @@ export const skynet: ScalingProject = underReviewL3({
       'Skynet is a scaling solution built on the Orbit stack that aims to act as infrastructure for AI Agents.',
     purposes: ['Universal'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://skynet.io/'],
       explorers: ['https://explorer.skynet.io/'],
@@ -33,6 +33,7 @@ export const skynet: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'skynet',
+    gasTokens: ['sUSD'],
     chainId: 619,
     apis: [
       {
@@ -50,4 +51,12 @@ export const skynet: ScalingProject = underReviewL3({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-}) //no escrow since gas token is not on CoinGecko, very low TVS
+  escrows: [
+    {
+      address: EthereumAddress('0x54f3bad1ed5e67a1aee393f80d27542f9ef81c78'), // bridge
+      sinceTimestamp: UnixTime(1734416521),
+      tokens: ['ETH'], // gastoken skyUSD sUSD not on CG (tvs 300 doler)
+      chain: 'arbitrum',
+    },
+  ],
+})

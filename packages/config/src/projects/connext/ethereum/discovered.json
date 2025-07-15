@@ -5,13 +5,13 @@
   "configHash": "0xee7fe8d5b8f25022515ce11dc595d1260caaca9f2aeff69f8f136757b5863856",
   "entries": [
     {
-      "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
+      "address": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "TransactionManager",
-      "address": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
+      "address": "eth:0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09",
       "type": "Contract",
       "sourceHashes": [
         "0x5a10f30a0039faccfa89f130d4f1114d81bb965bf1e050e64d2806982289ad52"
@@ -25,24 +25,24 @@
         "delay": 604800,
         "getChainId": 1,
         "getStoredChainId": 1,
-        "interpreter": "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
+        "interpreter": "eth:0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
         "isAssetOwnershipRenounced": false,
         "isRouterOwnershipRenounced": false,
         "MAX_TIMEOUT": 2592000,
         "MIN_TIMEOUT": 86400,
-        "owner": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
-        "proposed": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
+        "proposed": "eth:0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
         "renounced": false,
         "routerOwnershipTimestamp": 0
       },
       "implementationNames": {
-        "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": "TransactionManager"
+        "eth:0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": "TransactionManager"
       }
     },
     {
       "name": "FulfillInterpreter",
-      "address": "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
+      "address": "eth:0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a",
       "type": "Contract",
       "sourceHashes": [
         "0xd97bc069bf47ba9568177032f0a27cb51ad0564b0a2c9480fdcd09f5e3dff02d"
@@ -52,10 +52,10 @@
       "sinceBlock": 13548432,
       "values": {
         "$immutable": true,
-        "getTransactionManager": "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"
+        "getTransactionManager": "eth:0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"
       },
       "implementationNames": {
-        "0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a": "FulfillInterpreter"
+        "eth:0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a": "FulfillInterpreter"
       }
     }
   ],
@@ -121,5 +121,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xa8fb333760f388754817d51b347b3f2490368a69f361d4f07bfde8e87522f74c"
+  "permissionsConfigHash": "0xb2030b2626dfd0da9688c4e24533d26d84d97494fbbee320dceadbe42e6300df"
 }

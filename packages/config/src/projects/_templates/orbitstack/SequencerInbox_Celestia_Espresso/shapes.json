@@ -10,5 +10,11 @@
     "address": "0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC",
     "chain": "arbitrum",
     "blockNumber": 333824645
+  },
+  "SequencerInbox_Celestia_Espresso_vBlobs": {
+    "hash": "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c",
+    "address": "0x481863c96f949F5E13932ec2F65470C0CF83808d",
+    "chain": "arbitrum",
+    "blockNumber": 355528153
   }
 }

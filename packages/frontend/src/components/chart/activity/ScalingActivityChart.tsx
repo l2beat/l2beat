@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
@@ -64,7 +64,7 @@ export function ScalingActivityChart({
     filter: chartFilter,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: chartFilter,
   })
 

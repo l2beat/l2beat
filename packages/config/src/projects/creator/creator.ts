@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,10 +13,13 @@ export const creator: ScalingProject = upcomingL2({
       'The CREATOR chain will leverage exclusive relationships with successful Web 2 platforms to generate new user onboarding strategies. To attract and retain users, CREATOR will offer personalized DeFi services for creators and position itself as the premier Web 2.5 hub and a one-stop shop for new entrants to crypto.',
     purposes: ['Universal', 'Gaming'],
     category: 'Validium',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://oncreator.com/'],
       socialMedia: ['https://x.com/oncreator_'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

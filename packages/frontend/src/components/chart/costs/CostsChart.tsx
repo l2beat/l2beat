@@ -1,7 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -12,6 +11,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
@@ -27,32 +27,32 @@ import { formatNumber } from '~/utils/number-format/formatNumber'
 const chartMeta = {
   calldata: {
     label: 'Calldata',
-    color: 'hsl(var(--chart-stacked-blue))',
+    color: 'var(--chart-stacked-blue)',
     indicatorType: { shape: 'square' },
   },
   blobs: {
     label: 'Blobs',
-    color: 'hsl(var(--chart-stacked-yellow))',
+    color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
   compute: {
     label: 'Compute',
-    color: 'hsl(var(--chart-stacked-pink))',
+    color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   overhead: {
     label: 'Overhead',
-    color: 'hsl(var(--chart-stacked-purple))',
+    color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   posted: {
     label: 'Data posted',
-    color: 'hsl(var(--chart-emerald))',
+    color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line' },
   },
   notSyncedPosted: {
     label: 'Data posted (not synced)',
-    color: 'hsl(var(--chart-emerald))',
+    color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line', strokeDasharray: '3 3' },
   },
 } satisfies ChartMeta
@@ -227,13 +227,13 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
-        <div className="label-value-14-medium mb-3 text-secondary">
+        <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, {
             mode: resolution === 'daily' ? 'date' : 'datetime',
             longMonthName: resolution === 'daily',
           })}
         </div>
-        <div className="heading-16 flex w-full items-center justify-between gap-2">
+        <div className="flex w-full items-center justify-between gap-2 text-heading-16">
           <span>Total</span>
           <span className="whitespace-nowrap text-primary tabular-nums">
             {formatCostValue(total, unit, 'total')}
@@ -254,11 +254,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="label-value-15-medium whitespace-nowrap">
+                <span className="whitespace-nowrap font-medium text-label-value-15">
                   {entry.name === 'posted' || entry.name === 'notSyncedPosted'
                     ? formatBytes(entry.value)
                     : formatCostValue(entry.value, unit, 'total')}

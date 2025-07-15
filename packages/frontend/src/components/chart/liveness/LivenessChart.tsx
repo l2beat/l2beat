@@ -1,11 +1,10 @@
 import type { Milestone } from '@l2beat/config'
 import {
-  type TrackedTxsConfigSubtype,
   assertUnreachable,
+  type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -19,6 +18,7 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
@@ -45,14 +45,14 @@ export function LivenessChart({
   const chartMeta = {
     range: {
       label: 'Min&max submission interval',
-      color: 'hsl(var(--chart-pink-stroke-gradient-1))',
+      color: 'var(--chart-pink-stroke-gradient-1)',
       indicatorType: {
         shape: 'line',
       },
     },
     avg: {
       label: 'Average interval',
-      color: 'hsl(var(--chart-pink))',
+      color: 'var(--chart-pink)',
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
@@ -75,7 +75,7 @@ export function LivenessChart({
           isAnimationActive={false}
           stroke="url(#strokeRange)"
           strokeWidth={2}
-          fill="hsl(var(--chart-pink-fill-gradient))"
+          fill="var(--chart-pink-fill-gradient)"
           fillOpacity={0.4}
           connectNulls
         />
@@ -83,7 +83,7 @@ export function LivenessChart({
           dataKey="avg"
           isAnimationActive={false}
           strokeWidth={2}
-          stroke="hsl(var(--chart-pink))"
+          stroke="var(--chart-pink)"
           fill="none"
           strokeDasharray="5 5"
           connectNulls
@@ -92,9 +92,6 @@ export function LivenessChart({
           data,
           isLoading,
           yAxis: {
-            tick: {
-              width: 100,
-            },
             tickFormatter: (value: number) => formatDuration(value),
             domain: ['auto', 'auto'],
           },
@@ -102,7 +99,7 @@ export function LivenessChart({
         <ReferenceArea
           x1={lastValidTimestamp}
           x2={lastTimestamp}
-          fill="hsl(var(--negative))"
+          fill="var(--negative)"
           fillOpacity={0.2}
         />
         <ChartTooltip content={<LivenessCustomTooltip subtype={subtype} />} />
@@ -133,7 +130,7 @@ export function LivenessCustomTooltip({
   let content: React.ReactNode = null
   if (!range?.value || !avg?.value) {
     content = (
-      <div className="label-value-16-medium mt-2">
+      <div className="mt-2 font-medium text-label-value-16">
         {getTooltipContent(subtype)}
       </div>
     )
@@ -150,7 +147,7 @@ export function LivenessCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
-        <div className="label-value-14-medium mb-1 whitespace-nowrap text-secondary">
+        <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatTimestamp(timestamp, {
             longMonthName: true,
             mode: 'datetime',
@@ -166,13 +163,13 @@ export function LivenessCustomTooltip({
 function Stat({ name, seconds }: { name: string; seconds: number }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="label-value-14-medium">{name}</span>
-      <span className="heading-16">{formatDuration(seconds)}</span>
+      <span className="font-medium text-label-value-14">{name}</span>
+      <span className="text-heading-16">{formatDuration(seconds)}</span>
     </div>
   )
 }
 
-function formatDuration(durationInSeconds: number) {
+export function formatDuration(durationInSeconds: number) {
   const seconds = durationInSeconds
   const minutes = Math.floor(seconds / 60)
   const hours = Math.floor(minutes / 60)

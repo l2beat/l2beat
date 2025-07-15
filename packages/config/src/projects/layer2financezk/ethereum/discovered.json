@@ -6,42 +6,42 @@
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+      "address": "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "operateStarkEx",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".operators"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".$admin"
         }
       ]
     },
     {
-      "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+      "address": "eth:0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OrderRegistry",
-      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "address": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
@@ -57,12 +57,12 @@
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
       "implementationNames": {
-        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
+        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
       }
     },
     {
       "name": "StrategyCompound",
-      "address": "0x5b000954F70B0410685193B0afd3074B744B5C97",
+      "address": "eth:0x5b000954F70B0410685193B0afd3074B744B5C97",
       "type": "Contract",
       "sourceHashes": [
         "0xd4db48e0b7efb71ded88f8c4a839b0175d98cfd365e8beaf4630e60dfb8ea404"
@@ -72,38 +72,38 @@
       "sinceBlock": 14473373,
       "values": {
         "$immutable": true,
-        "broker": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
-        "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
-        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
-        "uniswap": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "broker": "eth:0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+        "comp": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "owner": "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+        "uniswap": "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "weth": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
-        "0x5b000954F70B0410685193B0afd3074B744B5C97": "StrategyCompound"
+        "eth:0x5b000954F70B0410685193B0afd3074B744B5C97": "StrategyCompound"
       }
     },
     {
       "name": "GpsFactRegistryAdapter",
-      "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "address": "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
       "sinceTimestamp": 1640107463,
       "sinceBlock": 13849860,
       "values": {
         "$immutable": true,
-        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+        "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
         "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
       },
       "implementationNames": {
-        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
+        "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
       },
       "usedTypes": [
         {
@@ -137,7 +137,7 @@
     },
     {
       "name": "StarkExchange",
-      "address": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+      "address": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
       "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
@@ -157,42 +157,42 @@
       "sinceTimestamp": 1645130774,
       "sinceBlock": 14225869,
       "values": {
-        "$admin": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+        "$admin": "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
         "$immutable": false,
         "$implementation": [
-          "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-          "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-          "0x8536850750956c2FEebeCAB786d82271a5467687",
-          "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-          "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-          "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-          "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+          "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+          "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+          "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+          "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+          "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+          "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+          "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
         ],
         "$pastUpgrades": [
           [
             "2022-02-17T20:46:14.000Z",
             "0xc1986fcfa9adba1076e31573ea760b1b64e5dca5954623c3306f7f90f76fd3f9",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ],
           [
             "2022-04-25T08:12:19.000Z",
             "0x880c2620a1b1c1bc539b81f1533ca188c76cc94cfc5288bd1f19af042ea51805",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ]
         ],
@@ -205,17 +205,17 @@
         "getOrderRoot": "2449344249870982788470726390907865854777361400154633433874282805096307135974",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
-          "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9"
+          "eth:0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9"
         ],
         "getRegisteredVerifiers": [
-          "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
+          "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
         "getSequenceNumber": 114,
         "getUpgradeActivationDelay": 0,
         "getVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
         "getVaultTreeHeight": 31,
         "GOVERNORS": [],
-        "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+        "implementation": "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
         "isFrozen": false,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
@@ -223,21 +223,21 @@
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
         "operators": [
-          "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+          "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
         ],
         "OPERATORS": [
-          "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-          "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+          "eth:0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+          "eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
         ],
-        "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+        "orderRegistryAddress": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
         "StarkWareDiamond_upgradeDelay": 0,
         "tokenAdmins": [
-          "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
-          "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+          "eth:0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+          "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
         ],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
@@ -258,32 +258,32 @@
         }
       },
       "implementationNames": {
-        "0x82123571C8a5e0910280C066bc634c4945FFcbC8": "Proxy",
-        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
-        "0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
-        "0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
-        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
-        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
-        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
-        "0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
+        "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8": "Proxy",
+        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
+        "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
+        "eth:0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
+        "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
+        "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
+        "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
+        "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
+      "address": "eth:0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".operators"
         }
       ]
     },
     {
       "name": "Compound Token",
-      "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+      "address": "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888",
       "type": "Contract",
       "sourceHashes": [
         "0xface33f588d07cf7b8c64c6200efc11c45d45332a47c27e8c49859d6bc5c8001"
@@ -301,30 +301,30 @@
         "totalSupply": "10000000000000000000000000"
       },
       "implementationNames": {
-        "0xc00e94Cb662C3520282E6f5717214004A7f26888": "Comp"
+        "eth:0xc00e94Cb662C3520282E6f5717214004A7f26888": "Comp"
       }
     },
     {
-      "address": "0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
+      "address": "eth:0xd649b1E03aE10199c3Ac38f0fd8b5F3ecbDDb978",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
       ]
     },
     {
-      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+      "address": "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -332,7 +332,7 @@
     },
     {
       "name": "Broker",
-      "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+      "address": "eth:0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
       "type": "Contract",
       "sourceHashes": [
         "0xd9040d82f39aa8ff258f35b318bdf0fc513f4d8844c61c34f6c8ce81eee40b55"
@@ -344,18 +344,18 @@
         "$immutable": true,
         "EXP_TIME": 2000000,
         "nonce": 23,
-        "onchainVaults": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-        "owner": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
+        "onchainVaults": "eth:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+        "owner": "eth:0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988",
         "PRICE_DECIMALS": "1000000000000000000",
         "SLIPPAGE_DENOMINATOR": 10000
       },
       "implementationNames": {
-        "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": "Broker"
+        "eth:0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": "Broker"
       }
     },
     {
       "name": "Committee",
-      "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
+      "address": "eth:0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -363,7 +363,7 @@
       "sinceBlock": 14652355,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9": ""
+        "eth:0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9": ""
       }
     }
   ],
@@ -759,5 +759,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "permissionsConfigHash": "0x224550285ab55e23e081fbb44bea3e837ade818b8df87668be4f4b61a1109a0b"
+  "permissionsConfigHash": "0xb5384eb38bbf98ab8d91b5ea84f2b7f6f41a08d2f46e20b5eb59ef60a84a2cc2"
 }

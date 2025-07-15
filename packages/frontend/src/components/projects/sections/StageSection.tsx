@@ -26,10 +26,10 @@ import { MissingIcon } from '~/icons/Missing'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import { UnderReviewIcon } from '~/icons/UnderReview'
-import { Callout } from '../../Callout'
-import { WarningBar } from '../../WarningBar'
 import { StageBadge } from '../../badge/StageBadge'
+import { Callout } from '../../Callout'
 import { Markdown } from '../../markdown/Markdown'
+import { WarningBar } from '../../WarningBar'
 import { ProjectSection } from './ProjectSection'
 import { ScopeOfAssessment } from './ScopeOfAssessment'
 import type { ProjectSectionProps } from './types'
@@ -85,8 +85,6 @@ export function StageSection({
       : UnderReviewIcon
 
   const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
-
-  console.log(stageConfig.summary[0]?.requirements)
 
   return (
     <ProjectSection {...sectionProps}>

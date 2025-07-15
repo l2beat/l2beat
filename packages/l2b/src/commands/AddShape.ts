@@ -1,10 +1,10 @@
 import {
-  TemplateService,
   getChainConfig,
   getDiscoveryPaths,
+  getExplorerClient,
+  TemplateService,
 } from '@l2beat/discovery'
-import { getExplorerClient } from '@l2beat/discovery'
-import { CliLogger, HttpClient } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/shared'
 import { assert, formatAsciiBorder } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, positional, string } from 'cmd-ts'
@@ -43,7 +43,6 @@ export const AddShape = command({
   handler: async (args) => {
     assert(args.addresses.length > 0, 'No addresses provided')
 
-    const logger = new CliLogger()
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
     if (templateService.exists(args.template) === false) {
@@ -81,7 +80,7 @@ export const AddShape = command({
     const httpClient = new HttpClient()
     const client = getExplorerClient(httpClient, chainConfig.explorer)
 
-    logger.logLine('Fetching contract source code...')
+    console.log('Fetching contract source code...')
     const sources = await Promise.all(
       args.addresses.map((address) => client.getContractSource(address)),
     )

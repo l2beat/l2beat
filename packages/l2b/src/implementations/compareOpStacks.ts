@@ -10,10 +10,10 @@ type OpStackProject = {
   L2OutputOracle: string | undefined
 }
 
-export async function analyseAllOpStackChains(
+export function analyseAllOpStackChains(
   projectToCompare: string | null,
   paths: DiscoveryPaths,
-): Promise<void> {
+) {
   const configReader = new ConfigReader(paths.discovery)
   const allL2s = configReader
     .readAllDiscoveredProjects()
@@ -29,7 +29,7 @@ export async function analyseAllOpStackChains(
       (obj) => obj.name === 'L2OutputOracle',
     )
     const optimismPortal = discovery.entries.find(
-      (obj) => obj.name === 'OptimismPortal',
+      (obj) => obj.name === 'OptimismPortal' || obj.name === 'OptimismPortal2',
     )
     const l1StandardBridge = discovery.entries.find(
       (obj) => obj.name === 'L1StandardBridge',

@@ -1,15 +1,15 @@
-import { FullPageHeader } from '~/components/FullPageHeader'
-import { WarningBar } from '~/components/WarningBar'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { FullPageHeader } from '~/components/FullPageHeader'
 import { ArchivedBar } from '~/components/projects/ArchivedBar'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
-import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
-import { UpcomingBar } from '~/components/projects/UpcomingBar'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
+import { UpcomingBar } from '~/components/projects/UpcomingBar'
+import { WarningBar } from '~/components/WarningBar'
 import { EmergencyIcon } from '~/icons/Emergency'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { getUnderReviewText } from '~/utils/project/underReview'
@@ -31,7 +31,10 @@ export function ProjectScalingSummary({ project }: Props) {
       >
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
-            <ProjectHeader project={project} />
+            <ProjectHeader
+              project={project}
+              ongoingAnomaly={project.header.ongoingAnomaly}
+            />
             <div className="space-y-2">
               {project.archivedAt && <ArchivedBar />}
               {project.isUpcoming && <UpcomingBar />}
@@ -73,7 +76,7 @@ export function ProjectScalingSummary({ project }: Props) {
                 )}
               </div>
             ) : null}
-            <HorizontalSeparator className="max-md:-mx-4 md:!my-6 my-4 max-md:w-screen md:hidden" />
+            <HorizontalSeparator className="max-md:-mx-4 my-4 max-md:w-screen md:my-6! md:hidden" />
 
             <div className="max-md:hidden">
               <DesktopProjectLinks
@@ -88,10 +91,10 @@ export function ProjectScalingSummary({ project }: Props) {
                 detailedBreakdownHref={`/scaling/projects/${project.slug}/tvs-breakdown`}
                 archivedAt={project.archivedAt}
               />
-              <HorizontalSeparator className="max-md:-mx-4 md:!my-6 my-4 max-md:w-screen md:hidden" />
+              <HorizontalSeparator className="max-md:-mx-4 my-4 max-md:w-screen md:my-6! md:hidden" />
               <ProjectScalingStats
                 project={project}
-                className="md:order-first md:col-span-2 [@media(min-width:1000px)]:order-none"
+                className="md:order-first md:col-span-2 [@media(min-width:1000px)]:order-0"
               />
             </div>
           </div>

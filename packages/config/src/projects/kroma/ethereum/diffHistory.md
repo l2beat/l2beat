@@ -1,3 +1,1614 @@
+Generated with discovered.json: 0xec006a72bd5bab67af91f694503a8a0b478b26ba
+
+# Diff at Mon, 14 Jul 2025 12:45:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22882090
+- current block number: 22882090
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882090 (main branch discovery), not current.
+
+```diff
+    EOA  (0x000000000000000000000000000000000000dEaD) {
+    +++ description: None
+      address:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+    }
+```
+
+```diff
+    contract ZKProofVerifier (0x005DDC466C804c79adB079c120347dDE48132105) {
+    +++ description: None
+      address:
+-        "0x005DDC466C804c79adB079c120347dDE48132105"
++        "eth:0x005DDC466C804c79adB079c120347dDE48132105"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x9f2Ec7196596581806218D3D183581b00e5a444E"
++        "eth:0x9f2Ec7196596581806218D3D183581b00e5a444E"
+      values.$pastUpgrades.0.2.0:
+-        "0x9f2Ec7196596581806218D3D183581b00e5a444E"
++        "eth:0x9f2Ec7196596581806218D3D183581b00e5a444E"
+      values.sp1Verifier:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      values.zkMerkleTrie:
+-        "0x339208824010425cBE73201ceD4372308ACD610B"
++        "eth:0x339208824010425cBE73201ceD4372308ACD610B"
+      values.zkVerifier:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      implementationNames.0x005DDC466C804c79adB079c120347dDE48132105:
+-        "Proxy"
+      implementationNames.0x9f2Ec7196596581806218D3D183581b00e5a444E:
+-        "ZKProofVerifier"
+      implementationNames.eth:0x005DDC466C804c79adB079c120347dDE48132105:
++        "Proxy"
+      implementationNames.eth:0x9f2Ec7196596581806218D3D183581b00e5a444E:
++        "ZKProofVerifier"
+    }
+```
+
+```diff
+    EOA  (0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848) {
+    +++ description: None
+      address:
+-        "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848"
++        "eth:0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848"
+    }
+```
+
+```diff
+    EOA  (0x16876e5c608cec36968517A9Eb345269D308D94a) {
+    +++ description: None
+      address:
+-        "0x16876e5c608cec36968517A9Eb345269D308D94a"
++        "eth:0x16876e5c608cec36968517A9Eb345269D308D94a"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).
+      address:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"
++        "eth:0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"
+      values.$pastUpgrades.0.2.0:
+-        "0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"
++        "eth:0x14126FFa3889a026A79F0f99FaE80B3dc9E38095"
+      values.$pastUpgrades.1.2.0:
+-        "0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"
++        "eth:0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b"
++++ description: Contract used to challenge state roots and prove fraud.
++++ severity: HIGH
+      values.COLOSSEUM:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      values.VALIDATOR_MANAGER:
+-        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      values.VALIDATOR_POOL:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      implementationNames.0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6:
+-        "Proxy"
+      implementationNames.0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b:
+-        "L2OutputOracle"
+      implementationNames.eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6:
++        "Proxy"
+      implementationNames.eth:0x4B68F22d96a04F6d80e284C20A648f8Da2fD569b:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      address:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"
++        "eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"
+      values.$pastUpgrades.0.2.0:
+-        "0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"
++        "eth:0x595E1b330892Fcbf18b2BF099DE501Ad4d6A07C4"
+      values.$pastUpgrades.1.2.0:
+-        "0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"
++        "eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.cancellerAC.0:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.executorAC.0:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.proposerAC.0:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.timelockAdminAC.0:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.timelockAdminAC.1:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      implementationNames.0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1:
+-        "Proxy"
+      implementationNames.0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3:
+-        "TimeLock"
+      implementationNames.eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1:
++        "Proxy"
+      implementationNames.eth:0xe44da6e9fA92E3FD897Da84d38fa6B9322Dd22c3:
++        "TimeLock"
+    }
+```
+
+```diff
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363) {
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+      address:
+-        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"
++        "eth:0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"
+      values.$pastUpgrades.0.2.0:
+-        "0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082"
++        "eth:0x0Ed7bb332F7307F5c97E566E74A4A73ab6671082"
+      values.$pastUpgrades.1.2.0:
+-        "0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"
++        "eth:0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1"
+      values.ASSET_MANAGER:
+-        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      values.L2_ORACLE:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      values.TRUSTED_VALIDATOR:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "eth:0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+      implementationNames.0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363:
+-        "Proxy"
+      implementationNames.0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1:
+-        "ValidatorManager"
+      implementationNames.eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363:
++        "Proxy"
+      implementationNames.eth:0x8687b9ecD75ea00997a999B9DdE54C735DE9DEE1:
++        "ValidatorManager"
+    }
+```
+
+```diff
+    EOA  (0x27EFE61C5266e461995141f57b4D13F13c83f786) {
+    +++ description: None
+      address:
+-        "0x27EFE61C5266e461995141f57b4D13F13c83f786"
++        "eth:0x27EFE61C5266e461995141f57b4D13F13c83f786"
+    }
+```
+
+```diff
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de) {
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
+      address:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"
++        "eth:0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"
+      values.$pastUpgrades.0.2.0:
+-        "0x381F53695230BAF83a39D1a08304D233A35730Fa"
++        "eth:0x381F53695230BAF83a39D1a08304D233A35730Fa"
+      values.$pastUpgrades.1.2.0:
+-        "0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"
++        "eth:0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316"
+      values.GUARDIAN:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      values.L2_ORACLE:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      values.l2Sender:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+      values.SYSTEM_CONFIG:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      values.VALIDATOR_POOL:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      values.ZK_MERKLE_TRIE:
+-        "0x339208824010425cBE73201ceD4372308ACD610B"
++        "eth:0x339208824010425cBE73201ceD4372308ACD610B"
+      implementationNames.0x31F648572b67e60Ec6eb8E197E1848CC5F5558de:
+-        "Proxy"
+      implementationNames.0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316:
+-        "KromaPortal"
+      implementationNames.eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de:
++        "Proxy"
+      implementationNames.eth:0x5C8eE8323a33ebBF3ea3c6c3b84DACFca44A9316:
++        "KromaPortal"
+    }
+```
+
+```diff
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B) {
+    +++ description: Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.
+      address:
+-        "0x339208824010425cBE73201ceD4372308ACD610B"
++        "eth:0x339208824010425cBE73201ceD4372308ACD610B"
+      values.POSEIDON2:
+-        "0xFd234971881a7c72965175fA8E438c97B2Dcd273"
++        "eth:0xFd234971881a7c72965175fA8E438c97B2Dcd273"
+      implementationNames.0x339208824010425cBE73201ceD4372308ACD610B:
+-        "ZKMerkleTrie"
+      implementationNames.eth:0x339208824010425cBE73201ceD4372308ACD610B:
++        "ZKMerkleTrie"
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      address:
+-        "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x2af8a383C395EBa6551E674EeD02344936fE36f5"
++        "eth:0x2af8a383C395EBa6551E674EeD02344936fE36f5"
+      values.$pastUpgrades.0.2.0:
+-        "0x2af8a383C395EBa6551E674EeD02344936fE36f5"
++        "eth:0x2af8a383C395EBa6551E674EeD02344936fE36f5"
+      values.batcherHash:
+-        "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12"
++        "eth:0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12"
+      values.owner:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.sequencerInbox:
+-        "0xfF00000000000000000000000000000000000255"
++        "eth:0xfF00000000000000000000000000000000000255"
+      values.unsafeBlockSigner:
+-        "0x994C074BD9503e4f01CB834e2c409FA16b41E587"
++        "eth:0x994C074BD9503e4f01CB834e2c409FA16b41E587"
+      implementationNames.0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35:
+-        "Proxy"
+      implementationNames.0x2af8a383C395EBa6551E674EeD02344936fE36f5:
+-        "SystemConfig"
+      implementationNames.eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35:
++        "Proxy"
+      implementationNames.eth:0x2af8a383C395EBa6551E674EeD02344936fE36f5:
++        "SystemConfig"
+    }
+```
+
+```diff
+    EOA  (0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0) {
+    +++ description: None
+      address:
+-        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
++        "eth:0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
+    }
+```
+
+```diff
+    EOA KromaOperator (0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6) {
+    +++ description: None
+      address:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "eth:0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+    }
+```
+
+```diff
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      address:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"
++        "eth:0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"
+      values.$pastUpgrades.0.2.0:
+-        "0x2BB1c629c46a4018fBe2538a98da7162F8355583"
++        "eth:0x2BB1c629c46a4018fBe2538a98da7162F8355583"
+      values.$pastUpgrades.1.2.0:
+-        "0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"
++        "eth:0x61c7C854Dcdf8393230B1242a4c1107f4d023c28"
++++ description: Contract used to challenge state roots and prove fraud.
++++ severity: HIGH
+      values.COLOSSEUM:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      values.GOVERNOR:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      implementationNames.0x3de211088dF516da72efe68D386b561BEE256Ec4:
+-        "Proxy"
+      implementationNames.0x61c7C854Dcdf8393230B1242a4c1107f4d023c28:
+-        "SecurityCouncil"
+      implementationNames.eth:0x3de211088dF516da72efe68D386b561BEE256Ec4:
++        "Proxy"
+      implementationNames.eth:0x61c7C854Dcdf8393230B1242a4c1107f4d023c28:
++        "SecurityCouncil"
+    }
+```
+
+```diff
+    EOA  (0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12) {
+    +++ description: None
+      address:
+-        "0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12"
++        "eth:0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12"
+    }
+```
+
+```diff
+    EOA  (0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1) {
+    +++ description: None
+      address:
+-        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
++        "eth:0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      address:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x675924D68200F2C967Ba12349d5d510676C7214c"
++        "eth:0x675924D68200F2C967Ba12349d5d510676C7214c"
+      values.$pastUpgrades.0.2.0:
+-        "0x675924D68200F2C967Ba12349d5d510676C7214c"
++        "eth:0x675924D68200F2C967Ba12349d5d510676C7214c"
+      values.OTHER_MESSENGER:
+-        "0x4200000000000000000000000000000000000004"
++        "eth:0x4200000000000000000000000000000000000004"
+      values.PORTAL:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      implementationNames.0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746:
+-        "Proxy"
+      implementationNames.0x675924D68200F2C967Ba12349d5d510676C7214c:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746:
++        "Proxy"
+      implementationNames.eth:0x675924D68200F2C967Ba12349d5d510676C7214c:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      address:
+-        "0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"
++        "eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"
+      values.$pastUpgrades.0.2.0:
+-        "0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"
++        "eth:0x0257e4d92C00C9EfcCa1d641b224d7d09cfa4522"
+      values.$pastUpgrades.1.2.0:
+-        "0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"
++        "eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9"
+      values.MESSENGER:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      values.OTHER_BRIDGE:
+-        "0x420000000000000000000000000000000000000A"
++        "eth:0x420000000000000000000000000000000000000A"
+      implementationNames.0x46d07221dfC313afe1BF104F4bB1f185301D65B9:
+-        "Proxy"
+      implementationNames.0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9:
++        "Proxy"
+      implementationNames.eth:0xbB1cDB5Cc35B1c9801DA8772aCBcDbd323A912D9:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    EOA  (0x547fc089E9f2971d27b9780214ED891F6d154faa) {
+    +++ description: None
+      address:
+-        "0x547fc089E9f2971d27b9780214ED891F6d154faa"
++        "eth:0x547fc089E9f2971d27b9780214ED891F6d154faa"
+    }
+```
+
+```diff
+    EOA  (0x5ddcf494A8b6EeE4904934E829109cCF584EAF80) {
+    +++ description: None
+      address:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "eth:0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      address:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.owner:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      implementationNames.0x665c23A5722B6A237fa6Be2B49c0A94504db1edd:
+-        "ProxyAdmin"
+      implementationNames.eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x66FA82F4AEA284d1d208437F179dFE13d8118f3A) {
+    +++ description: None
+      address:
+-        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
++        "eth:0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
+    }
+```
+
+```diff
+    contract ZkVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7) {
+    +++ description: ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.
+      address:
+-        "0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x4cd05aB629055a449617a28E3466660403eA7126"
++        "eth:0x4cd05aB629055a449617a28E3466660403eA7126"
+      values.$pastUpgrades.0.2.0:
+-        "0xD3b1D396330EA8dd79615f12433B856160d7D8B4"
++        "eth:0xD3b1D396330EA8dd79615f12433B856160d7D8B4"
+      values.$pastUpgrades.1.2.0:
+-        "0x7E79726560B140fd6e089547bD049509F5423BFf"
++        "eth:0x7E79726560B140fd6e089547bD049509F5423BFf"
+      values.$pastUpgrades.2.2.0:
+-        "0x4cd05aB629055a449617a28E3466660403eA7126"
++        "eth:0x4cd05aB629055a449617a28E3466660403eA7126"
+      implementationNames.0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7:
+-        "Proxy"
+      implementationNames.0x4cd05aB629055a449617a28E3466660403eA7126:
+-        "ZKVerifier"
+      implementationNames.eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7:
++        "Proxy"
+      implementationNames.eth:0x4cd05aB629055a449617a28E3466660403eA7126:
++        "ZKVerifier"
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+      address:
+-        "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      description:
+-        "Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the 0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced."
++        "Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced."
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"
++        "eth:0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"
+      values.$pastUpgrades.0.2.0:
+-        "0x7526F997ea040B3949415c3a44e708273863AA2b"
++        "eth:0x7526F997ea040B3949415c3a44e708273863AA2b"
+      values.$pastUpgrades.1.2.0:
+-        "0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
++        "eth:0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066"
+      values.$pastUpgrades.2.2.0:
+-        "0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
++        "eth:0xb87eaB624EE684C1799f1E8b24936A1c90759eEc"
+      values.$pastUpgrades.3.2.0:
+-        "0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"
++        "eth:0xAB54b3e775f645cf4486039bfA4dA539E70c9f99"
+      values.$pastUpgrades.4.2.0:
+-        "0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"
++        "eth:0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC"
+      values.L2_ORACLE:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      values.SECURITY_COUNCIL:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      values.ZK_PROOF_VERIFIER:
+-        "0x005DDC466C804c79adB079c120347dDE48132105"
++        "eth:0x005DDC466C804c79adB079c120347dDE48132105"
+      implementationNames.0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a:
+-        "Proxy"
+      implementationNames.0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC:
+-        "Colosseum"
+      implementationNames.eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a:
++        "Proxy"
+      implementationNames.eth:0xBFcA810D1c26a3aC6F81a32Ab5C023F24bE93dAC:
++        "Colosseum"
+    }
+```
+
+```diff
+    EOA  (0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A) {
+    +++ description: None
+      address:
+-        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
++        "eth:0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+    }
+```
+
+```diff
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e) {
+    +++ description: None
+      address:
+-        "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
++        "eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+      values.$admin:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.$implementation:
+-        "0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"
++        "eth:0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"
+      values.$pastUpgrades.0.2.0:
+-        "0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"
++        "eth:0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"
+      values.MESSENGER:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      implementationNames.0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e:
+-        "Proxy"
+      implementationNames.0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3:
+-        "USDCBridge"
+      implementationNames.eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e:
++        "Proxy"
+      implementationNames.eth:0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3:
++        "USDCBridge"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      address:
+-        "0x827962404D7104202C5aaa6b929115C8211d9596"
++        "eth:0x827962404D7104202C5aaa6b929115C8211d9596"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"
++        "eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"
+      values.$pastUpgrades.0.2.0:
+-        "0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"
++        "eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4"
+      values.MESSENGER:
+-        "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000009"
++        "eth:0x4200000000000000000000000000000000000009"
+      implementationNames.0x827962404D7104202C5aaa6b929115C8211d9596:
+-        "Proxy"
+      implementationNames.0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4:
+-        "L1StandardBridge"
+      implementationNames.eth:0x827962404D7104202C5aaa6b929115C8211d9596:
++        "Proxy"
+      implementationNames.eth:0x404133EdF24F56b7dD9c6d89Fb56bb35244461B4:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    EOA  (0x8ECF028Cd647379E580DaA6701A11154750fcd3c) {
+    +++ description: None
+      address:
+-        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
++        "eth:0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+    }
+```
+
+```diff
+    EOA  (0x994C074BD9503e4f01CB834e2c409FA16b41E587) {
+    +++ description: None
+      address:
+-        "0x994C074BD9503e4f01CB834e2c409FA16b41E587"
++        "eth:0x994C074BD9503e4f01CB834e2c409FA16b41E587"
+    }
+```
+
+```diff
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3) {
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+      address:
+-        "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"
++        "eth:0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"
+      values.$pastUpgrades.0.2.0:
+-        "0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"
++        "eth:0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede"
+      values.ASSET_TOKEN:
+-        "0x25500000d700bbE27104577CCcce8eAbCC96c8ad"
++        "eth:0x25500000d700bbE27104577CCcce8eAbCC96c8ad"
+      values.KGH:
+-        "0xacA91C74748090f861E25D142B6fCB265c6171c8"
++        "eth:0xacA91C74748090f861E25D142B6fCB265c6171c8"
+      values.SECURITY_COUNCIL:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      values.VALIDATOR_MANAGER:
+-        "0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      values.VALIDATOR_REWARD_VAULT:
+-        "0xe57E217d8ed498992452791622711B866403E950"
++        "eth:0xe57E217d8ed498992452791622711B866403E950"
+      implementationNames.0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3:
+-        "Proxy"
+      implementationNames.0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede:
+-        "AssetManager"
+      implementationNames.eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3:
++        "Proxy"
+      implementationNames.eth:0xf34fa8D3ac4AAcAD8307da8C8E51bDddCDa60Ede:
++        "AssetManager"
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: A governance proxy contract using token voting with eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      address:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      description:
+-        "A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards."
++        "A governance proxy contract using token voting with eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards."
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"
++        "eth:0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"
+      values.$pastUpgrades.0.2.0:
+-        "0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"
++        "eth:0x2a51e099CC7AF922CcDe7F3db909DC7b71B8D030"
+      values.$pastUpgrades.1.2.0:
+-        "0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"
++        "eth:0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3"
+      values.eip712Domain.verifyingContract:
+-        "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      values.timelock:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.token:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      implementationNames.0xb3c415c2Aad428D5570208e1772cb68e7D06a537:
+-        "Proxy"
+      implementationNames.0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3:
+-        "UpgradeGovernor"
+      implementationNames.eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537:
++        "Proxy"
+      implementationNames.eth:0x64F8F4EB207D51F74caf6db644Bf710Ad86989b3:
++        "UpgradeGovernor"
+    }
+```
+
+```diff
+    EOA  (0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3) {
+    +++ description: None
+      address:
+-        "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3"
++        "eth:0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3"
+    }
+```
+
+```diff
+    EOA  (0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC) {
+    +++ description: None
+      address:
+-        "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
++        "eth:0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
+    }
+```
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      address:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"
++        "eth:0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"
+      values.$pastUpgrades.0.2.0:
+-        "0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"
++        "eth:0x54140F4Cd6e6665BE0151eD5a8aC949EC2942439"
+      values.$pastUpgrades.1.2.0:
+-        "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"
++        "eth:0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"
+      values.eip712Domain.verifyingContract:
+-        "0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      values.getApproved.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getApproved.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      values.tokenOwners.0:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "eth:0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+      values.tokenOwners.1:
+-        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
++        "eth:0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+      values.tokenOwners.2:
+-        "0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
++        "eth:0x8ECF028Cd647379E580DaA6701A11154750fcd3c"
+      values.tokenOwners.3:
+-        "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
++        "eth:0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1"
+      values.tokenOwners.4:
+-        "0x16876e5c608cec36968517A9Eb345269D308D94a"
++        "eth:0x16876e5c608cec36968517A9Eb345269D308D94a"
+      values.tokenOwners.5:
+-        "0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
++        "eth:0x5ddcf494A8b6EeE4904934E829109cCF584EAF80"
+      values.tokenOwners.6:
+-        "0x27EFE61C5266e461995141f57b4D13F13c83f786"
++        "eth:0x27EFE61C5266e461995141f57b4D13F13c83f786"
+      values.tokenOwners.7:
+-        "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
++        "eth:0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0"
+      values.tokenOwners.8:
+-        "0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
++        "eth:0x66FA82F4AEA284d1d208437F179dFE13d8118f3A"
+      values.tokenOwners.9:
+-        "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
++        "eth:0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC"
+      implementationNames.0xe4D08346609055c091D3DEECdAAd3Bf83119B08c:
+-        "Proxy"
+      implementationNames.0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C:
+-        "SecurityCouncilToken"
+      implementationNames.eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c:
++        "Proxy"
+      implementationNames.eth:0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C:
++        "SecurityCouncilToken"
+    }
+```
+
+```diff
+    contract Kroma Multisig (0xe57E217d8ed498992452791622711B866403E950) {
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+      address:
+-        "0xe57E217d8ed498992452791622711B866403E950"
++        "eth:0xe57E217d8ed498992452791622711B866403E950"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x547fc089E9f2971d27b9780214ED891F6d154faa"
++        "eth:0x547fc089E9f2971d27b9780214ED891F6d154faa"
+      values.$members.1:
+-        "0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848"
++        "eth:0x138AAFab6Dc4Fd30957da1Bbded441ABF9Ccb848"
+      values.$members.2:
+-        "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3"
++        "eth:0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3"
+      values.$members.3:
+-        "0xF5624B7E74C4Ed876C9793C7895184747a8D2310"
++        "eth:0xF5624B7E74C4Ed876C9793C7895184747a8D2310"
+      values.$members.4:
+-        "0xEEE06120a1861102D69Aa69535091a8FE72D9e43"
++        "eth:0xEEE06120a1861102D69Aa69535091a8FE72D9e43"
+      implementationNames.0xe57E217d8ed498992452791622711B866403E950:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xe57E217d8ed498992452791622711B866403E950:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xEEE06120a1861102D69Aa69535091a8FE72D9e43) {
+    +++ description: None
+      address:
+-        "0xEEE06120a1861102D69Aa69535091a8FE72D9e43"
++        "eth:0xEEE06120a1861102D69Aa69535091a8FE72D9e43"
+    }
+```
+
+```diff
+    EOA  (0xF5624B7E74C4Ed876C9793C7895184747a8D2310) {
+    +++ description: None
+      address:
+-        "0xF5624B7E74C4Ed876C9793C7895184747a8D2310"
++        "eth:0xF5624B7E74C4Ed876C9793C7895184747a8D2310"
+    }
+```
+
+```diff
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103) {
+    +++ description: Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.
+      address:
+-        "0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      values.$admin:
+-        "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      values.$implementation:
+-        "0xE36776FFA20a9206dcD742C981402a3f3d81938d"
++        "eth:0xE36776FFA20a9206dcD742C981402a3f3d81938d"
+      values.$pastUpgrades.0.2.0:
+-        "0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"
++        "eth:0x6e1781678ffE6CDc109fd3bC0833c47BD0F23de1"
+      values.$pastUpgrades.1.2.0:
+-        "0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"
++        "eth:0x3eb033BAc5c449bDcb6D082c4f728eDAfC8D75fa"
+      values.$pastUpgrades.2.2.0:
+-        "0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"
++        "eth:0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4"
+      values.$pastUpgrades.3.2.0:
+-        "0xE36776FFA20a9206dcD742C981402a3f3d81938d"
++        "eth:0xE36776FFA20a9206dcD742C981402a3f3d81938d"
+      values.L2_ORACLE:
+-        "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      values.PORTAL:
+-        "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      values.SECURITY_COUNCIL:
+-        "0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      values.TRUSTED_VALIDATOR:
+-        "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
++        "eth:0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6"
+      implementationNames.0xFdFF462845953D90719A78Fd12a2d103541d2103:
+-        "Proxy"
+      implementationNames.0xE36776FFA20a9206dcD742C981402a3f3d81938d:
+-        "ValidatorPool"
+      implementationNames.eth:0xFdFF462845953D90719A78Fd12a2d103541d2103:
++        "Proxy"
+      implementationNames.eth:0xE36776FFA20a9206dcD742C981402a3f3d81938d:
++        "ValidatorPool"
+    }
+```
+
+```diff
+    EOA  (0xfF00000000000000000000000000000000000255) {
+    +++ description: None
+      address:
+-        "0xfF00000000000000000000000000000000000255"
++        "eth:0xfF00000000000000000000000000000000000255"
+    }
+```
+
+```diff
+    EOA  (0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF) {
+    +++ description: None
+      address:
+-        "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZKProofVerifier (0x005DDC466C804c79adB079c120347dDE48132105)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6)
+    +++ description: The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Anyone can participate as a Proposer by depositing in the ValidatorPool. A root can be proposed every 1800 blocks (2s block time).
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1)
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorManager (0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363)
+    +++ description: Manages the set of Proposers (Validators in Kroma) and selects the next proposer with the window to submit the output root within 30m, after which anyone can propose for them. It is also the entry point for other contracts, such as the L2OutputOracle and the Colosseum, which distribute output rewards and slash challenge losers. It makes successive calls to the AssetManager to apply changes to the proposers' assets.
+```
+
+```diff
++   Status: CREATED
+    contract KromaPortal (0x31F648572b67e60Ec6eb8E197E1848CC5F5558de)
+    +++ description: This is a fork of the standard OP stack OptimismPortal contract, the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ZKMerkleTrie (0x339208824010425cBE73201ceD4372308ACD610B)
+    +++ description: Merkle Trie contract used to prove withdrawals that were initiated in the legacy system, deprecated for new withdrawals and succeeded by a merkle tree library in the KromaPortal.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4)
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x46d07221dfC313afe1BF104F4bB1f185301D65B9)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkVerifier (0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7)
+    +++ description: ZK verifier used to verify the last step of a legacy zkEVM proof, which corresponds to a block.
+```
+
+```diff
++   Status: CREATED
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a)
+    +++ description: Contract used to challenge state roots and prove fraud. If successful, the wrong state root in the eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6 is replaced.
+```
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x827962404D7104202C5aaa6b929115C8211d9596)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract AssetManager (0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3)
+    +++ description: Manages the delegation and undelegation of KRO tokens and Kroma Guardian House (KGH) NFTs for Proposers (Kroma Validators) and distributes rewards.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537)
+    +++ description: A governance proxy contract using token voting with eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c)
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+```
+
+```diff
++   Status: CREATED
+    contract Kroma Multisig (0xe57E217d8ed498992452791622711B866403E950)
+    +++ description: Escrows a pool of KRO used as validator rewards by the AssetManager.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorPool (0xFdFF462845953D90719A78Fd12a2d103541d2103)
+    +++ description: Contract used to manage the Proposers. Anyone can submit a deposit and bond to a state root, or create a challenge. It also manages the Proposer rotation for each submittable block using a random selection. If the selected proposer fails to publish a root within 30m then the submission becomes open to everyone.
+```
+
+Generated with discovered.json: 0x0c21d8af15a2819fb38d726ab2a0ce63c8338d09
+
+# Diff at Wed, 09 Jul 2025 15:10:15 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780031
+- current block number: 22882090
+
+## Description
+
+Moved SP1 verifier into shared module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780031 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x8104a8ebb0036cf09c7c21f0879cfa53ee1ca842
+
+# Diff at Fri, 04 Jul 2025 12:19:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22780031
+- current block number: 22780031
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780031 (main branch discovery), not current.
+
+```diff
+    EOA  (0x16876e5c608cec36968517A9Eb345269D308D94a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    contract L1Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
++        "eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+    }
+```
+
+```diff
+    EOA  (0x27EFE61C5266e461995141f57b4D13F13c83f786) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    EOA  (0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    EOA KromaOperator (0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    contract KromaSecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: Custom Multisig contract in which each signer is identified by a token. The threshold is 8 and the token contract is called SecurityCouncilToken.
+      receivedPermissions.0.from:
+-        "ethereum:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.1.from:
+-        "ethereum:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.2.from:
+-        "ethereum:0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103"
+    }
+```
+
+```diff
+    EOA  (0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+    }
+```
+
+```diff
+    EOA  (0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    EOA  (0x5ddcf494A8b6EeE4904934E829109cCF584EAF80) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x665c23A5722B6A237fa6Be2B49c0A94504db1edd) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x005DDC466C804c79adB079c120347dDE48132105"
++        "eth:0x005DDC466C804c79adB079c120347dDE48132105"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      directlyReceivedPermissions.9.from:
+-        "ethereum:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      directlyReceivedPermissions.10.from:
+-        "ethereum:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      directlyReceivedPermissions.11.from:
+-        "ethereum:0x827962404D7104202C5aaa6b929115C8211d9596"
++        "eth:0x827962404D7104202C5aaa6b929115C8211d9596"
+      directlyReceivedPermissions.12.from:
+-        "ethereum:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      directlyReceivedPermissions.13.from:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      directlyReceivedPermissions.14.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      directlyReceivedPermissions.15.from:
+-        "ethereum:0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103"
+    }
+```
+
+```diff
+    EOA  (0x66FA82F4AEA284d1d208437F179dFE13d8118f3A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    EOA  (0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    EOA  (0x8ECF028Cd647379E580DaA6701A11154750fcd3c) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    contract UpgradeGovernor (0xb3c415c2Aad428D5570208e1772cb68e7D06a537) {
+    +++ description: A governance proxy contract using token voting with 0xe4D08346609055c091D3DEECdAAd3Bf83119B08c as identification of actors allowed to vote/sign a proposal which is passed to the 0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1 afterwards.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+```diff
+    EOA  (0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+    }
+```
+
+```diff
+    contract SecurityCouncilTokenOwners (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: A soulbound token implementation to identify participants of the KromaSecurityCouncil. Owners of the token are members of the council. There are currently 10 members.
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.0.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.1.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.2.via.1.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.2.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.3.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.4.via.0.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.4.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.5.via.1.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.5.from:
+-        "ethereum:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.6.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.6.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.6.from:
+-        "ethereum:0x005DDC466C804c79adB079c120347dDE48132105"
++        "eth:0x005DDC466C804c79adB079c120347dDE48132105"
+      receivedPermissions.7.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.7.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.7.from:
+-        "ethereum:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
++        "eth:0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6"
+      receivedPermissions.8.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.8.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.8.from:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.9.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.9.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.9.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.9.from:
+-        "ethereum:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
++        "eth:0x232277d9672eEdd53c4B26C0F386C2Eb88DC7363"
+      receivedPermissions.10.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.10.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.10.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.10.from:
+-        "ethereum:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
++        "eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de"
+      receivedPermissions.11.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.11.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.11.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.11.from:
+-        "ethereum:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
++        "eth:0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35"
+      receivedPermissions.12.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.12.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.12.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.12.from:
+-        "ethereum:0x3de211088dF516da72efe68D386b561BEE256Ec4"
++        "eth:0x3de211088dF516da72efe68D386b561BEE256Ec4"
+      receivedPermissions.13.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.13.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.13.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.13.from:
+-        "ethereum:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
++        "eth:0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746"
+      receivedPermissions.14.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.14.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.14.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.14.from:
+-        "ethereum:0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
++        "eth:0x46d07221dfC313afe1BF104F4bB1f185301D65B9"
+      receivedPermissions.15.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.15.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.15.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.15.from:
+-        "ethereum:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
++        "eth:0x6deb6a630D7b486c1C08d4016AEe3835a2F52Fa7"
+      receivedPermissions.16.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.16.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.16.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.16.from:
+-        "ethereum:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
++        "eth:0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a"
+      receivedPermissions.17.via.1.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.17.via.0.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.17.from:
+-        "ethereum:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
++        "eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
+      receivedPermissions.18.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.18.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.18.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.18.from:
+-        "ethereum:0x827962404D7104202C5aaa6b929115C8211d9596"
++        "eth:0x827962404D7104202C5aaa6b929115C8211d9596"
+      receivedPermissions.19.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.19.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.19.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.19.from:
+-        "ethereum:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
++        "eth:0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3"
+      receivedPermissions.20.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.20.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.20.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.20.from:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.21.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.21.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.21.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.21.from:
+-        "ethereum:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
++        "eth:0xe4D08346609055c091D3DEECdAAd3Bf83119B08c"
+      receivedPermissions.22.via.2.address:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+      receivedPermissions.22.via.1.address:
+-        "ethereum:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
++        "eth:0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      receivedPermissions.22.via.0.address:
+-        "ethereum:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
++        "eth:0x665c23A5722B6A237fa6Be2B49c0A94504db1edd"
+      receivedPermissions.22.from:
+-        "ethereum:0xFdFF462845953D90719A78Fd12a2d103541d2103"
++        "eth:0xFdFF462845953D90719A78Fd12a2d103541d2103"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
++        "eth:0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+    }
+```
+
 Generated with discovered.json: 0x8676d32b4681d0459a1d5d3c89969dd6767da8df
 
 # Diff at Wed, 25 Jun 2025 07:42:17 GMT:

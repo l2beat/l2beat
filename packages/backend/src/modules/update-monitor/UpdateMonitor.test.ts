@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import {
   type ConfigReader,
   ConfigRegistry,
@@ -10,13 +11,12 @@ import {
 import {
   ChainConverter,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
@@ -98,6 +98,7 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
 
 const flatSourcesRepository = mockObject<Database['flatSources']>({
   upsert: async () => undefined,
+  get: async () => undefined,
 })
 
 describe(UpdateMonitor.name, () => {
@@ -287,24 +288,36 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         3,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         4,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       // calls repository (and gets undefined)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(2)
@@ -505,12 +518,18 @@ describe(UpdateMonitor.name, () => {
         config,
         BLOCK_NUMBER - 1,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         config,
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
@@ -627,6 +646,10 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('gets repository entry', async () => {
+      const committed = {
+        ...mockProject,
+        entries: DISCOVERY_RESULT.entries,
+      }
       const dbEntry = {
         ...mockRecord,
         discovery: { ...mockProject, entries: COMMITTED },
@@ -650,7 +673,7 @@ describe(UpdateMonitor.name, () => {
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
         mockObject<UpdateDiffer>(),
-        mockObject<ConfigReader>(),
+        mockObject<ConfigReader>({ readDiscovery: () => committed }),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
@@ -735,6 +758,10 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('with version mismatch runs discovery with previous block number', async () => {
+      const committed = {
+        ...mockProject,
+        entries: DISCOVERY_RESULT.entries,
+      }
       const dbEntry = COMMITTED
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -762,7 +789,7 @@ describe(UpdateMonitor.name, () => {
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
         mockObject<UpdateDiffer>(),
-        mockObject<ConfigReader>(),
+        mockObject<ConfigReader>({ readDiscovery: () => committed }),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
@@ -783,8 +810,11 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(1)
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledWith(
         mockConfig(PROJECT_A),
-        BLOCK_NUMBER - 1,
+        committed.blockNumber,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
     })
   })
@@ -1029,7 +1059,7 @@ const mockRecord: UpdateMonitorRecord = {
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
   chain: 'ethereum',
-  blockNumber: BLOCK_NUMBER,
+  blockNumber: 1,
   configHash: Hash256.random(),
   entries: COMMITTED,
   abis: {},
@@ -1040,7 +1070,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address,
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

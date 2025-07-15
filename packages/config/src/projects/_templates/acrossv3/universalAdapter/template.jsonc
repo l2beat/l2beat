@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "core",
+  "description": "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the {{DATA_STORE}} on Ethereum, which can then be zk proven on a remote chain.",
+  "ignoreRelatives": ["usdcToken", "cctpTokenMessenger"]
+}

@@ -1,17 +1,17 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22774522,
+  "blockNumber": 22924125,
   "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
   "entries": [
     {
-      "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+      "address": "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "SP1Verifier",
-      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
@@ -27,12 +27,12 @@
         "VERSION": "v5.0.0"
       },
       "implementationNames": {
-        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
     },
     {
       "name": "AggLayerGateway",
-      "address": "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "address": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
       "type": "Contract",
       "template": "polygon-cdk/AgglayerGateway",
       "sourceHashes": [
@@ -44,36 +44,38 @@
       "sinceTimestamp": 1750087643,
       "sinceBlock": 22717971,
       "values": {
-        "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0x7bB0e8f1950722694929dB392abA805AAc6e9346",
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346",
         "$pastUpgrades": [
           [
             "2025-06-16T15:27:23.000Z",
             "0xe7c64d567589723d0920e6104296a434fb24193d2ccd33814d0b3fd753be5db2",
-            ["0x7bB0e8f1950722694929dB392abA805AAc6e9346"]
+            ["eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346"]
           ]
         ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
           },
           "AGGCHAIN_DEFAULT_VKEY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "AL_ADD_PP_ROUTE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
           },
           "AL_FREEZE_PP_ROUTE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           }
         },
-        "addPpRouteAC": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
-        "aggchainDefaultVKeyAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "addPpRouteAC": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "aggchainDefaultVKeyAC": [
+          "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+        ],
         "aggchainVKeys": {
           "0x00040001": [
             {
@@ -86,15 +88,15 @@
         },
         "aggchainVKeysUpdated": {},
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "freezePpRouteAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "freezePpRouteAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
         "routes": {
           "0x00000004": [
             {
               "0": "0x00000004",
-              "1": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "1": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "2": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30",
               "selector": "0x00000004",
-              "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
             }
           ]
@@ -102,26 +104,30 @@
       },
       "fieldMeta": {
         "aggchainVKeys": {
-          "description": "First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is not used in verifyPessimisticProof()."
+          "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+        },
+        "aggchainVKeysUpdated": {
+          "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated."
         },
         "routes": {
-          "description": "This map is used for routing in verifyPessimisticProof()."
+          "severity": "HIGH",
+          "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
         }
       },
       "implementationNames": {
-        "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",
-        "0x7bB0e8f1950722694929dB392abA805AAc6e9346": "AggLayerGateway"
+        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",
+        "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346": "AggLayerGateway"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+      "address": "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "SharedProxyAdmin",
-      "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+      "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -131,22 +137,22 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
           "role": "admin"
         }
       ],
@@ -154,37 +160,37 @@
       "sinceBlock": 16896716,
       "values": {
         "$immutable": true,
-        "owner": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+        "owner": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
       },
       "implementationNames": {
-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
+        "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
       }
     },
     {
-      "address": "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
+      "address": "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "aggregatePolygon",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": ".trustedAggregatorAC"
         }
       ]
     },
     {
-      "address": "0x21618593F7147235aC8D511d68A547C935F9d417",
+      "address": "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x21887c89368bf918346c62460e0c339113801C28",
+      "address": "eth:0x21887c89368bf918346c62460e0c339113801C28",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonAdminMultisig",
-      "address": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+      "address": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -195,12 +201,12 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
           "role": ".addPpRouteAC",
           "via": [
             {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -208,24 +214,24 @@
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "add or update default aggchain verification keys.",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors.",
           "role": ".aggchainDefaultVKeyAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "freeze routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
           "role": ".freezePpRouteAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
           "role": ".proxiedTokensManager",
           "via": [
             {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -233,18 +239,18 @@
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
           "role": ".createRollupAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "role": ".defaultAdminAC",
           "via": [
             {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -252,20 +258,20 @@
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
           "role": ".tweakParametersAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)",
           "via": [
             {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -273,7 +279,7 @@
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
@@ -281,14 +287,12 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
           "role": "admin",
           "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
-            },
-            {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -296,14 +300,12 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "role": "admin",
           "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
-            },
-            {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -311,14 +313,12 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": "admin",
           "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
-            },
-            {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -326,14 +326,12 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "from": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
           "role": "admin",
           "via": [
+            { "address": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
-            },
-            {
-              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -343,7 +341,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
@@ -354,37 +352,37 @@
       "sinceBlock": 16839348,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
-          "0xAb3506507449bF1880f3337825efd19ac89E235E",
-          "0x54c401eD03D086fE13221E5422165f3b024265d9",
-          "0x21618593F7147235aC8D511d68A547C935F9d417",
-          "0xED7cC82235A7757702475c8f77c7830c095FB5a2",
-          "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
-          "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
-          "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
-          "0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
-          "0x4c1665d6651ecEfa59B9B3041951608468b18891",
-          "0xA0B02B28920812324f1cC3255bd8840867d3f227",
-          "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+          "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+          "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
+          "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
+          "eth:0x21618593F7147235aC8D511d68A547C935F9d417",
+          "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
+          "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
+          "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
+          "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+          "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+          "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
+          "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
+          "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
         ],
         "$threshold": 5,
         "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 81,
+        "nonce": 83,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "PolygonSharedBridge",
-      "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+      "address": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Contract",
       "template": "polygon-cdk/PolygonSharedBridge_al030",
       "sourceHashes": [
@@ -397,41 +395,41 @@
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
       "values": {
-        "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
         "$pastUpgrades": [
           [
             "2023-03-24T10:18:47.000Z",
             "0x28f93532243dd8a8cc92ce630ef1920f40de15af7db2903efbf42f21fdf8152c",
-            ["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
+            ["eth:0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
           ],
           [
             "2024-02-13T11:00:59.000Z",
             "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
-            ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
+            ["eth:0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
           ],
           [
             "2025-06-23T14:46:23.000Z",
             "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
-            ["0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"]
+            ["eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"]
           ]
         ],
         "$upgradeCount": 3,
         "BRIDGE_VERSION": "al-v0.3.0",
-        "gasTokenAddress": "0x0000000000000000000000000000000000000000",
+        "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getProxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x87934c8344301b6b9e6c9229766c8c73d01885134eba5b0009e1b7f621a22027",
-        "getWrappedTokenBridgeImplementation": "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "getRoot": "0x803a15cd5d09f55a22af9f45ef003f9b4bdfa55788093fd690bdb12b1e83ae36",
+        "getWrappedTokenBridgeImplementation": "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
-        "pendingProxiedTokensManager": "0x0000000000000000000000000000000000000000",
-        "polygonRollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "proxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "WETHToken": "0x0000000000000000000000000000000000000000",
-        "wrappedTokenBytecodeStorer": "0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
+        "pendingProxiedTokensManager": "eth:0x0000000000000000000000000000000000000000",
+        "polygonRollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "proxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "WETHToken": "eth:0x0000000000000000000000000000000000000000",
+        "wrappedTokenBytecodeStorer": "eth:0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
       },
       "fieldMeta": {
         "isEmergencyState": {
@@ -444,19 +442,19 @@
         }
       },
       "implementationNames": {
-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
-        "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": "PolygonZkEVMBridgeV2"
+        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
+        "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": "PolygonZkEVMBridgeV2"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+      "address": "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonSecurityCouncil",
-      "address": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+      "address": "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -467,7 +465,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
           "role": ".emergencyCouncilAdminAC"
         }
@@ -477,16 +475,16 @@
       "sinceBlock": 16795950,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
-          "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
-          "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
-          "0x4c1665d6651ecEfa59B9B3041951608468b18891",
-          "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
-          "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
-          "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
-          "0x21887c89368bf918346c62460e0c339113801C28"
+          "eth:0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+          "eth:0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+          "eth:0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+          "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
+          "eth:0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+          "eth:0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+          "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+          "eth:0x21887c89368bf918346c62460e0c339113801C28"
         ],
         "$threshold": 6,
         "domainSeparator": "0x33ea3e28c0dfd2e84cb64bd76585cb4f6ed8e2e6f5fe17293c8c09fa01db36d7",
@@ -497,28 +495,28 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
+      "address": "eth:0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
+      "address": "eth:0x49c15936864690bCd6af0ecaca8E874adFF30E86",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4c1665d6651ecEfa59B9B3041951608468b18891",
+      "address": "eth:0x4c1665d6651ecEfa59B9B3041951608468b18891",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonRollupManager",
-      "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+      "address": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Contract",
       "template": "polygon-cdk/PolygonRollupManager_al030",
       "sourceHashes": [
@@ -526,7 +524,7 @@
         "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
+      "description": "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -537,411 +535,419 @@
       "sinceBlock": 16896721,
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": "1 week",
-        "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:23.000Z",
             "0xe34243804e1f7257acb09c97d0d6f023663200c39ee85a1e6927b0b391710bbb",
-            ["0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]
+            ["eth:0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"]
           ],
           [
             "2023-09-20T08:30:35.000Z",
             "0x25c342d7c5b4137b5439c16fd5fa1577c116277859202b2c68fcd9f73b3fc2ac",
-            ["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
+            ["eth:0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
           ],
           [
             "2023-11-09T09:22:59.000Z",
             "0x1db1400138d6778d303b9a13e816432d11f8dfca00ef6ec6ffcb6698cb447a31",
-            ["0xb1585916487AcEdD99952086f2950763D253b923"]
+            ["eth:0xb1585916487AcEdD99952086f2950763D253b923"]
           ],
           [
             "2024-02-13T11:00:59.000Z",
             "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
-            ["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]
+            ["eth:0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]
           ],
           [
             "2024-10-30T11:11:59.000Z",
             "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",
-            ["0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"]
+            ["eth:0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"]
           ],
           [
             "2025-02-03T14:55:59.000Z",
             "0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e",
-            ["0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
+            ["eth:0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
           ],
           [
             "2025-06-23T14:46:23.000Z",
             "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
-            ["0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"]
+            ["eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"]
           ]
         ],
         "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
           },
           "TRUSTED_AGGREGATOR": {
             "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
             "members": [
-              "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-              "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+              "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+              "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
             ]
           },
           "ADD_ROLLUP_TYPE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
           },
           "ADD_EXISTING_ROLLUP": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+            "members": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
           },
           "UPDATE_ROLLUP": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+              "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
             ]
           },
           "OBSOLETE_ROLLUP_TYPE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "CREATE_ROLLUP": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-              "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+              "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+              "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
             ]
           },
           "STOP_EMERGENCY": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "TWEAK_PARAMETERS": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "TRUSTED_AGGREGATOR_ADMIN": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "SET_FEE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "EMERGENCY_COUNCIL": {
             "adminRole": "EMERGENCY_COUNCIL_ADMIN",
-            "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+            "members": ["eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
           },
           "EMERGENCY_COUNCIL_ADMIN": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
+            "members": ["eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
           }
         },
-        "aggLayerGateway": "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "aggLayerGateway": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "createRollupAC": [
-          "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-          "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+          "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+          "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
         ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdminAC": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "defaultAdminAC": ["eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
         "emergencyCouncilAdminAC": [
-          "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"
+          "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x823f8e9eb0e35b41bc431bba85b8b18ba9d047f2590b8f40ff84fc3782b84e9e",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "getRollupExitRoot": "0x5b54bc97a1190fbe9d4c1ed111359c02e1747217ecf68b037fea88068ab21239",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1750770779,
+        "lastAggregationTimestamp": 1752576635,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "ROLLUP_MANAGER_VERSION": "al-v0.3.0",
         "rollupCount": 20,
         "rollupsDataV2": [
           {
-            "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+            "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
             "chainID": 1101,
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupTypeID": 6,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+            "rollupContract": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
             "chainID": 3776,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+            "rollupContract": "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
             "chainID": 196,
-            "verifier": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            "verifier": "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
             "forkID": 13,
             "rollupTypeID": 8,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
+            "rollupContract": "eth:0x88AaB361f108C3c959F2928Da3cD8e47298016B5",
             "chainID": 4913,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
+            "rollupContract": "eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858",
             "chainID": 1511670449,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+            "rollupContract": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
             "chainID": 1702448187,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x92726F7dE49300DBdb60930066bc1d0803c0740B",
+            "rollupContract": "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B",
             "chainID": 994873017,
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+            "rollupContract": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
             "chainID": 31415,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
+            "rollupContract": "eth:0xA87df42CD53E998b3A610B8bCe3719871b0bb940",
             "chainID": 511252203,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+            "rollupContract": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
             "chainID": 2355,
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
+            "rollupContract": "eth:0xB234F18738d9531CAD6ae6d9A587d09fe200272C",
             "chainID": 999,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
+            "rollupContract": "eth:0x505ce1246F7e2Fd899dc5d3cfB17A47500Eb58bC",
             "chainID": 938,
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupTypeID": 4,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+            "rollupContract": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
             "chainID": 752025,
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+            "rollupContract": "eth:0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
             "chainID": 9369,
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
             "rollupTypeID": 11,
             "rollupVerifierType": 1,
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
-            "rollupContract": "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+            "rollupContract": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
             "chainID": 623,
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
+            "rollupContract": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
             "chainID": 3344,
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupTypeID": 7,
             "rollupVerifierType": 0,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "rollupContract": "0x7449449460b5B732A9754CA3d9A7916122A9190d",
+            "rollupContract": "eth:0x7449449460b5B732A9754CA3d9A7916122A9190d",
             "chainID": 801,
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
             "rollupTypeID": 11,
             "rollupVerifierType": 1,
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
-            "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
+            "rollupContract": "eth:0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
             "chainID": 45056,
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
             "rollupTypeID": 11,
             "rollupVerifierType": 1,
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
-            "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+            "rollupContract": "eth:0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
             "chainID": 8088,
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
             "rollupTypeID": 11,
             "rollupVerifierType": 1,
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
-            "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+            "rollupContract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
             "chainID": 747474,
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 12,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "rollupTypeCount": 11,
+        "rollupTypeCount": 12,
         "rollupTypes": [
           {
-            "consensusImplementation": "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
-            "verifier": "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+            "consensusImplementation": "eth:0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
+            "verifier": "eth:0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
             "forkID": 7,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "verifier": "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+            "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "eth:0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
             "forkID": 8,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-            "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+            "consensusImplementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+            "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
             "forkID": 9,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "verifier": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+            "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "verifier": "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
             "forkID": 11,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "consensusImplementation": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+            "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
             "forkID": 12,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-            "verifier": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+            "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+            "verifier": "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
             "forkID": 13,
             "rollupVerifierType": 0,
             "obsolete": false,
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           },
           {
-            "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
             "forkID": 12,
             "rollupVerifierType": 1,
             "obsolete": false,
             "programVKey": "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
           },
           {
-            "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
             "forkID": 12,
             "rollupVerifierType": 1,
             "obsolete": false,
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           },
           {
-            "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
             "rollupVerifierType": 1,
             "obsolete": false,
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "consensusImplementation": "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+            "verifier": "eth:0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupVerifierType": 2,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 761798,
-        "totalVerifiedBatches": 761315,
+        "totalSequencedBatches": 775364,
+        "totalVerifiedBatches": 774868,
         "trustedAggregatorAC": [
-          "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-          "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+          "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+          "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
         ],
-        "tweakParametersAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+        "tweakParametersAC": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
       },
       "fieldMeta": {
         "isEmergencyState": {
@@ -960,24 +966,24 @@
         }
       },
       "implementationNames": {
-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "TransparentUpgradeableProxy",
-        "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab": "PolygonRollupManager"
+        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "TransparentUpgradeableProxy",
+        "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab": "PolygonRollupManager"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+      "address": "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x54c401eD03D086fE13221E5422165f3b024265d9",
+      "address": "eth:0x54c401eD03D086fE13221E5422165f3b024265d9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonGlobalExitRootV2",
-      "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+      "address": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "type": "Contract",
       "template": "polygon-cdk/PolygonGlobalExitRootV2",
       "sourceHashes": [
@@ -990,93 +996,93 @@
       "sinceTimestamp": 1679653151,
       "sinceBlock": 16896720,
       "values": {
-        "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
+        "$admin": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:11.000Z",
             "0x9946be78d6c6d19dd1c6c7134a8fac27e76d32cad36dae2398d28fe6ff838f10",
-            ["0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]
+            ["eth:0xbc1ea504fC54D078514eFCCA1F6860B5219B6BC3"]
           ],
           [
             "2024-02-13T11:00:59.000Z",
             "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
-            ["0x2E38cD55163137483E30580Cb468C2dFf1d85077"]
+            ["eth:0x2E38cD55163137483E30580Cb468C2dFf1d85077"]
           ],
           [
             "2024-10-30T11:11:59.000Z",
             "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",
-            ["0x9Bdda421219900454E94e01d641fE64c60D8f4C8"]
+            ["eth:0x9Bdda421219900454E94e01d641fE64c60D8f4C8"]
           ],
           [
             "2025-06-23T14:46:23.000Z",
             "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
-            ["0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"]
+            ["eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"]
           ]
         ],
         "$upgradeCount": 4,
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 59740,
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "depositCount": 61655,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x8eecad9b3fb3145fd36f919d72a3bda497eac208f5c6c407dc91cdf5688dfac4",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+        "getRoot": "0xae18621cfbc4b059574a9fe2d8d91ba0afca587e011053912c8a6875773cfa02",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "TransparentUpgradeableProxy",
-        "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": "PolygonZkEVMGlobalExitRootV2"
+        "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "TransparentUpgradeableProxy",
+        "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": "PolygonZkEVMGlobalExitRootV2"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+      "address": "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "aggregatePolygon",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": ".trustedAggregatorAC"
         }
       ]
     },
     {
-      "address": "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
+      "address": "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
+      "address": "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xA0B02B28920812324f1cC3255bd8840867d3f227",
+      "address": "eth:0xA0B02B28920812324f1cC3255bd8840867d3f227",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "address": "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xAb3506507449bF1880f3337825efd19ac89E235E",
+      "address": "eth:0xAb3506507449bF1880f3337825efd19ac89E235E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
+      "address": "eth:0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
+      "address": "eth:0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonCreateRollupMultisig",
-      "address": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
+      "address": "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1087,7 +1093,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
           "role": ".createRollupAC"
         }
@@ -1097,114 +1103,108 @@
       "sinceBlock": 20435175,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
-          "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
-          "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
-          "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
-          "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
-          "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
-          "0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496",
-          "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+          "eth:0x3038B4DBf022E80169b2A068290d4a3A8b87D3b5",
+          "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+          "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+          "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+          "eth:0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
+          "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
+          "eth:0x7316DeD96c4Ff756c74D1D9c4178f6921Aff4496"
         ],
         "$threshold": 3,
         "domainSeparator": "0x771bc24f4d160e0eb868dd1295227792c9121e52ca89c5940d820985422c484e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 8 (38%)",
-        "nonce": 16,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9",
+      "address": "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+      "address": "eth:0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
+      "address": "eth:0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xD9478f759a13Bfa1d9dAB3cDF5ff0C099d5EfCFC",
+      "address": "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
+      "address": "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "address": "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xED7cC82235A7757702475c8f77c7830c095FB5a2",
+      "address": "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Timelock",
-      "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+      "address": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
       "type": "Contract",
       "template": "polygon-cdk/Timelock",
       "sourceHashes": [
         "0x7de9e4256607fc137552230010585d417c818730e4f56e29065699cdb97f9cf1"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
+      "description": "A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.",
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "from": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
-          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "from": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs.",
           "role": ".addPpRouteAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "from": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
           "role": ".proxiedTokensManager"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
@@ -1223,89 +1223,89 @@
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
             "members": [
-              "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+              "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
             ]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+            "members": ["eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           }
         },
         "getMinDelay": 259200,
         "getMinDelayFormatted": "3d",
-        "polygonZkEVM": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "polygonZkEVM": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "scheduledTransactionsDecoded": [
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-              "implementation": "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F",
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F",
               "data": { "_versionString": "v2.0.0-RC1-fork.5" }
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-              "implementation": "0xb1585916487AcEdD99952086f2950763D253b923",
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0xb1585916487AcEdD99952086f2950763D253b923",
               "data": { "_versionString": "v3.0.0-incaberry" }
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgrade",
             "inputs": {
-              "proxy": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-              "implementation": "0x2E38cD55163137483E30580Cb468C2dFf1d85077"
+              "proxy": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "eth:0x2E38cD55163137483E30580Cb468C2dFf1d85077"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgrade",
             "inputs": {
-              "proxy": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-              "implementation": "0x0FeB850B183C57534b56b7d56520133C8f9BDB65"
+              "proxy": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "eth:0x0FeB850B183C57534b56b7d56520133C8f9BDB65"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-              "implementation": "0x3b82Da772c825283d85d5d6717A77C6Ff582053b",
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x3b82Da772c825283d85d5d6717A77C6Ff582053b",
               "data": {
-                "trustedAggregator": "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
+                "trustedAggregator": "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
                 "_pendingStateTimeout": 432000,
                 "_trustedAggregatorTimeout": 432000,
-                "admin": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-                "timelock": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-                "emergencyCouncil": "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
-                "polygonZkEVM": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-                "zkEVMVerifier": "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
+                "admin": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+                "timelock": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+                "emergencyCouncil": "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6",
+                "polygonZkEVM": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+                "zkEVMVerifier": "eth:0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
                 "zkEVMForkID": 7,
                 "zkEVMChainID": 1101
               }
@@ -1314,7 +1314,7 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "0xf34eb8eb",
             "inputs": {
@@ -1324,12 +1324,12 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-              "verifier": "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+              "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+              "verifier": "eth:0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
               "forkID": 8,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1339,11 +1339,11 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+              "rollupContract": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
               "newRollupTypeID": 2,
               "upgradeData": "0x"
             },
@@ -1351,12 +1351,12 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-              "verifier": "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
+              "consensusImplementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+              "verifier": "eth:0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
               "forkID": 8,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1366,11 +1366,11 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+              "rollupContract": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
               "newRollupTypeID": 3,
               "upgradeData": "0x1c8b9370"
             },
@@ -1378,12 +1378,12 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-              "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+              "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+              "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
               "forkID": 9,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1393,23 +1393,23 @@
             "delay": "0"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "grantRole",
             "inputs": {
               "role": "0x66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac",
-              "account": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+              "account": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "0"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-              "verifier": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+              "consensusImplementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+              "verifier": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
               "forkID": 9,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1419,23 +1419,23 @@
             "delay": "0"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "grantRole",
             "inputs": {
               "role": "0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08",
-              "account": "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
+              "account": "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-              "verifier": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+              "consensusImplementation": "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+              "verifier": "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
               "forkID": 11,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1445,35 +1445,35 @@
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-              "implementation": "0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
+              "proxy": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "eth:0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
               "data": {}
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgrade",
             "inputs": {
-              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-              "implementation": "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
-              "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+              "consensusImplementation": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+              "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
               "forkID": 12,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1483,12 +1483,12 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-              "verifier": "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+              "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+              "verifier": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
               "forkID": 12,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1498,12 +1498,12 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
-              "verifier": "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
+              "consensusImplementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+              "verifier": "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB",
               "forkID": 13,
               "rollupCompatibilityID": 0,
               "genesis": "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272",
@@ -1513,7 +1513,7 @@
             "delay": "864000"
           },
           {
-            "target": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+            "target": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
             "value": "0",
             "function": "updateDelay",
             "inputs": { "newDelay": 259200 },
@@ -1521,19 +1521,19 @@
             "delay": "864000"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-              "implementation": "0xA33619940bceb9be7c9679Dd80FA2918C2476382",
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0xA33619940bceb9be7c9679Dd80FA2918C2476382",
               "data": {}
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "0xabcb5198",
             "inputs": {
@@ -1543,12 +1543,12 @@
             "delay": "864000"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-              "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+              "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+              "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
               "forkID": 12,
               "rollupVerifierType": 1,
               "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1559,12 +1559,12 @@
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
-              "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "consensusImplementation": "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+              "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "forkID": 12,
               "rollupVerifierType": 1,
               "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1575,46 +1575,46 @@
             "delay": "259200"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-              "implementation": "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
               "data": {}
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgradeAndCall",
             "inputs": {
-              "proxy": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-              "implementation": "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
+              "proxy": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
               "data": {}
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
           },
           {
-            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
             "value": "0",
             "function": "upgrade",
             "inputs": {
-              "proxy": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-              "implementation": "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
+              "proxy": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+              "rollupContract": "eth:0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
               "newRollupTypeID": 11,
               "upgradeData": "0x"
             },
@@ -1622,11 +1622,11 @@
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0x7449449460b5B732A9754CA3d9A7916122A9190d",
+              "rollupContract": "eth:0x7449449460b5B732A9754CA3d9A7916122A9190d",
               "newRollupTypeID": 11,
               "upgradeData": "0x"
             },
@@ -1634,11 +1634,11 @@
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
+              "rollupContract": "eth:0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
               "newRollupTypeID": 11,
               "upgradeData": "0x"
             },
@@ -1646,11 +1646,11 @@
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+              "rollupContract": "eth:0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
               "newRollupTypeID": 11,
               "upgradeData": "0x"
             },
@@ -1658,11 +1658,11 @@
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "updateRollup",
             "inputs": {
-              "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+              "rollupContract": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
               "newRollupTypeID": 11,
               "upgradeData": "0x"
             },
@@ -1670,12 +1670,12 @@
             "delay": "259200"
           },
           {
-            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "target": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
             "value": "0",
             "function": "addNewRollupType",
             "inputs": {
-              "consensusImplementation": "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
-              "verifier": "0x0000000000000000000000000000000000000000",
+              "consensusImplementation": "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+              "verifier": "eth:0x0000000000000000000000000000000000000000",
               "forkID": 0,
               "rollupVerifierType": 2,
               "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1687,22 +1687,22 @@
           }
         ],
         "timelockAdminAC": [
-          "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-          "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+          "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
         ]
       },
       "implementationNames": {
-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "PolygonZkEVMTimelock"
+        "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "PolygonZkEVMTimelock"
       },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
+      "address": "eth:0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
+      "address": "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -2173,5 +2173,5 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x348c3deccef8869986a9dcf1ca4104b6e8a468c71c9adb59bf66a3e9db2077a4"
+  "permissionsConfigHash": "0x0e5818e3b894fb3edb1ec7bf0c24860f3b3c4541566ffefbbd01ab100c1f5d3d"
 }

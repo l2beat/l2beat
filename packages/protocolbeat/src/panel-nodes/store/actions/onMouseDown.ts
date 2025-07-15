@@ -32,6 +32,10 @@ export function onMouseDown(
     const { x, y } = toViewCoordinates(event, container, state.transform)
 
     for (const node of reverseIter(state.nodes)) {
+      if (state.hidden.includes(node.id)) {
+        continue
+      }
+
       if (boxContains(node.box, x, y)) {
         if (isResizable(node.box, state.transform.scale, x)) {
           return {

@@ -1,0 +1,83 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main system contract defining the {{networkName}} Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.",
+  "ignoreInWatchMode": [
+    "lastAccInputHash",
+    "latestBlockNumber",
+    "latestOutputIndex",
+    "nextBlockNumber",
+    "nextOutputIndex"
+  ],
+  "ignoreMethods": ["computeL2Timestamp", "getL2Output"],
+  "ignoreRelatives": ["gasTokenAddress", "pol"],
+  "fields": {
+    "optimisticMode": {
+      "description": "degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer.",
+      "severity": "HIGH"
+    },
+    "trustedSequencer": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "finalize any state root with only their signature.",
+          "condition": "optimisticMode is enabled by the optimisticModeManager."
+        }
+      ]
+    },
+    "optimisticModeManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "toggle the 'optimisticMode'."
+        }
+      ]
+    },
+    "aggchainManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
+        }
+      ]
+    },
+    "vkeyManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage whether aggchainVkeys are managed by the AggLayerGateway or AggchainFEP. Add new supported aggchainVkeys to AggchainFEP."
+        }
+      ]
+    },
+    "aggregationVkey": {
+      "severity": "HIGH",
+      "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
+    },
+    "rangeVkeyCommitment": {
+      "severity": "HIGH",
+      "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+    }
+    // these params are there but not used, just like 'optimistic mode' is currently not wired up (must check whether the proof references it):
+    // "admin": {
+    //   "permissions": [
+    //     {
+    //       "type": "interact",
+    //       "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+    //     }
+    //   ]
+    // },
+    // "trustedSequencer": {
+    //   "permissions": [{ "type": "sequence" }]
+    // },
+    // "forceBatchAddress": {
+    //   "severity": "HIGH",
+    //   "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
+    //   "permissions": [
+    //     {
+    //       "type": "interact",
+    //       "description": "sole address that can force batches."
+    //     }
+    //   ]
+    // }
+  },
+  "category": "core"
+}

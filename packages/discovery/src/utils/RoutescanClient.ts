@@ -13,8 +13,8 @@ class RoutescanError extends Error {}
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
   maxAttempts: 10,
-  maxDistanceMs: Infinity,
-  notifyAfterAttempts: Infinity,
+  maxDistanceMs: Number.POSITIVE_INFINITY,
+  notifyAfterAttempts: Number.POSITIVE_INFINITY,
 })
 
 export class RoutescanClient

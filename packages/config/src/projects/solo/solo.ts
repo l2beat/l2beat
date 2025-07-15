@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const solo: ScalingProject = upcomingL2({
       'SoloChain is a programmable, variable-cost, user-centric Ethereum L2 built to allow users to mine and launch projects with seamless DePIN integrations, equitable mining curves, and AI agentic mechanisms to redefine the internet.',
     purposes: ['AI'],
     category: 'Optimium',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://solo.tech'],
       bridges: ['https://solo-testnet.bridge.caldera.xyz'],
@@ -21,5 +21,8 @@ export const solo: ScalingProject = upcomingL2({
       explorers: ['https://solo-testnet.explorer.caldera.xyz/'],
       socialMedia: ['https://x.com/SoloDePIN', 'https://t.me/SoloDePIN'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

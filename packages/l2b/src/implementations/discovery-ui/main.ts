@@ -1,12 +1,12 @@
-import type { Server } from 'http'
-import path, { join } from 'path'
 import {
   ConfigReader,
-  TemplateService,
   getDiscoveryPaths,
+  TemplateService,
 } from '@l2beat/discovery'
 import { v as z } from '@l2beat/validate'
 import express from 'express'
+import type { Server } from 'http'
+import path, { join } from 'path'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
@@ -103,14 +103,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/', (_req, res) => {
-    res.redirect('/ui')
-  })
-
-  app.get(['/ui', '/ui/*', '/diff', '/diff/*'], (_req, res) => {
-    res.sendFile(join(STATIC_ROOT, 'index.html'))
-  })
-
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
@@ -119,7 +111,14 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     }
     const { project, address } = paramsValidation.data
 
-    const response = getCode(paths, configReader, project, address)
+    const checkFlatCode = readonly === false
+    const response = getCode(
+      paths,
+      configReader,
+      project,
+      address,
+      checkFlatCode,
+    )
     res.json(response)
   })
 
@@ -221,6 +220,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       )
     })
   }
+
+  app.get('*', (_req, res) => {
+    res.sendFile(join(STATIC_ROOT, 'index.html'))
+  })
 
   const server = app.listen(port, () => {
     console.log(`Discovery UI live on http://localhost:${port}/ui`)

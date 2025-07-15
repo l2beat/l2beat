@@ -1,12 +1,14 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
-  "extends": ["../../biome.jsonc"],
+  "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "extends": ["../../../biome.json"],
+  "files": {
+    "includes": ["**", "!**/static/**", "!**/dist/**"]
+  },
   "linter": {
     "enabled": true,
     "rules": {
-      "a11y": {
-        "noBlankTarget": "error"
-      },
+      "a11y": {},
       "complexity": {
         "noUselessFragments": "error"
       },
@@ -14,17 +16,27 @@
         "useExhaustiveDependencies": "error",
         "useHookAtTopLevel": "error",
         "noChildrenProp": "error",
-        "noVoidElementsWithChildren": "error"
+        "noVoidElementsWithChildren": "error",
+        "useJsxKeyInIterable": "error"
       },
       "suspicious": {
         "noDuplicateJsxProps": "error"
       },
       "style": {
-        "useFragmentSyntax": "error"
+        "useFragmentSyntax": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      },
+      "security": {
+        "noBlankTarget": "error"
       }
     }
-  },
-  "files": {
-    "ignore": ["./static"]
   }
 }

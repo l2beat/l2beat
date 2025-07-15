@@ -7,19 +7,19 @@ import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
+import { getImplementationNames } from '../source/getDerivedName'
 import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import { getImplementationNames } from '../source/getDerivedName'
 import {
   get$Beacons,
   get$Implementations,
   get$PastUpgrades,
 } from '../utils/extractors'
-import type { TemplateService } from './TemplateService'
 import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import type { TemplateService } from './TemplateService'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -79,17 +79,7 @@ export class AddressAnalyzer {
     const templateErrors: Record<string, string> = {}
     let extendedTemplate: ExtendedTemplate | undefined = undefined
 
-    if (config.extends !== undefined) {
-      const templateValues = this.templateService.loadContractTemplate(
-        config.extends,
-      )
-      config.pushValues(templateValues)
-      extendedTemplate = {
-        template: config.extends,
-        reason: 'byExtends',
-        templateHash: this.templateService.getTemplateHash(config.extends),
-      }
-    } else if (suggestedTemplates !== undefined) {
+    if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
         // extend template even on error to make sure pruning works

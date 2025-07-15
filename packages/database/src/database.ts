@@ -1,6 +1,7 @@
 import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
+import { BlobsRepository } from './da-beat/blob/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { DataAvailabilityRepository } from './da-beat/data-availability/repository'
 import { StakeRepository } from './da-beat/stake/repository'
@@ -15,10 +16,10 @@ import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repositor
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { AnomalyStatsRepository } from './other/anomaly-stats/repository'
-import { FinalityRepository } from './other/finality/repository'
-import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
+import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { LivenessRepository } from './other/liveness/repository'
+import { NotificationsRepository } from './other/notifications/repository'
 import { RealTimeAnomaliesRepository } from './other/real-time-anomalies/repository'
 import { RealTimeLivenessRepository } from './other/real-time-liveness/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
@@ -46,6 +47,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     currentPrice: new CurrentPriceRepository(db),
     stake: new StakeRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
+    blobs: new BlobsRepository(db),
     // #endregion
 
     // #region Discovery
@@ -68,7 +70,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     anomalies: new AnomaliesRepository(db),
     realTimeAnomalies: new RealTimeAnomaliesRepository(db),
     anomalyStats: new AnomalyStatsRepository(db),
-    finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
@@ -83,5 +84,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tvsTokenValue: new TokenValueRepository(db),
     tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
+    notifications: new NotificationsRepository(db),
   }
 }

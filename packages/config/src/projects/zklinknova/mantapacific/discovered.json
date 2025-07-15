@@ -2,11 +2,11 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "blockNumber": 4745686,
-  "configHash": "0x1f1b9bad5a845950a7a13bcf03747c3aa28767c4fad0d81e47b62bb74bf20424",
+  "configHash": "0x31f7f43b2f6d8f61b798272cb98cec43ae574ad138c45ec01020f660d933532e",
   "entries": [
     {
       "name": "MantaProxyAdmin",
-      "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+      "address": "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -16,7 +16,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "mantapacific:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "from": "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
           "role": "admin"
         }
       ],
@@ -24,21 +24,21 @@
       "sinceBlock": 1507188,
       "values": {
         "$immutable": true,
-        "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "owner": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": "ProxyAdmin"
+        "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": "ProxyAdmin"
       }
     },
     {
-      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "address": "manta:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge",
-      "address": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+      "address": "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
       "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
@@ -48,67 +48,65 @@
       "sinceTimestamp": 1709295839,
       "sinceBlock": 1507188,
       "values": {
-        "$admin": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
-        "$implementation": "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c",
+        "$admin": "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+        "$implementation": "manta:0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c",
         "$pastUpgrades": [
           [
             "2024-03-01T12:23:59.000Z",
             "0x2943e153ac49278eb44cc3606eb830489bd39126056837515c5f1d4fd6262943",
-            ["0x0d53cE63f3A72879d543ed6272A081308A731470"]
+            ["manta:0x0d53cE63f3A72879d543ed6272A081308A731470"]
           ],
           [
             "2024-04-04T06:40:49.000Z",
             "0x15196bbffee8d57f18df9fead80e6301e9468716eef250ffbc5822cd435dd4a1",
-            ["0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"]
+            ["manta:0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"]
           ]
         ],
         "$upgradeCount": 2,
-        "l2Bridge": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09",
-        "l2TokenBeacon": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F",
+        "l2Bridge": "manta:0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09",
+        "l2TokenBeacon": "manta:0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
       "implementationNames": {
-        "0x44a65dc12865A1e5249b45b4868f32b0E37168FF": "TransparentUpgradeableProxy",
-        "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c": "L1ERC20Bridge"
+        "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF": "TransparentUpgradeableProxy",
+        "manta:0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c": "L1ERC20Bridge"
       }
     },
     {
-      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "address": "manta:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MantaOwner",
-      "address": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+      "address": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
       "type": "Contract",
       "unverified": true,
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "mantapacific:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "from": "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
           "role": "admin",
           "via": [
-            {
-              "address": "mantapacific:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
-            }
+            { "address": "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "mantapacific:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "from": "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "mantapacific:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+          "from": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "mantapacific:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+          "from": "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
           "role": ".owner"
         }
       ],
@@ -116,59 +114,59 @@
       "sinceBlock": 1602938,
       "values": {
         "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$implementation": "manta:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
-          "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-          "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-          "0xF801886AE2e127A269B0F11892edb54F692d02dF",
-          "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-          "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
-          "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-          "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+          "manta:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "manta:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+          "manta:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "manta:0xF801886AE2e127A269B0F11892edb54F692d02dF",
+          "manta:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+          "manta:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+          "manta:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+          "manta:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
         ],
         "$threshold": 5,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)"
       },
       "implementationNames": {
-        "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3": "",
-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": ""
+        "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3": "",
+        "manta:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": ""
       }
     },
     {
-      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "address": "manta:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F",
+      "address": "manta:0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09",
+      "address": "manta:0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "address": "manta:0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "address": "manta:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "address": "manta:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "zkLink",
-      "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+      "address": "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
@@ -187,23 +185,23 @@
       "sinceTimestamp": 1709279099,
       "sinceBlock": 1505514,
       "values": {
-        "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-        "$implementation": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "$admin": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "$implementation": "manta:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "$pastUpgrades": [
           [
             "2024-03-01T07:44:59.000Z",
             "0xc4750009e40fe4c7c227dc379408c428ce6ff26c296f9eb06815b021339fdf69",
-            ["0x5715Dec4cd747675E47b969D3a15aab909b8ce05"]
+            ["manta:0x5715Dec4cd747675E47b969D3a15aab909b8ce05"]
           ],
           [
             "2024-03-09T10:17:09.000Z",
             "0x8ee4d527346b72e8b98838d84ef8667fc841944314f583cabf9993f6f462f848",
-            ["0xe89635a7339bf46198f76b17bCFdAD977699cc13"]
+            ["manta:0xe89635a7339bf46198f76b17bCFdAD977699cc13"]
           ],
           [
             "2024-04-22T02:31:49.000Z",
             "0x469dbeecfffe82b89157782a568b255280c6058eb429a32feff865321c640339",
-            ["0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"]
+            ["manta:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"]
           ]
         ],
         "$upgradeCount": 3,
@@ -216,15 +214,15 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-        "gateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
-        "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
-        "getGovernor": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "forwardFeeAllocator": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "gateway": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+        "getGateway": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+        "getGovernor": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "getPriorityTxMaxGasLimit": 72000000,
         "getTotalBatchesExecuted": 50873,
         "getTotalPriorityTxs": 6709,
         "IS_ETH_GAS_TOKEN": true,
-        "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "owner": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "paused": true,
         "totalBatchesExecuted": 50873,
         "totalPriorityTxs": 6709,
@@ -234,18 +232,18 @@
         "txGasPrice": 40000000000
       },
       "implementationNames": {
-        "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": "ERC1967Proxy",
-        "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585": "ZkLink"
+        "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": "ERC1967Proxy",
+        "manta:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585": "ZkLink"
       }
     },
     {
-      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "address": "manta:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MantaL2Gateway",
-      "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+      "address": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
@@ -256,43 +254,43 @@
       "sinceTimestamp": 1709279189,
       "sinceBlock": 1505523,
       "values": {
-        "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-        "$implementation": "0x50efC7f1290479cb879473512D89fDC80B726211",
+        "$admin": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "$implementation": "manta:0x50efC7f1290479cb879473512D89fDC80B726211",
         "$pastUpgrades": [
           [
             "2024-03-01T07:46:29.000Z",
             "0x1fca63a739c05f1e22df26b3cc5b2af31de992156fc017e7810cc94671913fee",
-            ["0x55fa5276c44c1B465196898b144524C9c852235E"]
+            ["manta:0x55fa5276c44c1B465196898b144524C9c852235E"]
           ],
           [
             "2024-03-01T11:22:39.000Z",
             "0x59d14b41116012c515c95ed7546fdcc82a1535184eb2a134daff77bf2db9c5f6",
-            ["0xbfa352a683D82a04233Cc45AC1308621BA63283f"]
+            ["manta:0xbfa352a683D82a04233Cc45AC1308621BA63283f"]
           ],
           [
             "2024-03-01T11:29:29.000Z",
             "0x4a6764267c156b1453ce1460fca710b3544d2df4ddeb03c625843c891886cb1b",
-            ["0x55fa5276c44c1B465196898b144524C9c852235E"]
+            ["manta:0x55fa5276c44c1B465196898b144524C9c852235E"]
           ],
           [
             "2024-03-09T10:52:49.000Z",
             "0x40fe517bb5f7d135cc8dc1c39fe59b6ec44bf2b9477ab4f9f3e7fc09f658e892",
-            ["0x50efC7f1290479cb879473512D89fDC80B726211"]
+            ["manta:0x50efC7f1290479cb879473512D89fDC80B726211"]
           ]
         ],
         "$upgradeCount": 4,
-        "getRemoteGateway": "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
-        "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
-        "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
-        "ZKLINK": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
+        "getRemoteGateway": "manta:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
+        "MESSAGE_SERVICE": "manta:0x4200000000000000000000000000000000000007",
+        "owner": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "ZKLINK": "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
       },
       "implementationNames": {
-        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
-        "0x50efC7f1290479cb879473512D89fDC80B726211": "OptimismL2Gateway"
+        "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "ERC1967Proxy",
+        "manta:0x50efC7f1290479cb879473512D89fDC80B726211": "OptimismL2Gateway"
       }
     },
     {
-      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "address": "manta:0xF801886AE2e127A269B0F11892edb54F692d02dF",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -459,5 +457,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
+  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
 }

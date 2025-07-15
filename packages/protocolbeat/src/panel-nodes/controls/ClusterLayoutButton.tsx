@@ -1,9 +1,9 @@
 import {
-  type SimulationNodeDatum,
   forceCenter,
   forceLink,
   forceManyBody,
   forceSimulation,
+  type SimulationNodeDatum,
 } from 'd3-force'
 import { useEffect, useState } from 'react'
 

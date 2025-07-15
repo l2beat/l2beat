@@ -2,9 +2,9 @@ import {
   assert,
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
@@ -99,6 +99,7 @@ const timelockUpgrades2 = {
 }
 
 export const degate3: ScalingProject = {
+  archivedAt: UnixTime(1752041971), // Wednesday, July 9, 2025 6:19:31 AM UTC
   type: 'layer2',
   id: ProjectId('degate3'),
   capability: 'appchain',
@@ -114,9 +115,10 @@ export const degate3: ScalingProject = {
     description:
       'DeGate is a ZK Rollup enabling a decentralized order book exchange. DeGate smart contracts are forked from Loopring V3.',
     purposes: ['Exchange', 'NFT'],
-    stack: 'Loopring',
+    stacks: ['Loopring'],
     category: 'ZK Rollup',
-
+    headerWarning:
+      'A system **shutdown** [was triggered](https://etherscan.io/tx/0xa3a340cfebbdbf9999e61cc3838f67d21610944704f9b2546e2fe95435134d5c#eventlog) on 2025-06-27. This irreversible action freezes the L2 state and allows users to withdraw their funds with the help of the operator. Degate announced that they [will withdraw all funds automatically](https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51). If the operator does not cooperate, a withdrawal mode can still be activated, allowing users to withdraw their funds on their own by providing merkle proofs.',
     links: {
       websites: ['https://degate.com/'],
       bridges: ['https://app.degate.com/'],
@@ -133,9 +135,6 @@ export const degate3: ScalingProject = {
     liveness: {
       explanation:
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -188,12 +187,6 @@ export const degate3: ScalingProject = {
         from: 'stateUpdates',
         to: 'proofSubmissions',
       },
-    },
-    finality: {
-      type: 'Degate',
-      minTimestamp: UnixTime(1699747007),
-      lag: 0,
-      stateUpdate: 'disabled',
     },
   },
   scopeOfAssessment: {
@@ -436,7 +429,7 @@ export const degate3: ScalingProject = {
     addresses: {
       [discovery.chain]: [
         discovery.getContractDetails('ExchangeV3', {
-          description: `Main ExchangeV3 contract.`,
+          description: 'Main ExchangeV3 contract.',
           ...timelockUpgrades1,
         }),
         discovery.getContractDetails(
@@ -444,7 +437,8 @@ export const degate3: ScalingProject = {
           'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
         ),
         discovery.getContractDetails('DefaultDepositContract', {
-          description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
+          description:
+            'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
           ...timelockUpgrades2,
         }),
         discovery.getContractDetails(
@@ -472,6 +466,14 @@ export const degate3: ScalingProject = {
     risks: [],
   },
   milestones: [
+    {
+      title: 'Shutdown mode activated',
+      url: 'https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51',
+      date: '2025-06-26T00:00:00Z',
+      description:
+        'Shutdown mode prevents further state updates and allows users to withdraw their funds.',
+      type: 'incident',
+    },
     {
       title: 'DeGate Mainnet Beta Redeploy',
       url: 'https://medium.com/degate/degate-mainnet-beta-redeployment-oct-2023-e07c8eeaec4c',

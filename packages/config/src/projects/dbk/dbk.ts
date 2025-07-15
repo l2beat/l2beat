@@ -38,15 +38,6 @@ export const dbk: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1717461337),
-  // incompatible
-  // finality: {
-  //   type: 'OPStack-blob',
-  //   genesisTimestamp: UnixTime(1717461337),
-  //   minTimestamp: UnixTime(1717485635), // first blob https://etherscan.io/tx/0x5206806df7d2124910f2c44f38bb34b6ab99b9dfbea94c6ae6a793f1600e3363
-  //   l2BlockTimeSeconds: 2,
-  //   lag: 0,
-  //   stateUpdate: 'disabled',
-  // },
   isNodeAvailable: 'UnderReview',
   milestones: [
     {

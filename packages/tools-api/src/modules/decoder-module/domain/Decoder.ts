@@ -1,3 +1,4 @@
+import { getShortChainName } from '../../../config/address'
 import type { Address, Chain, TokenConfig } from '../../../config/types'
 import type { AddressInfo, IAddressService } from './AddressService'
 import type {
@@ -7,9 +8,9 @@ import type {
   DecodedValue,
   Value,
 } from './DecodedResult'
-import type { ISignatureService } from './SignatureService'
 import { decode } from './decode'
 import { plugins } from './plugins/plugins'
+import type { ISignatureService } from './SignatureService'
 
 export interface Transaction {
   to?: Address
@@ -28,29 +29,30 @@ export class Decoder {
     private signatureService: ISignatureService,
     private tokens: TokenConfig,
     private hashes: Record<`0x${string}`, string>,
+    private chains: Chain[],
   ) {}
 
   async decode(tx: Transaction) {
     const known: Known = { addresses: new Map(), signatures: new Map() }
     if (tx.to) {
-      await this.knowSafe(tx.to, tx.chain, known)
+      await this.knowSafe(tx.to, known)
     }
     return this.decodeKnown(tx, known)
   }
 
-  private async knowSafe(address: Address, chain: Chain, known: Known) {
+  private async knowSafe(address: Address, known: Known) {
     try {
-      await this.know(address, chain, known)
+      await this.know(address, known)
     } catch (e) {
       console.error(e)
     }
   }
 
-  private async know(address: Address, chain: Chain, known: Known) {
+  private async know(address: Address, known: Known) {
     if (known.addresses.has(address)) {
       return
     }
-    const info = await this.addressService.lookup(address, chain)
+    const info = await this.addressService.lookup(address)
     known.addresses.set(address, info)
     for (const { selector, signature } of info.abi) {
       const array = known.signatures.get(selector) ?? []
@@ -137,8 +139,12 @@ export class Decoder {
 
     const addresses = getAddresses(result)
     await Promise.all(
-      addresses.map((x) => this.knowSafe(x.value, chain, known)),
+      nested
+        .map((x) => x.to)
+        .filter((x) => x !== undefined)
+        .map((x) => this.knowSafe(x, known)),
     )
+    await Promise.all(addresses.map((x) => this.knowSafe(x.value, known)))
 
     const hashes = result.arguments.map(getBytes32).flat(1)
     for (const hash of hashes) {
@@ -161,11 +167,21 @@ export class Decoder {
       if (value.data.decoded?.type !== 'bytes') {
         continue
       }
+
+      let nestedChain = chain
+      if (value.to !== undefined) {
+        const shortChainName = getShortChainName(value.to)
+        const newChain = this.chains.find((x) => x.shortName === shortChainName)
+        if (newChain !== undefined) {
+          nestedChain = newChain
+        }
+      }
+
       value.data.decoded = await this.decodeBytes(
         value.data.decoded.value,
         value.data.decoded.extra,
         value.to,
-        chain,
+        nestedChain,
         known,
       )
     }
@@ -189,7 +205,7 @@ export class Decoder {
     chain: Chain,
   ) {
     for (const plugin of plugins) {
-      const nested = plugin(result, chain, to, this.tokens)
+      const nested = plugin(result, chain, to, this.tokens, this.chains)
       if (nested) {
         return nested
       }

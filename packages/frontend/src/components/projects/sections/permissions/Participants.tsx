@@ -8,9 +8,11 @@ export interface Participant {
 
 export function ParticipantsEntry({
   participants,
-}: { participants: Participant[] }) {
+}: {
+  participants: Participant[]
+}) {
   return (
-    <div className="!leading-[1.15] mt-2 flex flex-row flex-wrap items-center gap-x-2">
+    <div className="mt-2 flex flex-row flex-wrap items-center gap-x-2 leading-[1.15]!">
       <p className="text-gray-850 dark:text-gray-400">
         <strong className="text-primary">{`Participants (${participants.length}): `}</strong>
       </p>

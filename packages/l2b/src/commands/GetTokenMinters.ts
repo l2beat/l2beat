@@ -1,5 +1,5 @@
-import { CliLogger } from '@l2beat/shared'
 import { command, positional } from 'cmd-ts'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { getTokenMinterEvents } from '../implementations/tokenMinters'
 import { rpcUrl } from './args'
 import { EthereumAddressValue } from './types'
@@ -12,7 +12,7 @@ export const GetTokenMinters = command({
     rpcUrl,
   },
   handler: async (args) => {
-    const logger = new CliLogger()
+    const logger = getPlainLogger()
     await getTokenMinterEvents(logger, args.address, args.rpcUrl)
   },
 })

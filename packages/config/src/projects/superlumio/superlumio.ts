@@ -41,14 +41,6 @@ export const superlumio: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1708984633),
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1708984631),
-    minTimestamp: UnixTime(1708984751),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'analyze',
-  },
   isNodeAvailable: 'UnderReview',
   milestones: [
     {

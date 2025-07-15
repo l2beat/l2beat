@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -25,7 +29,7 @@ export const lens: ScalingProject = zkStackL2({
     slug: 'lens',
     description:
       "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     architectureImage: 'zkstack-validium-vector',
     links: {
       websites: ['https://lens.xyz'],
@@ -61,7 +65,7 @@ export const lens: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: ['LGHO', 'ETH'],
       description:
         'Shared bridge for depositing tokens to Lens and other ZK stack chains.',

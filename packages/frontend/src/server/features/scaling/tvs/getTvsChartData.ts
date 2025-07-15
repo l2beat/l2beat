@@ -10,13 +10,22 @@ import { getSummedTvsValues } from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
-  TvsProjectFilter,
   createTvsProjectsFilter,
+  TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { TvsChartRange, rangeToResolution } from './utils/range'
+import { rangeToResolution, TvsChartRange } from './utils/range'
 
 export const TvsChartDataParams = v.object({
-  range: TvsChartRange,
+  range: v.union([
+    v.object({
+      type: TvsChartRange,
+    }),
+    v.object({
+      type: v.literal('custom'),
+      from: v.number(),
+      to: v.number(),
+    }),
+  ]),
   filter: TvsProjectFilter,
   excludeAssociatedTokens: v.boolean(),
 })
@@ -101,8 +110,9 @@ function getChartData(
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
+  const adjustedTarget = range.type === 'custom' ? range.to : target
   const [from, to] = getRangeWithMax(range, resolution, {
-    now: target,
+    now: adjustedTarget,
   })
   const timestamps = generateTimestamps(
     [from ?? MIN_TIMESTAMPS.tvs, to],

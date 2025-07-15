@@ -1,9 +1,7 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-
-import { UnixTime } from '@l2beat/shared-pure'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   ChartContainer,
   ChartLegend,
@@ -19,6 +17,7 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
@@ -28,12 +27,14 @@ interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
   includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }
 
 export function DaAbsoluteThroughputChart({
   data,
   isLoading,
   includeScalingOnly,
+  syncStatus,
 }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'line' })
   const max = useMemo(() => {
@@ -98,9 +99,6 @@ export function DaAbsoluteThroughputChart({
           yAxis: {
             unit: ` ${unit}`,
             tickCount: 3,
-            tick: {
-              width: 100,
-            },
           },
         })}
         <ChartTooltip
@@ -108,6 +106,7 @@ export function DaAbsoluteThroughputChart({
             <CustomTooltip
               unit={unit}
               includeScalingOnly={includeScalingOnly}
+              syncStatus={syncStatus}
             />
           }
         />
@@ -122,9 +121,11 @@ function CustomTooltip({
   label,
   unit,
   includeScalingOnly,
+  syncStatus,
 }: TooltipProps<number, string> & {
   unit: string
   includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
@@ -133,7 +134,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="label-value-14-medium text-secondary">
+      <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-1" />
@@ -143,9 +144,11 @@ function CustomTooltip({
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 
-          // We don't have data for EigenDA projects for the past day, so we show estimated data for the current day
-          const isEstimated =
-            includeScalingOnly && isCurrentDay && entry.name === 'eigenda'
+          const projectSyncStatus = entry.name
+            ? syncStatus?.[entry.name]
+            : undefined
+          const isEstimated = projectSyncStatus && projectSyncStatus < label
+
           return (
             <div
               key={index}
@@ -156,11 +159,11 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="label-value-14-medium">
+                <span className="font-medium text-label-value-14">
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium text-primary tabular-nums">
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)} {unit}
               </span>
             </div>
@@ -168,7 +171,7 @@ function CustomTooltip({
         })}
       </div>
       {includeScalingOnly && isCurrentDay && (
-        <div className="label-value-13-medium mt-2 max-w-[230px] text-secondary leading-[130%]">
+        <div className="mt-2 max-w-[230px] font-medium text-label-value-13 text-secondary leading-[130%]">
           Scaling project usage data for EigenDA is only available for the past
           day.
         </div>

@@ -1,17 +1,17 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
-  ProjectId,
-  UnixTime,
   formatSeconds,
+  UnixTime,
 } from '@l2beat/shared-pure'
-import { DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import {
+  DA_LAYERS,
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
   DaUpgradeabilityRisk,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -21,13 +21,17 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('automata')
 const genesisTimestamp = UnixTime(1721183063)
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'sequencerInbox',
+const sequencerInbox = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'sequencerInbox',
+  ),
 )
-const sequencerAddress = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'batcherHash',
+const sequencerAddress = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'batcherHash',
+  ),
 )
 
 const daChallengeWindow = formatSeconds(
@@ -69,9 +73,6 @@ export const automata: ScalingProject = opStackL2({
         'https://ata.ws/telegram',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   associatedTokens: ['ATA'],
   nonTemplateOptimismPortalEscrowTokens: ['ATA'],
@@ -128,7 +129,7 @@ export const automata: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: l2OutputOracle.address,
+        address: ChainSpecificAddress.address(l2OutputOracle.address),
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
@@ -174,11 +175,11 @@ However, there is a mechanism that allows users to challenge unavailability of d
       risks: [
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate and there are no challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate and there are no challengers.',
         },
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.`,
+          text: 'the sequencer posts an invalid data availability certificate, and he is able to outspend the challengers.',
         },
       ],
     },

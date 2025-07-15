@@ -1,4 +1,4 @@
-import { UnixTime, pluralize } from '@l2beat/shared-pure'
+import { pluralize, UnixTime } from '@l2beat/shared-pure'
 
 export function LivenessDurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds
@@ -30,7 +30,7 @@ function getDurationText(
   return amount > 0 ? `${amount} ${pluralize(amount, unit)}` : ''
 }
 
-function getDurationColorClassName(durationInSeconds: number) {
+export function getDurationColorClassName(durationInSeconds: number) {
   if (durationInSeconds < UnixTime.MINUTE) {
     return 'text-positive'
   }

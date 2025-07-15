@@ -8,8 +8,8 @@ import type {
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -18,8 +18,8 @@ import {
 } from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
@@ -33,8 +33,8 @@ import { getSequencingSection } from '~/utils/project/technology/getSequencingSe
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getTrackedTransactions } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import {
-  type UnderReviewStatus,
   getUnderReviewStatus,
+  type UnderReviewStatus,
 } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
@@ -61,6 +61,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     emergencyWarning?: string
+    ongoingAnomaly?: 'single' | 'multiple'
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -142,12 +143,12 @@ export async function getScalingProjectEntry(
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     helpers.tvs.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     helpers.activity.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     project.scalingInfo.layer === 'layer2'
@@ -161,6 +162,11 @@ export async function getScalingProjectEntry(
     getScalingDaSolution(project),
     getContractUtils(),
   ])
+  const projectLiveness = liveness[project.id]
+
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (a) => a.end === undefined,
+  )
 
   const tvsProjectStats = tvsStats.projects[project.id]
   const header: ProjectScalingEntry['header'] = {
@@ -168,6 +174,13 @@ export async function getScalingProjectEntry(
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
     emergencyWarning: project.statuses.emergencyWarning,
+    ongoingAnomaly: ongoingAnomalies
+      ? ongoingAnomalies.length === 0
+        ? undefined
+        : ongoingAnomalies.length === 1
+          ? 'single'
+          : 'multiple'
+      : undefined,
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
@@ -334,7 +347,7 @@ export async function getScalingProjectEntry(
   const livenessSection = await getLivenessSection(
     helpers,
     project,
-    liveness[project.id],
+    projectLiveness,
     projectsChangeReport.projects[project.id],
   )
   if (livenessSection) {

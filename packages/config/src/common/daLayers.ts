@@ -74,7 +74,7 @@ const FRAXTAL_DA: DaProjectTableValue = {
 }
 
 const OP_ALT_DA: DaProjectTableValue = {
-  value: 'Alt-DA Provider',
+  value: 'Alt-DA',
   sentiment: 'warning',
   description:
     'The data is posted to an off-chain data availability provider which is tasked to serve data upon request. Only hashes of the data are published on an onchain inbox.',

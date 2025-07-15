@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -182,7 +187,9 @@ export const avalanche: Bridge = {
         discovery.getPermissionDetails(
           'Bridge Wardens',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x8EB8a3b98659Cce290402893d0123abb75E3ab28'),
+            ChainSpecificAddress(
+              'eth:0x8EB8a3b98659Cce290402893d0123abb75E3ab28',
+            ),
           ]),
           'Off-chain Multisig 6/8 (EOA on Ethereum) using Intel SGX, which controls all the funds deposited to the bridge. There is no possibility to verify whether Intel SGX technology is being used.',
         ),

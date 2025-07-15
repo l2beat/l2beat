@@ -9,15 +9,17 @@ export class DiscordWebhookClient {
     private readonly webhookClient = new WebhookClient({ url: webhookUrl }),
   ) {}
 
-  async sendMessage(content: string) {
+  async sendMessage(content: string): Promise<string> {
     if (content.length > MAX_MESSAGE_LENGTH) {
-      throw new Error(`Discord error: Message size exceeded (2000 characters)`)
+      throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
 
-    await this.webhookClient.send({
+    const message = await this.webhookClient.send({
       content,
       username: USERNAME,
     })
+
+    return message.id
   }
 
   async deleteMessage(messageId: string) {

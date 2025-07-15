@@ -2,9 +2,9 @@ import {
   assert,
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
@@ -115,9 +115,6 @@ export const linea: ScalingProject = {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
     },
-    finality: {
-      finalizationPeriod,
-    },
   },
   config: {
     escrows: [
@@ -142,10 +139,10 @@ export const linea: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xd19d4b5d358258f05d7b411e21a1460d11b0876f',
+        inbox: EthereumAddress('0xd19d4b5d358258f05d7b411e21a1460d11b0876f'),
         sequencers: [
-          '0x46d2F319fd42165D4318F099E143dEA8124E9E3e',
-          '0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754',
+          EthereumAddress('0x46d2F319fd42165D4318F099E143dEA8124E9E3e'),
+          EthereumAddress('0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754'),
         ],
       },
     ],
@@ -336,12 +333,6 @@ export const linea: ScalingProject = {
         from: 'stateUpdates',
         to: 'proofSubmissions',
       },
-    },
-    finality: {
-      type: 'Linea',
-      lag: 0,
-      minTimestamp: UnixTime(1717588271),
-      stateUpdate: 'disabled',
     },
   },
   chainConfig: {

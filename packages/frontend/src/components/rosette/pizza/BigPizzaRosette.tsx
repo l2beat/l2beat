@@ -1,13 +1,13 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { SentimentText } from '../../SentimentText'
-import { WarningBar, sentimentToWarningBarColor } from '../../WarningBar'
 import { UpcomingBadge } from '../../badge/UpcomingBadge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
+import { SentimentText } from '../../SentimentText'
+import { sentimentToWarningBarColor, WarningBar } from '../../WarningBar'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
@@ -97,11 +97,13 @@ function RosetteTooltipContent() {
       }}
       className="w-[300px]"
     >
-      <p className="label-value-14-medium mb-2">{selectedRisk.name}</p>
+      <p className="mb-2 font-medium text-label-value-14">
+        {selectedRisk.name}
+      </p>
       <SentimentText
         sentiment={selectedRisk.sentiment ?? 'neutral'}
         vibrant={true}
-        className="heading-18 mb-2 flex items-center gap-1"
+        className="mb-2 flex items-center gap-1 text-heading-18"
       >
         {selectedRisk.value}
       </SentimentText>

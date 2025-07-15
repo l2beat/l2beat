@@ -1,4 +1,419 @@
-Generated with discovered.json: 0xaf6b9c01f6aeb3d35b229e88a2de2e19945af05a
+Generated with discovered.json: 0x012a1df3c3d62050263811140addd2b3cfe9cb30
+
+# Diff at Mon, 14 Jul 2025 12:45:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20675914
+- current block number: 20675914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675914 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57) {
+    +++ description: None
+      address:
+-        "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
++        "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
+    }
+```
+
+```diff
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C) {
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+      address:
+-        "0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
++        "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
+      values.EthCrossChainDataAddress:
+-        "0xcF2afe102057bA5c16f899271045a0A37fCb10f2"
++        "eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2"
+      values.owner:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.whiteLister:
+-        "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
++        "eth:0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
+      implementationNames.0x14413419452Aaf089762A0c5e95eD2A13bBC488C:
+-        "EthCrossChainManager"
+      implementationNames.eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C:
++        "EthCrossChainManager"
+    }
+```
+
+```diff
+    contract Lock Proxy 1 (0x250e76987d838a75310c34bf422ea9f1AC4Cc906) {
+    +++ description: None
+      address:
+-        "0x250e76987d838a75310c34bf422ea9f1AC4Cc906"
++        "eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
++        "eth:0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
+      implementationNames.0x250e76987d838a75310c34bf422ea9f1AC4Cc906:
+-        "LockProxy"
+      implementationNames.eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906:
++        "LockProxy"
+    }
+```
+
+```diff
+    contract Lock Proxy 3 (0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035) {
+    +++ description: None
+      address:
+-        "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035"
++        "eth:0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
++        "eth:0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
+      implementationNames.0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035:
+-        ""
+      implementationNames.eth:0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035:
++        ""
+    }
+```
+
+```diff
+    contract Lock Proxy 7 (0x51ba447DaD1de30b91286471BcB570F69ECE968D) {
+    +++ description: None
+      address:
+-        "0x51ba447DaD1de30b91286471BcB570F69ECE968D"
++        "eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
++        "eth:0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
+      implementationNames.0x51ba447DaD1de30b91286471BcB570F69ECE968D:
+-        "LockProxy"
+      implementationNames.eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D:
++        "LockProxy"
+    }
+```
+
+```diff
+    EOA  (0x52D858ef5e0A768C80C38617eB8a7680f4D4d459) {
+    +++ description: None
+      address:
+-        "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
++        "eth:0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
+    }
+```
+
+```diff
+    contract Lock Proxy 4 (0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868) {
+    +++ description: None
+      address:
+-        "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868"
++        "eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
++        "eth:0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
+      implementationNames.0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868:
+-        "LockProxy"
+      implementationNames.eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868:
++        "LockProxy"
+    }
+```
+
+```diff
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb) {
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+      address:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.getEthCrossChainManager:
+-        "0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
++        "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
+      values.owner:
+-        "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671"
++        "eth:0xdf408d52A717F7CF0c629CF8a8807f2455eAa671"
+      implementationNames.0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb:
+-        "EthCrossChainManagerProxy"
+      implementationNames.eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb:
++        "EthCrossChainManagerProxy"
+    }
+```
+
+```diff
+    EOA  (0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E) {
+    +++ description: None
+      address:
+-        "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
++        "eth:0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
+    }
+```
+
+```diff
+    contract Lock Proxy 6 (0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC) {
+    +++ description: None
+      address:
+-        "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC"
++        "eth:0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC"
+      implementationNames.0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC:
+-        ""
+      implementationNames.eth:0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC:
++        ""
+    }
+```
+
+```diff
+    EOA  (0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725) {
+    +++ description: None
+      address:
+-        "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
++        "eth:0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
+    }
+```
+
+```diff
+    contract Lock Proxy 2 (0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54) {
+    +++ description: None
+      address:
+-        "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54"
++        "eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
++        "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
+      implementationNames.0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54:
+-        "LockProxyWithLP"
+      implementationNames.eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54:
++        "LockProxyWithLP"
+    }
+```
+
+```diff
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A) {
+    +++ description: None
+      address:
+-        "0x81910675DbaF69deE0fD77570BFD07f8E436386A"
++        "eth:0x81910675DbaF69deE0fD77570BFD07f8E436386A"
+      values.feeCollector:
+-        "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
++        "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.0:
+-        "0x250e76987d838a75310c34bf422ea9f1AC4Cc906"
++        "eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.1:
+-        "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54"
++        "eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.2:
+-        "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035"
++        "eth:0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.3:
+-        "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868"
++        "eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.4:
+-        "0xf6378141BC900020a438F3914e4C3ceA29907b27"
++        "eth:0xf6378141BC900020a438F3914e4C3ceA29907b27"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.5:
+-        "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC"
++        "eth:0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.6:
+-        "0x51ba447DaD1de30b91286471BcB570F69ECE968D"
++        "eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D"
++++ description: These addresses can escrow funds for the bridge.
++++ severity: HIGH
+      values.lockProxyIndexMap.7:
+-        "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0"
++        "eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0"
+      values.owner:
+-        "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
++        "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
+      implementationNames.0x81910675DbaF69deE0fD77570BFD07f8E436386A:
+-        "PolyWrapper"
+      implementationNames.eth:0x81910675DbaF69deE0fD77570BFD07f8E436386A:
++        "PolyWrapper"
+    }
+```
+
+```diff
+    EOA  (0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02) {
+    +++ description: None
+      address:
+-        "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
++        "eth:0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
+    }
+```
+
+```diff
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2) {
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+      address:
+-        "0xcF2afe102057bA5c16f899271045a0A37fCb10f2"
++        "eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2"
+      values.owner:
+-        "0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
++        "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C"
+      implementationNames.0xcF2afe102057bA5c16f899271045a0A37fCb10f2:
+-        "EthCrossChainData"
+      implementationNames.eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2:
++        "EthCrossChainData"
+    }
+```
+
+```diff
+    EOA  (0xdf408d52A717F7CF0c629CF8a8807f2455eAa671) {
+    +++ description: None
+      address:
+-        "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671"
++        "eth:0xdf408d52A717F7CF0c629CF8a8807f2455eAa671"
+    }
+```
+
+```diff
+    contract Lock Proxy 8 (0xead16Ae2c301C48Ea011A36Eef9337507673DFc0) {
+    +++ description: None
+      address:
+-        "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0"
++        "eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
++        "eth:0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
+      implementationNames.0xead16Ae2c301C48Ea011A36Eef9337507673DFc0:
+-        "LockProxy"
+      implementationNames.eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0:
++        "LockProxy"
+    }
+```
+
+```diff
+    EOA  (0xeF86b2c8740518548ae449c4C3892B4be0475d8c) {
+    +++ description: None
+      address:
+-        "0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
++        "eth:0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
+    }
+```
+
+```diff
+    contract Lock Proxy 5 (0xf6378141BC900020a438F3914e4C3ceA29907b27) {
+    +++ description: None
+      address:
+-        "0xf6378141BC900020a438F3914e4C3ceA29907b27"
++        "eth:0xf6378141BC900020a438F3914e4C3ceA29907b27"
+      values.managerProxyContract:
+-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
++        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb"
+      values.owner:
+-        "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
++        "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
+      implementationNames.0xf6378141BC900020a438F3914e4C3ceA29907b27:
+-        "LockProxy"
+      implementationNames.eth:0xf6378141BC900020a438F3914e4C3ceA29907b27:
++        "LockProxy"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C)
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 1 (0x250e76987d838a75310c34bf422ea9f1AC4Cc906)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 3 (0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 7 (0x51ba447DaD1de30b91286471BcB570F69ECE968D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 4 (0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb)
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 6 (0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 2 (0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2)
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 8 (0xead16Ae2c301C48Ea011A36Eef9337507673DFc0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 5 (0xf6378141BC900020a438F3914e4C3ceA29907b27)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xc87e6b853f81d67370e6bb3d157da6a5e4055f47
 
 # Diff at Mon, 12 May 2025 13:48:15 GMT:
 

@@ -123,7 +123,7 @@ describe(LowLevelProvider.name, () => {
     })
   }
 
-  it(`does not retry on log size exceeded`, async () => {
+  it('does not retry on log size exceeded', async () => {
     const topErrorMessage =
       'processing response error (body="{"jsonrpc":"2.0","id":45,"error":{"code":-32602,"message":"Log response size exceeded. You can make eth_getLogs r'
 
@@ -206,7 +206,7 @@ describe(LowLevelProvider.name, () => {
     }),
   ]
   for (const error of errors) {
-    it(`does retry on different errors`, async () => {
+    it('does retry on different errors', async () => {
       const bytes = Bytes.randomOfLength(20)
       const ethersProvider = mockObject<providers.JsonRpcProvider>({
         call: mockFn().throwsOnce(error).returnsOnce(bytes.toString()),
@@ -223,7 +223,7 @@ describe(LowLevelProvider.name, () => {
 })
 
 // NOTE(radomski): I love ethers
-function makeSubServerError(message: string = 'user message'): Error {
+function makeSubServerError(message = 'user message'): Error {
   return makeEthersError('LowLevelProvider test', {
     code: 'CALL_EXCEPTION',
     error: makeEthersError('processing response error', {
@@ -234,7 +234,7 @@ function makeSubServerError(message: string = 'user message'): Error {
 }
 
 function makeEthersError(
-  message: string = 'user message',
+  message = 'user message',
   params: Record<string, unknown> = {},
 ): Error {
   const result = new Error(message) as any

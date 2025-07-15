@@ -12,6 +12,7 @@ import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
+import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
@@ -42,6 +43,7 @@ export function createServer(logger: Logger) {
   app.use(MetricsMiddleware(appLogger))
 
   app.use('/', createMigratedProjectsRouter())
+  app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createApiRouter())
@@ -52,7 +54,7 @@ export function createServer(logger: Logger) {
   }
 
   app.listen(port, () => {
-    appLogger.info(`Started`, {
+    appLogger.info('Started', {
       port,
     })
   })
@@ -64,7 +66,7 @@ function renderToHtml(data: RenderData, url: string) {
     Object.entries(process.env)
       .map(([key, value]) => {
         if (
-          !key.startsWith('NEXT_PUBLIC_') &&
+          !key.startsWith('CLIENT_SIDE_') &&
           key !== 'NODE_ENV' &&
           key !== 'DEPLOYMENT_ENV'
         ) {
@@ -75,13 +77,13 @@ function renderToHtml(data: RenderData, url: string) {
       .filter((x) => x !== undefined),
   )
   return template
-    .replace(`<!--app-head-->`, rendered.head)
-    .replace(`<!--app-html-->`, rendered.html)
+    .replace('<!--app-head-->', rendered.head)
+    .replace('<!--app-html-->', rendered.html)
     .replace(
-      `<!--ssr-data-->`,
+      '<!--ssr-data-->',
       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
-    .replace(`<!--env-data-->`, `window.__ENV__=${JSON.stringify(envData)}`)
+    .replace('<!--env-data-->', `window.__ENV__=${JSON.stringify(envData)}`)
 }
 
 function getTemplate(manifest: Manifest) {

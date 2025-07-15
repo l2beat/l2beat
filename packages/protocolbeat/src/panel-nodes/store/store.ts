@@ -1,7 +1,5 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-
-import type { State } from './State'
 import type { Actions } from './actions/Actions'
 import { loadNodes } from './actions/loadNodes'
 import { onKeyDown } from './actions/onKeyDown'
@@ -22,6 +20,7 @@ import {
 import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
 import { setNodes } from './actions/setNodes'
+import type { State } from './State'
 import { persistNodeLayout } from './utils/storage'
 
 const INITIAL_STATE: State = {

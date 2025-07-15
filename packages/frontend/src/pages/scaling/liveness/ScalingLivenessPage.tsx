@@ -6,18 +6,31 @@ import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingT
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { LivenessHeader } from './components/LivenessHeader'
 import { LivenessTimeRangeContextProvider } from './components/LivenessTimeRangeContext'
+import {
+  type ProjectWithAnomaly,
+  RecentAnomalies,
+} from './components/RecentAnomalies'
 import { ScalingLivenessTables } from './components/ScalingLivenessTables'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingLivenessEntry>
+  projectsWithAnomalies: ProjectWithAnomaly[]
 }
 
-export function ScalingLivenessPage({ entries, ...props }: Props) {
+export function ScalingLivenessPage({
+  entries,
+  projectsWithAnomalies,
+  ...props
+}: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <LivenessTimeRangeContextProvider>
           <LivenessHeader />
+          <RecentAnomalies
+            projectsWithAnomalies={projectsWithAnomalies}
+            className="max-md:mt-4 md:mb-6"
+          />
           <TableFilterContextProvider>
             <ScalingLivenessTables {...entries} />
           </TableFilterContextProvider>

@@ -4,9 +4,10 @@ import {
   BOTTOM_PADDING,
   FIELD_HEIGHT,
   HEADER_HEIGHT,
+  HIDDEN_FIELDS_FOOTER_HEIGHT,
   NODE_WIDTH,
 } from '../utils/constants'
-import { type StoredNodeLayout, recallNodeLayout } from '../utils/storage'
+import { recallNodeLayout, type StoredNodeLayout } from '../utils/storage'
 import { layout } from './other'
 
 export function loadNodes(
@@ -25,17 +26,21 @@ export function loadNodes(
 
   const saved = recallNodeLayout(projectId)
   const added = toAdd.map((node) => {
+    const hiddenFields = combinedHiddenFields(node, saved)
+
     const box = saved?.locations[node.id]
     const x = box?.x ?? 0
     const y = box?.y ?? 0
     const width = box?.width ?? NODE_WIDTH
+    const hiddenFieldsHeight =
+      hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
     const height =
       HEADER_HEIGHT +
-      (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
-      BOTTOM_PADDING
+      (node.fields.length - hiddenFields.length) * FIELD_HEIGHT +
+      BOTTOM_PADDING +
+      hiddenFieldsHeight
     const savedColor = saved?.colors?.[node.id]
     const color = typeof savedColor === 'number' ? savedColor : node.color
-    const hiddenFields = combinedHiddenFields(node, saved)
 
     return {
       ...node,

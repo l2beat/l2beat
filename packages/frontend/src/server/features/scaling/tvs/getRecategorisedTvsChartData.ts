@@ -10,10 +10,10 @@ import { getSummedTvsValues } from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
-  TvsProjectFilter,
   createTvsProjectsFilter,
+  TvsProjectFilter,
 } from './utils/projectFilterUtils'
-import { TvsChartRange, rangeToResolution } from './utils/range'
+import { rangeToResolution, TvsChartRange } from './utils/range'
 
 export const RecategorisedTvsChartDataParams = v.object({
   range: TvsChartRange,
@@ -63,9 +63,9 @@ export async function getRecategorisedTvsChart({
 
   const [rollupValues, validiumAndOptimiumsValues, othersValues] =
     await Promise.all([
-      getSummedTvsValues(rollups, range, 'SUMMARY'),
-      getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
-      getSummedTvsValues(others, range, 'SUMMARY'),
+      getSummedTvsValues(rollups, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(validiumsAndOptimiums, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(others, { type: range }, 'SUMMARY'),
     ])
 
   return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
@@ -117,9 +117,9 @@ function getChartData(
 function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution({ type: range })
   const target = getTvsTargetTimestamp()
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: target,
   })
   const timestamps = generateTimestamps(

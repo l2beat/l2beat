@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import type { ReactNode } from 'react'
 import { externalLinks } from '~/consts/externalLinks'
+import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
 import { DataAvailabilityIcon } from '~/icons/pages/DataAvailability'
@@ -8,6 +9,7 @@ import { EcosystemsIcon } from '~/icons/pages/Ecosystems'
 import { ScalingIcon } from '~/icons/pages/Scaling'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
 import { cn } from '~/utils/cn'
+import { createOrderedSort } from '~/utils/sort'
 import { HiringBadge } from '../badge/HiringBadge'
 import { SidebarProvider } from '../core/Sidebar'
 import { MobileTopNavbar } from './mobile/MobileTopNavbar'
@@ -65,10 +67,6 @@ export function NavLayout({
         {
           title: 'Liveness',
           href: '/scaling/liveness',
-        },
-        {
-          title: 'Finality',
-          href: '/scaling/finality',
         },
         {
           title: 'Costs',
@@ -145,7 +143,7 @@ export function NavLayout({
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
-    env.NEXT_PUBLIC_PARTNERS && {
+    env.CLIENT_SIDE_PARTNERS && {
       type: 'multiple',
       title: 'Ecosystems',
       match: 'ecosystems',
@@ -172,11 +170,11 @@ export function NavLayout({
           slug: 'the-elastic-network',
         },
       ]
+        .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
         .map((ecosystem) => ({
           title: ecosystem.name,
           href: `/ecosystems/${ecosystem.slug}`,
-        }))
-        .sort((a, b) => a.title.localeCompare(b.title)),
+        })),
     },
   ])
 
@@ -204,7 +202,7 @@ export function NavLayout({
     {
       title: 'Jobs',
       href: externalLinks.jobs,
-      accessory: env.NEXT_PUBLIC_SHOW_HIRING_BADGE ? (
+      accessory: env.CLIENT_SIDE_SHOW_HIRING_BADGE ? (
         <HiringBadge />
       ) : undefined,
     },
@@ -249,7 +247,7 @@ export function NavLayout({
         />
         <div
           className={cn(
-            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
+            'min-w-0 flex-1 has-data-hide-overflow-x:overflow-x-clip',
             !topNavbar && 'md:pt-5 lg:ml-3 lg:pt-0',
           )}
         >

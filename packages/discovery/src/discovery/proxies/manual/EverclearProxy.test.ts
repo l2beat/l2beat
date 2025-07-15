@@ -60,7 +60,7 @@ describe(getEverclearProxy.name, () => {
       callMethodMock
         .given(
           ADDRESS,
-          `function modules(bytes32 _moduleType) external view returns (address _module)`,
+          'function modules(bytes32 _moduleType) external view returns (address _module)',
           [module.toString()],
         )
         .resolvesToOnce(MODULE_IMPLEMENTATIONS[index])
@@ -210,7 +210,7 @@ describe(getEverclearProxy.name, () => {
       callMethodMock
         .given(
           ADDRESS,
-          `function modules(bytes32 _moduleType) external view returns (address _module)`,
+          'function modules(bytes32 _moduleType) external view returns (address _module)',
           [module.toString()],
         )
         .resolvesToOnce(MODULE_IMPLEMENTATIONS[index])

@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -52,7 +52,7 @@ export const cartesiprthoneypot: ScalingProject = {
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
-    stack: 'Cartesi Rollups',
+    stacks: ['Cartesi Rollups'],
     description:
       'Cartesi PRT Honeypot is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system. Users should not deposit unless they are willing to donate their funds to the Honeypot.',
     purposes: ['Bug bounty'],
@@ -160,7 +160,7 @@ export const cartesiprthoneypot: ScalingProject = {
       description:
         'Users cannot exit their funds as all deposits are considered donations.',
       sentiment: 'neutral',
-      orderHint: -Infinity,
+      orderHint: Number.NEGATIVE_INFINITY,
       warning: {
         value:
           'Bug bounty Appchain: The single hardcoded address can withdraw all funds.',

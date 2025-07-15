@@ -17,8 +17,8 @@ const rosetteVariants = cva(
   {
     variants: {
       size: {
-        small: 'subtitle-10',
-        regular: 'subtitle-14',
+        small: 'text-subtitle-10',
+        regular: 'text-subtitle-14',
       },
     },
     defaultVariants: {
@@ -51,7 +51,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((-4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          '-translate-x-1/2 absolute origin-top rotate-[36deg]',
+          '-translate-x-1/2 absolute origin-top rotate-36',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== first.name && 'opacity-20',
         )}
@@ -90,7 +90,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          '-translate-x-1/2 -translate-y-full absolute origin-bottom rotate-[72deg]',
+          '-translate-x-1/2 -translate-y-full absolute origin-bottom rotate-72',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== fourth.name && 'opacity-20',
         )}

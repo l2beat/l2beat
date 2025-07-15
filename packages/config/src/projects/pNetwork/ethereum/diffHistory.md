@@ -1,3 +1,613 @@
+Generated with discovered.json: 0x69e2986e8379459b3afefbe1980aee1d0d7b5960
+
+# Diff at Mon, 14 Jul 2025 12:45:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0000000000000000000000000000000000000001) {
+    +++ description: None
+      address:
+-        "0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+    }
+```
+
+```diff
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135) {
+    +++ description: None
+      address:
+-        "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135"
++        "eth:0x112334f50Cb6efcff4e35Ae51A022dBE41a48135"
+      values.PNETWORK:
+-        "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
++        "eth:0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
+      implementationNames.0x112334f50Cb6efcff4e35Ae51A022dBE41a48135:
+-        "Erc20Vault"
+      implementationNames.eth:0x112334f50Cb6efcff4e35Ae51A022dBE41a48135:
++        "Erc20Vault"
+    }
+```
+
+```diff
+    EOA  (0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9) {
+    +++ description: None
+      address:
+-        "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
++        "eth:0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
+    }
+```
+
+```diff
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4) {
+    +++ description: None
+      address:
+-        "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4"
++        "eth:0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4"
+      values.$implementation:
+-        "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"
++        "eth:0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"
+      values.getEVMScriptRegistry:
+-        "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
++        "eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
+      values.getRecoveryVault:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"
++        "eth:0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"
+      values.kernel:
+-        "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
++        "eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
+      values.token:
+-        "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
++        "eth:0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
+      implementationNames.0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4:
+-        "AppProxyUpgradeable"
+      implementationNames.0x17bFDa688b43245A399200a284F81CA0A0b25Bf4:
+-        "DandelionVoting"
+      implementationNames.eth:0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4:
++        "AppProxyUpgradeable"
+      implementationNames.eth:0x17bFDa688b43245A399200a284F81CA0A0b25Bf4:
++        "DandelionVoting"
+    }
+```
+
+```diff
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b) {
+    +++ description: None
+      address:
+-        "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
++        "eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
+      values.$implementation:
+-        "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425"
++        "eth:0x2b33CF282f867A7FF693A66e11B0FcC5552e4425"
+      values.acl:
+-        "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe"
++        "eth:0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe"
+      values.getRecoveryVault:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425"
++        "eth:0x2b33CF282f867A7FF693A66e11B0FcC5552e4425"
+      implementationNames.0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b:
+-        "KernelProxy"
+      implementationNames.0x2b33CF282f867A7FF693A66e11B0FcC5552e4425:
+-        "Kernel"
+      implementationNames.eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b:
++        "KernelProxy"
+      implementationNames.eth:0x2b33CF282f867A7FF693A66e11B0FcC5552e4425:
++        "Kernel"
+    }
+```
+
+```diff
+    EOA  (0x341aA660fD5c280F5a9501E3822bB4a98E816D1b) {
+    +++ description: None
+      address:
+-        "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b"
++        "eth:0x341aA660fD5c280F5a9501E3822bB4a98E816D1b"
+    }
+```
+
+```diff
+    EOA  (0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496) {
+    +++ description: None
+      address:
+-        "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
++        "eth:0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
+    }
+```
+
+```diff
+    EOA  (0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262) {
+    +++ description: None
+      address:
+-        "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262"
++        "eth:0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262"
+    }
+```
+
+```diff
+    EOA  (0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f) {
+    +++ description: None
+      address:
+-        "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
++        "eth:0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
+    }
+```
+
+```diff
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478) {
+    +++ description: None
+      address:
+-        "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
++        "eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
+      values.$implementation:
+-        "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb"
++        "eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb"
+      values.getEVMScriptRegistry:
+-        "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
++        "eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
+      values.getRecoveryVault:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb"
++        "eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb"
+      values.kernel:
+-        "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
++        "eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
+      implementationNames.0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478:
+-        "AppProxyPinned"
+      implementationNames.0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb:
+-        "EVMScriptRegistry"
+      implementationNames.eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478:
++        "AppProxyPinned"
+      implementationNames.eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb:
++        "EVMScriptRegistry"
+    }
+```
+
+```diff
+    EOA  (0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45) {
+    +++ description: None
+      address:
+-        "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45"
++        "eth:0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45"
+    }
+```
+
+```diff
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D) {
+    +++ description: None
+      address:
+-        "0x9f8622b11984AfC8f0a42A394928702017c5968D"
++        "eth:0x9f8622b11984AfC8f0a42A394928702017c5968D"
+      values.PNETWORK:
+-        "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
++        "eth:0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
+      implementationNames.0x9f8622b11984AfC8f0a42A394928702017c5968D:
+-        "Erc20Vault"
+      implementationNames.eth:0x9f8622b11984AfC8f0a42A394928702017c5968D:
++        "Erc20Vault"
+    }
+```
+
+```diff
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3) {
+    +++ description: None
+      address:
+-        "0xA29EF584c389c67178aE9152aC9C543f9156E2B3"
++        "eth:0xA29EF584c389c67178aE9152aC9C543f9156E2B3"
+      implementationNames.0xA29EF584c389c67178aE9152aC9C543f9156E2B3:
+-        "MiniMeTokenFactory"
+      implementationNames.eth:0xA29EF584c389c67178aE9152aC9C543f9156E2B3:
++        "MiniMeTokenFactory"
+    }
+```
+
+```diff
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB) {
+    +++ description: None
+      address:
+-        "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
++        "eth:0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45"
++        "eth:0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45"
+      values.$members.1:
+-        "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262"
++        "eth:0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262"
+      values.$members.2:
+-        "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20"
++        "eth:0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20"
+      values.$members.3:
+-        "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
++        "eth:0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
+      implementationNames.0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      address:
+-        "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
++        "eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
+      values.owner:
+-        "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
++        "eth:0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
+      implementationNames.0xB6D14DdFBE01AC537accBe35cCd771C30D53c535:
+-        "ProxyAdmin"
+      implementationNames.eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20) {
+    +++ description: None
+      address:
+-        "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20"
++        "eth:0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20"
+    }
+```
+
+```diff
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254) {
+    +++ description: None
+      address:
+-        "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254"
++        "eth:0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254"
+      values.$implementation:
+-        "0xde3A93028F2283cc28756B3674BD657eaFB992f4"
++        "eth:0xde3A93028F2283cc28756B3674BD657eaFB992f4"
+      values.getEVMScriptRegistry:
+-        "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
++        "eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
+      values.getRecoveryVault:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0xde3A93028F2283cc28756B3674BD657eaFB992f4"
++        "eth:0xde3A93028F2283cc28756B3674BD657eaFB992f4"
+      values.kernel:
+-        "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
++        "eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
+      values.token:
+-        "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
++        "eth:0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
+      implementationNames.0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254:
+-        "AppProxyUpgradeable"
+      implementationNames.0xde3A93028F2283cc28756B3674BD657eaFB992f4:
+-        "TokenManager"
+      implementationNames.eth:0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254:
++        "AppProxyUpgradeable"
+      implementationNames.eth:0xde3A93028F2283cc28756B3674BD657eaFB992f4:
++        "TokenManager"
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      address:
+-        "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
++        "eth:0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
+      values.owner:
+-        "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
++        "eth:0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
+      implementationNames.0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a:
+-        "PProxyAdmin"
+      implementationNames.eth:0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a:
++        "PProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132) {
+    +++ description: None
+      address:
+-        "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
++        "eth:0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
+    }
+```
+
+```diff
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8) {
+    +++ description: None
+      address:
+-        "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
++        "eth:0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
+      values.$admin:
+-        "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
++        "eth:0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
+      values.$implementation:
+-        "0x34D085516f9D7794192aDB10C995d9c532E335aF"
++        "eth:0x34D085516f9D7794192aDB10C995d9c532E335aF"
+      values.$pastUpgrades.0.2.0:
+-        "0xE01a9c36170b8Fa163C6a54D7aB3015C85e0186c"
++        "eth:0xE01a9c36170b8Fa163C6a54D7aB3015C85e0186c"
+      values.$pastUpgrades.1.2.0:
+-        "0xfbc347975C48578F4A25ECeEB61BC16356abE8a2"
++        "eth:0xfbc347975C48578F4A25ECeEB61BC16356abE8a2"
+      values.$pastUpgrades.2.2.0:
+-        "0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"
++        "eth:0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"
+      values.$pastUpgrades.3.2.0:
+-        "0x1cfE92176eefc0C53aF05a298F271C319b73E0aB"
++        "eth:0x1cfE92176eefc0C53aF05a298F271C319b73E0aB"
+      values.$pastUpgrades.4.2.0:
+-        "0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"
++        "eth:0xD331E3EB139D1433D1c988D5DC1cd6eCB971233b"
+      values.$pastUpgrades.5.2.0:
+-        "0x34D085516f9D7794192aDB10C995d9c532E335aF"
++        "eth:0x34D085516f9D7794192aDB10C995d9c532E335aF"
+      values.ETHPNT_TOKEN_ADDRESS:
+-        "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
++        "eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
+      values.PNETWORK:
+-        "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b"
++        "eth:0x341aA660fD5c280F5a9501E3822bB4a98E816D1b"
+      values.PNT_TOKEN_ADDRESS:
+-        "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
++        "eth:0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
+      implementationNames.0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8:
+-        "PTransparentUpgradeableProxy"
+      implementationNames.0x34D085516f9D7794192aDB10C995d9c532E335aF:
+-        "Erc20Vault"
+      implementationNames.eth:0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8:
++        "PTransparentUpgradeableProxy"
+      implementationNames.eth:0x34D085516f9D7794192aDB10C995d9c532E335aF:
++        "Erc20Vault"
+    }
+```
+
+```diff
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E) {
+    +++ description: None
+      address:
+-        "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
++        "eth:0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E"
+      values.controller:
+-        "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254"
++        "eth:0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254"
+      values.parentToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.tokenFactory:
+-        "0xA29EF584c389c67178aE9152aC9C543f9156E2B3"
++        "eth:0xA29EF584c389c67178aE9152aC9C543f9156E2B3"
+      implementationNames.0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E:
+-        "MiniMeToken"
+      implementationNames.eth:0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E:
++        "MiniMeToken"
+    }
+```
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+    +++ description: None
+      address:
+-        "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
++        "eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
+      values.$admin:
+-        "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
++        "eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
+      values.$implementation:
+-        "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"
++        "eth:0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"
+      values.$pastUpgrades.0.2.0:
+-        "0x8474a898677C3bc97f35A86c387aE34Bf272C860"
++        "eth:0x8474a898677C3bc97f35A86c387aE34Bf272C860"
+      values.$pastUpgrades.1.2.0:
+-        "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"
++        "eth:0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"
+      values.inflationOwner:
+-        "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4"
++        "eth:0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4"
+      implementationNames.0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b:
+-        "EthPntv2"
+      implementationNames.eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b:
++        "EthPntv2"
+    }
+```
+
+```diff
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe) {
+    +++ description: None
+      address:
+-        "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe"
++        "eth:0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe"
+      values.$implementation:
+-        "0x81F7564e413586f1f99fDe55740Ac52b43cA99c9"
++        "eth:0x81F7564e413586f1f99fDe55740Ac52b43cA99c9"
+      values.ANY_ENTITY:
+-        "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+      values.BURN_ENTITY:
+-        "0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+      values.getEVMScriptRegistry:
+-        "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
++        "eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478"
+      values.getRecoveryVault:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0x81F7564e413586f1f99fDe55740Ac52b43cA99c9"
++        "eth:0x81F7564e413586f1f99fDe55740Ac52b43cA99c9"
+      values.kernel:
+-        "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
++        "eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b"
+      implementationNames.0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe:
+-        "AppProxyUpgradeable"
+      implementationNames.0x81F7564e413586f1f99fDe55740Ac52b43cA99c9:
+-        "ACL"
+      implementationNames.eth:0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe:
++        "AppProxyUpgradeable"
+      implementationNames.eth:0x81F7564e413586f1f99fDe55740Ac52b43cA99c9:
++        "ACL"
+    }
+```
+
+```diff
+    EOA  (0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF) {
+    +++ description: None
+      address:
+-        "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
++        "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xd10adfa0da55dda15dc5f517f5dca10c982b969c
+
+# Diff at Fri, 04 Jul 2025 12:19:13 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
++        "eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
++        "eth:0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"
+    }
+```
+
 Generated with discovered.json: 0x896fd033e276cb5871e0cc3376c717ba43d71fcc
 
 # Diff at Fri, 23 May 2025 09:41:01 GMT:

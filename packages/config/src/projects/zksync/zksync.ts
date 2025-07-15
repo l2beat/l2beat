@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 
 import {
@@ -71,7 +71,7 @@ export const zksync: ScalingProject = {
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments', 'Exchange', 'NFT'],
-    stack: 'ZKsync Lite',
+    stacks: ['ZKsync Lite'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/'],
@@ -90,9 +90,6 @@ export const zksync: ScalingProject = {
     liveness: {
       explanation:
         'ZKsync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -164,12 +161,6 @@ export const zksync: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'zkSyncLite',
-      minTimestamp: UnixTime(1592218708),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
@@ -394,11 +385,13 @@ export const zksync: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   stateDerivation: {
-    nodeSoftware: `The node software is open-sourced and the source can be found [here](https://github.com/matter-labs/zksync).`,
+    nodeSoftware:
+      'The node software is open-sourced and the source can be found [here](https://github.com/matter-labs/zksync).',
     compressionScheme: 'No compression, transactions are always the same size.',
     genesisState:
       'There is no genesis file nor regenesis for ZKsync Lite. By default, all accounts were empty at the beginning.',
-    dataFormat: `The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).`,
+    dataFormat:
+      'The data format documentations can be found [here](https://github.com/matter-labs/zksync/blob/master/docs/protocol.md#data-format).',
   },
   permissions: {
     [discovery.chain]: {

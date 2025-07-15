@@ -1,4 +1,4 @@
-import { type MockObject, expect, mockFn, mockObject } from 'earl'
+import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import type { DiscoveryCache } from './DiscoveryCache'
 import { LeveledCache } from './LeveledCache'
 

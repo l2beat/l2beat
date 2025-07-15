@@ -19,7 +19,7 @@ const basePaletteHex = [
   '#F5C710', // orange, sky blue, bluish green, amber
   '#0072B2',
   '#D55E00',
-  '#CC79A7', // dark blue, vermillion, purple
+  '#CC79A7', // dark blue, vermilion, purple
   // Additional from CARTO Safe to extend to 11:
   '#88CCEE',
   '#DDCC77',
@@ -59,7 +59,7 @@ export function generateAccessibleColors(n: number): string[] {
   while (selected.length < n && filtered.length) {
     // find the candidate with max distance to the nearest selected color
     let bestIndex = 0
-    let bestDist = -Infinity
+    let bestDist = Number.NEGATIVE_INFINITY
     filtered.forEach((c, idx) => {
       // distance to closest selected color
       const d = Math.min(...selected.map((sel) => labDistance(c, sel)))
@@ -87,7 +87,7 @@ export function generateAccessibleColors(n: number): string[] {
 // Utility: Convert HEX to Lab
 function hexToLab(hex: string): Color {
   // Parse hex to RGB [0,255]
-  const bigint = parseInt(hex.slice(1), 16)
+  const bigint = Number.parseInt(hex.slice(1), 16)
   const r = (bigint >> 16) & 255
   const g = (bigint >> 8) & 255
   const b = bigint & 255

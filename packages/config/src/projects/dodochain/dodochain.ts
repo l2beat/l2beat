@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL3 } from '../../templates/underReview'
@@ -9,23 +9,55 @@ export const dodochain: ScalingProject = underReviewL3({
   addedAt: UnixTime(1719224565), // 2024-06-24T10:22:45Z
   hostChain: ProjectId('arbitrum'),
   display: {
-    name: 'DODOchain',
+    name: 'Birdlayer',
     slug: 'dodochain',
     category: 'Optimium',
     description:
-      'DODOchain is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',
+      'Birdlayer is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',
     purposes: ['Universal', 'Interoperability'],
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
-      websites: ['https://dodochain.com/'],
-      documentation: ['https://docs.dodochain.com/en/dodochain'],
+      websites: ['https://birdlayer.xyz/'],
+      explorers: ['https://scan.birdlayer.xyz/'],
+      bridges: ['https://birdlayer.xyz/bridge/'],
+      documentation: [
+        'https://docs.birdlayer.xyz/en/birdlayer/developers/network-information',
+      ],
       repositories: ['https://github.com/DODOEX'],
       socialMedia: [
-        'https://x.com/DODO_Chain',
-        'https://medium.com/@DODOchain',
+        'https://x.com/Bird_Layer',
+        'https://medium.com/@BirdLayer',
         'https://t.me/dodoex_official',
         'https://discord.com/invite/tyKReUK',
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
+  chainConfig: {
+    name: 'dodochain',
+    chainId: 53456,
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.birdlayer.xyz',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
+  escrows: [
+    {
+      address: EthereumAddress('0x113E7DC5e4A42b1bEe9DB0594f48EFdEa7b88eE0'), // bridge
+      sinceTimestamp: UnixTime(1737689038),
+      tokens: ['ETH'],
+      chain: 'arbitrum',
+    },
+    {
+      address: EthereumAddress('0x6111D7AAa83fbE979301C458fF8f07F1d2E30002'), // standardGW
+      sinceTimestamp: UnixTime(1737693204),
+      tokens: '*',
+      chain: 'arbitrum',
+    },
+  ],
 })

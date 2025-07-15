@@ -5,13 +5,18 @@ import { DiscordWebhookClient } from './DiscordWebhookClient'
 describe(DiscordWebhookClient.name, () => {
   describe(DiscordWebhookClient.prototype.sendMessage.name, () => {
     it('sends message', async () => {
+      const messageId = '1234567890'
       const mockWebhookClient = mockObject<WebhookClient>({
-        send: mockFn().resolvesTo(undefined),
+        send: mockFn().resolvesTo({
+          id: messageId,
+        }),
       })
 
       const message = 'Hello, Discord!'
       const client = new DiscordWebhookClient('url', mockWebhookClient)
-      await client.sendMessage(message)
+      const result = await client.sendMessage(message)
+
+      expect(result).toEqual(messageId)
 
       expect(mockWebhookClient.send).toHaveBeenCalledWith({
         username: 'L2BEAT',
@@ -27,7 +32,7 @@ describe(DiscordWebhookClient.name, () => {
       const message = 'a'.repeat(2001)
 
       await expect(client.sendMessage(message)).toBeRejectedWith(
-        `Discord error: Message size exceeded (2000 characters)`,
+        'Discord error: Message size exceeded (2000 characters)',
       )
     })
   })

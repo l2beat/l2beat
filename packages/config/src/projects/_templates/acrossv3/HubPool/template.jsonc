@@ -1,0 +1,68 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of {{finalizationDelayFmt}} and a bond amount of {{bondAmountFmt}} ABT.",
+  "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
+  "ignoreRelatives": ["weth", "lpTokenFactory"],
+  "ignoreInWatchMode": ["rootBundleProposal"],
+  "category": "core",
+  "canActIndependently": false,
+  "fields": {
+    "bondAmountFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function bondAmount() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds)."
+        }
+      ]
+    },
+    "paused": {
+      "severity": "HIGH"
+    },
+    "finalizationDelayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function liveness() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "CrossChainContracts": {
+      "handler": {
+        "type": "event",
+        "select": "spokePool",
+        "set": {
+          "event": "CrossChainContractsSet"
+        },
+        "groupBy": "l2ChainId",
+        "ignoreRelative": true
+      }
+    },
+    "spokePool": {
+      "handler": {
+        "type": "call",
+        "method": "function crossChainContracts(uint256) view returns (address adapter, address spokePool)",
+        "args": ["1"]
+      },
+      "edit": ["get", "spokePool"]
+    },
+    "Adapters": {
+      "handler": {
+        "type": "event",
+        "select": "adapter",
+        "set": {
+          "event": "CrossChainContractsSet"
+        },
+        "groupBy": "l2ChainId"
+      }
+    }
+  }
+}

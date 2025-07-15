@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,10 +13,13 @@ export const leaf: ScalingProject = upcomingL2({
       'Leaf is an upcoming OP Stack L2 focused on DeFi and MEV protection.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://leafprotocol.com/'],
       socialMedia: ['https://x.com/leaf_rollup'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

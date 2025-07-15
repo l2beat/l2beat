@@ -34,7 +34,7 @@ interface Props {
 export function TvsChart({ data, unit, isLoading, milestones }: Props) {
   const chartMeta = {
     value: {
-      color: 'hsl(var(--chart-pink))',
+      color: 'var(--chart-pink)',
       indicatorType: { shape: 'line' },
       label: unit.toUpperCase(),
     },
@@ -78,14 +78,18 @@ export function TvsCustomTooltip({
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
+  fullDate,
+}: TooltipProps<number, string> & { unit: ChartUnit; fullDate?: boolean }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
-        <div className="label-value-14-medium mb-3 text-secondary">
-          {formatTimestamp(label, { longMonthName: true })}
+        <div className="mb-3 font-medium text-label-value-14 text-secondary">
+          {formatTimestamp(label, {
+            longMonthName: true,
+            mode: fullDate ? 'datetime' : undefined,
+          })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
@@ -104,11 +108,11 @@ export function TvsCustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="label-value-15-medium whitespace-nowrap">
+                <span className="whitespace-nowrap font-medium text-label-value-15">
                   {formatCurrency(entry.value, unit)}
                 </span>
               </div>

@@ -13,7 +13,7 @@ export async function getScalingActivityData(
     unknown,
     unknown,
     unknown,
-    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview' }
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
   >,
   manifest: Manifest,
   cache: ICache,
@@ -53,7 +53,7 @@ export async function getScalingActivityData(
 
 async function getCachedData(
   cache: ICache,
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
   const [entries, queryState] = await Promise.all([
     getScalingActivityEntries(),
@@ -74,18 +74,18 @@ async function getCachedData(
 }
 
 async function getQueryState(
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
   const helpers = getSsrHelpers()
 
-  // Skip prefetching for underReview tab as it doesn't have chart data
-  if (tab === 'underReview') {
+  // Skip prefetching for notReviewed tab as it doesn't have chart data
+  if (tab === 'notReviewed') {
     return helpers.dehydrate()
   }
 
   await Promise.all([
     helpers.activity.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: tab },
     }),
     helpers.activity.chartStats.prefetch({

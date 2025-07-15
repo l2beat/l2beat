@@ -8,7 +8,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ActivityIndexerDeps) {
     super({
       ...$,
-      name: `activity_block_indexer`,
+      name: 'activity_block_indexer',
       tags: {
         tag: $.projectId,
         project: $.projectId,

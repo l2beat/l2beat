@@ -1,0 +1,122 @@
+{
+  "Optimism_Adapter": {
+    "hash": "0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849",
+    "address": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Ethereum_Adapter": {
+    "hash": "0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a",
+    "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "DoctorWho_Adapter": {
+    "hash": "0x26a48559a60b482a96526e1ee27fef2111bb46e40395ee2122284141ffc30e14",
+    "address": "0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Polygon_Adapter": {
+    "hash": "0xf598be4ed345b6b3e83e04dff2cb5472dc4df0b8476f8f74a4c75c473dee6347",
+    "address": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "ZkStack_CustomGasToken_Adapter": {
+    "hash": "0x949e41ae655aafeb048cfa1c491186b6582bd4f6028227ed0ce17a012456e675",
+    "address": "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Boba_Adapter": {
+    "hash": "0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31",
+    "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "ZkStack_Adapter": {
+    "hash": "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59",
+    "address": "0xA374585E6062517Ee367ee5044946A6fBe17724f",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "WorldChain_Adapter": {
+    "hash": "0x1cb72676cfb98558060e29bb95cd793731c85797f35025b1f2dfb383499f55a3",
+    "address": "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Redstone_Adapter": {
+    "hash": "0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1",
+    "address": "0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Lisk_Adapter": {
+    "hash": "0x9c8e20215aa548a11ed98c8333dbfbaa36143263b4de43d8f73a57b19ec7cea6",
+    "address": "0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Soneium_Adapter": {
+    "hash": "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008",
+    "address": "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Base_Adapter": {
+    "hash": "0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f",
+    "address": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Mode_Adapter": {
+    "hash": "0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac",
+    "address": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Alephzero_Adapter": {
+    "hash": "0x1ccce681c671e5131c390787ccaa619eb4c4ee20d444e73484078b4770b12ea1",
+    "address": "0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Arbitrum_Adapter": {
+    "hash": "0xa1c171564a6e837069132a07b8c6d217e08cf53cd6a43151a7f497440d2f1e33",
+    "address": "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Linea_Adapter": {
+    "hash": "0x0252bdb116e29cf6cc0b6de4ebf9589fcc53281458cb80f4db7a91a866d9eb46",
+    "address": "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Blast_Adapter": {
+    "hash": "0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332",
+    "address": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Scroll_Adapter": {
+    "hash": "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e",
+    "address": "0x2DA799c2223c6ffB595e578903AE6b95839160d8",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Zora_Adapter": {
+    "hash": "0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87",
+    "address": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  },
+  "Solana_Adapter": {
+    "hash": "0xd9ba616630e494fc819ca66efe5c5ed40e5ed274cb568c605ecf8a609d88f738",
+    "address": "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3",
+    "chain": "ethereum",
+    "blockNumber": 22867011
+  }
+}

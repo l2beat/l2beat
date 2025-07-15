@@ -12,7 +12,7 @@ export function StageOneRequirementsChangeTooltipContent({
 }: Props) {
   return (
     <div className="space-y-2">
-      <div className="label-value-14-bold">
+      <div className="font-bold text-label-value-14">
         The project will be downgraded to{' '}
         <StageBadge
           stage={downgradePending.toStage}
@@ -27,7 +27,9 @@ export function StageOneRequirementsChangeTooltipContent({
         className="mx-auto w-full py-1"
         withBackground
       />
-      <p className="label-value-14-bold !mt-4 text-primary">Reasons</p>
+      <p className="mt-4! font-bold text-label-value-14 text-primary">
+        Reasons
+      </p>
       <div className="flex gap-2">
         <MissingIcon className="size-4 shrink-0 fill-negative" />
         <span>{downgradePending.reason}</span>

@@ -4,9 +4,6 @@ import capitalize from 'lodash/capitalize'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import { TokenCombobox } from '~/components/TokenCombobox'
-import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { Skeleton } from '~/components/core/Skeleton'
 import {
   ChartContainer,
   ChartLegend,
@@ -23,8 +20,11 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
+import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
+import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
 import type {
   ProjectToken,
@@ -134,9 +134,6 @@ export function ProjectTokenChart({
             data: chartData,
             isLoading,
             yAxis: {
-              tick: {
-                width: 150,
-              },
               tickFormatter: (value: number) =>
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
             },
@@ -180,7 +177,7 @@ function CustomTooltip({
   return (
     <div className={tooltipContentVariants()}>
       <div className="flex min-w-28 flex-col gap-1">
-        <div className="label-value-14-medium mb-1 text-secondary">
+        <div className="mb-1 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true })}
         </div>
         <div className="flex flex-col gap-2">
@@ -200,11 +197,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="label-value-15-medium whitespace-nowrap">
+                <span className="whitespace-nowrap font-medium text-label-value-15">
                   {formatCurrency(entry.value, unit)}
                 </span>
               </div>
@@ -258,11 +255,11 @@ function TokenChartUnitControls({
 function sourceToColor(source: ProjectToken['source']) {
   switch (source) {
     case 'native':
-      return 'hsl(var(--chart-stacked-pink))'
+      return 'var(--chart-stacked-pink)'
     case 'canonical':
-      return 'hsl(var(--chart-stacked-purple))'
+      return 'var(--chart-stacked-purple)'
     case 'external':
-      return 'hsl(var(--chart-stacked-yellow))'
+      return 'var(--chart-stacked-yellow)'
     default:
       assertUnreachable(source)
   }

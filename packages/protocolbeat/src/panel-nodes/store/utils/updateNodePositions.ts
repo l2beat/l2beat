@@ -1,5 +1,10 @@
 import type { Box, Connection, State } from '../State'
-import { BOTTOM_PADDING, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
+import {
+  BOTTOM_PADDING,
+  FIELD_HEIGHT,
+  HEADER_HEIGHT,
+  HIDDEN_FIELDS_FOOTER_HEIGHT,
+} from './constants'
 
 export function updateNodePositions(state: State): State {
   let dx = state.input.mouseX - state.input.mouseStartX
@@ -15,12 +20,15 @@ export function updateNodePositions(state: State): State {
   const nodeDimensions: Record<string, Box> = {}
   for (const node of state.nodes) {
     const start = state.positionsBeforeMove[node.id]
+    const hiddenFieldsHeight =
+      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
     nodeDimensions[node.id] = {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
         (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
-        BOTTOM_PADDING,
+        BOTTOM_PADDING +
+        hiddenFieldsHeight,
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }
@@ -34,35 +42,43 @@ export function updateNodePositions(state: State): State {
         // this should never happen
         throw new Error('missing dimensions for node ' + node.id)
       }
+
+      const hiddenFieldsSet = new Set(node.hiddenFields)
+
+      let visibleIndex = 0
+
+      const processedFields = node.fields.map((field, index) => {
+        const to = nodeDimensions[field.target]
+        if (!to) {
+          // this should never happen
+          throw new Error('missing dimensions for node ' + field.target)
+        }
+
+        const currentVisibleIndex = visibleIndex
+
+        if (!hiddenFieldsSet.has(field.name)) {
+          visibleIndex++
+        }
+
+        return {
+          ...field,
+          box: {
+            x: box.x,
+            y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
+            width: box.width,
+            height: FIELD_HEIGHT,
+          },
+          connection: {
+            nodeId: field.target,
+            ...processConnection(currentVisibleIndex, box, to),
+          },
+        }
+      })
+
       return {
         ...node,
         box,
-        fields: node.fields.map((field, index) => {
-          const to = nodeDimensions[field.target]
-          if (!to) {
-            // this should never happen
-            throw new Error('missing dimensions for node ' + field.target)
-          }
-
-          // Calculate the actual visible index by counting non-hidden fields up to the current index
-          const visibleIndex = node.fields
-            .slice(0, index)
-            .filter((f) => !node.hiddenFields.includes(f.name)).length
-
-          return {
-            ...field,
-            box: {
-              x: box.x,
-              y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
-              width: box.width,
-              height: FIELD_HEIGHT,
-            },
-            connection: {
-              nodeId: field.target,
-              ...processConnection(visibleIndex, box, to),
-            },
-          }
-        }),
+        fields: processedFields,
       }
     }),
   }
@@ -97,17 +113,20 @@ function processConnection(
       from: { direction: 'left', x: from.x, y: fromY },
       to: { direction: 'left', x: to.x, y: toY },
     }
-  } else if (min === leftToRight) {
+  }
+  if (min === leftToRight) {
     return {
       from: { direction: 'left', x: from.x, y: fromY },
       to: { direction: 'right', x: to.x + to.width, y: toY },
     }
-  } else if (min === rightToLeft) {
+  }
+  if (min === rightToLeft) {
     return {
       from: { direction: 'right', x: from.x + from.width, y: fromY },
       to: { direction: 'left', x: to.x, y: toY },
     }
-  } else if (min === rightToRight) {
+  }
+  if (min === rightToRight) {
     return {
       from: { direction: 'right', x: from.x + from.width, y: fromY },
       to: { direction: 'right', x: to.x + to.width, y: toY },

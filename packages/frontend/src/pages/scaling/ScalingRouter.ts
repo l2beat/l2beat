@@ -8,7 +8,6 @@ import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
 import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
-import { getScalingFinalityData } from './finality/getScalingFinalityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
@@ -39,7 +38,7 @@ export function createScalingRouter(
     validateRoute({
       query: v.object({
         tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'underReview'])
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
           .default('rollups'),
       }),
     }),
@@ -61,7 +60,7 @@ export function createScalingRouter(
     validateRoute({
       query: v.object({
         tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'underReview'])
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
           .default('rollups'),
       }),
     }),
@@ -80,12 +79,6 @@ export function createScalingRouter(
 
   router.get('/scaling/liveness', async (req, res) => {
     const data = await getScalingLivenessData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
-  router.get('/scaling/finality', async (req, res) => {
-    const data = await getScalingFinalityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })

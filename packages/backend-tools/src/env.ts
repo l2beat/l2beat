@@ -57,7 +57,7 @@ export class Env {
   optionalInteger(key: string | string[]): number | undefined {
     const resolved = this.resolve(key)
     if (resolved) {
-      const result = parseInt(resolved.value)
+      const result = Number.parseInt(resolved.value)
       if (result.toString() === resolved.value) {
         return result
       }
@@ -101,7 +101,6 @@ function throwMissingEnvVar(keys: string | string[]): never {
         ', ',
       )}`,
     )
-  } else {
-    throw new Error(`Missing environment variable: ${keys}`)
   }
+  throw new Error(`Missing environment variable: ${keys}`)
 }

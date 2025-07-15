@@ -6,37 +6,32 @@ import { EcosystemWidget } from './EcosystemWidget'
 
 export interface EcosystemGovernanceLinks {
   review: string
-  topDelegates: string
+  delegateToL2BEAT: string
   proposals: string
   bankImage: ImageParams
 }
 
 interface Props {
   links: EcosystemGovernanceLinks
-  topDelegatesBackgroundImage: string
+  delegateToL2BEATBackgroundImage: string
   className?: string
 }
 
 export function EcosystemGovernanceLinks({
   links,
-  topDelegatesBackgroundImage,
+  delegateToL2BEATBackgroundImage,
   className,
 }: Props) {
   return (
-    <div
-      className={cn(
-        'grid gap-[--spacing] sm:grid-cols-2 sm:grid-rows-2',
-        className,
-      )}
-    >
+    <div className={cn('grid gap-1 sm:grid-cols-2 sm:grid-rows-2', className)}>
       <GovernanceLink
         href={links.review}
         bankImage={links.bankImage}
         className="sm:row-span-2"
       />
-      <TopDelegatesLink
-        href={links.topDelegates}
-        backgroundImage={topDelegatesBackgroundImage}
+      <DelegateToL2BEATLink
+        href={links.delegateToL2BEAT}
+        backgroundImage={delegateToL2BEATBackgroundImage}
       />
       <ProposalsLink href={links.proposals} />
     </div>
@@ -47,10 +42,14 @@ function GovernanceLink({
   href,
   bankImage,
   className,
-}: { href: string; bankImage: ImageParams; className?: string }) {
+}: {
+  href: string
+  bankImage: ImageParams
+  className?: string
+}) {
   return (
     <EcosystemWidget
-      className={cn('!pt-0 flex flex-col overflow-hidden', className)}
+      className={cn('flex flex-col overflow-hidden pt-0!', className)}
     >
       <div className="relative flex h-full select-none items-center justify-between gap-2 text-primary">
         <div className="flex flex-col justify-center whitespace-nowrap">
@@ -81,11 +80,15 @@ function GovernanceLink({
   )
 }
 
-function TopDelegatesLink({
+function DelegateToL2BEATLink({
   href,
   backgroundImage,
   className,
-}: { href: string; backgroundImage: string; className?: string }) {
+}: {
+  href: string
+  backgroundImage: string
+  className?: string
+}) {
   return (
     <EcosystemWidget asChild>
       <CustomLink
@@ -101,13 +104,13 @@ function TopDelegatesLink({
           className="absolute inset-0 origin-left rounded-lg bg-cover transition-all ease-in-out group-hover:scale-125"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
-        <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black"></div>
+        <div className="absolute inset-y-0 left-0 w-1/2 bg-linear-to-r from-black" />
         <div className="relative flex h-full flex-col justify-center">
           <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Governance
           </div>
           <div className="group-hover:-translate-y-2 origin-left font-bold text-xl transition-all ease-in-out will-change-transform group-hover:translate-x-4 group-hover:scale-125">
-            Top Delegates
+            Delegate to L2BEAT
           </div>
         </div>
       </CustomLink>
@@ -118,7 +121,10 @@ function TopDelegatesLink({
 function ProposalsLink({
   href,
   className,
-}: { href: string; className?: string }) {
+}: {
+  href: string
+  className?: string
+}) {
   return (
     <EcosystemWidget asChild>
       <CustomLink

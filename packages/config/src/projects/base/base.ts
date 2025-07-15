@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -20,7 +25,7 @@ export const base: ScalingProject = opStackL2({
     slug: 'base',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     description:
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
     links: {
@@ -42,9 +47,6 @@ export const base: ScalingProject = opStackL2({
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
@@ -73,18 +75,16 @@ export const base: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
+      inbox: ChainSpecificAddress.address(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
+      ],
     },
   ],
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1710375515),
-    genesisTimestamp: UnixTime(1686789347),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -93,13 +93,17 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'batcherHash',
+        from: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'batcherHash',
+          ),
         ),
-        to: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'sequencerInbox',
+        to: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'sequencerInbox',
+          ),
         ),
         sinceTimestamp: genesisTimestamp,
       },
@@ -126,7 +130,9 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: discovery.getContract('DisputeGameFactory').address,
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
@@ -232,7 +238,7 @@ export const base: ScalingProject = opStackL2({
     'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Optimism Security Council multisig, with a Safe Module that allows the OP Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The OP Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
-    text: `a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.`,
+    text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.',
   },
   nonTemplateRiskView: {
     exitWindow: {

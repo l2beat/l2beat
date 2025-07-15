@@ -1,3 +1,172 @@
+Generated with discovered.json: 0x761a87ab32dc9ee537e1a5480f51b8d80db81877
+
+# Diff at Mon, 14 Jul 2025 12:45:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22397507
+- current block number: 22397507
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397507 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      address:
+-        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
++        "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
++        "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
+      values.$members.1:
+-        "0xf4b7676d9EC86D2011aB87855424219a97DEB40c"
++        "eth:0xf4b7676d9EC86D2011aB87855424219a97DEB40c"
+      values.$members.2:
+-        "0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E"
++        "eth:0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E"
+      implementationNames.0x34F5af5158171Ffd2475d21dB5fc3B311F221982:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc) {
+    +++ description: None
+      address:
+-        "0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
++        "eth:0x389b5c80A1dbE24f96BEb50002cB5fbe2536e1Cc"
+    }
+```
+
+```diff
+    EOA  (0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947) {
+    +++ description: None
+      address:
+-        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
++        "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+    }
+```
+
+```diff
+    EOA  (0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E) {
+    +++ description: None
+      address:
+-        "0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E"
++        "eth:0x84ef523696eeE7BC7Fe102Eccc8508895Cd2c37E"
+    }
+```
+
+```diff
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458) {
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+      address:
+-        "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+      values.$admin:
+-        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
++        "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      values.$implementation:
+-        "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"
++        "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"
+      values.$pastUpgrades.0.2.0:
+-        "0x2E81FD03725158903FD32E41b0357C47941BB2c3"
++        "eth:0x2E81FD03725158903FD32E41b0357C47941BB2c3"
+      values.$pastUpgrades.1.2.0:
+-        "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"
++        "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B"
+      values.owner:
+-        "0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
++        "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982"
+      values.permissionedProver:
+-        "0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
++        "eth:0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947"
+      implementationNames.0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458:
+-        "ERC1967Proxy"
+      implementationNames.0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B:
+-        "LightClient"
+      implementationNames.eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458:
++        "ERC1967Proxy"
+      implementationNames.eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B:
++        "LightClient"
+    }
+```
+
+```diff
+    EOA  (0xf4b7676d9EC86D2011aB87855424219a97DEB40c) {
+    +++ description: None
+      address:
+-        "0xf4b7676d9EC86D2011aB87855424219a97DEB40c"
++        "eth:0xf4b7676d9EC86D2011aB87855424219a97DEB40c"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HotShotLightClient (0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458)
+    +++ description: The DA bridge contract that stores and verifies HotShot state commitments on Ethereum.
+```
+
+Generated with discovered.json: 0x2c7846e1d38db7696eabbf984911bc2f434ce178
+
+# Diff at Fri, 04 Jul 2025 12:18:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22397507
+- current block number: 22397507
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397507 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+      receivedPermissions.1.from:
+-        "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+    }
+```
+
+```diff
+    EOA  (0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+    }
+```
+
 Generated with discovered.json: 0xe6f17bfb1401cba8392e891e4d98471a7a03a2e5
 
 # Diff at Fri, 23 May 2025 09:40:55 GMT:

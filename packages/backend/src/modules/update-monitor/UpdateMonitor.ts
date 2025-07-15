@@ -1,4 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import {
   type ConfigReader,
   type ConfigRegistry,
@@ -7,24 +8,22 @@ import {
   diffDiscovery,
   hashJsonStable,
 } from '@l2beat/discovery'
+import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import {
   assert,
+  assertUnreachable,
   type ChainConverter,
   ChainId,
   UnixTime,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
-
-import type { Database } from '@l2beat/database'
-import { hashJson, sortObjectByKeys } from '@l2beat/shared'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
+import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import type { UpdateDiffer } from './UpdateDiffer'
 import type { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
-import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
 import { findUnknownEntries } from './utils/findUnknownEntries'
 
@@ -179,6 +178,7 @@ export class UpdateMonitor {
       this.logger.info('Project update started', {
         chain: runner.chain,
         project: projectConfig.name,
+        currentBlock: blockNumber,
       })
 
       const projectFinished = projectGauge.startTimer({
@@ -228,10 +228,14 @@ export class UpdateMonitor {
       runner,
       projectConfig,
     )
+
     const { discovery } = await runner.discoverWithRetry(
       projectConfig,
       blockNumber,
       this.logger,
+      undefined,
+      undefined,
+      'useCurrentBlockNumber', // this is for dependent discoveries
     )
 
     if (!previousDiscovery || !discovery) return
@@ -284,7 +288,7 @@ export class UpdateMonitor {
     for (const contract of discovery.entries) {
       if (contract.errors !== undefined) {
         for (const [field, error] of Object.entries(contract.errors)) {
-          logger.warn(`There was an error during discovery`, {
+          logger.warn('There was an error during discovery', {
             field,
             error,
           })
@@ -297,35 +301,49 @@ export class UpdateMonitor {
     runner: DiscoveryRunner,
     projectConfig: ConfigRegistry,
   ): Promise<DiscoveryOutput | undefined> {
+    this.logger.info('Getting previous discovery', {
+      chain: runner.chain,
+      project: projectConfig.name,
+    })
+    const projectPair = { chain: runner.chain, project: projectConfig.name }
+
     const databaseEntry = await this.db.updateMonitor.findLatest(
       projectConfig.name,
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
-    let previousDiscovery: DiscoveryOutput
-    const dbEntryIsUpToDate =
-      databaseEntry?.configHash === hashJsonStable(projectConfig.structure)
+    const diskDiscovery = this.configReader.readDiscovery(
+      projectConfig.name,
+      runner.chain,
+    )
 
-    if (dbEntryIsUpToDate) {
-      this.logger.info('Using database record', {
-        chain: runner.chain,
-        project: projectConfig.name,
-      })
-      previousDiscovery = databaseEntry.discovery
+    const flatSourceEntry = await this.db.flatSources.get(
+      projectConfig.name,
+      ChainId(this.chainConverter.toChainId(runner.chain)),
+    )
+
+    const flatSourceBlockNumber = flatSourceEntry?.blockNumber ?? 0
+    const onDiskDiscoveryChanged =
+      diskDiscovery.blockNumber > flatSourceBlockNumber
+    const onDiskConfigChanged =
+      databaseEntry?.configHash !== hashJsonStable(projectConfig.structure)
+
+    let previousDiscovery: DiscoveryOutput
+
+    if (onDiskConfigChanged || onDiskDiscoveryChanged) {
+      this.logger.info('Using committed file', projectPair)
+      previousDiscovery = diskDiscovery
     } else {
-      this.logger.info('Using committed file', {
-        chain: runner.chain,
-        project: projectConfig.name,
-      })
-      previousDiscovery = this.configReader.readDiscovery(
-        projectConfig.name,
-        runner.chain,
-      )
+      this.logger.info('Using database record', projectPair)
+      previousDiscovery = databaseEntry.discovery
     }
 
     const { discovery, flatSources } = await runner.discoverWithRetry(
       projectConfig,
       previousDiscovery.blockNumber,
       this.logger,
+      undefined,
+      undefined,
+      previousDiscovery.dependentDiscoveries,
     )
 
     // NOTE(radomski): We should only write to the database files that are
@@ -333,7 +351,12 @@ export class UpdateMonitor {
     // update could happen to the implementation of a contract. UpdateMonitor
     // will find it and write the _new_ implementation's source code to the
     // database.
-    if (!dbEntryIsUpToDate) {
+    //
+    // A project can update, have it's source changed and the config will stay
+    // the same. The only way to detect it is to check if the block number of
+    // the ondisk discovery is higher than the one in the flat source table
+    if (onDiskConfigChanged || onDiskDiscoveryChanged) {
+      this.logger.info('Upserting flat source', projectPair)
       await this.db.flatSources.upsert({
         projectId: projectConfig.name,
         chainId: ChainId(this.chainConverter.toChainId(runner.chain)),

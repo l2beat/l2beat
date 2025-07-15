@@ -1,17 +1,17 @@
-import { type IEtherscanClient, flattenStartingFrom } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
+import type { Logger } from '@l2beat/backend-tools'
+import { flattenStartingFrom, type IEtherscanClient } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 export async function fetchAndFlatten(
   address: EthereumAddress,
   client: IEtherscanClient,
-  logger: CliLogger,
+  logger: Logger,
   includeAll: boolean,
 ): Promise<string> {
-  logger.logLine('Fetching contract source code...')
+  logger.info('Fetching contract source code...')
   const source = await client.getContractSource(address)
 
-  logger.logLine('Flattening...')
+  logger.info('Flattening...')
   const input = Object.entries(source.files)
     .map(([fileName, content]) => ({
       path: fileName,

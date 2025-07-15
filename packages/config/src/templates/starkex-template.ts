@@ -4,9 +4,9 @@ import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { type CommitteeResult, getCommittee } from '../discovery/starkware'
 import type {
   DaBridgeRisks,
+  DacInfo,
   DaLayerRisks,
   DaTechnology,
-  DacInfo,
   ProjectCustomDa,
 } from '../types'
 import { DAC } from './dac-template'
@@ -66,7 +66,7 @@ Before the state update is accepted, the StarkEx contract verifies the transacti
     risks: [
       {
         category: 'Funds can be lost if',
-        text: `a malicious committee signs a data availability attestation for an unavailable transaction batch.`,
+        text: 'a malicious committee signs a data availability attestation for an unavailable transaction batch.',
       },
     ],
     references: [

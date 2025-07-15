@@ -5,13 +5,13 @@
   "configHash": "0x1dadc37d64fb7e57dadb7a1ae1069d85a7936b4fae8e3d7979287fb16b0ce803",
   "entries": [
     {
-      "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+      "address": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "TransitionDisputer",
-      "address": "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f",
+      "address": "eth:0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f",
       "type": "Contract",
       "sourceHashes": [
         "0x6ef430d51894cfb8e777520f64a1df14975bcd0d02c642bc3a7230a0c9407a33"
@@ -24,17 +24,17 @@
         "INIT_TRANSITION_STATE_ROOT": "0xcf277fb80a82478460e8988570b718f1e083ceb76f7e271a1a1497e5975f53ae"
       },
       "implementationNames": {
-        "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": "TransitionDisputer"
+        "eth:0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": "TransitionDisputer"
       }
     },
     {
-      "address": "0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
+      "address": "eth:0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "RollupChain",
-      "address": "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
+      "address": "eth:0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
       "type": "Contract",
       "sourceHashes": [
         "0x4e59983723a2311ff5ff300ba5aa1533dca94726b04932b57697741b294d47c3"
@@ -48,8 +48,8 @@
         "countExecuted": 1457,
         "getCurrentBlockId": 1457,
         "maxPriorityTxDelay": 60,
-        "operator": "0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
-        "owner": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+        "operator": "eth:0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
+        "owner": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
         "paused": false,
         "pendingBalanceSyncsCommitHead": 3810,
         "pendingBalanceSyncsExecuteHead": 3807,
@@ -59,12 +59,12 @@
         "pendingDepositsTail": 321
       },
       "implementationNames": {
-        "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": "RollupChain"
+        "eth:0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": "RollupChain"
       }
     },
     {
       "name": "Registry",
-      "address": "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8",
+      "address": "eth:0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8",
       "type": "Contract",
       "sourceHashes": [
         "0xebb65e547192b3206d06923231dcd1eed98be7f1c64c6ded8b96f7cc248f5708"
@@ -74,10 +74,10 @@
       "sinceBlock": 12283733,
       "values": {
         "$immutable": true,
-        "owner": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+        "owner": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
       },
       "implementationNames": {
-        "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": "Registry"
+        "eth:0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": "Registry"
       }
     }
   ],
@@ -158,5 +158,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x9c78edfe7bddc69d6ad5528e94fcdbceff7214e3bc3d1484d1f0070bb8318592"
+  "permissionsConfigHash": "0x6bd18bc8429622d1522ab48e5387f39a315b0d74727ba2c2da80d81ef4e2fd15"
 }

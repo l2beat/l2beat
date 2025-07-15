@@ -1,13 +1,13 @@
-import { readFileSync } from 'fs'
-import path from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import {
-  type HashedFileContent,
   buildSimilarityHashmap,
   estimateSimilarity,
   format,
+  type HashedFileContent,
 } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
+import { readFileSync } from 'fs'
+import path from 'path'
 import { listFilesRecursively } from './compare-flat-sources/common'
 import { colorMap } from './compare-flat-sources/output'
 
@@ -33,26 +33,14 @@ export async function matchFile(
   directoryPath: string,
   minSimilarity: number,
   maxResults: number,
-  logger: CliLogger,
+  logger: Logger,
 ): Promise<void> {
   const filePaths = await listFilesRecursively(directoryPath)
   const solidityFiles = filePaths.filter((f) => f.endsWith('.sol'))
-  const databaseFiles = solidityFiles.map((f, i) => {
-    logger.updateStatus(
-      'ReadingFiles',
-      `Reading files: ${i + 1}/${solidityFiles.length}`,
-    )
-    return readAndHashFile(f)
-  })
+  const databaseFiles = solidityFiles.map((f) => readAndHashFile(f))
 
   const comparisons = databaseFiles
-    .map((dbFile, i) => {
-      logger.updateStatus(
-        'Comparing files',
-        `Comparing files: ${i + 1}/${solidityFiles.length}`,
-      )
-      return compareTwoFiles(baseFile, dbFile)
-    })
+    .map((dbFile) => compareTwoFiles(baseFile, dbFile))
     .sort((a, b) => b.similarity - a.similarity)
     .filter((c) => c.similarity >= minSimilarity)
     .slice(0, maxResults)
@@ -79,7 +67,7 @@ function subtractPath(basePath: string, fullPath: string): string {
 }
 
 function present(
-  logger: CliLogger,
+  logger: Logger,
   baseDatabasePath: string,
   result: ComparisonResult[],
 ) {
@@ -97,5 +85,5 @@ function present(
   }
 
   const table = formatAsAsciiTable(headers, rows)
-  logger.logLine(table)
+  logger.info(table)
 }

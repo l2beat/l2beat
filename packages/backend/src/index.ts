@@ -1,22 +1,20 @@
 import {
   type Env,
+  getEnv,
   LogFormatterEcs,
   LogFormatterJson,
   LogFormatterPretty,
   Logger,
   type LoggerOptions,
   type LoggerTransportOptions,
-  getEnv,
 } from '@l2beat/backend-tools'
-
+import apm from 'elastic-apm-node'
+import { Application } from './Application'
+import { getConfig } from './config'
 import {
   ElasticSearchTransport,
   type ElasticSearchTransportOptions,
 } from './peripherals/elastic-search/ElasticSearchTransport'
-
-import apm from 'elastic-apm-node'
-import { Application } from './Application'
-import { getConfig } from './config'
 
 main().catch(() => {
   process.exit(1)

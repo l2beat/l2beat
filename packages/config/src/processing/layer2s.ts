@@ -19,8 +19,8 @@ import { astarzkevm } from '../projects/astarzkevm/astarzkevm'
 import { automata } from '../projects/automata/automata'
 import { axonum } from '../projects/axonum/axonum'
 import { azchain } from '../projects/azchain/azchain'
-import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztec } from '../projects/aztec/aztec'
+import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
 import { blast } from '../projects/blast/blast'
@@ -43,7 +43,6 @@ import { dcamonster } from '../projects/dcamonster/dcamonster'
 import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
-import { degenlayer } from '../projects/degenlayer/degenlayer'
 import { destra } from '../projects/destra/destra'
 import { deversifi } from '../projects/deversifi/deversifi'
 import { dydx } from '../projects/dydx/dydx'
@@ -84,7 +83,6 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { intmax } from '../projects/intmax/intmax'
-import { kakarotzkevm } from '../projects/kakarotzkevm/kakarotzkevm'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -136,7 +134,6 @@ import { optimism } from '../projects/optimism/optimism'
 import { optopia } from '../projects/optopia/optopia'
 import { orderly } from '../projects/orderly/orderly'
 import { ozean } from '../projects/ozean/ozean'
-import { palm } from '../projects/palm/palm'
 import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
@@ -145,6 +142,7 @@ import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
+import { pepeunchained2 } from '../projects/pepeunchained2/pepeunchained2'
 import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
 import { polygonpos } from '../projects/polygon-pos/polygon-pos'
@@ -183,7 +181,6 @@ import { soon } from '../projects/soon/soon'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
-import { specular } from '../projects/specular/specular'
 import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
@@ -273,7 +270,6 @@ export const layer2s: ScalingProject[] = [
   degate,
   degate2,
   degate3,
-  degenlayer,
   destra,
   dydx,
   ebichain,
@@ -313,7 +309,6 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   intmax,
-  kakarotzkevm,
   karak,
   katana,
   kinto,
@@ -365,7 +360,6 @@ export const layer2s: ScalingProject[] = [
   optopia,
   orderly,
   ozean,
-  palm,
   pandasea,
   paradex,
   parallel,
@@ -374,6 +368,7 @@ export const layer2s: ScalingProject[] = [
   payy,
   penchain,
   pepeunchained,
+  pepeunchained2,
   phala,
   plumenetwork,
   polygonmiden,
@@ -413,7 +408,6 @@ export const layer2s: ScalingProject[] = [
   sophon,
   sorare,
   sovrun,
-  specular,
   spire,
   starknet,
   status,

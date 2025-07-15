@@ -5,6 +5,7 @@
     "name": { "type": "string" },
     "import": { "type": "array", "items": { "type": "string" } },
     "archived": { "type": "boolean" },
+    "modelCrossChainPermissions": { "type": "boolean" },
     "chains": {
       "type": "object",
       "propertyNames": { "type": "string" },
@@ -23,7 +24,6 @@
             "additionalProperties": {
               "type": "object",
               "properties": {
-                "extends": { "type": "string" },
                 "canActIndependently": { "type": "boolean" },
                 "ignoreDiscovery": { "type": "boolean" },
                 "proxyType": {
@@ -89,6 +89,7 @@
                                 "stateDeleterMetis",
                                 "hotValidatorHyperliquid",
                                 "coldValidatorHyperliquid",
+                                "acrossPropose",
                                 "member",
                                 "act",
                                 "interact",

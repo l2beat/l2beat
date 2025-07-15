@@ -1,6 +1,6 @@
 import type { DaLayerThroughput } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
@@ -65,6 +65,9 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     return Object.fromEntries(
       daLayers
         .map((daLayer) => {
+          const lastDaLayerTimestamp = daLayerValues.findLast(
+            (v) => v.daLayer === daLayer.id,
+          )?.timestamp
           const lastRecord = values[daLayer.id]?.at(-1)
 
           const latestThroughput = daLayer.daLayer.throughput
@@ -85,7 +88,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
           return [
             daLayer.id,
             {
-              syncedUntil: lastRecord ? lastRecord.timestamp : undefined,
+              syncedUntil: lastDaLayerTimestamp,
               pastDayData: lastRecord
                 ? getPastDayData(
                     lastRecord,

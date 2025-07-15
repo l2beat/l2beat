@@ -13,7 +13,6 @@ export const tusima: ScalingProject = upcomingL2({
       'Tusima is an infrastructure that bridges Web3.0 and real-world business. It aims to be a consumer payment network for any asset.',
     purposes: ['Universal', 'Payments'],
     category: 'Validium',
-    stack: 'Agglayer CDK',
     links: {
       websites: ['https://tusima.network/'],
       bridges: ['https://tusima.network/Galactic/Withdraw'],

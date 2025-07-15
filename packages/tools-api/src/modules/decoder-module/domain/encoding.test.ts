@@ -3,8 +3,8 @@ import { expect } from 'earl'
 import { describe } from 'mocha'
 import { encodeAbiParameters } from 'viem'
 import {
-  type ParsedType,
   decodeType,
+  type ParsedType,
   parseType,
   tokenizeType,
 } from './encoding'
@@ -152,7 +152,7 @@ describe(decodeType.name, () => {
       encoded: encoded,
       decoded: {
         type: 'bytes',
-        value: `0xdeadbeef`,
+        value: '0xdeadbeef',
         extra: '0x',
         dynamic: false,
       },

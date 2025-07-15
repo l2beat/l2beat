@@ -38,8 +38,8 @@ const getDaThroughputChartByProjectData = async (
   params: DaThroughputChartByProjectParams,
 ): Promise<DaThroughputChartDataByChart> => {
   const db = getDb()
-  const resolution = rangeToResolution(params.range)
-  const [from, to] = getRangeWithMax(params.range, resolution, {
+  const resolution = rangeToResolution({ type: params.range })
+  const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
   const [throughput, allProjects] = await Promise.all([
@@ -49,14 +49,21 @@ const getDaThroughputChartByProjectData = async (
   if (throughput.length === 0) {
     return []
   }
-  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
     allProjects,
     resolution,
   )
 
+  const chartAdjustedTo =
+    resolution === 'hourly'
+      ? to - UnixTime.HOUR
+      : resolution === 'sixHourly'
+        ? to - UnixTime.HOUR * 6
+        : to - UnixTime.DAY
+
   const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
+    [minTimestamp, chartAdjustedTo],
     resolution,
   )
   return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
@@ -67,8 +74,7 @@ function groupByTimestampAndProjectId(
   allProjects: Project[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
-  let minTimestamp = Infinity
-  let maxTimestamp = -Infinity
+  let minTimestamp = Number.POSITIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
   const [daLayerRecords, projectRecords] = partition(
     records,
@@ -89,7 +95,6 @@ function groupByTimestampAndProjectId(
       [project.name]: Number(value),
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   // Add the difference between the total size and the sum of the other projects as 'Unknown'
@@ -110,7 +115,6 @@ function groupByTimestampAndProjectId(
       ['Unknown']: Number(value) - restSummed,
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   return {
@@ -125,14 +129,13 @@ function groupByTimestampAndProjectId(
       ]),
     ),
     minTimestamp: UnixTime(minTimestamp),
-    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
 function getMockDaThroughputChartByProjectData({
   range,
 }: DaThroughputChartByProjectParams): DaThroughputChartDataByChart {
-  const days = rangeToDays(range) ?? 730
+  const days = rangeToDays({ type: range }) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 

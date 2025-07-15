@@ -1,18 +1,18 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
-import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
-import { TableLink } from '~/components/table/TableLink'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
 import {
   TypeExplanationTooltip,
   TypeInfo,
 } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { sortStages } from '~/components/table/sorting/sortStages'
+import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { TotalCell } from '~/pages/scaling/summary/components/table/TotalCell'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
@@ -44,7 +44,9 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
       cell: (ctx) => (
         <TwoRowCell>
           <TwoRowCell.First>
-            <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+            <TypeInfo stacks={ctx.row.original.stacks}>
+              {ctx.getValue()}
+            </TypeInfo>
           </TwoRowCell.First>
           {ctx.row.original.capability === 'appchain' && (
             <TwoRowCell.Second>

@@ -1,3 +1,722 @@
+Generated with discovered.json: 0x583a30e4d258213c0683713d710d93152897df4d
+
+# Diff at Mon, 14 Jul 2025 12:46:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22431552
+- current block number: 22431552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431552 (main branch discovery), not current.
+
+```diff
+    EOA  (0x11b0E7Bef4046dD43b09489926F30514584B1161) {
+    +++ description: None
+      address:
+-        "0x11b0E7Bef4046dD43b09489926F30514584B1161"
++        "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161"
+    }
+```
+
+```diff
+    EOA  (0x2534ED5d1303F035fa7e5d6a52199e59328B3F72) {
+    +++ description: None
+      address:
+-        "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
++        "eth:0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
+    }
+```
+
+```diff
+    EOA  (0x2D407dDb06311396fE14D4b49da5F0471447d45C) {
+    +++ description: None
+      address:
+-        "0x2D407dDb06311396fE14D4b49da5F0471447d45C"
++        "eth:0x2D407dDb06311396fE14D4b49da5F0471447d45C"
+    }
+```
+
+```diff
+    EOA  (0x32744b98cC03A76C0559e905a31E8474a31729c1) {
+    +++ description: None
+      address:
+-        "0x32744b98cC03A76C0559e905a31E8474a31729c1"
++        "eth:0x32744b98cC03A76C0559e905a31E8474a31729c1"
+    }
+```
+
+```diff
+    EOA  (0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65) {
+    +++ description: None
+      address:
+-        "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65"
++        "eth:0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65"
+    }
+```
+
+```diff
+    EOA  (0x3Dd6C793AbA45738e531639977a292A3A8E32C9D) {
+    +++ description: None
+      address:
+-        "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D"
++        "eth:0x3Dd6C793AbA45738e531639977a292A3A8E32C9D"
+    }
+```
+
+```diff
+    EOA  (0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011) {
+    +++ description: None
+      address:
+-        "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011"
++        "eth:0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011"
+    }
+```
+
+```diff
+    EOA  (0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9) {
+    +++ description: None
+      address:
+-        "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9"
++        "eth:0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9"
+    }
+```
+
+```diff
+    EOA  (0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5) {
+    +++ description: None
+      address:
+-        "0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5"
++        "eth:0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5"
+    }
+```
+
+```diff
+    contract ValidatorsRegistry (0x72965045A6691E5A74299D1e878f303264D4D910) {
+    +++ description: Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).
+      address:
+-        "0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+      values.owner:
+-        "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+      values.stateOracle:
+-        "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
++        "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
+      values.validatorAddress.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.validatorAddress.1:
+-        "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad"
++        "eth:0x92E33222A1389aAf89C0794643fBBC7E679a6Dad"
+      values.validatorAddress.2:
+-        "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572"
++        "eth:0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572"
+      values.validatorAddress.3:
+-        "0x32744b98cC03A76C0559e905a31E8474a31729c1"
++        "eth:0x32744b98cC03A76C0559e905a31E8474a31729c1"
+      values.validatorAddress.4:
+-        "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011"
++        "eth:0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011"
+      values.validatorAddress.5:
+-        "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65"
++        "eth:0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65"
+      values.validatorAddress.6:
+-        "0x8406de45bfAca854d08377ca1436C6b4785b4D79"
++        "eth:0x8406de45bfAca854d08377ca1436C6b4785b4D79"
+      values.validatorAddress.7:
+-        "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D"
++        "eth:0x3Dd6C793AbA45738e531639977a292A3A8E32C9D"
+      values.validatorAddress.8:
+-        "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
++        "eth:0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
+      implementationNames.0x72965045A6691E5A74299D1e878f303264D4D910:
+-        "ValidatorsRegistry"
+      implementationNames.eth:0x72965045A6691E5A74299D1e878f303264D4D910:
++        "ValidatorsRegistry"
+    }
+```
+
+```diff
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329) {
+    +++ description: None
+      address:
+-        "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329"
++        "eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329"
+      values.deposit:
+-        "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
++        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+      implementationNames.0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329:
+-        "DirectExitAdministrator"
+      implementationNames.eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329:
++        "DirectExitAdministrator"
+    }
+```
+
+```diff
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B) {
+    +++ description: None
+      address:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB"
++        "eth:0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB"
+      values.$members.1:
+-        "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9"
++        "eth:0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9"
+      values.$members.2:
+-        "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
++        "eth:0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
+      implementationNames.0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1) {
+    +++ description: None
+      address:
+-        "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
++        "eth:0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
+    }
+```
+
+```diff
+    EOA  (0x8406de45bfAca854d08377ca1436C6b4785b4D79) {
+    +++ description: None
+      address:
+-        "0x8406de45bfAca854d08377ca1436C6b4785b4D79"
++        "eth:0x8406de45bfAca854d08377ca1436C6b4785b4D79"
+    }
+```
+
+```diff
+    contract MPTProofVerifier (0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306) {
+    +++ description: Verifier contract for merkle proofs.
+      address:
+-        "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306"
++        "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306"
+      implementationNames.0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306:
+-        "MPTProofVerifier"
+      implementationNames.eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306:
++        "MPTProofVerifier"
+    }
+```
+
+```diff
+    EOA  (0x92E33222A1389aAf89C0794643fBBC7E679a6Dad) {
+    +++ description: None
+      address:
+-        "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad"
++        "eth:0x92E33222A1389aAf89C0794643fBBC7E679a6Dad"
+    }
+```
+
+```diff
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0) {
+    +++ description: None
+      address:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
++        "eth:0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
+      values.$members.1:
+-        "0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5"
++        "eth:0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5"
+      values.$members.2:
+-        "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7"
++        "eth:0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7"
+      values.$members.3:
+-        "0x2D407dDb06311396fE14D4b49da5F0471447d45C"
++        "eth:0x2D407dDb06311396fE14D4b49da5F0471447d45C"
+      implementationNames.0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract TokenDeposit (0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20) {
+    +++ description: Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.
+      address:
+-        "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
++        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+      values.$admin:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.$implementation:
+-        "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"
++        "eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"
+      values.$pastUpgrades.0.2.0:
+-        "0xd8a7d475931193C84b57663fb33a1738df83Ce6f"
++        "eth:0xd8a7d475931193C84b57663fb33a1738df83Ce6f"
+      values.$pastUpgrades.1.2.0:
+-        "0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"
++        "eth:0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"
+      values.$pastUpgrades.2.2.0:
+-        "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"
++        "eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"
+      values.bridge:
+-        "0x9Ef7629F9B930168b76283AdD7120777b3c895b3"
++        "eth:0x9Ef7629F9B930168b76283AdD7120777b3c895b3"
++++ severity: HIGH
+      values.exitAdministrator:
+-        "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329"
++        "eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329"
+      values.owner:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++++ severity: HIGH
+      values.proofVerifier:
+-        "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306"
++        "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306"
++++ severity: HIGH
+      values.stateOracle:
+-        "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
++        "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
+      values.tokenPairs:
+-        "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
++        "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
+      implementationNames.0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20:
+-        "ERC1967Proxy"
+      implementationNames.0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9:
+-        "TokenDeposit"
+      implementationNames.eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20:
++        "ERC1967Proxy"
+      implementationNames.eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9:
++        "TokenDeposit"
+    }
+```
+
+```diff
+    EOA  (0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D) {
+    +++ description: None
+      address:
+-        "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
++        "eth:0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+    }
+```
+
+```diff
+    EOA  (0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7) {
+    +++ description: None
+      address:
+-        "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7"
++        "eth:0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7"
+    }
+```
+
+```diff
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4) {
+    +++ description: Entry point for state (oracle) updates.
+      address:
+-        "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
++        "eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+      values.$pastUpgrades.0.2.0:
+-        "0x13bd43A6BE5795D4A4E3Efc4baC21Cd36Ae9e68A"
++        "eth:0x13bd43A6BE5795D4A4E3Efc4baC21Cd36Ae9e68A"
+      values.$pastUpgrades.1.2.0:
+-        "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
++        "eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"
+      values.acAdmin.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.FEE_SETTER_ROLE.members.0:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.accessControl.HEARTBEAT_ROLE.members.0:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.accessControl.RELAY_ROLE.members.0:
+-        "0x11b0E7Bef4046dD43b09489926F30514584B1161"
++        "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161"
+      values.accessControl.RELAY_ROLE.members.1:
+-        "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
++        "eth:0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+      values.accessControl.RELAY_ADMIN_ROLE.members.0:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.acFeeSetter.0:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.acHeartbeat.0:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.acRelay.0:
+-        "0x11b0E7Bef4046dD43b09489926F30514584B1161"
++        "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161"
+      values.acRelay.1:
+-        "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
++        "eth:0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+      values.acRelayAdmin.0:
+-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
++        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"
+      values.activityMonitor:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.proofVerifier:
+-        "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306"
++        "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306"
+      values.provingContract:
+-        "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
++        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+      values.stateOracle:
+-        "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
++        "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
+      values.updateVerifier:
+-        "0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+      implementationNames.0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4:
+-        "ERC1967Proxy"
+      implementationNames.0x50c42dEAcD8Fc9773493ED674b675bE577f2634b:
+-        "UpdateManager"
+      implementationNames.eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4:
++        "ERC1967Proxy"
+      implementationNames.eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b:
++        "UpdateManager"
+    }
+```
+
+```diff
+    contract StateOracle (0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f) {
+    +++ description: Simple contract that saves the latest state root.
+      address:
+-        "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
++        "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
+      values.owner:
+-        "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+      implementationNames.0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f:
+-        "StateOracle"
+      implementationNames.eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f:
++        "StateOracle"
+    }
+```
+
+```diff
+    EOA  (0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572) {
+    +++ description: None
+      address:
+-        "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572"
++        "eth:0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572"
+    }
+```
+
+```diff
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4) {
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+      address:
+-        "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
++        "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x68A4DdEDc285241440733719e43B1BCB795dD8c7"
++        "eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7"
+      values.$pastUpgrades.0.2.0:
+-        "0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943"
++        "eth:0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943"
+      values.$pastUpgrades.1.2.0:
+-        "0x68A4DdEDc285241440733719e43B1BCB795dD8c7"
++        "eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7"
+      values.acAdmin.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.REGISTER_ROLE.members.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.UNREGISTER_ROLE.members.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6.members.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.accessControl.TERMINATOR_ROLE.members.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.acRegister.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      values.acUnregister.0:
+-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
++        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"
+      implementationNames.0xf2b1510c2709072C88C5b14db90Ec3b6297193e4:
+-        "ERC1967Proxy"
+      implementationNames.0x68A4DdEDc285241440733719e43B1BCB795dD8c7:
+-        "TokenPairs"
+      implementationNames.eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4:
++        "ERC1967Proxy"
+      implementationNames.eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7:
++        "TokenPairs"
+    }
+```
+
+```diff
+    EOA  (0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB) {
+    +++ description: None
+      address:
+-        "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB"
++        "eth:0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorsRegistry (0x72965045A6691E5A74299D1e878f303264D4D910)
+    +++ description: Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).
+```
+
+```diff
++   Status: CREATED
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MPTProofVerifier (0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306)
+    +++ description: Verifier contract for merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenDeposit (0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20)
+    +++ description: Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.
+```
+
+```diff
++   Status: CREATED
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4)
+    +++ description: Entry point for state (oracle) updates.
+```
+
+```diff
++   Status: CREATED
+    contract StateOracle (0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f)
+    +++ description: Simple contract that saves the latest state root.
+```
+
+```diff
++   Status: CREATED
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4)
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+```
+
+Generated with discovered.json: 0x87d73135ef8a5c6f5eef01ce2a3d38e1e5a2037f
+
+# Diff at Fri, 04 Jul 2025 12:19:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22431552
+- current block number: 22431552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431552 (main branch discovery), not current.
+
+```diff
+    EOA  (0x11b0E7Bef4046dD43b09489926F30514584B1161) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+    }
+```
+
+```diff
+    EOA  (0x2534ED5d1303F035fa7e5d6a52199e59328B3F72) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    EOA  (0x32744b98cC03A76C0559e905a31E8474a31729c1) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    EOA  (0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    EOA  (0x3Dd6C793AbA45738e531639977a292A3A8E32C9D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    EOA  (0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
++        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+    }
+```
+
+```diff
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+      receivedPermissions.1.from:
+-        "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+      receivedPermissions.2.from:
+-        "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+    }
+```
+
+```diff
+    EOA  (0x8406de45bfAca854d08377ca1436C6b4785b4D79) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    EOA  (0x92E33222A1389aAf89C0794643fBBC7E679a6Dad) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
+```diff
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
++        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+      receivedPermissions.1.from:
+-        "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+      receivedPermissions.2.from:
+-        "ethereum:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
++        "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
+      receivedPermissions.3.from:
+-        "ethereum:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
++        "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
+      receivedPermissions.4.from:
+-        "ethereum:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
++        "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4"
+      receivedPermissions.5.from:
+-        "ethereum:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
++        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+    }
+```
+
+```diff
+    EOA  (0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
++        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+    }
+```
+
+```diff
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4) {
+    +++ description: Entry point for state (oracle) updates.
+      receivedPermissions.0.from:
+-        "ethereum:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
++        "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f"
+    }
+```
+
+```diff
+    EOA  (0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910"
++        "eth:0x72965045A6691E5A74299D1e878f303264D4D910"
+    }
+```
+
 Generated with discovered.json: 0x4dc34f02922a8e78531b011ac3aa50d69a6aaea2
 
 # Diff at Fri, 23 May 2025 09:41:05 GMT:

@@ -1,5 +1,4 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -8,11 +7,11 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -67,7 +66,7 @@ export const brine: ScalingProject = {
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
     category: 'Other',
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     links: {
       websites: ['https://tanx.fi/'],
       bridges: ['https://trade.tanx.fi/'],

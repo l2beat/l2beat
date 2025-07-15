@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -12,9 +12,6 @@ export const shape: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Alchemy],
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Shape',
     slug: 'shape',
@@ -35,14 +32,6 @@ export const shape: ScalingProject = opStackL2({
         'https://warpcast.com/shape-l2',
       ],
     },
-  },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1721744473),
-    genesisTimestamp: UnixTime(1721744473),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   isNodeAvailable: true,
   chainConfig: {

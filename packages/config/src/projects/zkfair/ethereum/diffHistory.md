@@ -1,3 +1,616 @@
+Generated with discovered.json: 0x9cefe9e5e38e899b04905806a6f19620fea048e0
+
+# Diff at Mon, 14 Jul 2025 12:46:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22322978
+- current block number: 22322978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+    contract ZKFairAdmin (0x0110B1B231aA3b96a94c900eb3056297526AB725) {
+    +++ description: None
+      address:
+-        "0x0110B1B231aA3b96a94c900eb3056297526AB725"
++        "eth:0x0110B1B231aA3b96a94c900eb3056297526AB725"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x39FcAEb9870cB015f2165e93c51f4663AE970953"
++        "eth:0x39FcAEb9870cB015f2165e93c51f4663AE970953"
+      values.$members.1:
+-        "0x3226ECf79dc7007063599A334832d015B48aBDBc"
++        "eth:0x3226ECf79dc7007063599A334832d015B48aBDBc"
+      values.$members.2:
+-        "0x4dba6F06597Ea29A330C06806FA284610c810295"
++        "eth:0x4dba6F06597Ea29A330C06806FA284610c810295"
+      values.$members.3:
+-        "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF"
++        "eth:0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF"
+      implementationNames.0x0110B1B231aA3b96a94c900eb3056297526AB725:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x0110B1B231aA3b96a94c900eb3056297526AB725:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2) {
+    +++ description: None
+      address:
+-        "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
++        "eth:0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
+    }
+```
+
+```diff
+    EOA  (0x061D273bEf947BD0ef2B828526e710eEa0f297ae) {
+    +++ description: None
+      address:
+-        "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
++        "eth:0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
+    }
+```
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      address:
+-        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
++        "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      values.$admin:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      values.$implementation:
+-        "0x668965757127549f8755D2eEd10494B06420213b"
++        "eth:0x668965757127549f8755D2eEd10494B06420213b"
+      values.$pastUpgrades.0.2.0:
+-        "0x668965757127549f8755D2eEd10494B06420213b"
++        "eth:0x668965757127549f8755D2eEd10494B06420213b"
+      values.admin:
+-        "0x0110B1B231aA3b96a94c900eb3056297526AB725"
++        "eth:0x0110B1B231aA3b96a94c900eb3056297526AB725"
+      values.bridgeAddress:
+-        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
++        "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      values.dataCommitteeAddress:
+-        "0x997CfB0838544f68E59f877EDc905001456F125b"
++        "eth:0x997CfB0838544f68E59f877EDc905001456F125b"
+      values.globalExitRootManager:
+-        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
++        "eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      values.matic:
+-        "0x6dfAF52259d494C29596F5Eb16573B105693E78f"
++        "eth:0x6dfAF52259d494C29596F5Eb16573B105693E78f"
+      values.owner:
+-        "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88"
++        "eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rollupVerifier:
+-        "0x769E285d2120472c3400A09684B82A842012F46d"
++        "eth:0x769E285d2120472c3400A09684B82A842012F46d"
+      values.trustedAggregator:
+-        "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027"
++        "eth:0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027"
+      values.trustedSequencer:
+-        "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c"
++        "eth:0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c"
+      implementationNames.0x1CbC08bf0D48b18F9f97796c61352b192d1850A5:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x668965757127549f8755D2eEd10494B06420213b:
+-        "CDKValidium"
+      implementationNames.eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x668965757127549f8755D2eEd10494B06420213b:
++        "CDKValidium"
+    }
+```
+
+```diff
+    EOA  (0x3226ECf79dc7007063599A334832d015B48aBDBc) {
+    +++ description: None
+      address:
+-        "0x3226ECf79dc7007063599A334832d015B48aBDBc"
++        "eth:0x3226ECf79dc7007063599A334832d015B48aBDBc"
+    }
+```
+
+```diff
+    EOA  (0x39FcAEb9870cB015f2165e93c51f4663AE970953) {
+    +++ description: None
+      address:
+-        "0x39FcAEb9870cB015f2165e93c51f4663AE970953"
++        "eth:0x39FcAEb9870cB015f2165e93c51f4663AE970953"
+    }
+```
+
+```diff
+    EOA  (0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976) {
+    +++ description: None
+      address:
+-        "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976"
++        "eth:0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976"
+    }
+```
+
+```diff
+    EOA  (0x4dba6F06597Ea29A330C06806FA284610c810295) {
+    +++ description: None
+      address:
+-        "0x4dba6F06597Ea29A330C06806FA284610c810295"
++        "eth:0x4dba6F06597Ea29A330C06806FA284610c810295"
+    }
+```
+
+```diff
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      address:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
++        "eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
++        "eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "0x75575Dc1adD71eA794A52D83f836a13F7891C527"
++        "eth:0x75575Dc1adD71eA794A52D83f836a13F7891C527"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0x75575Dc1adD71eA794A52D83f836a13F7891C527"
++        "eth:0x75575Dc1adD71eA794A52D83f836a13F7891C527"
+      values.accessControl.PROPOSER_ROLE.members.1:
+-        "0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
++        "eth:0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x75575Dc1adD71eA794A52D83f836a13F7891C527"
++        "eth:0x75575Dc1adD71eA794A52D83f836a13F7891C527"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
++        "eth:0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0x75575Dc1adD71eA794A52D83f836a13F7891C527"
++        "eth:0x75575Dc1adD71eA794A52D83f836a13F7891C527"
+      values.cdkValidium:
+-        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
++        "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      implementationNames.0x52882c7564fAca480549145fAc4d0b09eD0D9c17:
+-        "CDKValidiumTimelock"
+      implementationNames.eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17:
++        "CDKValidiumTimelock"
+    }
+```
+
+```diff
+    EOA  (0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba) {
+    +++ description: None
+      address:
+-        "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba"
++        "eth:0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba"
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      address:
+-        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
++        "eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      values.$admin:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      values.$implementation:
+-        "0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"
++        "eth:0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"
+      values.$pastUpgrades.0.2.0:
+-        "0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"
++        "eth:0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615"
+      values.bridgeAddress:
+-        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
++        "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      values.rollupAddress:
+-        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
++        "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      implementationNames.0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615:
+-        "PolygonZkEVMGlobalExitRoot"
+      implementationNames.eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xC4CD3D0b31904969a397A98AcE8bDF2A94ba8615:
++        "PolygonZkEVMGlobalExitRoot"
+    }
+```
+
+```diff
+    EOA  (0x75575Dc1adD71eA794A52D83f836a13F7891C527) {
+    +++ description: None
+      address:
+-        "0x75575Dc1adD71eA794A52D83f836a13F7891C527"
++        "eth:0x75575Dc1adD71eA794A52D83f836a13F7891C527"
+    }
+```
+
+```diff
+    contract FflonkVerifier (0x769E285d2120472c3400A09684B82A842012F46d) {
+    +++ description: None
+      address:
+-        "0x769E285d2120472c3400A09684B82A842012F46d"
++        "eth:0x769E285d2120472c3400A09684B82A842012F46d"
+      implementationNames.0x769E285d2120472c3400A09684B82A842012F46d:
+-        "FflonkVerifier"
+      implementationNames.eth:0x769E285d2120472c3400A09684B82A842012F46d:
++        "FflonkVerifier"
+    }
+```
+
+```diff
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      address:
+-        "0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88"
++        "eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7"
++        "eth:0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7"
+      values.$members.1:
+-        "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba"
++        "eth:0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba"
+      values.$members.2:
+-        "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87"
++        "eth:0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87"
+      values.$members.3:
+-        "0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976"
++        "eth:0x4B7f09f4D658638d81Bb2023674B80a9Dd7e9976"
+      implementationNames.0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x9231622437bD57349cC9a15CDEc5383627DEbA17) {
+    +++ description: None
+      address:
+-        "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
++        "eth:0x9231622437bD57349cC9a15CDEc5383627DEbA17"
+    }
+```
+
+```diff
+    EOA  (0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa) {
+    +++ description: None
+      address:
+-        "0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
++        "eth:0x9412eCbEE1e8dd25F347D6d8002f62eF540ddDAa"
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      address:
+-        "0x997CfB0838544f68E59f877EDc905001456F125b"
++        "eth:0x997CfB0838544f68E59f877EDc905001456F125b"
+      values.$admin:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      values.$implementation:
+-        "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"
++        "eth:0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"
+      values.$pastUpgrades.0.2.0:
+-        "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"
++        "eth:0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"
+      values.members.0.addr:
+-        "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
++        "eth:0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
+      values.members.1.addr:
+-        "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
++        "eth:0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
+      values.members.2.addr:
+-        "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
++        "eth:0x9231622437bD57349cC9a15CDEc5383627DEbA17"
+      values.members.3.addr:
+-        "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
++        "eth:0x9d8616545C9941138832EebC58Cb498E0ef21a13"
+      values.members.4.addr:
+-        "0xFe1da7CAd939805d4A889822357c348177a5118d"
++        "eth:0xFe1da7CAd939805d4A889822357c348177a5118d"
+      values.owner:
+-        "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+      implementationNames.0x997CfB0838544f68E59f877EDc905001456F125b:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc:
+-        "CDKDataCommittee"
+      implementationNames.eth:0x997CfB0838544f68E59f877EDc905001456F125b:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc:
++        "CDKDataCommittee"
+    }
+```
+
+```diff
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      address:
+-        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
++        "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      values.$admin:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      values.$implementation:
+-        "0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"
++        "eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"
+      values.$pastUpgrades.0.2.0:
+-        "0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"
++        "eth:0xEb80283EBc508CF6AaC5E054118954a2BD7fA006"
+      values.$pastUpgrades.1.2.0:
+-        "0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"
++        "eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46"
+      implementationNames.0x9cb4706e20A18E59a48ffa7616d700A3891e1861:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x58371687dc997A7A11154bBcA72aEb15e4Db8F46:
+-        ""
+      implementationNames.eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x58371687dc997A7A11154bBcA72aEb15e4Db8F46:
++        ""
+    }
+```
+
+```diff
+    EOA  (0x9d8616545C9941138832EebC58Cb498E0ef21a13) {
+    +++ description: None
+      address:
+-        "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
++        "eth:0x9d8616545C9941138832EebC58Cb498E0ef21a13"
+    }
+```
+
+```diff
+    EOA  (0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c) {
+    +++ description: None
+      address:
+-        "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c"
++        "eth:0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c"
+    }
+```
+
+```diff
+    EOA  (0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7) {
+    +++ description: None
+      address:
+-        "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7"
++        "eth:0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7"
+    }
+```
+
+```diff
+    EOA  (0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70) {
+    +++ description: None
+      address:
+-        "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
++        "eth:0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70"
+    }
+```
+
+```diff
+    contract Bridge (0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e) {
+    +++ description: None
+      address:
+-        "0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e"
++        "eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e"
+      implementationNames.0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e:
+-        ""
+      implementationNames.eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e:
++        ""
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      address:
+-        "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      values.owner:
+-        "0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
++        "eth:0x52882c7564fAca480549145fAc4d0b09eD0D9c17"
+      implementationNames.0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3:
+-        "ProxyAdmin"
+      implementationNames.eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87) {
+    +++ description: None
+      address:
+-        "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87"
++        "eth:0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87"
+    }
+```
+
+```diff
+    EOA  (0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027) {
+    +++ description: None
+      address:
+-        "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027"
++        "eth:0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027"
+    }
+```
+
+```diff
+    EOA  (0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF) {
+    +++ description: None
+      address:
+-        "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF"
++        "eth:0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF"
+    }
+```
+
+```diff
+    EOA  (0xFe1da7CAd939805d4A889822357c348177a5118d) {
+    +++ description: None
+      address:
+-        "0xFe1da7CAd939805d4A889822357c348177a5118d"
++        "eth:0xFe1da7CAd939805d4A889822357c348177a5118d"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairAdmin (0x0110B1B231aA3b96a94c900eb3056297526AB725)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FflonkVerifier (0x769E285d2120472c3400A09684B82A842012F46d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b)
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+```
+
+```diff
++   Status: CREATED
+    contract OldBridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x408fe88ca79ae236d4f26c36695a41db4ff0d6d8
+
+# Diff at Fri, 04 Jul 2025 12:19:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22322978
+- current block number: 22322978
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22322978 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0x52882c7564fAca480549145fAc4d0b09eD0D9c17) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      receivedPermissions.0.from:
+-        "ethereum:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
++        "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      receivedPermissions.1.from:
+-        "ethereum:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
++        "eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      receivedPermissions.2.from:
+-        "ethereum:0x997CfB0838544f68E59f877EDc905001456F125b"
++        "eth:0x997CfB0838544f68E59f877EDc905001456F125b"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+      receivedPermissions.3.from:
+-        "ethereum:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
++        "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
++        "eth:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
++        "eth:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
++        "eth:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x997CfB0838544f68E59f877EDc905001456F125b"
++        "eth:0x997CfB0838544f68E59f877EDc905001456F125b"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
++        "eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
+    }
+```
+
 Generated with discovered.json: 0x3a0098fb98652e3de6d33a803559ba6adcfd80af
 
 # Diff at Fri, 23 May 2025 09:41:08 GMT:

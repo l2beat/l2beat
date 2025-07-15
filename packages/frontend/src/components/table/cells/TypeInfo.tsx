@@ -20,24 +20,28 @@ import {
 
 export interface TypeInfoProps {
   children: string | undefined
-  stack?: ProjectScalingStack
+  stacks?: ProjectScalingStack[]
 }
 
-export function TypeInfo({ stack, children }: TypeInfoProps) {
-  const providerProps = stack ? providerMap[stack] : undefined
-
+export function TypeInfo({ stacks, children }: TypeInfoProps) {
   return (
     <span>
       {children ?? EM_DASH}
-      {providerProps ? (
-        <TypeTooltip
-          Icon={providerProps.Icon}
-          text={
-            providerProps.text ??
-            `This project is based on ${stack}'s code base.`
-          }
-        />
-      ) : null}
+      {stacks &&
+        stacks.map((stack) => {
+          const providerProps = providerMap[stack]
+          if (!providerProps) return null
+          return (
+            <TypeTooltip
+              key={stack}
+              Icon={providerProps.Icon}
+              text={
+                providerProps.text ??
+                `This project is based on ${stack}'s code base.`
+              }
+            />
+          )
+        })}
     </span>
   )
 }

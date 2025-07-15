@@ -29,7 +29,9 @@
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
-    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts"
+    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
+    "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
+    "bridges:cli": "ts-node ./scripts/bridges/cli.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
@@ -64,6 +66,7 @@
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
     "uuid": "^9.0.1",
+    "viem": "^2.31.6",
     "ws": "^8.18.2"
   },
   "devDependencies": {

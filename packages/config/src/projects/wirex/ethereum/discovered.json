@@ -7,7 +7,7 @@
   "entries": [
     {
       "name": "Verifier",
-      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "address": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
@@ -19,25 +19,25 @@
       "sinceBlock": 19505052,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
+        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
+      "address": "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "from": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "role": ".trustedSequencer"
         }
       ]
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
+      "address": "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -47,7 +47,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "role": "admin"
         }
       ],
@@ -55,20 +55,20 @@
       "sinceBlock": 20270515,
       "values": {
         "$immutable": true,
-        "owner": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+        "owner": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
       },
       "implementationNames": {
-        "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78": "ProxyAdmin"
+        "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78": "ProxyAdmin"
       }
     },
     {
-      "address": "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986",
+      "address": "eth:0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonDataCommittee",
-      "address": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+      "address": "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
       "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
@@ -80,13 +80,13 @@
       "sinceTimestamp": 1720547183,
       "sinceBlock": 20270516,
       "values": {
-        "$admin": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
-        "$implementation": "0xAce9269EaC3419937093154dea0AD44C36Df6963",
+        "$admin": "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
+        "$implementation": "eth:0xAce9269EaC3419937093154dea0AD44C36Df6963",
         "$pastUpgrades": [
           [
             "2024-07-09T17:46:23.000Z",
             "0xf72b5eafd4612b45278a8d49041d0736c6c4a6de6069160dec9a086e08027762",
-            ["0xAce9269EaC3419937093154dea0AD44C36Df6963"]
+            ["eth:0xAce9269EaC3419937093154dea0AD44C36Df6963"]
           ]
         ],
         "$upgradeCount": 1,
@@ -96,25 +96,25 @@
         "members": [
           {
             "url": "https://dac.wirexpaychain.zeeve.online",
-            "addr": "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
+            "addr": "eth:0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
           },
           {
             "url": "https://dac2.wirexpaychain.zeeve.online",
-            "addr": "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
+            "addr": "eth:0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
           }
         ],
-        "owner": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
+        "owner": "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
         "requiredAmountOfSignatures": 1
       },
       "implementationNames": {
-        "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5": "TransparentUpgradeableProxy",
-        "0xAce9269EaC3419937093154dea0AD44C36Df6963": "PolygonDataCommittee"
+        "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5": "TransparentUpgradeableProxy",
+        "eth:0xAce9269EaC3419937093154dea0AD44C36Df6963": "PolygonDataCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "Validium",
-      "address": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+      "address": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
       "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -127,26 +127,26 @@
       "sinceTimestamp": 1720089623,
       "sinceBlock": 20232613,
       "values": {
-        "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
+        "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "$implementation": "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
         "$pastUpgrades": [
           [
             "2024-07-04T10:40:23.000Z",
             "0xb727fee71f71c51e9d5fe335b8c6382b80f576364002f5986149004578a16af9",
-            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+            ["eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
           ]
         ],
         "$upgradeCount": 1,
-        "admin": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "admin": "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
-        "forceBatchAddress": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+        "dataAvailabilityProtocol": "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+        "forceBatchAddress": "eth:0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0x0000000000000000000000000000000000000000",
+        "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
         "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
         "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
@@ -160,14 +160,14 @@
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "pay-chain",
-        "pendingAdmin": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "pendingAdmin": "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
+        "trustedSequencer": "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164",
         "trustedSequencerURL": "https://rpc.wirexpaychain.com"
       },
       "fieldMeta": {
@@ -177,68 +177,68 @@
         }
       },
       "implementationNames": {
-        "0x78253E2E6120164bd826668A4C96Db20f78A94c9": "PolygonTransparentProxy",
-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": "PolygonValidiumStorageMigration"
+        "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9": "PolygonTransparentProxy",
+        "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": "PolygonValidiumStorageMigration"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
+      "address": "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }
+            { "address": "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
+          "from": "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
           "role": ".owner"
         }
       ]
     },
     {
-      "address": "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
+      "address": "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "from": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         }
       ]
     },
     {
-      "address": "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
+      "address": "eth:0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "from": "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         }
       ]
     },
     {
-      "address": "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0",
+      "address": "eth:0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -424,5 +424,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xf528c2362985ba63660b0f653a508b41120fa238fa6717fa15c44ae2f8e86662"
+  "permissionsConfigHash": "0xe9be5f4b75740f13b418677d2d4ce188d4075e7fe5920aa8c90c34488f7568f1"
 }

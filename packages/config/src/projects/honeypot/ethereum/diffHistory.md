@@ -1,4 +1,144 @@
-Generated with discovered.json: 0x196987255ee009ef9cd53b022c25c98a2a805162
+Generated with discovered.json: 0x6c11804204d494eb9a278f527c8941eb81686954
+
+# Diff at Mon, 14 Jul 2025 12:45:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20641250
+- current block number: 20641250
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20641250 (main branch discovery), not current.
+
+```diff
+    contract Honeypot (0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366) {
+    +++ description: None
+      address:
+-        "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366"
++        "eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366"
+      values.getConsensus:
+-        "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
++        "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
+      values.owner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366:
+-        "CartesiDApp"
+      implementationNames.eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366:
++        "CartesiDApp"
+    }
+```
+
+```diff
+    contract History (0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9) {
+    +++ description: None
+      address:
+-        "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9"
++        "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9"
+      values.owner:
+-        "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
++        "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
+      implementationNames.0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9:
+-        "History"
+      implementationNames.eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9:
++        "History"
+    }
+```
+
+```diff
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768) {
+    +++ description: None
+      address:
+-        "0x59b22D57D4f067708AB0c00552767405926dc768"
++        "eth:0x59b22D57D4f067708AB0c00552767405926dc768"
+      implementationNames.0x59b22D57D4f067708AB0c00552767405926dc768:
+-        "InputBox"
+      implementationNames.eth:0x59b22D57D4f067708AB0c00552767405926dc768:
++        "InputBox"
+    }
+```
+
+```diff
+    EOA  (0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861) {
+    +++ description: None
+      address:
+-        "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
++        "eth:0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
+    }
+```
+
+```diff
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB) {
+    +++ description: None
+      address:
+-        "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB"
++        "eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB"
+      values.getInputBox:
+-        "0x59b22D57D4f067708AB0c00552767405926dc768"
++        "eth:0x59b22D57D4f067708AB0c00552767405926dc768"
+      implementationNames.0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB:
+-        "ERC20Portal"
+      implementationNames.eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB:
++        "ERC20Portal"
+    }
+```
+
+```diff
+    contract Authority (0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f) {
+    +++ description: None
+      address:
+-        "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
++        "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
+      values.getHistory:
+-        "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9"
++        "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9"
+      values.owner:
+-        "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
++        "eth:0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
+      implementationNames.0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f:
+-        "Authority"
+      implementationNames.eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f:
++        "Authority"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Honeypot (0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract History (0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Authority (0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x7a599aaaee4e13f2ceeb2fc01a35f2f4a6c57103
 
 # Diff at Tue, 04 Mar 2025 10:39:14 GMT:
 

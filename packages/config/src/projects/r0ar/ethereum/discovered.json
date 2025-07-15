@@ -5,23 +5,23 @@
   "configHash": "0x903fab96d8aedd9772109fdc6a9fa747849c632b2065277f26eecbc1b7d5a58d",
   "entries": [
     {
-      "address": "0x000000000000000000000000000000000000dEaD",
+      "address": "eth:0x000000000000000000000000000000000000dEaD",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x01440f52270A1CbA3449be1F7512CD9A1AA788FD",
+      "address": "eth:0x01440f52270A1CbA3449be1F7512CD9A1AA788FD",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF",
+      "address": "eth:0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PreimageOracle",
-      "address": "0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4",
+      "address": "eth:0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4",
       "type": "Contract",
       "template": "opstack/PreimageOracle",
       "sourceHashes": [
@@ -43,12 +43,12 @@
         "version": "1.0.0"
       },
       "implementationNames": {
-        "0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4": "PreimageOracle"
+        "eth:0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4": "PreimageOracle"
       }
     },
     {
       "name": "OptimismPortal",
-      "address": "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+      "address": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
       "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
@@ -61,38 +61,38 @@
       "sinceTimestamp": 1728285287,
       "sinceBlock": 20912120,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98",
         "$pastUpgrades": [
           [
             "2024-10-07T07:20:11.000Z",
             "0x98c389a3264c55bfed390dd2c2f04204905f952e33e2e2622b2d05cba3f16c5f",
-            ["0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98"]
+            ["eth:0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98"]
           ]
         ],
         "$upgradeCount": 1,
-        "guardian": "0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
-        "l2Oracle": "0xb7850CFa577332EB839840e1411962AC3Dd2f183",
-        "l2Sender": "0x000000000000000000000000000000000000dEaD",
+        "guardian": "eth:0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
+        "l2Oracle": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+        "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 309981,
           "prevBlockNum": 22024919
         },
         "paused": false,
-        "superchainConfig": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
-        "systemConfig": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+        "superchainConfig": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+        "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.8.0"
       },
       "implementationNames": {
-        "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e": "Proxy",
-        "0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98": "OptimismPortal"
+        "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e": "Proxy",
+        "eth:0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98": "OptimismPortal"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "DelayedWETH",
-      "address": "0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+      "address": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
       "type": "Contract",
       "template": "opstack/DelayedWETH",
       "sourceHashes": [
@@ -105,33 +105,33 @@
       "sinceTimestamp": 1728285383,
       "sinceBlock": 20912128,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x9Dc689620a87803378b3304776dd5AE9070730A8",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x9Dc689620a87803378b3304776dd5AE9070730A8",
         "$pastUpgrades": [
           [
             "2024-10-07T07:22:59.000Z",
             "0xfa9788edba99991156bf536f76638d428526a8376968aa80e6865e2d2f3bc839",
-            ["0x9Dc689620a87803378b3304776dd5AE9070730A8"]
+            ["eth:0x9Dc689620a87803378b3304776dd5AE9070730A8"]
           ]
         ],
         "$upgradeCount": 1,
-        "config": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+        "config": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
         "decimals": 18,
         "delay": 604800,
         "name": "Wrapped Ether",
-        "owner": "0xf758e2272FCe1330d8a1De38D5128A47B4041752",
+        "owner": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752",
         "symbol": "WETH",
         "totalSupply": 0,
         "version": "1.0.0"
       },
       "implementationNames": {
-        "0x465833609d9ff2Cb9A070b0d71b700F318C97293": "Proxy",
-        "0x9Dc689620a87803378b3304776dd5AE9070730A8": "DelayedWETH"
+        "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293": "Proxy",
+        "eth:0x9Dc689620a87803378b3304776dd5AE9070730A8": "DelayedWETH"
       }
     },
     {
       "name": "L1CrossDomainMessenger",
-      "address": "0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+      "address": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
       "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
@@ -144,14 +144,14 @@
       "sinceTimestamp": 1728285323,
       "sinceBlock": 20912123,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
         "$immutable": false,
-        "$implementation": "0x8bA829f040EB57668BDfb010472AEb0a16B2399C",
+        "$implementation": "eth:0x8bA829f040EB57668BDfb010472AEb0a16B2399C",
         "$pastUpgrades": [
           [
             "2024-10-07T07:21:59.000Z",
             "0xe75d91c9c73e244e39548e7396733c48fd0c74f903280cb31e493af29b505b9e",
-            ["0x8bA829f040EB57668BDfb010472AEb0a16B2399C"]
+            ["eth:0x8bA829f040EB57668BDfb010472AEb0a16B2399C"]
           ]
         ],
         "$upgradeCount": 1,
@@ -160,30 +160,30 @@
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
-        "otherMessenger": "0x4200000000000000000000000000000000000007",
+        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
+        "otherMessenger": "eth:0x4200000000000000000000000000000000000007",
         "paused": false,
-        "portal": "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
-        "PORTAL": "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+        "portal": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+        "PORTAL": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
-        "ResolvedDelegateProxy_addressManager": "0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
+        "ResolvedDelegateProxy_addressManager": "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
-        "superchainConfig": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
-        "systemConfig": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+        "superchainConfig": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+        "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.4.0"
       },
       "implementationNames": {
-        "0x5b0e75a52862881b4077C865B244CC17cD2b531b": "ResolvedDelegateProxy",
-        "0x8bA829f040EB57668BDfb010472AEb0a16B2399C": "L1CrossDomainMessenger"
+        "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b": "ResolvedDelegateProxy",
+        "eth:0x8bA829f040EB57668BDfb010472AEb0a16B2399C": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "AddressManager",
-      "address": "0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
+      "address": "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
       "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
@@ -195,16 +195,16 @@
       "sinceBlock": 20912104,
       "values": {
         "$immutable": true,
-        "owner": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
+        "owner": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
       },
       "implementationNames": {
-        "0x66e58c9D0b42110E956F54aA850C0d629f4B56C5": "AddressManager"
+        "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "L1StandardBridge",
-      "address": "0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+      "address": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
       "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
@@ -216,29 +216,29 @@
       "sinceTimestamp": 1728285311,
       "sinceBlock": 20912122,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "messenger": "0x5b0e75a52862881b4077C865B244CC17cD2b531b",
-        "MESSENGER": "0x5b0e75a52862881b4077C865B244CC17cD2b531b",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
-        "otherBridge": "0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "messenger": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+        "MESSENGER": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
+        "otherBridge": "eth:0x4200000000000000000000000000000000000010",
         "paused": false,
-        "superchainConfig": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
-        "systemConfig": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+        "superchainConfig": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+        "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.2.0"
       },
       "implementationNames": {
-        "0x683ca289a8418Cb090E42929A73a263d7b81DfC2": "L1ChugSplashProxy",
-        "0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1": "L1StandardBridge"
+        "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2": "L1ChugSplashProxy",
+        "eth:0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "SystemConfig",
-      "address": "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+      "address": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
       "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
@@ -251,24 +251,24 @@
       "sinceTimestamp": 1728285299,
       "sinceBlock": 20912121,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719",
         "$pastUpgrades": [
           [
             "2024-10-07T07:20:23.000Z",
             "0x06f05a5d629575c585b9ac47ede24ae30dfd9ad39631fb0e2edbd60505cd6188",
-            ["0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719"]
+            ["eth:0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719"]
           ]
         ],
         "$upgradeCount": 1,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
-        "batcherHash": "0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c",
-        "batchInbox": "0xFF00000000000000000000000000000000193939",
+        "batcherHash": "eth:0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c",
+        "batchInbox": "eth:0xFF00000000000000000000000000000000193939",
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
-        "disputeGameFactory": "0xF014d8028A7028352baD6226A4894Ae596e2846c",
+        "disputeGameFactory": "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c",
         "gasLimit": 30000000,
         "gasPayingToken": {
-          "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+          "addr_": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
           "decimals_": 18
         },
         "gasPayingTokenName": "Ether",
@@ -277,9 +277,9 @@
         "L1_CROSS_DOMAIN_MESSENGER_SLOT": "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636",
         "L1_ERC_721_BRIDGE_SLOT": "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7",
         "L1_STANDARD_BRIDGE_SLOT": "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376",
-        "l1CrossDomainMessenger": "0x5b0e75a52862881b4077C865B244CC17cD2b531b",
-        "l1ERC721Bridge": "0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
-        "l1StandardBridge": "0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+        "l1CrossDomainMessenger": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+        "l1ERC721Bridge": "eth:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
+        "l1StandardBridge": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
         "maximumGasLimit": 200000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
@@ -289,10 +289,10 @@
         },
         "OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT": "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c",
         "OPTIMISM_PORTAL_SLOT": "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac",
-        "optimismMintableERC20Factory": "0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
-        "optimismPortal": "0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+        "optimismMintableERC20Factory": "eth:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
+        "optimismPortal": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
         "overhead": 188,
-        "owner": "0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
+        "owner": "eth:0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -302,11 +302,11 @@
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
         "scalar": 684000,
-        "sequencerInbox": "0xFF00000000000000000000000000000000193939",
+        "sequencerInbox": "eth:0xFF00000000000000000000000000000000193939",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 20912148,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "0x01440f52270A1CbA3449be1F7512CD9A1AA788FD",
+        "unsafeBlockSigner": "eth:0x01440f52270A1CbA3449be1F7512CD9A1AA788FD",
         "version": "2.2.0",
         "VERSION": 0
       },
@@ -320,14 +320,14 @@
         }
       },
       "implementationNames": {
-        "0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA": "Proxy",
-        "0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719": "SystemConfig"
+        "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA": "Proxy",
+        "eth:0xae9fC3cFD19b751c893105c43A8ed8af6F9e1719": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "OptimismMintableERC20Factory",
-      "address": "0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
+      "address": "eth:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
       "type": "Contract",
       "template": "opstack/OptimismMintableERC20Factory",
       "sourceHashes": [
@@ -335,49 +335,49 @@
         "0x4c5ac4e53576924cabbd2a471f368a541bc3f4b1f53fa41a389692fcc62f6176"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.",
+      "description": "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.",
       "sinceTimestamp": 1728285335,
       "sinceBlock": 20912124,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF",
         "$pastUpgrades": [
           [
             "2024-10-07T07:21:11.000Z",
             "0x1d85e76cf844ae2c48005a2147ddde53c91e0363e3d74b7ca350b2dd940f0e59",
-            ["0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF"]
+            ["eth:0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF"]
           ]
         ],
         "$upgradeCount": 1,
-        "bridge": "0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
-        "BRIDGE": "0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+        "bridge": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+        "BRIDGE": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
         "version": "1.9.0"
       },
       "implementationNames": {
-        "0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8": "Proxy",
-        "0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF": "OptimismMintableERC20Factory"
+        "eth:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8": "Proxy",
+        "eth:0x1561Fb12A6eFc3C63b881dE403A76B5F7Cd6a6CF": "OptimismMintableERC20Factory"
       }
     },
     {
-      "address": "0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
+      "address": "eth:0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "ethereum:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+          "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": ".challenger"
         },
         {
           "permission": "challenge",
-          "from": "ethereum:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+          "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": ".CHALLENGER"
         }
       ]
     },
     {
       "name": "MIPS",
-      "address": "0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
+      "address": "eth:0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
       "type": "Contract",
       "sourceHashes": [
         "0xaac82ba0947c8928e2d00f2d5343a95f7e494fe1cb792814cc4875a689952f15"
@@ -388,50 +388,50 @@
       "values": {
         "$immutable": true,
         "BRK_START": 1073741824,
-        "oracle": "0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4",
+        "oracle": "eth:0x192668f6b57DeB9D46e6DE87caD7065a052fe1b4",
         "version": "1.0.1"
       },
       "implementationNames": {
-        "0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6": "MIPS"
+        "eth:0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6": "MIPS"
       }
     },
     {
-      "address": "0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
+      "address": "eth:0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "guard",
-          "from": "ethereum:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+          "from": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
           "role": ".guardian"
         },
         {
           "permission": "guard",
-          "from": "ethereum:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+          "from": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
           "role": ".guardian"
         }
       ]
     },
     {
-      "address": "0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
+      "address": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "propose",
-          "from": "ethereum:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+          "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": ".proposer"
         },
         {
           "permission": "propose",
-          "from": "ethereum:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+          "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": ".PROPOSER"
         }
       ]
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+      "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -441,64 +441,64 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
+          "from": "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
           "description": "set and change address mappings.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+          "from": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "from": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+          "from": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+          "from": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+          "from": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
+          "from": "eth:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+          "from": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+          "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
+          "from": "eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xF014d8028A7028352baD6226A4894Ae596e2846c",
+          "from": "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
+          "from": "eth:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
           "role": "admin"
         }
       ],
@@ -506,17 +506,17 @@
       "sinceBlock": 20912105,
       "values": {
         "$immutable": true,
-        "addressManager": "0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
+        "addressManager": "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
         "isUpgrading": false,
-        "owner": "0xf758e2272FCe1330d8a1De38D5128A47B4041752"
+        "owner": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752"
       },
       "implementationNames": {
-        "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA": "ProxyAdmin"
+        "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA": "ProxyAdmin"
       }
     },
     {
       "name": "SuperchainConfig",
-      "address": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+      "address": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
       "type": "Contract",
       "template": "opstack/SuperchainConfigFake",
       "sourceHashes": [
@@ -528,31 +528,31 @@
       "sinceTimestamp": 1728285143,
       "sinceBlock": 20912108,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E",
         "$pastUpgrades": [
           [
             "2024-10-07T07:13:47.000Z",
             "0x0ac1cecdefcef1ffc0a495e77beea1fa1fca2a465a9a88132cb90613b9c6ce7a",
-            ["0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E"]
+            ["eth:0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E"]
           ]
         ],
         "$upgradeCount": 1,
-        "guardian": "0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
+        "guardian": "eth:0x87aab081Ac9F8ce80fb048f23280DF019036BA1d",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.1.0"
       },
       "implementationNames": {
-        "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8": "Proxy",
-        "0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E": "SuperchainConfig"
+        "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8": "Proxy",
+        "eth:0x13a9A075D8Aa2D93c3d32F1C61aB671108fedE6E": "SuperchainConfig"
       },
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "L2OutputOracle",
-      "address": "0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+      "address": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
       "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
@@ -570,28 +570,28 @@
       "sinceTimestamp": 1728285371,
       "sinceBlock": 20912127,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x503733C3d5AA487B88fA1FB475694da51744e4Cd",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x503733C3d5AA487B88fA1FB475694da51744e4Cd",
         "$pastUpgrades": [
           [
             "2024-10-07T07:22:23.000Z",
             "0x1f93c68ac898610ce0211403311e315e6b16f339d539dfc2ea90c68300ce7b30",
-            ["0x503733C3d5AA487B88fA1FB475694da51744e4Cd"]
+            ["eth:0x503733C3d5AA487B88fA1FB475694da51744e4Cd"]
           ],
           [
             "2024-12-10T12:08:23.000Z",
             "0x938849eda5221879fe8590b25582870db663a9988be25eef4051a2f254a8e6f4",
-            ["0xCEBbcE0D64A1703dc74d3f3790A09c1E20a4cB09"]
+            ["eth:0xCEBbcE0D64A1703dc74d3f3790A09c1E20a4cB09"]
           ],
           [
             "2024-12-10T12:42:35.000Z",
             "0x9e414151d74fee791bf929a6ef63d9509950c5c3cebeeeddc3b72bb0eba43d5f",
-            ["0x503733C3d5AA487B88fA1FB475694da51744e4Cd"]
+            ["eth:0x503733C3d5AA487B88fA1FB475694da51744e4Cd"]
           ]
         ],
         "$upgradeCount": 3,
-        "challenger": "0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
-        "CHALLENGER": "0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
+        "challenger": "eth:0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
+        "CHALLENGER": "eth:0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
@@ -601,8 +601,8 @@
         "latestOutputIndex": 4298,
         "nextBlockNumber": 7740000,
         "nextOutputIndex": 4299,
-        "proposer": "0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
-        "PROPOSER": "0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
+        "proposer": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
+        "PROPOSER": "eth:0x8B72aB0D35F87e0f56D9805031D7CDfA13D1C71F",
         "startingBlockNumber": 0,
         "startingTimestamp": 1728283991,
         "SUBMISSION_INTERVAL": 1800,
@@ -618,14 +618,14 @@
         "deletedOutputs": { "severity": "HIGH" }
       },
       "implementationNames": {
-        "0xb7850CFa577332EB839840e1411962AC3Dd2f183": "Proxy",
-        "0x503733C3d5AA487B88fA1FB475694da51744e4Cd": "L2OutputOracle"
+        "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183": "Proxy",
+        "eth:0x503733C3d5AA487B88fA1FB475694da51744e4Cd": "L2OutputOracle"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PermissionedDisputeGame",
-      "address": "0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
+      "address": "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
       "type": "Contract",
       "template": "opstack/PermissionedDisputeGame",
       "sourceHashes": [
@@ -639,14 +639,14 @@
         "$immutable": true,
         "absolutePrestate": "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55",
         "absolutePrestateDecoded": "v1.0.0 (govApproved)",
-        "anchorStateRegistry": "0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
-        "challenger": "0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
+        "anchorStateRegistry": "eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
+        "challenger": "eth:0x79DdF0745D14783cDC2a05624c585Ddce07F4A02",
         "claimData": [],
         "claimDataLen": 0,
         "clockExtension": 0,
         "createdAt": 0,
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
         "gameData": {
           "gameType_": 1,
           "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -657,11 +657,11 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
-        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2BlockNumberChallenger": "eth:0x0000000000000000000000000000000000000000",
         "l2ChainId": 193939,
         "maxClockDuration": 600,
         "maxGameDepth": 44,
-        "proposer": "0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF",
+        "proposer": "eth:0x0F7A7ca8f7673D9D219766a962856371e1Ed27FF",
         "resolvedAt": 0,
         "rootClaim": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "splitDepth": 14,
@@ -673,8 +673,8 @@
         "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "status": 0,
         "version": "1.2.0",
-        "vm": "0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
-        "weth": "0x465833609d9ff2Cb9A070b0d71b700F318C97293"
+        "vm": "eth:0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
+        "weth": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293"
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
@@ -682,7 +682,7 @@
         }
       },
       "implementationNames": {
-        "0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0": "PermissionedDisputeGame"
+        "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0": "PermissionedDisputeGame"
       },
       "usedTypes": [
         {
@@ -721,165 +721,141 @@
       ]
     },
     {
-      "address": "0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
+      "address": "eth:0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "from": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
+          "from": "eth:0x66e58c9D0b42110E956F54aA850C0d629f4B56C5",
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+          "from": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
+          "from": "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "from": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+          "from": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
+          "from": "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+          "from": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
+          "from": "eth:0x73bD898CD5b1dE0Ad1ED5Bf51aaEb52129F697d8",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+          "from": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
+          "from": "eth:0xb7850CFa577332EB839840e1411962AC3Dd2f183",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
+          "from": "eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xF014d8028A7028352baD6226A4894Ae596e2846c",
+          "from": "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
+          "from": "eth:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
-            },
-            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+            { "address": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA" },
+            { "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
           ]
         }
       ]
     },
     {
       "name": "AnchorStateRegistry",
-      "address": "0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
+      "address": "eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
       "type": "Contract",
       "template": "opstack/AnchorStateRegistry",
       "sourceHashes": [
@@ -892,27 +868,27 @@
       "sinceTimestamp": 1728285395,
       "sinceBlock": 20912129,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5",
         "$pastUpgrades": [
           [
             "2024-10-07T07:23:11.000Z",
             "0x84194bd88d7abf301864917a84d4b9c64c52c4d3665fbd0bab82fd3bef33a9da",
-            ["0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5"]
+            ["eth:0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5"]
           ]
         ],
         "$upgradeCount": 1,
-        "disputeGameFactory": "0xF014d8028A7028352baD6226A4894Ae596e2846c",
+        "disputeGameFactory": "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c",
         "version": "1.0.0"
       },
       "implementationNames": {
-        "0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F": "Proxy",
-        "0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5": "AnchorStateRegistry"
+        "eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F": "Proxy",
+        "eth:0x57923d2b2A4B32b0F1001022Fd81b9F0655F3AD5": "AnchorStateRegistry"
       }
     },
     {
       "name": "DisputeGameFactory",
-      "address": "0xF014d8028A7028352baD6226A4894Ae596e2846c",
+      "address": "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c",
       "type": "Contract",
       "template": "opstack/DisputeGameFactory",
       "sourceHashes": [
@@ -925,38 +901,38 @@
       "sinceTimestamp": 1728285359,
       "sinceBlock": 20912126,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0x5cd233B95e4799444567873902bf9f9f20D3F640",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0x5cd233B95e4799444567873902bf9f9f20D3F640",
         "$pastUpgrades": [
           [
             "2024-10-07T07:22:47.000Z",
             "0x3dab6ec8da16855b5daff549ac44e17fec27c881f44e469b9e3daecfd17148f1",
-            ["0x5cd233B95e4799444567873902bf9f9f20D3F640"]
+            ["eth:0x5cd233B95e4799444567873902bf9f9f20D3F640"]
           ]
         ],
         "$upgradeCount": 1,
         "gameCount": 0,
         "gameImpls": [
-          "0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2",
-          "0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000"
+          "eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2",
+          "eth:0xC5D5B6fCD5FdBdA41Ae640aC9881dC949aEd36d0",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000"
         ],
         "initBonds": [0, 0, 0, 0, 0],
-        "owner": "0xf758e2272FCe1330d8a1De38D5128A47B4041752",
+        "owner": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752",
         "permissionedGamesTotal": 0,
         "version": "1.0.0"
       },
       "implementationNames": {
-        "0xF014d8028A7028352baD6226A4894Ae596e2846c": "Proxy",
-        "0x5cd233B95e4799444567873902bf9f9f20D3F640": "DisputeGameFactory"
+        "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c": "Proxy",
+        "eth:0x5cd233B95e4799444567873902bf9f9f20D3F640": "DisputeGameFactory"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1ERC721Bridge",
-      "address": "0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
+      "address": "eth:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259",
       "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
@@ -968,45 +944,45 @@
       "sinceTimestamp": 1728285347,
       "sinceBlock": 20912125,
       "values": {
-        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
-        "$implementation": "0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6",
+        "$admin": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+        "$implementation": "eth:0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6",
         "$pastUpgrades": [
           [
             "2024-10-07T07:20:59.000Z",
             "0xc22d88aebf82016cc7be7e4bbf44ec4db9d4743dcd4640abc74a668a58054457",
-            ["0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6"]
+            ["eth:0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6"]
           ]
         ],
         "$upgradeCount": 1,
-        "messenger": "0x5b0e75a52862881b4077C865B244CC17cD2b531b",
-        "MESSENGER": "0x5b0e75a52862881b4077C865B244CC17cD2b531b",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
-        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "messenger": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+        "MESSENGER": "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
+        "otherBridge": "eth:0x4200000000000000000000000000000000000014",
         "paused": false,
-        "superchainConfig": "0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
+        "superchainConfig": "eth:0x9bB00Bc6388Ec810d79cD0e8D5C33edFD4Fd1fa8",
         "version": "2.1.0"
       },
       "implementationNames": {
-        "0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259": "Proxy",
-        "0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6": "L1ERC721Bridge"
+        "eth:0xF24e68552ED9F4024E1cEBa8ECB8715F62Bb9259": "Proxy",
+        "eth:0xff57b96E6F426f9dEC14f083dE0D3aD9B95887b6": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c",
+      "address": "eth:0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
+          "from": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
           "role": ".batcherHash"
         }
       ]
     },
     {
       "name": "GnosisSafe",
-      "address": "0xf758e2272FCe1330d8a1De38D5128A47B4041752",
+      "address": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1017,12 +993,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
+          "from": "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "from": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner"
         }
@@ -1032,8 +1008,8 @@
       "sinceBlock": 20912103,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": ["0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395"],
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": ["eth:0xdaf66a37Fddc1095Aa916C6fF9347958DCa35395"],
         "$threshold": 1,
         "domainSeparator": "0xda7183ce1c5ee6099e2cffd4f5ffa09793e2ad964d462a227c24aec0e3fb439b",
         "getChainId": 1,
@@ -1043,13 +1019,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xf758e2272FCe1330d8a1De38D5128A47B4041752": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "FaultDisputeGame",
-      "address": "0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2",
+      "address": "eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2",
       "type": "Contract",
       "template": "opstack/FaultDisputeGame",
       "sourceHashes": [
@@ -1063,13 +1039,13 @@
         "$immutable": true,
         "absolutePrestate": "0x037ef3c1a487960b0e633d3e513df020c43432769f41a634d18a9595cbf53c55",
         "absolutePrestateDecoded": "v1.0.0 (govApproved)",
-        "anchorStateRegistry": "0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
+        "anchorStateRegistry": "eth:0xe7C8a3Dd5A03E01e92bD019bBd89bd67aCeC036F",
         "claimData": [],
         "claimDataLen": 0,
         "clockExtension": 0,
         "createdAt": 0,
         "extraData": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "gameCreator": "0x0000000000000000000000000000000000000000",
+        "gameCreator": "eth:0x0000000000000000000000000000000000000000",
         "gameData": {
           "gameType_": 0,
           "rootClaim_": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1080,7 +1056,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "l2BlockNumber": 0,
         "l2BlockNumberChallenged": false,
-        "l2BlockNumberChallenger": "0x0000000000000000000000000000000000000000",
+        "l2BlockNumberChallenger": "eth:0x0000000000000000000000000000000000000000",
         "l2ChainId": 193939,
         "maxClockDuration": 600,
         "maxGameDepth": 44,
@@ -1095,8 +1071,8 @@
         "startingRootHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "status": 0,
         "version": "1.2.0",
-        "vm": "0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
-        "weth": "0x465833609d9ff2Cb9A070b0d71b700F318C97293"
+        "vm": "eth:0x82e66E285aeAd8C06D8b5d6f2a46fd6fAb9097e6",
+        "weth": "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293"
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
@@ -1104,7 +1080,7 @@
         }
       },
       "implementationNames": {
-        "0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2": "FaultDisputeGame"
+        "eth:0xFED2F84E3e18e24EE6aa5f375edBA79782FDA6D2": "FaultDisputeGame"
       },
       "usedTypes": [
         {
@@ -1143,7 +1119,7 @@
       ]
     },
     {
-      "address": "0xFF00000000000000000000000000000000193939",
+      "address": "eth:0xFF00000000000000000000000000000000193939",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1878,5 +1854,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x85d3d163e4e66e273e6ddba1c9be9775dc4fc1632ce969e4ea9c4dde47111b1a"
+  "permissionsConfigHash": "0xe03a506b0b4b165de70e4bbe28ad49348469776b27a704dbd7abebcf158a4c7f"
 }

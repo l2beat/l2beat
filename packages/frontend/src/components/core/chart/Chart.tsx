@@ -1,11 +1,11 @@
+import type { Milestone } from '@l2beat/config'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-
-import type { Milestone } from '@l2beat/config'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
+import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import {
   ChartDataIndicator,
@@ -50,7 +50,7 @@ const chartContainerClassNames = cn(
   // Tooltip cursor bar
   '[&_.recharts-rectangle.recharts-tooltip-cursor]:fill-primary/25',
   // Tooltip
-  '[&_.recharts-tooltip-wrapper]:!transition-none [&_.recharts-tooltip-wrapper]:z-110',
+  '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:transition-none!',
   // Active dots
   "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none [&_.recharts-layer]:outline-none",
   // Cartesian grid line
@@ -127,7 +127,7 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              '-translate-y-1/2 top-[calc(50%_-_5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%_-_11px)]',
+              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-11px)]',
               loaderClassName,
             )}
           />
@@ -193,6 +193,7 @@ function ChartLegendContent({
     nameKey?: string
     reverse?: boolean
   }) {
+  const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta } = useChart()
 
   if (!payload?.length) {
@@ -201,35 +202,38 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <div
-      className={cn(
-        'flex flex-wrap items-center justify-center gap-2',
-        verticalAlign === 'top' && 'pb-3',
-        className,
-      )}
-    >
-      {actualPayload.map((item) => {
-        const key = `${nameKey ?? item.dataKey ?? 'value'}`
-        const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+    <OverflowWrapper childrenRef={contentRef}>
+      <div
+        className={cn(
+          'mx-auto flex w-fit items-center gap-2',
+          verticalAlign === 'top' && 'pb-3',
+          className,
+        )}
+        ref={contentRef}
+      >
+        {actualPayload.map((item) => {
+          const key = `${nameKey ?? item.dataKey ?? 'value'}`
+          const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
-        if (!itemConfig || item.type === 'none') return null
+          if (!itemConfig || item.type === 'none') return null
 
-        return (
-          <div
-            key={item.value}
-            className="flex items-center gap-[3px] [&>svg]:text-secondary"
-          >
-            <ChartDataIndicator
-              type={itemConfig.indicatorType}
-              backgroundColor={itemConfig.color}
-            />
-            <span className="font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
-              {itemConfig.legendLabel ?? itemConfig.label}
-            </span>
-          </div>
-        )
-      })}
-    </div>
+          return (
+            <div
+              key={item.value}
+              className="flex items-center gap-[3px] [&>svg]:text-secondary"
+            >
+              <ChartDataIndicator
+                type={itemConfig.indicatorType}
+                backgroundColor={itemConfig.color}
+              />
+              <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
+                {itemConfig.legendLabel ?? itemConfig.label}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </OverflowWrapper>
   )
 }
 

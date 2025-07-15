@@ -1,14 +1,14 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import { Square } from '~/components/Square'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { ValueSecuredBreakdown } from '~/components/breakdown/ValueSecuredBreakdown'
-import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
+import { Square } from '~/components/Square'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'

@@ -1,4 +1,257 @@
-Generated with discovered.json: 0x1277e4164cc2b5a1ea2da365e45649b79942edac
+Generated with discovered.json: 0x754058bdf6c3db7de2f98f10d667bca5b5c557e5
+
+# Diff at Mon, 14 Jul 2025 12:47:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 136932647
+- current block number: 136932647
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 136932647 (main branch discovery), not current.
+
+```diff
+    contract StargatePoolMigratable (0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      address:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.burnAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "oeth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig.feeLib:
+-        "0x3da4f8E456AC648c489c286B99Ca37B666be7C4C"
++        "oeth:0x3da4f8E456AC648c489c286B99Ca37B666be7C4C"
+      values.getAddressConfig.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.getAddressConfig.treasurer:
+-        "0x644abb1e17291b4403966119d15Ab081e4a487e9"
++        "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9"
+      values.getAddressConfig.tokenMessaging:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.getAddressConfig.creditMessaging:
+-        "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
++        "oeth:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
+      values.getAddressConfig.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.lpToken:
+-        "0x9f58A79D81477130C0C6D74b96e1397db9765ab1"
++        "oeth:0x9f58A79D81477130C0C6D74b96e1397db9765ab1"
+      values.owner:
+-        "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
+      values.token:
+-        "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
++        "oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58"
+      implementationNames.0x19cFCE47eD54a88614648DC3f19A5980097007dD:
+-        "StargatePoolMigratable"
+      implementationNames.oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD:
++        "StargatePoolMigratable"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      address:
+-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
++        "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
+      values.burnAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "oeth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig.feeLib:
+-        "0x1F605162282570dFa6255D27895587f4117F52FA"
++        "oeth:0x1F605162282570dFa6255D27895587f4117F52FA"
+      values.getAddressConfig.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.getAddressConfig.treasurer:
+-        "0x644abb1e17291b4403966119d15Ab081e4a487e9"
++        "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9"
+      values.getAddressConfig.tokenMessaging:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.getAddressConfig.creditMessaging:
+-        "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
++        "oeth:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
+      values.getAddressConfig.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.lpToken:
+-        "0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8"
++        "oeth:0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8"
+      values.owner:
+-        "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
+      values.token:
+-        "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
++        "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85"
+      implementationNames.0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0:
+-        "StargatePoolUSDC"
+      implementationNames.oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0:
++        "StargatePoolUSDC"
+    }
+```
+
+```diff
+    EOA  (0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      address:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      address:
+-        "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
++        "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "oeth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig.feeLib:
+-        "0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161"
++        "oeth:0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161"
+      values.getAddressConfig.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.getAddressConfig.treasurer:
+-        "0x644abb1e17291b4403966119d15Ab081e4a487e9"
++        "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9"
+      values.getAddressConfig.tokenMessaging:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.getAddressConfig.creditMessaging:
+-        "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
++        "oeth:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
+      values.getAddressConfig.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.lpToken:
+-        "0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225"
++        "oeth:0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225"
+      values.owner:
+-        "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
+      values.token:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xe8CDF27AcD73a434D661C84887215F7598e7d0d3:
+-        "StargatePoolNative"
+      implementationNames.oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3:
++        "StargatePoolNative"
+    }
+```
+
+```diff
+    contract TokenMessaging (0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6) {
+    +++ description: None
+      address:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "oeth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.oApp:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.owner:
+-        "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
++        "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43"
+      values.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.pools.0:
+-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
++        "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
+      values.pools.1:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.pools.2:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.3:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.4:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.5:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.6:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.7:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.8:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.9:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.10:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.11:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.pools.12:
+-        "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
++        "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6:
+-        "TokenMessaging"
+      implementationNames.oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6:
++        "TokenMessaging"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (0x19cFCE47eD54a88614648DC3f19A5980097007dD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessaging (0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3328afb3b550cf8d389e55f306c5161037fed0be
 
 # Diff at Mon, 09 Jun 2025 10:36:19 GMT:
 

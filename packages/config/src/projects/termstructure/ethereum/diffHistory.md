@@ -1,4 +1,587 @@
-Generated with discovered.json: 0x05be3aed911d867939fb8cae80a05f91f83e5eb9
+Generated with discovered.json: 0x45652e8037f131cc3db79e5e77b28faff2932d53
+
+# Diff at Mon, 14 Jul 2025 12:46:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      address:
+-        "0x09E01425780094a9754B2bd8A3298f73ce837CF9"
++        "eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9"
+      values.$implementation.0:
+-        "0x09E01425780094a9754B2bd8A3298f73ce837CF9"
++        "eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9"
+      values.$implementation.1:
+-        "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A"
++        "eth:0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A"
+      values.$implementation.2:
+-        "0x5d8A9DDA649524D1Ce31C204551a93560617D1D3"
++        "eth:0x5d8A9DDA649524D1Ce31C204551a93560617D1D3"
+      values.$implementation.3:
+-        "0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c"
++        "eth:0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c"
+      values.$implementation.4:
+-        "0x84283289D7E57a2f5b80ddA065AC99450eB44cb6"
++        "eth:0x84283289D7E57a2f5b80ddA065AC99450eB44cb6"
+      values.$implementation.5:
+-        "0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9"
++        "eth:0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9"
+      values.$implementation.6:
+-        "0x955cdD2E56Ca2776a101a552A318d28fe311398D"
++        "eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D"
+      values.$implementation.7:
+-        "0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC"
++        "eth:0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC"
+      values.$implementation.8:
+-        "0x10a73b16f6CD03931484b4Ae69fEDc55E868D295"
++        "eth:0x10a73b16f6CD03931484b4Ae69fEDc55E868D295"
+      values.$implementation.9:
+-        "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
++        "eth:0x882aBFb2F6A67d36350499991638044e8Bd83a72"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
++        "eth:0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      values.accessControl.OPERATOR_ROLE.members.0:
+-        "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8"
++        "eth:0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8"
+      values.accessControl.COMMITTER_ROLE.members.0:
+-        "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
++        "eth:0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
+      values.accessControl.VERIFIER_ROLE.members.0:
+-        "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
++        "eth:0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
+      values.accessControl.EXECUTER_ROLE.members.0:
+-        "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
++        "eth:0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
+      values.facetAddresses.0:
+-        "0x09E01425780094a9754B2bd8A3298f73ce837CF9"
++        "eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9"
+      values.facetAddresses.1:
+-        "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A"
++        "eth:0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A"
+      values.facetAddresses.2:
+-        "0x5d8A9DDA649524D1Ce31C204551a93560617D1D3"
++        "eth:0x5d8A9DDA649524D1Ce31C204551a93560617D1D3"
+      values.facetAddresses.3:
+-        "0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c"
++        "eth:0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c"
+      values.facetAddresses.4:
+-        "0x84283289D7E57a2f5b80ddA065AC99450eB44cb6"
++        "eth:0x84283289D7E57a2f5b80ddA065AC99450eB44cb6"
+      values.facetAddresses.5:
+-        "0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9"
++        "eth:0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9"
+      values.facetAddresses.6:
+-        "0x955cdD2E56Ca2776a101a552A318d28fe311398D"
++        "eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D"
+      values.facetAddresses.7:
+-        "0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC"
++        "eth:0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC"
+      values.facetAddresses.8:
+-        "0x10a73b16f6CD03931484b4Ae69fEDc55E868D295"
++        "eth:0x10a73b16f6CD03931484b4Ae69fEDc55E868D295"
+      values.facetAddresses.9:
+-        "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
++        "eth:0x882aBFb2F6A67d36350499991638044e8Bd83a72"
+      values.facets.0x09E01425780094a9754B2bd8A3298f73ce837CF9:
+-        ["getFallbackAddress()","setFallbackAddress(address)","diamondCut((address,uint8,bytes4[])[],address,bytes)","facets()","facetFunctionSelectors(address)","facetAddresses()","facetAddress(bytes4)","supportsInterface(bytes4)","owner()","nomineeOwner()","transferOwnership(address)","acceptOwnership()"]
+      values.facets.0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A:
+-        ["deposit(address,address,uint128)","forceWithdraw(address)","getAccountAddr(uint32)","getAccountId(address)","getAccountNum()","getDelegatedActions(address,address)","getIsDelegated(address,address,uint256)","getPermitNonce(address)","register(uint256,uint256,address,uint128)","setDelegatee(address,uint256)","withdraw(address,address,uint256)","withdrawWithPermit(address,address,uint256,uint256,uint8,bytes32,bytes32)"]
+      values.facets.0x5d8A9DDA649524D1Ce31C204551a93560617D1D3:
+-        ["getAaveV3Pool()","getEvacuVerifier()","getPoseidonUnit2()","getVerifier()","getWETH()","setEvacuVerifier(address)","setVerifier(address)"]
+      values.facets.0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c:
+-        ["flashLoan(address,address[],uint256[],bytes)","getFlashLoanPremium()","setFlashLoanPremium(uint16)"]
+      values.facets.0x84283289D7E57a2f5b80ddA065AC99450eB44cb6:
+-        ["getFundWeight()","getInsuranceAddr()","getTreasuryAddr()","getVaultAddr()","setFundWeight((uint16,uint16,uint16))","setInsuranceAddr(address)","setTreasuryAddr(address)","setVaultAddr(address)","withdrawProtocolFee(uint8,address,uint256)"]
+      values.facets.0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9:
+-        ["addCollateral(bytes12,uint128)","forceCancelRollBorrow(bytes12)","forceCancelRollBorrowWithPermit(bytes12,uint256,uint8,bytes32,bytes32)","getBorrowFeeRate()","getHalfLiquidationThreshold()","getHealthFactor(bytes12)","getLiquidationFactor(bool)","getLiquidationInfo(bytes12)","getLoan(bytes12)","getLoanId(uint32,uint32,uint16,uint16)","getRollOverFee()","isActivatedRoller()","liquidate(bytes12,uint128)","removeCollateral(bytes12,uint128)","removeCollateralWithPermit(bytes12,uint128,uint256,uint8,bytes32,bytes32)","repay(bytes12,uint128,uint128,bool)","repayWithPermit(bytes12,uint128,uint128,bool,uint256,uint8,bytes32,bytes32)","resolveLoanId(bytes12)","rollBorrow((bytes12,uint32,uint32,uint128,uint128,address))","rollBorrowWithPermit((bytes12,uint32,uint32,uint128,uint128,address),uint256,uint8,bytes32,bytes32)","rollToAave(bytes12,uint128,uint128)","rollToAaveWithPermit(bytes12,uint128,uint128,uint256,uint8,bytes32,bytes32)","setActivatedRoller(bool)","setBorrowFeeRate(uint32)","setHalfLiquidationThreshold(uint16)","setLiquidationFactor((uint16,uint16,uint16,uint16),bool)","setRollOverFee(uint256)"]
+      values.facets.0x955cdD2E56Ca2776a101a552A318d28fe311398D:
+-        ["commitBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])","commitEvacuBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])","executeBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])","executeEvacuBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])","getBlockNum()","getL1Request(uint64)","getL1RequestNum()","getPendingBalances(address,address)","getStoredBlockHash(uint32)","isDepositInL1RequestQueue((uint32,uint16,uint128),uint64)","isEvacuationInL1RequestQueue((uint32,uint16,uint128),uint64)","isForceCancelRollBorrowInL1RequestQueue((uint32,uint16,uint16,uint32),uint64)","isForceWithdrawInL1RequestQueue((uint32,uint16,uint128),uint64)","isRegisterInL1RequestQueue((uint32,bytes20),uint64)","isRollBorrowInL1RequestQueue((uint32,uint16,uint128,uint32,uint16,uint128,uint32,uint32,uint32,uint32),uint64)","revertBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256)[])","verifyBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])","verifyEvacuBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])"]
+      values.facets.0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC:
+-        ["addToken((bool,bool,uint8,uint128,address,address))","getAssetConfig(uint16)","getTokenId(address)","getTokenNum()","isTokenPaused(address)","setMinDepositAmt(address,uint128)","setPaused(address,bool)","setPriceFeed(address,address)","setStableCoin(address,bool)"]
+      values.facets.0x10a73b16f6CD03931484b4Ae69fEDc55E868D295:
+-        ["activeSupply(address)","allowance(address,address,address)","balanceOf(address,address)","createTsbToken(uint16,uint32,string,string)","getMaturityTime(address)","getTsbToken(uint16,uint32)","getUnderlyingAsset(address)","redeem(address,address,uint128,bool)","redeemWithPermit(address,address,uint128,bool,uint256,uint8,bytes32,bytes32)"]
+      values.facets.0x882aBFb2F6A67d36350499991638044e8Bd83a72:
+-        ["activateEvacuation()","consumeL1RequestInEvacuMode(bytes[])","evacuate((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes),(uint256[2],uint256[2][2],uint256[2],uint256[1]))","isEvacuMode()","isEvacuted(address,uint16)","refundDeregisteredAddr(address,uint256,uint32)"]
+      values.facets.eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9:
++        ["getFallbackAddress()","setFallbackAddress(address)","diamondCut((address,uint8,bytes4[])[],address,bytes)","facets()","facetFunctionSelectors(address)","facetAddresses()","facetAddress(bytes4)","supportsInterface(bytes4)","owner()","nomineeOwner()","transferOwnership(address)","acceptOwnership()"]
+      values.facets.eth:0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A:
++        ["deposit(address,address,uint128)","forceWithdraw(address)","getAccountAddr(uint32)","getAccountId(address)","getAccountNum()","getDelegatedActions(address,address)","getIsDelegated(address,address,uint256)","getPermitNonce(address)","register(uint256,uint256,address,uint128)","setDelegatee(address,uint256)","withdraw(address,address,uint256)","withdrawWithPermit(address,address,uint256,uint256,uint8,bytes32,bytes32)"]
+      values.facets.eth:0x5d8A9DDA649524D1Ce31C204551a93560617D1D3:
++        ["getAaveV3Pool()","getEvacuVerifier()","getPoseidonUnit2()","getVerifier()","getWETH()","setEvacuVerifier(address)","setVerifier(address)"]
+      values.facets.eth:0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c:
++        ["flashLoan(address,address[],uint256[],bytes)","getFlashLoanPremium()","setFlashLoanPremium(uint16)"]
+      values.facets.eth:0x84283289D7E57a2f5b80ddA065AC99450eB44cb6:
++        ["getFundWeight()","getInsuranceAddr()","getTreasuryAddr()","getVaultAddr()","setFundWeight((uint16,uint16,uint16))","setInsuranceAddr(address)","setTreasuryAddr(address)","setVaultAddr(address)","withdrawProtocolFee(uint8,address,uint256)"]
+      values.facets.eth:0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9:
++        ["addCollateral(bytes12,uint128)","forceCancelRollBorrow(bytes12)","forceCancelRollBorrowWithPermit(bytes12,uint256,uint8,bytes32,bytes32)","getBorrowFeeRate()","getHalfLiquidationThreshold()","getHealthFactor(bytes12)","getLiquidationFactor(bool)","getLiquidationInfo(bytes12)","getLoan(bytes12)","getLoanId(uint32,uint32,uint16,uint16)","getRollOverFee()","isActivatedRoller()","liquidate(bytes12,uint128)","removeCollateral(bytes12,uint128)","removeCollateralWithPermit(bytes12,uint128,uint256,uint8,bytes32,bytes32)","repay(bytes12,uint128,uint128,bool)","repayWithPermit(bytes12,uint128,uint128,bool,uint256,uint8,bytes32,bytes32)","resolveLoanId(bytes12)","rollBorrow((bytes12,uint32,uint32,uint128,uint128,address))","rollBorrowWithPermit((bytes12,uint32,uint32,uint128,uint128,address),uint256,uint8,bytes32,bytes32)","rollToAave(bytes12,uint128,uint128)","rollToAaveWithPermit(bytes12,uint128,uint128,uint256,uint8,bytes32,bytes32)","setActivatedRoller(bool)","setBorrowFeeRate(uint32)","setHalfLiquidationThreshold(uint16)","setLiquidationFactor((uint16,uint16,uint16,uint16),bool)","setRollOverFee(uint256)"]
+      values.facets.eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D:
++        ["commitBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])","commitEvacuBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])","executeBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])","executeEvacuBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])","getBlockNum()","getL1Request(uint64)","getL1RequestNum()","getPendingBalances(address,address)","getStoredBlockHash(uint32)","isDepositInL1RequestQueue((uint32,uint16,uint128),uint64)","isEvacuationInL1RequestQueue((uint32,uint16,uint128),uint64)","isForceCancelRollBorrowInL1RequestQueue((uint32,uint16,uint16,uint32),uint64)","isForceWithdrawInL1RequestQueue((uint32,uint16,uint128),uint64)","isRegisterInL1RequestQueue((uint32,bytes20),uint64)","isRollBorrowInL1RequestQueue((uint32,uint16,uint128,uint32,uint16,uint128,uint32,uint32,uint32,uint32),uint64)","revertBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256)[])","verifyBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])","verifyEvacuBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])"]
+      values.facets.eth:0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC:
++        ["addToken((bool,bool,uint8,uint128,address,address))","getAssetConfig(uint16)","getTokenId(address)","getTokenNum()","isTokenPaused(address)","setMinDepositAmt(address,uint128)","setPaused(address,bool)","setPriceFeed(address,address)","setStableCoin(address,bool)"]
+      values.facets.eth:0x10a73b16f6CD03931484b4Ae69fEDc55E868D295:
++        ["activeSupply(address)","allowance(address,address,address)","balanceOf(address,address)","createTsbToken(uint16,uint32,string,string)","getMaturityTime(address)","getTsbToken(uint16,uint32)","getUnderlyingAsset(address)","redeem(address,address,uint128,bool)","redeemWithPermit(address,address,uint128,bool,uint256,uint8,bytes32,bytes32)"]
+      values.facets.eth:0x882aBFb2F6A67d36350499991638044e8Bd83a72:
++        ["activateEvacuation()","consumeL1RequestInEvacuMode(bytes[])","evacuate((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes),(uint256[2],uint256[2][2],uint256[2],uint256[1]))","isEvacuMode()","isEvacuted(address,uint16)","refundDeregisteredAddr(address,uint256,uint32)"]
+      values.getAaveV3Pool:
+-        "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
++        "eth:0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+      values.getEvacuVerifier:
+-        "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467"
++        "eth:0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467"
+      values.getFallbackAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getInsuranceAddr:
+-        "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165"
++        "eth:0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165"
+      values.getPoseidonUnit2:
+-        "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D"
++        "eth:0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D"
+      values.getTreasuryAddr:
+-        "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca"
++        "eth:0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca"
+      values.getVaultAddr:
+-        "0x23bCad9BFB1378cd45b32525B835F037b673f529"
++        "eth:0x23bCad9BFB1378cd45b32525B835F037b673f529"
+      values.getVerifier:
+-        "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE"
++        "eth:0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE"
+      values.getWETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.nomineeOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
++        "eth:0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      implementationNames.0x09E01425780094a9754B2bd8A3298f73ce837CF9:
+-        "ZkTrueUp"
+      implementationNames.0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A:
+-        "AccountFacet"
+      implementationNames.0x5d8A9DDA649524D1Ce31C204551a93560617D1D3:
+-        "AddressFacet"
+      implementationNames.0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c:
+-        "FlashLoanFacet"
+      implementationNames.0x84283289D7E57a2f5b80ddA065AC99450eB44cb6:
+-        "ProtocolParamsFacet"
+      implementationNames.0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9:
+-        "LoanFacet"
+      implementationNames.0x955cdD2E56Ca2776a101a552A318d28fe311398D:
+-        "RollupFacet"
+      implementationNames.0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC:
+-        "TokenFacet"
+      implementationNames.0x10a73b16f6CD03931484b4Ae69fEDc55E868D295:
+-        "TsbFacet"
+      implementationNames.0x882aBFb2F6A67d36350499991638044e8Bd83a72:
+-        "EvacuationFacet"
+      implementationNames.eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9:
++        "ZkTrueUp"
+      implementationNames.eth:0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A:
++        "AccountFacet"
+      implementationNames.eth:0x5d8A9DDA649524D1Ce31C204551a93560617D1D3:
++        "AddressFacet"
+      implementationNames.eth:0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c:
++        "FlashLoanFacet"
+      implementationNames.eth:0x84283289D7E57a2f5b80ddA065AC99450eB44cb6:
++        "ProtocolParamsFacet"
+      implementationNames.eth:0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9:
++        "LoanFacet"
+      implementationNames.eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D:
++        "RollupFacet"
+      implementationNames.eth:0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC:
++        "TokenFacet"
+      implementationNames.eth:0x10a73b16f6CD03931484b4Ae69fEDc55E868D295:
++        "TsbFacet"
+      implementationNames.eth:0x882aBFb2F6A67d36350499991638044e8Bd83a72:
++        "EvacuationFacet"
+    }
+```
+
+```diff
+    EOA Rolluper (0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12) {
+    +++ description: None
+      address:
+-        "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
++        "eth:0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
+    }
+```
+
+```diff
+    contract Verifier (0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE) {
+    +++ description: None
+      address:
+-        "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE"
++        "eth:0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE"
+      implementationNames.0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE:
+-        "Verifier"
+      implementationNames.eth:0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE:
++        "Verifier"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 2 (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      address:
+-        "0x23bCad9BFB1378cd45b32525B835F037b673f529"
++        "eth:0x23bCad9BFB1378cd45b32525B835F037b673f529"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
++        "eth:0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.$members.1:
+-        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
++        "eth:0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.$members.2:
+-        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
++        "eth:0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.$members.3:
+-        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
++        "eth:0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.$members.4:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "eth:0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.$members.5:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "eth:0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      implementationNames.0x23bCad9BFB1378cd45b32525B835F037b673f529:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x23bCad9BFB1378cd45b32525B835F037b673f529:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 3 (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      address:
+-        "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165"
++        "eth:0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
++        "eth:0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.$members.1:
+-        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
++        "eth:0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.$members.2:
+-        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
++        "eth:0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.$members.3:
+-        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
++        "eth:0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.$members.4:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "eth:0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.$members.5:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "eth:0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      implementationNames.0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract  (0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D) {
+    +++ description: None
+      address:
+-        "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D"
++        "eth:0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D"
+      implementationNames.0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D:
+-        ""
+      implementationNames.eth:0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D:
++        ""
+    }
+```
+
+```diff
+    EOA  (0x50E6298795C412B26e54FdD87825Bc6ffa94B80d) {
+    +++ description: None
+      address:
+-        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
++        "eth:0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+    }
+```
+
+```diff
+    EOA  (0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44) {
+    +++ description: None
+      address:
+-        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
++        "eth:0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+    }
+```
+
+```diff
+    EOA  (0x83d4814307088732528A53D8DF75fd6F2f5be398) {
+    +++ description: None
+      address:
+-        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
++        "eth:0x83d4814307088732528A53D8DF75fd6F2f5be398"
+    }
+```
+
+```diff
+    EOA  (0x85e500dF81F10B539E16Dd717e24C41465D10D82) {
+    +++ description: None
+      address:
+-        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
++        "eth:0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+    }
+```
+
+```diff
+    EOA  (0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348) {
+    +++ description: None
+      address:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "eth:0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+    }
+```
+
+```diff
+    contract EvacuationFacet (0x882aBFb2F6A67d36350499991638044e8Bd83a72) {
+    +++ description: None
+      address:
+-        "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
++        "eth:0x882aBFb2F6A67d36350499991638044e8Bd83a72"
+      implementationNames.0x882aBFb2F6A67d36350499991638044e8Bd83a72:
+-        "EvacuationFacet"
+      implementationNames.eth:0x882aBFb2F6A67d36350499991638044e8Bd83a72:
++        "EvacuationFacet"
+    }
+```
+
+```diff
+    contract AccountFacet (0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A) {
+    +++ description: None
+      address:
+-        "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A"
++        "eth:0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A"
+      implementationNames.0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A:
+-        "AccountFacet"
+      implementationNames.eth:0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A:
++        "AccountFacet"
+    }
+```
+
+```diff
+    contract RollupFacet (0x955cdD2E56Ca2776a101a552A318d28fe311398D) {
+    +++ description: None
+      address:
+-        "0x955cdD2E56Ca2776a101a552A318d28fe311398D"
++        "eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D"
+      implementationNames.0x955cdD2E56Ca2776a101a552A318d28fe311398D:
+-        "RollupFacet"
+      implementationNames.eth:0x955cdD2E56Ca2776a101a552A318d28fe311398D:
++        "RollupFacet"
+    }
+```
+
+```diff
+    contract EvacuVerifier (0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467) {
+    +++ description: None
+      address:
+-        "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467"
++        "eth:0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467"
+      implementationNames.0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467:
+-        "EvacuVerifier"
+      implementationNames.eth:0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467:
++        "EvacuVerifier"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 1 (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      address:
+-        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
++        "eth:0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
++        "eth:0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.$members.1:
+-        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
++        "eth:0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.$members.2:
+-        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
++        "eth:0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.$members.3:
+-        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
++        "eth:0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.$members.4:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "eth:0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.$members.5:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "eth:0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      implementationNames.0xa00d50A40B1635D293c87BA36503bD2504b5D818:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xa00d50A40B1635D293c87BA36503bD2504b5D818:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93) {
+    +++ description: None
+      address:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "eth:0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+    }
+```
+
+```diff
+    contract TermStructure Multisig 4 (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      address:
+-        "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca"
++        "eth:0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
++        "eth:0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.$members.1:
+-        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
++        "eth:0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.$members.2:
+-        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
++        "eth:0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.$members.3:
+-        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
++        "eth:0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.$members.4:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "eth:0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.$members.5:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "eth:0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      implementationNames.0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA Operator (0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8) {
+    +++ description: None
+      address:
+-        "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8"
++        "eth:0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TermStructure Multisig 2 (0x23bCad9BFB1378cd45b32525B835F037b673f529)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TermStructure Multisig 3 (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvacuationFacet (0x882aBFb2F6A67d36350499991638044e8Bd83a72)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccountFacet (0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupFacet (0x955cdD2E56Ca2776a101a552A318d28fe311398D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvacuVerifier (0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TermStructure Multisig 1 (0xa00d50A40B1635D293c87BA36503bD2504b5D818)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TermStructure Multisig 4 (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x5c76a0065b8bc64094a8214aa195eb65cd3e1127
 
 # Diff at Wed, 28 May 2025 11:34:00 GMT:
 

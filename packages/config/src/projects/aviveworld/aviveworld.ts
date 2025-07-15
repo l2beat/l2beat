@@ -14,10 +14,13 @@ export const aviveworld: ScalingProject = upcomingL3({
       'Avive World is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It focuses on creating a new decentralized social world by empowering geonetworking depin protocols and onboarding millions to Web3.',
     purposes: ['Social'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://avive.world/'],
       socialMedia: ['https://twitter.com/Avive_World'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

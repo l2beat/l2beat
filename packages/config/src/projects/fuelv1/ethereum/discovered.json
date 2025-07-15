@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "Fuel",
-      "address": "0x6880f6Fd960D1581C2730a451A22EED1081cfD72",
+      "address": "eth:0x6880f6Fd960D1581C2730a451A22EED1081cfD72",
       "type": "Contract",
       "sourceHashes": [
         "0x882649168abfdfff5ebf9fbcaa09f8d7025c4b394b2ca7f4f4325f3eba030292"
@@ -16,7 +16,7 @@
       "sinceBlock": 11787727,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x6880f6Fd960D1581C2730a451A22EED1081cfD72": ""
+        "eth:0x6880f6Fd960D1581C2730a451A22EED1081cfD72": ""
       },
       "references": [
         {
@@ -28,5 +28,5 @@
   ],
   "abis": {},
   "usedTemplates": {},
-  "permissionsConfigHash": "0xdc035bb26f2e94c5c345da8e3a923285e2a2eb44a7766ae2c00a8485b2759887"
+  "permissionsConfigHash": "0x0aa50c370c07bd98c8cceea6993c0e367de7507a5c3840404525c0a3929efefe"
 }

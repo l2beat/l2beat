@@ -1,9 +1,3 @@
-import {
-  OthersInfo,
-  RollupsInfo,
-  UnderReviewInfo,
-  ValidiumsAndOptimiumsInfo,
-} from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -12,15 +6,21 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import {
+  NotReviewedInfo,
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import { ExcludeAssociatedTokensCheckbox } from '~/pages/scaling/components/ExcludeAssociatedTokensCheckbox'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import type { TabbedScalingEntries } from '../../utils/groupByScalingTabs'
+import { ScalingSummaryNotReviewedTable } from './table/ScalingSummaryNotReviewedTable'
 import { ScalingSummaryOthersTable } from './table/ScalingSummaryOthersTable'
 import { ScalingSummaryRollupsTable } from './table/ScalingSummaryRollupsTable'
-import { ScalingSummaryUnderReviewTable } from './table/ScalingSummaryUnderReviewTable'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/ScalingSummaryValidiumsAndOptimiumsTable'
 
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
@@ -31,7 +31,7 @@ export function ScalingSummaryTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
+    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -48,7 +48,7 @@ export function ScalingSummaryTables(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.underReview,
+            ...props.notReviewed,
           ]}
         />
         <ExcludeAssociatedTokensCheckbox />
@@ -66,10 +66,10 @@ export function ScalingSummaryTables(props: Props) {
             Others
             <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.underReview.length > 0 && (
-            <DirectoryTabsTrigger value="underReview">
-              Under initial review
-              <CountBadge>{entries.underReview.length}</CountBadge>
+          {entries.notReviewed.length > 0 && (
+            <DirectoryTabsTrigger value="notReviewed">
+              Not reviewed
+              <CountBadge>{entries.notReviewed.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
@@ -94,9 +94,9 @@ export function ScalingSummaryTables(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview">
-            <UnderReviewInfo />
-            <ScalingSummaryUnderReviewTable entries={entries.underReview} />
+          <DirectoryTabsContent value="notReviewed">
+            <NotReviewedInfo />
+            <ScalingSummaryNotReviewedTable entries={entries.notReviewed} />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

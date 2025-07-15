@@ -10,6 +10,7 @@ import { orbitStackL3 } from '../../templates/orbitStack'
 const discovery = new ProjectDiscovery('geist', 'base')
 
 export const geist: ScalingProject = orbitStackL3({
+  archivedAt: UnixTime(1751373084), // Tuesday, July 1, 2025 12:31:24 PM
   addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
   additionalPurposes: ['Gaming', 'NFT'],
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Alchemy],

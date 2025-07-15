@@ -1,4 +1,8 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -7,13 +11,17 @@ const discovery = new ProjectDiscovery('hashkey')
 
 const genesisTimestamp = UnixTime(1734347135)
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'sequencerInbox',
+const sequencerInbox = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'sequencerInbox',
+  ),
 )
-const sequencerAddress = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'batcherHash',
+const sequencerAddress = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'batcherHash',
+  ),
 )
 
 export const hashkey = opStackL2({
@@ -41,9 +49,6 @@ export const hashkey = opStackL2({
         'https://discord.com/invite/ujaF7aKAEk',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   chainConfig: {
     name: 'hashkey',
@@ -90,7 +95,7 @@ export const hashkey = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: disputeGameFactory.address,
+        address: ChainSpecificAddress.address(disputeGameFactory.address),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
@@ -98,14 +103,6 @@ export const hashkey = opStackL2({
       },
     },
   ],
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   associatedTokens: ['HSK'],
   nonTemplateOptimismPortalEscrowTokens: ['HSK'],
   genesisTimestamp,

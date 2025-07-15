@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OptimismPortal2",
+  "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the {{ RespectedGameString }}. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
+  "ignoreMethods": ["isOutputFinalized"],
+  "ignoreInWatchMode": ["params", "balance"],
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame"
+      }
+    }
+  },
+  "fields": {
+    "RespectedGameString": {
+      "handler": {
+        "type": "call",
+        "method": "respectedGameType",
+        "args": []
+      },
+      "edit": ["format", "DisputeGameMap"]
+    },
+    "paused": {
+      "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+      "severity": "HIGH"
+    }
+  },
+  "category": "core"
+}

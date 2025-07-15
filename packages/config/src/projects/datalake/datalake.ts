@@ -14,7 +14,7 @@ export const datalake: ScalingProject = upcomingL3({
       'Data Lake Chain marks the beginning of its mission to build a robust, secure, efficient, and scalable infrastructure to support scientific research.',
     purposes: ['AI'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://data-lake.co'],
       documentation: ['https://docs.data-lake.co/'],
@@ -25,5 +25,8 @@ export const datalake: ScalingProject = upcomingL3({
         'https://datalaketoken.medium.com/',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

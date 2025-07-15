@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const sovrun: ScalingProject = upcomingL2({
       'Shaping the future of gaming through AI, Blockchain & Autonomous Worlds.',
     purposes: ['AI', 'Gaming'],
     category: 'Optimistic Rollup',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://sovrun.org/'],
       explorers: ['https://testnet-l2-explorer-hyperliquid.sovrun.org/'],
@@ -25,5 +25,8 @@ export const sovrun: ScalingProject = upcomingL2({
         'https://t.me/SovrunAnn',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

@@ -184,9 +184,12 @@ function formatFunctionDefinition(fn: AST.FunctionDefinition): string {
     addons.push(fn.stateMutability)
   }
   if (fn.override !== null) {
-    for (const override of fn.override) {
-      addons.push(`override(${override.namePath})`)
+    let value = 'override'
+    const args = fn.override.map((x) => x.namePath)
+    if (args.length > 0) {
+      value += `(${args.join(', ')})`
     }
+    addons.push(value)
   }
   if (addons.length > 0) {
     declaration += ` ${addons.join(' ')}`
@@ -238,7 +241,7 @@ function formatTypeName(typeName: AST.TypeName): string {
       return `${baseType}[${formatExpression(typeName.length)}]`
     }
     case 'FunctionTypeName': {
-      let declaration = `function(`
+      let declaration = 'function('
       const params = []
       for (const param of typeName.parameterTypes) {
         assert(param.typeName !== null, 'Function parameter must have a type')

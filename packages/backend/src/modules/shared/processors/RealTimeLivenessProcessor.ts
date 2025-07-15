@@ -1,6 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, RealTimeAnomalyRecord } from '@l2beat/database'
-import type { RealTimeLivenessRecord } from '@l2beat/database/dist/other/real-time-liveness/entity'
+import type {
+  Database,
+  RealTimeAnomalyRecord,
+  RealTimeLivenessRecord,
+} from '@l2beat/database'
 import type {
   TrackedTxFunctionCallConfig,
   TrackedTxLivenessConfig,
@@ -14,15 +17,17 @@ import {
   type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import type { Config, TrackedTxsConfig } from '../../../config/Config'
-import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
 import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
+import type { AnomalyNotifier } from '../notifiers/AnomalyNotifier'
 import type { BlockProcessor } from '../types'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
   private logger: Logger
+  private trackedTxsConfig: TrackedTxsConfig
   private transfers: (TrackedTxLivenessConfig & {
     params: TrackedTxTransferConfig
   })[] = []
@@ -40,13 +45,18 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     config: Config,
     logger: Logger,
     private readonly db: Database,
-    private readonly discordClient?: DiscordWebhookClient,
+    private readonly notifier?: AnomalyNotifier,
   ) {
     this.logger = logger.for(this)
 
     assert(config.trackedTxsConfig, 'TrackedTxsConfig is required')
 
+    this.trackedTxsConfig = config.trackedTxsConfig
     this.mapConfigurations(config.trackedTxsConfig)
+  }
+
+  async init() {
+    await this.deleteForArchivedProjects()
   }
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
@@ -180,39 +190,48 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
       if (isAnomaly) {
         if (ongoingAnomaly) {
-          this.logger.info(`Ongoing anomaly detected`, {
+          this.logger.info('Ongoing anomaly detected', {
             projectId: group.projectId,
             subtype: group.subtype,
             duration: interval,
             blockNumber: block.number,
           })
+
+          await this.notifier?.anomalyOngoing(
+            ongoingAnomaly,
+            interval,
+            z,
+            block,
+            latestRecord,
+            latestStat,
+          )
+
           continue
         }
 
-        this.logger.info(`New anomaly detected`, {
+        this.logger.info('New anomaly detected', {
           projectId: group.projectId,
           subtype: group.subtype,
           duration: interval,
           blockNumber: block.number,
         })
 
-        const message =
-          `New anomaly detected\n` +
-          `- project: \`${group.projectId}\`\n` +
-          `- type: \`${group.subtype}\`\n` +
-          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
-          `- detected at time: \`${block.timestamp}\`\n` +
-          `- detected at block: \`${block.number}\`\n` +
-          `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)\n`
-
-        await this.sendDiscordNotification(message)
-
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
           projectId: group.projectId,
           subtype: group.subtype,
           status: 'ongoing',
+          isApproved: false,
         }
+
+        await this.notifier?.anomalyDetected(
+          newAnomaly,
+          interval,
+          z,
+          block,
+          latestRecord,
+          latestStat,
+        )
 
         records.push(newAnomaly)
       } else {
@@ -220,28 +239,26 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           continue
         }
 
-        this.logger.info(`Recovered from anomaly`, {
+        this.logger.info('Recovered from anomaly', {
           projectId: group.projectId,
           subtype: group.subtype,
           blockNumber: block.number,
         })
 
-        const message =
-          `Recovered from anomaly\n` +
-          `- project: \`${group.projectId}\`\n` +
-          `- type: \`${group.subtype}\`\n` +
-          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
-          `- recovered on time: \`${block.timestamp}\`\n` +
-          `- recovered on block: \`${block.number}\`\n` +
-          `- duration: \`${latestRecord.timestamp - ongoingAnomaly.start} seconds\``
-
-        await this.sendDiscordNotification(message)
+        const duration = latestRecord.timestamp - ongoingAnomaly.start
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
           status: 'recovered',
           end: latestRecord.timestamp,
         }
+
+        await this.notifier?.anomalyRecovered(
+          recoveredAnomaly,
+          duration,
+          block,
+          latestRecord,
+        )
 
         records.push(recoveredAnomaly)
       }
@@ -296,8 +313,13 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
     const livenesConfigurations = trackedTxsConfig.projects
+      .filter((project) => !project.isArchived)
       .flatMap((project) => project.configurations)
-      .filter((config) => config.type === 'liveness')
+      .filter(
+        (config) =>
+          config.type === 'liveness' &&
+          (!config.untilTimestamp || config.untilTimestamp > UnixTime.now()),
+      )
 
     this.transfers = livenesConfigurations.filter(
       (
@@ -332,17 +354,27 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     )
   }
 
-  private async sendDiscordNotification(message: string) {
-    if (!this.discordClient) {
+  async deleteForArchivedProjects() {
+    const archivedProjectIds = this.trackedTxsConfig.projects
+      .filter((project) => project.isArchived)
+      .map((project) => project.id.toString())
+
+    const projectIdsInDb = await this.db.realTimeAnomalies.getProjectIds()
+
+    const projectIdsToDelete = projectIdsInDb.filter((id: string) =>
+      archivedProjectIds.includes(id),
+    )
+
+    if (projectIdsToDelete.length === 0) {
       return
     }
 
-    try {
-      await this.discordClient.sendMessage(message)
-    } catch (error) {
-      this.logger.error('Failed to send Discord notification', {
-        error,
-      })
-    }
+    const deletedCount =
+      await this.db.realTimeAnomalies.deleteByProjectId(projectIdsToDelete)
+
+    this.logger.info(`Deleted ${deletedCount} records for archived projects`, {
+      projectIds: projectIdsToDelete,
+      count: deletedCount,
+    })
   }
 }

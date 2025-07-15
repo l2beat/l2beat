@@ -5,12 +5,12 @@
   "configHash": "0xee3a7a46ae9f9465e04cfb2e3a49daf9cd6876405dbd61bb6a5009543f690858",
   "entries": [
     {
-      "address": "0x8EB8a3b98659Cce290402893d0123abb75E3ab28",
+      "address": "eth:0x8EB8a3b98659Cce290402893d0123abb75E3ab28",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {},
   "usedTemplates": {},
-  "permissionsConfigHash": "0x7bffca01cec526d3c9caede286c7fddb4aaa4b7ae9c2900a37bee6ec0b722d89"
+  "permissionsConfigHash": "0x4ae4be3546790d1e307b80caae21ce59b0d52ea81cf080eb2fc5c4f324beac66"
 }

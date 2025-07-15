@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const penchain: ScalingProject = upcomingL2({
       'Pen Chain is a zkEVM blockchain powered by ZK stack and secured by Ethereum. It is dedicated to mainstream adoption of Web3 gaming, DeFi, and SocialFi.',
     purposes: ['Gaming'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://pentagon.games/pen-chain'],
       documentation: [],
@@ -25,5 +25,8 @@ export const penchain: ScalingProject = upcomingL2({
         'https://t.me/PentagonGamesXP',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

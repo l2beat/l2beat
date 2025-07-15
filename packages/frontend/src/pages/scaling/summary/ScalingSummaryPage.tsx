@@ -1,8 +1,8 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/ScalingSummaryActivityChart'
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/ScalingSummaryTvsChart'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
@@ -28,7 +28,7 @@ export function ScalingSummaryPage({ entries, queryState, ...props }: Props) {
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <MainPageHeader>Summary</MainPageHeader>
-          <div className="grid grid-cols-2 gap-4 max-lg:hidden">
+          <div className="grid grid-cols-2 gap-4 max-lg:hidden ">
             <PrimaryCard>
               <ScalingSummaryTvsChart
                 unit={SCALING_SUMMARY_UNIT}

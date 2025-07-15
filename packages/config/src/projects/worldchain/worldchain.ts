@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -14,9 +14,6 @@ export const worldchain = opStackL2({
   additionalBadges: [BADGES.RaaS.Alchemy],
   additionalPurposes: ['Identity'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'World Chain',
     slug: 'world',
@@ -56,14 +53,6 @@ export const worldchain = opStackL2({
         callsPerMinute: 1500,
       },
     ],
-  },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   stateDerivation: DERIVATION.OPSTACK('WORLD'),
   isNodeAvailable: 'UnderReview',

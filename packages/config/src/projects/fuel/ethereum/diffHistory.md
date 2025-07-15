@@ -1,4 +1,518 @@
-Generated with discovered.json: 0x29e5e8818c7f013e675b6472f8075259c0670eeb
+Generated with discovered.json: 0x81d9a30bc33a3eb6018a7e645a9a471000c8462b
+
+# Diff at Mon, 14 Jul 2025 12:45:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21630407
+- current block number: 21630407
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630407 (main branch discovery), not current.
+
+```diff
+    contract Fuel Security Council (0x32da601374b38154f05904B16F44A1911Aa6f314) {
+    +++ description: None
+      address:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4"
++        "eth:0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4"
+      values.$members.1:
+-        "0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F"
++        "eth:0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F"
+      values.$members.2:
+-        "0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8"
++        "eth:0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8"
+      values.$members.3:
+-        "0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306"
++        "eth:0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306"
+      values.$members.4:
+-        "0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09"
++        "eth:0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09"
+      values.$members.5:
+-        "0x5F5e0C904153789a9E978c286180b4191950d886"
++        "eth:0x5F5e0C904153789a9E978c286180b4191950d886"
+      values.$members.6:
+-        "0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc"
++        "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc"
+      values.$members.7:
+-        "0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d"
++        "eth:0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d"
+      values.$members.8:
+-        "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
++        "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
+      values.$members.9:
+-        "0x9F7dfAb2222A473284205cdDF08a677726d786A0"
++        "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0"
+      values.$members.10:
+-        "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
++        "eth:0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
+      values.$members.11:
+-        "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
++        "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
+      values.$members.12:
+-        "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+      implementationNames.0x32da601374b38154f05904B16F44A1911Aa6f314:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x32da601374b38154f05904B16F44A1911Aa6f314:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD) {
+    +++ description: None
+      address:
+-        "0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD"
++        "eth:0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD"
+    }
+```
+
+```diff
+    contract Safe (0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc) {
+    +++ description: None
+      address:
+-        "0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc"
++        "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x698F7A879197Dd834c3203b470ddBadD6616A8bF"
++        "eth:0x698F7A879197Dd834c3203b470ddBadD6616A8bF"
+      values.$members.1:
+-        "0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD"
++        "eth:0x3e814Ba5e1FE40d3D1f6D31a1AF3A5E30E4129CD"
+      implementationNames.0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e) {
+    +++ description: None
+      address:
+-        "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
++        "eth:0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
+    }
+```
+
+```diff
+    EOA  (0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d) {
+    +++ description: None
+      address:
+-        "0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d"
++        "eth:0x515Fa9b26E195a043582377F51F9A9bAD2D10c7d"
+    }
+```
+
+```diff
+    EOA  (0x5F5e0C904153789a9E978c286180b4191950d886) {
+    +++ description: None
+      address:
+-        "0x5F5e0C904153789a9E978c286180b4191950d886"
++        "eth:0x5F5e0C904153789a9E978c286180b4191950d886"
+    }
+```
+
+```diff
+    EOA  (0x698F7A879197Dd834c3203b470ddBadD6616A8bF) {
+    +++ description: None
+      address:
+-        "0x698F7A879197Dd834c3203b470ddBadD6616A8bF"
++        "eth:0x698F7A879197Dd834c3203b470ddBadD6616A8bF"
+    }
+```
+
+```diff
+    EOA  (0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306) {
+    +++ description: None
+      address:
+-        "0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306"
++        "eth:0x76707a7F4b40ecFCc7431A3D7345Ef597ee7e306"
+    }
+```
+
+```diff
+    EOA  (0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd) {
+    +++ description: None
+      address:
+-        "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+    }
+```
+
+```diff
+    EOA  (0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4) {
+    +++ description: None
+      address:
+-        "0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4"
++        "eth:0x7cdbF64f57f0D623D924d2b4c17664c1Cd9f93d4"
+    }
+```
+
+```diff
+    EOA  (0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6) {
+    +++ description: None
+      address:
+-        "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
++        "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
+    }
+```
+
+```diff
+    EOA  (0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF) {
+    +++ description: None
+      address:
+-        "0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF"
++        "eth:0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF"
+    }
+```
+
+```diff
+    EOA  (0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F) {
+    +++ description: None
+      address:
+-        "0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F"
++        "eth:0x8a34B78Feb23b97b5ccDf83D9aDC7669C34D346F"
+    }
+```
+
+```diff
+    EOA  (0x958470a2ADe72b7a01A2e160F3286767b9623Ad7) {
+    +++ description: None
+      address:
+-        "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
++        "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
+    }
+```
+
+```diff
+    EOA  (0x9F7dfAb2222A473284205cdDF08a677726d786A0) {
+    +++ description: None
+      address:
+-        "0x9F7dfAb2222A473284205cdDF08a677726d786A0"
++        "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0"
+    }
+```
+
+```diff
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67) {
+    +++ description: None
+      address:
+-        "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
++        "eth:0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab"
++        "eth:0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab"
+      values.$pastUpgrades.0.2.0:
+-        "0xB3109036813ff48E523Cef3818438e64ee04069d"
++        "eth:0xB3109036813ff48E523Cef3818438e64ee04069d"
+      values.$pastUpgrades.1.2.0:
+-        "0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab"
++        "eth:0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+      values.accessControl.PAUSER_ROLE.members.1:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.accessControl.PAUSER_ROLE.members.2:
+-        "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
++        "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
+      values.accessControl.PAUSER_ROLE.members.3:
+-        "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
++        "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
+      values.accessControl.PAUSER_ROLE.members.4:
+-        "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+      values.accessControl.PAUSER_ROLE.members.5:
+-        "0x9F7dfAb2222A473284205cdDF08a677726d786A0"
++        "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0"
+      values.accessControl.PAUSER_ROLE.members.6:
+-        "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
++        "eth:0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
+      values.accessControl.PAUSER_ROLE.members.7:
+-        "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
++        "eth:0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
+      values.accessControl.PAUSER_ROLE.members.8:
+-        "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
++        "eth:0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
+      values.accessControl.SET_RATE_LIMITER_ROLE.members.0:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.fuelMessagePortal:
+-        "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
++        "eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
+      implementationNames.0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67:
+-        "ERC1967Proxy"
+      implementationNames.0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab:
+-        "FuelERC20GatewayV4"
+      implementationNames.eth:0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67:
++        "ERC1967Proxy"
+      implementationNames.eth:0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab:
++        "FuelERC20GatewayV4"
+    }
+```
+
+```diff
+    EOA  (0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8) {
+    +++ description: None
+      address:
+-        "0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8"
++        "eth:0xAA52e167e8Ad426054DCF0fd5BD5481348F4FfC8"
+    }
+```
+
+```diff
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf) {
+    +++ description: None
+      address:
+-        "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
++        "eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x2C4df10a82CF077122eD99573acA6daCd76F2E67"
++        "eth:0x2C4df10a82CF077122eD99573acA6daCd76F2E67"
+      values.$pastUpgrades.0.2.0:
+-        "0x5A725F508659F9846E5877E8625F9ea32B57d577"
++        "eth:0x5A725F508659F9846E5877E8625F9ea32B57d577"
+      values.$pastUpgrades.1.2.0:
+-        "0x6d67857224F66d7A677f063B861B6BACafB10639"
++        "eth:0x6d67857224F66d7A677f063B861B6BACafB10639"
+      values.$pastUpgrades.2.2.0:
+-        "0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16"
++        "eth:0x05f886DDeE0FE07496f6e38b0e140F8eF4655B16"
+      values.$pastUpgrades.3.2.0:
+-        "0x2C4df10a82CF077122eD99573acA6daCd76F2E67"
++        "eth:0x2C4df10a82CF077122eD99573acA6daCd76F2E67"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+      values.accessControl.PAUSER_ROLE.members.1:
+-        "0xe7d56c84cEA9b58569fdfe8863085207F9a14881"
++        "eth:0xe7d56c84cEA9b58569fdfe8863085207F9a14881"
+      values.accessControl.PAUSER_ROLE.members.2:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.accessControl.PAUSER_ROLE.members.3:
+-        "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
++        "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
+      values.accessControl.PAUSER_ROLE.members.4:
+-        "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
++        "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
+      values.accessControl.PAUSER_ROLE.members.5:
+-        "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+      values.accessControl.PAUSER_ROLE.members.6:
+-        "0x9F7dfAb2222A473284205cdDF08a677726d786A0"
++        "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0"
+      values.accessControl.PAUSER_ROLE.members.7:
+-        "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
++        "eth:0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
+      values.accessControl.PAUSER_ROLE.members.8:
+-        "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
++        "eth:0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
+      values.accessControl.PAUSER_ROLE.members.9:
+-        "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
++        "eth:0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
+      values.accessControl.SET_RATE_LIMITER_ROLE.members.0:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.fuelChainStateContract:
+-        "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
++        "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
+      implementationNames.0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf:
+-        "ERC1967Proxy"
+      implementationNames.0x2C4df10a82CF077122eD99573acA6daCd76F2E67:
+-        "FuelMessagePortalV3"
+      implementationNames.eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf:
++        "ERC1967Proxy"
+      implementationNames.eth:0x2C4df10a82CF077122eD99573acA6daCd76F2E67:
++        "FuelMessagePortalV3"
+    }
+```
+
+```diff
+    EOA  (0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2) {
+    +++ description: None
+      address:
+-        "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
++        "eth:0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
+    }
+```
+
+```diff
+    EOA  (0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09) {
+    +++ description: None
+      address:
+-        "0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09"
++        "eth:0xd4c29D8ddC7D3E326030270f35d9FD4973AbBE09"
+    }
+```
+
+```diff
+    EOA  (0xe7d56c84cEA9b58569fdfe8863085207F9a14881) {
+    +++ description: None
+      address:
+-        "0xe7d56c84cEA9b58569fdfe8863085207F9a14881"
++        "eth:0xe7d56c84cEA9b58569fdfe8863085207F9a14881"
+    }
+```
+
+```diff
+    EOA  (0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e) {
+    +++ description: None
+      address:
+-        "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+    }
+```
+
+```diff
+    EOA Sequencer (0xEA0337EFC12e98AB118948dA570C07691E8E4b37) {
+    +++ description: None
+      address:
+-        "0xEA0337EFC12e98AB118948dA570C07691E8E4b37"
++        "eth:0xEA0337EFC12e98AB118948dA570C07691E8E4b37"
+    }
+```
+
+```diff
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130) {
+    +++ description: None
+      address:
+-        "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
++        "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x725B2b1a15D818E1f25c68be77816802e6036559"
++        "eth:0x725B2b1a15D818E1f25c68be77816802e6036559"
+      values.$pastUpgrades.0.2.0:
+-        "0x725B2b1a15D818E1f25c68be77816802e6036559"
++        "eth:0x725B2b1a15D818E1f25c68be77816802e6036559"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
++        "eth:0xE7DCFE1B21D4b9899A80Dc67847e03830a88585e"
+      values.accessControl.PAUSER_ROLE.members.1:
+-        "0xe7d56c84cEA9b58569fdfe8863085207F9a14881"
++        "eth:0xe7d56c84cEA9b58569fdfe8863085207F9a14881"
+      values.accessControl.PAUSER_ROLE.members.2:
+-        "0x32da601374b38154f05904B16F44A1911Aa6f314"
++        "eth:0x32da601374b38154f05904B16F44A1911Aa6f314"
+      values.accessControl.PAUSER_ROLE.members.3:
+-        "0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
++        "eth:0x958470a2ADe72b7a01A2e160F3286767b9623Ad7"
+      values.accessControl.PAUSER_ROLE.members.4:
+-        "0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
++        "eth:0x81ACA96D4Ae0932d2F3463a043392efcCB1F05b6"
+      values.accessControl.PAUSER_ROLE.members.5:
+-        "0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
++        "eth:0x796C3f536C6bf5CB7661C9A0570da0e1ECD303Dd"
+      values.accessControl.PAUSER_ROLE.members.6:
+-        "0x9F7dfAb2222A473284205cdDF08a677726d786A0"
++        "eth:0x9F7dfAb2222A473284205cdDF08a677726d786A0"
+      values.accessControl.PAUSER_ROLE.members.7:
+-        "0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
++        "eth:0xC8Bd2Ead61e54C53C5A1836352c29F10383FBad2"
+      values.accessControl.PAUSER_ROLE.members.8:
+-        "0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
++        "eth:0x45aa9fF818Ffaca57CA31b1C624b2a8CBF5B417e"
+      values.accessControl.PAUSER_ROLE.members.9:
+-        "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
++        "eth:0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
+      values.accessControl.COMMITTER_ROLE.members.0:
+-        "0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF"
++        "eth:0x83dC58504D1d2276Bc8D9Cf01d0B341D84A49cfF"
+      implementationNames.0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130:
+-        "ERC1967Proxy"
+      implementationNames.0x725B2b1a15D818E1f25c68be77816802e6036559:
+-        "FuelChainState"
+      implementationNames.eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130:
++        "ERC1967Proxy"
+      implementationNames.eth:0x725B2b1a15D818E1f25c68be77816802e6036559:
++        "FuelChainState"
+    }
+```
+
+```diff
+    EOA  (0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C) {
+    +++ description: None
+      address:
+-        "0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
++        "eth:0xf88b0247e611eE5af8Cf98f5303769Cba8e7177C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Fuel Security Council (0x32da601374b38154f05904B16F44A1911Aa6f314)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x8d508883bcc7966363ecc4a3400a79eebec4871e
 
 # Diff at Tue, 18 Mar 2025 08:12:49 GMT:
 

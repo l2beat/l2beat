@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -22,7 +27,7 @@ export const optimism: ScalingProject = opStackL2({
     slug: 'op-mainnet',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     description:
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
     links: {
@@ -102,19 +107,12 @@ export const optimism: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xFF00000000000000000000000000000000000010',
-      sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
+      inbox: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+      sequencers: [
+        EthereumAddress('0x6887246668a3b87f54deb3b94ba47a6f63f32985'),
+      ],
     },
   ],
-  finality: {
-    type: 'OPStack',
-    // timestamp of the first blob tx
-    minTimestamp: UnixTime(1710375155),
-    l2BlockTimeSeconds: 2,
-    genesisTimestamp: UnixTime(1686068903),
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -123,13 +121,17 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'batcherHash',
+        from: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'batcherHash',
+          ),
         ),
-        to: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'sequencerInbox',
+        to: ChainSpecificAddress.address(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'sequencerInbox',
+          ),
         ),
         sinceTimestamp: genesisTimestamp,
       },
@@ -156,7 +158,9 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: discovery.getContract('DisputeGameFactory').address,
+        address: ChainSpecificAddress.address(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
@@ -198,9 +202,6 @@ export const optimism: ScalingProject = opStackL2({
       { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   scopeOfAssessment: {
     inScope: [
@@ -248,7 +249,59 @@ export const optimism: ScalingProject = opStackL2({
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
-      title: 'Fallback to permissioned proposals for 26 days.',
+      title: 'Upgrade #15  Isthmus Hard Fork',
+      url: 'https://vote.optimism.io/proposals/8705916809146420472067303211131851783087744913535435360574720946039078686841',
+      date: '2025-04-12T00:00:00Z',
+      description:
+        'Optimism introduces the Isthmus hard fork and its features.',
+      type: 'general',
+    },
+    {
+      title: 'Upgrade #14  Isthmus L1 Contracts + MT-Cannon',
+      url: 'https://vote.optimism.io/proposals/95528263587371532982719325402371584327430753545162858644972401153516332664853',
+      date: '2025-04-12T00:00:00Z',
+      description: 'Optimism introduces MT-Cannon and the Operator Fee.',
+      type: 'general',
+    },
+    {
+      title: 'Upgrade #13 OPCM',
+      url: 'https://vote.optimism.io/proposals/84511922734478887667300419900648701566511387783615524992018614345859900443455',
+      date: '2025-03-22T00:00:00Z',
+      description:
+        'Optimism introduces a new system for upgrading L1 contracts across the Superchain.',
+      type: 'general',
+    },
+    {
+      title: 'Maintainance Upgrade L1 Pectra Readiness',
+      url: 'https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829',
+      date: '2025-03-05T00:00:00Z',
+      description: "Optimism prepares for Ethereum's pectra upgrade.",
+      type: 'general',
+    },
+    {
+      title: 'Upgrade #11 Holocene',
+      url: 'https://vote.optimism.io/proposals/50775220738623167695573388814398057544437236582252674861818535424434586434657',
+      date: '2025-01-09T00:00:00Z',
+      description: 'The Holocene Network Upgrade contains three changes.',
+      type: 'general',
+    },
+    {
+      title: 'Governor Upgrade #3',
+      url: 'https://vote.optimism.io/proposals/20127877429053636874064552098716749508236019236440427814457915785398876262515',
+      date: '2024-12-22T00:00:00Z',
+      description: 'Optimism enables onchain treasury execution.',
+      type: 'general',
+    },
+    {
+      title: 'Upgrade #10 Granite',
+      url: 'https://vote.optimism.io/proposals/46514799174839131952937755475635933411907395382311347042580299316635260952272',
+      date: '2024-08-28T00:00:00Z',
+      description:
+        'Fraud proofs reenabled after Granite upgrade successfully passes through OP governance.',
+      type: 'general',
+    },
+    {
+      title: 'Fallback to permissioned proposals for 26 days',
       url: 'https://x.com/Optimism/status/1824560759747256596',
       date: '2024-08-16T00:00:00Z',
       description:

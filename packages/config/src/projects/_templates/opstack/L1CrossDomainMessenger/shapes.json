@@ -130,5 +130,11 @@
     "address": "0xC08f08571Ea50EDaA1F71Fd6d72a68d164B0C618",
     "chain": "ethereum",
     "blockNumber": 22395854
+  },
+  "L1CrossDomainMessenger_v2_6_0_celo": {
+    "hash": "0x6831ab5545aca99fd05c64f6718bff61dc5cbdb7d5b248257ea6e95a132024c3",
+    "address": "0x807124F75FF2120b2f26D7e6f9e39C03ee9DE212",
+    "chain": "ethereum",
+    "blockNumber": 22882513
   }
 }

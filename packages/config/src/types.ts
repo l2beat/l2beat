@@ -9,6 +9,7 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
+import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -102,6 +103,9 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
+  // zk catalog v2 data
+  proofSystem?: ProjectProofSystem
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -110,8 +114,6 @@ export interface BaseProject {
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
   trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
-  finalityInfo?: ProjectFinalityInfo
-  finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
@@ -208,6 +210,13 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
+
+export interface ZkCatalogTag {
+  id: string
+  type: string
+  name: string
+  description: string
+}
 
 export interface Milestone {
   title: string
@@ -342,7 +351,7 @@ export interface ProjectScalingInfo {
     name: string
     shortName: string | undefined
   }
-  stack: ProjectScalingStack | undefined
+  stacks: ProjectScalingStack[] | undefined
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
@@ -538,11 +547,11 @@ export interface ProjectScalingStateValidationCategory {
     | 'Verification Keys Generation'
     | 'Proven Program'
     | 'Validity proofs'
+    | 'Pessimistic Proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
-    | 'Pessimistic Proofs'
     | 'Fraud proofs'
     // Other
     | 'No state validation'
@@ -736,6 +745,31 @@ export interface RequiredTool {
 }
 // #endregion
 
+// #region zk catalog v2 data
+export interface ProjectProofSystem {
+  creator?: string
+  techStack: {
+    zkVM?: ZkCatalogTag[]
+    finalWrap?: ZkCatalogTag[]
+  }
+  proofSystemInfo: string
+  trustedSetup: {
+    risk: 'green' | 'yellow' | 'red'
+    shortDescription: string
+    longDescription: string
+  }
+  verifierHashes: {
+    hash: string
+    explorerLink: string
+    verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
+    usedBy: ProjectId[]
+    verificationSteps?: string
+    attesters?: ZkCatalogAttester[]
+  }[]
+}
+
+// #endregion
+
 // #region feature configs
 export interface ProjectTvsInfo {
   associatedTokens: string[]
@@ -823,56 +857,6 @@ export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
 }
 
-export interface ProjectFinalityInfo {
-  /** Warning tooltip content for finality tab for given project */
-  warnings?: {
-    timeToInclusion?: WarningWithSentiment
-    stateUpdateDelay?: WarningWithSentiment
-  }
-  /** Finalization period displayed in table for given project (time in seconds) */
-  finalizationPeriod?: number
-}
-
-export type ProjectFinalityConfig =
-  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
-  | {
-      type:
-        | 'Linea'
-        | 'zkSyncEra'
-        | 'Scroll'
-        | 'zkSyncLite'
-        | 'Starknet'
-        | 'Arbitrum'
-        | 'Loopring'
-        | 'Degate'
-        | 'PolygonZkEvm'
-
-      minTimestamp: UnixTime
-      lag: number
-      stateUpdate: StateUpdateMode
-    }
-  | {
-      type: 'OPStack'
-      minTimestamp: UnixTime
-      lag: number
-      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-      // you can get this values by calling the RPC method optimism_rollupConfig
-      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
-      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
-      // <rpc-url> | jq
-      genesisTimestamp: UnixTime
-      l2BlockTimeSeconds: number
-      stateUpdate: StateUpdateMode
-    }
-
-/**
- * Determines how the state update should be handled.
- * - `analyze`: The state update delay should be analyzed as a part of the update.
- * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
- * - `disabled`: The state update analyzer will not be run.
- */
-export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
-
 export type ProjectDaTrackingConfig =
   | BlockDaTrackingConfig
   | TimestampDaTrackingConfig
@@ -933,7 +917,7 @@ export interface ProjectEcosystemConfig {
   links: {
     buildOn: string
     learnMore: string
-    governanceTopDelegates: string
+    governanceDelegateToL2BEAT: string
     governanceProposals: string
     tools?: string[]
     grants?: string

@@ -4,5 +4,17 @@
     "address": "0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "Scroll": {
+    "hash": "0xcbd3207b9109e4f409b0253248655dee17cc83299a5e19d4d7c8bdc792b30008",
+    "address": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
+    "chain": "scroll",
+    "blockNumber": 13963893
+  },
+  "Mantle": {
+    "hash": "0xce3f5eaddd62b6c043d92c0ff2cc4eed6369114f68e9d57c1b76f3d26dd29fa2",
+    "address": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
+    "chain": "mantle",
+    "blockNumber": 81058973
   }
 }

@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "TopTournament",
-      "address": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
+      "address": "eth:0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
       "type": "Contract",
       "template": "cartesi/TopTournament_clone",
       "sourceHashes": [
@@ -18,12 +18,12 @@
       "sinceBlock": 22670003,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": "TopTournament"
+        "eth:0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": "TopTournament"
       }
     },
     {
       "name": "BottomTournament",
-      "address": "0x18256941eC7B661F9F46C228b74e775b581e63f8",
+      "address": "eth:0x18256941eC7B661F9F46C228b74e775b581e63f8",
       "type": "Contract",
       "template": "cartesi/BottomTournament_clone",
       "sourceHashes": [
@@ -35,12 +35,12 @@
       "sinceBlock": 22669999,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x18256941eC7B661F9F46C228b74e775b581e63f8": "BottomTournament"
+        "eth:0x18256941eC7B661F9F46C228b74e775b581e63f8": "BottomTournament"
       }
     },
     {
       "name": "MiddleTournamentFactory",
-      "address": "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
+      "address": "eth:0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
       "type": "Contract",
       "template": "cartesi/MiddleTournamentFactory",
       "sourceHashes": [
@@ -52,42 +52,42 @@
       "values": {
         "$immutable": true,
         "constructorArgs": {
-          "impl": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE"
+          "impl": "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE"
         }
       },
       "implementationNames": {
-        "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": "MiddleTournamentFactory"
+        "eth:0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": "MiddleTournamentFactory"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Application",
-      "address": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+      "address": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
       "type": "Contract",
       "template": "cartesi/Application",
       "sourceHashes": [
         "0x040a3525c8ccc1fbd5fef3a9e0b3087a477f2f7d77e358637619e3c8702615ac"
       ],
       "proxyType": "immutable",
-      "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14`.",
+      "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14`.",
       "sinceTimestamp": 1749510467,
       "sinceBlock": 22670193,
       "values": {
         "$immutable": true,
         "getDataAvailability": "0xb12c9ede000000000000000000000000c70074bdd26d8cf983ca6a5b89b8db52d5850051",
         "getDeploymentBlockNumber": 22670193,
-        "getOutputsMerkleRootValidator": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
+        "getOutputsMerkleRootValidator": "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
         "getTemplateHash": "0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "withdrawer": "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5"
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "withdrawer": "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5"
       },
       "implementationNames": {
-        "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
+        "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
       }
     },
     {
       "name": "BottomTournamentFactory",
-      "address": "0x4C7ab101e9B114A253475485b301E0D0c9e20647",
+      "address": "eth:0x4C7ab101e9B114A253475485b301E0D0c9e20647",
       "type": "Contract",
       "template": "cartesi/BottomTournamentFactory",
       "sourceHashes": [
@@ -99,22 +99,22 @@
       "values": {
         "$immutable": true,
         "constructorArgs": {
-          "impl": "0x18256941eC7B661F9F46C228b74e775b581e63f8"
+          "impl": "eth:0x18256941eC7B661F9F46C228b74e775b581e63f8"
         }
       },
       "implementationNames": {
-        "0x4C7ab101e9B114A253475485b301E0D0c9e20647": "BottomTournamentFactory"
+        "eth:0x4C7ab101e9B114A253475485b301E0D0c9e20647": "BottomTournamentFactory"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
+      "address": "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Cartesi Multisig",
-      "address": "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5",
+      "address": "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -125,7 +125,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+          "from": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
           "description": "withdraw the entire balance in the escrow.",
           "role": ".withdrawer"
         }
@@ -135,14 +135,14 @@
       "sinceBlock": 13408863,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
-          "0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
-          "0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
-          "0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
-          "0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
-          "0xC826D6061b5C62237932c834B60a5eFf04D80F30"
+          "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
+          "eth:0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
+          "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
+          "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
+          "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
+          "eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30"
         ],
         "$threshold": 3,
         "domainSeparator": "0x5da08fdea0dbcc8c2e5ff2167841877be4e4105aceec36114c391bed58448056",
@@ -153,13 +153,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": "Proxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": "Proxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "DaveConsensus",
-      "address": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
+      "address": "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
       "type": "Contract",
       "template": "cartesi/DaveConsensus",
       "sourceHashes": [
@@ -177,23 +177,23 @@
           "epochNumber": 1,
           "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
-        "getApplicationContract": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+        "getApplicationContract": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
         "getCurrentSealedEpoch": {
           "epochNumber": 1,
           "inputIndexLowerBound": 0,
           "inputIndexUpperBound": 3,
-          "tournament": "0x907d1A3092F63400FDA8E0bd33Fe774FE6a62399"
+          "tournament": "eth:0x907d1A3092F63400FDA8E0bd33Fe774FE6a62399"
         },
-        "getInputBox": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
-        "getTournamentFactory": "0xA31C2aCfF3464658866960c0fBD3d798310272D7"
+        "getInputBox": "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
+        "getTournamentFactory": "eth:0xA31C2aCfF3464658866960c0fBD3d798310272D7"
       },
       "implementationNames": {
-        "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": "DaveConsensus"
+        "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": "DaveConsensus"
       }
     },
     {
       "name": "TopTournamentFactory",
-      "address": "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
+      "address": "eth:0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
       "type": "Contract",
       "template": "cartesi/TopTournamentFactory",
       "sourceHashes": [
@@ -205,17 +205,17 @@
       "values": {
         "$immutable": true,
         "constructorArgs": {
-          "impl": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa"
+          "impl": "eth:0x09114973AE4bf3Af3896E4e541082C73f224F8Aa"
         }
       },
       "implementationNames": {
-        "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": "TopTournamentFactory"
+        "eth:0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": "TopTournamentFactory"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CartesiStateTransition",
-      "address": "0x772732EFbDE6559B2960327276ed33d707fF057f",
+      "address": "eth:0x772732EFbDE6559B2960327276ed33d707fF057f",
       "type": "Contract",
       "template": "cartesi/CartesiStateTransition",
       "sourceHashes": [
@@ -227,12 +227,12 @@
       "sinceBlock": 22670005,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x772732EFbDE6559B2960327276ed33d707fF057f": "CartesiStateTransition"
+        "eth:0x772732EFbDE6559B2960327276ed33d707fF057f": "CartesiStateTransition"
       }
     },
     {
       "name": "MultiLevelTournamentFactory",
-      "address": "0xA31C2aCfF3464658866960c0fBD3d798310272D7",
+      "address": "eth:0xA31C2aCfF3464658866960c0fBD3d798310272D7",
       "type": "Contract",
       "template": "cartesi/MultiLevelTournamentFactory",
       "sourceHashes": [
@@ -245,25 +245,25 @@
       "values": {
         "$immutable": true,
         "constructorArgs": {
-          "_topFactory": "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
-          "_middleFactory": "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
-          "_bottomFactory": "0x4C7ab101e9B114A253475485b301E0D0c9e20647",
-          "_tournamentParametersProvider": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
-          "_stateTransition": "0x772732EFbDE6559B2960327276ed33d707fF057f"
+          "_topFactory": "eth:0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
+          "_middleFactory": "eth:0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
+          "_bottomFactory": "eth:0x4C7ab101e9B114A253475485b301E0D0c9e20647",
+          "_tournamentParametersProvider": "eth:0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
+          "_stateTransition": "eth:0x772732EFbDE6559B2960327276ed33d707fF057f"
         }
       },
       "implementationNames": {
-        "0xA31C2aCfF3464658866960c0fBD3d798310272D7": "MultiLevelTournamentFactory"
+        "eth:0xA31C2aCfF3464658866960c0fBD3d798310272D7": "MultiLevelTournamentFactory"
       }
     },
     {
-      "address": "0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
+      "address": "eth:0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "InputBox",
-      "address": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
+      "address": "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
       "type": "Contract",
       "template": "cartesi/InputBox",
       "sourceHashes": [
@@ -275,12 +275,12 @@
       "sinceBlock": 22595776,
       "values": { "$immutable": true, "getDeploymentBlockNumber": 22595776 },
       "implementationNames": {
-        "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": "InputBox"
+        "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": "InputBox"
       }
     },
     {
       "name": "ERC20Portal",
-      "address": "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
+      "address": "eth:0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
       "type": "Contract",
       "template": "cartesi/ERC20Portal",
       "sourceHashes": [
@@ -292,20 +292,20 @@
       "sinceBlock": 22595782,
       "values": {
         "$immutable": true,
-        "getInputBox": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051"
+        "getInputBox": "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051"
       },
       "implementationNames": {
-        "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051": "ERC20Portal"
+        "eth:0xc700D6aDd016eECd59d989C028214Eaa0fCC0051": "ERC20Portal"
       }
     },
     {
-      "address": "0xC826D6061b5C62237932c834B60a5eFf04D80F30",
+      "address": "eth:0xC826D6061b5C62237932c834B60a5eFf04D80F30",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "CanonicalTournamentParametersProvider",
-      "address": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
+      "address": "eth:0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
       "type": "Contract",
       "template": "cartesi/CanonicalTournamentParametersProvider",
       "sourceHashes": [
@@ -332,22 +332,22 @@
         }
       },
       "implementationNames": {
-        "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": "CanonicalTournamentParametersProvider"
+        "eth:0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": "CanonicalTournamentParametersProvider"
       }
     },
     {
-      "address": "0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
+      "address": "eth:0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
+      "address": "eth:0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MiddleTournament",
-      "address": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
+      "address": "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
       "type": "Contract",
       "template": "cartesi/MiddleTournament_clone",
       "sourceHashes": [
@@ -359,11 +359,11 @@
       "sinceBlock": 22670001,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": "MiddleTournament"
+        "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": "MiddleTournament"
       }
     },
     {
-      "address": "0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
+      "address": "eth:0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -645,5 +645,5 @@
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x2e7db4a1312020b21d53f2184bd50181fcf9a719a49005d50f6d7316553ef660"
+  "permissionsConfigHash": "0xeb5b65494022006b366d9813f45a340050c6c497467585273bdc743c858f147a"
 }

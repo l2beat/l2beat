@@ -10,10 +10,12 @@ import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
+import { BlobIndexer } from './indexers/BlobIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
+import { BlobService } from './services/BlobService'
 import { DaService } from './services/DaService'
 
 export function initDataAvailabilityModule(
@@ -89,7 +91,7 @@ function createIndexers(
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: DaIndexer[] = []
+  const daIndexers: (DaIndexer | BlobIndexer)[] = []
   const hourlyIndexer = new HourlyIndexer(logger, clock)
   const eigenIndexers: (EigenDaLayerIndexer | EigenDaProjectsIndexer)[] = []
 
@@ -106,6 +108,24 @@ function createIndexers(
       (c) => c.daLayer === daLayer.name,
     )
 
+    let blobService: BlobService | undefined = undefined
+    let blobIndexer: BlobIndexer | undefined = undefined
+
+    if (daLayer.type === 'ethereum') {
+      blobService = new BlobService(database)
+      blobIndexer = new BlobIndexer({
+        daLayer: daLayer.name,
+        batchSize: daLayer.batchSize,
+        daProvider: providers.da,
+        blobService,
+        logger,
+        indexerService,
+        minHeight: daLayer.startingBlock,
+        parents: [targetIndexer],
+      })
+      daIndexers.push(blobIndexer)
+    }
+
     const indexer = new DaIndexer({
       configurations: configurations.map((c) => ({
         id: c.configurationId,
@@ -118,9 +138,10 @@ function createIndexers(
       logger,
       daLayer: daLayer.name,
       batchSize: daLayer.batchSize,
-      parents: [targetIndexer],
+      parents: [blobIndexer ?? targetIndexer],
       indexerService,
       db: database,
+      blobService,
     })
 
     daIndexers.push(indexer)

@@ -1,18 +1,20 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import isEmpty from 'lodash/isEmpty'
 import type {
   DiscoveryOutput,
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
+import type { DiscoveryBlockNumbers } from './modelPermissions'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
 // This makes the new Clingo modelling a drop-in replacement for the old one
 // and gives certainty that nothing has been broken.
-export async function combinePermissionsIntoDiscovery(
+export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
+  options: { skipDependentDiscoveries?: boolean } = {},
 ) {
   const updateRelevantField = (
     entry: EntryParameters,
@@ -38,7 +40,7 @@ export async function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${discovery.chain}:${entry.address}`) &&
+          p.receiver.startsWith(entry.address) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -48,7 +50,7 @@ export async function combinePermissionsIntoDiscovery(
               sortReceivedPermissions(
                 ultimatePermissionsForEntry.map((p) => {
                   // Remove some fields for backwards compatibility
-                  const { receiver, isFinal, ...rest } = p
+                  const { receiver: _, isFinal: __, ...rest } = p
                   return rest
                 }),
               ),
@@ -57,11 +59,28 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          ChainSpecificAddress(`${discovery.chain}:${entry.address}`),
+          entry.address,
         )
           ? true
           : undefined
     }
+  }
+
+  if (!options.skipDependentDiscoveries) {
+    const blockNumbersWithoutCurProj: DiscoveryBlockNumbers = {}
+    for (const [project, chains] of Object.entries(
+      permissionsOutput.dependentBlockNumbers,
+    )) {
+      for (const [chain, blockNumber] of Object.entries(chains)) {
+        if (!(project === discovery.name && chain === discovery.chain)) {
+          blockNumbersWithoutCurProj[project] ??= {}
+          blockNumbersWithoutCurProj[project][chain] = blockNumber
+        }
+      }
+    }
+    discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
+      ? undefined // remove entry if there are no dependent discoveries
+      : blockNumbersWithoutCurProj
   }
 }
 

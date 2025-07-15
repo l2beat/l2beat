@@ -13,6 +13,7 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/getEcosystemProjectsChartData'
 import { formatTimestamp } from '~/utils/dates'
 import { EcosystemWidget } from '../widgets/EcosystemWidget'
@@ -22,14 +23,19 @@ import { EcosystemsMarketShare } from './EcosystemsMarketShare'
 interface Props {
   data: EcosystemProjectsCountData
   className?: string
+  ecosystemMilestones: EcosystemMilestone[]
 }
 
-export function EcosystemsProjectsChart({ data, className }: Props) {
+export function EcosystemsProjectsChart({
+  data,
+  className,
+  ecosystemMilestones,
+}: Props) {
   const chartMeta = useMemo(() => {
     return {
       projectCount: {
         color: 'var(--ecosystem-primary)',
-        label: `Project count`,
+        label: 'Project count',
         indicatorType: {
           shape: 'line',
         },
@@ -51,8 +57,9 @@ export function EcosystemsProjectsChart({ data, className }: Props) {
       <ChartContainer
         meta={chartMeta}
         data={data.chart}
-        className="!h-[110px] !min-h-[110px]"
+        className="h-[110px]! min-h-[110px]!"
         logoClassName="bottom-[42px]"
+        milestones={ecosystemMilestones}
       >
         <AreaChart data={data.chart} accessibilityLayer margin={{ top: 20 }}>
           <defs>
@@ -97,7 +104,7 @@ function Header({
   marketShare: number
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Projects count</div>
         <EcosystemChartTimeRange range={range} />

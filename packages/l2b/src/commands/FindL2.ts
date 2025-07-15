@@ -1,10 +1,10 @@
-import { existsSync } from 'fs'
-import path from 'path'
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import { CliLogger } from '@l2beat/shared'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, number, option } from 'cmd-ts'
+import { existsSync } from 'fs'
+import path from 'path'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { BlobsFetcher } from '../implementations/find-l2/BlobsFetcher'
 import { CeleniumFetcher } from '../implementations/find-l2/CeleniumFetcher'
 import { RollupWtfFetcher } from '../implementations/find-l2/RollupWtfFetcher'
@@ -24,7 +24,7 @@ export const FindL2 = command({
     }),
   },
   handler: async (args) => {
-    const logger: CliLogger = new CliLogger()
+    const logger = getPlainLogger()
     const paths = getDiscoveryPaths()
 
     const fetchers = [
@@ -71,6 +71,6 @@ export const FindL2 = command({
     }
 
     const table = formatAsAsciiTable(headers, rows)
-    logger.logLine(table)
+    logger.info(table)
   },
 })

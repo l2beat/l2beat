@@ -4,7 +4,6 @@ import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -16,6 +15,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
@@ -68,7 +68,7 @@ export function DaThroughputByProjectChart({
           label: project,
           color:
             project === 'Unknown'
-              ? 'hsl(var(--secondary))'
+              ? 'var(--secondary)'
               : // biome-ignore lint/style/noNonNullAssertion: we know it's there
                 (customColors[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
@@ -147,9 +147,6 @@ export function DaThroughputByProjectChart({
           yAxis: {
             unit: ` ${unit}`,
             tickCount: 3,
-            tick: {
-              width: 100,
-            },
           },
         })}
         <ChartTooltip content={<CustomTooltip denominator={denominator} />} />
@@ -174,7 +171,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="label-value-14-medium text-secondary">
+      <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-2" />
@@ -197,11 +194,11 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="label-value-14-medium">
+                <span className="font-medium text-label-value-14">
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium text-primary tabular-nums">
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {formattedValue} {unit}
               </span>
             </div>

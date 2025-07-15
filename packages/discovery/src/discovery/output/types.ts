@@ -1,11 +1,8 @@
-import type {
-  ChainSpecificAddress,
-  EthereumAddress,
-  Hash256,
-} from '@l2beat/shared-pure'
+import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
+import type { DiscoveryBlockNumbers } from '../modelling/modelPermissions'
 
 export type ContractValue =
   | string
@@ -35,6 +32,7 @@ export interface DiscoveryOutput {
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   permissionsConfigHash?: Hash256
+  dependentDiscoveries?: DiscoveryBlockNumbers
 }
 
 export interface DiscoveryCustomType {
@@ -79,9 +77,9 @@ export interface ContractCategory {
 
 export type StructureEntry = {
   type: 'Contract' | 'EOA'
-  address: EthereumAddress
+  address: ChainSpecificAddress
   name?: string
-  implementationNames?: Record<EthereumAddress, string>
+  implementationNames?: Record<ChainSpecificAddress, string>
   template?: string
   sourceHashes?: string[]
   unverified?: true
@@ -132,4 +130,5 @@ export type PermissionsOutput = {
     isFinal: boolean
     role?: string
   }[]
+  dependentBlockNumbers: DiscoveryBlockNumbers
 }

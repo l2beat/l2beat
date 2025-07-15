@@ -1,6 +1,6 @@
-import path from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
+import path from 'path'
 import { keyInYN } from 'readline-sync'
 import { powerdiff } from '../powerdiff'
 import {
@@ -19,7 +19,7 @@ export interface FindSimilarCommand {
   projectPath: string
   forceTable: boolean
   paths: DiscoveryPaths
-  logger: CliLogger
+  logger: Logger
 }
 
 export async function executeFindSimilar(
@@ -49,11 +49,11 @@ export async function executeFindSimilar(
     secondProject,
     command,
   )
-  command.logger.logLine(formatHeader('Most similar to:'))
-  command.logger.logLine(`${otherName} => ${name} @ ${colorMap(similarity)}`)
+  command.logger.info(formatHeader('Most similar to:'))
+  command.logger.info(`${otherName} => ${name} @ ${colorMap(similarity)}`)
 
   if (similarity === 1) {
-    command.logger.logLine('No need to run powerdiff, projects are identical')
+    command.logger.info('No need to run powerdiff, projects are identical')
     return
   }
 

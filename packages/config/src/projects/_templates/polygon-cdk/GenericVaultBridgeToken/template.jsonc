@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token ({{name}}) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the {{symbol}}-IOU but is sent to {{yieldRecipient}}.",
+  "category": "bridge-external",
+  "ignoreRelatives": ["asset", "underlyingToken", "yieldVault"],
+  "ignoreInWatchMode": [
+    "backingDifference",
+    "stakedAssets",
+    "totalAssets",
+    "totalSupply",
+    "yield"
+  ],
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint",
+    "previewRedeem",
+    "previewWithdraw"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    }
+  }
+}

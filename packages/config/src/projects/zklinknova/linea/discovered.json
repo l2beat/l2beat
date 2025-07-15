@@ -2,11 +2,11 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 19494394,
-  "configHash": "0x1acb5ac0b4af27705698882f9770a4d106c6931e4ce31c21a117f745d8c4503f",
+  "configHash": "0xfef4755ff49762851512ee66ed332370e1528b5711f90796b288428b608e1cde",
   "entries": [
     {
       "name": "LineaOwner",
-      "address": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
+      "address": "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -26,16 +26,16 @@
       "sinceBlock": 244397,
       "values": {
         "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$implementation": "linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
-          "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-          "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-          "0xF801886AE2e127A269B0F11892edb54F692d02dF",
-          "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
-          "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-          "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-          "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+          "linea:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "linea:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+          "linea:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "linea:0xF801886AE2e127A269B0F11892edb54F692d02dF",
+          "linea:0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+          "linea:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+          "linea:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+          "linea:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
         "$threshold": 5,
         "domainSeparator": "0x904d639129fac6c960663a383b13890137d00cf438dde08b756e908d3ac03fe4",
@@ -46,33 +46,33 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391": "GnosisSafeProxy",
-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+        "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391": "GnosisSafeProxy",
+        "linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
     {
-      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "address": "linea:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
+      "address": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4732015b3B1712A4FC5C059195300D12d529bb77",
+      "address": "linea:0x4732015b3B1712A4FC5C059195300D12d529bb77",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "address": "linea:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ValidatorTimelock",
-      "address": "0x509ff56c152315EdeE91A2e0f059195519507e01",
+      "address": "linea:0x509ff56c152315EdeE91A2e0f059195519507e01",
       "type": "Contract",
       "sourceHashes": [
         "0x12cecfbcc6781dd4b8196aa7774f756e4f6b1ffa89386aee473d301f8b6e50a9"
@@ -83,31 +83,31 @@
       "values": {
         "$immutable": true,
         "constructorArgs": {
-          "_initialOwner": "0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
-          "_zkSyncContract": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
+          "_initialOwner": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
+          "_zkSyncContract": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
           "_executionDelay": 0,
-          "_validator": "0x4732015b3B1712A4FC5C059195300D12d529bb77"
+          "_validator": "linea:0x4732015b3B1712A4FC5C059195300D12d529bb77"
         },
         "executionDelay": 0,
         "getName": "ValidatorTimelock",
-        "owner": "0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "owner": "linea:0x34788Df312acC671E62C9aB15523F7CDC4D29BA9",
+        "pendingOwner": "linea:0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "validator": "0x4732015b3B1712A4FC5C059195300D12d529bb77",
-        "zkSyncContract": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
+        "validator": "linea:0x4732015b3B1712A4FC5C059195300D12d529bb77",
+        "zkSyncContract": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
       },
       "implementationNames": {
-        "0x509ff56c152315EdeE91A2e0f059195519507e01": "ValidatorTimelock"
+        "linea:0x509ff56c152315EdeE91A2e0f059195519507e01": "ValidatorTimelock"
       }
     },
     {
-      "address": "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
+      "address": "linea:0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "zkLink",
-      "address": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
+      "address": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP2535 diamond proxy",
@@ -127,93 +127,93 @@
       "values": {
         "$immutable": false,
         "$implementation": [
-          "0x6a91814E3481967Ea350398cf748aB845DF43c05",
-          "0xF3d053C29666D653Fa8629190579844BffE9FB92",
-          "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
-          "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
+          "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05",
+          "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92",
+          "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
+          "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
         ],
         "$pastUpgrades": [
           [
             "2024-02-29T14:48:05.000Z",
             "0x819d006b90a1059b199bc80dd0bdc799ff3bfc4835056c5a818ebe4d6e7a0b2e",
             [
-              "0x73B076425025A3Bf059001D5bE0E21384C8cf049",
-              "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
-              "0x6052B353022dA2C61a999bf081C349260de993Af",
-              "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0"
+              "linea:0x73B076425025A3Bf059001D5bE0E21384C8cf049",
+              "linea:0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
+              "linea:0x6052B353022dA2C61a999bf081C349260de993Af",
+              "linea:0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0"
             ]
           ],
           [
             "2024-03-04T03:26:13.000Z",
             "0x33b1bba23b3c4bf16fb2b10b47dfda138dc2ff659fc32e2d0926b716e76f3dbc",
             [
-              "0x73B076425025A3Bf059001D5bE0E21384C8cf049",
-              "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
-              "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0",
-              "0x841f709F4219a1283300c0250cA7c582aD2B289c"
+              "linea:0x73B076425025A3Bf059001D5bE0E21384C8cf049",
+              "linea:0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
+              "linea:0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0",
+              "linea:0x841f709F4219a1283300c0250cA7c582aD2B289c"
             ]
           ],
           [
             "2024-03-09T09:54:34.000Z",
             "0xdc95a41e73ce7a4cb3200d9b2ecdcb33b548678392e2ac62e35dfc10e37f3308",
             [
-              "0x73B076425025A3Bf059001D5bE0E21384C8cf049",
-              "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
-              "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0",
-              "0x841f709F4219a1283300c0250cA7c582aD2B289c"
+              "linea:0x73B076425025A3Bf059001D5bE0E21384C8cf049",
+              "linea:0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0",
+              "linea:0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0",
+              "linea:0x841f709F4219a1283300c0250cA7c582aD2B289c"
             ]
           ],
           [
             "2024-03-09T10:02:42.000Z",
             "0xe5ccaa4de67ac346e3a8360734dc8d32e894e60ef78686734428bc400f621781",
             [
-              "0xcE8E69a2685c80Eb6bd825d0552f44BB34f35503",
-              "0xb1d0354063527E4426c4bEcbDB75fE0fb112e3CB",
-              "0x11bf5BC6327f7BECB0AE753932A181c8fB5780bA",
-              "0x1b19287CE898217D937571EABa97ec50F27d1206"
+              "linea:0xcE8E69a2685c80Eb6bd825d0552f44BB34f35503",
+              "linea:0xb1d0354063527E4426c4bEcbDB75fE0fb112e3CB",
+              "linea:0x11bf5BC6327f7BECB0AE753932A181c8fB5780bA",
+              "linea:0x1b19287CE898217D937571EABa97ec50F27d1206"
             ]
           ],
           [
             "2024-04-23T02:48:53.000Z",
             "0x72a67f79ae66e93c75e22e06ccc384e73bcf1be4dfb587597aee5467c7f2bddf",
             [
-              "0x2b1f8EcEc8C5E09395D83910b5Cbf0E149E271DC",
-              "0xF3d053C29666D653Fa8629190579844BffE9FB92",
-              "0x253AbB100Dd2606e73E41A26D03269fd13de5548",
-              "0x268F47D6058c3122131e2f8Df1B634793e4B0a7c"
+              "linea:0x2b1f8EcEc8C5E09395D83910b5Cbf0E149E271DC",
+              "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92",
+              "linea:0x253AbB100Dd2606e73E41A26D03269fd13de5548",
+              "linea:0x268F47D6058c3122131e2f8Df1B634793e4B0a7c"
             ]
           ],
           [
             "2024-05-22T15:53:09.000Z",
             "0x63cc92d7d7f235ed4094027a72b93973cb159c4cca509f669668032a0b6d9e96",
             [
-              "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f",
-              "0xF3d053C29666D653Fa8629190579844BffE9FB92",
-              "0x495220D99B432b0de3e1F1fe206AA0E26A051C63",
-              "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
+              "linea:0xB76Ee80B3344D86580C990638bDE1915E58d2c6f",
+              "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92",
+              "linea:0x495220D99B432b0de3e1F1fe206AA0E26A051C63",
+              "linea:0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
             ]
           ],
           [
             "2025-05-14T03:35:45.000Z",
             "0xc126f92dc36c78ecb4aac331b0cc9e92ba1693d8b1a83981f4cb789cd1c55a6b",
             [
-              "0x6a91814E3481967Ea350398cf748aB845DF43c05",
-              "0xF3d053C29666D653Fa8629190579844BffE9FB92",
-              "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
-              "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
+              "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05",
+              "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92",
+              "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
+              "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
             ]
           ]
         ],
         "$upgradeCount": 7,
         "facetAddresses": [
-          "0x6a91814E3481967Ea350398cf748aB845DF43c05",
-          "0xF3d053C29666D653Fa8629190579844BffE9FB92",
-          "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
-          "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
+          "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05",
+          "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92",
+          "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
+          "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
         ],
         "facets": [
           {
-            "addr": "0x6a91814E3481967Ea350398cf748aB845DF43c05",
+            "addr": "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05",
             "selectors": [
               "0x0e18b681",
               "0xe58bb639",
@@ -231,7 +231,7 @@
             ]
           },
           {
-            "addr": "0xF3d053C29666D653Fa8629190579844BffE9FB92",
+            "addr": "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92",
             "selectors": [
               "0xcdffacc6",
               "0x52ef6b2c",
@@ -274,7 +274,7 @@
             ]
           },
           {
-            "addr": "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
+            "addr": "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e",
             "selectors": [
               "0x00e969a8",
               "0x6c0960f9",
@@ -291,7 +291,7 @@
             ]
           },
           {
-            "addr": "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488",
+            "addr": "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488",
             "selectors": [
               "0x93406cf2",
               "0xc3d93e7c",
@@ -302,14 +302,14 @@
           }
         ],
         "getFirstUnprocessedPriorityTx": 269010,
-        "getGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
-        "getGovernor": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
+        "getGateway": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
+        "getGovernor": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "getL2BootloaderBytecodeHash": "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d",
         "getL2DefaultAccountBytecodeHash": "0x0100055b7a8be90522251be8be1a186464d056462973502ac8a0437c85e4d2a9",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getPendingGovernor": "0x0000000000000000000000000000000000000000",
+        "getPendingGovernor": "linea:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 2,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
@@ -320,7 +320,7 @@
         "getTotalBlocksExecuted": 63016,
         "getTotalBlocksVerified": 63055,
         "getTotalPriorityTxs": 269012,
-        "getVerifier": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
+        "getVerifier": "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
           "recursionLeafLevelVkHash": "0x062362cb3eaf1f631406cbe19bf2a2c5d0d9ea69d069309a6003addae9f387be",
@@ -328,21 +328,21 @@
         },
         "isDiamondStorageFrozen": false,
         "validators": [
-          "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
-          "0x509ff56c152315EdeE91A2e0f059195519507e01"
+          "linea:0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
+          "linea:0x509ff56c152315EdeE91A2e0f059195519507e01"
         ]
       },
       "implementationNames": {
-        "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": "DiamondProxy",
-        "0x6a91814E3481967Ea350398cf748aB845DF43c05": "",
-        "0xF3d053C29666D653Fa8629190579844BffE9FB92": "GettersFacet",
-        "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "",
-        "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": ""
+        "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": "DiamondProxy",
+        "linea:0x6a91814E3481967Ea350398cf748aB845DF43c05": "",
+        "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92": "GettersFacet",
+        "linea:0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e": "",
+        "linea:0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488": ""
       }
     },
     {
       "name": "L1ERC20Bridge",
-      "address": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+      "address": "linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
       "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -352,38 +352,38 @@
       "sinceTimestamp": 1709218113,
       "sinceBlock": 2590048,
       "values": {
-        "$admin": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
-        "$implementation": "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A",
+        "$admin": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
+        "$implementation": "linea:0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A",
         "$pastUpgrades": [
           [
             "2024-02-29T14:48:33.000Z",
             "0xd4a7bf62cc26e7852b2f27b65739c9d3fb4c0f7ad57757d0a854391c9b1395c3",
-            ["0xB8017A397E7844635c5a2750d0BEB2af97506461"]
+            ["linea:0xB8017A397E7844635c5a2750d0BEB2af97506461"]
           ],
           [
             "2024-04-03T12:30:11.000Z",
             "0x151e5e3496cc0cfa545a4515a036154bb172dea85ccafce5563b408a83793570",
-            ["0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A"]
+            ["linea:0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A"]
           ]
         ],
         "$upgradeCount": 2,
-        "l2Bridge": "0x01c3f51294494e350AD69B999Db6B382b3B510b9",
-        "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
+        "l2Bridge": "linea:0x01c3f51294494e350AD69B999Db6B382b3B510b9",
+        "l2TokenBeacon": "linea:0x45A4e87354154EB95c2896A43B65bf1148F34908",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
       "implementationNames": {
-        "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": "TransparentUpgradeableProxy",
-        "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": "L1ERC20Bridge"
+        "linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": "TransparentUpgradeableProxy",
+        "linea:0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": "L1ERC20Bridge"
       }
     },
     {
-      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "address": "linea:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LineaL2Gateway",
-      "address": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
+      "address": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
@@ -394,34 +394,34 @@
       "sinceTimestamp": 1709279545,
       "sinceBlock": 2605406,
       "values": {
-        "$admin": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
-        "$implementation": "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
+        "$admin": "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
+        "$implementation": "linea:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
         "$pastUpgrades": [
           [
             "2024-03-01T07:52:25.000Z",
             "0xa810024f29ca544f9587b26bd9ca270c0811b58dd9fcc75ee870e24c316468cc",
-            ["0xaFc54E8277f8Bb8c195C794B0D10D6766e89DF0a"]
+            ["linea:0xaFc54E8277f8Bb8c195C794B0D10D6766e89DF0a"]
           ],
           [
             "2024-03-09T10:50:34.000Z",
             "0x37af14ba1cab3bbd0b202ad21c9bd057c8d36f654ff515e18fc22af68ea72d33",
-            ["0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"]
+            ["linea:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"]
           ]
         ],
         "$upgradeCount": 2,
-        "getRemoteGateway": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
-        "MESSAGE_SERVICE": "0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
-        "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
-        "ZKLINK": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
+        "getRemoteGateway": "linea:0x803460416C2682Ac54FccF03eF77b10A12f2809b",
+        "MESSAGE_SERVICE": "linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec",
+        "owner": "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
+        "ZKLINK": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
       },
       "implementationNames": {
-        "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": "ERC1967Proxy",
-        "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "LineaL2Gateway"
+        "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": "ERC1967Proxy",
+        "linea:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": "LineaL2Gateway"
       }
     },
     {
       "name": "Verifier",
-      "address": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
+      "address": "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458",
       "type": "Contract",
       "sourceHashes": [
         "0x456c64183a7130a9bf99039d4d381b4b827b7efe87e684f81c20871836d975cb"
@@ -434,32 +434,32 @@
         "verificationKeyHash": "0x8574e152c41dc39a2ecab984545e1cf21cb3ec250b919018a8053f2fa270784f"
       },
       "implementationNames": {
-        "0x902C3806A84f4e855a8746e92d7F1C9a51400458": "Verifier"
+        "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458": "Verifier"
       }
     },
     {
-      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "address": "linea:0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "address": "linea:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "address": "linea:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "address": "linea:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Governance",
-      "address": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
+      "address": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
       "type": "Contract",
       "sourceHashes": [
         "0x200762223206dfe40a648627db22f3403b1bdb04c59d8753a1e7525591876fda"
@@ -477,16 +477,16 @@
       "values": {
         "$immutable": true,
         "minDelay": 0,
-        "owner": "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "securityCouncil": "0x0000000000000000000000000000000000000000"
+        "owner": "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391",
+        "pendingOwner": "linea:0x0000000000000000000000000000000000000000",
+        "securityCouncil": "linea:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec": "Governance"
+        "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec": "Governance"
       }
     },
     {
-      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "address": "linea:0xF801886AE2e127A269B0F11892edb54F692d02dF",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -714,5 +714,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
   },
-  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
+  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
 }

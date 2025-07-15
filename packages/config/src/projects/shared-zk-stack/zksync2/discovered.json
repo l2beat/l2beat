@@ -2,11 +2,11 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 61100811,
-  "configHash": "0x3b4e2c234e593ffedace322e27e8f5ee3de3d9368b47ca262b1059cb0d2e2cb4",
+  "configHash": "0xff35e3160d6a7978d70bf2bf236d114dc7bb70580ec822338892e3670fee8ff5",
   "entries": [
     {
       "name": "ProtocolTimelockController",
-      "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+      "address": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -17,7 +17,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
         }
@@ -33,76 +33,76 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x085b8B6407f150D62adB1EF926F7f304600ec714"]
+            "members": ["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+            "members": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+            "members": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+            "members": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
           }
         },
-        "Canceller": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "Canceller": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "Executor": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
         "getMinDelay_formatted": "0s",
-        "Proposer": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "Proposer": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
-        "timelockAdminAC": ["0x085b8B6407f150D62adB1EF926F7f304600ec714"]
+        "timelockAdminAC": ["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]
       },
       "implementationNames": {
-        "0x085b8B6407f150D62adB1EF926F7f304600ec714": "TimelockController"
+        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": "TimelockController"
       }
     },
     {
       "name": "ZkTokenGovernor_deprecated",
-      "address": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+      "address": "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
       "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "address": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -110,7 +110,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -137,7 +137,7 @@
           "name": "ZkTokenGovernor",
           "version": "1",
           "chainId": 324,
-          "verifyingContract": "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
+          "verifyingContract": "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
@@ -149,24 +149,24 @@
         "proposalQueuedCount": 2,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
-        "PROPOSE_GUARDIAN": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+        "PROPOSE_GUARDIAN": "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
         "state": [],
-        "timelock": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
-        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "timelock": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+        "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
-        "VETO_GUARDIAN": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+        "VETO_GUARDIAN": "zksync:0xe788e09324F8bb3cc64f009973693f751C33b999",
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
       "implementationNames": {
-        "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor"
+        "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ProtocolTimelockController_deprecated",
-      "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+      "address": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -177,7 +177,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
         }
@@ -193,41 +193,41 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"]
+            "members": ["zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+            "members": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+            "members": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x76705327e682F2d96943280D99464Ab61219e34f"]
+            "members": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
           }
         },
-        "Canceller": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "Canceller": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "Executor": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 0,
         "getMinDelay_formatted": "0s",
-        "Proposer": ["0x76705327e682F2d96943280D99464Ab61219e34f"],
+        "Proposer": ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
-        "timelockAdminAC": ["0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"]
+        "timelockAdminAC": ["zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"]
       },
       "implementationNames": {
-        "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "TimelockController"
+        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "TimelockController"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "TokenTimelockController_deprecated",
-      "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+      "address": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -238,7 +238,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -255,77 +255,77 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
+            "members": ["zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
+            "members": ["zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
+            "members": ["zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
+            "members": ["zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"]
           }
         },
-        "Canceller": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
+        "Canceller": ["zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
+        "Executor": ["zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "getMinDelay_formatted": "3d",
-        "Proposer": ["0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
+        "Proposer": ["zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
-        "timelockAdminAC": ["0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
+        "timelockAdminAC": ["zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"]
       },
       "implementationNames": {
-        "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TimelockController"
+        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TimelockController"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ZkGovOpsGovernor_deprecated",
-      "address": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+      "address": "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
       "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+              "address": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -333,7 +333,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -360,7 +360,7 @@
           "name": "ZkGovOpsGovernor",
           "version": "1",
           "chainId": 324,
-          "verifyingContract": "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
+          "verifyingContract": "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
@@ -372,22 +372,22 @@
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
-        "timelock": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
-        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "timelock": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+        "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
-        "VETO_GUARDIAN": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+        "VETO_GUARDIAN": "zksync:0xe788e09324F8bb3cc64f009973693f751C33b999",
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
       "implementationNames": {
-        "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor"
+        "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ZkToken",
-      "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+      "address": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
       "type": "Contract",
       "template": "shared-zk-stack/ZkToken",
       "sourceHashes": [
@@ -400,29 +400,29 @@
       "sinceTimestamp": 1716317326,
       "sinceBlock": 34572100,
       "values": {
-        "$admin": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
-        "$implementation": "0x01a6715d3560241E09E865a46122bf347A576c09",
+        "$admin": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+        "$implementation": "zksync:0x01a6715d3560241E09E865a46122bf347A576c09",
         "$pastUpgrades": [
           [
             "2024-05-21T18:48:46.000Z",
             "0x5bfce59c2ad18019ef20d58a3f1ec496cdc85537fc9564c932f7dcbbb2a15b56",
-            ["0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]
+            ["zksync:0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]
           ],
           [
             "2024-06-10T09:25:38.000Z",
             "0xa6bc022ba0f60ac6f10a6efb84b261e9ca1b327a611bdd7a1f4d37cc9b027a3c",
-            ["0x01a6715d3560241E09E865a46122bf347A576c09"]
+            ["zksync:0x01a6715d3560241E09E865a46122bf347A576c09"]
           ]
         ],
         "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"]
+            "members": ["zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"]
           },
           "MINTER_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
+            "members": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
           },
           "BURNER_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -431,18 +431,18 @@
           "MINTER_ROLE": {
             "adminRole": "MINTER_ADMIN_ROLE",
             "members": [
-              "0xa97fBc75CcbC7d4353C4D2676ed18Cd0C5AaF7e6",
-              "0xD78dc27D4dB8f428C67f542216a2b23663838405",
-              "0x21b27952f8621f54f3CB652630E122Ec81dd2dc1",
-              "0x0Ad50686C159040E57ddcE137Db0b63c67473450",
-              "0x0681E3808a0aA12004fb815ebB4515DC823cfbb4",
-              "0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4",
-              "0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d",
-              "0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b",
-              "0x721b6d77a58FaaF540bE49F28D668a46214Ba44c",
-              "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-              "0x51E818785dEa065D392ac21F04E9cac5B601Cfd8",
-              "0x70F6998FC0c492d9DD08b1105259252329be9Db6"
+              "zksync:0xa97fBc75CcbC7d4353C4D2676ed18Cd0C5AaF7e6",
+              "zksync:0xD78dc27D4dB8f428C67f542216a2b23663838405",
+              "zksync:0x21b27952f8621f54f3CB652630E122Ec81dd2dc1",
+              "zksync:0x0Ad50686C159040E57ddcE137Db0b63c67473450",
+              "zksync:0x0681E3808a0aA12004fb815ebB4515DC823cfbb4",
+              "zksync:0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4",
+              "zksync:0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d",
+              "zksync:0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b",
+              "zksync:0x721b6d77a58FaaF540bE49F28D668a46214Ba44c",
+              "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "zksync:0x51E818785dEa065D392ac21F04E9cac5B601Cfd8",
+              "zksync:0x70F6998FC0c492d9DD08b1105259252329be9Db6"
             ]
           },
           "BURNER_ROLE": { "adminRole": "BURNER_ADMIN_ROLE", "members": [] }
@@ -453,7 +453,7 @@
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DefaultAdmin": ["0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
+        "DefaultAdmin": ["zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"],
         "DELEGATION_TYPEHASH": "0x1c1f5657b6ac36a65c3e5b65a5634cd09b7ef90b4242a880c395b82e476db0ac",
         "DOMAIN_SEPARATOR": "0x6e2ba8dffae8c5e86024561f23979a6140fe63a80e3c29168c0c570e59bdf622",
         "eip712Domain": {
@@ -461,37 +461,37 @@
           "name": "ZKsync",
           "version": "1",
           "chainId": 324,
-          "verifyingContract": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "verifyingContract": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
         "MINTER_ADMIN_ROLE": "0x70480ee89cb38eff00b7d23da25713d52ce19c6ed428691d22c58b2f615e3d67",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
-        "MinterAdmin": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
+        "MinterAdmin": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
         "totalSupply": "13703157062315200000000000000"
       },
       "implementationNames": {
-        "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
-        "0x01a6715d3560241E09E865a46122bf347A576c09": "ZkTokenV2"
+        "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
+        "zksync:0x01a6715d3560241E09E865a46122bf347A576c09": "ZkTokenV2"
       }
     },
     {
       "name": "Guardians_l2Alias",
-      "address": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+      "address": "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "role": ".VETO_GUARDIAN"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "from": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "role": ".VETO_GUARDIAN"
         }
@@ -499,66 +499,66 @@
     },
     {
       "name": "ZkProtocolGovernor",
-      "address": "0x76705327e682F2d96943280D99464Ab61219e34f",
+      "address": "zksync:0x76705327e682F2d96943280D99464Ab61219e34f",
       "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x82c5a05996248ee29f451f121ff0f973a3b17f7c7a8ed31878d30c5eaa51b245"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
-            { "address": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
+            { "address": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "propose transactions.",
           "role": ".Proposer"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
-            { "address": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" }
+            { "address": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -566,12 +566,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "role": ".Executor"
         },
         {
           "permission": "act",
-          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "role": ".Executor"
         }
       ],
@@ -597,7 +597,7 @@
           "name": "ZkProtocolGovernor",
           "version": "1",
           "chainId": 324,
-          "verifyingContract": "0x76705327e682F2d96943280D99464Ab61219e34f",
+          "verifyingContract": "zksync:0x76705327e682F2d96943280D99464Ab61219e34f",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
@@ -609,93 +609,93 @@
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
-        "timelock": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "timelock": "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714",
+        "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
         "votingDelay": 259200,
         "votingPeriod": 604800
       },
       "implementationNames": {
-        "0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor"
+        "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": "ZkProtocolGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ProtocolUpgradeHandler_l2Alias_deprecated",
-      "address": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
+      "address": "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "role": "admin",
           "via": [
-            { "address": "zksync2:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
+            { "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "from": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
           "role": ".owner"
         }
       ]
     },
     {
       "name": "ZkTokenGovernor",
-      "address": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+      "address": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
       "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "role": ".MinterAdmin",
           "via": [
             {
-              "address": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -703,7 +703,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -730,7 +730,7 @@
           "name": "ZkTokenGovernor",
           "version": "1",
           "chainId": 324,
-          "verifyingContract": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "verifyingContract": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
@@ -742,24 +742,24 @@
         "proposalQueuedCount": 2,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
-        "PROPOSE_GUARDIAN": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+        "PROPOSE_GUARDIAN": "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
         "state": [],
-        "timelock": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "timelock": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+        "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
-        "VETO_GUARDIAN": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+        "VETO_GUARDIAN": "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
       "implementationNames": {
-        "0xb83FF6501214ddF40C91C9565d095400f3F45746": "ZkTokenGovernor"
+        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": "ZkTokenGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "GovOpsTimelockController_deprecated",
-      "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+      "address": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -770,7 +770,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -787,41 +787,41 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"]
+            "members": ["zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
+            "members": ["zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
+            "members": ["zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
+            "members": ["zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"]
           }
         },
-        "Canceller": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
+        "Canceller": ["zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
+        "Executor": ["zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "getMinDelay_formatted": "3d",
-        "Proposer": ["0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
+        "Proposer": ["zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
-        "timelockAdminAC": ["0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"]
+        "timelockAdminAC": ["zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"]
       },
       "implementationNames": {
-        "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "TimelockController"
+        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "TimelockController"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "GovOpsTimelockController",
-      "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+      "address": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -832,7 +832,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -849,46 +849,46 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xC9E442574958f96C026DeF9a50C3236cab17428a"]
+            "members": ["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
+            "members": ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
+            "members": ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
+            "members": ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
           }
         },
-        "Canceller": ["0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"],
+        "Canceller": ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"],
+        "Executor": ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "getMinDelay_formatted": "3d",
-        "Proposer": ["0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"],
+        "Proposer": ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
-        "timelockAdminAC": ["0xC9E442574958f96C026DeF9a50C3236cab17428a"]
+        "timelockAdminAC": ["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]
       },
       "implementationNames": {
-        "0xC9E442574958f96C026DeF9a50C3236cab17428a": "TimelockController"
+        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": "TimelockController"
       }
     },
     {
       "name": "ZKFoundationMultisig_l2Alias",
-      "address": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
+      "address": "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "from": "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
           "role": ".PROPOSE_GUARDIAN"
         }
@@ -896,7 +896,7 @@
     },
     {
       "name": "ZkTokenProxyAdmin",
-      "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+      "address": "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -906,7 +906,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "role": "admin"
         }
       ],
@@ -914,15 +914,15 @@
       "sinceBlock": 34572095,
       "values": {
         "$immutable": true,
-        "owner": "0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
+        "owner": "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8"
       },
       "implementationNames": {
-        "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ProxyAdmin"
+        "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ProxyAdmin"
       }
     },
     {
       "name": "ZkTokenTimelockController",
-      "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+      "address": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
       "type": "Contract",
       "template": "shared-zk-stack/TimelockController",
       "sourceHashes": [
@@ -933,13 +933,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "role": ".MinterAdmin"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -956,82 +956,82 @@
           },
           "TIMELOCK_ADMIN_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
+            "members": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"]
+            "members": ["zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"]
+            "members": ["zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"]
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"]
+            "members": ["zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"]
           }
         },
-        "Canceller": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"],
+        "Canceller": ["zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"],
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "Executor": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"],
+        "Executor": ["zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"],
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 259200,
         "getMinDelay_formatted": "3d",
-        "Proposer": ["0xb83FF6501214ddF40C91C9565d095400f3F45746"],
+        "Proposer": ["zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
-        "timelockAdminAC": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
+        "timelockAdminAC": ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
       },
       "implementationNames": {
-        "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": "TimelockController"
+        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": "TimelockController"
       }
     },
     {
       "name": "Guardians_l2Alias_deprecated",
-      "address": "0xe788e09324F8bb3cc64f009973693f751C33b999",
+      "address": "zksync:0xe788e09324F8bb3cc64f009973693f751C33b999",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ZkGovOpsGovernor",
-      "address": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+      "address": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
       "type": "Contract",
       "template": "shared-zk-stack/ZkGovernor",
       "sourceHashes": [
         "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+              "address": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -1039,7 +1039,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -1066,7 +1066,7 @@
           "name": "ZkGovOpsGovernor",
           "version": "1",
           "chainId": 324,
-          "verifyingContract": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "verifyingContract": "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
@@ -1078,28 +1078,28 @@
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
-        "timelock": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
-        "token": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+        "timelock": "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a",
+        "token": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
         "version": "1",
-        "VETO_GUARDIAN": "0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
+        "VETO_GUARDIAN": "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9",
         "votingDelay": 604800,
         "votingPeriod": 604800
       },
       "implementationNames": {
-        "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": "ZkGovOpsGovernor"
+        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": "ZkGovOpsGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
       "category": { "name": "Governance", "priority": 3 }
     },
     {
       "name": "ProtocolUpgradeHandler_l2Alias",
-      "address": "0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
+      "address": "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "control all roles in the ZkToken access control, including the minter roles.",
           "role": ".DefaultAdmin"
         }
@@ -1776,5 +1776,5 @@
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "permissionsConfigHash": "0x19c8199f563fac8dd7142854fbf59232d1d12548f46e6b37bb6b146440c2af63"
+  "permissionsConfigHash": "0xa74d55785abb646f800a5d8b66e674273ede4f7118ef733a43ca8640e9bd123a"
 }

@@ -4,15 +4,16 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  DaCommitteeSecurityRisk,
+  DaEconomicSecurityRisk,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { DaCommitteeSecurityRisk, DaEconomicSecurityRisk } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -70,7 +71,7 @@ export const immutablex: ScalingProject = {
     description:
       'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purposes: ['NFT', 'Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'Other',
     links: {
       websites: ['https://immutable.com/'],

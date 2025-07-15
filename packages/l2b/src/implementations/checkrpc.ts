@@ -1,6 +1,7 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { LogLevel } from '@l2beat/backend-tools/dist/logger/LogLevel'
-import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
+import { getPlainLogger } from './common/getPlainLogger'
 
 enum FailureReason {
   Timeout = 'Response took too long',
@@ -32,7 +33,7 @@ async function callRpc(
   rpcUrl: string,
   method: string,
   timeout: number,
-  logger: CliLogger,
+  logger: Logger,
 ): Promise<FailureReason | null> {
   const controller = new AbortController()
   const id = setTimeout(() => controller.abort(), timeout)
@@ -56,23 +57,20 @@ async function callRpc(
 
     if (response.status === 200) {
       return null
-    } else if (response.status === 429) {
-      return FailureReason.Status429
-    } else {
-      logger.logLine(
-        `Got HTTP code: ${chalk.yellow(response.status.toString())}`,
-      )
-      return FailureReason.OtherStatus
     }
+    if (response.status === 429) {
+      return FailureReason.Status429
+    }
+    logger.info(`Got HTTP code: ${chalk.yellow(response.status.toString())}`)
+    return FailureReason.OtherStatus
   } catch (error) {
     clearTimeout(id)
 
     if (error instanceof Error && error.name === 'AbortError') {
       return FailureReason.Timeout
-    } else {
-      logger.logLine(chalk.red(error))
-      return FailureReason.Other
     }
+    logger.info(chalk.red(error))
+    return FailureReason.Other
   }
 }
 
@@ -80,7 +78,7 @@ async function runBatch(
   callRate: number,
   blockNumber: number,
   config: BatchConfiguration,
-  logger: CliLogger,
+  logger: Logger,
 ): Promise<{
   successes: number
   failures: Record<FailureReason, number>
@@ -97,7 +95,7 @@ async function runBatch(
   let totalCalls = 0
   let aborted = false
 
-  logger.logLine(`Starting batch at ${callRate} calls/minute...`)
+  logger.info(`Starting batch at ${callRate} calls/minute...`)
 
   const promises = Array.from({ length: callRate }, (_, i) => {
     return new Promise<void>((resolve) => {
@@ -132,8 +130,7 @@ async function runBatch(
             failures[FailureReason.OtherStatus] +
             failures[FailureReason.Other]
           const failureRate = totalFailures / totalCalls
-          logger.updateStatus(
-            'statusLine',
+          logger.info(
             [
               chalk.green(`Successes: ${successes}`),
               chalk.red(`Failures: ${totalFailures}`),
@@ -156,7 +153,7 @@ async function runBatch(
             failureRate >= config.maxFailureRatio
           ) {
             aborted = true
-            logger.logLine(
+            logger.info(
               chalk.red(
                 `\nAborting batch due to high failure rate (${Math.floor(
                   failureRate * 100,
@@ -175,7 +172,7 @@ async function runBatch(
   await Promise.all(promises)
 
   if (!aborted) {
-    logger.logLine(
+    logger.info(
       `Batch at ${callRate} calls/min: ${successes} successes, Failures (Timeout: ${
         failures[FailureReason.Timeout]
       }, Status 429: ${failures[FailureReason.Status429]}, Other Status: ${
@@ -196,7 +193,7 @@ function isBatchSuccessful(
 }
 
 export async function findRateLimit(config: Configuration) {
-  const logger = new CliLogger()
+  const logger = getPlainLogger()
   let blockNumber = 1
 
   let lowerRate = config.lowerBoundary
@@ -209,7 +206,7 @@ export async function findRateLimit(config: Configuration) {
     logger,
   )
   if (aborted || !isBatchSuccessful(successes, lowerRate, config)) {
-    logger.logLine(chalk.red('Rate limit is below the lower boundary.'))
+    logger.info(chalk.red('Rate limit is below the lower boundary.'))
     return
   }
 
@@ -232,19 +229,19 @@ export async function findRateLimit(config: Configuration) {
       lowerRate = testRate
     }
 
-    logger.logLine(`New bounds: lower=${lowerRate}, upper=${upperRate}`)
+    logger.info(`New bounds: lower=${lowerRate}, upper=${upperRate}`)
 
     if (upperRate - lowerRate <= 1) {
       break
     }
 
     if (pauseNeeded) {
-      logger.logLine(
+      logger.info(
         chalk.yellow(`Pausing for ${config.retryDelayMs / 1000} seconds...`),
       )
       await new Promise((res) => setTimeout(res, config.retryDelayMs))
     }
   }
 
-  logger.logLine(chalk.green(`Estimated rate limit: ${lowerRate} calls/min`))
+  logger.info(chalk.green(`Estimated rate limit: ${lowerRate} calls/min`))
 }

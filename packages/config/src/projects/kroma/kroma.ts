@@ -1,9 +1,10 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -51,6 +52,7 @@ const finalizationPeriod = discovery.getContractValue<number>(
 const chainId = 255
 
 export const kroma: ScalingProject = {
+  archivedAt: UnixTime(1752041971), // Wednesday, July 9, 2025 6:19:31 AM UTC
   type: 'layer2',
   id: ProjectId('kroma'),
   addedAt: UnixTime(1686820004), // 2023-06-15T09:06:44Z
@@ -63,14 +65,15 @@ export const kroma: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    redWarning: `Kroma will shut down on June 30, 2025. Users must withdraw their funds before that date. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.`,
+    redWarning:
+      'Kroma will shut down on June 30, 2025. Users must withdraw their funds before that date. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.',
     name: 'Kroma',
     slug: 'kroma',
     description:
       'Kroma aims to develop a universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll and a zkVM based proven with SP1.',
     purposes: ['Universal'],
     category: 'Other',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://kroma.network/'],
       bridges: ['https://kroma.network/bridge/'],
@@ -99,16 +102,9 @@ export const kroma: ScalingProject = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
-    finality: {
-      warnings: {
-        timeToInclusion: {
-          sentiment: 'neutral',
-          value:
-            "It's assumed that transaction data batches are submitted sequentially.",
-        },
-      },
-      finalizationPeriod,
-    },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   chainConfig: {
     name: 'kroma',
@@ -156,8 +152,10 @@ export const kroma: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xfF00000000000000000000000000000000000255',
-        sequencers: ['0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'],
+        inbox: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+        sequencers: [
+          EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
+        ],
       },
     ],
     trackedTxs: [
@@ -168,11 +166,15 @@ export const kroma: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: EthereumAddress(
-            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          from: ChainSpecificAddress.address(
+            ChainSpecificAddress(
+              discovery.getContractValue('SystemConfig', 'batcherHash'),
+            ),
           ),
-          to: EthereumAddress(
-            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          to: ChainSpecificAddress.address(
+            ChainSpecificAddress(
+              discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+            ),
           ),
           sinceTimestamp: UnixTime(1693883663),
         },
@@ -194,15 +196,6 @@ export const kroma: ScalingProject = {
         },
       },
     ],
-    finality: {
-      type: 'OPStack',
-      // timestamp of the first blob tx
-      minTimestamp: UnixTime(1714032407),
-      l2BlockTimeSeconds: 2,
-      genesisTimestamp: UnixTime(1693880387),
-      lag: 0,
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it'
-
+import { useId } from 'react'
 import { cn } from '~/utils/cn'
 import {
   glossaryPlugin,
@@ -68,16 +68,10 @@ export function Markdown(props: MarkdownProps) {
  * Uses the native <details> and <summary> elements with Tailwind classes
  */
 export function processCollapsibleText(markdown: string): string {
-  // Regular expression to match the pattern [label: content]
-  // Using non-greedy matching with .*? to handle nested content properly
   const collapsiblePattern = /\[([^:]+):\s*(.*?)\]/g
 
-  // Replace each match with the HTML details/summary structure with Tailwind classes
   return markdown.replace(collapsiblePattern, (_match, label, content) => {
-    return `
-      <details class="inline">
-        <summary class="inline-block text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600">${label}</summary>
-        ${content}
-      </details>`
+    const uniqueId = useId()
+    return `<button class="inline text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded px-1 text-sm cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 dark:focus:ring-gray-600" onclick="document.getElementById('${uniqueId}').classList.toggle('hidden')">${label}</button><span id="${uniqueId}" class="hidden ml-1">${content}</span>`
   })
 }

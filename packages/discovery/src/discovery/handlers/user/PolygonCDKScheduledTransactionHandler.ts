@@ -6,8 +6,8 @@ import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
 import { get$Implementations } from '../../utils/extractors'
-import type { Handler, HandlerResult } from '../Handler'
 import { getSighash } from '../getSighash'
+import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type PolygonCDKScheduledTransactionsHandlerDefinition = v.infer<
