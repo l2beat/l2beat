@@ -4,10 +4,11 @@
   "import": ["../../globalConfig.jsonc"],
   "chains": {
     "arbitrum": {
-      "maxAddresses": 1,
+      "maxAddresses": 0,
       "initialAddresses": ["0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"],
       "overrides": {
         "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": {
+          "ignoreMethods": ["getPastTotalSupply", "proxiableUUID"],
           "fields": {
             "$tokenData": {
               "handler": {

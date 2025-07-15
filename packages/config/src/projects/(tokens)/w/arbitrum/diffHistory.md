@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x578ab1399376327d87f0d2a230a4fa8ee303137f
+Generated with discovered.json: 0x4737539cd127080b01fe7c8cc358b96bd1b7d65d
 
-# Diff at Tue, 15 Jul 2025 15:02:04 GMT:
+# Diff at Tue, 15 Jul 2025 15:19:36 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current block number: 357988693
@@ -10,12 +10,6 @@ Generated with discovered.json: 0x578ab1399376327d87f0d2a230a4fa8ee303137f
 Provide description of changes. This section will be preserved.
 
 ## Initial discovery
-
-```diff
-+   Status: CREATED
-    contract Governance (0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F)
-    +++ description: None
-```
 
 ```diff
 +   Status: CREATED

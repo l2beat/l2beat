@@ -2,23 +2,8 @@
   "name": "buidl",
   "chain": "arbitrum",
   "blockNumber": 357992851,
-  "configHash": "0x3cb401217189371626806d000042021aaff955827c62c26c01c790a060542ca1",
+  "configHash": "0x518883540a2599696b3fa970e6d67c1b073705352a3656a518fb33093203f33f",
   "entries": [
-    {
-      "address": "0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x54FE3425f09854E15081fa5B3276afCB4C46FCa2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x7f4e4384137b6aF7732e4e0951832b4152082fbB",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "DSToken",
       "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
@@ -101,24 +86,6 @@
         "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": "ERC1967Proxy",
         "0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": "DSToken"
       }
-    },
-    {
-      "address": "0xC8abbd5bC34C943C908D99581e77D0A91b104515",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-          "role": "admin"
-        }
-      ]
     }
   ],
   "abis": {
@@ -236,5 +203,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x2b635f94c7ab2654ac74b7bfa03a06942d9fa60934b06343f488b108e6d25c6b"
+  "permissionsConfigHash": "0x0028046b3bbe4453b3dc162e38f41e2c398ce1713b6f6321fe2b2c5df311c12a"
 }

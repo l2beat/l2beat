@@ -4,7 +4,7 @@
   "import": ["../../globalConfig.jsonc"],
   "chains": {
     "arbitrum": {
-      "maxAddresses": 1,
+      "maxAddresses": 0,
       "initialAddresses": ["0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872"],
       "overrides": {
         "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": {

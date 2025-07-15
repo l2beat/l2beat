@@ -2,7 +2,7 @@
   "name": "eurs",
   "chain": "ethereum",
   "blockNumber": 22925376,
-  "configHash": "0x074a9e83035060ed7e607d8e21a9ca1147c79b62cfc152179426901f61864534",
+  "configHash": "0xf1f39fc067c31e1c692401a03bde74a19a407ea1a05a42f0efcfb3b2fe5a94d4",
   "entries": [
     {
       "name": "EURSToken",

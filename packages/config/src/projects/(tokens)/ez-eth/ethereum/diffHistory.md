@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x71428f0b229b1d68b0746badaa3e849b9f1ee7f7
+Generated with discovered.json: 0x3adee16d8df97c6815da8213d28f5a50ef4eebaf
 
-# Diff at Tue, 15 Jul 2025 15:08:27 GMT:
+# Diff at Tue, 15 Jul 2025 15:19:36 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current block number: 22925376
@@ -10,18 +10,6 @@ Generated with discovered.json: 0x71428f0b229b1d68b0746badaa3e849b9f1ee7f7
 Provide description of changes. This section will be preserved.
 
 ## Initial discovery
-
-```diff
-+   Status: CREATED
-    contract RoleManager (0x4994EFc62101A9e3F885d872514c2dC7b3235849)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982)
-    +++ description: None
-```
 
 ```diff
 +   Status: CREATED

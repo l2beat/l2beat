@@ -4,7 +4,7 @@
   "import": ["../../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
-      "maxAddresses": 1,
+      "maxAddresses": 0,
       "initialAddresses": ["0xbf5495efe5db9ce00f80364c8b423567e58d2110"],
       "overrides": {
         "0xbf5495efe5db9ce00f80364c8b423567e58d2110": {

@@ -4,10 +4,11 @@
   "import": ["../../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
-      "maxAddresses": 1,
+      "maxAddresses": 0,
       "initialAddresses": ["0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"],
       "overrides": {
         "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB": {
+          "ignoreMethods": ["calculateWithdrawalAmount", "withdrawalRequests"],
           "fields": {
             "$tokenData": {
               "handler": {

@@ -2,33 +2,8 @@
   "name": "w",
   "chain": "arbitrum",
   "blockNumber": 357988693,
-  "configHash": "0xa4f35e3c5d6f5cd7b9ae30531e5f80149ac0c65e6780080f7f0143f8a5798801",
+  "configHash": "0xca0d4db5579890024a5972106b3772b4957c77c1eb459c32dc868c5a8ca71947",
   "entries": [
-    {
-      "name": "Governance",
-      "address": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x8c7278d95972e6d307ad475c076926362a278c65314c6d350355439b91d2551c"
-      ],
-      "proxyType": "immutable",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1713367963,
-      "sinceBlock": 201997577,
-      "values": {
-        "$immutable": true,
-        "MODULE": "0x000000000000000047656e6572616c507572706f7365476f7665726e616e6365"
-      },
-      "implementationNames": {
-        "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F": "Governance"
-      }
-    },
     {
       "name": "Wormhole Token",
       "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
@@ -86,7 +61,6 @@
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
-        "getPastTotalSupply": [0, 0, 0, 0, 0],
         "MAX_SUPPLY": "10000000000000000000000000000",
         "MINTER_AND_BURNER_ADMIN": "0x94fa52329a774c590492dd80ea9dcb867c8e45fcf44ebe594977447db27d90a3",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
@@ -101,10 +75,6 @@
         "symbol": "W",
         "totalSupply": "40422943300773550000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "errors": {
-        "getPastTotalSupply": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred."
       },
       "implementationNames": {
         "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": "ERC1967Proxy",
@@ -220,22 +190,6 @@
       "function transferFrom(address from, address to, uint256 value) returns (bool)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F": [
-      "constructor(address _wormhole)",
-      "error GovernanceActionAlreadyConsumed(bytes32 digest)",
-      "error InvalidAction(uint8 action)",
-      "error InvalidGovernanceChainId(uint16 chainId)",
-      "error InvalidGovernanceContract(bytes32 contractAddress)",
-      "error InvalidModule(bytes32 module)",
-      "error LengthMismatch(uint256 encodedLength, uint256 expectedLength)",
-      "error NotRecipientChain(uint16 chainId)",
-      "error NotRecipientContract(address contractAddress)",
-      "error PayloadTooLong(uint256 size)",
-      "function MODULE() view returns (bytes32)",
-      "function encodeGeneralPurposeGovernanceMessage(tuple(uint8 action, uint16 chain, address governanceContract, address governedContract, bytes callData) m) pure returns (bytes encoded)",
-      "function parseGeneralPurposeGovernanceMessage(bytes encoded) pure returns (tuple(uint8 action, uint16 chain, address governanceContract, address governedContract, bytes callData) message)",
-      "function performGovernance(bytes vaa)"
-    ],
     "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -244,5 +198,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x71d19a35f9db1d596f73ed27b6a724b719188e32257a1ccd362baf9967ffc2c3"
+  "permissionsConfigHash": "0x2bd3e6dd992d2dfbd3af0406f57a87bdc2a4533b757c3711511aa5ee3a1daca1"
 }

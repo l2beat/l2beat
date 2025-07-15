@@ -4,10 +4,11 @@
   "import": ["../../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
-      "maxAddresses": 1,
+      "maxAddresses": 0,
       "initialAddresses": ["0xdC035D45d973E3EC169d2276DDab16f1e407384F"],
       "overrides": {
         "0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+          "ignoreMethods": ["proxiableUUID"],
           "fields": {
             "$tokenData": {
               "handler": {

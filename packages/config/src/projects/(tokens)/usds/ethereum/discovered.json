@@ -2,7 +2,7 @@
   "name": "usds",
   "chain": "ethereum",
   "blockNumber": 22925285,
-  "configHash": "0x3e266da4e9aecd0b5b2b91413a43675b204e1889234ef469a5ffb5a33a72adc9",
+  "configHash": "0xd0ff174c5ee2b369995667ac26dfcf3a438e53e99de45768e8282c295b41925d",
   "entries": [
     {
       "name": "Usds",
@@ -50,7 +50,6 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "0xdC035D45d973E3EC169d2276DDab16f1e407384F": "ERC1967Proxy",
         "0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": "Usds"

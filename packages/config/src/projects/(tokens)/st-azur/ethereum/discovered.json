@@ -1,8 +1,8 @@
 {
   "name": "st-azur",
   "chain": "ethereum",
-  "blockNumber": 22925400,
-  "configHash": "0x1df7c2d742d80245ca5cc2dd05fca5d50a068f8f61643973630ebea69d9d5b6f",
+  "blockNumber": 22925411,
+  "configHash": "0xb7a289db6652a83e44dd4e6beff41786c8fc7b772b8b56c28d8e0cf25cf8efa6",
   "entries": [
     {
       "name": "RewardPoolV2",
@@ -45,9 +45,8 @@
           "source": "canonical"
         },
         "$upgradeCount": 2,
-        "calculateWithdrawalAmount": [0, 1, 2, 3, 4],
         "decimals": 18,
-        "exchangeRate": "1076578074227301895",
+        "exchangeRate": "1076578544200890495",
         "incentiveEndsAt": 1752844811,
         "incentiveStartedAt": 1750252811,
         "name": "Staked $AZUR",
@@ -59,66 +58,11 @@
         "totalRequestedAmount": "3836498477691710556569482",
         "totalSupply": "26114982095918367620485861",
         "underlying": "0x9E6be44cC1236eEf7e1f197418592D363BedCd5A",
-        "withdrawalDelay": 1209600,
-        "withdrawalRequests": [
-          [0, "0x0000000000000000000000000000000000000000", 0],
-          [
-            "22829209633472660000",
-            "0x04a93B3296C69B924594F686403944FeDDe9FAE1",
-            1725139055
-          ],
-          [0, "0x0000000000000000000000000000000000000000", 0],
-          [0, "0x0000000000000000000000000000000000000000", 0],
-          [0, "0x0000000000000000000000000000000000000000", 0]
-        ]
-      },
-      "errors": {
-        "calculateWithdrawalAmount": "Processing error occurred.",
-        "withdrawalRequests": "Processing error occurred."
+        "withdrawalDelay": 1209600
       },
       "implementationNames": {
         "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB": "TransparentUpgradeableProxy",
         "0xB9321FA9b769E14c76F6c67B09ffA126BDD23ea9": "RewardPoolV2"
-      }
-    },
-    {
-      "address": "0x80cB7c007D448aF0822E7b7b2459012cdfb5A200",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Azuro",
-      "address": "0x9E6be44cC1236eEf7e1f197418592D363BedCd5A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf019eb2d914f30c6b97cfb52650671f7b0f4c46444af82d76882ff63f86b1ad8"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1718021867,
-      "sinceBlock": 20061378,
-      "values": {
-        "$immutable": true,
-        "clock": 22925400,
-        "CLOCK_MODE": "mode=blocknumber&from=default",
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0x1af91957da4b743af328a5e6ffad70adaea3203666f431fea597725427fbb7c5",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Azuro",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "0x9E6be44cC1236eEf7e1f197418592D363BedCd5A",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "getPastTotalSupply": [0, 0, 0, 0, 0],
-        "name": "Azuro",
-        "symbol": "AZUR",
-        "totalSupply": "1000000000000000000000000000"
-      },
-      "errors": { "getPastTotalSupply": "Processing error occurred." },
-      "implementationNames": {
-        "0x9E6be44cC1236eEf7e1f197418592D363BedCd5A": "Azuro"
       }
     }
   ],
@@ -133,57 +77,6 @@
       "error ProxyDeniedAdminAccess()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x9E6be44cC1236eEf7e1f197418592D363BedCd5A": [
-      "constructor(string _name, string _symbol)",
-      "error CheckpointUnorderedInsertion()",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap)",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error ERC2612ExpiredSignature(uint256 deadline)",
-      "error ERC2612InvalidSigner(address signer, address owner)",
-      "error ERC5805FutureLookup(uint256 timepoint, uint48 clock)",
-      "error ERC6372InconsistentClock()",
-      "error InvalidAccountNonce(address account, uint256 currentNonce)",
-      "error InvalidShortString()",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error StringTooLong(string str)",
-      "error VotesExpiredSignature(uint256 expiry)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
-      "event DelegateVotesChanged(address indexed delegate, uint256 previousVotes, uint256 newVotes)",
-      "event EIP712DomainChanged()",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function CLOCK_MODE() view returns (string)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function checkpoints(address account, uint32 pos) view returns (tuple(uint48 _key, uint208 _value))",
-      "function clock() view returns (uint48)",
-      "function decimals() view returns (uint8)",
-      "function delegate(address delegatee)",
-      "function delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
-      "function delegates(address account) view returns (address)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function getPastTotalSupply(uint256 timepoint) view returns (uint256)",
-      "function getPastVotes(address account, uint256 timepoint) view returns (uint256)",
-      "function getVotes(address account) view returns (uint256)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function numCheckpoints(address account) view returns (uint32)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)"
     ],
     "0xB9321FA9b769E14c76F6c67B09ffA126BDD23ea9": [
       "constructor()",
@@ -248,5 +141,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x405def753465419a19c0dc005bce39801ba7db0bcb53850a663afeb2d26987cd"
+  "permissionsConfigHash": "0x4b8a93dce6140dd85a3a6ebe732797a4d54ff1f0911bed3d71eb21d6453368e3"
 }
