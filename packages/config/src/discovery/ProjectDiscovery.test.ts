@@ -3,11 +3,7 @@ import {
   ConfigRegistry,
   type DiscoveryConfig,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
@@ -104,15 +100,15 @@ describe(ProjectDiscovery.name, () => {
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {
-          address: ChainSpecificAddress.address(contractStub.address),
+          address: contractStub.address,
           type: 'Contract',
           isVerified: true,
           name: '0x0D4C…72ac',
           url: 'https://etherscan.io/address/0x0D4C1222f5e839a911e2053860e45F18921D72ac',
         },
         {
-          address: EthereumAddress(
-            '0x000000000000000000000000000000000000Bb22',
+          address: ChainSpecificAddress(
+            'eth:0x000000000000000000000000000000000000Bb22',
           ),
           type: 'EOA',
           isVerified: true,

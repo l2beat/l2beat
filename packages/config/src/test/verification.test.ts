@@ -177,7 +177,10 @@ function getProjectContractsForChain(
   return [...contracts, ...escrows]
 }
 
-function getPermissionedAddressesForChain(project: Project, chain: string) {
+function getPermissionedAddressesForChain(
+  project: Project,
+  chain: string,
+): EthereumAddress[] {
   if (!project.permissions) {
     return []
   }
@@ -191,5 +194,5 @@ function getPermissionedAddressesForChain(project: Project, chain: string) {
     .filter((p) => p.chain === chain)
     .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
     .filter((p) => p.type !== 'EOA')
-    .map((p) => p.address)
+    .map((p) => ChainSpecificAddress.address(p.address))
 }
