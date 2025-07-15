@@ -7,7 +7,7 @@ Generated with discovered.json: 0x820ae2c18c4205e6810f5d98081e4ab06bb01cc0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+standard orbit stack optimium with 1/1 DAC and custom gas token.
 
 ## Initial discovery
 
