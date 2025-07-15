@@ -42,16 +42,26 @@ export function DesktopProjectNavigation({
 }: ProjectNavigationProps) {
   const router = useRouter()
   const pathname = usePathname()
+
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()
+  const [isHeaderShown, setIsHeaderShown] = useState(false)
   const currentSection = useCurrentSection()
-  const isSummarySection = currentSection && currentSection.id === 'summary'
 
   useEffect(() => {
     const header = headerRef.current
     if (!header) return
 
     setHeaderHeight(header.getBoundingClientRect().height)
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsHeaderShown(window.scrollY > 50)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const style = useMemo(() => {
@@ -68,7 +78,7 @@ export function DesktopProjectNavigation({
           ref={headerRef}
           className={cn(
             '-z-1 opacity-0 transition-opacity duration-300',
-            isSummarySection === false && 'opacity-100',
+            isHeaderShown && 'opacity-100',
           )}
         >
           <div className="flex flex-row items-center gap-2">
@@ -114,7 +124,7 @@ export function DesktopProjectNavigation({
           sections={sections}
           isUnderReview={project.isUnderReview}
           currentSection={currentSection}
-          style={isSummarySection === false ? style : undefined}
+          style={isHeaderShown ? style : undefined}
         />
       </div>
     </div>
