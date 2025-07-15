@@ -31,11 +31,11 @@ export function getTokenList(chains: ChainConfig[]): LegacyToken[] {
   return tokens
 }
 
-function getGeneratedTokenList(chains: ChainConfig[]): LegacyToken[] {
+export function getGeneratedTokenList(chains: ChainConfig[]): LegacyToken[] {
   return generated.tokens.map((t) => toToken(GeneratedToken.parse(t), chains))
 }
 
-function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
+export function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
   const tokens: LegacyToken[] = []
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)

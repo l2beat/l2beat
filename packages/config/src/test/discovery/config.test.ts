@@ -32,6 +32,7 @@ export const onChainProjects: string[] = [
   'espresso',
   'dydx',
   'tokens',
+  'tokens-v2',
   'gateway',
   'hibachi',
   'opcm16',
