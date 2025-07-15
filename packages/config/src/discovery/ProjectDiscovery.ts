@@ -846,7 +846,6 @@ export class ProjectDiscovery {
       return 0
     }
 
-    // TODO(radomski): This does not work, replace it with getEntryByAdrress
     const permissions = entry.receivedPermissions.map((p) => p.from)
     const priority = permissions.reduce((acc, permission) => {
       return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
