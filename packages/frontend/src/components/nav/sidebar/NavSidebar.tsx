@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -106,19 +106,13 @@ function NavCollapsibleItem({
     () => [...group.links, ...(group.secondaryLinks ?? [])],
     [group.links, group.secondaryLinks],
   )
-  const isActive = allGroupLinks.some((link) =>
+  const isGroupActive = pathname.startsWith('/' + group.match)
+  const isAnyLinkActive = allGroupLinks.some((link) =>
     getIsActive(link.href, pathname),
   )
   const breakpoint = useBreakpoint()
 
-  const [open, setOpen] = useState(isActive)
-
-  useEffect(() => {
-    const isActive = allGroupLinks.some((link) =>
-      getIsActive(link.href, pathname),
-    )
-    setOpen(isActive)
-  }, [allGroupLinks, pathname])
+  const [open, setOpen] = useState(isAnyLinkActive)
 
   if (!group.links[0]) return null
 
@@ -130,50 +124,33 @@ function NavCollapsibleItem({
       group.preventTitleNavigation ? (
         <CollapsibleTrigger
           className="group flex items-center gap-1.5 p-1.5"
-          data-active={isActive}
+          data-active={isGroupActive}
         >
-          <div className="flex items-center gap-2" data-active={isActive}>
+          <div className="flex items-center gap-2">
             <div>{group.icon}</div>
-            <span
-              className={cn(
-                'font-medium text-base text-primary tracking-tight transition-colors duration-300 ',
-                isActive && 'text-brand',
-              )}
-            >
+            <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
               {group.title}
             </span>
           </div>
           <ChevronIcon
             className={cn(
-              '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0',
-              isActive && 'fill-brand',
+              '-rotate-90 size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand',
             )}
           />
         </CollapsibleTrigger>
       ) : (
-        <div className="group flex items-center p-1.5" data-active={isActive}>
-          <a
-            href={group.links[0].href}
-            className="flex items-center gap-2"
-            data-active={isActive}
-          >
+        <div
+          className="group flex items-center p-1.5"
+          data-active={isGroupActive}
+        >
+          <a href={group.links[0].href} className="flex items-center gap-2">
             <div>{group.icon}</div>
-            <span
-              className={cn(
-                'font-medium text-base text-primary tracking-tight transition-colors duration-300 ',
-                isActive && 'text-brand',
-              )}
-            >
+            <span className="font-medium text-base text-primary tracking-tight transition-colors duration-300 group-data-[active=true]:text-brand">
               {group.title}
             </span>
           </a>
           <CollapsibleTrigger className="group size-6">
-            <ChevronIcon
-              className={cn(
-                '-rotate-90 m-auto size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0',
-                isActive && 'fill-brand',
-              )}
-            />
+            <ChevronIcon className="-rotate-90 m-auto size-3 fill-primary transition-[rotate,color,fill] duration-300 group-data-[state=open]:rotate-0 group-data-[active=true]:fill-brand" />
           </CollapsibleTrigger>
         </div>
       )}
