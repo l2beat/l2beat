@@ -11,13 +11,23 @@
       "overrides": {
         "0x1e89F91Ee35D7d21c8e8238c79146daF7aB8Bb94": {
           "ignoreDiscovery": true
+        },
+        "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971": {
+          "ignoreRelatives": ["GnosisSafe_modules"]
         }
       }
     },
     "ethereum": {
+      "maxAddresses": 300,
       "initialAddresses": [
         "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
-        "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0"
+        "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+        "0x45804880De22913dAFE09f4980848ECE6EcbAf78" // PAXG
+      ]
+    },
+    "arbitrum": {
+      "initialAddresses": [
+        "0xCBeb19549054CC0a6257A77736FC78C367216cE7" // EUTBL
       ]
     }
   }

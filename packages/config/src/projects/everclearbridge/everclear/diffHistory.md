@@ -1,4 +1,280 @@
-Generated with discovered.json: 0x025d4eaf9069cba284986fdd844e5c47cf88ed8c
+Generated with discovered.json: 0xf81f1adc993b7d59ed5489173e491d27a76f829c
+
+# Diff at Mon, 14 Jul 2025 12:46:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 1846362
+- current block number: 1846362
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1846362 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2eEd1440842990Fa61F0c396f981375Fa6004131) {
+    +++ description: None
+      address:
+-        "0x2eEd1440842990Fa61F0c396f981375Fa6004131"
++        "everclear:0x2eEd1440842990Fa61F0c396f981375Fa6004131"
+    }
+```
+
+```diff
+    EOA  (0x38f188953f1E3afE83327C78AAeF72e0498da2C6) {
+    +++ description: None
+      address:
+-        "0x38f188953f1E3afE83327C78AAeF72e0498da2C6"
++        "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6"
+    }
+```
+
+```diff
+    EOA  (0x5d334979C6f565b9646975AEdD2358D01f3db4c1) {
+    +++ description: None
+      address:
+-        "0x5d334979C6f565b9646975AEdD2358D01f3db4c1"
++        "everclear:0x5d334979C6f565b9646975AEdD2358D01f3db4c1"
+    }
+```
+
+```diff
+    EOA  (0x6281ea3060B26352b558C4F45767C90db482c4fd) {
+    +++ description: None
+      address:
+-        "0x6281ea3060B26352b558C4F45767C90db482c4fd"
++        "everclear:0x6281ea3060B26352b558C4F45767C90db482c4fd"
+    }
+```
+
+```diff
+    EOA  (0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315) {
+    +++ description: None
+      address:
+-        "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315"
++        "everclear:0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315"
+    }
+```
+
+```diff
+    EOA  (0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f) {
+    +++ description: None
+      address:
+-        "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
++        "everclear:0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
+    }
+```
+
+```diff
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      address:
+-        "0xa05A3380889115bf313f1Db9d5f335157Be4D816"
++        "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816"
+      values.$admin:
+-        "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
++        "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
+      values.$implementation.0:
+-        "0x255aba6E7f08d40B19872D11313688c2ED65d1C9"
++        "everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9"
+      values.$implementation.1:
+-        "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
++        "everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
+      values.$implementation.2:
+-        "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99"
++        "everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99"
+      values.$implementation.3:
+-        "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
++        "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
+      values.$implementation.4:
+-        "0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
++        "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
+      values.$pastUpgrades.0.2.0:
+-        "0x255aba6E7f08d40B19872D11313688c2ED65d1C9"
++        "everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9"
+      values.$pastUpgrades.0.2.1:
+-        "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
++        "everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
+      values.$pastUpgrades.0.2.2:
+-        "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99"
++        "everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99"
+      values.$pastUpgrades.0.2.3:
+-        "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
++        "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66"
+      values.$pastUpgrades.0.2.4:
+-        "0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
++        "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
+      values.$pastUpgrades.0.2.5:
+-        "0x0000000000000000000000000000000000000000"
++        "everclear:0x0000000000000000000000000000000000000000"
++++ description: role 1: ADMIN, role 2: ASSET_MANAGER
+      values.activeRoles.1.0:
+-        "0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874"
++        "everclear:0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874"
++++ description: role 1: ADMIN, role 2: ASSET_MANAGER
+      values.activeRoles.2.0:
+-        "0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed"
++        "everclear:0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed"
+      values.hubGateway:
+-        "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
++        "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
+      values.lighthouse:
+-        "0x38f188953f1E3afE83327C78AAeF72e0498da2C6"
++        "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6"
+      values.managerModule:
+-        "0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
++        "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056"
+      values.owner:
+-        "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
++        "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
+      values.proposedOwner:
+-        "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
++        "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
+      values.watchtower:
+-        "0x6281ea3060B26352b558C4F45767C90db482c4fd"
++        "everclear:0x6281ea3060B26352b558C4F45767C90db482c4fd"
+      implementationNames.0xa05A3380889115bf313f1Db9d5f335157Be4D816:
+-        "ERC1967Proxy"
+      implementationNames.0x255aba6E7f08d40B19872D11313688c2ED65d1C9:
+-        "EverclearHub"
+      implementationNames.0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7:
+-        "Settler"
+      implementationNames.0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99:
+-        "Handler"
+      implementationNames.0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66:
+-        "HubMessageReceiver"
+      implementationNames.0xe0F010e465f15dcD42098dF9b99F1038c11B3056:
+-        "Manager"
+      implementationNames.everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816:
++        "ERC1967Proxy"
+      implementationNames.everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9:
++        "EverclearHub"
+      implementationNames.everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7:
++        "Settler"
+      implementationNames.everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99:
++        "Handler"
+      implementationNames.everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66:
++        "HubMessageReceiver"
+      implementationNames.everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056:
++        "Manager"
+    }
+```
+
+```diff
+    contract  (0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8) {
+    +++ description: None
+      address:
+-        "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
++        "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
+      values.$implementation:
+-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
++        "everclear:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+      values.$members.0:
+-        "0x38f188953f1E3afE83327C78AAeF72e0498da2C6"
++        "everclear:0x38f188953f1E3afE83327C78AAeF72e0498da2C6"
+      values.$members.1:
+-        "0x2eEd1440842990Fa61F0c396f981375Fa6004131"
++        "everclear:0x2eEd1440842990Fa61F0c396f981375Fa6004131"
+      values.$members.2:
+-        "0x5d334979C6f565b9646975AEdD2358D01f3db4c1"
++        "everclear:0x5d334979C6f565b9646975AEdD2358D01f3db4c1"
+      values.$members.3:
+-        "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315"
++        "everclear:0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315"
+      values.$members.4:
+-        "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
++        "everclear:0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
+      values.$members.5:
+-        "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
++        "everclear:0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
+      implementationNames.0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8:
+-        ""
+      implementationNames.0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        ""
+      implementationNames.everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8:
++        ""
+      implementationNames.everclear:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
++        ""
+    }
+```
+
+```diff
+    EOA  (0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed) {
+    +++ description: None
+      address:
+-        "0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed"
++        "everclear:0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed"
+    }
+```
+
+```diff
+    EOA  (0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837) {
+    +++ description: None
+      address:
+-        "0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
++        "everclear:0xBc8988C7a4b77c1d6df7546bd876Ea4D42DF0837"
+    }
+```
+
+```diff
+    EOA  (0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874) {
+    +++ description: None
+      address:
+-        "0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874"
++        "everclear:0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874"
+    }
+```
+
+```diff
+    contract EverclearHubGateway (0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa) {
+    +++ description: None
+      address:
+-        "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
++        "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa"
+      values.$admin:
+-        "0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
++        "everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8"
+      values.$implementation:
+-        "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
++        "everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
+      values.$pastUpgrades.0.2.0:
+-        "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
++        "everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4"
+      implementationNames.0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa:
+-        "ERC1967Proxy"
+      implementationNames.0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4:
+-        ""
+      implementationNames.everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa:
++        "ERC1967Proxy"
+      implementationNames.everclear:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4:
++        ""
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EverclearHubGateway (0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x3caf6a7c3b0d9db7932beaf9741a0fdf00732a47
 
 # Diff at Mon, 07 Jul 2025 08:11:47 GMT:
 

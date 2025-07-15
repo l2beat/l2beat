@@ -1,12 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { type IProvider, ProxyDetector } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery'
+import {
+  get$Implementations,
+  type IProvider,
+  ProxyDetector,
+} from '@l2beat/discovery'
 import {
   assert,
   type EthereumAddress,
+  formatAsAsciiTable,
   Hash256,
   UnixTime,
-  formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { utils } from 'ethers'
@@ -70,7 +73,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
             `"${topic}"`,
           )} does not exist in the ABI.`,
         )
-        throw new Error(`Unable to decode event name.`)
+        throw new Error('Unable to decode event name.')
       }
     }
     logger.info('Done')

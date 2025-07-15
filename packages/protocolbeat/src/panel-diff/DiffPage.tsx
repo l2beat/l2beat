@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../api/api'
 import { ErrorState } from '../components/ErrorState'
-import { LoadingState } from '../components/LoadingState'
 import { DiffView } from '../components/editor/diff/DiffView'
+import { LoadingState } from '../components/LoadingState'
 
 export function DiffPage() {
   const { address1, address2 } = useParams()

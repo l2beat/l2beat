@@ -2,8 +2,10 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
-import { TypeExplanationTooltip } from '~/components/table/cells/TypeInfo'
-import { TypeInfo } from '~/components/table/cells/TypeInfo'
+import {
+  TypeExplanationTooltip,
+  TypeInfo,
+} from '~/components/table/cells/TypeInfo'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { EM_DASH } from '~/consts/characters'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'

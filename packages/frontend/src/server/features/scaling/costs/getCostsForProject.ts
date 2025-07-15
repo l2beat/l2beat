@@ -78,6 +78,6 @@ function getMockedCostsForProject(): CostsForProject {
       blobs: 50,
     },
     syncedUntil: UnixTime.now(),
-    range: [-Infinity, Infinity],
+    range: [Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY],
   }
 }

@@ -52,7 +52,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
           <span className="mt-px font-bold text-[#2A5BD8] text-xs leading-none">
             Explore in Disco
           </span>
-          <CustomLinkIcon className="!fill-[#2A5BD8] size-4" />
+          <CustomLinkIcon className="size-4 fill-[#2A5BD8]!" />
         </a>
       </div>
     </>

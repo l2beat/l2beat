@@ -35,7 +35,7 @@ export function EcosystemsProjectsChart({
     return {
       projectCount: {
         color: 'var(--ecosystem-primary)',
-        label: `Project count`,
+        label: 'Project count',
         indicatorType: {
           shape: 'line',
         },
@@ -57,7 +57,7 @@ export function EcosystemsProjectsChart({
       <ChartContainer
         meta={chartMeta}
         data={data.chart}
-        className="!h-[110px] !min-h-[110px]"
+        className="h-[110px]! min-h-[110px]!"
         logoClassName="bottom-[42px]"
         milestones={ecosystemMilestones}
       >
@@ -104,7 +104,7 @@ function Header({
   marketShare: number
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Projects count</div>
         <EcosystemChartTimeRange range={range} />

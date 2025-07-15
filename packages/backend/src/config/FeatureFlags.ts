@@ -43,7 +43,8 @@ export class FeatureFlags {
       const key = terms.slice(0, i).join('.')
       if (this.disabled.has(key)) {
         return false
-      } else if (this.enabled.has(key)) {
+      }
+      if (this.enabled.has(key)) {
         return true
       }
 
@@ -53,7 +54,8 @@ export class FeatureFlags {
         .join('.')
       if (this.disabled.has(starKey)) {
         return false
-      } else if (this.enabled.has(starKey)) {
+      }
+      if (this.enabled.has(starKey)) {
         return true
       }
     }

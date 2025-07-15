@@ -1,21 +1,21 @@
-import { writeFileSync } from 'fs'
-import { Logger, RateLimiter, getEnv } from '@l2beat/backend-tools'
+import { getEnv, Logger, RateLimiter } from '@l2beat/backend-tools'
 import { type ChainConfig, ProjectService } from '@l2beat/config'
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { BlockIndexerClient, CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, ChainConverter } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { providers, utils } from 'ethers'
+import { writeFileSync } from 'fs'
 import chunk from 'lodash/chunk'
 import groupBy from 'lodash/groupBy'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import {
-  OUTPUT_PATH,
-  PROCESSED_ESCROWS_PATH,
   formatNumberWithCommas,
   getEscrowKey,
   loadExistingTokens,
   loadProcessedEscrows,
+  OUTPUT_PATH,
+  PROCESSED_ESCROWS_PATH,
 } from './utils'
 
 const MIN_MARKET_CAP = 10_000_000
@@ -445,8 +445,7 @@ async function getAllLogs(
         getAllLogs(provider, topics, midPoint + 1, toBlock),
       ])
       return a.concat(b)
-    } else {
-      throw e
     }
+    throw e
   }
 }

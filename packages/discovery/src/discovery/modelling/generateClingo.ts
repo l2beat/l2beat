@@ -1,3 +1,4 @@
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { PermissionsConfig } from '../config/PermissionConfig'
@@ -21,7 +22,9 @@ export function generateClingoFromPermissionsConfig(
   const mergedPermissionsConfig = merge(
     {},
     permissionTemplate,
-    permissionsConfig.overrides?.[entry.address.toString()],
+    permissionsConfig.overrides?.[
+      ChainSpecificAddress.address(entry.address).toString()
+    ],
   )
 
   return buildPermissionsModel(

@@ -1,7 +1,6 @@
 import { expect } from 'earl'
-
-import type { FileContent } from './ParsedFilesManager'
 import { flattenStartingFrom } from './flatten'
+import type { FileContent } from './ParsedFilesManager'
 
 describe('flatten', () => {
   it('handles multiple files, imports, remappings, renames etc.', () => {
@@ -64,7 +63,7 @@ describe('flatten', () => {
       },
       {
         path: 'path5',
-        content: `contract C5 { function r5() public {} }`,
+        content: 'contract C5 { function r5() public {} }',
       },
     ]
 

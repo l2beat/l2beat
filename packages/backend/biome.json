@@ -1,10 +1,23 @@
 {
-  "extends": ["../../biome.jsonc"],
+  "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "extends": ["../../../biome.json"],
   "files": { "maxSize": 10485760 },
   "linter": {
     "rules": {
       "nursery": {
         "useSortedClasses": "off"
+      },
+      "style": {
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       }
     }
   }

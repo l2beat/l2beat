@@ -1,9 +1,9 @@
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { FullPageHeader } from '~/components/FullPageHeader'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import type { ProjectStat } from './DaProjectStats'
 import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'
@@ -39,7 +39,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
         <div className="mt-6 flex w-full flex-col gap-4">
           <div className="flex flex-row items-start gap-10">
             <div className="w-full">
-              <div className="!mb-8 hidden md:flex">
+              <div className="mb-8! hidden md:flex">
                 <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
               </div>
               <div className="flex-1">

@@ -1,5 +1,5 @@
-import path from 'path'
 import { command, option } from 'cmd-ts'
+import path from 'path'
 import { AgglayerDataFetcher } from '../implementations/fetchAgglayer'
 import { File, HttpUrl } from './types'
 

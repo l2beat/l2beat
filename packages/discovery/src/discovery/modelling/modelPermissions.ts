@@ -1,19 +1,22 @@
+import { assert, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { assert, Hash256 } from '@l2beat/shared-pure'
 import { getChainShortName } from '../../config/config.discovery'
+import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
-import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
+import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
-import { KnowledgeBase } from './KnowledgeBase'
-import { ModelIdRegistry } from './ModelIdRegistry'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
-import { generateClingoFromModelLp } from './generateClingo'
-import { generateClingoFromPermissionsConfig } from './generateClingo'
+import {
+  generateClingoFromModelLp,
+  generateClingoFromPermissionsConfig,
+} from './generateClingo'
+import { KnowledgeBase } from './KnowledgeBase'
+import { ModelIdRegistry } from './ModelIdRegistry'
 import {
   parseEoaWithMajorityUpgradePermissionsFacts,
   parseUltimatePermissionFact,
@@ -29,9 +32,16 @@ export type DiscoveryBlockNumbers = {
 }
 
 export class DiscoveryRegistry {
-  discoveries: { [name: string]: { [chain: string]: DiscoveryOutput } } = {}
+  discoveries: {
+    [name: string]: {
+      [chain: string]: {
+        discoveryOutput: DiscoveryOutput
+        analysis?: Analysis[]
+      }
+    }
+  } = {}
 
-  get(project: string, chain: string): DiscoveryOutput {
+  get(project: string, chain: string) {
     assert(
       this.discoveries[project]?.[chain],
       `Discovery for ${project} on ${chain} is not set.`,
@@ -39,9 +49,14 @@ export class DiscoveryRegistry {
     return this.discoveries[project][chain]
   }
 
-  set(project: string, chain: string, discovery: DiscoveryOutput) {
+  set(
+    project: string,
+    chain: string,
+    discoveryOutput: DiscoveryOutput,
+    analysis?: Analysis[],
+  ) {
     this.discoveries[project] ??= {}
-    this.discoveries[project][chain] = discovery
+    this.discoveries[project][chain] = { discoveryOutput, analysis }
   }
 
   getSortedProjects(): { project: string; chain: string }[] {
@@ -56,11 +71,7 @@ export class DiscoveryRegistry {
     return result
   }
 
-  getBlockNumbers(
-    options: {
-      skip?: { project: string; chain: string }
-    } = {},
-  ) {
+  getBlockNumbers(options: { skip?: { project: string; chain: string } } = {}) {
     const result: DiscoveryBlockNumbers = {}
     const skip = options.skip
 
@@ -71,7 +82,7 @@ export class DiscoveryRegistry {
         }
         result[project] ??= {}
         result[project][chain] = {
-          blockNumber: discovery.blockNumber,
+          blockNumber: discovery.discoveryOutput.blockNumber,
         }
       }
     }
@@ -116,6 +127,9 @@ export function getDependenciesToDiscoverForProject(
   return configReader
     .readAllDiscoveredChainsForProject(project)
     .map((chain) => ({ project, chain }))
+    .sort((a, b) =>
+      `${a.chain}-${a.project}`.localeCompare(`${b.chain}-${b.project}`),
+    )
 }
 
 export function buildPermissionsOutput(
@@ -216,7 +230,7 @@ export function generateClingoForDiscoveries(
   const generatedClingo: string[] = []
 
   for (const { project, chain } of discoveries.getSortedProjects()) {
-    const discovery = discoveries.get(project, chain)
+    const discovery = discoveries.get(project, chain).discoveryOutput
     const config = configReader.readConfig(project, chain)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
@@ -237,7 +251,7 @@ export function generateClingoForProjectOnChain(
   const generatedClingo: string[] = []
 
   const shortChain = getChainShortName(discovery.chain)
-  const addressToNameMap = buildAddressToNameMap(shortChain, discovery.entries)
+  const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   discovery.entries
     .sort((a, b) => a.address.localeCompare(b.address))

@@ -1,6 +1,6 @@
-import type { CountedBlock } from '@/types'
 import { type Block, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
+import type { CountedBlock } from '@/types'
 import { StarknetCounter } from './StarknetCounter'
 
 describe(StarknetCounter.name, () => {

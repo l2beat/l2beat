@@ -39,9 +39,8 @@ export async function decodeChainId(chainId: number): Promise<string> {
   const entry = chains.find((c) => c.chainId === chainId)
   if (entry !== undefined) {
     return entry.name
-  } else {
-    return chainId.toString()
   }
+  return chainId.toString()
 }
 
 const ChainIDResponse = v.array(

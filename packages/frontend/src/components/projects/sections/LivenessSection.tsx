@@ -1,14 +1,14 @@
 import type { Milestone } from '@l2beat/config'
-import { type TrackedTxsConfigSubtype, pluralize } from '@l2beat/shared-pure'
-import { LiveIndicator } from '~/components/LiveIndicator'
+import { pluralize, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenessChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import { ProjectSection } from './ProjectSection'
 import { TrackedTransactions } from './costs/TrackedTransactions'
+import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
 export interface LivenessSectionProps extends ProjectSectionProps {
@@ -57,9 +57,11 @@ export function LivenessSection({
 
 export function OngoingAnomalies({
   anomalies,
-}: { anomalies: LivenessAnomaly[] }) {
+}: {
+  anomalies: LivenessAnomaly[]
+}) {
   if (anomalies.length === 0) {
-    return <NoAnomaliesState className="!rounded-lg" type="ongoing" />
+    return <NoAnomaliesState className="rounded-lg!" type="ongoing" />
   }
 
   return (

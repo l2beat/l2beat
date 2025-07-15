@@ -1,4 +1,1702 @@
-Generated with discovered.json: 0x06c12da1b3d86c99be7c6149525a92d60a49982f
+Generated with discovered.json: 0x3ab11c41b75786d966a03b2dfa81256c850f0991
+
+# Diff at Mon, 14 Jul 2025 12:45:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22882451
+- current block number: 22882451
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882451 (main branch discovery), not current.
+
+```diff
+    EOA  (0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2) {
+    +++ description: None
+      address:
+-        "0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2"
++        "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2"
+    }
+```
+
+```diff
+    EOA  (0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2) {
+    +++ description: None
+      address:
+-        "0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2"
++        "eth:0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2"
+    }
+```
+
+```diff
+    contract WTIA_OFTAdapter (0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2) {
+    +++ description: None
+      address:
+-        "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2"
++        "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2"
+      values.composeMsgSender:
+-        "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2"
++        "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2"
++        "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2"
+      values.owner:
+-        "0x1964f3Eaf7d8fca7E559468a384453d2d8490744"
++        "eth:0x1964f3Eaf7d8fca7E559468a384453d2d8490744"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2:
+-        "WTIA_OFTAdapter"
+      implementationNames.eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2:
++        "WTIA_OFTAdapter"
+    }
+```
+
+```diff
+    EOA  (0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47) {
+    +++ description: None
+      address:
+-        "0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47"
++        "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47"
+    }
+```
+
+```diff
+    EOA  (0x1082E92A0b92e15212fD5879C1dd672AB548302c) {
+    +++ description: None
+      address:
+-        "0x1082E92A0b92e15212fD5879C1dd672AB548302c"
++        "eth:0x1082E92A0b92e15212fD5879C1dd672AB548302c"
+    }
+```
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      address:
+-        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
++        "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+      values.$admin:
+-        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
++        "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+      values.$implementation:
+-        "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
++        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
+      values.$pastUpgrades.0.2.0:
+-        "0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"
++        "eth:0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"
+      values.$pastUpgrades.1.2.0:
+-        "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
++        "eth:0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+      values.$pastUpgrades.2.2.0:
+-        "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
++        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"
+      implementationNames.0x173272739Bd7Aa6e4e214714048a9fE699453059:
+-        "OptimizedTransparentUpgradeableProxy"
+      implementationNames.0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805:
+-        ""
+      implementationNames.eth:0x173272739Bd7Aa6e4e214714048a9fE699453059:
++        "OptimizedTransparentUpgradeableProxy"
+      implementationNames.eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805:
++        ""
+    }
+```
+
+```diff
+    contract TBankOFT (0x1762c17f671FA27cE6C59256f5F28242de9274d0) {
+    +++ description: None
+      address:
+-        "0x1762c17f671FA27cE6C59256f5F28242de9274d0"
++        "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0"
+      values.composeMsgSender:
+-        "0x1762c17f671FA27cE6C59256f5F28242de9274d0"
++        "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x1762c17f671FA27cE6C59256f5F28242de9274d0"
++        "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0"
+      values.owner:
+-        "0x33C78a4EBE7950277B0Ba8b8F4C66526db73C502"
++        "eth:0x33C78a4EBE7950277B0Ba8b8F4C66526db73C502"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x1762c17f671FA27cE6C59256f5F28242de9274d0:
+-        "TBankOFT"
+      implementationNames.eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0:
++        "TBankOFT"
+    }
+```
+
+```diff
+    contract TRESTLE_OFTAdapter (0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E) {
+    +++ description: None
+      address:
+-        "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E"
++        "eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E"
++        "eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E"
+      values.owner:
+-        "0x1964f3Eaf7d8fca7E559468a384453d2d8490744"
++        "eth:0x1964f3Eaf7d8fca7E559468a384453d2d8490744"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E:
+-        "TRESTLE_OFTAdapter"
+      implementationNames.eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E:
++        "TRESTLE_OFTAdapter"
+    }
+```
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
+      address:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.blockedLibrary:
+-        "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862"
++        "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862"
+      values.defaultReceiveLib_rsETH.lib:
+-        "0xc02Ab410f0734EFa3F14628780e6e695156024C2"
++        "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2"
++++ description: The default send lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed.
++++ severity: HIGH
+      values.defaultSendLib_ENA:
+-        "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1"
++        "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1"
++++ description: All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.
++++ severity: HIGH
+      values.getRegisteredLibraries.0:
+-        "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862"
++        "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862"
++++ description: All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.
++++ severity: HIGH
+      values.getRegisteredLibraries.1:
+-        "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1"
++        "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1"
++++ description: All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.
++++ severity: HIGH
+      values.getRegisteredLibraries.2:
+-        "0xc02Ab410f0734EFa3F14628780e6e695156024C2"
++        "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2"
++++ description: All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps.
++++ severity: HIGH
+      values.getRegisteredLibraries.3:
+-        "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
++        "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
+      values.getSendContext.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.nativeToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
++        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+      implementationNames.0x1a44076050125825900e736c501f859c50fE728c:
+-        "EndpointV2"
+      implementationNames.eth:0x1a44076050125825900e736c501f859c50fE728c:
++        "EndpointV2"
+    }
+```
+
+```diff
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862) {
+    +++ description: None
+      address:
+-        "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862"
++        "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862"
+      implementationNames.0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862:
+-        "BlockedMessageLib"
+      implementationNames.eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862:
++        "BlockedMessageLib"
+    }
+```
+
+```diff
+    contract DineroOFTLockbox (0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208) {
+    +++ description: None
+      address:
+-        "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208"
++        "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208"
+      values.composeMsgSender:
+-        "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208"
++        "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208"
++        "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208"
+      values.owner:
+-        "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
++        "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208:
+-        "DineroOFTLockbox"
+      implementationNames.eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208:
++        "DineroOFTLockbox"
+    }
+```
+
+```diff
+    EOA  (0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C) {
+    +++ description: None
+      address:
+-        "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C"
++        "eth:0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C"
+    }
+```
+
+```diff
+    contract StakedFraxEtherOFTAdapter (0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A) {
+    +++ description: None
+      address:
+-        "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A"
++        "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A"
+      values.composeMsgSender:
+-        "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A"
++        "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A"
++        "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A"
+      values.owner:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
++        "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A:
+-        "StakedFraxEtherOFTAdapter"
+      implementationNames.eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A:
++        "StakedFraxEtherOFTAdapter"
+    }
+```
+
+```diff
+    contract StakedUSDeOFTAdapter (0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2) {
+    +++ description: None
+      address:
+-        "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
++        "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
+      values.composeMsgSender:
+-        "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
++        "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
++        "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2"
+      values.owner:
+-        "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862"
++        "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rateLimiter:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2:
+-        "StakedUSDeOFTAdapter"
+      implementationNames.eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2:
++        "StakedUSDeOFTAdapter"
+    }
+```
+
+```diff
+    contract FraxSharesOFTAdapter (0x23432452B720C80553458496D4D9d7C5003280d0) {
+    +++ description: None
+      address:
+-        "0x23432452B720C80553458496D4D9d7C5003280d0"
++        "eth:0x23432452B720C80553458496D4D9d7C5003280d0"
+      values.composeMsgSender:
+-        "0x23432452B720C80553458496D4D9d7C5003280d0"
++        "eth:0x23432452B720C80553458496D4D9d7C5003280d0"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x23432452B720C80553458496D4D9d7C5003280d0"
++        "eth:0x23432452B720C80553458496D4D9d7C5003280d0"
+      values.owner:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
++        "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x23432452B720C80553458496D4D9d7C5003280d0:
+-        "FraxSharesOFTAdapter"
+      implementationNames.eth:0x23432452B720C80553458496D4D9d7C5003280d0:
++        "FraxSharesOFTAdapter"
+    }
+```
+
+```diff
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14) {
+    +++ description: None
+      address:
+-        "0x276816F1931aFac123BdaeA54afF02BE6fd73e14"
++        "eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14"
+      implementationNames.0x276816F1931aFac123BdaeA54afF02BE6fd73e14:
+-        "EvmZkMptValidator"
+      implementationNames.eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14:
++        "EvmZkMptValidator"
+    }
+```
+
+```diff
+    contract HorizenDVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D) {
+    +++ description: None
+      address:
+-        "0x380275805876Ff19055EA900CDb2B46a94ecF20D"
++        "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D"
+      values.priceFeed:
+-        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
++        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.workerFeeLib:
+-        "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
++        "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
+      implementationNames.0x380275805876Ff19055EA900CDb2B46a94ecF20D:
+-        "DVN"
+      implementationNames.eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D:
++        "DVN"
+    }
+```
+
+```diff
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B) {
+    +++ description: None
+      address:
+-        "0x38C967856d17E900042Af447B3346bfF26C8ed4B"
++        "eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B"
+      implementationNames.0x38C967856d17E900042Af447B3346bfF26C8ed4B:
+-        "EvmMptValidator"
+      implementationNames.eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B:
++        "EvmMptValidator"
+    }
+```
+
+```diff
+    EOA  (0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346) {
+    +++ description: None
+      address:
+-        "0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"
++        "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"
+    }
+```
+
+```diff
+    contract USDT0DVN (0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2) {
+    +++ description: None
+      address:
+-        "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2"
++        "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2"
+      values.getSigners.0:
+-        "0xB88dca912E27EB7929a145458B99649C1120fE6b"
++        "eth:0xB88dca912E27EB7929a145458B99649C1120fE6b"
+      values.getSigners.1:
+-        "0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2"
++        "eth:0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2"
+      values.priceFeed:
+-        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
++        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.workerFeeLib:
+-        "0x7087B8011caC9541b388B639a1460D9cbA4eA0A2"
++        "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2"
+      implementationNames.0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2:
+-        "DVN"
+      implementationNames.eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2:
++        "DVN"
+    }
+```
+
+```diff
+    contract CyberTokenAdapter (0x3d2fe83ea885C2E43A422C82C738847669708210) {
+    +++ description: None
+      address:
+-        "0x3d2fe83ea885C2E43A422C82C738847669708210"
++        "eth:0x3d2fe83ea885C2E43A422C82C738847669708210"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x3d2fe83ea885C2E43A422C82C738847669708210"
++        "eth:0x3d2fe83ea885C2E43A422C82C738847669708210"
+      values.owner:
+-        "0x455DB34c99A866489F3ac63fa2F068c726BC286b"
++        "eth:0x455DB34c99A866489F3ac63fa2F068c726BC286b"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x3d2fe83ea885C2E43A422C82C738847669708210:
+-        "CyberTokenAdapter"
+      implementationNames.eth:0x3d2fe83ea885C2E43A422C82C738847669708210:
++        "CyberTokenAdapter"
+    }
+```
+
+```diff
+    contract MysoOFTAdapter (0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6) {
+    +++ description: None
+      address:
+-        "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6"
++        "eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6"
++        "eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6"
+      values.owner:
+-        "0xF3E76af90A74fE743db172996db484052e2bC61f"
++        "eth:0xF3E76af90A74fE743db172996db484052e2bC61f"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6:
+-        "MysoOFTAdapter"
+      implementationNames.eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6:
++        "MysoOFTAdapter"
+    }
+```
+
+```diff
+    EOA  (0x4192D72c281dB0eF10464dD274EE583C33256ac5) {
+    +++ description: None
+      address:
+-        "0x4192D72c281dB0eF10464dD274EE583C33256ac5"
++        "eth:0x4192D72c281dB0eF10464dD274EE583C33256ac5"
+    }
+```
+
+```diff
+    EOA  (0x488A3d37442F583c1c0a356118d1d6181b22434c) {
+    +++ description: None
+      address:
+-        "0x488A3d37442F583c1c0a356118d1d6181b22434c"
++        "eth:0x488A3d37442F583c1c0a356118d1d6181b22434c"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc) {
+    +++ description: None
+      address:
+-        "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
++        "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
+      values.owner:
+-        "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
++        "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
+      implementationNames.0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc:
+-        "ProxyAdmin"
+      implementationNames.eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8) {
+    +++ description: None
+      address:
+-        "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
++        "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x4192D72c281dB0eF10464dD274EE583C33256ac5"
++        "eth:0x4192D72c281dB0eF10464dD274EE583C33256ac5"
+      values.$members.1:
+-        "0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA"
++        "eth:0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA"
+      values.$members.2:
+-        "0x488A3d37442F583c1c0a356118d1d6181b22434c"
++        "eth:0x488A3d37442F583c1c0a356118d1d6181b22434c"
+      values.$members.3:
+-        "0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2"
++        "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2"
+      values.$members.4:
+-        "0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982"
++        "eth:0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982"
+      implementationNames.0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract ENAOFTAdapter (0x58538e6A46E07434d7E7375Bc268D3cb839C0133) {
+    +++ description: None
+      address:
+-        "0x58538e6A46E07434d7E7375Bc268D3cb839C0133"
++        "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133"
+      values.composeMsgSender:
+-        "0x58538e6A46E07434d7E7375Bc268D3cb839C0133"
++        "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x58538e6A46E07434d7E7375Bc268D3cb839C0133"
++        "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133"
+      values.owner:
+-        "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862"
++        "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rateLimiter:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x58538e6A46E07434d7E7375Bc268D3cb839C0133:
+-        "ENAOFTAdapter"
+      implementationNames.eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133:
++        "ENAOFTAdapter"
+    }
+```
+
+```diff
+    contract LayerZeroDVN (0x589dEDbD617e0CBcB916A9223F4d1300c294236b) {
+    +++ description: None
+      address:
+-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.priceFeed:
+-        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
++        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.workerFeeLib:
+-        "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b"
++        "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b"
+      implementationNames.0x589dEDbD617e0CBcB916A9223F4d1300c294236b:
+-        "DVN"
+      implementationNames.eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b:
++        "DVN"
+    }
+```
+
+```diff
+    EOA  (0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c) {
+    +++ description: None
+      address:
+-        "0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c"
++        "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c"
+    }
+```
+
+```diff
+    contract USDeOFTAdapter (0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34) {
+    +++ description: None
+      address:
+-        "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
++        "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+      values.composeMsgSender:
+-        "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
++        "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
++        "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34"
+      values.owner:
+-        "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862"
++        "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.rateLimiter:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34:
+-        "USDeOFTAdapter"
+      implementationNames.eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34:
++        "USDeOFTAdapter"
+    }
+```
+
+```diff
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056) {
+    +++ description: None
+      address:
+-        "0x5ebB3f2feaA15271101a927869B3A56837e73056"
++        "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056"
+      values.owner:
+-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
++        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+      implementationNames.0x5ebB3f2feaA15271101a927869B3A56837e73056:
+-        "Treasury"
+      implementationNames.eth:0x5ebB3f2feaA15271101a927869B3A56837e73056:
++        "Treasury"
+    }
+```
+
+```diff
+    EOA  (0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982) {
+    +++ description: None
+      address:
+-        "0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982"
++        "eth:0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982"
+    }
+```
+
+```diff
+    contract ParamOFTAdapter (0x6182995916d79DeDb60db1570776F9994fCdCA0a) {
+    +++ description: None
+      address:
+-        "0x6182995916d79DeDb60db1570776F9994fCdCA0a"
++        "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a"
+      values.composeMsgSender:
+-        "0x6182995916d79DeDb60db1570776F9994fCdCA0a"
++        "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x6182995916d79DeDb60db1570776F9994fCdCA0a"
++        "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a"
+      values.owner:
+-        "0x3B89fC2918D9F25977d6F85C13ff2395ba2f8022"
++        "eth:0x3B89fC2918D9F25977d6F85C13ff2395ba2f8022"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x6182995916d79DeDb60db1570776F9994fCdCA0a:
+-        "ParamOFTAdapter"
+      implementationNames.eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a:
++        "ParamOFTAdapter"
+    }
+```
+
+```diff
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee) {
+    +++ description: None
+      address:
+-        "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
++        "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
+      values.$admin:
+-        "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
++        "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
+      values.$implementation:
+-        "0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4"
++        "eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4"
+      values.$pastUpgrades.0.2.0:
+-        "0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4"
++        "eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
++        "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
+      values.owner:
+-        "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
++        "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4:
+-        "OAdapterUpgradeable"
+      implementationNames.eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4:
++        "OAdapterUpgradeable"
+    }
+```
+
+```diff
+    contract  (0x7087B8011caC9541b388B639a1460D9cbA4eA0A2) {
+    +++ description: None
+      address:
+-        "0x7087B8011caC9541b388B639a1460D9cbA4eA0A2"
++        "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2"
+      implementationNames.0x7087B8011caC9541b388B639a1460D9cbA4eA0A2:
+-        ""
+      implementationNames.eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2:
++        ""
+    }
+```
+
+```diff
+    EOA  (0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e) {
+    +++ description: None
+      address:
+-        "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
++        "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+    }
+```
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      address:
+-        "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
++        "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
+      values.getTreasuryAndNativeFeeCap.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
++        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+      implementationNames.0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D:
+-        "ReadLib1002"
+      implementationNames.eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D:
++        "ReadLib1002"
+    }
+```
+
+```diff
+    EOA  (0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5) {
+    +++ description: None
+      address:
+-        "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
++        "eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
+    }
+```
+
+```diff
+    EOA  (0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e) {
+    +++ description: None
+      address:
+-        "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e"
++        "eth:0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e"
+    }
+```
+
+```diff
+    EOA  (0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634) {
+    +++ description: None
+      address:
+-        "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634"
++        "eth:0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634"
+    }
+```
+
+```diff
+    EOA  (0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA) {
+    +++ description: None
+      address:
+-        "0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA"
++        "eth:0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA"
+    }
+```
+
+```diff
+    contract MyOFTAdapter (0x801642B6efB861fE624dAD704b7A747779d9B433) {
+    +++ description: None
+      address:
+-        "0x801642B6efB861fE624dAD704b7A747779d9B433"
++        "eth:0x801642B6efB861fE624dAD704b7A747779d9B433"
+      values.composeMsgSender:
+-        "0x801642B6efB861fE624dAD704b7A747779d9B433"
++        "eth:0x801642B6efB861fE624dAD704b7A747779d9B433"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x801642B6efB861fE624dAD704b7A747779d9B433"
++        "eth:0x801642B6efB861fE624dAD704b7A747779d9B433"
+      values.owner:
+-        "0x21FE3e26E824783cA7E374355A8D30Ae8BBf6E37"
++        "eth:0x21FE3e26E824783cA7E374355A8D30Ae8BBf6E37"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x801642B6efB861fE624dAD704b7A747779d9B433:
+-        "MyOFTAdapter"
+      implementationNames.eth:0x801642B6efB861fE624dAD704b7A747779d9B433:
++        "MyOFTAdapter"
+    }
+```
+
+```diff
+    contract RSETH_OFTAdapter (0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3) {
+    +++ description: None
+      address:
+-        "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
++        "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
+      values.composeMsgSender:
+-        "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
++        "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
++        "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3"
+      values.owner:
+-        "0xCbcdd778AA25476F203814214dD3E9b9c46829A1"
++        "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3:
+-        "RSETH_OFTAdapter"
+      implementationNames.eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3:
++        "RSETH_OFTAdapter"
+    }
+```
+
+```diff
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24) {
+    +++ description: None
+      address:
+-        "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
++        "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
+      values.$admin:
+-        "0xe16d201cA134345601631D327a971A3741646B0d"
++        "eth:0xe16d201cA134345601631D327a971A3741646B0d"
+      values.$implementation:
+-        "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"
++        "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"
+      values.$pastUpgrades.0.2.0:
+-        "0x156C3E0384459E07Dca7849b79196FbC5877dc3A"
++        "eth:0x156C3E0384459E07Dca7849b79196FbC5877dc3A"
+      values.$pastUpgrades.1.2.0:
+-        "0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"
++        "eth:0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"
+      values.$pastUpgrades.2.2.0:
+-        "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"
++        "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"
+      values.defaultTxValidator:
+-        "0x38C967856d17E900042Af447B3346bfF26C8ed4B"
++        "eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B"
+      values.defaultZkValidator:
+-        "0x276816F1931aFac123BdaeA54afF02BE6fd73e14"
++        "eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14"
+      values.layerZeroEndpointV1:
+-        "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
++        "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
+      values.layerZeroEndpointV2:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.owner:
+-        "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
++        "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
+      values.sender:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x8ddF05F9A5c488b4973897E278B58895bF87Cb24:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xdFf54e8d2B31A197DC5859739E7177AA31fC3390:
+-        "ZkBridgeOracleV2"
+      implementationNames.eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390:
++        "ZkBridgeOracleV2"
+    }
+```
+
+```diff
+    contract DVNFeeLib (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB) {
+    +++ description: None
+      address:
+-        "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
++        "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
+      values.owner:
+-        "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
++        "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+      implementationNames.0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB:
+-        "DVNFeeLib"
+      implementationNames.eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB:
++        "DVNFeeLib"
+    }
+```
+
+```diff
+    EOA  (0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327) {
+    +++ description: None
+      address:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      address:
+-        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
++        "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
+      values.owner:
+-        "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
++        "eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
+      implementationNames.0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3:
+-        "ProxyAdmin"
+      implementationNames.eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7) {
+    +++ description: None
+      address:
+-        "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
++        "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xd1846C61A063edA820305A5e568A12a570420cf6"
++        "eth:0xd1846C61A063edA820305A5e568A12a570420cf6"
+      values.$members.1:
+-        "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C"
++        "eth:0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C"
+      values.$members.2:
+-        "0xF94b16157948E10597481Da0523927c8BA0bd182"
++        "eth:0xF94b16157948E10597481Da0523927c8BA0bd182"
+      values.$members.3:
+-        "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634"
++        "eth:0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634"
+      values.$members.4:
+-        "0x1082E92A0b92e15212fD5879C1dd672AB548302c"
++        "eth:0x1082E92A0b92e15212fD5879C1dd672AB548302c"
+      implementationNames.0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711) {
+    +++ description: None
+      address:
+-        "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711"
++        "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711"
++        "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711"
+      values.owner:
+-        "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0"
++        "eth:0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711:
+-        "WooTokenOFTAdapter"
+      implementationNames.eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711:
++        "WooTokenOFTAdapter"
+    }
+```
+
+```diff
+    contract DVNFeeLib (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b) {
+    +++ description: None
+      address:
+-        "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b"
++        "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b"
+      values.owner:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+      implementationNames.0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b:
+-        "DVNFeeLib"
+      implementationNames.eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b:
++        "DVNFeeLib"
+    }
+```
+
+```diff
+    EOA  (0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6) {
+    +++ description: None
+      address:
+-        "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
++        "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+    }
+```
+
+```diff
+    EOA  (0xB88dca912E27EB7929a145458B99649C1120fE6b) {
+    +++ description: None
+      address:
+-        "0xB88dca912E27EB7929a145458B99649C1120fE6b"
++        "eth:0xB88dca912E27EB7929a145458B99649C1120fE6b"
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
+      address:
+-        "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1"
++        "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1"
+      values.defaultExecutor_ENA.executor:
+-        "0x173272739Bd7Aa6e4e214714048a9fE699453059"
++        "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+      values.owner:
+-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
++        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+      values.treasury:
+-        "0x5ebB3f2feaA15271101a927869B3A56837e73056"
++        "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056"
+      values.ulnConfig_CYBER.requiredDVNs.0:
+-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.ulnConfig_CYBER.requiredDVNs.1:
+-        "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
++        "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
+      values.ulnConfig_ENA.requiredDVNs.0:
+-        "0x380275805876Ff19055EA900CDb2B46a94ecF20D"
++        "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D"
+      values.ulnConfig_ENA.requiredDVNs.1:
+-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.ulnConfig_sfrxETH.requiredDVNs.0:
+-        "0x380275805876Ff19055EA900CDb2B46a94ecF20D"
++        "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D"
+      values.ulnConfig_sfrxETH.requiredDVNs.1:
+-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      values.ulnConfig_USDT0.requiredDVNs.0:
+-        "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2"
++        "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2"
+      values.ulnConfig_USDT0.requiredDVNs.1:
+-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
++        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+      implementationNames.0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1:
+-        "SendUln302"
+      implementationNames.eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1:
++        "SendUln302"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478) {
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+      address:
+-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
++        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+      values.$members.0:
+-        "0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47"
++        "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47"
+      values.$members.1:
+-        "0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c"
++        "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c"
+      values.$members.2:
+-        "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
++        "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+      values.$members.3:
+-        "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e"
++        "eth:0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e"
+      values.$members.4:
+-        "0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
++        "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
+      values.getExecutors.0:
+-        "0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"
++        "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"
+      implementationNames.0xBe010A7e3686FdF65E93344ab664D065A0B02478:
+-        "OneSig"
+      implementationNames.eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478:
++        "OneSig"
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: None
+      address:
+-        "0xc02Ab410f0734EFa3F14628780e6e695156024C2"
++        "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2"
+      values.owner:
+-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
++        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+      implementationNames.0xc02Ab410f0734EFa3F14628780e6e695156024C2:
+-        "ReceiveUln302"
+      implementationNames.eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2:
++        "ReceiveUln302"
+    }
+```
+
+```diff
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052) {
+    +++ description: None
+      address:
+-        "0xCB07992DE144bDeE56fDb66Fff2454B43243b052"
++        "eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0xCB07992DE144bDeE56fDb66Fff2454B43243b052"
++        "eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052"
+      values.owner:
+-        "0x455DB34c99A866489F3ac63fa2F068c726BC286b"
++        "eth:0x455DB34c99A866489F3ac63fa2F068c726BC286b"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xCB07992DE144bDeE56fDb66Fff2454B43243b052:
+-        "CyberTokenAdapter"
+      implementationNames.eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052:
++        "CyberTokenAdapter"
+    }
+```
+
+```diff
+    EOA  (0xd1846C61A063edA820305A5e568A12a570420cf6) {
+    +++ description: None
+      address:
+-        "0xd1846C61A063edA820305A5e568A12a570420cf6"
++        "eth:0xd1846C61A063edA820305A5e568A12a570420cf6"
+    }
+```
+
+```diff
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      address:
+-        "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
++        "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc"
+      values.priceFeed:
+-        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
++        "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113"
+      values.workerFeeLib:
+-        "0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
++        "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
+      implementationNames.0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc:
+-        "VerifierNetwork"
+      implementationNames.eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc:
++        "VerifierNetwork"
+    }
+```
+
+```diff
+    contract KinetixFinanceTokenOFTAdapter (0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf) {
+    +++ description: None
+      address:
+-        "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf"
++        "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf"
++        "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf"
+      values.owner:
+-        "0x58591456DD9FEdf8F629819F88cC02F4C6e9Aeb9"
++        "eth:0x58591456DD9FEdf8F629819F88cC02F4C6e9Aeb9"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf:
+-        "KinetixFinanceTokenOFTAdapter"
+      implementationNames.eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf:
++        "KinetixFinanceTokenOFTAdapter"
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      address:
+-        "0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
++        "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
+      implementationNames.0xdeA04ef31C4B4FDf31CB58923F37869739280d49:
+-        "VerifierFeeLib"
+      implementationNames.eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49:
++        "VerifierFeeLib"
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      address:
+-        "0xe16d201cA134345601631D327a971A3741646B0d"
++        "eth:0xe16d201cA134345601631D327a971A3741646B0d"
+      values.owner:
+-        "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
++        "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
+      implementationNames.0xe16d201cA134345601631D327a971A3741646B0d:
+-        "ZkBridgeAdmin"
+      implementationNames.eth:0xe16d201cA134345601631D327a971A3741646B0d:
++        "ZkBridgeAdmin"
+    }
+```
+
+```diff
+    contract StakedFraxOFTAdapter (0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E) {
+    +++ description: None
+      address:
+-        "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E"
++        "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E"
+      values.composeMsgSender:
+-        "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E"
++        "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E"
++        "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E"
+      values.owner:
+-        "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
++        "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E:
+-        "StakedFraxOFTAdapter"
+      implementationNames.eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E:
++        "StakedFraxOFTAdapter"
+    }
+```
+
+```diff
+    EOA  (0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7) {
+    +++ description: None
+      address:
+-        "0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
++        "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
+    }
+```
+
+```diff
+    contract MaviaOFTAdapter (0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D) {
+    +++ description: None
+      address:
+-        "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D"
++        "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D"
+      values.composeMsgSender:
+-        "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D"
++        "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D"
++        "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D"
+      values.owner:
+-        "0xEd43EaA4ADd5FCBf009e3E2d362a217745A11Cf3"
++        "eth:0xEd43EaA4ADd5FCBf009e3E2d362a217745A11Cf3"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D:
+-        "MaviaOFTAdapter"
+      implementationNames.eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D:
++        "MaviaOFTAdapter"
+    }
+```
+
+```diff
+    EOA  (0xF94b16157948E10597481Da0523927c8BA0bd182) {
+    +++ description: None
+      address:
+-        "0xF94b16157948E10597481Da0523927c8BA0bd182"
++        "eth:0xF94b16157948E10597481Da0523927c8BA0bd182"
+    }
+```
+
+```diff
+    contract EtherFiOFTAdapter (0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D) {
+    +++ description: None
+      address:
+-        "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D"
++        "eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "eth:0x1a44076050125825900e736c501f859c50fE728c"
+      values.msgInspector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.oApp:
+-        "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D"
++        "eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D"
+      values.owner:
+-        "0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
++        "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D:
+-        "EtherFiOFTAdapter"
+      implementationNames.eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D:
++        "EtherFiOFTAdapter"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WTIA_OFTAdapter (0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TBankOFT (0x1762c17f671FA27cE6C59256f5F28242de9274d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TRESTLE_OFTAdapter (0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DineroOFTLockbox (0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedFraxEtherOFTAdapter (0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedUSDeOFTAdapter (0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FraxSharesOFTAdapter (0x23432452B720C80553458496D4D9d7C5003280d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HorizenDVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT0DVN (0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CyberTokenAdapter (0x3d2fe83ea885C2E43A422C82C738847669708210)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MysoOFTAdapter (0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ENAOFTAdapter (0x58538e6A46E07434d7E7375Bc268D3cb839C0133)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroDVN (0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDeOFTAdapter (0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ParamOFTAdapter (0x6182995916d79DeDb60db1570776F9994fCdCA0a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x7087B8011caC9541b388B639a1460D9cbA4eA0A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MyOFTAdapter (0x801642B6efB861fE624dAD704b7A747779d9B433)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RSETH_OFTAdapter (0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVNFeeLib (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVNFeeLib (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KinetixFinanceTokenOFTAdapter (0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedFraxOFTAdapter (0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MaviaOFTAdapter (0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherFiOFTAdapter (0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x6d316016a1480c6308a9f431aee1ef502609276f
 
 # Diff at Wed, 09 Jul 2025 15:14:40 GMT:
 

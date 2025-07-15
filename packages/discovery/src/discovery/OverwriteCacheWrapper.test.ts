@@ -1,4 +1,4 @@
-import { type MockObject, expect, mockFn, mockObject } from 'earl'
+import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { DiscoveryCache } from './provider/DiscoveryCache'
 

@@ -1,18 +1,10 @@
-import {
-  type EntryParameters,
-  type ReceivedPermission,
-  getChainShortName,
-} from '@l2beat/discovery'
-import {
-  ChainSpecificAddress,
-  type EthereumAddress,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
+import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
+import { UltimatePermissionToPrefix } from './descriptions'
 import type { PermissionRegistry } from './PermissionRegistry'
 import type { ProjectDiscovery } from './ProjectDiscovery'
-import { UltimatePermissionToPrefix } from './descriptions'
 import {
   formatPermissionCondition,
   formatPermissionDelay,
@@ -23,7 +15,7 @@ import {
 export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
 
-  getPermissionedContracts(): EthereumAddress[] {
+  getPermissionedContracts(): ChainSpecificAddress[] {
     const contracts = this.projectDiscovery.getContracts()
 
     return [
@@ -42,7 +34,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     ].map((e) => e.address)
   }
 
-  getPermissionedEoas(): EthereumAddress[] {
+  getPermissionedEoas(): ChainSpecificAddress[] {
     return this.projectDiscovery
       .getEoas()
       .filter((e) => e.receivedPermissions !== undefined)
@@ -182,7 +174,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
 
   describePermissions(
     contractOrEoa: EntryParameters,
-    describeRoles: boolean = true,
+    describeRoles = true,
   ): string {
     const upgrade = this.describeUpgradePermissions(contractOrEoa)
     const interact = this.describeInteractPermissions(contractOrEoa)
@@ -193,11 +185,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       .join('\n')
   }
 
-  getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
-    const shortChain = getChainShortName(this.projectDiscovery.chain)
-    const prefixedFromAddress = ChainSpecificAddress(
-      `${shortChain}:${fromAddress}`,
-    )
+  getUltimatelyIssuedPermissions(fromAddress: ChainSpecificAddress) {
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) =>
@@ -206,16 +194,10 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         })),
       )
-      .filter(
-        (receivedPermission) => receivedPermission.from === prefixedFromAddress,
-      )
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
   }
 
-  getIssuedPermissions(fromAddress: EthereumAddress) {
-    const shortChain = getChainShortName(this.projectDiscovery.chain)
-    const prefixedFromAddress = ChainSpecificAddress(
-      `${shortChain}:${fromAddress}`,
-    )
+  getIssuedPermissions(fromAddress: ChainSpecificAddress) {
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) => {
@@ -228,9 +210,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         }))
       })
-      .filter(
-        (receivedPermission) => receivedPermission.from === prefixedFromAddress,
-      )
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
   }
 
   getUpgradableBy(

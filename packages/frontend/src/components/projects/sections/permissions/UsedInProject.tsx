@@ -18,7 +18,10 @@ export interface UsedInProject {
 export function UsedInProjectEntry({
   label,
   implementations,
-}: { label: string; implementations: UsedInProject[] }) {
+}: {
+  label: string
+  implementations: UsedInProject[]
+}) {
   return (
     <div className="mt-2 flex flex-row items-center">
       <div className="flex flex-row flex-wrap items-center">

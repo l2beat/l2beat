@@ -97,121 +97,123 @@ describeDatabase(ProjectValueRepository.name, (db) => {
     })
   })
 
-  describe(ProjectValueRepository.prototype.getProjectValuesAtTimestamps
-    .name, () => {
-    it('returns records at the specified timestamps for given types', async () => {
-      await repository.upsertMany([
-        projectValue('ethereum', 'PROJECT', timestamp(50), 500),
-        projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
-        projectValue('ethereum', 'PROJECT', timestamp(150), 1500),
-        projectValue('ethereum', 'PROJECT', timestamp(200), 2000),
-        projectValue('ethereum', 'PROJECT', timestamp(250), 2500),
-        projectValue('ethereum', 'SUMMARY', timestamp(50), 550),
-        projectValue('ethereum', 'SUMMARY', timestamp(100), 1050),
-        projectValue('ethereum', 'SUMMARY', timestamp(200), 2050),
-        projectValue('ethereum', 'SUMMARY_WA', timestamp(50), 1100),
-        projectValue('ethereum', 'SUMMARY_WA', timestamp(200), 2100),
-        projectValue('arbitrum', 'PROJECT', timestamp(100), 500),
-        projectValue('arbitrum', 'PROJECT', timestamp(200), 1000),
-        projectValue('arbitrum', 'SUMMARY', timestamp(50), 250),
-        projectValue('arbitrum', 'SUMMARY', timestamp(150), 750),
-      ])
+  describe(
+    ProjectValueRepository.prototype.getProjectValuesAtTimestamps.name,
+    () => {
+      it('returns records at the specified timestamps for given types', async () => {
+        await repository.upsertMany([
+          projectValue('ethereum', 'PROJECT', timestamp(50), 500),
+          projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
+          projectValue('ethereum', 'PROJECT', timestamp(150), 1500),
+          projectValue('ethereum', 'PROJECT', timestamp(200), 2000),
+          projectValue('ethereum', 'PROJECT', timestamp(250), 2500),
+          projectValue('ethereum', 'SUMMARY', timestamp(50), 550),
+          projectValue('ethereum', 'SUMMARY', timestamp(100), 1050),
+          projectValue('ethereum', 'SUMMARY', timestamp(200), 2050),
+          projectValue('ethereum', 'SUMMARY_WA', timestamp(50), 1100),
+          projectValue('ethereum', 'SUMMARY_WA', timestamp(200), 2100),
+          projectValue('arbitrum', 'PROJECT', timestamp(100), 500),
+          projectValue('arbitrum', 'PROJECT', timestamp(200), 1000),
+          projectValue('arbitrum', 'SUMMARY', timestamp(50), 250),
+          projectValue('arbitrum', 'SUMMARY', timestamp(150), 750),
+        ])
 
-      const result = await repository.getProjectValuesAtTimestamps(
-        timestamp(100),
-        timestamp(200),
-        ['SUMMARY', 'SUMMARY_WA'],
-      )
+        const result = await repository.getProjectValuesAtTimestamps(
+          timestamp(100),
+          timestamp(200),
+          ['SUMMARY', 'SUMMARY_WA'],
+        )
 
-      expect(result).toEqualUnsorted([
-        // Latest records at timestamp 200
-        projectValue('ethereum', 'SUMMARY', timestamp(200), 2050),
-        projectValue('ethereum', 'SUMMARY_WA', timestamp(200), 2100),
-        projectValue('arbitrum', 'SUMMARY', timestamp(150), 750),
+        expect(result).toEqualUnsorted([
+          // Latest records at timestamp 200
+          projectValue('ethereum', 'SUMMARY', timestamp(200), 2050),
+          projectValue('ethereum', 'SUMMARY_WA', timestamp(200), 2100),
+          projectValue('arbitrum', 'SUMMARY', timestamp(150), 750),
 
-        // Oldest records at timestamp 100
-        projectValue('ethereum', 'SUMMARY', timestamp(100), 1050),
-        projectValue('ethereum', 'SUMMARY_WA', timestamp(50), 1100),
-        projectValue('arbitrum', 'SUMMARY', timestamp(50), 250),
-      ])
-    })
+          // Oldest records at timestamp 100
+          projectValue('ethereum', 'SUMMARY', timestamp(100), 1050),
+          projectValue('ethereum', 'SUMMARY_WA', timestamp(50), 1100),
+          projectValue('arbitrum', 'SUMMARY', timestamp(50), 250),
+        ])
+      })
 
-    it('returns records sorted by timestamp in ascending order', async () => {
-      await repository.upsertMany([
-        projectValue('ethereum', 'SUMMARY', timestamp(50), 550),
-        projectValue('ethereum', 'SUMMARY', timestamp(200), 2050),
-        projectValue('ethereum', 'SUMMARY_WA', timestamp(50), 1100),
-        projectValue('ethereum', 'SUMMARY_WA', timestamp(200), 2100),
-        projectValue('arbitrum', 'SUMMARY', timestamp(50), 250),
-        projectValue('arbitrum', 'SUMMARY', timestamp(150), 750),
-      ])
+      it('returns records sorted by timestamp in ascending order', async () => {
+        await repository.upsertMany([
+          projectValue('ethereum', 'SUMMARY', timestamp(50), 550),
+          projectValue('ethereum', 'SUMMARY', timestamp(200), 2050),
+          projectValue('ethereum', 'SUMMARY_WA', timestamp(50), 1100),
+          projectValue('ethereum', 'SUMMARY_WA', timestamp(200), 2100),
+          projectValue('arbitrum', 'SUMMARY', timestamp(50), 250),
+          projectValue('arbitrum', 'SUMMARY', timestamp(150), 750),
+        ])
 
-      const result = await repository.getProjectValuesAtTimestamps(
-        timestamp(50),
-        timestamp(200),
-        ['SUMMARY', 'SUMMARY_WA'],
-      )
+        const result = await repository.getProjectValuesAtTimestamps(
+          timestamp(50),
+          timestamp(200),
+          ['SUMMARY', 'SUMMARY_WA'],
+        )
 
-      expect(result.map((r) => r.timestamp)).toEqual([
-        timestamp(50),
-        timestamp(50),
-        timestamp(50),
-        timestamp(150),
-        timestamp(200),
-        timestamp(200),
-      ])
-    })
+        expect(result.map((r) => r.timestamp)).toEqual([
+          timestamp(50),
+          timestamp(50),
+          timestamp(50),
+          timestamp(150),
+          timestamp(200),
+          timestamp(200),
+        ])
+      })
 
-    it('returns empty array when no matching records exist', async () => {
-      await repository.upsertMany([
-        projectValue('ethereum', 'PROJECT', timestamp(50), 500),
-        projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
-      ])
+      it('returns empty array when no matching records exist', async () => {
+        await repository.upsertMany([
+          projectValue('ethereum', 'PROJECT', timestamp(50), 500),
+          projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
+        ])
 
-      const result = await repository.getProjectValuesAtTimestamps(
-        timestamp(100),
-        timestamp(200),
-        ['SUMMARY'],
-      )
-      expect(result).toEqual([])
-    })
+        const result = await repository.getProjectValuesAtTimestamps(
+          timestamp(100),
+          timestamp(200),
+          ['SUMMARY'],
+        )
+        expect(result).toEqual([])
+      })
 
-    it('returns empty array when types array is empty', async () => {
-      await repository.upsertMany([
-        projectValue('ethereum', 'PROJECT', timestamp(50), 500),
-        projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
-      ])
+      it('returns empty array when types array is empty', async () => {
+        await repository.upsertMany([
+          projectValue('ethereum', 'PROJECT', timestamp(50), 500),
+          projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
+        ])
 
-      const result = await repository.getProjectValuesAtTimestamps(
-        timestamp(100),
-        timestamp(200),
-        [],
-      )
-      expect(result).toEqual([])
-    })
+        const result = await repository.getProjectValuesAtTimestamps(
+          timestamp(100),
+          timestamp(200),
+          [],
+        )
+        expect(result).toEqual([])
+      })
 
-    it('cuts off values older than 30 days', async () => {
-      await repository.upsertMany([
-        projectValue(
-          'ethereum',
-          'PROJECT',
-          timestamp(-40 * UnixTime.DAY),
-          10000,
-        ),
-        projectValue('ethereum', 'PROJECT', timestamp(50), 500),
-        projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
-      ])
+      it('cuts off values older than 30 days', async () => {
+        await repository.upsertMany([
+          projectValue(
+            'ethereum',
+            'PROJECT',
+            timestamp(-40 * UnixTime.DAY),
+            10000,
+          ),
+          projectValue('ethereum', 'PROJECT', timestamp(50), 500),
+          projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
+        ])
 
-      const result = await repository.getProjectValuesAtTimestamps(
-        timestamp(-30 * UnixTime.DAY),
-        timestamp(200),
-        ['PROJECT'],
-      )
-      expect(result).toEqual([
-        projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
-      ])
-    })
-  })
+        const result = await repository.getProjectValuesAtTimestamps(
+          timestamp(-30 * UnixTime.DAY),
+          timestamp(200),
+          ['PROJECT'],
+        )
+        expect(result).toEqual([
+          projectValue('ethereum', 'PROJECT', timestamp(100), 1000),
+        ])
+      })
+    },
+  )
 
   describe(ProjectValueRepository.prototype.trimProject.name, () => {
     it('deletes records outside the specified time range for a project', async () => {

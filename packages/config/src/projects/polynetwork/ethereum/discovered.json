@@ -5,13 +5,13 @@
   "configHash": "0xf31f1a647491faa84528675b19a444a9c78c1da09d09324e08740dacbda4e44d",
   "entries": [
     {
-      "address": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+      "address": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "EthCrossChainManager",
-      "address": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+      "address": "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
       "type": "Contract",
       "sourceHashes": [
         "0x221889e435e2f64e82619837d394394a6179db1932bfbbdedc0782fe358dffda"
@@ -23,19 +23,19 @@
       "values": {
         "$immutable": true,
         "chainId": 2,
-        "EthCrossChainDataAddress": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
+        "EthCrossChainDataAddress": "eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
         "isOwner": false,
-        "owner": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
         "paused": false,
-        "whiteLister": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
+        "whiteLister": "eth:0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E"
       },
       "implementationNames": {
-        "0x14413419452Aaf089762A0c5e95eD2A13bBC488C": "EthCrossChainManager"
+        "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C": "EthCrossChainManager"
       }
     },
     {
       "name": "Lock Proxy 1",
-      "address": "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+      "address": "eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
       "type": "Contract",
       "sourceHashes": [
         "0x2d120f7fb68dde6641e58f5786c8afcdb63926871f15f20ea7f9da917c31e255"
@@ -46,16 +46,16 @@
       "values": {
         "$immutable": true,
         "isOwner": false,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
       },
       "implementationNames": {
-        "0x250e76987d838a75310c34bf422ea9f1AC4Cc906": "LockProxy"
+        "eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906": "LockProxy"
       }
     },
     {
       "name": "Lock Proxy 3",
-      "address": "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
+      "address": "eth:0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -63,16 +63,16 @@
       "sinceBlock": 14716305,
       "values": {
         "$immutable": true,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0x52D858ef5e0A768C80C38617eB8a7680f4D4d459"
       },
       "implementationNames": {
-        "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035": ""
+        "eth:0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035": ""
       }
     },
     {
       "name": "Lock Proxy 7",
-      "address": "0x51ba447DaD1de30b91286471BcB570F69ECE968D",
+      "address": "eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D",
       "type": "Contract",
       "sourceHashes": [
         "0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"
@@ -83,21 +83,21 @@
       "values": {
         "$immutable": true,
         "isOwner": false,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02"
       },
       "implementationNames": {
-        "0x51ba447DaD1de30b91286471BcB570F69ECE968D": "LockProxy"
+        "eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D": "LockProxy"
       }
     },
     {
-      "address": "0x52D858ef5e0A768C80C38617eB8a7680f4D4d459",
+      "address": "eth:0x52D858ef5e0A768C80C38617eB8a7680f4D4d459",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Lock Proxy 4",
-      "address": "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
+      "address": "eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
       "type": "Contract",
       "sourceHashes": [
         "0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"
@@ -108,16 +108,16 @@
       "values": {
         "$immutable": true,
         "isOwner": false,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0xeF86b2c8740518548ae449c4C3892B4be0475d8c"
       },
       "implementationNames": {
-        "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868": "LockProxy"
+        "eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868": "LockProxy"
       }
     },
     {
       "name": "EthCrossChainManagerProxy",
-      "address": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+      "address": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
       "type": "Contract",
       "sourceHashes": [
         "0x59a4969b8c2f837444e679b13cbaec4730cc5ffe789f3e3e7b038b7e8d4a79d5"
@@ -128,23 +128,23 @@
       "sinceBlock": 10650143,
       "values": {
         "$immutable": true,
-        "getEthCrossChainManager": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+        "getEthCrossChainManager": "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "isOwner": false,
-        "owner": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
+        "owner": "eth:0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
         "paused": false
       },
       "implementationNames": {
-        "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": "EthCrossChainManagerProxy"
+        "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": "EthCrossChainManagerProxy"
       }
     },
     {
-      "address": "0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E",
+      "address": "eth:0x5De690a2f2b290E3De4F60c01CD2Be78C91A4e1E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Lock Proxy 6",
-      "address": "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
+      "address": "eth:0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -152,17 +152,17 @@
       "sinceBlock": 17832183,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC": ""
+        "eth:0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC": ""
       }
     },
     {
-      "address": "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725",
+      "address": "eth:0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Lock Proxy 2",
-      "address": "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
+      "address": "eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
       "type": "Contract",
       "sourceHashes": [
         "0x51007159d79f6f899952b6b5996a46b210e9b041665c5da2408c4f528b000bc3"
@@ -173,17 +173,17 @@
       "values": {
         "$immutable": true,
         "isOwner": false,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "paused": false
       },
       "implementationNames": {
-        "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": "LockProxyWithLP"
+        "eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": "LockProxyWithLP"
       }
     },
     {
       "name": "PolyWrapper",
-      "address": "0x81910675DbaF69deE0fD77570BFD07f8E436386A",
+      "address": "eth:0x81910675DbaF69deE0fD77570BFD07f8E436386A",
       "type": "Contract",
       "sourceHashes": [
         "0xfbfc2095ce2f12ed5539dc7b6b1ee656eaf477f144685f6bb185c9aa8d6b4d42"
@@ -194,20 +194,20 @@
       "values": {
         "$immutable": true,
         "chainId": 2,
-        "feeCollector": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+        "feeCollector": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "isOwner": false,
         "lockProxyIndexMap": [
-          "0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
-          "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
-          "0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
-          "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
-          "0xf6378141BC900020a438F3914e4C3ceA29907b27",
-          "0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
-          "0x51ba447DaD1de30b91286471BcB570F69ECE968D",
-          "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0"
+          "eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906",
+          "eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54",
+          "eth:0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035",
+          "eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868",
+          "eth:0xf6378141BC900020a438F3914e4C3ceA29907b27",
+          "eth:0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC",
+          "eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D",
+          "eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0"
         ],
         "maxLockProxyIndex": 8,
-        "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
+        "owner": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "paused": false
       },
       "fieldMeta": {
@@ -221,17 +221,17 @@
         }
       },
       "implementationNames": {
-        "0x81910675DbaF69deE0fD77570BFD07f8E436386A": "PolyWrapper"
+        "eth:0x81910675DbaF69deE0fD77570BFD07f8E436386A": "PolyWrapper"
       }
     },
     {
-      "address": "0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02",
+      "address": "eth:0xB9078AC14fc8B9181B02368bA4E34DA53Bf43D02",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "EthCrossChainData",
-      "address": "0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
+      "address": "eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2",
       "type": "Contract",
       "sourceHashes": [
         "0xd8a7f029fa8e1dabfbc9c64632f1959334147be1d784e585f99ad1e307ba11f7"
@@ -246,21 +246,21 @@
         "EthToPolyTxHashIndex": 72025,
         "getEthTxHashIndex": 72025,
         "isOwner": false,
-        "owner": "0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
+        "owner": "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C",
         "paused": false
       },
       "implementationNames": {
-        "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": "EthCrossChainData"
+        "eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2": "EthCrossChainData"
       }
     },
     {
-      "address": "0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
+      "address": "eth:0xdf408d52A717F7CF0c629CF8a8807f2455eAa671",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Lock Proxy 8",
-      "address": "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0",
+      "address": "eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0",
       "type": "Contract",
       "sourceHashes": [
         "0xba13e21f4e7ec8692a18d58c1a21540ef7c2bcfd9a72466af608976c7bc65081"
@@ -271,21 +271,21 @@
       "values": {
         "$immutable": true,
         "isOwner": false,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0x68BaeABc5Df1C6014F59bdFFCdc357bE3539b725"
       },
       "implementationNames": {
-        "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": "LockProxy"
+        "eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": "LockProxy"
       }
     },
     {
-      "address": "0xeF86b2c8740518548ae449c4C3892B4be0475d8c",
+      "address": "eth:0xeF86b2c8740518548ae449c4C3892B4be0475d8c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Lock Proxy 5",
-      "address": "0xf6378141BC900020a438F3914e4C3ceA29907b27",
+      "address": "eth:0xf6378141BC900020a438F3914e4C3ceA29907b27",
       "type": "Contract",
       "sourceHashes": [
         "0xed38088fe5df0eccdb8a218a37c99e8a09d2a807286624e96a1d50b4f6e57620"
@@ -296,11 +296,11 @@
       "values": {
         "$immutable": true,
         "isOwner": false,
-        "managerProxyContract": "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
-        "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
+        "managerProxyContract": "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb",
+        "owner": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57"
       },
       "implementationNames": {
-        "0xf6378141BC900020a438F3914e4C3ceA29907b27": "LockProxy"
+        "eth:0xf6378141BC900020a438F3914e4C3ceA29907b27": "LockProxy"
       }
     }
   ],
@@ -556,5 +556,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x92df7965f5ff9a489e1aaeb774621d3cba074c39ffae18e50b179f5fcdf8e208"
+  "permissionsConfigHash": "0x49cd1235e626d3d3ef91f7c8a78475d9a58abb001e48296f32ea345de80a2042"
 }

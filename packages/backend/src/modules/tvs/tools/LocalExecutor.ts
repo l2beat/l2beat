@@ -21,14 +21,14 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { ValueService } from '../services/ValueService'
 import {
   type AmountConfig,
+  isOnchainAmountConfig,
   type ProjectTvsConfig,
   type TokenValue,
-  isOnchainAmountConfig,
 } from '../types'
-import { DBStorage } from './DBStorage'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
-import type { LocalStorage } from './LocalStorage'
+import { DBStorage } from './DBStorage'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
+import type { LocalStorage } from './LocalStorage'
 
 export class LocalExecutor {
   private readonly dbStorage: DBStorage | undefined

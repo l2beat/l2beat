@@ -24,7 +24,6 @@
             "additionalProperties": {
               "type": "object",
               "properties": {
-                "extends": { "type": "string" },
                 "canActIndependently": { "type": "boolean" },
                 "ignoreDiscovery": { "type": "boolean" },
                 "proxyType": {
@@ -90,6 +89,7 @@
                                 "stateDeleterMetis",
                                 "hotValidatorHyperliquid",
                                 "coldValidatorHyperliquid",
+                                "acrossPropose",
                                 "member",
                                 "act",
                                 "interact",

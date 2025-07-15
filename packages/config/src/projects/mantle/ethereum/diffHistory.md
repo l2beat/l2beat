@@ -1,3 +1,716 @@
+Generated with discovered.json: 0xac5ec88b8b1c30c96270d69819c79ce8bbb7cc81
+
+# Diff at Mon, 14 Jul 2025 12:45:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22273219
+- current block number: 22273219
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273219 (main branch discovery), not current.
+
+```diff
+    EOA  (0x000000000000000000000000000000000000dEaD) {
+    +++ description: None
+      address:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+    }
+```
+
+```diff
+    EOA  (0x00da2F87c56C3a19BD863613995705095F55b524) {
+    +++ description: None
+      address:
+-        "0x00da2F87c56C3a19BD863613995705095F55b524"
++        "eth:0x00da2F87c56C3a19BD863613995705095F55b524"
+    }
+```
+
+```diff
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd) {
+    +++ description: None
+      address:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+      values.owner:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      implementationNames.0x0cac2B1a172ac24012621101634DD5ABD6399ADd:
+-        "ProxyAdmin"
+      implementationNames.eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x207E804758e28F2b3fD6E4219671B327100b82f8) {
+    +++ description: None
+      address:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8"
+    }
+```
+
+```diff
+    EOA  (0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749) {
+    +++ description: None
+      address:
+-        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
++        "eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
+    }
+```
+
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      address:
+-        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
++        "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xC37642355c18ec9c3b3268AAC67e33516aa115eb"
++        "eth:0xC37642355c18ec9c3b3268AAC67e33516aa115eb"
+      values.$members.1:
+-        "0x207E804758e28F2b3fD6E4219671B327100b82f8"
++        "eth:0x207E804758e28F2b3fD6E4219671B327100b82f8"
+      values.$members.2:
+-        "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
++        "eth:0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
+      values.$members.3:
+-        "0x00da2F87c56C3a19BD863613995705095F55b524"
++        "eth:0x00da2F87c56C3a19BD863613995705095F55b524"
+      values.$members.4:
+-        "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "eth:0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
+      values.$members.5:
+-        "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
++        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+      values.$members.6:
+-        "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
++        "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
+      implementationNames.0x2F44BD2a54aC3fB20cd7783cF94334069641daC9:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb) {
+    +++ description: None
+      address:
+-        "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb"
++        "eth:0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      address:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      values.$admin:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      values.$implementation:
+-        "0xD1230865641561653406906Fb08873F011c19080"
++        "eth:0xD1230865641561653406906Fb08873F011c19080"
+      values.$pastUpgrades.0.2.0:
+-        "0xD1230865641561653406906Fb08873F011c19080"
++        "eth:0xD1230865641561653406906Fb08873F011c19080"
+      values.CHALLENGER:
+-        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
++        "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      values.PROPOSER:
+-        "0x6667961f5e9C98A76a48767522150889703Ed77D"
++        "eth:0x6667961f5e9C98A76a48767522150889703Ed77D"
+      implementationNames.0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481:
+-        "Proxy"
+      implementationNames.0xD1230865641561653406906Fb08873F011c19080:
+-        "L2OutputOracle"
+      implementationNames.eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481:
++        "Proxy"
+      implementationNames.eth:0xD1230865641561653406906Fb08873F011c19080:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354) {
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+      address:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      values.$admin:
+-        "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
++        "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
+      values.$implementation:
+-        "0xCd368c1d80120b0Dd92447c87eB570154f8e685c"
++        "eth:0xCd368c1d80120b0Dd92447c87eB570154f8e685c"
+      values.$pastUpgrades.0.2.0:
+-        "0xCd368c1d80120b0Dd92447c87eB570154f8e685c"
++        "eth:0xCd368c1d80120b0Dd92447c87eB570154f8e685c"
+      values.owner:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      implementationNames.0x3c3a81e81dc49A522A592e7622A7E711c06bf354:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xCd368c1d80120b0Dd92447c87eB570154f8e685c:
+-        "L1MantleToken"
+      implementationNames.eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xCd368c1d80120b0Dd92447c87eB570154f8e685c:
++        "L1MantleToken"
+    }
+```
+
+```diff
+    EOA  (0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8) {
+    +++ description: None
+      address:
+-        "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
++        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+    }
+```
+
+```diff
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      address:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      values.$admin:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      values.$implementation:
+-        "0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
++        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
++        "eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3"
+      values.batcherHash:
+-        "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
++        "eth:0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
+      values.owner:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.sequencerInbox:
+-        "0xFFEEDDCcBbAA0000000000000000000000000000"
++        "eth:0xFFEEDDCcBbAA0000000000000000000000000000"
+      values.unsafeBlockSigner:
+-        "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc"
++        "eth:0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc"
+      implementationNames.0x427Ea0710FA5252057F0D88274f7aeb308386cAf:
+-        "Proxy"
+      implementationNames.0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3:
+-        "SystemConfig"
+      implementationNames.eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf:
++        "Proxy"
+      implementationNames.eth:0x6Dbb7D9C5dC60844B8CF442ddC6Be081c060B2E3:
++        "SystemConfig"
+    }
+```
+
+```diff
+    EOA  (0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1) {
+    +++ description: None
+      address:
+-        "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
++        "eth:0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
+    }
+```
+
+```diff
+    EOA  (0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498) {
+    +++ description: None
+      address:
+-        "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
++        "eth:0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      address:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089"
++        "eth:0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089"
+      values.$members.1:
+-        "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3"
++        "eth:0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3"
+      values.$members.2:
+-        "0x50dCf0B40E593301aA75DcB54f36f379607595CE"
++        "eth:0x50dCf0B40E593301aA75DcB54f36f379607595CE"
+      values.$members.3:
+-        "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
++        "eth:0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
+      values.$members.4:
+-        "0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
++        "eth:0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
+      values.$members.5:
+-        "0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
++        "eth:0x4A42577Bf6e51127c490F3639F5c8B90Ec53f5B1"
+      values.$members.6:
+-        "0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
++        "eth:0x4b6CFecA60f8BDF8AbCEE10f033f17cb2a928498"
+      values.$members.7:
+-        "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
++        "eth:0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8"
+      values.$members.8:
+-        "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070"
++        "eth:0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070"
+      values.$members.9:
+-        "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B"
++        "eth:0xe75D7324d6BC4E70A200c5E268160332F43b2d2B"
+      values.$members.10:
+-        "0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb"
++        "eth:0x3000BE80ad204D327990eB403654aCd1Eaa8eCeb"
+      values.$members.11:
+-        "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93"
++        "eth:0xc4143711aA5bd6d37F1b0A690120AA5859e32A93"
+      values.$members.12:
+-        "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
++        "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
+      implementationNames.0x4e59e778a0fb77fBb305637435C62FaeD9aED40f:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x50dCf0B40E593301aA75DcB54f36f379607595CE) {
+    +++ description: None
+      address:
+-        "0x50dCf0B40E593301aA75DcB54f36f379607595CE"
++        "eth:0x50dCf0B40E593301aA75DcB54f36f379607595CE"
+    }
+```
+
+```diff
+    EOA  (0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317) {
+    +++ description: None
+      address:
+-        "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
++        "eth:0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317"
+    }
+```
+
+```diff
+    EOA  (0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3) {
+    +++ description: None
+      address:
+-        "0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3"
++        "eth:0x61Af7a48B0EeA8481E5A055A35f829d0e8505fE3"
+    }
+```
+
+```diff
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      address:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.Canceller.0:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.defaultAdminAC.0:
+-        "0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
++        "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
+      values.defaultAdminAC.1:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.Executor.0:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      values.Proposer.0:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      implementationNames.0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F:
+-        "TimelockController"
+      implementationNames.eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F:
++        "TimelockController"
+    }
+```
+
+```diff
+    EOA  (0x6667961f5e9C98A76a48767522150889703Ed77D) {
+    +++ description: None
+      address:
+-        "0x6667961f5e9C98A76a48767522150889703Ed77D"
++        "eth:0x6667961f5e9C98A76a48767522150889703Ed77D"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      address:
+-        "0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.$admin:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      values.$implementation:
+-        "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"
++        "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"
+      values.$pastUpgrades.0.2.0:
+-        "0x4692363048d0F32a2dE7816860D48fff0c61B24B"
++        "eth:0x4692363048d0F32a2dE7816860D48fff0c61B24B"
+      values.$pastUpgrades.1.2.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.2.0:
+-        "0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"
++        "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308"
+      values.L1_MNT_ADDRESS:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      values.OTHER_MESSENGER:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+      values.PORTAL:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      values.ResolvedDelegateProxy_addressManager:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      implementationNames.0x676A795fe6E43C17c668de16730c3F690FEB7120:
+-        "Lib_ResolvedDelegateProxy"
+      implementationNames.0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x676A795fe6E43C17c668de16730c3F690FEB7120:
++        "Lib_ResolvedDelegateProxy"
+      implementationNames.eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      address:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      values.owner:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      implementationNames.0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42:
+-        "Lib_AddressManager"
+      implementationNames.eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42:
++        "Lib_AddressManager"
+    }
+```
+
+```diff
+    EOA  (0x915dc866e2e5E64f912A5ac1D40E3be4597F172a) {
+    +++ description: None
+      address:
+-        "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
++        "eth:0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      address:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      values.$admin:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      values.$implementation:
+-        "0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f"
++        "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f"
+      values.L1_MNT_ADDRESS:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      values.l2TokenBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.messenger:
+-        "0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.MESSENGER:
+-        "0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      implementationNames.0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012:
+-        "L1ChugSplashProxy"
+      implementationNames.0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f:
+-        "L1StandardBridge"
+      implementationNames.eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    EOA  (0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F) {
+    +++ description: None
+      address:
+-        "0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
++        "eth:0xA3C8f55BE8aF7402d5192b343E8BfE4BB9795C2F"
+    }
+```
+
+```diff
+    EOA  (0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc) {
+    +++ description: None
+      address:
+-        "0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc"
++        "eth:0xAAC979CBeE00C75C35DE9a2635d8B75940F466dc"
+    }
+```
+
+```diff
+    EOA  (0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e) {
+    +++ description: None
+      address:
+-        "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
++        "eth:0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e"
+    }
+```
+
+```diff
+    EOA  (0xC37642355c18ec9c3b3268AAC67e33516aa115eb) {
+    +++ description: None
+      address:
+-        "0xC37642355c18ec9c3b3268AAC67e33516aa115eb"
++        "eth:0xC37642355c18ec9c3b3268AAC67e33516aa115eb"
+    }
+```
+
+```diff
+    EOA  (0xc4143711aA5bd6d37F1b0A690120AA5859e32A93) {
+    +++ description: None
+      address:
+-        "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93"
++        "eth:0xc4143711aA5bd6d37F1b0A690120AA5859e32A93"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      address:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      values.$admin:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      values.$implementation:
+-        "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"
++        "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"
+      values.$pastUpgrades.0.2.0:
+-        "0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"
++        "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7"
+      values.GUARDIAN:
+-        "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
++        "eth:0x2F44BD2a54aC3fB20cd7783cF94334069641daC9"
+      values.L1_MNT_ADDRESS:
+-        "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
++        "eth:0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+      values.L2_ORACLE:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+      values.l2Sender:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+      values.SYSTEM_CONFIG:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      implementationNames.0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb:
+-        "Proxy"
+      implementationNames.0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7:
+-        "OptimismPortal"
+      implementationNames.eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb:
++        "Proxy"
+      implementationNames.eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7:
++        "OptimismPortal"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      address:
+-        "0xca35F8338054739D138884685e08b39EE2217794"
++        "eth:0xca35F8338054739D138884685e08b39EE2217794"
+      values.addressManager:
+-        "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
++        "eth:0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
+      values.owner:
+-        "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
++        "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
+      implementationNames.0xca35F8338054739D138884685e08b39EE2217794:
+-        "ProxyAdmin"
+      implementationNames.eth:0xca35F8338054739D138884685e08b39EE2217794:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xdC3644e172813ADbF6D130262e2416975Ac48Af3) {
+    +++ description: None
+      address:
+-        "0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
++        "eth:0xdC3644e172813ADbF6D130262e2416975Ac48Af3"
+    }
+```
+
+```diff
+    EOA  (0xe75D7324d6BC4E70A200c5E268160332F43b2d2B) {
+    +++ description: None
+      address:
+-        "0xe75D7324d6BC4E70A200c5E268160332F43b2d2B"
++        "eth:0xe75D7324d6BC4E70A200c5E268160332F43b2d2B"
+    }
+```
+
+```diff
+    EOA  (0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070) {
+    +++ description: None
+      address:
+-        "0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070"
++        "eth:0xf5b16239f88B54894e03e0293d3d7FDdEb9f9070"
+    }
+```
+
+```diff
+    EOA  (0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089) {
+    +++ description: None
+      address:
+-        "0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089"
++        "eth:0xf73546Da2F971bD0Ed1b3c5F9C01092180Db5089"
+    }
+```
+
+```diff
+    EOA  (0xFFEEDDCcBbAA0000000000000000000000000000) {
+    +++ description: None
+      address:
+-        "0xFFEEDDCcBbAA0000000000000000000000000000"
++        "eth:0xFFEEDDCcBbAA0000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MantleTokenProxyAdmin (0x0cac2B1a172ac24012621101634DD5ABD6399ADd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract L1MantleToken (0x3c3a81e81dc49A522A592e7622A7E711c06bf354)
+    +++ description: MNT token contract: Mantle uses Mantle (MNT) as the designated gas token, allowing users pay for gas in MNT.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x427Ea0710FA5252057F0D88274f7aeb308386cAf)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5f8bfcb7543ffa28f12259565d47b15b610d1e79
 
 # Diff at Fri, 04 Jul 2025 12:19:08 GMT:

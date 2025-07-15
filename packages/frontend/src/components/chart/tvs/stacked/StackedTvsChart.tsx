@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -13,6 +12,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
@@ -35,17 +35,17 @@ interface Props {
 const chartMeta = {
   canonical: {
     label: 'Canonical',
-    color: 'hsl(var(--chart-stacked-purple))',
+    color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   native: {
     label: 'Native',
-    color: 'hsl(var(--chart-stacked-pink))',
+    color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   external: {
     label: 'External',
-    color: 'hsl(var(--chart-stacked-yellow))',
+    color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
@@ -117,7 +117,7 @@ function CustomTooltip({
   const reversedPayload = [...payload].reverse()
   return (
     <ChartTooltipWrapper>
-      <div className="xs:!w-56 flex w-44 flex-col">
+      <div className="flex w-44 xs:w-56! flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>

@@ -4,7 +4,6 @@ import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +12,7 @@ import {
 import { Markdown } from '../markdown/Markdown'
 import { GrissiniStick } from '../rosette/grissini/GrissiniStick'
 import type { RosetteValue } from '../rosette/types'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 
 interface RiskBannerProps extends RosetteValue {
   className?: string
@@ -39,7 +39,7 @@ export function RiskBanner({
         className={cn(
           'flex flex-row items-stretch rounded-lg',
           size === 'small' && 'h-12',
-          size === 'regular' && 'h-12 md:h-[5.125rem]',
+          size === 'regular' && 'h-12 md:h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
           warning && 'rounded-b-none',
           className,
@@ -59,7 +59,7 @@ export function RiskBanner({
           </div>
           <div
             className={cn(
-              '!leading-none font-bold text-sm md:text-lg',
+              'font-bold text-sm leading-none! md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >

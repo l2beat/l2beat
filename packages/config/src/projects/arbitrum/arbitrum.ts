@@ -1,20 +1,20 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
+  ESCROW,
   OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
   RISK_VIEW,
   SOA,
   UPGRADE_MECHANISM,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
-  WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
+  WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('arbitrum')
@@ -104,7 +104,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
     slug: 'arbitrum',
     warning: undefined,
     architectureImage: 'arbitrumwithbold',
-    description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
+    description:
+      'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       bridges: ['https://bridge.arbitrum.io'],
@@ -309,6 +310,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'ArbOS 40, Callisto Upgrade',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/13108804573775967668959825241666341617107666532012387058509418598838035461528?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2025-06-18T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'Timeboost transaction ordering policy introduced',
       url: 'https://www.tally.xyz/gov/arbitrum/proposal/14881197137069494959448952699217598923721993392617887469969318742509097999570?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',

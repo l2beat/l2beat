@@ -13,7 +13,11 @@ export function MobileTopNavbar({
   groups,
   logoLink,
   className,
-}: { groups: NavGroup[]; logoLink: string; className?: string }) {
+}: {
+  groups: NavGroup[]
+  logoLink: string
+  className?: string
+}) {
   return (
     <div className={cn('z-10 lg:hidden', className)}>
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">

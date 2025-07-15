@@ -1,5 +1,5 @@
-import { randomUUID } from 'crypto'
 import type { Logger } from '@l2beat/backend-tools'
+import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
 
 export function ErrorHandler(appLogger: Logger) {

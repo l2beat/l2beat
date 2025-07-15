@@ -19,6 +19,8 @@ import {
 } from 'cmd-ts'
 import { formatDuration } from '../../src/modules/shared/notifiers/utils/format'
 
+const ps = new ProjectService()
+
 export const AnomalyKey = extendType(string, {
   async from(input) {
     const match = input.match(
@@ -28,8 +30,6 @@ export const AnomalyKey = extendType(string, {
 
     const projectId = match[1]
     const subtype = match[2] as TrackedTxsConfigSubtype
-
-    const ps = new ProjectService()
 
     const project = await ps.getProject({
       id: ProjectId(projectId),
@@ -117,8 +117,8 @@ const cmd = command({
         'duration',
         'projectId',
         'subtype',
-        'status',
         'start',
+        'isApproved',
       ])
     } else if (args.approve) {
       const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies()

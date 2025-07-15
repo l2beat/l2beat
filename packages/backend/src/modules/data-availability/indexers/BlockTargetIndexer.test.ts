@@ -1,8 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { BlockTimestampProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { BlockTimestampProvider } from '@l2beat/shared'
 import type { Clock } from '../../../tools/Clock'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 

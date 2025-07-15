@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -261,21 +266,27 @@ export const allbridge: Bridge = {
         discovery.getPermissionDetails(
           'AllbridgeMessenger EOA.',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x7234dB900E907398EdfAdA744d5Bf8A842B335BA'),
+            ChainSpecificAddress(
+              'eth:0x7234dB900E907398EdfAdA744d5Bf8A842B335BA',
+            ),
           ]),
           'EOA delivering crosschain messages to the AllbridgeMessenger contract.',
         ),
         discovery.getPermissionDetails(
           'WormholeMessenger EOA.',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5'),
+            ChainSpecificAddress(
+              'eth:0x26f9AA5a00825d37E4ebBa0844fcCF1f852640D5',
+            ),
           ]),
           'EOA delivering crosschain messages to the WormholeMessenger contract.',
         ),
         discovery.getPermissionDetails(
           'CctpBridge messenger EOA.',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0xb7C522Adb3429e2C7474df324c7a3744A5803414'),
+            ChainSpecificAddress(
+              'eth:0xb7C522Adb3429e2C7474df324c7a3744A5803414',
+            ),
           ]),
           'EOA delivering crosschain messages to the WormholeMessenger contract.',
         ),

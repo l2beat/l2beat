@@ -55,7 +55,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
       },
       meta: {
         headClassName: 'w-0',
-        cellClassName: 'lg:!pr-1.5',
+        cellClassName: 'lg:pr-1.5!',
       },
       size: 28,
     }),

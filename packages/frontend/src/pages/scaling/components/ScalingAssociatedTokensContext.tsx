@@ -22,7 +22,9 @@ export function useScalingAssociatedTokensContext() {
 
 export function ScalingAssociatedTokensContextProvider({
   children,
-}: { children: React.ReactNode }) {
+}: {
+  children: React.ReactNode
+}) {
   const [value, setValue] = useState<boolean>(false)
 
   return (

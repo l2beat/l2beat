@@ -19,7 +19,7 @@ export function Checkbox({ checked, onClick, className, id }: CheckboxProps) {
     >
       {checked === true && <CheckedTick />}
       {checked === 'indeterminate' && <Indeterminate />}
-      {checked === false && <span className="w-4"></span>}
+      {checked === false && <span className="w-4" />}
     </div>
   )
 }

@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
   "ignoreMethods": ["getSigners", "threshold"],
+  "ignoreInWatchMode": ["nonce"],
   "fields": {
     "$members": {
       "handler": {

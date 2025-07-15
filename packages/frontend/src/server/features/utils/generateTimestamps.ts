@@ -1,4 +1,4 @@
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 interface Options {

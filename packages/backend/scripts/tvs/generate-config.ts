@@ -1,10 +1,9 @@
-import * as fs from 'fs'
 import {
   type Env,
-  LogFormatterPretty,
-  type LogLevel,
-  Logger,
   getEnv,
+  LogFormatterPretty,
+  Logger,
+  type LogLevel,
 } from '@l2beat/backend-tools'
 import {
   type ChainConfig,
@@ -30,12 +29,13 @@ import {
   run,
   string,
 } from 'cmd-ts'
-import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
-import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
+import * as fs from 'fs'
 import {
   getTokenSyncRange,
   isInTokenSyncRange,
 } from '../../src/modules/tvs/tools/getTokenSyncRange'
+import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
+import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
 import { getLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/getLegacyConfig'
 import { mapLegacyConfig } from '../../src/modules/tvs/tools/legacyConfig/mapLegacyConfig'
 import { setTokenSyncRange } from '../../src/modules/tvs/tools/setTokenSyncRange'
@@ -189,7 +189,7 @@ const cmd = command({
 
 run(cmd, process.argv.slice(2))
 
-async function generateConfigForProject(
+function generateConfigForProject(
   project: Project<'escrows' | 'tvsInfo', 'chainConfig'>,
   tokens: LegacyToken[],
   chains: Map<string, ChainConfig>,

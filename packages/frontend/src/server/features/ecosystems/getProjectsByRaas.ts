@@ -8,7 +8,7 @@ export type ProjectByRaas = Record<
 >
 
 export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
-  return ecosystemProjects.reduce((acc, curr) => {
+  const unsorted = ecosystemProjects.reduce((acc, curr) => {
     const raas = curr.scalingInfo.raas
     if (!raas) return acc
     if (!acc[raas]) {
@@ -25,4 +25,10 @@ export function getProjectsByRaas(ecosystemProjects: Project<'scalingInfo'>[]) {
     })
     return acc
   }, {} as ProjectByRaas)
+
+  return Object.fromEntries(
+    Object.entries(unsorted).sort(
+      ([, a], [, b]) => b.projects.length - a.projects.length,
+    ),
+  )
 }

@@ -1,11 +1,14 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
-
 import {
   type ConfigReader,
   ConfigRegistry,
   type DiscoveryConfig,
 } from '@l2beat/discovery'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
@@ -27,7 +30,9 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should throw an error if contract with given address does not exist', () => {
-      const nonExistingAddress = '0xF380166F8490F24AF32Bf47D1aA217FBA62B6575'
+      const nonExistingAddress = ChainSpecificAddress(
+        'eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575',
+      )
 
       expect(() => discovery.getContract(nonExistingAddress)).toThrow(
         `Assertion Error: No contract of ${nonExistingAddress} address found (${projectName})`,
@@ -99,7 +104,7 @@ describe(ProjectDiscovery.name, () => {
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {
-          address: contractStub.address,
+          address: ChainSpecificAddress.address(contractStub.address),
           type: 'Contract',
           isVerified: true,
           name: '0x0D4C…72ac',
@@ -121,7 +126,7 @@ describe(ProjectDiscovery.name, () => {
   describe(ProjectDiscovery.prototype.replaceAddressesWithNames.name, () => {
     it('should replace addresses with names', () => {
       const replaced = discovery.replaceAddressesWithNames(
-        'Can be updated by 0x0D4C1222f5e839a911e2053860e45F18921D72ac, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
+        'Can be updated by eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac, eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
       expect(replaced).toEqual(
         'Can be updated by MockedContract, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',

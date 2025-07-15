@@ -1,3 +1,482 @@
+Generated with discovered.json: 0x8bbedfcfd2253c4d6057a653cc92d03d45933b38
+
+# Diff at Mon, 14 Jul 2025 12:45:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21937191
+- current block number: 21937191
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937191 (main branch discovery), not current.
+
+```diff
+    contract HomeUpgradeBeacon (0x101a39eA1143cb252fc8093847399046fc35Db89) {
+    +++ description: None
+      address:
+-        "0x101a39eA1143cb252fc8093847399046fc35Db89"
++        "eth:0x101a39eA1143cb252fc8093847399046fc35Db89"
+      implementationNames.0x101a39eA1143cb252fc8093847399046fc35Db89:
+-        "UpgradeBeacon"
+      implementationNames.eth:0x101a39eA1143cb252fc8093847399046fc35Db89:
++        "UpgradeBeacon"
+    }
+```
+
+```diff
+    contract ReplicaBeaconProxy (0x27658c5556A9a57f96E69Bbf6d3B8016f001a785) {
+    +++ description: None
+      address:
+-        "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
++        "eth:0x27658c5556A9a57f96E69Bbf6d3B8016f001a785"
+      values.$admin:
+-        "0x4F50a7081792063693F46A6402390b9647562457"
++        "eth:0x4F50a7081792063693F46A6402390b9647562457"
+      values.$implementation:
+-        "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
++        "eth:0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
+      values.$pastUpgrades.0.2.0:
+-        "0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58"
++        "eth:0xCBe8b8C4Fe6590BB59d1507dE7f252AF3E621E58"
+      values.$pastUpgrades.1.2.0:
+-        "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
++        "eth:0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
+      values.OpticsBeacon_beacon:
+-        "0xA734EDE8229970776e1B68085D579b6b6E97dAd4"
++        "eth:0xA734EDE8229970776e1B68085D579b6b6E97dAd4"
+      values.owner:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      values.updater:
+-        "0x703643995262c92ab013E3CCA810BdcB9239d45a"
++        "eth:0x703643995262c92ab013E3CCA810BdcB9239d45a"
+      implementationNames.0x27658c5556A9a57f96E69Bbf6d3B8016f001a785:
+-        "UpgradeBeaconProxy"
+      implementationNames.0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F:
+-        "Replica"
+      implementationNames.eth:0x27658c5556A9a57f96E69Bbf6d3B8016f001a785:
++        "UpgradeBeaconProxy"
+      implementationNames.eth:0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F:
++        "Replica"
+    }
+```
+
+```diff
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    +++ description: None
+      address:
+-        "0x2bB2a5A724170357cb691841F40d26A950d8C33D"
++        "eth:0x2bB2a5A724170357cb691841F40d26A950d8C33D"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
++        "eth:0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
+      values.$members.1:
+-        "0x63c079444e07D82d33399DE7D56d6E48740494c7"
++        "eth:0x63c079444e07D82d33399DE7D56d6E48740494c7"
+      values.$members.2:
+-        "0xa725898D6F73C512f803B564A89DFbd96cF298EC"
++        "eth:0xa725898D6F73C512f803B564A89DFbd96cF298EC"
+      values.$members.3:
+-        "0xd85DC9A21378EF738A248236E970c2e0be89C9c2"
++        "eth:0xd85DC9A21378EF738A248236E970c2e0be89C9c2"
+      values.$members.4:
+-        "0xeE2b1e23e71052860C14f69E84AAF78478606D63"
++        "eth:0xeE2b1e23e71052860C14f69E84AAF78478606D63"
+      values.$members.5:
+-        "0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552"
++        "eth:0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552"
+      values.$members.6:
+-        "0x7519Db53B63d72721470319A5F4462D587Bb3008"
++        "eth:0x7519Db53B63d72721470319A5F4462D587Bb3008"
+      implementationNames.0x2bB2a5A724170357cb691841F40d26A950d8C33D:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x2bB2a5A724170357cb691841F40d26A950d8C33D:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract GovernanceUpgradeBeacon (0x4d89F34dB307015F8002F97c1d100d84e3AFb76c) {
+    +++ description: None
+      address:
+-        "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c"
++        "eth:0x4d89F34dB307015F8002F97c1d100d84e3AFb76c"
+      implementationNames.0x4d89F34dB307015F8002F97c1d100d84e3AFb76c:
+-        "UpgradeBeacon"
+      implementationNames.eth:0x4d89F34dB307015F8002F97c1d100d84e3AFb76c:
++        "UpgradeBeacon"
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0x4F50a7081792063693F46A6402390b9647562457) {
+    +++ description: None
+      address:
+-        "0x4F50a7081792063693F46A6402390b9647562457"
++        "eth:0x4F50a7081792063693F46A6402390b9647562457"
+      values.owner:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      implementationNames.0x4F50a7081792063693F46A6402390b9647562457:
+-        "UpgradeBeaconController"
+      implementationNames.eth:0x4F50a7081792063693F46A6402390b9647562457:
++        "UpgradeBeaconController"
+    }
+```
+
+```diff
+    contract BridgeRouterBeaconProxy (0x4fc16De11deAc71E8b2Db539d82d93BE4b486892) {
+    +++ description: None
+      address:
+-        "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
++        "eth:0x4fc16De11deAc71E8b2Db539d82d93BE4b486892"
+      values.$admin:
+-        "0x4F50a7081792063693F46A6402390b9647562457"
++        "eth:0x4F50a7081792063693F46A6402390b9647562457"
+      values.$implementation:
+-        "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"
++        "eth:0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"
+      values.$pastUpgrades.0.2.0:
+-        "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"
++        "eth:0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"
+      values.OpticsBeacon_beacon:
+-        "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE"
++        "eth:0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE"
+      values.owner:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      values.xAppConnectionManager:
+-        "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
++        "eth:0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
+      implementationNames.0x4fc16De11deAc71E8b2Db539d82d93BE4b486892:
+-        "UpgradeBeaconProxy"
+      implementationNames.0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738:
+-        "BridgeRouter"
+      implementationNames.eth:0x4fc16De11deAc71E8b2Db539d82d93BE4b486892:
++        "UpgradeBeaconProxy"
+      implementationNames.eth:0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738:
++        "BridgeRouter"
+    }
+```
+
+```diff
+    EOA  (0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0) {
+    +++ description: None
+      address:
+-        "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
++        "eth:0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
+    }
+```
+
+```diff
+    EOA  (0x63c079444e07D82d33399DE7D56d6E48740494c7) {
+    +++ description: None
+      address:
+-        "0x63c079444e07D82d33399DE7D56d6E48740494c7"
++        "eth:0x63c079444e07D82d33399DE7D56d6E48740494c7"
+    }
+```
+
+```diff
+    EOA  (0x703643995262c92ab013E3CCA810BdcB9239d45a) {
+    +++ description: None
+      address:
+-        "0x703643995262c92ab013E3CCA810BdcB9239d45a"
++        "eth:0x703643995262c92ab013E3CCA810BdcB9239d45a"
+    }
+```
+
+```diff
+    EOA  (0x7519Db53B63d72721470319A5F4462D587Bb3008) {
+    +++ description: None
+      address:
+-        "0x7519Db53B63d72721470319A5F4462D587Bb3008"
++        "eth:0x7519Db53B63d72721470319A5F4462D587Bb3008"
+    }
+```
+
+```diff
+    EOA  (0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552) {
+    +++ description: None
+      address:
+-        "0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552"
++        "eth:0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552"
+    }
+```
+
+```diff
+    contract UpdaterManager (0x81B97dfBB743c343983e9bE7B863dB636DbD7373) {
+    +++ description: None
+      address:
+-        "0x81B97dfBB743c343983e9bE7B863dB636DbD7373"
++        "eth:0x81B97dfBB743c343983e9bE7B863dB636DbD7373"
+      values.owner:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      values.updater:
+-        "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
++        "eth:0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
+      implementationNames.0x81B97dfBB743c343983e9bE7B863dB636DbD7373:
+-        "UpdaterManager"
+      implementationNames.eth:0x81B97dfBB743c343983e9bE7B863dB636DbD7373:
++        "UpdaterManager"
+    }
+```
+
+```diff
+    contract XAppConnectionManager (0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD) {
+    +++ description: None
+      address:
+-        "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
++        "eth:0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
+      values.home:
+-        "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
++        "eth:0xa73a3a74C7044B5411bD61E1990618A1400DA379"
+      values.owner:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      values.watchers.0:
+-        "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"
++        "eth:0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"
+      implementationNames.0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD:
+-        "XAppConnectionManager"
+      implementationNames.eth:0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD:
++        "XAppConnectionManager"
+    }
+```
+
+```diff
+    EOA  (0xa725898D6F73C512f803B564A89DFbd96cF298EC) {
+    +++ description: None
+      address:
+-        "0xa725898D6F73C512f803B564A89DFbd96cF298EC"
++        "eth:0xa725898D6F73C512f803B564A89DFbd96cF298EC"
+    }
+```
+
+```diff
+    contract ReplicaUpgradeBeacon (0xA734EDE8229970776e1B68085D579b6b6E97dAd4) {
+    +++ description: None
+      address:
+-        "0xA734EDE8229970776e1B68085D579b6b6E97dAd4"
++        "eth:0xA734EDE8229970776e1B68085D579b6b6E97dAd4"
+      implementationNames.0xA734EDE8229970776e1B68085D579b6b6E97dAd4:
+-        "UpgradeBeacon"
+      implementationNames.eth:0xA734EDE8229970776e1B68085D579b6b6E97dAd4:
++        "UpgradeBeacon"
+    }
+```
+
+```diff
+    contract HomeBeaconProxy (0xa73a3a74C7044B5411bD61E1990618A1400DA379) {
+    +++ description: None
+      address:
+-        "0xa73a3a74C7044B5411bD61E1990618A1400DA379"
++        "eth:0xa73a3a74C7044B5411bD61E1990618A1400DA379"
+      values.$admin:
+-        "0x4F50a7081792063693F46A6402390b9647562457"
++        "eth:0x4F50a7081792063693F46A6402390b9647562457"
+      values.$implementation:
+-        "0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
++        "eth:0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
+      values.$pastUpgrades.0.2.0:
+-        "0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
++        "eth:0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
+      values.OpticsBeacon_beacon:
+-        "0x101a39eA1143cb252fc8093847399046fc35Db89"
++        "eth:0x101a39eA1143cb252fc8093847399046fc35Db89"
+      values.owner:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      values.updater:
+-        "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
++        "eth:0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
+      values.updaterManager:
+-        "0x81B97dfBB743c343983e9bE7B863dB636DbD7373"
++        "eth:0x81B97dfBB743c343983e9bE7B863dB636DbD7373"
+      implementationNames.0xa73a3a74C7044B5411bD61E1990618A1400DA379:
+-        "UpgradeBeaconProxy"
+      implementationNames.0xfc6E146384b5c65f372d5b20537F3e8727aD3723:
+-        "Home"
+      implementationNames.eth:0xa73a3a74C7044B5411bD61E1990618A1400DA379:
++        "UpgradeBeaconProxy"
+      implementationNames.eth:0xfc6E146384b5c65f372d5b20537F3e8727aD3723:
++        "Home"
+    }
+```
+
+```diff
+    contract BridgeUpgradeBeacon (0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE) {
+    +++ description: None
+      address:
+-        "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE"
++        "eth:0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE"
+      implementationNames.0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE:
+-        "UpgradeBeacon"
+      implementationNames.eth:0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE:
++        "UpgradeBeacon"
+    }
+```
+
+```diff
+    contract GovernanceRouterBeaconProxy (0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94) {
+    +++ description: None
+      address:
+-        "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
++        "eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+      values.$admin:
+-        "0x4F50a7081792063693F46A6402390b9647562457"
++        "eth:0x4F50a7081792063693F46A6402390b9647562457"
+      values.$implementation:
+-        "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
++        "eth:0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
+      values.$pastUpgrades.0.2.0:
+-        "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
++        "eth:0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
+      values.governor:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.OpticsBeacon_beacon:
+-        "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c"
++        "eth:0x4d89F34dB307015F8002F97c1d100d84e3AFb76c"
+      values.recoveryManager:
+-        "0x2bB2a5A724170357cb691841F40d26A950d8C33D"
++        "eth:0x2bB2a5A724170357cb691841F40d26A950d8C33D"
+      values.xAppConnectionManager:
+-        "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
++        "eth:0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD"
+      implementationNames.0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94:
+-        "UpgradeBeaconProxy"
+      implementationNames.0xe552861e90a42ddDC66b508A18a85bCEAbFcB835:
+-        "GovernanceRouter"
+      implementationNames.eth:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94:
++        "UpgradeBeaconProxy"
+      implementationNames.eth:0xe552861e90a42ddDC66b508A18a85bCEAbFcB835:
++        "GovernanceRouter"
+    }
+```
+
+```diff
+    EOA  (0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e) {
+    +++ description: None
+      address:
+-        "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"
++        "eth:0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"
+    }
+```
+
+```diff
+    EOA  (0xd85DC9A21378EF738A248236E970c2e0be89C9c2) {
+    +++ description: None
+      address:
+-        "0xd85DC9A21378EF738A248236E970c2e0be89C9c2"
++        "eth:0xd85DC9A21378EF738A248236E970c2e0be89C9c2"
+    }
+```
+
+```diff
+    EOA  (0xeE2b1e23e71052860C14f69E84AAF78478606D63) {
+    +++ description: None
+      address:
+-        "0xeE2b1e23e71052860C14f69E84AAF78478606D63"
++        "eth:0xeE2b1e23e71052860C14f69E84AAF78478606D63"
+    }
+```
+
+```diff
+    EOA  (0xFCcD3516d6BB62b009088aDae1E349430dDF6e77) {
+    +++ description: None
+      address:
+-        "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
++        "eth:0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract HomeUpgradeBeacon (0x101a39eA1143cb252fc8093847399046fc35Db89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReplicaBeaconProxy (0x27658c5556A9a57f96E69Bbf6d3B8016f001a785)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceUpgradeBeacon (0x4d89F34dB307015F8002F97c1d100d84e3AFb76c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconController (0x4F50a7081792063693F46A6402390b9647562457)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeRouterBeaconProxy (0x4fc16De11deAc71E8b2Db539d82d93BE4b486892)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpdaterManager (0x81B97dfBB743c343983e9bE7B863dB636DbD7373)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract XAppConnectionManager (0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReplicaUpgradeBeacon (0xA734EDE8229970776e1B68085D579b6b6E97dAd4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HomeBeaconProxy (0xa73a3a74C7044B5411bD61E1990618A1400DA379)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeUpgradeBeacon (0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceRouterBeaconProxy (0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x091e6384fd0d81100190fb37032a37a09cd2be8c
 
 # Diff at Fri, 04 Jul 2025 12:19:12 GMT:

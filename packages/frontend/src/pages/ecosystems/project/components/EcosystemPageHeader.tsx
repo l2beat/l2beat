@@ -1,8 +1,8 @@
+import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import {
   type BadgeWithParams,
   ProjectBadge,
 } from '~/components/projects/ProjectBadge'
-import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
 

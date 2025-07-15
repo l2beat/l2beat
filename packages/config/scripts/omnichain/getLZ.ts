@@ -20,7 +20,7 @@ export async function getLZ(
   const start = 14388880
   const end = blockNumber
   const batchSize = 10_000
-  console.log(`fetching addresses... (this may take a while)`)
+  console.log('fetching addresses... (this may take a while)')
   console.log(
     'start block',
     start,

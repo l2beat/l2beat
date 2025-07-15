@@ -107,7 +107,10 @@ export function EcosystemProjectsByRaas({
 function ProjectLinkWithTooltip({
   project,
   children,
-}: { project: UsedInProjectWithIcon; children: React.ReactNode }) {
+}: {
+  project: UsedInProjectWithIcon
+  children: React.ReactNode
+}) {
   return (
     <Tooltip>
       <a href={`/scaling/projects/${project.slug}`} className="size-6">

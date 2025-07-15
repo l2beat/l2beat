@@ -7,7 +7,7 @@
   "entries": [
     {
       "name": "DACommittee",
-      "address": "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
+      "address": "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295",
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
@@ -21,13 +21,13 @@
         "$immutable": true,
         "constructorArgs": [
           [
-            "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
-            "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
-            "0x48AF849535DDFa560A0EB0FbDEf436688169B949",
-            "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-            "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
-            "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
-            "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
+            "eth:0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
+            "eth:0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
+            "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949",
+            "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+            "eth:0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
+            "eth:0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
+            "eth:0xfF506616E8C53EE5e513b906AC00B5D76664C537"
           ],
           "5"
         ],
@@ -41,43 +41,43 @@
         }
       },
       "implementationNames": {
-        "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": "Committee"
+        "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": "Committee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
+      "address": "eth:0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
+      "address": "eth:0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
+      "address": "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
+      "address": "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x3d395f623D8954d71132F5caC10778CA275806e0",
+      "address": "eth:0x3d395f623D8954d71132F5caC10778CA275806e0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x48AF849535DDFa560A0EB0FbDEf436688169B949",
+      "address": "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OrderRegistry",
-      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "address": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
@@ -93,17 +93,17 @@
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
       "implementationNames": {
-        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
+        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
       }
     },
     {
-      "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+      "address": "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "StarkExchange",
-      "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+      "address": "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
       "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
@@ -123,108 +123,108 @@
       "sinceTimestamp": 1615389188,
       "sinceBlock": 12011518,
       "values": {
-        "$admin": "0xD2C37fC6fD89563187f3679304975655e448D192",
+        "$admin": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
         "$immutable": false,
         "$implementation": [
-          "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-          "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-          "0x8536850750956c2FEebeCAB786d82271a5467687",
-          "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-          "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-          "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-          "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+          "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+          "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+          "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+          "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+          "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+          "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+          "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
         ],
         "$pastUpgrades": [
           [
             "2021-03-10T15:13:08.000Z",
             "0x9b57c19aa91cc17c9487085b68532cd65d1e4c263b5928f14c03a9d36c9097df",
             [
-              "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
+              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
+              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
+              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
             ]
           ],
           [
             "2021-03-16T18:04:39.000Z",
             "0xf42d8fc579401fc76769bf63ba72f7277aac976aeb2a4cd3eca899ca08de7c20",
             [
-              "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
+              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
+              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
+              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
             ]
           ],
           [
             "2021-03-25T11:24:15.000Z",
             "0x79f72bef0984e3ae76ab638c078f92f1a0d4ad2a289b8a91e072d81f77d505ce",
             [
-              "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
+              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
+              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
+              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
             ]
           ],
           [
             "2021-03-26T08:01:31.000Z",
             "0x9e8cc538b40a70723a287ece3ecb4e6aafbbde0e04f621124df6e4c2d7995dc7",
             [
-              "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
-              "0x61d3389Aa2d001c860859cC021153e40D557BF4b",
-              "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
-              "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+              "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378",
+              "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b",
+              "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E",
+              "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
             ]
           ],
           [
             "2021-08-31T08:15:29.000Z",
             "0x26fb60bb6b5ff3ef22cd959d007588f7410586499870411cfddc2759b97d44d6",
             [
-              "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
+              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
+              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
+              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
+              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
+              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
+              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
             ]
           ],
           [
             "2021-09-09T16:30:02.000Z",
             "0xeaa0efb3937eee43c1083cc776d5033b131e6ef12ba0d0646db1b34e600847cd",
             [
-              "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
+              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
+              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
+              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
+              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
+              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
+              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
             ]
           ],
           [
             "2022-01-13T08:08:51.000Z",
             "0x658a93571ca9733ba346bd746790a6d07821d86c89fd90809e85bf7f2f8d9797",
             [
-              "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
+              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
+              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
+              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
+              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
+              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
+              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
             ]
           ],
           [
             "2024-05-20T06:39:35.000Z",
             "0x3425fd24435e4aefdb08f3970e61e446eb5d21a1e0c916d1ba9331b060b72192",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ]
         ],
@@ -236,30 +236,30 @@
         "getOrderRoot": "1979386112938031259179906123766987240678777172422412845625170562656431493992",
         "getOrderTreeHeight": 63,
         "getRegisteredAvailabilityVerifiers": [
-          "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
+          "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
         ],
         "getRegisteredVerifiers": [
-          "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
+          "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
         ],
         "getSequenceNumber": 34422,
         "getUpgradeActivationDelay": 1209600,
         "getVaultRoot": "2089382124374340589248516775244900390932500014258313507936211877127913216580",
         "getVaultTreeHeight": 31,
-        "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+        "implementation": "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
         "isFrozen": false,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "operators": ["0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"],
-        "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+        "operators": ["eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"],
+        "orderRegistryAddress": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
         "StarkWareDiamond_upgradeDelay": 1209600,
         "tokenAdmins": [
-          "0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
-          "0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
+          "eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
+          "eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
         ],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
@@ -280,39 +280,39 @@
         }
       },
       "implementationNames": {
-        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": "Proxy",
-        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
-        "0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
-        "0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
-        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
-        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
-        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
-        "0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
+        "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": "Proxy",
+        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": "StarkExchange",
+        "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379": "AllVerifiers",
+        "eth:0x8536850750956c2FEebeCAB786d82271a5467687": "TokensAndRamping",
+        "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": "StarkExState",
+        "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": "ForcedActions",
+        "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": "OnchainVaults",
+        "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6": "ProxyUtils"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "GpsFactRegistryAdapter",
-      "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
+      "address": "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).",
       "sinceTimestamp": 1640107463,
       "sinceBlock": 13849860,
       "values": {
         "$immutable": true,
-        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+        "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "3485280386001712778192330279103973322645241679001461923469191557000342180556",
         "programHashMapped": "StarkEx Spot v3.0 (ImutableX, Layer2FinanceZK)"
       },
       "implementationNames": {
-        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
+        "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": "GpsFactRegistryAdapter"
       },
       "usedTypes": [
         {
@@ -345,7 +345,7 @@
       ]
     },
     {
-      "address": "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
+      "address": "eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -357,28 +357,28 @@
       ]
     },
     {
-      "address": "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
+      "address": "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
+      "address": "eth:0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB",
+      "address": "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
+      "address": "eth:0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "IMXAdminMultisig",
-      "address": "0xD2C37fC6fD89563187f3679304975655e448D192",
+      "address": "eth:0xD2C37fC6fD89563187f3679304975655e448D192",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -410,14 +410,14 @@
       "sinceBlock": 18816399,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
-          "0x3d395f623D8954d71132F5caC10778CA275806e0",
-          "0xdb6c271060571A96A62E3947E373395C89f765Ba",
-          "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
-          "0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
-          "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+          "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26",
+          "eth:0x3d395f623D8954d71132F5caC10778CA275806e0",
+          "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba",
+          "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b",
+          "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30",
+          "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
         ],
         "$threshold": 4,
         "domainSeparator": "0x6d4cd80fab6b5f67389fb83fe46f5b27c2fbd48c5c3b58b6979e365d12da62f8",
@@ -428,17 +428,17 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xD2C37fC6fD89563187f3679304975655e448D192": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xD2C37fC6fD89563187f3679304975655e448D192": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0xdb6c271060571A96A62E3947E373395C89f765Ba",
+      "address": "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
+      "address": "eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -451,7 +451,7 @@
       ]
     },
     {
-      "address": "0xeDb0219557ba13816f1dEb7fA54688362B05A5aE",
+      "address": "eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -464,7 +464,7 @@
       ]
     },
     {
-      "address": "0xfF506616E8C53EE5e513b906AC00B5D76664C537",
+      "address": "eth:0xfF506616E8C53EE5e513b906AC00B5D76664C537",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -843,5 +843,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "permissionsConfigHash": "0xba36981583b4d3206c5f642a2d98aac312a86bc3d57195dbb0efb27e756c7a19"
+  "permissionsConfigHash": "0xb441bf5defac26ca131d8c5f0b493c4e981473d9c08223a52a5196ccb3f2a07e"
 }

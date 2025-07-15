@@ -2,9 +2,9 @@ import {
   assert,
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
@@ -139,10 +139,10 @@ export const linea: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xd19d4b5d358258f05d7b411e21a1460d11b0876f',
+        inbox: EthereumAddress('0xd19d4b5d358258f05d7b411e21a1460d11b0876f'),
         sequencers: [
-          '0x46d2F319fd42165D4318F099E143dEA8124E9E3e',
-          '0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754',
+          EthereumAddress('0x46d2F319fd42165D4318F099E143dEA8124E9E3e'),
+          EthereumAddress('0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754'),
         ],
       },
     ],

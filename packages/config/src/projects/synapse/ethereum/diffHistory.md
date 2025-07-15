@@ -1,3 +1,345 @@
+Generated with discovered.json: 0xdbd86087560c20b5ef3cd9430f364134ed8f1432
+
+# Diff at Mon, 14 Jul 2025 12:46:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC) {
+    +++ description: None
+      address:
+-        "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
++        "eth:0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
+    }
+```
+
+```diff
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8) {
+    +++ description: None
+      address:
+-        "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8"
++        "eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8"
+      values.$implementation:
+-        "0x5A5fFf6F753d7C11A56A52FE47a177a87e431655"
++        "eth:0x5A5fFf6F753d7C11A56A52FE47a177a87e431655"
+      values.owner:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      values.swapStorage.lpToken:
+-        "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F"
++        "eth:0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F"
+      implementationNames.0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8:
+-        "SwapFlashLoan"
+      implementationNames.0x5A5fFf6F753d7C11A56A52FE47a177a87e431655:
+-        "SwapFlashLoan"
+      implementationNames.eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8:
++        "SwapFlashLoan"
+      implementationNames.eth:0x5A5fFf6F753d7C11A56A52FE47a177a87e431655:
++        "SwapFlashLoan"
+    }
+```
+
+```diff
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F) {
+    +++ description: None
+      address:
+-        "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F"
++        "eth:0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F"
+      values.$implementation:
+-        "0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3"
++        "eth:0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3"
+      values.owner:
+-        "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8"
++        "eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8"
+      implementationNames.0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F:
+-        "LPToken"
+      implementationNames.0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3:
+-        "LPToken"
+      implementationNames.eth:0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F:
++        "LPToken"
+      implementationNames.eth:0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3:
++        "LPToken"
+    }
+```
+
+```diff
+    EOA  (0x230A1AC45690B9Ae1176389434610B9526d2f21b) {
+    +++ description: None
+      address:
+-        "0x230A1AC45690B9Ae1176389434610B9526d2f21b"
++        "eth:0x230A1AC45690B9Ae1176389434610B9526d2f21b"
+    }
+```
+
+```diff
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6) {
+    +++ description: None
+      address:
+-        "0x2796317b0fF8538F253012862c06787Adfb8cEb6"
++        "eth:0x2796317b0fF8538F253012862c06787Adfb8cEb6"
+      values.$admin:
+-        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
++        "eth:0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
+      values.$implementation:
+-        "0x31fe393815822edacBd81C2262467402199EFD0D"
++        "eth:0x31fe393815822edacBd81C2262467402199EFD0D"
+      values.$pastUpgrades.0.2.0:
+-        "0x1622B32113bd2dFE1d92B30dA7FB68b7E5FA81b2"
++        "eth:0x1622B32113bd2dFE1d92B30dA7FB68b7E5FA81b2"
+      values.$pastUpgrades.1.2.0:
+-        "0x346B928D29827a02bC06A4A66D7FF37D250bcEE8"
++        "eth:0x346B928D29827a02bC06A4A66D7FF37D250bcEE8"
+      values.$pastUpgrades.2.2.0:
+-        "0x36829ba54e6A0f11fB6e5A45aC5aD2742ec86a0B"
++        "eth:0x36829ba54e6A0f11fB6e5A45aC5aD2742ec86a0B"
+      values.$pastUpgrades.3.2.0:
+-        "0xEfD2F730c9D92E53d0B402ACA05FE597F1A47001"
++        "eth:0xEfD2F730c9D92E53d0B402ACA05FE597F1A47001"
+      values.$pastUpgrades.4.2.0:
+-        "0x7D971Ffc482d70831075fCf07c50EDED782aA9Fd"
++        "eth:0x7D971Ffc482d70831075fCf07c50EDED782aA9Fd"
+      values.$pastUpgrades.5.2.0:
+-        "0xFb4a5F07427C4de0051c5FCe5b6f9E8cBf8A544C"
++        "eth:0xFb4a5F07427C4de0051c5FCe5b6f9E8cBf8A544C"
+      values.$pastUpgrades.6.2.0:
+-        "0x64f80a3B1ac0d394d652DF0beCfBeA9DB2320782"
++        "eth:0x64f80a3B1ac0d394d652DF0beCfBeA9DB2320782"
+      values.$pastUpgrades.7.2.0:
+-        "0x9007A80247D23Cc5C213A6DAcB385c632c4e19F2"
++        "eth:0x9007A80247D23Cc5C213A6DAcB385c632c4e19F2"
+      values.$pastUpgrades.8.2.0:
+-        "0x4cF1471B56D18c7D5a16D48ff5B761BdAEBd2f0b"
++        "eth:0x4cF1471B56D18c7D5a16D48ff5B761BdAEBd2f0b"
+      values.$pastUpgrades.9.2.0:
+-        "0x472822517a019e1eEd4533De2d800719057716F1"
++        "eth:0x472822517a019e1eEd4533De2d800719057716F1"
+      values.$pastUpgrades.10.2.0:
+-        "0x31fe393815822edacBd81C2262467402199EFD0D"
++        "eth:0x31fe393815822edacBd81C2262467402199EFD0D"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      values.accessControl.NODEGROUP_ROLE.members.0:
+-        "0x230A1AC45690B9Ae1176389434610B9526d2f21b"
++        "eth:0x230A1AC45690B9Ae1176389434610B9526d2f21b"
+      values.accessControl.GOVERNANCE_ROLE.members.0:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      values.accessControl.GOVERNANCE_ROLE.members.1:
+-        "0xa31C04BFD3545E6d00A80573a0B009F7557D958D"
++        "eth:0xa31C04BFD3545E6d00A80573a0B009F7557D958D"
+      values.WETH_ADDRESS:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0x2796317b0fF8538F253012862c06787Adfb8cEb6:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x31fe393815822edacBd81C2262467402199EFD0D:
+-        "SynapseBridge"
+      implementationNames.eth:0x2796317b0fF8538F253012862c06787Adfb8cEb6:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x31fe393815822edacBd81C2262467402199EFD0D:
++        "SynapseBridge"
+    }
+```
+
+```diff
+    contract TimelockController (0x647489df0673E17dB3163c47d5233EBB6F5cAc70) {
+    +++ description: None
+      address:
+-        "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
++        "eth:0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
++        "eth:0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      implementationNames.0x647489df0673E17dB3163c47d5233EBB6F5cAc70:
+-        "TimelockController"
+      implementationNames.eth:0x647489df0673E17dB3163c47d5233EBB6F5cAc70:
++        "TimelockController"
+    }
+```
+
+```diff
+    contract L1BridgeZap (0x6571d6be3d8460CF5F7d6711Cd9961860029D85F) {
+    +++ description: None
+      address:
+-        "0x6571d6be3d8460CF5F7d6711Cd9961860029D85F"
++        "eth:0x6571d6be3d8460CF5F7d6711Cd9961860029D85F"
+      values.baseTokens.0:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.baseTokens.1:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.baseTokens.2:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      values.WETH_ADDRESS:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0x6571d6be3d8460CF5F7d6711Cd9961860029D85F:
+-        "L1BridgeZap"
+      implementationNames.eth:0x6571d6be3d8460CF5F7d6711Cd9961860029D85F:
++        "L1BridgeZap"
+    }
+```
+
+```diff
+    contract Bridge Multisig (0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55) {
+    +++ description: None
+      address:
+-        "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
++        "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xb3DAD3C24A861b84fDF380B212662620627D4e15"
++        "eth:0xb3DAD3C24A861b84fDF380B212662620627D4e15"
+      values.$members.1:
+-        "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3"
++        "eth:0x9Ce9dc8B12E264F00e80F35326040C75201C38f3"
+      values.$members.2:
+-        "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
++        "eth:0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
+      values.GnosisSafe_modules.0:
+-        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
++        "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
+      implementationNames.0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2) {
+    +++ description: None
+      address:
+-        "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
++        "eth:0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
+      values.owner:
+-        "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
++        "eth:0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
+      implementationNames.0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2:
+-        "ProxyAdmin"
+      implementationNames.eth:0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x9Ce9dc8B12E264F00e80F35326040C75201C38f3) {
+    +++ description: None
+      address:
+-        "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3"
++        "eth:0x9Ce9dc8B12E264F00e80F35326040C75201C38f3"
+    }
+```
+
+```diff
+    EOA  (0xa31C04BFD3545E6d00A80573a0B009F7557D958D) {
+    +++ description: None
+      address:
+-        "0xa31C04BFD3545E6d00A80573a0B009F7557D958D"
++        "eth:0xa31C04BFD3545E6d00A80573a0B009F7557D958D"
+    }
+```
+
+```diff
+    EOA  (0xb3DAD3C24A861b84fDF380B212662620627D4e15) {
+    +++ description: None
+      address:
+-        "0xb3DAD3C24A861b84fDF380B212662620627D4e15"
++        "eth:0xb3DAD3C24A861b84fDF380B212662620627D4e15"
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      address:
+-        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
++        "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"
+      implementationNames.0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134:
+-        "AllowanceModule"
+      implementationNames.eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134:
++        "AllowanceModule"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SynapseBridge (0x2796317b0fF8538F253012862c06787Adfb8cEb6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x647489df0673E17dB3163c47d5233EBB6F5cAc70)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1BridgeZap (0x6571d6be3d8460CF5F7d6711Cd9961860029D85F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge Multisig (0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xee8239c1e1d4adc8dbcd71c547478ef1a750b702
 
 # Diff at Fri, 04 Jul 2025 12:19:24 GMT:

@@ -35,14 +35,24 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getOngoingAnomalies(): Promise<RealTimeAnomalyRecord[]> {
-    const rows = await this.db
+  async getOngoingAnomalies(
+    projectIds?: string[],
+  ): Promise<RealTimeAnomalyRecord[]> {
+    let query = this.db
       .selectFrom('RealTimeAnomaly')
       .selectAll()
       .where('status', '=', 'ongoing')
-      .execute()
 
-    return rows.map((r) => toRecord(r))
+    if (projectIds) {
+      if (projectIds.length === 0) {
+        return []
+      }
+      query = query.where('projectId', 'in', projectIds)
+    }
+
+    const rows = await query.execute()
+
+    return rows.map(toRecord)
   }
 
   async getApprovedAnomaliesByProjectIds(
@@ -60,9 +70,27 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getProjectIds(): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('RealTimeAnomaly')
+      .select(['projectId'])
+      .groupBy('projectId')
+      .execute()
+
+    return rows.map((row) => row.projectId)
+  }
+
   async deleteAll(): Promise<number> {
     const result = await this.db
       .deleteFrom('RealTimeAnomaly')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByProjectId(projectIds: string[]): Promise<number> {
+    const result = await this.db
+      .deleteFrom('RealTimeAnomaly')
+      .where('projectId', 'in', projectIds)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

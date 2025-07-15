@@ -8,7 +8,7 @@ export function SideNavLayout({ children }: { children: React.ReactNode }) {
       logoLink="/scaling/summary"
       topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
     >
-      <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0">
+      <div className="mx-auto min-h-screen max-w-(--breakpoint-lg) md:px-6 lg:pl-0">
         {children}
       </div>
       <Footer

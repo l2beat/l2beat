@@ -1,3 +1,597 @@
+Generated with discovered.json: 0x598874e07da6761954d19f59e400655971aac649
+
+# Diff at Mon, 14 Jul 2025 12:44:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22868281
+- current block number: 22868281
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22868281 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x0706Ffc1722D53a85ba90f32807880ccee968Fed) {
+    +++ description: None
+      address:
+-        "0x0706Ffc1722D53a85ba90f32807880ccee968Fed"
++        "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x45894CeBad0a1298D44aF2B528490693E58B322E"
++        "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E"
+      values.$members.1:
+-        "0x825e868F5561352bC875E0C9D08d32e94F915E6b"
++        "eth:0x825e868F5561352bC875E0C9D08d32e94F915E6b"
+      implementationNames.0x0706Ffc1722D53a85ba90f32807880ccee968Fed:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x1a84163249B2909f746C725F23D5ae2a66D7C4fE) {
+    +++ description: None
+      address:
+-        "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
++        "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+    }
+```
+
+```diff
+    contract CanonicalBridgeV1 (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11) {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+      address:
+-        "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
++        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.PAUSER_ROLE.members.1:
+-        "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
++        "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+      values.accessControl.STARTER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.CLAIM_AUTHORITY_ROLE.members.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.accessControl.WITHDRAW_CANCELLER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.WITHDRAW_CANCELLER_ROLE.members.1:
+-        "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
++        "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+      values.accessControl.FRAUD_WINDOW_SETTER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.defaultAdminAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.pauserAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.pauserAC.1:
+-        "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
++        "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+      values.TREASURY:
+-        "0xD7E4b67E735733aC98a88F13d087D8aac670E644"
++        "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644"
+      values.withdrawAuthorityAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      implementationNames.0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11:
+-        "CanonicalBridge"
+      implementationNames.eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11:
++        "CanonicalBridge"
+    }
+```
+
+```diff
+    EOA  (0x3392fd462d9710Fbf3A5703818b9920C119DC080) {
+    +++ description: None
+      address:
+-        "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
++        "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+    }
+```
+
+```diff
+    EOA  (0x45894CeBad0a1298D44aF2B528490693E58B322E) {
+    +++ description: None
+      address:
+-        "0x45894CeBad0a1298D44aF2B528490693E58B322E"
++        "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E"
+    }
+```
+
+```diff
+    contract Eclipse Multisig (0x4720342419C1D316B948690d12C86D5b485C64E0) {
+    +++ description: None
+      address:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xBb534A6Bd0440727cb5883D037DEd7358059D547"
++        "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547"
+      values.$members.1:
+-        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
++        "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+      values.$members.2:
+-        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
++        "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5"
+      values.$members.3:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+      values.$members.4:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+      implementationNames.0x4720342419C1D316B948690d12C86D5b485C64E0:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x4720342419C1D316B948690d12C86D5b485C64E0:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3) {
+    +++ description: None
+      address:
+-        "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
++        "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+    }
+```
+
+```diff
+    EOA  (0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2) {
+    +++ description: None
+      address:
+-        "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
++        "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2"
+    }
+```
+
+```diff
+    contract Eclipse Multisig 2 (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      address:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5"
++        "eth:0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5"
+      values.$members.1:
+-        "0x0706Ffc1722D53a85ba90f32807880ccee968Fed"
++        "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed"
+      values.$members.2:
+-        "0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
++        "eth:0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
+      values.$members.3:
+-        "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
++        "eth:0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
+      values.$members.4:
+-        "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
++        "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+      implementationNames.0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x825e868F5561352bC875E0C9D08d32e94F915E6b) {
+    +++ description: None
+      address:
+-        "0x825e868F5561352bC875E0C9D08d32e94F915E6b"
++        "eth:0x825e868F5561352bC875E0C9D08d32e94F915E6b"
+    }
+```
+
+```diff
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1) {
+    +++ description: (Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.
+      address:
+-        "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
++        "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"
++        "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"
+      values.$pastUpgrades.0.2.0:
+-        "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"
++        "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      implementationNames.0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1:
+-        "ERC1967Proxy"
+      implementationNames.0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9:
+-        "EtherBridge"
+      implementationNames.eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1:
++        "ERC1967Proxy"
+      implementationNames.eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9:
++        "EtherBridge"
+    }
+```
+
+```diff
+    contract CanonicalBridgeV2 (0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51) {
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+      address:
+-        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.STARTER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.1:
+-        "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
++        "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+      values.accessControl.CLAIM_AUTHORITY_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.WITHDRAW_CANCELLER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.FRAUD_WINDOW_SETTER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.defaultAdminAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.defaultAdminAC.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.pauserAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.TREASURY:
+-        "0xD7E4b67E735733aC98a88F13d087D8aac670E644"
++        "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644"
+      values.withdrawAuthorityAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.withdrawAuthorityAC.1:
+-        "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
++        "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+      implementationNames.0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51:
+-        "CanonicalBridgeV2"
+      implementationNames.eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51:
++        "CanonicalBridgeV2"
+    }
+```
+
+```diff
+    EOA  (0x950815d0e585095B06111CD101440fb1E95AB2a5) {
+    +++ description: None
+      address:
+-        "0x950815d0e585095B06111CD101440fb1E95AB2a5"
++        "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5"
+    }
+```
+
+```diff
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d) {
+    +++ description: (Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.
+      address:
+-        "0xb23B2492f7A9631104A5877F7FFA00633660968d"
++        "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"
++        "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"
+      values.$pastUpgrades.0.2.0:
+-        "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"
++        "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.TRUSTED_RELAYER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.MODULE_ROLE.members.0:
+-        "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
++        "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"
+      implementationNames.0xb23B2492f7A9631104A5877F7FFA00633660968d:
+-        "ERC1967Proxy"
+      implementationNames.0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B:
+-        "Mailbox"
+      implementationNames.eth:0xb23B2492f7A9631104A5877F7FFA00633660968d:
++        "ERC1967Proxy"
+      implementationNames.eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B:
++        "Mailbox"
+    }
+```
+
+```diff
+    EOA  (0xBb534A6Bd0440727cb5883D037DEd7358059D547) {
+    +++ description: None
+      address:
+-        "0xBb534A6Bd0440727cb5883D037DEd7358059D547"
++        "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547"
+    }
+```
+
+```diff
+    EOA  (0xCD2fA978D163c0068167dDff8b6951f0E626e6A4) {
+    +++ description: None
+      address:
+-        "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
++        "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4"
+    }
+```
+
+```diff
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3) {
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+      address:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.UPGRADER_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.NULL_ADDRESS:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.upgraderAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      implementationNames.0xD02f545d57536BC1E8F12D867731F006AacE71E3:
+-        "Upgrader0to1"
+      implementationNames.eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3:
++        "Upgrader0to1"
+    }
+```
+
+```diff
+    EOA  (0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5) {
+    +++ description: None
+      address:
+-        "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5"
++        "eth:0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5"
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+      address:
+-        "0xD7E4b67E735733aC98a88F13d087D8aac670E644"
++        "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"
++        "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"
+      values.$pastUpgrades.0.2.0:
+-        "0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"
++        "eth:0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"
+      values.$pastUpgrades.1.2.0:
+-        "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"
++        "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.accessControl.PAUSER_ROLE.members.1:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.PAUSER_ROLE.members.2:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.STARTER_ROLE.members.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.accessControl.STARTER_ROLE.members.1:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.accessControl.STARTER_ROLE.members.2:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.UPGRADER_ROLE.members.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.accessControl.UPGRADER_ROLE.members.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.EMERGENCY_ROLE.members.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.accessControl.EMERGENCY_ROLE.members.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.DEPOSITOR_ROLE.members.0:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.DEPOSITOR_ROLE.members.1:
+-        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.0:
+-        "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
++        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.2:
+-        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+      values.defaultAdminAC.0:
+-        "0x4720342419C1D316B948690d12C86D5b485C64E0"
++        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+      values.defaultAdminAC.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.emergencyAC.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.emergencyAC.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.upgraderAC.0:
+-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3"
++        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"
+      values.upgraderAC.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.withdrawerAC.0:
+-        "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
++        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+      values.withdrawerAC.1:
+-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
++        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+      values.withdrawerAC.2:
+-        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
++        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+      implementationNames.0xD7E4b67E735733aC98a88F13d087D8aac670E644:
+-        "ERC1967Proxy"
+      implementationNames.0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978:
+-        "Treasury"
+      implementationNames.eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644:
++        "ERC1967Proxy"
+      implementationNames.eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978:
++        "Treasury"
+    }
+```
+
+```diff
+    EOA  (0xDecF20b9213f5d7f16196420377d37ef5f8F9686) {
+    +++ description: None
+      address:
+-        "0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
++        "eth:0xDecF20b9213f5d7f16196420377d37ef5f8F9686"
+    }
+```
+
+```diff
+    EOA  (0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9) {
+    +++ description: None
+      address:
+-        "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
++        "eth:0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9"
+    }
+```
+
+```diff
+    EOA  (0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA) {
+    +++ description: None
+      address:
+-        "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
++        "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0706Ffc1722D53a85ba90f32807880ccee968Fed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridgeV1 (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
++   Status: CREATED
+    contract Eclipse Multisig (0x4720342419C1D316B948690d12C86D5b485C64E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Eclipse Multisig 2 (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1)
+    +++ description: (Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridgeV2 (0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d)
+    +++ description: (Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.
+```
+
+```diff
++   Status: CREATED
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3)
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644)
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+```
+
 Generated with discovered.json: 0x52434924e62b9ac77adc8ecd688ed47152bb47b9
 
 # Diff at Mon, 07 Jul 2025 17:17:29 GMT:

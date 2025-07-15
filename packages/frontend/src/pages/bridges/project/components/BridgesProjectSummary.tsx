@@ -1,14 +1,14 @@
-import { FullPageHeader } from '~/components/FullPageHeader'
-import { WarningBar } from '~/components/WarningBar'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { FullPageHeader } from '~/components/FullPageHeader'
 import { ArchivedBar } from '~/components/projects/ArchivedBar'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
-import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
-import { UpcomingBar } from '~/components/projects/UpcomingBar'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
+import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
+import { UpcomingBar } from '~/components/projects/UpcomingBar'
+import { WarningBar } from '~/components/WarningBar'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { BridgesProjectStats } from './BridgesProjectStats'
@@ -48,7 +48,7 @@ export function BridgesProjectSummary({ project }: Props) {
               <AboutSection description={project.header.description} />
             </div>
           )}
-          <HorizontalSeparator className="max-md:-mx-4 md:!my-6 my-4 max-md:w-screen md:hidden" />
+          <HorizontalSeparator className="max-md:-mx-4 my-4 max-md:w-screen md:my-6! md:hidden" />
 
           <div className="max-md:hidden">
             <DesktopProjectLinks

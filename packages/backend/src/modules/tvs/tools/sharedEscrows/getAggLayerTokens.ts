@@ -10,15 +10,15 @@ import {
   assert,
   Bytes,
   EthereumAddress,
-  TokenId,
   notUndefined,
+  TokenId,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
 import type { MulticallRequest } from '../../../../peripherals/multicall/types'
-import type { LocalStorage } from '../LocalStorage'
 import { getTimeRangeIntersection } from '../getTimeRangeIntersection'
+import type { LocalStorage } from '../LocalStorage'
 import { createEscrowToken } from '../legacyConfig/mapLegacyConfig'
 import type { LegacyEscrow } from '../legacyConfig/types'
 import { isEmptyAddress } from './isEmptyAddress'

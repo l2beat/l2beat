@@ -1,6 +1,5 @@
+import { formatDate, type LoggerTransport } from '@l2beat/backend-tools'
 import { v4 as uuidv4 } from 'uuid'
-
-import { type LoggerTransport, formatDate } from '@l2beat/backend-tools'
 import {
   ElasticSearchClient,
   type ElasticSearchClientOptions,

@@ -85,7 +85,7 @@ describe(Clock.name, () => {
   describe(Clock.prototype.getSixHourlyCutoff.name, () => {
     it('returns correct cutoff', () => {
       const targetTimestamp = UnixTime.fromDate(
-        new Date(`2022-06-29T13:00:00.000Z`),
+        new Date('2022-06-29T13:00:00.000Z'),
       )
       setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
@@ -95,7 +95,7 @@ describe(Clock.name, () => {
       const result = clock.getSixHourlyCutoff(targetTimestamp)
 
       // 3D before - first possible sixHours entry
-      const expected = UnixTime.fromDate(new Date(`2022-06-26T18:00:00.000Z`))
+      const expected = UnixTime.fromDate(new Date('2022-06-26T18:00:00.000Z'))
       expect(result).toEqual(expected)
     })
   })
@@ -103,7 +103,7 @@ describe(Clock.name, () => {
   describe(Clock.prototype.getHourlyCutoff.name, () => {
     it('returns correct cutoff', () => {
       const targetTimestamp = UnixTime.fromDate(
-        new Date(`2022-06-29T13:00:00.000Z`),
+        new Date('2022-06-29T13:00:00.000Z'),
       )
       setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
@@ -113,7 +113,7 @@ describe(Clock.name, () => {
       const result = clock.getHourlyCutoff(targetTimestamp)
 
       // 3D before - first possible sixHours entry
-      const expected = UnixTime.fromDate(new Date(`2022-06-28T13:00:00.000Z`))
+      const expected = UnixTime.fromDate(new Date('2022-06-28T13:00:00.000Z'))
       expect(result).toEqual(expected)
     })
   })
@@ -121,10 +121,10 @@ describe(Clock.name, () => {
   describe(Clock.prototype.getAllTimestampsForApi.name, () => {
     it('can return all timestamps for API', () => {
       const minTimestamp = UnixTime.fromDate(
-        new Date(`2022-06-22T00:00:00.000Z`),
+        new Date('2022-06-22T00:00:00.000Z'),
       )
       const targetTimestamp = UnixTime.fromDate(
-        new Date(`2022-06-29T13:00:00.000Z`),
+        new Date('2022-06-29T13:00:00.000Z'),
       )
       setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 

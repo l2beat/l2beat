@@ -120,7 +120,7 @@ export function Verifiers(props: Props) {
                     </div>
                     <SubVerifiersTable
                       verifier={item}
-                      className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_176px)]"
+                      className="w-[calc(100vw-64px)] md:w-[calc(100vw-176px)]"
                     />
                   </td>
                   <td
@@ -137,7 +137,7 @@ export function Verifiers(props: Props) {
                     </div>
                     <SubVerifiersTable
                       verifier={item}
-                      className="w-[calc(100vw_-_64px)] md:w-[calc(100vw_-_176px)]"
+                      className="w-[calc(100vw-64px)] md:w-[calc(100vw-176px)]"
                     />
                   </td>
                 </tr>
