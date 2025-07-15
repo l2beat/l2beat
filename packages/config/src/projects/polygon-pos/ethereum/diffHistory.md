@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9980f3a054c277d4b485b9b9df008f57ac9cf9e9
+
+# Diff at Tue, 15 Jul 2025 10:46:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22865648
+- current block number: 22924075
+
+## Description
+
+validator checkpoint reward decreased, 1 vali added.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.CHECKPOINT_REWARD:
+-        "53870967741900000000000"
++        "37108000000000000000000"
+      values.currentValidatorSetSize:
+-        102
++        103
+    }
+```
+
 Generated with discovered.json: 0x28533632e3fd3314abe52e3d2d2b42c7ff6e919e
 
 # Diff at Mon, 14 Jul 2025 12:45:56 GMT:

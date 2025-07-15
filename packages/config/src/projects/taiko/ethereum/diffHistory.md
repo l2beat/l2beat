@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xb699939d690e0dc1d5373e5a2e4bc38539774aff
+
+# Diff at Tue, 15 Jul 2025 08:05:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22882688
+- current block number: 22923197
+
+## Description
+
+[Single line change](https://disco.l2beat.com/diff/eth:0x497B13f9192B09244de9b5F0964830969FB26F07/eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC) to the baseFeeConfig.sharingPctg: 50 -> 75.
+
+[ai]: this means that 75% of transaction fees are going to the block proposer and 25% to taiko treasury (distribution logic on L2).
+i could not really verify this claim and unsuccessfully searched for any l2 logic that distributes fees.
+
+the pre-pacaya impl is the same.
+
+## Watched changes
+
+```diff
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      sourceHashes.1:
+-        "0xc4ae3ca2fcf606673a1324989a7ac169b3fdb6780917814506e56898484e99d7"
++        "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7"
+      values.$implementation.0:
+-        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
+      values.$implementation.2:
+-        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+      values.$pastUpgrades.26:
++        ["2025-07-15T01:20:35.000Z","0xffedb70a513e71486c3a47079508d3ba87ae5362e7efb3300febac1be69276bc",["eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319","eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"]]
+      values.$upgradeCount:
+-        26
++        27
+      values.impl:
+-        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
+      values.newFork:
+-        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+      values.pacayaConfig.baseFeeConfig.sharingPctg:
+-        50
++        75
+      implementationNames.eth:0x4e030b19135869F6fd926614754B7F9c184E2B83:
+-        "PacayaForkRouter"
+      implementationNames.eth:0x497B13f9192B09244de9b5F0964830969FB26F07:
+-        "MainnetInbox"
+      implementationNames.eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319:
++        "PacayaForkRouter"
+      implementationNames.eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC:
++        "MainnetInbox"
+    }
+```
+
+## Source code changes
+
+```diff
+.../taiko/ethereum/{.flat@22882688 => .flat}/TaikoL1/MainnetInbox.3.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x68f1c20a820d13d60bb85440876ad5ed1c5c35a4
 
 # Diff at Mon, 14 Jul 2025 12:46:35 GMT:

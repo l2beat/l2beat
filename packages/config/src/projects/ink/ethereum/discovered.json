@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ethereum",
-  "blockNumber": 22437737,
+  "blockNumber": 22924293,
   "configHash": "0x5243e3d8d16541ba48e6ee583d1b0b4be7db47150f2e1b27ed7f0d328be7951e",
   "entries": [
     {
@@ -132,7 +132,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 612,
+        "gameCount": 885,
         "gameImpls": [
           "eth:0x3cCF7C31a3A8C1b8aaA9A18FC2d010dDE4262342",
           "eth:0x40641A4023f0F4C66D7f8Ade16497f4C947A7163",
@@ -283,11 +283,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x75D63168587f8722113615fbbb76164BC6e6BBd1",
+        "anchorGame": "eth:0xBC64C88309106dD992a694FCC3f81773277d5432",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "getAnchorRoot": [
-          "0xd4e22d733542c60c646b5256fb5922d2733ca724e51fef42cb7016c5d7600aba",
-          12569522
+          "0xe557fad285609ea70ab84ebfe1faf3af1669ce06addb2010bbb25a3166124d43",
+          18466505
         ],
         "portal": "eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F",
         "respectedGameType": 0,
@@ -563,7 +563,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -639,6 +639,11 @@
     },
     {
       "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -800,7 +805,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -855,7 +860,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 514422,
-          "prevBlockNum": 22437545
+          "prevBlockNum": 22924185
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -924,11 +929,11 @@
           ]
         ],
         "$upgradeCount": 4,
-        "basefeeScalar": 0,
+        "basefeeScalar": 4424,
         "BATCH_INBOX_SLOT": "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597",
         "batcherHash": "eth:0x500d7Ea63CF2E501dadaA5feeC1FC19FE2Aa72Ac",
         "batchInbox": "eth:0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97",
-        "blobbasefeeScalar": 0,
+        "blobbasefeeScalar": 810831,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "eth:0x10d7B35078d3baabB96Dd45a9143B94be65b12CD",
         "eip1559Denominator": 0,
@@ -971,7 +976,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": 801949,
+        "scalar": "452312848583266388373324160190187140051835877600158453279134670023538250056",
         "sequencerInbox": "eth:0x005969bf0EcbF6eDB6C47E5e94693b1C3651Be97",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 21344310,
@@ -1102,7 +1107,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628877",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630533",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1196,7 +1201,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1374,7 +1379,7 @@
         ],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 108,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1431,11 +1436,6 @@
       }
     },
     {
-      "address": "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1472,21 +1472,20 @@
         "$members": [
           "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
-          "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 37,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1552,7 +1551,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1814,11 +1813,6 @@
         "eth:0xf6b1554F483C391414d3830927E3600c105AaE6E": "Proxy",
         "eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e": "DelayedWETH"
       }
-    },
-    {
-      "address": "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -2765,5 +2759,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x93ba8c1e0f92e6e392816400ebefb9d0700d4801b3c0a2ad74e30ce2ef17b212"
+  "permissionsConfigHash": "0x7e7a395ef44389c3ee6a9f95f0856d06a4e4c8002b7a27f033f0dffe55efb3cc"
 }

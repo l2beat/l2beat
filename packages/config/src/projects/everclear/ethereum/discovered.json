@@ -1,7 +1,7 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 22122719,
+  "blockNumber": 22923583,
   "configHash": "0xf62fe7ad0a2f0cc608a9b15f49fec82f305645bd4c7fadbc90b777ccd0bb1f91",
   "entries": [
     {
@@ -304,7 +304,7 @@
           "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
         ],
         "allowedOutboxList": ["eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
-        "delayedMessageCount": 428,
+        "delayedMessageCount": 686,
         "inboxHistory": [
           "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
           "eth:0xdE3fdE71a026236b6b5C35505643FF4155EAb20D"
@@ -312,8 +312,8 @@
         "outboxHistory": ["eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa"],
         "rollup": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerInbox": "eth:0x7B0517E0104dB60198f9d573C0aB8d480207827E",
-        "sequencerMessageCount": 391,
-        "sequencerReportedSubMessageCount": 984675
+        "sequencerMessageCount": 615,
+        "sequencerReportedSubMessageCount": 1918484
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -341,6 +341,11 @@
     },
     {
       "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -402,7 +407,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 391,
+        "batchCount": 615,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -439,7 +444,7 @@
         "rollup": "eth:0xc6CAd31D83E33Fc8fBc855f36ef9Cb2fCE070f5C",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 427,
+        "totalDelayedMessagesRead": 685,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -583,11 +588,6 @@
         "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": "L1GatewayRouter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "address": "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "UpgradeExecutor",
@@ -787,21 +787,20 @@
         "$members": [
           "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
-          "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 36,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -876,13 +875,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 389,
+        "firstUnresolvedNode": 613,
         "inbox": "eth:0x97FdC935c5E25613AA13a054C7Aa71cf751DB495",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895344,
-        "latestConfirmed": 388,
-        "latestNodeCreated": 388,
+        "latestConfirmed": 612,
+        "latestNodeCreated": 612,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "eth:0x38fB6Ad5908f61dC0bCeffbeDf4Bf781CbeA22Aa",
@@ -1127,7 +1126,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 153,
+        "nonce": 377,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1178,11 +1177,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1940,5 +1934,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xb6b0bd5995735926e3b552e7b0c5ec28c97ac8c1c25ff7cc11eabf8043a8d227"
+  "permissionsConfigHash": "0x480b292435d18a7ff09f895c1cd9dd8d4850b1bccff1d352d377b5a84ce9906e"
 }

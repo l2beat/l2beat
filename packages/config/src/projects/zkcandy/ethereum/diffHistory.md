@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x53eb483757602b1ded701c2f1b906b085161f75f
+
+# Diff at Tue, 15 Jul 2025 10:59:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22896159
+- current block number: 22924135
+
+## Description
+
+v28 upgrade complete.
+
+## Watched changes
+
+```diff
+    contract zkCandyZkEvm (0xF2704433d11842d15aa76BBF0E00407267a99C92) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        4077
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        4077
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0x6e60bd0408b14d086d55f00ff7313e9826e748a6fddf5cda55ae2883321c9804"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xd938eb5008cbb09125f575b117690d73e6a52192
 
 # Diff at Mon, 14 Jul 2025 12:47:18 GMT:
