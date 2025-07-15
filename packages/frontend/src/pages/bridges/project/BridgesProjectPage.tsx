@@ -15,7 +15,6 @@ import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
-import { BridgesMvpWarning } from './components/BridgesMvpWarning'
 import { BridgesProjectSummary } from './components/BridgesProjectSummary'
 
 interface Props extends AppLayoutProps {
@@ -38,7 +37,6 @@ export function BridgesProjectPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div className="smooth-scroll">
-            <BridgesMvpWarning className="w-full" />
             {!isNavigationEmpty && (
               <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
@@ -47,7 +45,7 @@ export function BridgesProjectPage({
 
             <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[18px]">
               <ProjectHeader project={projectEntry} className="pb-6" />
-              <ProjectSummaryBars project={projectEntry} />
+              <ProjectSummaryBars project={projectEntry} showBridgesWarning />
 
               {projectEntry.header.description && (
                 <div className="md:hidden">
