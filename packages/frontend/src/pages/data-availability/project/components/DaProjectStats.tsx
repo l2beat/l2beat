@@ -2,7 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { Fragment } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import {
+  ProjectSummaryStat,
+  type ProjectSummaryStatProps,
+} from '~/components/projects/ProjectSummaryStat'
 import { EM_DASH } from '~/consts/characters'
 import type {
   DaProjectPageEntry,
@@ -12,7 +15,7 @@ import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
-  stats: ProjectSummaryStat[]
+  stats: ProjectSummaryStatProps[]
 }
 const GROUPS = 4
 
@@ -51,7 +54,7 @@ function chunkArray<T>(array: T[], divider: number): T[][] {
 export function getCommonDaProjectStats(
   project: DaProjectPageEntry | EthereumDaProjectPageEntry,
 ) {
-  const stats: ProjectSummaryStat[] = []
+  const stats: (ProjectSummaryStatProps & { key: string })[] = []
 
   // Type
   stats.push({

@@ -8,11 +8,11 @@ import {
 } from '../../core/tooltip/Tooltip'
 import { SentimentText } from '../../SentimentText'
 import { sentimentToWarningBarColor, WarningBar } from '../../WarningBar'
+import { rosetteParameters } from '../parameters'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../RosetteTooltipContext'
-import { rosetteParameters } from '../parameters'
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './PizzaRosetteIcon'
 import { PizzaRosetteLabels } from './PizzaRosetteLabels'

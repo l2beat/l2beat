@@ -8,7 +8,7 @@ import {
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 
-export interface ProjectSummaryStat {
+export interface ProjectSummaryStatProps {
   title: ReactNode
   value: ReactNode
   tooltip?: string
@@ -16,7 +16,7 @@ export interface ProjectSummaryStat {
   valueClassName?: string
 }
 
-export function ProjectSummaryStat(props: ProjectSummaryStat) {
+export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
   const Comp = typeof props.title === 'string' ? 'span' : Slot
   return (
     <li

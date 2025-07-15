@@ -1,5 +1,5 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import type { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import type { ProjectSummaryStatProps } from '~/components/projects/ProjectSummaryStat'
 import { RiskBanner } from '~/components/projects/RiskBanner'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
@@ -13,7 +13,7 @@ interface Props {
 
 export function RegularDaProjectSummary({ project }: Props) {
   const hasMultipleBridges = project.bridges.length > 1
-  const stats: ProjectSummaryStat[] = [
+  const stats: (ProjectSummaryStatProps & { key: string })[] = [
     ...getCommonDaProjectStats(project),
     {
       key: 'used-by',

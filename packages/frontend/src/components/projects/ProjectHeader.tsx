@@ -1,6 +1,5 @@
-import { cn } from '~/utils/cn'
-
 import { ChevronIcon } from '~/icons/Chevron'
+import { cn } from '~/utils/cn'
 import { LiveIndicator } from '../LiveIndicator'
 
 interface Project {

@@ -1,6 +1,6 @@
 import { Footer } from '~/components/Footer'
-import { TopBanner } from '~/components/TopBanner'
 import { NavLayout } from '~/components/nav/NavLayout'
+import { TopBanner } from '~/components/TopBanner'
 
 export function SideNavLayout({
   children,

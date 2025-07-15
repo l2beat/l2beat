@@ -1,6 +1,6 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import type { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
+import type { ProjectSummaryStatProps } from '~/components/projects/ProjectSummaryStat'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function EthereumDaProjectSummary({ project }: Props) {
-  const stats: ProjectSummaryStat[] = [
+  const stats: (ProjectSummaryStatProps & { key: string })[] = [
     ...getCommonDaProjectStats(project),
     {
       key: 'da-bridge',
