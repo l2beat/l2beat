@@ -1,16 +1,30 @@
-Generated with discovered.json: 0x31f590afbd9ea9daca6ebb8d50750dc0818a3f8f
+Generated with discovered.json: 0xab1a9fbd86915419dcb1b9f7c671f08d4da76eb2
 
-# Diff at Tue, 15 Jul 2025 09:09:12 GMT:
+# Diff at Tue, 15 Jul 2025 11:31:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22437737
-- current block number: 22923590
+- current block number: 22924293
 
 ## Description
 
 Gelato MS: one signer removed, one changed.
 
+fee config updated.
+
 ## Watched changes
+
+```diff
+    contract SystemConfig (0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        0
++        4424
+      values.blobbasefeeScalar:
+-        0
++        810831
+    }
+```
 
 ```diff
     contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
