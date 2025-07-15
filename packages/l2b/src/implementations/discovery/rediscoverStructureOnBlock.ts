@@ -8,7 +8,6 @@ import {
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { readFileSync } from 'fs'
-import path, { relative } from 'path'
 import { rimraf } from 'rimraf'
 
 export async function rediscoverStructureOnBlock(
@@ -23,13 +22,7 @@ export async function rediscoverStructureOnBlock(
   )
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-  const discoveryFolder =
-    '.' +
-    path.sep +
-    relative(
-      process.cwd(),
-      configReader.getProjectChainPath(projectName, chain),
-    )
+  const discoveryFolder = configReader.getProjectChainPath(projectName, chain)
 
   // Remove any old sources we fetched before, so that their count doesn't grow
   await rimraf(`${discoveryFolder}/.code@*`, { glob: true })

@@ -341,7 +341,7 @@ function getFileVersionOnMainBranch(
     // Wrap the path in single quotes to avoid the shell interpreting
     // characters like parentheses or spaces. We also escape any single quotes
     // inside the path (extremely unlikely in our repo layout).
-    const quotedPath = `'${filePath.replaceAll("'", "'\\''")}'`
+    const quotedPath = shellQuote(filePath)
     const content = execSync(
       `git show ${mainBranch}:${quotedPath} 2>/dev/null`,
       {
