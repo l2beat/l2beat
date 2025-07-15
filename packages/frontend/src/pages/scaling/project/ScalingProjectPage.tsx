@@ -70,33 +70,32 @@ export function ScalingProjectPage({
                 />
               </div>
             </div>
-            {isNavigationEmpty ? (
-              <ProjectDetails items={projectEntry.sections} />
-            ) : (
-              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
-                <div>
-                  <ProjectScalingSummary project={projectEntry} />
 
-                  {projectEntry.header.category === 'Other' &&
-                    projectEntry.reasonsForBeingOther &&
-                    projectEntry.reasonsForBeingOther.length > 0 && (
-                      <WhyAmIHereNotice
-                        reasons={projectEntry.reasonsForBeingOther}
-                      />
-                    )}
-                  {projectEntry.stageConfig.stage !== 'NotApplicable' &&
-                    projectEntry.stageConfig.stage !== 'UnderReview' &&
-                    projectEntry.stageConfig.downgradePending && (
-                      <StageOneRequirementsChangeNotice
-                        downgradePending={
-                          projectEntry.stageConfig.downgradePending
-                        }
-                      />
-                    )}
-                  <HighlightableLinkContextProvider>
-                    <ProjectDetails items={projectEntry.sections} />
-                  </HighlightableLinkContextProvider>
-                </div>
+            <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+              <div>
+                <ProjectScalingSummary project={projectEntry} />
+
+                {projectEntry.header.category === 'Other' &&
+                  projectEntry.reasonsForBeingOther &&
+                  projectEntry.reasonsForBeingOther.length > 0 && (
+                    <WhyAmIHereNotice
+                      reasons={projectEntry.reasonsForBeingOther}
+                    />
+                  )}
+                {projectEntry.stageConfig.stage !== 'NotApplicable' &&
+                  projectEntry.stageConfig.stage !== 'UnderReview' &&
+                  projectEntry.stageConfig.downgradePending && (
+                    <StageOneRequirementsChangeNotice
+                      downgradePending={
+                        projectEntry.stageConfig.downgradePending
+                      }
+                    />
+                  )}
+                <HighlightableLinkContextProvider>
+                  <ProjectDetails items={projectEntry.sections} />
+                </HighlightableLinkContextProvider>
+              </div>
+              {!isNavigationEmpty && (
                 <div className="mt-2 hidden shrink-0 lg:block">
                   <DesktopProjectNavigation
                     project={{
@@ -108,8 +107,8 @@ export function ScalingProjectPage({
                     sections={navigationSections}
                   />
                 </div>
-              </div>
-            )}
+              )}
+            </div>
             <ScrollToTopButton />
           </div>
         </SideNavLayout>

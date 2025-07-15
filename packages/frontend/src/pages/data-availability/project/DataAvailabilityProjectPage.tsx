@@ -56,21 +56,19 @@ export function DataAvailabilityProjectPage({
               </div>
             </div>
 
-            {isNavigationEmpty ? (
-              <ProjectDetails items={entry.sections} />
-            ) : (
-              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
-                <div className="w-full">
-                  {entry.entryType === 'ethereum' ? (
-                    <EthereumDaProjectSummary project={entry} />
-                  ) : (
-                    <RegularDaProjectSummary project={entry} />
-                  )}
-                  <HighlightableLinkContextProvider>
-                    <ProjectDetails items={entry.sections} />
-                  </HighlightableLinkContextProvider>
-                </div>
+            <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+              <div className="w-full">
+                {entry.entryType === 'ethereum' ? (
+                  <EthereumDaProjectSummary project={entry} />
+                ) : (
+                  <RegularDaProjectSummary project={entry} />
+                )}
+                <HighlightableLinkContextProvider>
+                  <ProjectDetails items={entry.sections} />
+                </HighlightableLinkContextProvider>
+              </div>
 
+              {!isNavigationEmpty && (
                 <div className="mt-2 hidden shrink-0 lg:block">
                   <DesktopProjectNavigation
                     project={{
@@ -83,8 +81,8 @@ export function DataAvailabilityProjectPage({
                     projectVariants={entry.projectVariants}
                   />
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <ScrollToTopButton />
         </SideNavLayout>
