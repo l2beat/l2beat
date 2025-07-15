@@ -15,7 +15,7 @@ import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
-  stats: ProjectSummaryStatProps[]
+  stats: (ProjectSummaryStatProps & { key: string })[]
 }
 const GROUPS = 4
 
@@ -29,8 +29,8 @@ export function DaProjectStats({ stats }: Props) {
 
         return (
           <Fragment key={i}>
-            {statGroup.map((stat) => (
-              <ProjectSummaryStat {...stat} />
+            {statGroup.map(({ key, ...stat }) => (
+              <ProjectSummaryStat key={key} {...stat} />
             ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
