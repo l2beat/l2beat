@@ -15,6 +15,7 @@ export function LivenessChartStats({
   isLoading,
   configuredSubtypes,
   timeRange,
+  isArchived,
 }: {
   stats:
     | Partial<
@@ -26,6 +27,7 @@ export function LivenessChartStats({
   configuredSubtypes: TrackedTxsConfigSubtype[]
   hasTrackedContractsChanged: boolean
   isLoading: boolean
+  isArchived: boolean
 }) {
   const timeRangeLabel = timeRange.toUpperCase()
   const elements = compact([
@@ -59,12 +61,14 @@ export function LivenessChartStats({
         )}
       </ChartStatsItem>
     ),
-    <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
-      <AnomalyIndicator
-        anomalies={anomalies}
-        hasTrackedContractsChanged={hasTrackedContractsChanged}
-      />
-    </ChartStatsItem>,
+    !isArchived && (
+      <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
+        <AnomalyIndicator
+          anomalies={anomalies}
+          hasTrackedContractsChanged={hasTrackedContractsChanged}
+        />
+      </ChartStatsItem>
+    ),
   ])
 
   return (

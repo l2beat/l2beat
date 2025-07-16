@@ -22,6 +22,7 @@ interface Props {
   projectId: string
   tokens: ProjectTokens | undefined
   tvsBreakdownUrl?: string
+  defaultRange: TvsChartRange
 }
 
 export function ProjectStackedTvsChart({
@@ -29,9 +30,10 @@ export function ProjectStackedTvsChart({
   projectId,
   tokens,
   tvsBreakdownUrl,
+  defaultRange,
 }: Props) {
   const [token, setToken] = useState<ProjectToken>()
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
   if (tokens && token) {

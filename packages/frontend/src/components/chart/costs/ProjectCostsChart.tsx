@@ -17,10 +17,15 @@ import { ProjectCostsChartStats } from './ProjectCostsChartStats'
 interface Props {
   milestones: Milestone[]
   projectId: string
+  defaultRange: CostsTimeRange
 }
 
-export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('1y')
+export function ProjectCostsChart({
+  milestones,
+  projectId,
+  defaultRange,
+}: Props) {
+  const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const [showDataPosted, setShowDataPosted] = useState(true)
 

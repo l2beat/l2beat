@@ -22,6 +22,7 @@ interface Props {
   projectId: string
   category?: ProjectScalingCategory
   projectName?: string
+  defaultRange: ActivityTimeRange
 }
 
 export function ProjectActivityChart({
@@ -29,8 +30,9 @@ export function ProjectActivityChart({
   projectId,
   category,
   projectName,
+  defaultRange,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)

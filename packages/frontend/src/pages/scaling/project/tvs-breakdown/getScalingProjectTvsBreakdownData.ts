@@ -20,13 +20,15 @@ export async function getScalingProjectTvsBreakdownData(
     return undefined
   }
 
+  const range = tvsBreakdownData.project.archivedAt ? 'max' : '1y'
+
   await helpers.tvs.chart.prefetch({
     filter: {
       type: 'projects',
       projectIds: [tvsBreakdownData.project.id.toString()],
     },
     excludeAssociatedTokens: false,
-    range: { type: '1y' },
+    range: { type: range },
   })
 
   return {
@@ -47,6 +49,7 @@ export async function getScalingProjectTvsBreakdownData(
         ...appLayoutProps,
         tvsBreakdownData,
         queryState: helpers.dehydrate(),
+        defaultRange: range,
       },
     },
   }

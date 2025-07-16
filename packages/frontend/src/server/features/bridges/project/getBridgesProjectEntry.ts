@@ -154,6 +154,7 @@ export async function getBridgesProjectEntry(
         projectId: project.id,
         tokens: tokens,
         milestones: project.milestones ?? [],
+        defaultRange: project.archivedAt ? 'max' : '1y',
       },
     })
   }
