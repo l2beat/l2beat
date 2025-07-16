@@ -160,8 +160,7 @@ export function getCodePaths(
     }
 
     const similar = discovery.entries.filter((x) => x.name === entry.name)
-    const hasImplementations =
-      get$Implementations(entry.values).length > 0
+    const hasImplementations = get$Implementations(entry.values).length > 0
 
     const name =
       similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`

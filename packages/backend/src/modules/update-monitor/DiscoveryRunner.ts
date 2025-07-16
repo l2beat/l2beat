@@ -19,11 +19,7 @@ import {
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import {
-  assert,
-  ChainSpecificAddress,
-  withoutUndefinedKeys,
-} from '@l2beat/shared-pure'
+import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 

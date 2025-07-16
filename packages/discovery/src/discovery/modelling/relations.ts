@@ -4,9 +4,9 @@ import type {
   RawPermissionConfiguration,
 } from '../config/PermissionConfig'
 import type { ContractValue, StructureEntry } from '../output/types'
+import { get$Admins, toAddressArray } from '../utils/extractors'
 import { interpolateString } from '../utils/interpolateString'
 import { interpolateModelTemplate } from './interpolate'
-import { get$Admins, toAddressArray } from '../utils/extractors'
 
 interface InlineTemplate {
   content: string
