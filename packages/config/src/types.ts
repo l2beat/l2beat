@@ -100,9 +100,6 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
-  // zk catalog v2 data
-  proofSystem?: ProjectProofSystem
-
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -114,6 +111,7 @@ export interface BaseProject {
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
+  zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -207,20 +205,6 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
-
-export interface ZkCatalogTag {
-  id: string
-  type: ZkCatalogTagType
-  name: string
-  description: string
-}
-
-export interface TrustedSetup {
-  id: string
-  risk: 'green' | 'yellow' | 'red' | 'N/A'
-  shortDescription: string
-  longDescription: string
-}
 
 export interface Milestone {
   title: string
@@ -750,7 +734,7 @@ export interface RequiredTool {
 // #endregion
 
 // #region zk catalog v2 data
-export interface ProjectProofSystem {
+export interface ProjectZkCatalogInfo {
   creator?: string
   techStack: {
     zkVM?: ZkCatalogTag[]
@@ -758,18 +742,37 @@ export interface ProjectProofSystem {
   }
   proofSystemInfo: string
   trustedSetups: {
-    snarkProofSystem: ZkCatalogTag
-    setups: TrustedSetup[]
-  }[]
+    [key in ZkCatalogProofSystem]?: TrustedSetup[]
+  }
   verifierHashes: {
     hash: string
-    proofSystem: ZkCatalogTag
+    proofSystem: ZkCatalogProofSystem
     knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
   }[]
+}
+
+export type ZkCatalogProofSystem =
+  | 'PlonkBellman'
+  | 'PlonkGnark'
+  | 'Groth16Gnark'
+  | 'FflonkZksync'
+
+export interface ZkCatalogTag {
+  id: string
+  type: ZkCatalogTagType
+  name: string
+  description: string
+}
+
+export interface TrustedSetup {
+  id: string
+  risk: 'green' | 'yellow' | 'red' | 'N/A'
+  shortDescription: string
+  longDescription: string
 }
 
 // #endregion

@@ -48,7 +48,7 @@ const schema = {
   customDa: 'TEXT',
 
   proofVerification: 'TEXT',
-  proofSystem: 'TEXT',
+  zkCatalogInfo: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
