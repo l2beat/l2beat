@@ -1,4 +1,4 @@
-import type { Project, ProjectProofSystem } from '@l2beat/config'
+import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
@@ -24,14 +24,13 @@ export interface ZkCatalogEntry extends CommonProjectEntry {
     notVerifiedCount: number
   }
   attesters: (ZkCatalogAttester & { icon: string })[]
-  trustedSetup: ProjectProofSystem['trustedSetup']
-  techStack: ProjectProofSystem['techStack']
+  techStack: ProjectZkCatalogInfo['techStack']
 }
 
 export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
   const [zkCatalogProjects, allProjects, tvs] = await Promise.all([
     ps.getProjects({
-      select: ['proofSystem', 'display', 'statuses'],
+      select: ['zkCatalogInfo', 'display', 'statuses'],
     }),
     ps.getProjects({
       optional: ['daBridge'],
@@ -45,12 +44,12 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 }
 
 function getZkCatalogEntry(
-  project: Project<'proofSystem' | 'display' | 'statuses'>,
+  project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
   allProjects: Project<never, 'daBridge'>[],
   tvs: SevenDayTvsBreakdown,
 ): ZkCatalogEntry {
   const usedInVerifiers = uniq(
-    project.proofSystem.verifierHashes.flatMap((v) => v.usedBy),
+    project.zkCatalogInfo.verifierHashes.flatMap((v) => v.usedBy),
   )
   const projectsForTvs = uniq(
     usedInVerifiers.flatMap((vp) => {
@@ -79,29 +78,28 @@ function getZkCatalogEntry(
     statuses: project.statuses,
     name: project.name,
     icon: getProjectIcon(project.slug),
-    creator: project.proofSystem.creator,
+    creator: project.zkCatalogInfo.creator,
     tvs: tvsForProject,
     verifiers: {
-      successfulCount: project.proofSystem.verifierHashes.filter(
+      successfulCount: project.zkCatalogInfo.verifierHashes.filter(
         (v) => v.verificationStatus === 'successful',
       ).length,
-      unsuccessfulCount: project.proofSystem.verifierHashes.filter(
+      unsuccessfulCount: project.zkCatalogInfo.verifierHashes.filter(
         (v) => v.verificationStatus === 'unsuccessful',
       ).length,
-      notVerifiedCount: project.proofSystem.verifierHashes.filter(
+      notVerifiedCount: project.zkCatalogInfo.verifierHashes.filter(
         (v) => v.verificationStatus === 'notVerified',
       ).length,
     },
     attesters: uniqBy(
-      project.proofSystem.verifierHashes
+      project.zkCatalogInfo.verifierHashes
         .flatMap((v) =>
           v.attesters?.map((a) => ({ ...a, icon: getProjectIcon(a.id) })),
         )
         .filter(notUndefined),
       (a) => a?.id,
     ),
-    trustedSetup: project.proofSystem.trustedSetup,
-    techStack: project.proofSystem.techStack,
+    techStack: project.zkCatalogInfo.techStack,
     projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
   }
 }

@@ -1,11 +1,11 @@
-import type { ProjectProofSystem } from '@l2beat/config'
+import type { ProjectZkCatalogInfo } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { TechStackTag } from './TechStackTag'
 
 export function TechStackCell({
   techStack,
 }: {
-  techStack: ProjectProofSystem['techStack']
+  techStack: ProjectZkCatalogInfo['techStack']
 }) {
   if (!techStack.zkVM && !techStack.finalWrap) {
     return <NoDataBadge />

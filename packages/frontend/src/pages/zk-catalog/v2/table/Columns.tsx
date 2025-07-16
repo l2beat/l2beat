@@ -1,17 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
-import { InfoIcon } from '~/icons/Info'
-import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
-import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 import { TechStackCell } from '../components/TechStackCell'
+import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
@@ -86,29 +79,29 @@ export const zkCatalogColumns = [
       return <TechStackCell techStack={ctx.row.original.techStack} />
     },
   }),
-  columnHelper.accessor((row) => row.trustedSetup, {
-    id: 'trusted-setup',
-    header: 'Trusted Setup',
-    cell: (ctx) => {
-      const { risk, shortDescription } = ctx.row.original.trustedSetup
-      return (
-        <Tooltip>
-          <TooltipTrigger className="flex items-center gap-2">
-            <div
-              className={cn(
-                'size-6 rounded-full',
-                risk === 'green' && 'bg-positive',
-                risk === 'yellow' && 'bg-warning',
-                risk === 'red' && 'bg-negative',
-              )}
-            />
-            <InfoIcon className="size-[14px]" />
-          </TooltipTrigger>
-          <TooltipContent>
-            <div className="text-sm leading-normal">{shortDescription}</div>
-          </TooltipContent>
-        </Tooltip>
-      )
-    },
-  }),
+  // columnHelper.accessor((row) => row.trustedSetup, {
+  //   id: 'trusted-setup',
+  //   header: 'Trusted Setup',
+  //   cell: (ctx) => {
+  //     const { risk, shortDescription } = ctx.row.original.trustedSetup
+  //     return (
+  //       <Tooltip>
+  //         <TooltipTrigger className="flex items-center gap-2">
+  //           <div
+  //             className={cn(
+  //               'size-6 rounded-full',
+  //               risk === 'green' && 'bg-positive',
+  //               risk === 'yellow' && 'bg-warning',
+  //               risk === 'red' && 'bg-negative',
+  //             )}
+  //           />
+  //           <InfoIcon className="size-[14px]" />
+  //         </TooltipTrigger>
+  //         <TooltipContent>
+  //           <div className="text-sm leading-normal">{shortDescription}</div>
+  //         </TooltipContent>
+  //       </Tooltip>
+  //     )
+  //   },
+  // }),
 ]
