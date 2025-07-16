@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../api/api'
+import { Title } from '../common/Title'
 import { ErrorState } from '../components/ErrorState'
 import { DiffView } from '../components/editor/diff/DiffView'
 import { LoadingState } from '../components/LoadingState'
@@ -31,11 +32,14 @@ export function DiffPage() {
 
   const [leftCode, rightCode] = response.data
   return (
-    <DiffView
-      leftAddress={address1}
-      leftCode={leftCode}
-      rightAddress={address2}
-      rightCode={rightCode}
-    />
+    <>
+      <Title title={`Diff - ${address1} vs ${address2}`} />
+      <DiffView
+        leftAddress={address1}
+        leftCode={leftCode}
+        rightAddress={address2}
+        rightCode={rightCode}
+      />
+    </>
   )
 }
