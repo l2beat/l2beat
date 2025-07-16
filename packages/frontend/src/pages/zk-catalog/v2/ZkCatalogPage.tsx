@@ -1,5 +1,5 @@
 import { env } from '~/env'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ZkCatalogEntry } from '../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ZkCatalogHeader } from '../v1/components/ZkCatalogHeader'
