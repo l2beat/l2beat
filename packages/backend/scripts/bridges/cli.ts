@@ -79,13 +79,24 @@ const cmd = command({
 
       logger.info(`Fetching logs from ${r.name} <${start},${start + range}>`)
 
-      const logs = await r.rpc.getLogs(start, start + range)
+      const BATCH_SIZE = 100 // Number of blocks per batch
 
-      for (const l of logs) {
-        for (const decoder of decoders) {
-          const decoded = decoder(r, logToViemLog(l))
-          if (decoded) {
-            transfers.push(decoded)
+      const numBatches = Math.ceil(range / BATCH_SIZE)
+
+      for (let i = 0; i < numBatches; i++) {
+        const batchStart = start + i * BATCH_SIZE
+        const batchEnd = Math.min(start + range, batchStart + BATCH_SIZE)
+
+        console.log(`Fetching logs for blocks ${batchStart} to ${batchEnd}`)
+
+        const logs = await r.rpc.getLogs(batchStart, batchEnd)
+
+        for (const l of logs) {
+          for (const decoder of decoders) {
+            const decoded = await decoder(r, logToViemLog(l))
+            if (decoded) {
+              transfers.push(decoded)
+            }
           }
         }
       }
@@ -122,6 +133,12 @@ const cmd = command({
             break
         }
       }
+    }
+
+    for (const t of transfers) {
+      logger.info(`${t.direction} via ${t.protocol}`, {
+        ...t,
+      })
     }
 
     for (const [protocol, m] of Array.from(Object.entries(matching))) {

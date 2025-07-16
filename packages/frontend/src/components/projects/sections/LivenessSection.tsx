@@ -7,6 +7,7 @@ import { LiveIndicator } from '~/components/LiveIndicator'
 import { AnomalyText } from '~/pages/scaling/liveness/components/AnomalyText'
 import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
 import { TrackedTransactions } from './costs/TrackedTransactions'
 import { ProjectSection } from './ProjectSection'
@@ -19,6 +20,8 @@ export interface LivenessSectionProps extends ProjectSectionProps {
   hasTrackedContractsChanged: boolean
   trackedTransactions: TrackedTransactionsByType
   milestones: Milestone[]
+  defaultRange: LivenessChartTimeRange
+  isArchived: boolean
 }
 
 export function LivenessSection({
@@ -28,6 +31,8 @@ export function LivenessSection({
   hasTrackedContractsChanged,
   trackedTransactions,
   milestones,
+  defaultRange,
+  isArchived,
   ...sectionProps
 }: LivenessSectionProps) {
   const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
@@ -39,7 +44,7 @@ export function LivenessSection({
         type. It also highlights anomalies - significant deviations from their
         typical schedule.
       </p>
-      <OngoingAnomalies anomalies={ongoingAnomalies} />
+      {!isArchived && <OngoingAnomalies anomalies={ongoingAnomalies} />}
 
       <HorizontalSeparator className="my-4" />
       <ProjectLivenessChart
@@ -48,6 +53,8 @@ export function LivenessSection({
         anomalies={anomalies}
         hasTrackedContractsChanged={hasTrackedContractsChanged}
         milestones={milestones}
+        defaultRange={defaultRange}
+        isArchived={isArchived}
       />
       <div className="mt-4">
         <TrackedTransactions {...trackedTransactions} />

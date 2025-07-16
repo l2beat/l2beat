@@ -4,9 +4,11 @@ import {
   DiscoverCommandArgs,
   type DiscoveryModuleConfig,
   getChainConfig,
+  getChainFullName,
+  getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
@@ -103,9 +105,13 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
         ? chains
         : chains.filter((chain) => chain === chainQuery)
 
-    const matchingChains = chainsToCheck.filter((chain) =>
-      predicate(projectQuery, project, chain),
-    )
+    const matchingChains = chainsToCheck.filter((chain) => {
+      const query = EthereumAddress.check(projectQuery)
+        ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
+        : projectQuery
+
+      return predicate(query, project)
+    })
 
     for (const chain of matchingChains) {
       if (!result[chain]) {
@@ -118,16 +124,11 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
   return result
 }
 
-type Predicate = (
-  needle: string,
-  haystackProject: string,
-  haystackChain: string,
-) => boolean
+type Predicate = (needle: string, haystackProject: string) => boolean
 
 function projectPredicate(
   needleProject: string,
   haystackProject: string,
-  _: string,
 ): boolean {
   return needleProject === haystackProject
 }
@@ -135,11 +136,10 @@ function projectPredicate(
 function addressPredicate(
   needleAddress: string,
   haystackProject: string,
-  haystackChain: string,
 ): boolean {
-  const discovery = configReader.readDiscovery(haystackProject, haystackChain)
+  const address = ChainSpecificAddress(needleAddress)
+  const chain = getChainFullName(ChainSpecificAddress.chain(address))
+  const discovery = configReader.readDiscovery(haystackProject, chain)
 
-  return (
-    discovery.entries.find((c) => c.address === needleAddress) !== undefined
-  )
+  return discovery.entries.find((c) => c.address === address) !== undefined
 }

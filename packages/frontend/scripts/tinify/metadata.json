@@ -238,7 +238,6 @@
   "static/icons/orderly.png": "6c0a6255aaf5ae55e721df003b5d38f8",
   "static/icons/oursong.png": "969dd24e2955be5c5326f35808d706a8",
   "static/icons/ozean.png": "ad782fd990504c7e518e2f6df6c3f3b5",
-  "static/icons/palm.png": "4dfdea6487729066cd2d515137b9bbdb",
   "static/icons/pandasea.png": "4fd33b66c6f6db3167a4f55cb214ca46",
   "static/icons/paradex.png": "850ac3440bf31138f2b4fcf347d750d2",
   "static/icons/parallel.png": "874ade5344c431493b25363917d77e58",
@@ -1057,8 +1056,6 @@
   "static/meta-images/scaling/projects/oursong/tvs-breakdown/opengraph-image.png": "2b9a88c0b71cc197f21c58e4ac5a270b",
   "static/meta-images/scaling/projects/ozean/opengraph-image.png": "2078c72fc57e5d6f1861e2f139168d09",
   "static/meta-images/scaling/projects/ozean/tvs-breakdown/opengraph-image.png": "150a96872c544c3842fcc5762dffd165",
-  "static/meta-images/scaling/projects/palm/opengraph-image.png": "e922d1fbf9c669b5026ef294033f252a",
-  "static/meta-images/scaling/projects/palm/tvs-breakdown/opengraph-image.png": "df2aa925e8790c7d6f4c42465f18cf24",
   "static/meta-images/scaling/projects/pandasea/opengraph-image.png": "d2411aed67700a8007a3f26180d8d56c",
   "static/meta-images/scaling/projects/pandasea/tvs-breakdown/opengraph-image.png": "162d125b73a7a1ba22192fb3a72155b4",
   "static/meta-images/scaling/projects/paradex/opengraph-image.png": "e058af986bb94338de4642b7fe828438",
@@ -1405,5 +1402,8 @@
   "static/partners/governance-delegate-to-l2beat.png": "e36783f07b87abe923cac2398e8de22e",
   "static/pepe-unchained.png": "42d225c0a04b045c658aa21e776dc172",
   "static/meta-images/scaling/projects/pepe-unchained/opengraph-image.png": "961d2e422f80ab0f29b2935c673e2a78",
-  "static/icons/pepe-unchained.png": "b643992aa970e33e4a7c87d5f04c8627"
+  "static/icons/pepe-unchained.png": "b643992aa970e33e4a7c87d5f04c8627",
+  "static/meta-images/governance/publications/governance-review-60.png": "1134250684fbc148c5f96fb7a025c9b2",
+  "static/meta-images/scaling/projects/palm/opengraph-image.png": "2ef6d310f4c550993dc064fd8eea9288",
+  "static/icons/pepeunchained2.png": "622b3bd36ee83475dc2fe02b7f2b0a23"
 }

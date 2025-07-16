@@ -1,8 +1,8 @@
 {
   "name": "donatuz",
   "chain": "base",
-  "blockNumber": 30898189,
-  "configHash": "0x1c6cd73bd7f6edaf7c36f993535c988d71a5386764e02c3070e74b4c1dc4940d",
+  "blockNumber": 32894143,
+  "configHash": "0x84f977fd2424ec5ff8f3e1b4101b287bb18823d1709dc149f9ea70685faae4ea",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",
@@ -46,7 +46,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620229",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620238",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -210,7 +210,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -322,10 +322,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 29246400,
-        "latestOutputIndex": 676,
-        "nextBlockNumber": 29289600,
-        "nextOutputIndex": 677,
+        "latestBlockNumber": 32529600,
+        "latestOutputIndex": 752,
+        "nextBlockNumber": 32572800,
+        "nextOutputIndex": 753,
         "PROPOSER": "base:0xfB04981fa938f03b82B4Ca8F5B1FAAA1A547306B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719319433,
@@ -394,7 +394,7 @@
         "opStackDA": {
           "isSequencerSendingBlobTx": false,
           "isUsingCelestia": false,
-          "isUsingEigenDA": true
+          "isUsingEigenDA": false
         },
         "overhead": 188,
         "owner": "base:0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
@@ -469,7 +469,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 30517296
+          "prevBlockNum": 32287636
         },
         "paused": false,
         "SYSTEM_CONFIG": "base:0xa096dD38362bd2cE3C696474329989960722A7Fd",

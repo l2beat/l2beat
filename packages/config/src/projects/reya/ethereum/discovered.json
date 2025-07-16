@@ -1,7 +1,7 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 22122787,
+  "blockNumber": 22923595,
   "configHash": "0x1a7c6d3a9ee502ab5e5f5ccf3611fac63ce7ae391b1e5a8e34117a220d22d0dd",
   "entries": [
     {
@@ -202,7 +202,7 @@
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 33686,
+        "delayedMessageCount": 45344,
         "inboxHistory": [
           "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
           "eth:0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
@@ -210,8 +210,8 @@
         "outboxHistory": ["eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "eth:0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 32034,
-        "sequencerReportedSubMessageCount": 63293476
+        "sequencerMessageCount": 43640,
+        "sequencerReportedSubMessageCount": 71113735
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -331,13 +331,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 2147,
+        "firstUnresolvedNode": 2371,
         "inbox": "eth:0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21894997,
-        "latestConfirmed": 2146,
-        "latestNodeCreated": 2159,
+        "latestConfirmed": 2370,
+        "latestNodeCreated": 2383,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -420,6 +420,11 @@
     },
     {
       "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -515,7 +520,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 32034,
+        "batchCount": 43640,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0x29156F8dFfE8979F49E3a085dbb10477373a6051"],
         "bridge": "eth:0x383c03c4EfF819E73409DbC690755a9992393814",
@@ -546,7 +551,7 @@
         "rollup": "eth:0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 33685,
+        "totalDelayedMessagesRead": 45342,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -697,11 +702,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
       "proxyType": "EOA"
@@ -814,21 +814,20 @@
         "$members": [
           "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
-          "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 36,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -885,11 +884,6 @@
       "implementationNames": {
         "eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "Vault"
       }
-    },
-    {
-      "address": "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "RollupEventInbox",
@@ -1602,5 +1596,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x9c115103b98d34765f02fe593118ae5d6a794e34eec4602e036a6ed7d07b5b1c"
+  "permissionsConfigHash": "0x0253b3d4b54f9a909464b402f5006f9101136b70b73e763ead654f5fbe80c61a"
 }

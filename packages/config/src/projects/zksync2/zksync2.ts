@@ -30,7 +30,7 @@ const validatorsVTLold = () => {
 const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
 // Extract addresses from new validators and convert to lowercase for comparison
 const newValidatorAddresses = validatorsVTLnew.map((v) =>
-  ChainSpecificAddress.from('eth', v.address).toLowerCase(),
+  v.address.toLowerCase(),
 )
 const oldValidators = validatorsVTLold()
 

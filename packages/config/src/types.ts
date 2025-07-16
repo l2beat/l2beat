@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -61,11 +62,6 @@ export type ProjectRiskCategory =
 // #endregion
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
-
-export interface ProjectUnverifiedContract {
-  chain: string
-  address: EthereumAddress
-}
 
 export interface BaseProject {
   id: ProjectId
@@ -144,7 +140,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  unverifiedContracts: ProjectUnverifiedContract[]
+  unverifiedContracts: ChainSpecificAddress[]
 }
 
 export interface ProjectDisplay {
@@ -953,7 +949,7 @@ export interface ProjectPermission {
 export interface ProjectPermissionedAccount {
   name: string
   url: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
 }
@@ -968,7 +964,7 @@ export interface ProjectContracts {
 
 export interface ProjectContract {
   /** Address of the contract */
-  address: EthereumAddress
+  address: ChainSpecificAddress
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
@@ -1001,8 +997,8 @@ export interface ProjectContract {
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
+  admins: ChainSpecificAddress[]
+  implementations: ChainSpecificAddress[]
 }
 
 export interface ProjectUpgradeableActor {

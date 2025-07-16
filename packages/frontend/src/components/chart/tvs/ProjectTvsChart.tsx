@@ -21,13 +21,19 @@ interface Props {
   projectId: string
   milestones: Milestone[]
   tokens: ProjectTokens | undefined
+  defaultRange: TvsChartRange
 }
 
-export function ProjectTvsChart({ projectId, milestones, tokens }: Props) {
+export function ProjectTvsChart({
+  projectId,
+  milestones,
+  tokens,
+  defaultRange,
+}: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
 
   if (tokens && token) {
     return (

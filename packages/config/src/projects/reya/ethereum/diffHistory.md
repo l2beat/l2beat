@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x49101914df36dbb9a9d0a9a84fc6e7e8344328a1
+
+# Diff at Tue, 15 Jul 2025 09:10:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22122787
+- current block number: 22923595
+
+## Description
+
+Gelato MS: one signer removed, one changed.
+
+## Watched changes
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
++        "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87"
+      values.$members.8:
+-        "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 9 (44%)"
+    }
+```
+
 Generated with discovered.json: 0xa4444e50dd70285af3fc8608f4445d8fad11f721
 
 # Diff at Mon, 14 Jul 2025 12:46:01 GMT:

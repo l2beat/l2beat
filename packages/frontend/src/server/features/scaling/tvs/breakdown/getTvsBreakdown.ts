@@ -6,7 +6,11 @@ import type {
 } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
 import type { UnixTime } from '@l2beat/shared-pure'
-import { assertUnreachable, type TokenId } from '@l2beat/shared-pure'
+import {
+  assertUnreachable,
+  ChainSpecificAddress,
+  type TokenId,
+} from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 import type { Address } from './extractAddressesFromTokenConfig'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
@@ -87,7 +91,9 @@ function processAddresses(
   if (addresses.length === 1 && addresses[0]) {
     const address = addresses[0]
     const contractName = projectContracts?.[address.chain]?.find(
-      (c) => c.address.toLowerCase() === address.address.toLowerCase(),
+      (c) =>
+        ChainSpecificAddress.address(c.address).toLowerCase() ===
+        address.address.toLowerCase(),
     )?.name
     const explorer = chains.find((c) => c.name === address.chain)?.explorerUrl
 

@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "RDO",
+      "address": "0x57240C3E140f98abe315CA8E0213c7a77F34A334"
+    },
+    {
       "symbol": "DIA",
       "address": "0x84ca8bc7997272c7cfb4d0cd3d55cd942b3c9419"
     },
@@ -2261,6 +2265,12 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "wM",
+      "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
+      "source": "native",
+      "supply": "totalSupply" // normal wrapper, underlying M is bridged via wormhole, wM backs USDai on arbi
+    },
     {
       "symbol": "MLK",
       "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",

@@ -2,5 +2,9 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "lasernet",
   "import": ["../globalConfig.jsonc"],
-  "chains": {}
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x1eeE9b9F024188E54930D2927d7a28e66E7649a7"]
+    }
+  }
 }

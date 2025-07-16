@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x71a5465c32e737ddfe1f295190a91fd8c11f6bd4
+
+# Diff at Tue, 15 Jul 2025 10:07:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22567327
+- current block number: 22923880
+
+## Description
+
+this [proposal upgrades several contracts](https://tools.l2beat.com/decoder-new/?hash=0x988dc1a723573a0c42b9f66c67951e5bd33ed34e3008de44b13bba5c30537521&data=AwA) and is labeled 'refactor' by the proposer.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: LOW
+      values.proposalCount:
+-        65
++        66
+    }
+```
+
 Generated with discovered.json: 0x5f07edc9f21c1226bf5aafb36ed91f46db9db0b4
 
 # Diff at Mon, 14 Jul 2025 12:44:55 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 356573936,
+  "blockNumber": 357933310,
   "configHash": "0xfa5de218496a06da8cd6a4ab55e84d10be279eb474d95f6144c8b1b8ce31be7a",
   "entries": [
     {
@@ -113,7 +113,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 2851,
+        "nonce": 2910,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -199,8 +199,8 @@
         "outboxHistory": ["arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 3746,
-        "sequencerReportedSubMessageCount": 1649345
+        "sequencerMessageCount": 3805,
+        "sequencerReportedSubMessageCount": 1649573
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -314,7 +314,7 @@
       "sinceBlock": 269256275,
       "values": {
         "$immutable": true,
-        "owner": "arb1:0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176"
+        "owner": "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
       },
       "implementationNames": {
         "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D": "ProxyAdmin"
@@ -351,7 +351,7 @@
         "inbox": "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "l1USDC": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "l2USDC": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D",
-        "owner": "arb1:0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",
+        "owner": "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
         "router": "arb1:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7"
       },
       "implementationNames": {
@@ -443,7 +443,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3746,
+        "batchCount": 3805,
         "batchPosterManager": "arb1:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
@@ -611,13 +611,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2958,
+        "firstUnresolvedNode": 3017,
         "inbox": "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22746354,
-        "latestConfirmed": 2957,
-        "latestNodeCreated": 2957,
+        "latestConfirmed": 3016,
+        "latestNodeCreated": 3016,
         "loserStakeEscrow": "arb1:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -758,6 +758,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+          "role": "admin",
+          "via": [
+            { "address": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
           "role": "admin",
           "via": [
@@ -840,6 +848,11 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
+          "from": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D",
+          "role": ".owner"
+        },
+        {
+          "permission": "act",
           "from": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
           "role": ".executors"
         }
@@ -868,7 +881,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 83,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1350,28 +1363,6 @@
           "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
-        }
-      ]
-    },
-    {
-      "address": "arb1:0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944",
-          "role": "admin",
-          "via": [
-            { "address": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D",
-          "role": ".owner"
         }
       ]
     },
@@ -2344,5 +2335,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x8fc212ca1778c906d97602b2db764b440b1d6091e81f0465d5fd5d118b8107d4"
+  "permissionsConfigHash": "0x5b2c69c84871e3ba2f6128799a53c75a03e852c9cf44bd6a0054352f78e2ea09"
 }

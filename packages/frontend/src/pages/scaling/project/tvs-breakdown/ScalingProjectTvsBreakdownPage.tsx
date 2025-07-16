@@ -9,6 +9,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
@@ -19,6 +20,7 @@ import { NativelyMintedTable } from './components/tables/NativelyMintedTable'
 interface Props extends AppLayoutProps {
   tvsBreakdownData: ScalingProjectTvsBreakdown
   queryState: DehydratedState
+  defaultRange: TvsChartRange
 }
 
 export function ScalingProjectTvsBreakdownPage({
@@ -31,6 +33,7 @@ export function ScalingProjectTvsBreakdownPage({
     project7dData,
   },
   queryState,
+  defaultRange,
   ...props
 }: Props) {
   return (
@@ -50,6 +53,7 @@ export function ScalingProjectTvsBreakdownPage({
                   projectId={project.id}
                   milestones={project.milestones ?? []}
                   tokens={projectTokens}
+                  defaultRange={defaultRange}
                 />
                 <HorizontalSeparator className="my-4" />
                 <TvsBreakdownSummaryBox
