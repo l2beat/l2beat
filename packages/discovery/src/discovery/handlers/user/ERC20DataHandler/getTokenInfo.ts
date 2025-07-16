@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { IProvider } from '../../../provider/IProvider'
+import { today } from './utils'
 
 export async function getTokenInfo(
   provider: IProvider,
@@ -73,8 +74,9 @@ function getImageUrl(
   provider: IProvider,
   coingeckoId: CoingeckoId,
 ): Promise<string> {
-  return provider.raw(`coingecko-image-${coingeckoId.toString()}`, (raw) =>
-    raw.coingeckoClient.getImageUrl(coingeckoId),
+  return provider.raw(
+    `coingecko-image-${coingeckoId.toString()}-${today()}`,
+    (raw) => raw.coingeckoClient.getImageUrl(coingeckoId),
   )
 }
 
@@ -101,7 +103,7 @@ async function getCoingeckoListingTimestamp(
   coingeckoId: CoingeckoId,
 ) {
   const coingeckoPriceHistoryData = await provider.raw(
-    `coingecko-price-history-${coingeckoId.toString()}`,
+    `coingecko-price-history-${coingeckoId.toString()}-${today()}`,
     (raw) =>
       raw.coingeckoClient.getCoinMarketChartRange(
         coingeckoId,

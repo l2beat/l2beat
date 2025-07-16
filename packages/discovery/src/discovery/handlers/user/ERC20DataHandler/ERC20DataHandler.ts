@@ -6,6 +6,7 @@ import type { Handler, HandlerResult } from '../../Handler'
 import { getCoingeckoId } from './getCoingeckoId'
 import { getTokenInfo } from './getTokenInfo'
 import { SourceEntry } from './types'
+import { today } from './utils'
 
 export type ERC20DataDefinition = v.infer<typeof ERC20DataDefinition>
 export const ERC20DataDefinition = v.strictObject({
@@ -30,10 +31,12 @@ export class ERC20DataHandler implements Handler {
     const supply = getSupply(provider.chain, entry)
     const category = entry?.category ?? 'other'
 
-    const coinList = await provider.raw('coingecko-coinList', (raw) =>
-      raw.coingeckoClient.getCoinList({
-        includePlatform: true,
-      }),
+    const coinList = await provider.raw(
+      `coingecko-coinList-${today()}`,
+      (raw) =>
+        raw.coingeckoClient.getCoinList({
+          includePlatform: true,
+        }),
     )
 
     const chain = chains.find((chain) => chain.name === provider.chain)
