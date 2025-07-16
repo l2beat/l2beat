@@ -2,5 +2,14 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "penchain",
   "import": ["../globalConfig.jsonc"],
-  "chains": {}
+  "chains": {
+    "ethereum": {
+      "sharedModules": ["shared-polygon-cdk"],
+      "initialAddresses": [
+        "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8", // validium
+        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D" // verifier
+      ],
+      "names": { "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8": "Validium" }
+    }
+  }
 }

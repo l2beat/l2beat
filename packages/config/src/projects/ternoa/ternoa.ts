@@ -99,6 +99,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
     sinceTimestamp: UnixTime(1735650935),
+    gasTokens: ['CAPS'],
     apis: [
       {
         type: 'rpc',
