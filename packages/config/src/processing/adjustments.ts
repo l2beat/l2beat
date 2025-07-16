@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
+import uniq from 'lodash/uniq'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'
@@ -10,7 +11,6 @@ import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
-import uniq from 'lodash/uniq'
 
 let once = false
 
@@ -68,7 +68,6 @@ function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
       project.statuses.unverifiedContracts.concat(
         getProjectUnverifiedContracts(project),
       ),
-
     )
   }
   if (project.proofVerification) {

@@ -44,11 +44,15 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
-  Object.entries(SHORT_TO_LONG_CHAIN_NAMES).map(([short, long]) => [long, short])
+  Object.entries(SHORT_TO_LONG_CHAIN_NAMES).map(([short, long]) => [
+    long,
+    short,
+  ]),
 ) as Record<LONG_CHAIN_NAME, SHORT_CHAIN_NAME>
 
 type SHORT_CHAIN_NAME = keyof typeof SHORT_TO_LONG_CHAIN_NAMES
-type LONG_CHAIN_NAME = typeof SHORT_TO_LONG_CHAIN_NAMES[keyof typeof SHORT_TO_LONG_CHAIN_NAMES]
+type LONG_CHAIN_NAME =
+  (typeof SHORT_TO_LONG_CHAIN_NAMES)[keyof typeof SHORT_TO_LONG_CHAIN_NAMES]
 
 const SHORT_CHAIN_NAMES = new Set(Object.keys(SHORT_TO_LONG_CHAIN_NAMES))
 
@@ -97,7 +101,8 @@ ChainSpecificAddress.fromLong = function from(
   longChainName: string,
   pureAddress: string | EthereumAddress,
 ) {
-    const shortChainName = LONG_TO_SHORT_CHAIN_NAMES[longChainName as LONG_CHAIN_NAME]
+  const shortChainName =
+    LONG_TO_SHORT_CHAIN_NAMES[longChainName as LONG_CHAIN_NAME]
   return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
 }
 
