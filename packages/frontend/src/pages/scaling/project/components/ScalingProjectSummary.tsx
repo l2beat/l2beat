@@ -52,7 +52,12 @@ export function ProjectScalingSummary({ project }: Props) {
         <div className="w-full">
           <ProjectScalingStats project={project} />
           <HorizontalSeparator className="mt-5 mb-4" />
-          <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+          <div
+            className={cn(
+              'grid gap-x-10 gap-y-4',
+              project.type === 'layer2' && 'md:grid-cols-2',
+            )}
+          >
             <div>
               <p
                 className={cn(

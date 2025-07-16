@@ -13,7 +13,7 @@ export function AboutSection({
       <h2 className="text-secondary text-subtitle-12 uppercase max-md:hidden">
         About
       </h2>
-      <p className="text-paragraph-13">
+      <p className="text-paragraph-14">
         <ReadMore onlyOnMobile>{description}</ReadMore>
       </p>
     </div>
