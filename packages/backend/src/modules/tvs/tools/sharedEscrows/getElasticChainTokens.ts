@@ -141,10 +141,7 @@ export async function getElasticChainTokens(
     if (isEmptyAddress(item.address)) return
 
     const token = l2Tokens.find((t) => t.id === item.id)
-    // assert(token, `${item.id} not found`)
-    if (!token) {
-      return
-    }
+    assert(token, `${item.id} not found`)
 
     const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
       escrow,
@@ -206,10 +203,8 @@ export async function getElasticChainTokens(
   if (escrow.sharedEscrow.tokensToAssignFromL1) {
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
-      // assert(token, `${l1Token} not found`)
-      if (!token) {
-        continue
-      }
+      assert(token, `${l1Token} not found`)
+
       tokensToAssignFromL1.push(
         createEscrowToken(
           project,
