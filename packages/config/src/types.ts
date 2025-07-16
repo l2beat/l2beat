@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -960,7 +961,7 @@ export interface ProjectPermission {
 export interface ProjectPermissionedAccount {
   name: string
   url: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
 }

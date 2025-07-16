@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xd5def8b4c78bf586b7947d017469aed6144fbdc0
+
+# Diff at Tue, 15 Jul 2025 10:57:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22829897
+- current block number: 22924125
+
+## Description
+
+remove one signer from PolygonCreateRollupMultisig.
+
+## Watched changes
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      values.$members.7:
+-        "eth:0xC8aaFEF5C3689c29143023Fe53cB3e833e0439e9"
+      values.multisigThreshold:
+-        "3 of 8 (38%)"
++        "3 of 7 (43%)"
+    }
+```
+
 Generated with discovered.json: 0x93bdd69413afdd3b0b5dfb291c03ca7a80a3d3c8
 
 # Diff at Mon, 14 Jul 2025 12:46:13 GMT:

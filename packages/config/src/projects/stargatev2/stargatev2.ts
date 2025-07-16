@@ -333,9 +333,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
               discoveredDelegates[0].address ===
                 discoveredDelegates[1].address &&
               discoveredDelegates[1].address ===
-                ChainSpecificAddress.address(
-                  discovery.getContract('Stargate Multisig').address,
-                ),
+                discovery.getContract('Stargate Multisig').address,
             'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
           )
           return [

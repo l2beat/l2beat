@@ -1,18 +1,26 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { AnytrustDAC } from '../../templates/anytrust-template'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
-export const lasernet: ScalingProject = underReviewL2({
-  id: 'lasernet',
+const discovery = new ProjectDiscovery('lasernet')
+
+export const lasernet: ScalingProject = orbitStackL2({
   capability: 'universal',
   addedAt: UnixTime(1745311928),
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
+  ],
+  discovery,
   display: {
     name: 'Lasernet',
     slug: 'lasernet',
     description:
       'Lasernet is a new oracle architecture with an ETH layer-2 at its core. Lasernet brings fully on-chain, verifiable, and trustless data through its permissionless and modular design.',
-    purposes: ['Universal'],
-    category: 'Optimium',
+    category: 'Other',
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://diadata.org/'],
@@ -42,20 +50,13 @@ export const lasernet: ScalingProject = underReviewL2({
       },
     ],
   },
-  ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
-  },
   activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x1eeE9b9F024188E54930D2927d7a28e66E7649a7'), // bridge
-      sinceTimestamp: UnixTime(1741964363),
-      tokens: ['DIA'],
-      chain: 'ethereum',
-    },
-  ],
+  customDa: AnytrustDAC({ discovery }),
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
 })
