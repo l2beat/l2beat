@@ -28,8 +28,8 @@ export function CodePage() {
   const files = [
     {
       id: address,
-      name: address,
-      content: getSource(response.data),
+      name: response.data.name,
+      content: getSource(response.data.sources),
       readOnly: true,
       language: 'solidity' as const,
     },
@@ -37,7 +37,7 @@ export function CodePage() {
 
   return (
     <>
-      <Title title={`Code - ${address}`} />
+      <Title title={`Code - ${response.data.name} (${address})`} />
       <div className="flex h-full w-full select-none flex-col">
         <EditorView
           editorId="code-app"

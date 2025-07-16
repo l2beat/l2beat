@@ -33,12 +33,14 @@ export function DiffPage() {
   const [leftCode, rightCode] = response.data
   return (
     <>
-      <Title title={`Diff - ${address1} vs ${address2}`} />
+      <Title
+        title={`Diff - ${leftCode.name} (${address1}) vs ${rightCode.name} (${address2})`}
+      />
       <DiffView
         leftAddress={address1}
-        leftCode={leftCode}
+        leftCode={leftCode.sources}
         rightAddress={address2}
-        rightCode={rightCode}
+        rightCode={rightCode.sources}
       />
     </>
   )

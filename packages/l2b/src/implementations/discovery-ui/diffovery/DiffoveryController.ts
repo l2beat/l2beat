@@ -14,8 +14,13 @@ import { HttpClient } from '@l2beat/shared'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
 import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
 
+type DiffoveryResult = {
+  name: string
+  sources: Record<string, string>
+}
+
 export class DiffoveryController {
-  private cache = new Map<string, Record<string, string>>()
+  private cache = new Map<string, DiffoveryResult>()
   private httpClient = new HttpClient()
   private allProviders: AllProviders
 
@@ -40,7 +45,7 @@ export class DiffoveryController {
   async handle(
     chain: string,
     address: EthereumAddress,
-  ): Promise<Record<string, string>> {
+  ): Promise<DiffoveryResult> {
     const client = await this.getClient(chain)
     const cacheKey = `${chain}:${address.toString()}`
     const cached = this.cache.get(cacheKey)
@@ -51,7 +56,10 @@ export class DiffoveryController {
     const code = await client.getBytecode(address)
     if (codeIsEOA(code)) {
       const result = {
-        'L2BEAT-EOA': '// NOTE: Address is an EOA, does not have source code',
+        name: 'EOA',
+        sources: {
+          'L2BEAT-EOA': '// NOTE: Address is an EOA, does not have source code',
+        },
       }
       this.cache.set(cacheKey, result)
       return result
@@ -60,10 +68,16 @@ export class DiffoveryController {
     const source = await client.getSource(address)
     const flat = this.handleSource(source)
     if (source.isVerified) {
-      this.cache.set(cacheKey, flat)
+      this.cache.set(cacheKey, {
+        name: source.name,
+        sources: flat,
+      })
     }
 
-    return flat
+    return {
+      name: source.name.length > 0 ? source.name : 'Unknown',
+      sources: flat,
+    }
   }
 
   private handleSource(source: ContractSource): Record<string, string> {
