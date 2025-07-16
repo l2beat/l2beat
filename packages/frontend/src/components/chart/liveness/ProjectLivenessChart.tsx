@@ -29,6 +29,7 @@ export function ProjectLivenessChart({
   anomalies,
   hasTrackedContractsChanged,
   milestones,
+  isArchived,
   defaultRange,
 }: Props) {
   const [timeRange, setTimeRange] =
@@ -96,7 +97,7 @@ export function ProjectLivenessChart({
         anomalies={anomalies}
         configuredSubtypes={configuredSubtypes}
         hasTrackedContractsChanged={hasTrackedContractsChanged}
-        isArchived
+        isArchived={isArchived}
       />
     </section>
   )
