@@ -118,7 +118,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name ?? contract.address,
       isVerified: isEntryVerified(contract),
-      address: ChainSpecificAddress.address(contract.address),
+      address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -479,7 +479,7 @@ export class ProjectDiscovery {
       descriptionOrOptions = { description: descriptionOrOptions }
     }
     return {
-      address: ChainSpecificAddress.address(contract.address),
+      address: contract.address,
       isVerified: isEntryVerified(contract),
       name: contract.name ?? contract.address,
       upgradeability: getUpgradeability(contract),
@@ -1043,12 +1043,8 @@ function getUpgradeability(
   }
   const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
-    admins: get$Admins(contract.values).map((a) =>
-      ChainSpecificAddress.address(a),
-    ),
-    implementations: get$Implementations(contract.values).map((a) =>
-      ChainSpecificAddress.address(a),
-    ),
+    admins: get$Admins(contract.values),
+    implementations: get$Implementations(contract.values),
   }
   if (contract.values?.$immutable !== undefined) {
     upgradeability.immutable = !!contract.values.$immutable
