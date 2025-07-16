@@ -289,6 +289,43 @@ export class ConfigReader {
   }
 
   /**
+   * Recursively traverses the directory structure, handling grouping folders.
+   * This is the common logic used by both resolveProjectPath and enumerateProjectDirectories.
+   *
+   * @param visitor Function called for each directory entry. Return true to continue traversal, false to stop.
+   * @param searchStrategy 'breadth' for BFS (used by resolveProjectPath) or 'depth' for DFS (used by enumerateProjectDirectories)
+   */
+  private traverseDirectories<T>(
+    visitor: (entryName: string, fullPath: string) => T | null,
+    searchStrategy: 'breadth' | 'depth',
+  ): T[] {
+    const result: T[] = []
+    const queue: string[] = [this.rootPath]
+
+    while (queue.length > 0) {
+      const current = searchStrategy === 'breadth' ? queue.shift() : queue.pop()
+      if (current === undefined) continue
+
+      const entries = readdirSync(current, { withFileTypes: true })
+      for (const entry of entries) {
+        if (!entry.isDirectory()) continue
+        if (entry.name.startsWith('_')) continue // keep existing behaviour
+
+        const full = path.join(current, entry.name)
+        const visitResult = visitor(entry.name, full)
+
+        if (visitResult !== null) {
+          result.push(visitResult)
+        } else if (this.isGroupingFolder(entry.name)) {
+          queue.push(full)
+        }
+      }
+    }
+
+    return result
+  }
+
+  /**
    * Locate the on-disk directory for a given project. The search rules are:
    * 1. Direct child of `rootPath` (legacy layout).
    * 2. Recursively within any *grouping folder* (a directory wrapped in
@@ -315,32 +352,17 @@ export class ConfigReader {
     }
 
     // 2. Breadth-first search within grouping folders
-    const queue: string[] = [this.rootPath]
-    const matches: string[] = []
-
-    while (queue.length > 0) {
-      const current = queue.shift()
-      if (current === undefined) {
-        continue
+    const matches = this.traverseDirectories<string>((entryName, full) => {
+      if (
+        entryName === project &&
+        fileExistsCaseSensitive(full) &&
+        existsSync(path.join(full, 'config.jsonc'))
+      ) {
+        return full
       }
-      const entries = readdirSync(current, { withFileTypes: true })
-      for (const entry of entries) {
-        if (!entry.isDirectory()) continue
-        if (entry.name.startsWith('_')) continue // keep existing behaviour
+      return null
+    }, 'breadth')
 
-        const full = path.join(current, entry.name)
-
-        if (
-          entry.name === project &&
-          fileExistsCaseSensitive(full) &&
-          existsSync(path.join(full, 'config.jsonc'))
-        ) {
-          matches.push(full)
-        } else if (this.isGroupingFolder(entry.name)) {
-          queue.push(full)
-        }
-      }
-    }
     if (matches.length === 0) {
       throw new Error('Project not found, check if case matches')
     }
@@ -364,29 +386,12 @@ export class ConfigReader {
    * folder below it.
    */
   enumerateProjectDirectories(): string[] {
-    const result: string[] = []
-    const stack: string[] = [this.rootPath]
-
-    while (stack.length > 0) {
-      const current = stack.pop()
-      if (current === undefined) continue
-
-      const entries = readdirSync(current, { withFileTypes: true })
-      for (const entry of entries) {
-        if (!entry.isDirectory()) continue
-        if (entry.name.startsWith('_')) continue
-
-        const full = path.join(current, entry.name)
-
-        if (this.isGroupingFolder(entry.name)) {
-          stack.push(full)
-        } else {
-          result.push(full)
-        }
+    return this.traverseDirectories<string>((entryName, full) => {
+      if (!this.isGroupingFolder(entryName)) {
+        return full
       }
-    }
-
-    return result
+      return null
+    }, 'depth')
   }
 
   // #endregion
