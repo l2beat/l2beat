@@ -123,21 +123,20 @@
       "newProjectsIds": ["katana"],
       "news": [
         {
-          "title": "AggLayer goes multistack - Agglayer v0.3",
-          "content": "Polygon’s ambitious Gigagas roadmap aims for 100,000 TPS, positioning the chain as a global settlement layer. [Polygon will integrate Agglayer](https://polygon.technology/blog/polygons-gigagas-roadmap-to-100k-tps-move-your-money-faster-across-the-globe), its cross-chain liquidity and interoperability layer."
+          "title": "Agglayer v0.3 is live",
+          "content": "[Agglayer v0.3 is now live](https://www.agglayer.dev/blogs/agglayer-v0-3-is-live), introducing a new execution-proof mode that lets chains prove their own state using ZK proofs—no architectural changes needed. This expands the existing pessimistic proof, adding a new security layer akin to 2FA for interop. Polygon PoS is set to connect by end of Q3, with Katana going live first. The upgrade lays the foundation for fast, sub-10s, chain-agnostic interoperability across diverse blockchain ecosystems."
         },
         {
           "title": "Polygon Winds Down zkEVM to Prioritize Agglayer and Scalable Growth",
-          "content": "Polygon Labs [has announced](https://forum.polygon.technology/t/sunsetting-polygon-zkevm-mainnet-beta-in-2026/21020) it will sunset Polygon zkEVM Mainnet Beta in 2026 to prioritize Agglayer.",
-          "tags": ["upcoming"]
+          "content": "Polygon Labs [has announced](https://forum.polygon.technology/t/sunsetting-polygon-zkevm-mainnet-beta-in-2026/21020) it will sunset Polygon zkEVM Mainnet Beta in 2026 to prioritize Agglayer."
         },
         {
           "title": "Polygon Doubles Down on Agglayer as Sandeep Nailwal Becomes Foundation CEO",
-          "content": "Polygon co-founder Sandeep Nailwal [has officially](https://x.com/sandeepnailwal/status/1932748558786310228) taken over as CEO of the Polygon Foundation, with Agglayer as the strategic focus."
+          "content": "Polygon co-founder Sandeep Nailwal [has officially](https://x.com/sandeepnailwal/status/1932748558786310228) takes over as CEO of the Polygon Foundation, with Agglayer as the strategic focus."
         },
         {
           "title": "Katana Launches High-Yield Blockchain for Institutional DeFi, Backed by Polygon",
-          "content": "The Katana Foundation [has launched](https://www.coindesk.com/tech/2025/05/28/polygon-gsr-release-katana-network-tackle-defi-fragmentation) the private mainnet of its new DeFi-optimized blockchain."
+          "content": "The Katana Foundation [has launched](https://www.coindesk.com/tech/2025/05/28/polygon-gsr-release-katana-network-tackle-defi-fragmentation) the mainnet of its new DeFi-optimized blockchain. Katana is the first Agglayer CDK chain to adopt the CDK OP Stack. Connected to the Agglayer’s Bridge, Katana enables cross-chain DeFi yield and aims to unify fragmented liquidity into a sustainable yield engine."
         }
       ]
     },
