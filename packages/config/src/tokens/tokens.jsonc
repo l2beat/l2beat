@@ -2262,6 +2262,12 @@
   ],
   "arbitrum": [
     {
+      "symbol": "wM",
+      "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
+      "source": "native",
+      "supply": "totalSupply" // normal wrapper, underlying M is bridged via wormhole, wM backs USDai on arbi
+    },
+    {
       "symbol": "MLK",
       "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
       "source": "native",

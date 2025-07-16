@@ -12977,6 +12977,20 @@
       }
     },
     {
+      "name": "WrappedM by M^0",
+      "coingeckoId": "wrappedm-by-m0",
+      "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
+      "symbol": "wM",
+      "decimals": 6,
+      "deploymentTimestamp": 1739985583,
+      "coingeckoListingTimestamp": 1743552000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55070/large/wm.jpg?1743589588",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Xai",
       "coingeckoId": "xai-blockchain",
       "address": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
