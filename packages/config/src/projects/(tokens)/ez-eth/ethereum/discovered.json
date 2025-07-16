@@ -1,8 +1,8 @@
 {
   "name": "ez-eth",
   "chain": "ethereum",
-  "blockNumber": 22925376,
-  "configHash": "0xc211169a6937357482c7ae392ebd3302b7c207954f863db4f003e56cca0b8ae9",
+  "blockNumber": 22932978,
+  "configHash": "0xfc63f7efa6831bb7daf7e3e73f379842efca255175a003d8f20bc7c62713a23e",
   "entries": [
     {
       "name": "EzEthToken",
@@ -49,7 +49,7 @@
           "decimals": 18,
           "deploymentTimestamp": 1701811163,
           "coingeckoListingTimestamp": 1706140800,
-          "category": "other",
+          "category": "ether",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
           "chainId": 1,
           "supply": "zero",
@@ -60,7 +60,7 @@
         "name": "Renzo Restaked ETH",
         "roleManager": "0x4994EFc62101A9e3F885d872514c2dC7b3235849",
         "symbol": "ezETH",
-        "totalSupply": "318233137714748074431658"
+        "totalSupply": "317920488584878119586156"
       },
       "implementationNames": {
         "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": "TransparentUpgradeableProxy",

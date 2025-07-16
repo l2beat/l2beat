@@ -11,7 +11,10 @@
           "fields": {
             "$tokenData": {
               "handler": {
-                "type": "ERC20Data"
+                "type": "ERC20Data",
+                "overrides": {
+                  "category": "ether"
+                }
               }
             }
           }
