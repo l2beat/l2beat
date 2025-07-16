@@ -6797,6 +6797,38 @@
   ],
   "abstract": [
     {
+      "symbol": "Polly",
+      "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "NOOT",
+      "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ABSTER",
+      "address": "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PENGU",
+      "address": "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USDT",
       "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",
       "source": "external",
