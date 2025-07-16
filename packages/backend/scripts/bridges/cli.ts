@@ -87,13 +87,16 @@ const cmd = command({
         const batchStart = start + i * BATCH_SIZE
         const batchEnd = Math.min(start + range, batchStart + BATCH_SIZE)
 
-        console.log(`Fetching logs for blocks ${batchStart} to ${batchEnd}`)
-
         const logs = await r.rpc.getLogs(batchStart, batchEnd)
 
-        for (const l of logs) {
+        const logsByTx = groupBy(logs, 'transactionHash')
+
+        for (const [hash, l] of Array.from(Object.entries(logsByTx))) {
           for (const decoder of decoders) {
-            const decoded = await decoder(r, logToViemLog(l))
+            const decoded = await decoder(r, {
+              hash,
+              logs: l.map(logToViemLog),
+            })
             if (decoded) {
               transfers.push(decoded)
             }
