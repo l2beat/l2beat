@@ -1,5 +1,4 @@
 import { assert } from '@l2beat/shared-pure'
-import uniqBy from 'lodash/uniqBy'
 import { CONTRACTS } from '../common'
 import { BADGES, badgesCompareFn } from '../common/badges'
 import type { Bridge, ScalingProject } from '../internalTypes'
@@ -11,6 +10,7 @@ import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
+import uniq from 'lodash/uniq'
 
 let once = false
 
@@ -64,11 +64,11 @@ function adjustLegacy(project: ScalingProject | Bridge, chains: ChainConfig[]) {
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
   if (project.statuses) {
-    project.statuses.unverifiedContracts = uniqBy(
+    project.statuses.unverifiedContracts = uniq(
       project.statuses.unverifiedContracts.concat(
         getProjectUnverifiedContracts(project),
       ),
-      (x) => `${x.chain}:${x.address}`,
+
     )
   }
   if (project.proofVerification) {

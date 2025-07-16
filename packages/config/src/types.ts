@@ -63,11 +63,6 @@ export type ProjectRiskCategory =
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
-export interface ProjectUnverifiedContract {
-  chain: string
-  address: EthereumAddress
-}
-
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -145,7 +140,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  unverifiedContracts: ProjectUnverifiedContract[]
+  unverifiedContracts: ChainSpecificAddress[]
 }
 
 export interface ProjectDisplay {
@@ -969,7 +964,7 @@ export interface ProjectContracts {
 
 export interface ProjectContract {
   /** Address of the contract */
-  address: EthereumAddress
+  address: ChainSpecificAddress
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
@@ -1002,8 +997,8 @@ export interface ProjectContract {
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
+  admins: ChainSpecificAddress[]
+  implementations: ChainSpecificAddress[]
 }
 
 export interface ProjectUpgradeableActor {

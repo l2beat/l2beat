@@ -1,4 +1,4 @@
-import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 
 import type { ProjectPermission } from '../../types'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
@@ -88,8 +88,7 @@ export function getSHARPVerifierContracts(
   verifierAddress: ChainSpecificAddress,
 ) {
   assert(
-    ChainSpecificAddress.address(verifierAddress) ===
-      SHARP_VERIFIER_PROXY.address,
+    verifierAddress === SHARP_VERIFIER_PROXY.address,
     `SHARPVerifierCallProxy address mismatch. This project probably uses a different SHARP verifier (${projectDiscovery.projectName})`,
   )
 
@@ -101,8 +100,7 @@ export function getSHARPVerifierGovernors(
   verifierAddress: ChainSpecificAddress,
 ): ProjectPermission[] {
   assert(
-    ChainSpecificAddress.address(verifierAddress) ===
-      SHARP_VERIFIER_PROXY.address &&
+    verifierAddress === SHARP_VERIFIER_PROXY.address &&
       getProxyGovernance(discovery, 'SHARPVerifierCallProxy')[0].address ===
         discovery.getContract('SHARP Multisig').address &&
       getProxyGovernance(discovery, 'SHARPVerifierCallProxy').length === 1,
