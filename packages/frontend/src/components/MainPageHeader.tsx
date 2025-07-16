@@ -13,7 +13,7 @@ export function MainPageHeader({ children, className, description }: Props) {
     <div>
       <header
         className={cn(
-          'ml-2 flex items-center justify-between py-5 max-lg:hidden',
+          'ml-2 flex items-center justify-between pt-[18px] pb-5 max-lg:hidden',
           !!description && 'pb-4',
           className,
         )}
