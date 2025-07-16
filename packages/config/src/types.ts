@@ -214,6 +214,13 @@ export interface ZkCatalogTag {
   description: string
 }
 
+export interface TrustedSetup {
+  id: string
+  risk: 'green' | 'yellow' | 'red' | 'N/A'
+  shortDescription: string
+  longDescription: string
+}
+
 export interface Milestone {
   title: string
   url: string
@@ -749,14 +756,14 @@ export interface ProjectProofSystem {
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetup: {
-    risk: 'green' | 'yellow' | 'red'
-    shortDescription: string
-    longDescription: string
-  }
+  trustedSetups: {
+    snarkProofSystem: ZkCatalogTag
+    setups: TrustedSetup[]
+  }[]
   verifierHashes: {
     hash: string
-    explorerLink: string
+    proofSystem: ZkCatalogTag
+    knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
     verificationSteps?: string

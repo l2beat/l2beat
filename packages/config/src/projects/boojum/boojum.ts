@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
+import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
 import type { BaseProject } from '../../types'
 
 export const boojum: BaseProject = {
@@ -60,27 +61,23 @@ export const boojum: BaseProject = {
 
         Only the final SNARK wrap needs a universal trusted setup, fflonk and plonk share the same setup CRS ([link](https://github.com/matter-labs/zksync-crypto/blob/949f38ac03bd2bc27e39961c08f6fe4996855f4b/crates/fflonk/src/definitions/setup.rs#L7)). The CRS from Aztec Ignition ceremony with 176 participants is used ([link](https://matter-labs.github.io/zksync-era/core/latest/guides/advanced/15_prover_keys.html#crs-files-setup_226key-8gb-files)).
         `,
-    trustedSetup: {
-      risk: 'green',
-      shortDescription: 'Aztec Ignition universal setup for KZG commitments',
-      longDescription: `
-                  
-                  ## Aztec Ignition 
-      
-                  Aztec Ignition is a trusted setup ceremony that was run by Aztec for KZG commitment over BN254 curve in 2019. 
-                  It included 176 participants and was open for participation.
-                  
-                  - Github repo to download and verify the ceremony artifacts: https://github.com/AztecProtocol/ignition-verification.
-                  - Github repo with instructions for ceremony participants: https://github.com/AztecProtocol/Setup.
-                  - Ceremony announcement with a call to participate: https://aztec.network/blog/announcing-ignition.
-                  `,
-    },
+    trustedSetups: [
+      {
+        snarkProofSystem: ZK_CATALOG_TAGS.SNARK.PlonkBellman,
+        setups: [TRUSTED_SETUPS.AztecIgnition],
+      },
+      {
+        snarkProofSystem: ZK_CATALOG_TAGS.SNARK.FflonkZksync,
+        setups: [TRUSTED_SETUPS.AztecIgnition],
+      },
+    ],
     verifierHashes: [
       {
-        // Fflonk
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
-        explorerLink:
+        proofSystem: ZK_CATALOG_TAGS.SNARK.FflonkZksync,
+        knownDeployments: [
           'https://etherscan.io/address/0xD5dBE903F5382B052317D326FA1a7B63710C6a5b',
+        ],
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zksync2'),
@@ -93,10 +90,11 @@ export const boojum: BaseProject = {
         ],
       },
       {
-        // Fflonk
         hash: '0x941fd36f78a5ba753dbbe65b9123a43ae833405fafd03b5149b959eee766e03c',
-        explorerLink:
+        proofSystem: ZK_CATALOG_TAGS.SNARK.FflonkZksync,
+        knownDeployments: [
           'https://etherscan.io/address/0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF',
+        ],
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zeronetwork'),
@@ -106,10 +104,11 @@ export const boojum: BaseProject = {
         ],
       },
       {
-        // Plonk
         hash: '0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78',
-        explorerLink:
+        proofSystem: ZK_CATALOG_TAGS.SNARK.PlonkBellman,
+        knownDeployments: [
           'https://etherscan.io/address/0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1',
+        ],
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zksync2'),
@@ -122,10 +121,11 @@ export const boojum: BaseProject = {
         ],
       },
       {
-        // Plonk
         hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
-        explorerLink:
+        proofSystem: ZK_CATALOG_TAGS.SNARK.PlonkBellman,
+        knownDeployments: [
           'https://etherscan.io/address/0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e',
+        ],
         verificationStatus: 'notVerified',
         usedBy: [
           ProjectId('zeronetwork'),
@@ -135,10 +135,11 @@ export const boojum: BaseProject = {
         ],
       },
       {
-        // Plonk
         hash: '0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2',
-        explorerLink:
+        proofSystem: ZK_CATALOG_TAGS.SNARK.PlonkBellman,
+        knownDeployments: [
           'https://etherscan.io/address/0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5',
+        ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('treasure')],
       },
