@@ -84,10 +84,7 @@ export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
       key={i}
     >
       <h3 className="font-bold text-red-300">{group.name}</h3>
-      <ol
-        className="list-inside list-decimal px-1.5 text-gray-850 dark:text-gray-400"
-        start={group.start}
-      >
+      <ol className="list-inside list-decimal px-1.5" start={group.start}>
         {group.items.map((item, i) => (
           <li key={i}>
             <a href={`#${item.referencedId}`} className="underline">

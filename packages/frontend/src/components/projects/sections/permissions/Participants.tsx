@@ -13,7 +13,7 @@ export function ParticipantsEntry({
 }) {
   return (
     <div className="mt-2 flex flex-row flex-wrap items-center gap-x-1.5 text-paragraph-15 md:text-paragraph-16">
-      <p className="text-gray-850 dark:text-gray-400">
+      <p>
         <strong className="text-primary">{`Participants (${participants.length}): `}</strong>
       </p>
       {participants.map((address, i) => (

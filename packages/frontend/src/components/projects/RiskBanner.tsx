@@ -105,7 +105,7 @@ export function RiskBanner({
         </div>
       )}
       {description && info === 'full' && (
-        <Markdown className="mt-2 font-normal text-black/80 text-paragraph-15 md:text-paragraph-16 dark:text-white/80">
+        <Markdown className="mt-2 font-normal text-paragraph-15 md:text-paragraph-16">
           {description}
         </Markdown>
       )}

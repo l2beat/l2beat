@@ -104,12 +104,12 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             ))}
           </div>
           {contract.description && (
-            <Markdown className="word-break-word mt-2 text-gray-850 text-paragraph-15 leading-snug md:text-paragraph-16 dark:text-gray-400">
+            <Markdown className="word-break-word mt-2 text-paragraph-15 leading-snug md:text-paragraph-16">
               {contract.description}
             </Markdown>
           )}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex flex-wrap text-gray-850 text-paragraph-15 md:text-paragraph-16 dark:text-gray-400">
+            <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((entry) => (
@@ -125,7 +125,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             </div>
           )}
           {contract.upgradeDelay && (
-            <p className="mt-2 text-gray-850 text-paragraph-15 md:text-paragraph-16 dark:text-gray-400">
+            <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
               <strong className="text-primary">Upgrade delay:</strong>{' '}
               {contract.upgradeDelay}
             </p>

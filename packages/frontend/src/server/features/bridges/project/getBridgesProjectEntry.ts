@@ -239,7 +239,6 @@ export async function getBridgesProjectEntry(
           'upgrades-and-governance',
           project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
-        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
