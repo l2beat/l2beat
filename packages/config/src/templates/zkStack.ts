@@ -99,6 +99,7 @@ export interface ZkStackConfigCommon {
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
+  archivedAt?: UnixTime
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -246,6 +247,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
+    archivedAt: templateVars.archivedAt,
     badges: mergeBadges(
       [
         BADGES.Stack.ZKStack,
