@@ -1,18 +1,18 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export function gatherReachableAddresses(
-  from: EthereumAddress[],
-  addressRelatives: Record<string, EthereumAddress[] | undefined>,
-): Set<EthereumAddress> {
-  const reachable = new Set<EthereumAddress>()
+  from: ChainSpecificAddress[],
+  addressRelatives: Record<string, ChainSpecificAddress[] | undefined>,
+): Set<ChainSpecificAddress> {
+  const reachable = new Set<ChainSpecificAddress>()
   gatherReachableAddressesRecursively(from, addressRelatives, reachable)
   return reachable
 }
 
 function gatherReachableAddressesRecursively(
-  from: EthereumAddress[],
-  addressRelatives: Record<string, EthereumAddress[] | undefined>,
-  reachable: Set<EthereumAddress>,
+  from: ChainSpecificAddress[],
+  addressRelatives: Record<string, ChainSpecificAddress[] | undefined>,
+  reachable: Set<ChainSpecificAddress>,
 ) {
   from.forEach((address) => {
     if (!reachable.has(address)) {

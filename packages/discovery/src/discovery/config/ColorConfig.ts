@@ -50,21 +50,13 @@ export const _ColorConfig = {
   categories: v.record(v.string(), DiscoveryCategory).optional(),
   names: v
     .record(
-      v
-        .string()
-        .transform((v) =>
-          ChainSpecificAddress.address(ChainSpecificAddress(v)).toString(),
-        ),
+      v.string().transform((v) => ChainSpecificAddress(v).toString()),
       v.string(),
     )
     .optional(),
   overrides: v
     .record(
-      v
-        .string()
-        .transform((v) =>
-          ChainSpecificAddress.address(ChainSpecificAddress(v)).toString(),
-        ),
+      v.string().transform((v) => ChainSpecificAddress(v).toString()),
       ColorContract,
     )
     .optional(),

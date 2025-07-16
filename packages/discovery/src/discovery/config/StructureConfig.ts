@@ -72,9 +72,7 @@ export const StructureContract = v.object(_StructureContract)
 export type StructureConfig = v.infer<typeof StructureConfig>
 export const _StructureConfig = {
   initialAddresses: v.array(
-    v
-      .string()
-      .transform((v) => ChainSpecificAddress.address(ChainSpecificAddress(v))),
+    v.string().transform((v) => ChainSpecificAddress(v)),
   ),
   maxAddresses: v
     .number()
@@ -83,11 +81,7 @@ export const _StructureConfig = {
   maxDepth: v.number().default(Number.POSITIVE_INFINITY),
   overrides: v
     .record(
-      v
-        .string()
-        .transform((v) =>
-          ChainSpecificAddress.address(ChainSpecificAddress(v)).toString(),
-        ),
+      v.string().transform((v) => ChainSpecificAddress(v).toString()),
       StructureContract,
     )
     .optional(),

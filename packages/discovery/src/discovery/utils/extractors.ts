@@ -1,27 +1,27 @@
-import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'
 
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,
-): EthereumAddress[] {
+): ChainSpecificAddress[] {
   return toAddressArrayPrivate(values?.$implementation)
 }
 
 export function get$Beacons(
   values: Record<string, ContractValue | undefined> | undefined,
-): EthereumAddress[] {
+): ChainSpecificAddress[] {
   return toAddressArrayPrivate(values?.$beacon)
 }
 
 export function get$PastUpgrades(
   values: Record<string, ContractValue | undefined> | undefined,
-): [string, Hash256, EthereumAddress[]][] {
+): [string, Hash256, ChainSpecificAddress[]][] {
   return toAddressRecordPrivate(values?.$pastUpgrades)
 }
 
 export function get$Admins(
   values: Record<string, ContractValue | undefined> | undefined,
-): EthereumAddress[] {
+): ChainSpecificAddress[] {
   return toAddressArrayPrivate(values?.$admin)
 }
 
@@ -32,8 +32,8 @@ export function toAddressRecordPrivate(value: ContractValue | undefined) {
         [
           e[0] as string,
           e[1] as unknown as Hash256,
-          e[2] as unknown as EthereumAddress[],
-        ] as [string, Hash256, EthereumAddress[]],
+          e[2] as unknown as ChainSpecificAddress[],
+        ] as [string, Hash256, ChainSpecificAddress[]],
     )
   }
   return []
@@ -41,7 +41,7 @@ export function toAddressRecordPrivate(value: ContractValue | undefined) {
 
 export function toAddressArrayPrivate(
   value: ContractValue | undefined,
-): EthereumAddress[] {
+): ChainSpecificAddress[] {
   if (Array.isArray(value)) {
     return value.flatMap((v) => toAddressArrayPrivate(v))
   }
@@ -50,7 +50,7 @@ export function toAddressArrayPrivate(
   }
   if (typeof value === 'string') {
     try {
-      return [EthereumAddress(value)]
+      return [ChainSpecificAddress(value)]
     } catch {
       return []
     }

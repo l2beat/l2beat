@@ -1,9 +1,9 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { AnalyzedContract, AnalyzedEOA } from '../analysis/AddressAnalyzer'
 
 export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
   type: 'Contract',
-  address: EthereumAddress.ZERO,
+  address: ChainSpecificAddress.ZERO('ethereum'),
   name: '',
   deploymentTimestamp: 0,
   deploymentBlockNumber: 0,
@@ -22,7 +22,7 @@ export const EMPTY_ANALYZED_CONTRACT: AnalyzedContract = {
 
 export const EMPTY_ANALYZED_EOA: AnalyzedEOA = {
   type: 'EOA',
-  address: EthereumAddress.ZERO,
+  address: ChainSpecificAddress.ZERO('ethereum'),
   name: undefined,
   isVerified: false,
   proxyType: 'EOA',

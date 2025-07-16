@@ -1,7 +1,6 @@
 import {
   assert,
   ChainSpecificAddress,
-  EthereumAddress,
   formatJson,
   Hash256,
 } from '@l2beat/shared-pure'
@@ -87,7 +86,6 @@ export class TemplateService {
       const criteria = existsSync(criteriaPath)
         ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
         : undefined
-      criteria?.validAddresses?.map((a: string) => EthereumAddress(a))
 
       const templateId = path.substring(resolvedRootPath.length + 1)
       result[templateId] = {
@@ -100,7 +98,7 @@ export class TemplateService {
 
   findMatchingTemplates(
     sources: ContractSources,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): string[] {
     if (!sources.isVerified) {
       return []
@@ -117,7 +115,7 @@ export class TemplateService {
 
   findMatchingTemplatesByHash(
     sourcesHash: Hash256,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): string[] {
     const candidates = this.getHashIndex().get(sourcesHash.toString()) ?? []
 
@@ -265,7 +263,7 @@ export class TemplateService {
       const sourcesHash = Hash256(hash)
       const matchingTemplates = this.findMatchingTemplatesByHash(
         sourcesHash,
-        ChainSpecificAddress.address(contract.address),
+        contract.address,
       )
 
       if (
@@ -347,7 +345,7 @@ export class TemplateService {
   addToShape(
     templateId: string,
     chain: string,
-    addresses: EthereumAddress[],
+    addresses: ChainSpecificAddress[],
     fileName: string,
     blockNumber: number,
     sources: ContractSource[],
@@ -377,10 +375,11 @@ export class TemplateService {
       return
     }
 
+    const rawAddresses = addresses.map((a) => ChainSpecificAddress.address(a))
     shapes[fileName] = {
       hash: masterHash,
       // biome-ignore lint/style/noNonNullAssertion: just checked
-      address: addresses.length > 1 ? addresses : addresses[0]!,
+      address: rawAddresses.length > 1 ? rawAddresses : rawAddresses[0]!,
       chain,
       blockNumber,
     }
