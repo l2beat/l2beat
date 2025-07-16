@@ -2,7 +2,7 @@
   "name": "honeypot",
   "chain": "ethereum",
   "blockNumber": 20641250,
-  "configHash": "0x07c0f1314be9f012c5f421e77e9b71517d239d82efcc27e37e18cc49c2d4fd25",
+  "configHash": "0x022ae64f39c54aac44df6dfdac489358f849747a8f3822853659fac9b1b1b846",
   "entries": [
     {
       "name": "Honeypot",
@@ -101,7 +101,7 @@
     }
   ],
   "abis": {
-    "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [
+    "eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [
       "constructor(address _consensus, address _owner, bytes32 _templateHash)",
       "error EtherTransferFailed()",
       "error IncorrectEpochHash()",
@@ -128,7 +128,7 @@
       "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
       "function withdrawEther(address _receiver, uint256 _value)"
     ],
-    "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": [
+    "eth:0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": [
       "constructor(address _owner)",
       "error InvalidClaimIndex()",
       "error InvalidInputIndices()",
@@ -142,19 +142,19 @@
       "function submitClaim(bytes _claimData)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x59b22D57D4f067708AB0c00552767405926dc768": [
+    "eth:0x59b22D57D4f067708AB0c00552767405926dc768": [
       "error InputSizeExceedsLimit()",
       "event InputAdded(address indexed dapp, uint256 indexed inputIndex, address sender, bytes input)",
       "function addInput(address _dapp, bytes _input) returns (bytes32)",
       "function getInputHash(address _dapp, uint256 _index) view returns (bytes32)",
       "function getNumberOfInputs(address _dapp) view returns (uint256)"
     ],
-    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
+    "eth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
       "constructor(address _inputBox)",
       "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
       "function getInputBox() view returns (address)"
     ],
-    "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": [
+    "eth:0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": [
       "constructor(address _owner)",
       "error AuthorityWithdrawalFailed()",
       "event ApplicationJoined(address application)",

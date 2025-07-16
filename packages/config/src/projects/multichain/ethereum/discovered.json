@@ -2,7 +2,7 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0x98b1d497e5585f3df1ce85b6691e98f8c96b938d4178bdb2ba7b027588ff7b19",
+  "configHash": "0xc93d21f902df263d22004d73b635a9d56027d318068676914b05d70d4730dfa2",
   "entries": [
     {
       "address": "eth:0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
@@ -59,7 +59,7 @@
     }
   ],
   "abis": {
-    "0x6b7a87899490EcE95443e979cA9485CBE7E71522": [
+    "eth:0x6b7a87899490EcE95443e979cA9485CBE7E71522": [
       "constructor(address _factory, address _wNATIVE, address _mpc)",
       "event LogAnySwapIn(bytes32 indexed txhash, address indexed token, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
       "event LogAnySwapOut(address indexed token, address indexed from, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
@@ -99,7 +99,7 @@
       "function quote(uint256 amountA, uint256 reserveA, uint256 reserveB) pure returns (uint256 amountB)",
       "function wNATIVE() view returns (address)"
     ],
-    "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": [
+    "eth:0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": [
       "constructor(address _factory, address _wNATIVE, address _mpc)",
       "event LogAnySwapIn(bytes32 indexed txhash, address indexed token, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
       "event LogAnySwapOut(address indexed token, address indexed from, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",

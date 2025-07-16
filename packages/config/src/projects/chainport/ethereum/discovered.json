@@ -2,7 +2,7 @@
   "name": "chainport",
   "chain": "ethereum",
   "blockNumber": 22923880,
-  "configHash": "0x57b279cf2abab98e3c8b063bee49be63ee6e8ee9ead559e744b9317f87e37052",
+  "configHash": "0xab101bb2ef95ec2ce8c854549000ac5e545647c53b55bc4370eab623ca1a5fe9",
   "entries": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -270,7 +270,7 @@
     }
   ],
   "abis": {
-    "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": [
+    "eth:0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa": [
       "constructor(address[] initialCongressMembers, bytes32[] initialCongressMemberNames, address _chainportCongress)",
       "event MembershipChanged(address member, bool isMember)",
       "function addMember(address targetMember, bytes32 memberName)",
@@ -286,10 +286,10 @@
       "function name() view returns (string)",
       "function removeMember(address targetMember)"
     ],
-    "0x450aD18B4442ce2972Af2a7A12439984db4Afaf9": [
+    "eth:0x450aD18B4442ce2972Af2a7A12439984db4Afaf9": [
       "constructor(address _singleton)"
     ],
-    "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F": [
+    "eth:0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -300,7 +300,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a": [
+    "eth:0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -311,10 +311,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19": [
+    "eth:0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19": [
       "constructor(address _masterCopy)"
     ],
-    "0xB6b4C7aC240b1f176c5589d064733066a83884a1": [
+    "eth:0xB6b4C7aC240b1f176c5589d064733066a83884a1": [
       "event ExecuteTransaction(address indexed target, uint256 value, string signature, bytes data)",
       "event ProposalCanceled(uint256 id)",
       "event ProposalCreated(uint256 id, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description)",
@@ -332,7 +332,7 @@
       "function propose(address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description) returns (uint256)",
       "function setMembersRegistry(address _membersRegistry)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22593197,
-  "configHash": "0x75d082b6aff7aef62346afe12cd803f308fdb240ea1688dae5896a19466dcef5",
+  "configHash": "0x1d0b8a48848db8a65a25423b8cfbf7ba449ec52ae816d04665b55d3c50459199",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -567,10 +567,10 @@
     }
   ],
   "abis": {
-    "0x282370D1e925ee897CB29Cb3beC13aAe0743067C": [
+    "eth:0x282370D1e925ee897CB29Cb3beC13aAe0743067C": [
       "constructor(address _singleton)"
     ],
-    "0x36b026c39125964D99596CE302866B5A59E4dE27": [
+    "eth:0x36b026c39125964D99596CE302866B5A59E4dE27": [
       "constructor(uint256 _eraChainId, uint256 _l1ChainId)",
       "error BaseTokenGasPriceDenominatorNotSet()",
       "error BatchNotExecuted(uint256 batchNumber)",
@@ -613,7 +613,7 @@
       "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionToGatewayMailbox(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp) returns (bytes32 canonicalTxHash)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -661,7 +661,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": [
+    "eth:0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
       "error BatchNumberMismatch(uint256 expectedBatchNumber, uint256 providedBatchNumber)",
@@ -721,7 +721,7 @@
       "function proveBatchesSharedBridge(uint256, uint256 _processBatchFrom, uint256 _processBatchTo, bytes _proofData)",
       "function revertBatchesSharedBridge(uint256, uint256 _newLastBatch)"
     ],
-    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
+    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
       "constructor(address _initialOwner, uint32 _executionDelay, uint256 _eraChainId)",
       "error AddressAlreadyValidator(uint256 _chainId)",
       "error ValidatorDoesNotExist(uint256 _chainId)",
@@ -757,11 +757,11 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879": [
+    "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
-    "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
+    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
       "error AddressAlreadyValidator(uint256 _chainId)",
       "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
@@ -796,11 +796,11 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x907b30407249949521Bf0c89A43558dae200146A": [
+    "eth:0x907b30407249949521Bf0c89A43558dae200146A": [
       "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
       "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
     ],
-    "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
+    "eth:0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
       "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
       "function facetAddress(bytes4 _selector) view returns (address)",
@@ -850,7 +850,7 @@
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
     ],
-    "0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871": [
+    "eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
       "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
       "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
@@ -869,11 +869,11 @@
       "function tokenMultiplierSetter() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": [
+    "eth:0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
-    "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": [
+    "eth:0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
       "error AddressHasNoCode(address)",
       "error AlreadyMigrated()",

@@ -2,7 +2,7 @@
   "name": "orbit",
   "chain": "ethereum",
   "blockNumber": 20792032,
-  "configHash": "0x691227a88a967798e918f953d293a6a30a565323875add6d55c847d4c7271339",
+  "configHash": "0xf69dc258d919fb189496ade146d8adabd5c7ad7f3e1229bb4aecf19a23bc67fa",
   "entries": [
     {
       "name": "",
@@ -346,7 +346,7 @@
     }
   ],
   "abis": {
-    "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": [
+    "eth:0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a": [
       "function owners(uint256) view returns (address)",
       "function removeOwner(address owner)",
       "function revokeConfirmation(uint256 transactionId)",
@@ -390,7 +390,7 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
-    "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9": [
+    "eth:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9": [
       "constructor(address _logic, address admin_, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -402,7 +402,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x830433dE03ABedE062660CC629e1A2c714272474": [
+    "eth:0x830433dE03ABedE062660CC629e1A2c714272474": [
       "constructor(address _logic, address admin_, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -414,7 +414,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0": [
+    "eth:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0": [
       "constructor(address _logic, address admin_, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -426,7 +426,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454": [
+    "eth:0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454": [
       "function owners(uint256) view returns (address)",
       "function transferToFarm(address token, uint256 amount)",
       "function chainAddressLength(bytes32) view returns (uint256)",
@@ -493,7 +493,7 @@
       "event BridgeReceiverResult(bool success, bytes fromAddress, address tokenAddress, bytes data)",
       "event OnBridgeReceived(bool result, bytes returndata, bytes fromAddr, address tokenAddress, bytes data)"
     ],
-    "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da": [
+    "eth:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da": [
       "constructor(address _logic, address admin_, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -505,7 +505,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xFb504CD4eD46024B83c4337044995CF112205f18": [
+    "eth:0xFb504CD4eD46024B83c4337044995CF112205f18": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",

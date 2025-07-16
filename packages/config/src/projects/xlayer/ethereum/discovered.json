@@ -2,7 +2,7 @@
   "name": "xlayer",
   "chain": "ethereum",
   "blockNumber": 22166659,
-  "configHash": "0x2fcdd916baa5463d4850e8b4580da4b81a4af4451f2de293f111f673c112bc14",
+  "configHash": "0xed5f18d5f30f181bbf582dbabd67c98edd620a8c29f3943572c39754eb1fbce7",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -249,13 +249,13 @@
     }
   ],
   "abis": {
-    "0x05652Ec92366F3C2255991a265c499E01Ba58e6a": [
+    "eth:0x05652Ec92366F3C2255991a265c499E01Ba58e6a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
+    "eth:0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -266,7 +266,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": [
+    "eth:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -276,7 +276,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
+    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -398,10 +398,10 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB": [
+    "eth:0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
+    "eth:0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",

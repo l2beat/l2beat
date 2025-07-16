@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "blockNumber": 136932647,
-  "configHash": "0xebdd92b73f4944d6a76c61fce515a85155557eea160ef4074c7138a605ff7f33",
+  "configHash": "0xe03d52fe07d6938684aefb92fc06349dcac6ab9929d757ae2acaa5f801048253",
   "entries": [
     {
       "name": "StargatePoolMigratable",
@@ -213,7 +213,7 @@
     }
   ],
   "abis": {
-    "0x19cFCE47eD54a88614648DC3f19A5980097007dD": [
+    "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -300,7 +300,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": [
+    "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -387,7 +387,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": [
+    "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -468,7 +468,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": [
+    "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
       "error BusCodec_InvalidMessage()",

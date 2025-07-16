@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 22882091,
-  "configHash": "0x6917991c950f196af6b5b8f46ce7fb74aa46b7cba91de62c0f8cc0b04bc41461",
+  "configHash": "0x6150a6553a1dacef9316690b2fe23e5af6843760843c900c81889e89564b235c",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -449,7 +449,7 @@
     }
   ],
   "abis": {
-    "0x02993cdC11213985b9B13224f3aF289F03bf298d": [
+    "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -457,7 +457,7 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x054fd961708D8E2B9c10a63F6157c74458889F0a": [
+    "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -468,10 +468,10 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": [
+    "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": [
       "constructor(address _singleton)"
     ],
-    "0x36194271a00dBBBae314E83dA56d0FF75fDa367B": [
+    "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -482,7 +482,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x45828180bbE489350D621d002968A0585406d487": [
+    "eth:0x45828180bbE489350D621d002968A0585406d487": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -529,7 +529,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x737539737b44493F65c17eAfE165197b6410d254": [
+    "eth:0x737539737b44493F65c17eAfE165197b6410d254": [
       "error AccessControlBadConfirmation()",
       "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
       "error AccessControlEnforcedDefaultAdminRules()",
@@ -618,10 +618,10 @@
       "function verifyBridgeLeaf(tuple(bytes32[] dataRootProof, bytes32[] leafProof, bytes32 rangeHash, uint256 dataRootIndex, bytes32 blobRoot, bytes32 bridgeRoot, bytes32 leaf, uint256 leafIndex) input) view returns (bool)",
       "function withdrawFees()"
     ],
-    "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": [
+    "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666": [
       "constructor(address _singleton)"
     ],
-    "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D": [
+    "eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D": [
       "error AuthoritySetMismatch()",
       "error AuthoritySetNotFound()",
       "error BlockHeightMismatch()",
@@ -689,7 +689,7 @@
       "function vectorXProgramVkey() view returns (bytes32)",
       "function verifier() view returns (address)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
