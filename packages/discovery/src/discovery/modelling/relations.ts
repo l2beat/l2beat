@@ -4,9 +4,9 @@ import type {
   RawPermissionConfiguration,
 } from '../config/PermissionConfig'
 import type { ContractValue, StructureEntry } from '../output/types'
-import { get$AdminsPublic, toAddressArray } from '../utils/extractorsPublic'
 import { interpolateString } from '../utils/interpolateString'
 import { interpolateModelTemplate } from './interpolate'
+import { get$Admins, toAddressArray } from '../utils/extractors'
 
 interface InlineTemplate {
   content: string
@@ -205,7 +205,7 @@ export function getPermissionsForAdmins(
   to: ChainSpecificAddress
   field: string
 })[] {
-  const admins = get$AdminsPublic(structureEntry.values)
+  const admins = get$Admins(structureEntry.values)
   return admins.map((admin) => {
     return {
       to: admin,

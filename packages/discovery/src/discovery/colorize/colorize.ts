@@ -12,7 +12,7 @@ import type {
   StructureEntry,
   StructureOutput,
 } from '../output/types'
-import { get$ImplementationsPublic } from '../utils/extractorsPublic'
+import { get$Implementations } from '../utils/extractors'
 import { interpolateString } from '../utils/interpolateString'
 
 export function colorize(
@@ -51,7 +51,7 @@ function getReferences(
     result.push(...entryConfig.references)
   }
 
-  const addresses = [entry.address, ...get$ImplementationsPublic(entry.values)]
+  const addresses = [entry.address, ...get$Implementations(entry.values)]
   for (const address of addresses) {
     const manualSourcePath = entryConfig.manualSourcePaths[address.toString()]
     if (manualSourcePath === undefined) {
