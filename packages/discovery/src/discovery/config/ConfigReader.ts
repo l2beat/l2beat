@@ -34,7 +34,7 @@ export class ConfigReader {
    * `projects/(tokens)/usdc`). These should be completely transparent for the
    * discovery tooling.  We treat every directory whose name **starts with** `(`
    * and **ends with** `)` as such a *grouping folder* – mirroring the behaviour
-   * of [Next.js routing](https://nextjs.org/docs/app/building-your-application/routing/parallel-routes#grouping).  All public methods that previously
+   * of Next.js routing. All public methods that previously
    * assumed `rootPath/<project>` now rely on {@link resolveProjectPath} to find
    * the actual directory of a project regardless of the grouping folders.
    */
@@ -339,9 +339,6 @@ export class ConfigReader {
     return path.join(this.getProjectPath(project), chain)
   }
 
-  /**
-   * @notice Top-level only, won't reach into nested-grouping folders
-   */
   getProjectsInGroup(group: string): string[] {
     return this.enumerateProjectDirectories().flatMap((projectPath) => {
       const basename = path.basename(projectPath)
