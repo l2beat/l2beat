@@ -6,8 +6,8 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { MainPageHeader } from '~/components/MainPageHeader'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/getDaThroughputSummary'

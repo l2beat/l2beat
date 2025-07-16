@@ -97,7 +97,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>
-          <h3 className="font-bold">
+          <h3 className="text-heading-20">
             Value Secured is calculated based on these smart contracts and
             tokens:
           </h3>
@@ -120,7 +120,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       )}
       {props.risks.length > 0 && (
         <>
-          <p className="text-gray-850 dark:text-gray-400">
+          <p className="text-paragraph-15 md:text-paragraph-16">
             The current deployment carries some associated risks:
           </p>
           <RiskList risks={props.risks} />
@@ -130,10 +130,10 @@ export function ContractsSection(props: ContractsSectionProps) {
   )
 }
 
-function ChainNameHeader(props: { children: React.ReactNode }) {
+export function ChainNameHeader(props: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-3">
-      <h3 className="whitespace-pre font-bold text-2xl">{props.children}</h3>
+      <h3 className="whitespace-pre text-heading-20">{props.children}</h3>
       <div className="w-full border-divider border-b-2" />
     </div>
   )

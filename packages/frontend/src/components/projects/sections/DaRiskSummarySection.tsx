@@ -40,7 +40,7 @@ export function DaRiskSummarySection({
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-          className="my-4"
+          className="my-4 text-paragraph-15 md:text-paragraph-16"
           icon={UnverifiedIcon}
         />
       )}
@@ -48,7 +48,7 @@ export function DaRiskSummarySection({
         <WarningBar
           text={redWarning}
           color="red"
-          className="my-4"
+          className="my-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}
         />
       )}
@@ -57,7 +57,7 @@ export function DaRiskSummarySection({
           text={warning}
           color="yellow"
           isCritical={false}
-          className="my-4"
+          className="my-4 text-paragraph-15 md:text-paragraph-16"
         />
       )}
       {layer.risks.length > 0 && (
@@ -74,7 +74,8 @@ export function DaRiskSummarySection({
       {bridge.risks.length > 0 && (
         <div className="flex flex-col gap-2">
           <span className="font-medium text-xs text-zinc-500 uppercase dark:text-gray-50">
-            {bridge.name} risks
+            {bridge.name}
+            {bridge.name === layer.name ? ' bridge' : ''} risks
           </span>
           {!bridge.isVerified && (
             <WarningBar

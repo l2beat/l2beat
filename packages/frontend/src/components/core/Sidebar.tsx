@@ -73,13 +73,10 @@ function SidebarProvider({
 }
 
 function Sidebar({
-  topNavbar,
   className,
   children,
   ...props
-}: React.ComponentProps<'div'> & {
-  topNavbar: boolean
-}) {
+}: React.ComponentProps<'div'>) {
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
@@ -103,10 +100,6 @@ function Sidebar({
         </SheetContent>
       </Sheet>
     )
-  }
-
-  if (topNavbar) {
-    return null
   }
 
   return (

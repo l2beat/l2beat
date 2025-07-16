@@ -7,9 +7,10 @@ import { RosetteSelector } from './RosetteSelector'
 
 interface Props {
   project: ProjectScalingEntry
+  size?: 'small' | 'regular'
 }
 
-export function ProjectScalingRosette({ project }: Props) {
+export function ProjectScalingRosette({ project, size }: Props) {
   const [rosetteType, setRosetteType] = useState<RosetteType>(
     project.rosette.stacked ? 'combined' : 'individual',
   )
@@ -17,10 +18,11 @@ export function ProjectScalingRosette({ project }: Props) {
   if (project.type === 'layer2') {
     return (
       <BigPizzaRosette
-        className="mt-auto max-lg:hidden"
+        className="my-auto max-lg:hidden"
         values={project.rosette.self}
         isUnderReview={project.underReviewStatus === 'config'}
         isUpcoming={project.isUpcoming}
+        size={size}
       />
     )
   }
@@ -32,13 +34,11 @@ export function ProjectScalingRosette({ project }: Props) {
     children: React.ReactNode
     hideSelector?: boolean
   }) => (
-    <div className="mt-auto flex flex-col gap-3 max-lg:hidden">
+    <div className="my-auto flex flex-col gap-3 max-lg:hidden">
       {!hideSelector && (
         <RosetteSelector
           rosetteType={rosetteType}
           setRosetteType={setRosetteType}
-          // Offset for labels
-          className="mb-3"
           isDisabled={
             project.underReviewStatus === 'config' ||
             project.isUpcoming ||
@@ -59,6 +59,7 @@ export function ProjectScalingRosette({ project }: Props) {
           values={project.rosette.self}
           isUnderReview={project.underReviewStatus === 'config'}
           isUpcoming={project.isUpcoming}
+          size={size}
         />
       </Wrapper>
     )
@@ -68,7 +69,7 @@ export function ProjectScalingRosette({ project }: Props) {
   if (!project.rosette.host || !project.hostChainName) {
     return (
       <Wrapper hideSelector>
-        <BigPizzaRosette values={project.rosette.self} />
+        <BigPizzaRosette values={project.rosette.self} size={size} />
       </Wrapper>
     )
   }
@@ -87,9 +88,10 @@ export function ProjectScalingRosette({ project }: Props) {
               name: project.name,
               risks: project.rosette.self,
             }}
+            size={size}
           />
         ) : (
-          <BigPizzaRosette values={project.rosette.stacked} />
+          <BigPizzaRosette values={project.rosette.stacked} size={size} />
         )}
       </Wrapper>
     )
@@ -108,10 +110,15 @@ export function ProjectScalingRosette({ project }: Props) {
             name: project.name,
             risks: project.rosette.self,
           }}
+          size={size}
         />
       ) : (
         // Force under review for combined - values doesn't matter
-        <BigPizzaRosette values={project.rosette.host} isUnderReview />
+        <BigPizzaRosette
+          values={project.rosette.host}
+          isUnderReview
+          size={size}
+        />
       )}
     </Wrapper>
   )

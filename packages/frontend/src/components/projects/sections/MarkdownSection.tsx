@@ -1,5 +1,6 @@
 import type { ReferenceLink } from '@l2beat/config'
 import { DiagramImage } from '~/components/DiagramImage'
+import { cn } from '~/utils/cn'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { Markdown } from '../../markdown/Markdown'
 import { ProjectSection } from './ProjectSection'
@@ -34,7 +35,11 @@ export function MarkdownSection({
           </figcaption>
         </figure>
       ) : null}
-      <Markdown className={mdClassName}>{content}</Markdown>
+      <Markdown
+        className={cn(mdClassName, 'text-paragraph-15 md:text-paragraph-16')}
+      >
+        {content}
+      </Markdown>
       {risks && risks?.length > 0 && <RiskList risks={risks} />}
       {references && references?.length > 0 && (
         <ReferenceList references={references} />

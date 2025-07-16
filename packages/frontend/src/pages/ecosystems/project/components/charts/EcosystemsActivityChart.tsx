@@ -157,8 +157,8 @@ export function EcosystemsActivityChart({
           >
             <div className="flex flex-row items-center gap-2">
               <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden xl:inline">ETH Mainnet Operations</span>
-              <span className="xl:hidden">ETH UOPS</span>
+              <span className="hidden 2xl:inline">ETH Mainnet Operations</span>
+              <span className="2xl:hidden">ETH UOPS</span>
             </div>
           </Checkbox>
         ) : (

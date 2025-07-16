@@ -2,7 +2,7 @@ import { pluralize } from '@l2beat/shared-pure'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -10,13 +10,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
-import { InfoIcon } from '~/icons/Info'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { TokenBreakdownStat } from './TokenBreakdownStat'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
   project: ProjectScalingEntry
@@ -25,22 +26,58 @@ interface Props {
 
 export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
-    <ProjectStat
-      key="tokens"
-      title="Tokens"
-      valueClassName="max-md:-mt-0.5"
-      value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
+    <ProjectSummaryStat
+      key="tvs"
+      title={
+        <div>
+          <span className="lg:max-xl:hidden">Total Value Secured</span>
+          <span className="max-lg:hidden xl:hidden">TVS</span>
+        </div>
+      }
+      value={
+        project.header.tvs?.breakdown ? (
+          <span className="mb-0.5 flex items-center gap-2">
+            {project.header.tvs.warning && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <RoundedWarningIcon
+                    sentiment={project.header.tvs.warning.sentiment}
+                    className="size-4"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {project.header.tvs.warning.value}
+                </TooltipContent>
+              </Tooltip>
+            )}
+            <ValueWithPercentageChange
+              className="!text-base !font-medium !leading-[100%] text-nowrap"
+              changeClassName="text-label-value-14 font-bold"
+              change={project.header.tvs.breakdown.totalChange}
+            >
+              {formatCurrency(project.header.tvs.breakdown.total, 'usd')}
+            </ValueWithPercentageChange>
+          </span>
+        ) : (
+          <NoDataBadge />
+        )
+      }
     />,
-    <ProjectStat
+    <ProjectSummaryStat
       key="ops-count"
-      title="Past day UOPS"
+      title={
+        <div>
+          <span className="lg:max-xl:hidden">Past day UOPS</span>
+          <span className="max-lg:hidden xl:hidden">Daily UOPS</span>
+        </div>
+      }
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
-            className="font-medium leading-none! md:font-bold md:text-lg"
-            changeClassName="md:text-base md:font-medium leading-none!"
+            className="font-medium! text-base! leading-[100%]!"
+            changeClassName="text-label-value-15 font-medium"
           >
             {project.header.activity.lastDayUops.toFixed(2)}
           </ValueWithPercentageChange>
@@ -49,16 +86,8 @@ export function ProjectScalingStats({ project, className }: Props) {
         )
       }
     />,
-
-    project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
-      <ProjectStat
-        key="gas-tokens"
-        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
-        value={project.header.gasTokens.join(', ')}
-      />
-    ) : undefined,
     project.stageConfig.stage !== 'NotApplicable' ? (
-      <ProjectStat
+      <ProjectSummaryStat
         key="stage"
         title="Stage"
         className="md:gap-2.5"
@@ -74,26 +103,33 @@ export function ProjectScalingStats({ project, className }: Props) {
         }
       />
     ) : undefined,
-    <ProjectStat
+    project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
+      <ProjectSummaryStat
+        key="gas-tokens"
+        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
+        value={project.header.gasTokens.join(', ')}
+      />
+    ) : undefined,
+    <ProjectSummaryStat
       key="type"
       title="Type"
       value={<TypeInfo>{project.header.category}</TypeInfo>}
     />,
 
-    <ProjectStat
+    <ProjectSummaryStat
       key="purpose"
       title={pluralize(project.header.purposes.length, 'Purpose')}
       value={project.header.purposes.join(', ')}
     />,
     project.header.hostChain ? (
-      <ProjectStat
+      <ProjectSummaryStat
         key="host-chain"
         title="Host chain"
         value={project.header.hostChain}
       />
     ) : undefined,
     project.header.chainId ? (
-      <ProjectStat
+      <ProjectSummaryStat
         key="chain-id"
         title="Chain ID"
         value={project.header.chainId}
@@ -101,13 +137,15 @@ export function ProjectScalingStats({ project, className }: Props) {
     ) : undefined,
   ])
 
-  const GROUPS = 4
-  const partitioned = chunk(stats, GROUPS)
+  const groups = stats.length > 4 ? 4 : 3
+  const partitioned = chunk(stats, groups)
 
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5',
+        'grid h-fit grid-cols-1 gap-x-6 gap-y-3',
+        groups === 3 && 'md:grid-cols-3',
+        groups === 4 && 'md:grid-cols-4',
         className,
       )}
     >
@@ -126,48 +164,5 @@ export function ProjectScalingStats({ project, className }: Props) {
         )
       })}
     </div>
-  )
-}
-
-interface ProjectStat {
-  title: string
-  value: ReactNode
-  tooltip?: string
-  className?: string
-  valueClassName?: string
-}
-
-function ProjectStat(props: ProjectStat) {
-  return (
-    <li
-      key={props.title}
-      className={cn(
-        'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
-        props.className,
-      )}
-    >
-      <div className="flex flex-row gap-1.5">
-        <span className="text-secondary text-xs leading-normal">
-          {props.title}
-        </span>
-        {props.tooltip && (
-          <Tooltip>
-            <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 md:size-3.5" variant="gray" />
-            </TooltipTrigger>
-            <TooltipContent>{props.tooltip}</TooltipContent>
-          </Tooltip>
-        )}
-      </div>
-
-      <span
-        className={cn(
-          'font-medium text-lg leading-none! md:font-bold',
-          props.valueClassName,
-        )}
-      >
-        {props.value}
-      </span>
-    </li>
   )
 }

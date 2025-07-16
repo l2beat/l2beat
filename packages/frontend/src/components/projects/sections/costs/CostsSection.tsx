@@ -23,7 +23,7 @@ export function CostsSection({
 }: CostsSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <p className="text-base">
+      <p className="text-paragraph-15 md:text-paragraph-16">
         The section shows the operating costs that L2s pay to Ethereum.
       </p>
       <HorizontalSeparator className="my-4" />

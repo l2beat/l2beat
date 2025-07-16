@@ -23,7 +23,7 @@ export function UsedInProjectEntry({
   implementations: UsedInProject[]
 }) {
   return (
-    <div className="mt-2 flex flex-row items-center">
+    <div className="mt-2 flex flex-row items-center text-paragraph-15 md:text-paragraph-16">
       <div className="flex flex-row flex-wrap items-center">
         <strong className="whitespace-nowrap text-primary">{label}: </strong>
         {implementations.map((project, i) => (
