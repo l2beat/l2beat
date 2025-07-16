@@ -15,13 +15,10 @@ export async function getCostsSection(
   if (!trackedTransactions) return undefined
 
   const range = project.archivedAt ? 'max' : '1y'
-  const data =
-    project.scalingInfo.layer === 'layer2'
-      ? await helpers.costs.projectChart.fetch({
-          range: '1y',
-          projectId: project.id,
-        })
-      : undefined
+  const data = await helpers.costs.projectChart.fetch({
+    range,
+    projectId: project.id,
+  })
 
   if (!data || data.chart.length === 0) return undefined
 

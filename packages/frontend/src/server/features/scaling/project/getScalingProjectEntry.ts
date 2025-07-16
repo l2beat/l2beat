@@ -133,6 +133,9 @@ export async function getScalingProjectEntry(
     liveness,
     daSolution,
     contractUtils,
+    stackedTvsSection,
+    activitySection,
+    costsSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -141,6 +144,11 @@ export async function getScalingProjectEntry(
     getLiveness(project.id),
     getScalingDaSolution(project),
     getContractUtils(),
+    getStackedTvsSection(helpers, project),
+    getActivitySection(helpers, project),
+    project.scalingInfo.layer === 'layer2'
+      ? getCostsSection(helpers, project)
+      : undefined,
   ])
   const projectLiveness = liveness[project.id]
 
@@ -271,7 +279,6 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  const stackedTvsSection = await getStackedTvsSection(helpers, project)
   if (!project.isUpcoming && stackedTvsSection && tvsProjectStats) {
     sections.push({
       type: 'StackedTvsSection',
@@ -289,7 +296,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const activitySection = await getActivitySection(helpers, project)
   if (activitySection) {
     sections.push({
       type: 'ActivitySection',
@@ -305,7 +311,6 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const costsSection = await getCostsSection(helpers, project)
   if (!project.isUpcoming && costsSection) {
     sections.push({
       type: 'CostsSection',
