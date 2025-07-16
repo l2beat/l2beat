@@ -4,7 +4,7 @@ import {
   formatSeconds,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { SOA } from '../../common'
+import { EXITS, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -218,6 +218,36 @@ The permissioned sanctions logic by KYC providers necessitates at least an ${for
           {
             title: 'User Owned KYC - Kinto documentation',
             url: 'https://docs.kinto.xyz/kinto-the-safe-l2/security-kyc-aml/how-does-kinto-solve-it',
+          },
+        ],
+      },
+    ],
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR_MESSAGING('optimistic'),
+        references: [
+          {
+            title: 'Transaction lifecycle - Arbitrum documentation',
+            url: 'https://developer.offchainlabs.com/tx-lifecycle',
+          },
+          {
+            title: 'L2 to L1 Messages - Arbitrum documentation',
+            url: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
+          },
+          {
+            title: 'Mainnet for everyone - Arbitrum Blog',
+            url: 'https://offchain.medium.com/mainnet-for-everyone-27ce0f67c85e',
+          },
+        ],
+        risks: [],
+      },
+      {
+        ...EXITS.AUTONOMOUS,
+        references: [
+          ...EXITS.AUTONOMOUS.references,
+          {
+            title: 'List of whitelisted Kinto validators',
+            url: 'https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/kinto-validators',
           },
         ],
       },
