@@ -43,6 +43,10 @@ export function Markdown(props: MarkdownProps) {
   )
   const collapsed = processCollapsibleText(rendered)
 
+  if (collapsed.includes('h3')) {
+    console.log('h3 detected')
+  }
+
   return (
     <Comp
       className={cn('mdc', props.className)}

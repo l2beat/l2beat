@@ -87,8 +87,8 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       )}
       <span
         className={cn(
-          'text-heading-24',
-          props.nested && 'text-heading-20 leading-none!',
+          'text-heading-28',
+          props.nested && 'text-heading-24 leading-none!',
         )}
       >
         {props.title}

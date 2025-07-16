@@ -56,18 +56,18 @@ export function StageOneRequirementsChangeStageSectionNotice({
       <div>
         <p className="font-bold text-lg">New requirements coming soon</p>
         <Countdown expiresAt={downgradePending.expiresAt} size="sm" />
-        <div className="mt-4 font-medium text-base">
+        <div className="mt-4 font-medium text-paragraph-15 md:text-paragraph-16">
           The project will be downgraded to{' '}
           <StageBadge stage="Stage 0" isAppchain={false} className="inline" />{' '}
           because it does not satisfy an upcoming Stage 1 principle.
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 text-paragraph-15 md:text-paragraph-16">
           <MissingIcon className="mt-[5px] size-4 shrink-0 fill-negative" />
           <span>{downgradePending.reason}</span>
         </div>{' '}
         <CustomLink
           href={externalLinks.articles.stageOneRequirementsChange}
-          className="mt-2.5 flex items-center gap-1 font-bold text-base"
+          className="mt-4 flex items-center gap-1 font-bold text-paragraph-14"
         >
           Learn more about the new requirements <ArrowRightIcon />
         </CustomLink>
