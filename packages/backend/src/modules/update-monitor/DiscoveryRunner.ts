@@ -323,7 +323,7 @@ function remapNames(
     }
 
     const matchingEntry = discoveryOutput.entries.find(
-      (e) => ChainSpecificAddress.address(e.address) === entry.address,
+      (e) => e.address === entry.address,
     )
 
     if (!matchingEntry) {
