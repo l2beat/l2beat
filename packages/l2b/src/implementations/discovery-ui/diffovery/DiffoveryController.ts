@@ -11,7 +11,7 @@ import {
 } from '@l2beat/discovery'
 import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
 
 export class DiffoveryController {
@@ -37,12 +37,10 @@ export class DiffoveryController {
     return this.allProviders.get(chain, blockNumber)
   }
 
-  async handle(
-    chain: string,
-    address: EthereumAddress,
-  ): Promise<Record<string, string>> {
+  async handle(address: ChainSpecificAddress): Promise<Record<string, string>> {
+    const chain = ChainSpecificAddress.chain(address)
     const client = await this.getClient(chain)
-    const cacheKey = `${chain}:${address.toString()}`
+    const cacheKey = address.toString()
     const cached = this.cache.get(cacheKey)
     if (cached !== undefined) {
       return cached

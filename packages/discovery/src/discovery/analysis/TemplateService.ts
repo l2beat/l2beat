@@ -1,6 +1,7 @@
 import {
   assert,
   ChainSpecificAddress,
+  EthereumAddress,
   formatJson,
   Hash256,
 } from '@l2beat/shared-pure'
@@ -345,7 +346,7 @@ export class TemplateService {
   addToShape(
     templateId: string,
     chain: string,
-    addresses: ChainSpecificAddress[],
+    addresses: EthereumAddress[],
     fileName: string,
     blockNumber: number,
     sources: ContractSource[],
@@ -375,11 +376,10 @@ export class TemplateService {
       return
     }
 
-    const rawAddresses = addresses.map((a) => ChainSpecificAddress.address(a))
     shapes[fileName] = {
       hash: masterHash,
       // biome-ignore lint/style/noNonNullAssertion: just checked
-      address: rawAddresses.length > 1 ? rawAddresses : rawAddresses[0]!,
+      address: addresses.length > 1 ? addresses : addresses[0]!,
       chain,
       blockNumber,
     }
