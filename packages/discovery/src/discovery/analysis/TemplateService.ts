@@ -1,7 +1,7 @@
 import {
   assert,
-  ChainSpecificAddress,
-  EthereumAddress,
+  type ChainSpecificAddress,
+  type EthereumAddress,
   formatJson,
   Hash256,
 } from '@l2beat/shared-pure'
