@@ -33,22 +33,18 @@ import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 
+const daBridges = refactored.filter((p) => p.daBridge)
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
-  const daBridges = refactored.filter((p) => p.daBridge)
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], daBridges)))
-    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges)))
-    .concat(bridges.map((p) => bridgeToProject(p)))
+    .concat(layer2s.map(layer2Or3ToProject))
+    .concat(layer3s.map(layer2Or3ToProject))
+    .concat(bridges.map(bridgeToProject))
     .concat(ecosystems)
 }
 
-function layer2Or3ToProject(
-  p: ScalingProject,
-  layer2s: ScalingProject[],
-  daBridges: BaseProject[],
-): BaseProject {
+function layer2Or3ToProject(p: ScalingProject): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -57,7 +53,8 @@ function layer2Or3ToProject(
     addedAt: p.addedAt,
 
     // data
-    colors: p.colors,
+    colors:
+      p.colors ?? ecosystems.find((e) => e.id === p.ecosystemInfo?.id)?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
@@ -173,6 +170,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p),
     },
+    colors: p.colors,
     display: {
       description: p.display.description,
       links: p.display.links,
