@@ -104,7 +104,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             ))}
           </div>
           {contract.description && (
-            <Markdown className="word-break-word mt-2 text-paragraph-15 leading-snug md:text-paragraph-16">
+            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
               {contract.description}
             </Markdown>
           )}

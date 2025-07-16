@@ -32,7 +32,7 @@ function Item(props: { title: string; children: string }) {
   return (
     <div>
       <span className="text-heading-20">{props.title}</span>
-      <Markdown className="mt-2 text-paragraph-15 leading-snug md:text-paragraph-16">
+      <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
         {props.children}
       </Markdown>
     </div>
