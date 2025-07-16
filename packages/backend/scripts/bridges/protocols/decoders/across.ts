@@ -114,7 +114,6 @@ const BRIDGES = [
     chainShortName: 'base',
     address: EthereumAddress('0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64'),
   },
-
   {
     chainId: 57073,
     chainShortName: 'ink',
