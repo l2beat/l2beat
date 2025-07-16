@@ -9511,6 +9511,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "ABSTER",
+      "coingeckoId": "abster",
+      "address": "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5",
+      "symbol": "ABSTER",
+      "decimals": 18,
+      "deploymentTimestamp": 1738040822,
+      "coingeckoListingTimestamp": 1740614400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54607/large/AbsterCoingecko.png?1740646344",
+      "chainId": 2741,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Bridged USDC (Stargate)",
       "coingeckoId": "usd-coin",
       "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
@@ -9528,6 +9542,56 @@
           {
             "name": "Stargate v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Noot Noot",
+      "coingeckoId": "noot-noot",
+      "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",
+      "symbol": "NOOT",
+      "decimals": 18,
+      "deploymentTimestamp": 1738021846,
+      "coingeckoListingTimestamp": 1739145600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54308/large/Screenshot_2025-01-28_132602-remove-background.com_%282%29.png?1739189556",
+      "chainId": 2741,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Pengus Wife",
+      "coingeckoId": "pengus-wife",
+      "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
+      "symbol": "Polly",
+      "decimals": 18,
+      "deploymentTimestamp": 1743142309,
+      "coingeckoListingTimestamp": 1747699200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55914/large/Polly_Official_PFP.jpg?1747708551",
+      "chainId": 2741,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Pudgy Penguins",
+      "coingeckoId": "pudgy-penguins",
+      "address": "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62",
+      "symbol": "PENGU",
+      "decimals": 18,
+      "deploymentTimestamp": 1737458169,
+      "coingeckoListingTimestamp": 1734393600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52622/large/PUDGY_PENGUINS_PENGU_PFP.png?1733809110",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
