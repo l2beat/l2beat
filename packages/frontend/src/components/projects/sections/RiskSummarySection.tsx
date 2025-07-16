@@ -4,6 +4,7 @@ import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
 import { WarningBar } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
+import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
@@ -76,7 +77,10 @@ export function RiskSummarySection({
 export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
   return risks.map((group, i) => (
     <div
-      className="not-first:mt-4 text-paragraph-15 md:text-paragraph-16"
+      className={cn(
+        'text-paragraph-15 md:text-paragraph-16',
+        i !== 0 && 'mt-4',
+      )}
       key={i}
     >
       <h3 className="font-bold text-red-300">{group.name}</h3>

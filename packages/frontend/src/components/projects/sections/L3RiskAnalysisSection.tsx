@@ -101,7 +101,7 @@ export function L3RiskAnalysisSection({
         </RosetteTile>
       </div>
       <HorizontalSeparator className="mt-6 mb-7" />
-      <div className="mb-4 font-bold text-xl text-zinc-800 md:text-[28px] dark:text-white">
+      <div className="mb-4 text-heading-24 text-zinc-800 dark:text-white">
         L3 {combined ? 'combined' : 'individual'} risks
       </div>
       <div className="mb-4 text-black/80 text-paragraph-15 md:text-paragraph-16 dark:text-white/80">

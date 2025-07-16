@@ -74,7 +74,8 @@ export function DaRiskSummarySection({
       {bridge.risks.length > 0 && (
         <div className="flex flex-col gap-2">
           <span className="font-medium text-xs text-zinc-500 uppercase dark:text-gray-50">
-            {bridge.name} risks
+            {bridge.name}
+            {bridge.name === layer.name ? ' bridge' : ''} risks
           </span>
           {!bridge.isVerified && (
             <WarningBar
