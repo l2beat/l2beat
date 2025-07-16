@@ -89,18 +89,18 @@ export const sp1: BaseProject = {
         `,
     trustedSetups: [
       {
-        snarkProofSystem: ZK_CATALOG_TAGS.SNARK.PlonkGnark,
+        snarkProofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         setups: [TRUSTED_SETUPS.AztecIgnition],
       },
       {
-        snarkProofSystem: ZK_CATALOG_TAGS.SNARK.Groth16Gnark,
+        snarkProofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         setups: [TRUSTED_SETUPS.SP1Groth16],
       },
     ],
     verifierHashes: [
       {
         hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
-        proofSystem: ZK_CATALOG_TAGS.SNARK.PlonkGnark,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           'https://etherscan.io/address/0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
           'https://etherscan.io/address/0xFF5Adab685362DC4C33536a65aF5873738D1216B',
@@ -126,7 +126,7 @@ export const sp1: BaseProject = {
       },
       {
         hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
-        proofSystem: ZK_CATALOG_TAGS.SNARK.PlonkGnark,
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           'https://etherscan.io/address/0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
         ],
@@ -142,7 +142,7 @@ export const sp1: BaseProject = {
       },
       {
         hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
-        proofSystem: ZK_CATALOG_TAGS.SNARK.Groth16Gnark,
+        proofSystem: ZK_CATALOG_TAGS.Groth16.Gnark,
         knownDeployments: [
           'https://etherscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
           'https://arbiscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
