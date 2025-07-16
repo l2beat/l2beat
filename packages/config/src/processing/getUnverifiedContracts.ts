@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import type {
   BaseProject,
@@ -27,7 +27,7 @@ function getUnverifiedPermissions(
     .flatMap((p) =>
       p.accounts.map((a) => ({
         chain: p.chain,
-        address: a.address,
+        address: ChainSpecificAddress.address(a.address),
         isVerified: a.isVerified,
       })),
     )
@@ -56,7 +56,7 @@ function getUnverifiedDaLayerContracts(
     .flatMap((p) =>
       p.accounts.map((a) => ({
         chain: p.chain,
-        address: a.address,
+        address: ChainSpecificAddress.address(a.address),
         isVerified: a.isVerified,
       })),
     )
