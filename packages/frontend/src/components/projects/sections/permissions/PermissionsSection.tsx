@@ -6,6 +6,7 @@ import {
   ContractsWithImpactfulChanges,
   technologyContractKey,
 } from '../ContractEntry'
+import { ChainNameHeader } from '../contracts/ContractsSection'
 import { PermissionedEntityEntry } from '../PermissionedEntityEntry'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
@@ -48,13 +49,10 @@ export function PermissionsSection({
           )
           return (
             <div key={chain} className="mt-8">
-              <div className="flex items-baseline gap-3">
-                <h3 className="whitespace-pre font-bold text-2xl">{chain}</h3>
-                <div className="w-full border-divider border-b-2" />
-              </div>
+              <ChainNameHeader>{chain}</ChainNameHeader>
               {permissions.roles.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="font-bold text-xl">Roles:</h4>
+                  <h4 className="text-heading-18">Roles:</h4>
                   {unchangedRoles.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}
@@ -72,7 +70,7 @@ export function PermissionsSection({
               )}
               {permissions.actors.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="font-bold text-xl">Actors:</h4>
+                  <h4 className="text-heading-18">Actors:</h4>
                   {unchangedActors.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}

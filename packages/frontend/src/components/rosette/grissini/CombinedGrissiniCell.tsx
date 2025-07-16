@@ -6,7 +6,7 @@ import {
 import type { RosetteValue } from '../types'
 import { GrissiniDetails } from './GrissiniDetails'
 import { GrissiniIcon } from './GrissiniIcon'
-import { InlinedNoBridgeGrissiniDetailsPlaceholder } from './NoBridgeGrissiniDetailsPlaceholder'
+import { NoBridgeGrissiniDetailsPlaceholder } from './NoBridgeGrissiniDetailsPlaceholder'
 
 interface Props {
   daLayerRisks: RosetteValue[]
@@ -25,21 +25,14 @@ export function CombinedGrissiniCell({ daLayerRisks, daBridgeRisks }: Props) {
         <p className="font-bold">DA Risks</p>
         <div>
           <p className="mb-1 font-medium text-secondary">DA LAYER RISKS</p>
-          <GrissiniDetails values={daLayerRisks} size="small" info="compact" />
+          <GrissiniDetails values={daLayerRisks} info="compact" />
         </div>
         <div>
           <p className="mb-1 font-medium text-secondary">DA BRIDGE RISKS</p>
           {hasNoBridge ? (
-            <InlinedNoBridgeGrissiniDetailsPlaceholder
-              contentClassName="md:items-start"
-              size="small"
-            />
+            <NoBridgeGrissiniDetailsPlaceholder />
           ) : (
-            <GrissiniDetails
-              values={daBridgeRisks}
-              size="small"
-              info="compact"
-            />
+            <GrissiniDetails values={daBridgeRisks} info="compact" />
           )}
         </div>
       </TooltipContent>

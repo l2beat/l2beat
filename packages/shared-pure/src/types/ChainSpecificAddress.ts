@@ -12,37 +12,49 @@ import { EthereumAddress } from './EthereumAddress'
 // NOTE(radomski): This is a little stupid. Ideally we would have a centralized
 // list of all chains with their short names. But currently I don't know how to
 // achieve that.
-const SHORT_CHAIN_NAMES = new Set([
-  'eth',
-  'arb1',
-  'arb-nova',
-  'oeth',
-  'matic',
-  'bnb',
-  'avax',
-  'celo',
-  'linea',
-  'base',
-  'zkevm',
-  'gno',
-  'zksync',
-  'sep',
-  'scr',
-  'mantle',
-  'metis-andromeda',
-  'boba',
-  'mode',
-  'zora',
-  'manta',
-  'blastmainnet',
-  'kinto',
-  'unichain',
-  'ink',
-  'everclear',
-  'zircuit',
-] as const)
+const SHORT_TO_LONG_CHAIN_NAMES = {
+  eth: 'ethereum',
+  arb1: 'arbitrum',
+  'arb-nova': 'nova',
+  oeth: 'optimism',
+  matic: 'polygonpos',
+  bnb: 'bsc',
+  avax: 'avalanche',
+  celo: 'celo',
+  linea: 'linea',
+  base: 'base',
+  zkevm: 'polygonzkevm',
+  gno: 'gnosis',
+  zksync: 'zksync2',
+  sep: 'sepolia',
+  scr: 'scroll',
+  mantle: 'mantle',
+  'metis-andromeda': 'metis',
+  boba: 'bobanetwork',
+  mode: 'mode',
+  zora: 'zora',
+  manta: 'mantapacific',
+  blastmainnet: 'blast',
+  kinto: 'kinto',
+  unichain: 'unichain',
+  ink: 'ink',
+  everclear: 'everclear',
+  zircuit: 'zircuit',
+  katana: 'katana',
+} as const
 
-export type SHORT_CHAIN_NAME = Parameters<typeof SHORT_CHAIN_NAMES.has>[0]
+const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
+  Object.entries(SHORT_TO_LONG_CHAIN_NAMES).map(([short, long]) => [
+    long,
+    short,
+  ]),
+) as Record<LONG_CHAIN_NAME, SHORT_CHAIN_NAME>
+
+type SHORT_CHAIN_NAME = keyof typeof SHORT_TO_LONG_CHAIN_NAMES
+type LONG_CHAIN_NAME =
+  (typeof SHORT_TO_LONG_CHAIN_NAMES)[keyof typeof SHORT_TO_LONG_CHAIN_NAMES]
+
+const SHORT_CHAIN_NAMES = new Set(Object.keys(SHORT_TO_LONG_CHAIN_NAMES))
 
 export type ChainSpecificAddress = string & {
   _ChainSpecificAddressBrand: string
@@ -85,6 +97,15 @@ ChainSpecificAddress.from = function from(
   return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
 }
 
+ChainSpecificAddress.fromLong = function from(
+  longChainName: string,
+  pureAddress: string | EthereumAddress,
+) {
+  const shortChainName =
+    LONG_TO_SHORT_CHAIN_NAMES[longChainName as LONG_CHAIN_NAME]
+  return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
+}
+
 ChainSpecificAddress.address = function address(
   value: ChainSpecificAddress,
 ): EthereumAddress {
@@ -93,6 +114,13 @@ ChainSpecificAddress.address = function address(
 
 ChainSpecificAddress.chain = function chain(
   value: ChainSpecificAddress,
-): string {
-  return value.slice(0, value.indexOf(':'))
+): SHORT_CHAIN_NAME {
+  return value.slice(0, value.indexOf(':')) as unknown as SHORT_CHAIN_NAME
+}
+
+ChainSpecificAddress.longChain = function longChain(
+  value: ChainSpecificAddress,
+): LONG_CHAIN_NAME {
+  const short = ChainSpecificAddress.chain(value)
+  return SHORT_TO_LONG_CHAIN_NAMES[short]
 }

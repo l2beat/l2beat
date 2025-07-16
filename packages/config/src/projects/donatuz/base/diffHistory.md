@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xcfd6d25d958c78970b015ddf2a4d4fdc12bee854
+
+# Diff at Tue, 15 Jul 2025 11:24:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 30898189
+- current block number: 32894143
+
+## Description
+
+archive this disco (project archived).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xa096dD38362bd2cE3C696474329989960722A7Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingEigenDA:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x6b65119d166e5b65ad88f3cc52dacace0f88770f
 
 # Diff at Mon, 14 Jul 2025 12:44:29 GMT:

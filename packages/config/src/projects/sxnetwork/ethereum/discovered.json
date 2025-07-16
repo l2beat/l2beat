@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 22122792,
+  "blockNumber": 22923598,
   "configHash": "0xac2ef9d555b563a2afd37f77b7af9471815d63451b01f4c54a14d69b6415d61c",
   "entries": [
     {
@@ -208,13 +208,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 556,
+        "firstUnresolvedNode": 780,
         "inbox": "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895273,
-        "latestConfirmed": 555,
-        "latestNodeCreated": 555,
+        "latestConfirmed": 779,
+        "latestNodeCreated": 779,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
@@ -371,6 +371,11 @@
     },
     {
       "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -588,7 +593,7 @@
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
         ],
         "allowedOutboxList": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
-        "delayedMessageCount": 352,
+        "delayedMessageCount": 546,
         "inboxHistory": [
           "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3"
@@ -598,8 +603,8 @@
         "outboxHistory": ["eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d"],
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerInbox": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
-        "sequencerMessageCount": 692,
-        "sequencerReportedSubMessageCount": 3224913
+        "sequencerMessageCount": 916,
+        "sequencerReportedSubMessageCount": 4364408
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -624,11 +629,6 @@
         "eth:0xEfA1De858293593732a09c9dAA238BEC49595751": "ERC20Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Outbox",
@@ -844,21 +844,20 @@
         "$members": [
           "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
-          "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 36,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -957,7 +956,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 692,
+        "batchCount": 916,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -994,7 +993,7 @@
         "rollup": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 352,
+        "totalDelayedMessagesRead": 546,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1045,7 +1044,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 289,
+        "nonce": 513,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1186,11 +1185,6 @@
           "role": ".batchPosters"
         }
       ]
-    },
-    {
-      "address": "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1901,5 +1895,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x15823f705b6ba132f660a5004cb736bf90a93a8dd547c29c2e4461c6a0441a0d"
+  "permissionsConfigHash": "0xba06cc4477cd3666917e2aac5957799314bb2b673315e1bd03e269606baacfae"
 }

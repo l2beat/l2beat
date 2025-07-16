@@ -7,8 +7,6 @@ import {
   useRef,
   useState,
 } from 'react'
-
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Select,
   SelectContent,
@@ -44,16 +42,26 @@ export function DesktopProjectNavigation({
 }: ProjectNavigationProps) {
   const router = useRouter()
   const pathname = usePathname()
+
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()
+  const [isHeaderShown, setIsHeaderShown] = useState(false)
   const currentSection = useCurrentSection()
-  const isSummarySection = currentSection && currentSection.id === 'summary'
 
   useEffect(() => {
     const header = headerRef.current
     if (!header) return
 
     setHeaderHeight(header.getBoundingClientRect().height)
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsHeaderShown(window.scrollY > 50)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const style = useMemo(() => {
@@ -64,33 +72,33 @@ export function DesktopProjectNavigation({
   }, [headerHeight])
 
   return (
-    <div className="sticky top-8">
+    <div className="sticky top-8 w-[172px] min-w-[172px]">
       <div className="relative">
         <div
           ref={headerRef}
           className={cn(
             '-z-1 opacity-0 transition-opacity duration-300',
-            isSummarySection === false && 'opacity-100',
+            isHeaderShown && 'opacity-100',
           )}
         >
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-2">
             {project.slug && (
               <img
-                width={32}
-                height={32}
+                width={24}
+                height={24}
                 src={project.icon}
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="font-bold text-xl lg:text-2xl">
+            <span className="font-bold text-label-value-18">
               {project.title}
             </span>
           </div>
           {project.isUnderReview && (
-            <UnderReviewCallout small className="mt-2" />
+            <UnderReviewCallout withoutDescription className="mt-2" />
           )}
           {projectVariants && projectVariants.length > 1 && (
-            <div className="mt-2 pl-12">
+            <div className="mt-2">
               <Select
                 defaultValue={
                   projectVariants.find((v) => pathname.startsWith(v.href))?.href
@@ -112,13 +120,13 @@ export function DesktopProjectNavigation({
               </Select>
             </div>
           )}
-          <HorizontalSeparator className="my-4" />
         </div>
 
         <ProjectNavigationList
           sections={sections}
           isUnderReview={project.isUnderReview}
-          style={isSummarySection === false ? style : undefined}
+          currentSection={currentSection}
+          style={isHeaderShown ? style : undefined}
         />
       </div>
     </div>
@@ -129,13 +137,14 @@ function ProjectNavigationList({
   sections,
   isUnderReview,
   style,
+  currentSection,
 }: Pick<ProjectNavigationProps, 'sections'> & {
   isUnderReview: boolean | undefined
+  currentSection: HTMLElement | undefined
   style?: CSSProperties
 }) {
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
-  const currentSection = useCurrentSection()
 
   const scrollToItem = useCallback(
     (item: HTMLElement, overflowingContainer: HTMLElement) =>
@@ -156,7 +165,7 @@ function ProjectNavigationList({
   return (
     <div
       className={cn(
-        'absolute top-0 flex w-[246px] min-w-[246px] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 overflow-y-auto font-medium text-xs leading-none transition-[top] duration-300',
         isUnderReview
           ? 'max-h-[calc(100vh-300px)]'
           : 'max-h-[calc(100vh-220px)]',
@@ -167,11 +176,13 @@ function ProjectNavigationList({
       <a
         href="#"
         className={cn(
-          'flex flex-row items-center gap-3 transition-opacity hover:opacity-100',
-          currentSection && currentSection.id !== 'summary' && 'opacity-60',
+          'flex flex-row items-center gap-1.5 transition-colors hover:text-primary',
+          currentSection && currentSection.id === 'summary'
+            ? 'text-primary'
+            : 'text-secondary',
         )}
       >
-        <SummaryIcon className="size-6" />
+        <SummaryIcon className="size-5" />
         Summary
       </a>
       {sections.map((section, i) => {
@@ -186,13 +197,17 @@ function ProjectNavigationList({
             <a
               href={`#${section.id}`}
               ref={selected ? currentMenuEntry : null}
-              className={cn(
-                'flex flex-row items-center transition-opacity hover:opacity-100',
-                !selected && 'opacity-60',
-              )}
+              className="group flex flex-row items-center gap-1.5"
             >
               <NavigationListIndex index={i + 1} selected={selected} />
-              <span className="ml-3">{section.title}</span>
+              <span
+                className={cn(
+                  'text-label-value-14 hover:text-primary',
+                  selected ? 'text-primary' : 'text-secondary',
+                )}
+              >
+                {section.title}
+              </span>
             </a>
             {section.subsections && (
               <div className="flex flex-col">
@@ -216,10 +231,10 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-6 shrink-0 items-center justify-center rounded-lg text-center font-bold text-xs',
+        'flex size-5 shrink-0 items-center justify-center rounded text-center text-label-value-12',
         props.selected
           ? 'bg-linear-to-r from-purple-100 to-pink-100 text-white'
-          : 'bg-surface-tertiary',
+          : 'bg-surface-tertiary text-secondary group-hover:text-primary',
       )}
     >
       <span>{props.index}</span>

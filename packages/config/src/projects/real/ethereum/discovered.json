@@ -1,7 +1,7 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 22122783,
+  "blockNumber": 22923592,
   "configHash": "0x6ad32e91b962a22c2bc532ebeeae75ccb79c667219c4f8736b3f1c953fcaf1d9",
   "entries": [
     {
@@ -75,7 +75,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 602,
+        "nonce": 1018,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -284,7 +284,7 @@
           "eth:0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
         ],
         "allowedOutboxList": ["eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
-        "delayedMessageCount": 5302,
+        "delayedMessageCount": 5357,
         "inboxHistory": [
           "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
           "eth:0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
@@ -294,8 +294,8 @@
         "outboxHistory": ["eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
         "rollup": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 3718,
-        "sequencerReportedSubMessageCount": 1505129
+        "sequencerMessageCount": 4133,
+        "sequencerReportedSubMessageCount": 1611275
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -455,7 +455,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 3718,
+        "batchCount": 4133,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -492,7 +492,7 @@
         "rollup": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 5302,
+        "totalDelayedMessagesRead": 5357,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -509,6 +509,11 @@
     },
     {
       "address": "eth:0x547D0F472309e4239b296D01e03bEDc101241a26",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -536,15 +541,15 @@
       "values": {
         "$immutable": true,
         "assetsVault": "eth:0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "246687829197986082466",
-        "getAllStrategyPendingValue": 0,
+        "getAllStrategiesValue": "97182931369002469943",
+        "getAllStrategyPendingValue": "18073921517358732",
         "getStrategies": {
           "addrs": ["eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
         "getTotalInvestedValue": {
-          "_value": "246687829197986082466",
-          "strategiesValue": ["246687829197986082466"]
+          "_value": "97164857447485111211",
+          "strategiesValue": ["97164857447485111211"]
         },
         "realVault": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -565,7 +570,7 @@
       "sinceBlock": 19443364,
       "values": {
         "$immutable": true,
-        "getTokenPrice": "1026779748147319377",
+        "getTokenPrice": "1035924751160132408",
         "real": "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
       },
@@ -590,9 +595,29 @@
       "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
-        "getInvestedValue": "246687829197986082466",
-        "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
-        "getTotalValue": "246687829197986082466",
+        "getInvestedValue": "97164857447485111211",
+        "getStETHWithdrawalStatus": {
+          "requestIds": [86017, 85909],
+          "statuses": [
+            {
+              "amountOfStETH": "13931140864770212",
+              "amountOfShares": "11532491708906402",
+              "owner": "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6",
+              "timestamp": 1752380411,
+              "isFinalized": false,
+              "isClaimed": false
+            },
+            {
+              "amountOfStETH": 4142780652588520,
+              "amountOfShares": 3429734567737457,
+              "owner": "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6",
+              "timestamp": 1752293711,
+              "isFinalized": false,
+              "isClaimed": false
+            }
+          ]
+        },
+        "getTotalValue": "97182931369002469943",
         "governance": "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -785,11 +810,6 @@
       }
     },
     {
-      "address": "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
       "proxyType": "EOA"
@@ -920,21 +940,20 @@
         "$members": [
           "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
-          "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 36,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -991,8 +1010,8 @@
         "minter": "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
         "symbol": "reETH",
-        "tokenPrice": "1026779748147319377",
-        "totalSupply": "242145865631498095533"
+        "tokenPrice": "1035924751160132408",
+        "totalSupply": "104297306087992713822"
       },
       "implementationNames": {
         "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421": "Real"
@@ -1065,13 +1084,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 3210,
+        "firstUnresolvedNode": 3626,
         "inbox": "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21903159,
-        "latestConfirmed": 3209,
-        "latestNodeCreated": 3209,
+        "latestConfirmed": 3625,
+        "latestNodeCreated": 3625,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -1414,11 +1433,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "AssetsVault",
       "address": "eth:0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
       "type": "Contract",
@@ -1432,7 +1446,7 @@
       "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
-        "getBalance": "1918321993704130620",
+        "getBalance": "10799189311380572543",
         "realVault": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
@@ -1471,7 +1485,7 @@
       "values": {
         "$immutable": true,
         "assetsVault": "eth:0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1026779748147319377",
+        "currentSharePrice": "1035924751160132408",
         "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
         "minter": "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "minWithdrawableShares": 100,
@@ -1479,13 +1493,13 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "proposal": "eth:0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
         "real": "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1742877011,
+        "rebaseTime": 1752467147,
         "rebaseTimeInterval": 86400,
         "strategyManager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "1918321993704130620",
+        "withdrawableAmountInPast": "10817263232897931275",
         "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "1891975113010747144",
-        "withdrawingSharesInRound": 0
+        "withdrawingSharesInPast": "10502020920155801833",
+        "withdrawingSharesInRound": 5145000000000000
       },
       "implementationNames": {
         "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": "RealVault"
@@ -2590,5 +2604,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x3dfd633d314a17fbdc8c2340dfb7aea83cd70e3cf794593d7dd41279c3333973"
+  "permissionsConfigHash": "0x41c4b771f234d22f8c1921b000170983a3e133cd2fbf65ae954d2f6620b7d63b"
 }

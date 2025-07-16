@@ -1,17 +1,20 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ContentWrapper } from '~/components/ContentWrapper'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/ProjectDetails'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
+import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
-import { TopNavLayout } from '~/layouts/TopNavLayout'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
-import { BridgesMvpWarning } from './components/BridgesMvpWarning'
 import { BridgesProjectSummary } from './components/BridgesProjectSummary'
 
 interface Props extends AppLayoutProps {
@@ -32,42 +35,59 @@ export function BridgesProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <TopNavLayout>
-          <div className="smooth-scroll">
-            <BridgesMvpWarning className="w-full" />
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
+          <div className="smooth-scroll max-md:bg-surface-primary">
             {!isNavigationEmpty && (
-              <div className="sticky top-0 z-100 md:hidden">
+              <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <BridgesProjectSummary project={projectEntry} />
-            <ContentWrapper mobileFull>
-              {isNavigationEmpty ? (
-                <ProjectDetails items={projectEntry.sections} />
-              ) : (
-                <div className="gap-x-12 md:flex">
-                  <div className="mt-10 hidden w-[242px] shrink-0 md:block">
-                    <DesktopProjectNavigation
-                      project={{
-                        title: projectEntry.name,
-                        slug: projectEntry.slug,
-                        isUnderReview: !!projectEntry.underReviewStatus,
-                        icon: projectEntry.icon,
-                      }}
-                      sections={navigationSections}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <HighlightableLinkContextProvider>
-                      <ProjectDetails items={projectEntry.sections} />
-                    </HighlightableLinkContextProvider>
-                  </div>
+
+            <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-5">
+              <ProjectHeader project={projectEntry} />
+              <ProjectSummaryBars project={projectEntry} showBridgesWarning />
+
+              {projectEntry.header.description && (
+                <AboutSection
+                  description={projectEntry.header.description}
+                  className="md:hidden"
+                />
+              )}
+              <HorizontalSeparator className="md:!my-6 mt-4 md:hidden" />
+
+              <div className="mb-3 max-md:hidden">
+                <DesktopProjectLinks
+                  projectLinks={projectEntry.header.links}
+                  discoUiHref={projectEntry.discoUiHref}
+                />
+              </div>
+            </div>
+
+            <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+              <div className="w-full">
+                <BridgesProjectSummary project={projectEntry} />
+
+                <HighlightableLinkContextProvider>
+                  <ProjectDetails items={projectEntry.sections} />
+                </HighlightableLinkContextProvider>
+              </div>
+              {!isNavigationEmpty && (
+                <div className="mt-2 hidden shrink-0 lg:block">
+                  <DesktopProjectNavigation
+                    project={{
+                      title: projectEntry.shortName ?? projectEntry.name,
+                      slug: projectEntry.slug,
+                      isUnderReview: !!projectEntry.underReviewStatus,
+                      icon: projectEntry.icon,
+                    }}
+                    sections={navigationSections}
+                  />
                 </div>
               )}
-            </ContentWrapper>
+            </div>
             <ScrollToTopButton />
           </div>
-        </TopNavLayout>
+        </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
   )

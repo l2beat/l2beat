@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -62,11 +63,6 @@ export type ProjectRiskCategory =
 // #endregion
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
-
-export interface ProjectUnverifiedContract {
-  chain: string
-  address: EthereumAddress
-}
 
 export interface BaseProject {
   id: ProjectId
@@ -145,7 +141,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  unverifiedContracts: ProjectUnverifiedContract[]
+  unverifiedContracts: ChainSpecificAddress[]
 }
 
 export interface ProjectDisplay {
@@ -217,6 +213,13 @@ export interface ZkCatalogTag {
   type: ZkCatalogTagType
   name: string
   description: string
+}
+
+export interface TrustedSetup {
+  id: string
+  risk: 'green' | 'yellow' | 'red' | 'N/A'
+  shortDescription: string
+  longDescription: string
 }
 
 export interface Milestone {
@@ -754,14 +757,14 @@ export interface ProjectProofSystem {
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetup: {
-    risk: 'green' | 'yellow' | 'red'
-    shortDescription: string
-    longDescription: string
-  }
+  trustedSetups: {
+    snarkProofSystem: ZkCatalogTag
+    setups: TrustedSetup[]
+  }[]
   verifierHashes: {
     hash: string
-    explorerLink: string
+    proofSystem: ZkCatalogTag
+    knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
     verificationSteps?: string
@@ -954,7 +957,7 @@ export interface ProjectPermission {
 export interface ProjectPermissionedAccount {
   name: string
   url: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
 }
@@ -969,7 +972,7 @@ export interface ProjectContracts {
 
 export interface ProjectContract {
   /** Address of the contract */
-  address: EthereumAddress
+  address: ChainSpecificAddress
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
@@ -1002,8 +1005,8 @@ export interface ProjectContract {
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
+  admins: ChainSpecificAddress[]
+  implementations: ChainSpecificAddress[]
 }
 
 export interface ProjectUpgradeableActor {

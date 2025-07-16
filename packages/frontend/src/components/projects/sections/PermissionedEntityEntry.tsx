@@ -27,7 +27,7 @@ export function PermissionedEntityEntry({
             {entity.name}
           </CustomLink>
           {entity.key && (
-            <div className="mt-1 flex items-center justify-center gap-1 text-gray-850 dark:text-gray-400">
+            <div className="mt-1 flex items-center justify-center gap-1">
               <strong className="text-primary">Key:</strong>{' '}
               {formatKey(entity.key)}{' '}
               <CopyButton toCopy={entity.key} iconClassName="size-3.5" />

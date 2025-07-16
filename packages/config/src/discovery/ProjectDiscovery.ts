@@ -118,7 +118,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name ?? contract.address,
       isVerified: isEntryVerified(contract),
-      address: ChainSpecificAddress.address(contract.address),
+      address: contract.address,
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -426,13 +426,7 @@ export class ProjectDiscovery {
       )
       const url = `${explorerUrl}/address/${raw}`
 
-      result.push({
-        address: raw,
-        type,
-        isVerified,
-        name,
-        url,
-      })
+      result.push({ address, type, isVerified, name, url })
     }
 
     return result
@@ -485,7 +479,7 @@ export class ProjectDiscovery {
       descriptionOrOptions = { description: descriptionOrOptions }
     }
     return {
-      address: ChainSpecificAddress.address(contract.address),
+      address: contract.address,
       isVerified: isEntryVerified(contract),
       name: contract.name ?? contract.address,
       upgradeability: getUpgradeability(contract),
@@ -938,7 +932,7 @@ export class ProjectDiscovery {
       }
 
       const eoa = permissionedEoas.find(
-        (eoa) => ChainSpecificAddress.address(eoa.address) === account.address,
+        (eoa) => eoa.address === account.address,
       )
       assert(eoa?.receivedPermissions !== undefined)
       const hasOnlyRole = eoa.receivedPermissions.every((p) =>
@@ -990,12 +984,7 @@ export class ProjectDiscovery {
     for (const account of accountsToLink) {
       const entry = structuredClone(account)
 
-      const discoveryName = this.getEntryByAddress(
-        ChainSpecificAddress.from(
-          getChainShortName(this.chain),
-          account.address,
-        ),
-      )?.name
+      const discoveryName = this.getEntryByAddress(account.address)?.name
       if (discoveryName !== undefined) {
         entry.name = discoveryName
       }
@@ -1054,12 +1043,8 @@ function getUpgradeability(
   }
   const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
-    admins: get$Admins(contract.values).map((a) =>
-      ChainSpecificAddress.address(a),
-    ),
-    implementations: get$Implementations(contract.values).map((a) =>
-      ChainSpecificAddress.address(a),
-    ),
+    admins: get$Admins(contract.values),
+    implementations: get$Implementations(contract.values),
   }
   if (contract.values?.$immutable !== undefined) {
     upgradeability.immutable = !!contract.values.$immutable

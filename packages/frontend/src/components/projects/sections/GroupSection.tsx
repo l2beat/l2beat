@@ -18,7 +18,11 @@ export function GroupSection({
   return (
     <ProjectSection {...sectionProps} as={as}>
       <div className="flex flex-1 flex-col gap-2 lg:min-w-[400px]">
-        {description && <Markdown>{description}</Markdown>}
+        {description && (
+          <Markdown className="text-paragraph-15 md:text-paragraph-16">
+            {description}
+          </Markdown>
+        )}
         <ProjectDetails
           nested
           items={items}

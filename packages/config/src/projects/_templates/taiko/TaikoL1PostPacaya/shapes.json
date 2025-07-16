@@ -8,5 +8,15 @@
     ],
     "chain": "ethereum",
     "blockNumber": 22565516
+  },
+  "TaikoL1PostPacaya_sharingPct75": {
+    "hash": "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7",
+    "address": [
+      "0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319",
+      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 22923197
   }
 }

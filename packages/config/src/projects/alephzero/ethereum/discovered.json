@@ -1,7 +1,7 @@
 {
   "name": "alephzero",
   "chain": "ethereum",
-  "blockNumber": 22122647,
+  "blockNumber": 22923572,
   "configHash": "0x0ec8cd3b75d0412703213f625519bac35ec0ac4608561c455ac0bc75ffaf9370",
   "entries": [
     {
@@ -93,13 +93,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1168,
+        "firstUnresolvedNode": 1616,
         "inbox": "eth:0x56D8EC76a421063e1907503aDd3794c395256AEb",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21895035,
-        "latestConfirmed": 1167,
-        "latestNodeCreated": 1167,
+        "latestConfirmed": 1615,
+        "latestNodeCreated": 1615,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e",
@@ -324,7 +324,7 @@
           "eth:0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d"
         ],
         "allowedOutboxList": ["eth:0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e"],
-        "delayedMessageCount": 488,
+        "delayedMessageCount": 726,
         "inboxHistory": [
           "eth:0x56D8EC76a421063e1907503aDd3794c395256AEb",
           "eth:0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d"
@@ -334,8 +334,8 @@
         "outboxHistory": ["eth:0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e"],
         "rollup": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
         "sequencerInbox": "eth:0xF75206c49c1694594E3e69252E519434f1579876",
-        "sequencerMessageCount": 3159,
-        "sequencerReportedSubMessageCount": 7724214
+        "sequencerMessageCount": 3607,
+        "sequencerReportedSubMessageCount": 10591833
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -439,6 +439,11 @@
         "eth:0x6C051397fee2d79ccf92d1f3c5c6547fEBD838F4": "ERC20Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
@@ -679,11 +684,6 @@
       }
     },
     {
-      "address": "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
       "proxyType": "EOA"
@@ -855,21 +855,20 @@
         "$members": [
           "eth:0x349f3839012DB2271e1BeC68F1668471D175Adb9",
           "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
-          "eth:0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "eth:0x58edE8C66A15f23c61b8EadD1191FdaD904f7a87",
           "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "eth:0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
           "eth:0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
           "eth:0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
           "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
-          "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "eth:0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "$threshold": 4,
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 36,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1079,7 +1078,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 595,
+        "nonce": 1043,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1135,7 +1134,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3159,
+        "batchCount": 3607,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -1172,7 +1171,7 @@
         "rollup": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 488,
+        "totalDelayedMessagesRead": 726,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1186,11 +1185,6 @@
         "eth:0xaEd84B70Be8117112a5aa0d93a7fBff463A03b18": "SequencerInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "eth:0xf83bC4688979b13Da02CB94c76cEB169540760b5",
-      "type": "EOA",
-      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1901,5 +1895,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xd64b2fc92304d6a305aa2172d67b77d81005e7a18f56505ff394721d5b43617c"
+  "permissionsConfigHash": "0xebb7e4eead933a6c182b0fbd1303655c7e6192d8eb85a34217bd4b26dbff0e69"
 }

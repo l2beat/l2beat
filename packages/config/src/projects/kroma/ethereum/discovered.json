@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22882090,
-  "configHash": "0x5687f060a90f3268f397f4c0433880da0820f96dfc5461f8282e34b7d462cef6",
+  "blockNumber": 22924020,
+  "configHash": "0x619a4d2dc78fbb3d7ea4edeeb7a273398b3225154fd5c8b64ba19c355ff9e056",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -1084,7 +1084,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22882090,
+        "clock": 22924020,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1395,7 +1395,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22882090,
+        "clock": 22924020,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {

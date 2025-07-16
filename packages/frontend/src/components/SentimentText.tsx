@@ -16,7 +16,11 @@ export function SentimentText(props: Props) {
     return (
       <Tooltip>
         <TooltipTrigger className={props.className}>
-          <SentimentText sentiment={props.sentiment} vibrant={props.vibrant}>
+          <SentimentText
+            sentiment={props.sentiment}
+            vibrant={props.vibrant}
+            className={props.className}
+          >
             {props.children}
           </SentimentText>
         </TooltipTrigger>
@@ -28,7 +32,6 @@ export function SentimentText(props: Props) {
   return (
     <span
       className={cn(
-        'font-medium',
         sentimentToTextColor(props.sentiment, {
           vibrant: props.vibrant,
         }),

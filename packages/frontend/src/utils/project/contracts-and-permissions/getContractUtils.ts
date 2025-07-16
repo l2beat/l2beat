@@ -1,4 +1,8 @@
-import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  type ProjectId,
+} from '@l2beat/shared-pure'
 import type { UsedInProject } from '~/components/projects/sections/permissions/UsedInProject'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
@@ -87,13 +91,13 @@ async function getContractUsageMap() {
 
     for (const chain in project.contracts.addresses) {
       for (const contract of project.contracts.addresses[chain] ?? []) {
-        addUsage(chain, contract.address, {
+        addUsage(chain, ChainSpecificAddress.address(contract.address), {
           ...basic,
           targetName: contract.name,
           type: contract.upgradeability ? 'proxy' : 'implementation',
         })
         for (const impl of contract.upgradeability?.implementations ?? []) {
-          addUsage(chain, impl, {
+          addUsage(chain, ChainSpecificAddress.address(impl), {
             ...basic,
             targetName: contract.name,
             type: 'implementation',
@@ -109,7 +113,7 @@ async function getContractUsageMap() {
       ]
       for (const permission of permissions) {
         for (const account of permission.accounts) {
-          addUsage(chain, account.address, {
+          addUsage(chain, ChainSpecificAddress.address(account.address), {
             ...basic,
             targetName: permission.name,
             type: 'permission',

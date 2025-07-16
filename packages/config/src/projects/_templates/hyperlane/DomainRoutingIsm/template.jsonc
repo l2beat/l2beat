@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to {{module}} for the origin Eclipse.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the domain -> ISM contract mapping."
+        }
+      ]
+    },
+    "module": {
+      "severity": "HIGH",
+      "description": "the module that is routed to for the origin chain Eclipse.",
+      "handler": {
+        "type": "call",
+        "method": "module",
+        "args": ["1408864445"]
+      }
+    }
+  }
+}

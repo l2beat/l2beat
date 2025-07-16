@@ -7,7 +7,7 @@ import {
 } from '@radix-ui/react-accordion'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { ChevronIcon } from '~/icons/Chevron'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { DetailsItem } from './components/DetailsItem'
 import { DetailsLink } from './components/DetailsLink'
