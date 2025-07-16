@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
-import type { BaseProject } from '../../types'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
+import type { BaseProject } from '../../types'
 
 export const boojum: BaseProject = {
   id: ProjectId('boojum'),
@@ -64,13 +64,13 @@ export const boojum: BaseProject = {
     trustedSetups: [
       {
         snarkProofSystem: ZK_CATALOG_TAGS.SNARK.PlonkBellman,
-        setups: [TRUSTED_SETUPS.AztecIgnition]
+        setups: [TRUSTED_SETUPS.AztecIgnition],
       },
       {
         snarkProofSystem: ZK_CATALOG_TAGS.SNARK.FflonkZksync,
-        setups: [TRUSTED_SETUPS.AztecIgnition]
+        setups: [TRUSTED_SETUPS.AztecIgnition],
       },
-  ],
+    ],
     verifierHashes: [
       {
         hash: '0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7',
@@ -123,7 +123,7 @@ export const boojum: BaseProject = {
       {
         hash: '0xf688611ad4e0ef20184a89e7b593493dffcefe92071f85c1a0b94d4852c4f82f',
         proofSystem: ZK_CATALOG_TAGS.SNARK.PlonkBellman,
-        knownDeployments: [          
+        knownDeployments: [
           'https://etherscan.io/address/0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e',
         ],
         verificationStatus: 'notVerified',
