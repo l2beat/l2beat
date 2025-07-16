@@ -1,7 +1,7 @@
 import type { TrustedSetup } from '../types'
 
-export const trustedSetups = [
-  {
+export const TRUSTED_SETUPS = {
+  AztecIgnition: {
     id: 'AztecIgnition',
     risk: 'green',
     shortDescription:
@@ -18,7 +18,7 @@ export const trustedSetups = [
     - Ceremony announcement with a call to participate: https://aztec.network/blog/announcing-ignition.
     `,
   },
-  {
+  TransparentSetup: {
     id: 'TransparentSetup',
     risk: 'N/A',
     shortDescription:
@@ -30,7 +30,7 @@ export const trustedSetups = [
         Transparent proving systems require no trusted setups and have no additional setup-related trust assumptions.
         `,
   },
-  {
+  SP1Groth16: {
     id: 'SP1Groth16',
     risk: 'red',
     shortDescription:
@@ -47,15 +47,6 @@ export const trustedSetups = [
     - Link to transcript and other artifacts (Note: will immediately start downloading .tar.gz file): https://sp1-circuits.s3.us-east-2.amazonaws.com/v4.0.0-rc.3-trusted-setup.tar.gz.
     `,
   },
-] as const satisfies TrustedSetup[]
+} as const satisfies Record<string, TrustedSetup>
 
-export type TrustedSetupId = (typeof trustedSetups)[number]['id']
-
-export const TRUSTED_SETUPS: { [K in TrustedSetupId]: TrustedSetup } =
-  trustedSetups.reduce(
-    (acc, setup) => {
-      acc[setup.id] = setup
-      return acc
-    },
-    {} as { [K in TrustedSetupId]: TrustedSetup },
-  )
+export type TrustedSetupId = keyof typeof TRUSTED_SETUPS
