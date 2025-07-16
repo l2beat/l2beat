@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 22567749,
+  "blockNumber": 22930337,
   "configHash": "0xa4bc6c9ecb4b4b8bdc0e98f047f65dd779f4d5aba496839d222decd004b89602",
   "entries": [
     {
@@ -65,6 +65,12 @@
         {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "role": ".guardian"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+          "description": "can blacklist games and update the respected game type.",
           "role": ".guardian"
         }
       ],
@@ -191,11 +197,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "eth:0x9d3408F3814Fcf71102C8e6EDc05EfB70441541c",
+        "anchorGame": "eth:0xe2Dc0e2d547b7239C83cc7e9F26d818A243619c9",
         "disputeGameFactory": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
         "getAnchorRoot": [
-          "0x340c9f9116cfa2456cde76f3d1e2cb5c31d62e670c47787bd8c2aa3cbafa3eb7",
-          136033360
+          "0x8bb83a6ddc5625ae81dd5464c1e8da15d29d5cd84c480a7b1af78b7986cc207e",
+          138222550
         ],
         "portal": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
         "respectedGameType": 0,
@@ -448,7 +454,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "59d 23h",
+        "timeSinceLastL2beatInteraction": "20d 16h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -539,7 +545,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292795887",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292803330",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -608,7 +614,7 @@
         "name": "Wrapped Ether",
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "20080000000000000000",
+        "totalSupply": "20247594000000000000",
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -625,6 +631,24 @@
         {
           "permission": "guard",
           "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            {
+              "address": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "if not revoked by the Security Council"
+            },
+            { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
+            {
+              "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "though restricted to the global pause function"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+          "description": "can blacklist games and update the respected game type.",
           "role": ".guardian",
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
@@ -674,7 +698,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 72,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -959,7 +983,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 17,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1268,6 +1292,20 @@
           "from": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+          "description": "can blacklist games and update the respected game type.",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            { "address": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03" },
+            {
+              "address": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+              "condition": "if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -1299,7 +1337,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 29,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1518,6 +1556,19 @@
               "condition": "if not revoked by the Security Council"
             }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+          "description": "can blacklist games and update the respected game type.",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" },
+            {
+              "address": "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B",
+              "condition": "if not revoked by the Security Council"
+            }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -1551,7 +1602,7 @@
         ],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 107,
+        "nonce": 108,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1773,8 +1824,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 1031404,
-          "prevBlockNum": 22567728
+          "prevBoughtGas": 514422,
+          "prevBlockNum": 22930330
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1789,6 +1840,9 @@
         "paused": {
           "severity": "HIGH",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        },
+        "guardian": {
+          "description": "The guardian can blacklist game and update the respected game type. It is set to reference the SuperchainConfig guardian."
         }
       },
       "implementationNames": {
@@ -1831,6 +1885,15 @@
           "via": [
             { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+          "description": "can blacklist games and update the respected game type.",
+          "role": ".guardian",
+          "via": [
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
+          ]
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1862,7 +1925,7 @@
         ],
         "isL2beatStillAnOwner": true,
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 29,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1964,7 +2027,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 8405,
+        "gameCount": 9624,
         "gameImpls": [
           "eth:0x89D68b1D63AAA0db4af1163e81f56B76934292F8",
           "eth:0xa1E0baCde89d899B3f24eEF3D179cC335A24E777",
@@ -3094,11 +3157,11 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
+    "opstack/OptimismPortal2": "0xa10314dd646a52d8ea3318f13bf69f9664e7d11c239c355999867353237f5c75",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x7f3c1447fcecb1925b49a8f3d76140597d4d5d3cac233f3e9162bcb873cbb1b3"
+  "permissionsConfigHash": "0x9b109f719c1194ceada2aba69823a4da772b50078770ccb97b5b10570dc03e4c"
 }

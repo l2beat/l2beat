@@ -75,6 +75,23 @@ eoaWithMajorityUpgradePermissions(Eoa) :-
   ReceivedUpgradePermissions = Max.
 % END
 % ------------------------------------------------------------------------------------------------
+% BEGIN: Stage 1 modelling
+isStage1(X) :- projectId(X), not nonSCMajorityCanIndefPauseOrPushInvalid(X).
+
+% we assume every ultimate permissioned actor to be malicious, except the security council
+compromised(Actor) :- ultimatePermission(Actor, _, _, _, _, _, _, _, _, isFinal), not isSecurityCouncil(Actor).
+% all contracts that are upgradable by compromised actors are also compromised
+compromised(Contract) :- ultimatePermission(Actor, "upgrade", Contract, _, _, _, _, _, _, isFinal), compromised(Actor).
+
+% TESTING: we just cover ethereum for now
+compromisedOnEth(X) :- compromised(X), address(X, "eth", _).
+
+%compromised(Contract) :- ultimatePermission(Actor, "upgrade", Contract, _, _, _, _, _, _, isFinal).
+
+#show compromisedOnEth/1.
+
+% END
+% ------------------------------------------------------------------------------------------------
 
 #show address/3.
 % #show addressName/2.
@@ -86,3 +103,5 @@ eoaWithMajorityUpgradePermissions(Eoa) :-
 % #show maxReceivedUpgradePermissionsCount/2.
 % #show receivedUpgradePermissionsCount/2.
 #show eoaWithMajorityUpgradePermissions/1.
+
+#show isStage1/1.
