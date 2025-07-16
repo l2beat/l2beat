@@ -33,7 +33,7 @@ export function LivenessSection({
   const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
   return (
     <ProjectSection {...sectionProps}>
-      <p className="mb-4 text-base">
+      <p className="mb-4 text-paragraph-15 md:text-paragraph-16">
         This section shows how &quot;live&quot; the project&apos;s operators are
         by displaying how frequently they submit transactions of the selected
         type. It also highlights anomalies - significant deviations from their

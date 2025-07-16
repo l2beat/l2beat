@@ -32,7 +32,11 @@ export function GrissiniRiskAnalysisSection({
       isUnderReview={isUnderReview}
       className="space-y-6"
     >
-      {description && <Markdown>{description}</Markdown>}
+      {description && (
+        <Markdown className="text-paragraph-15 md:text-paragraph-16">
+          {description}
+        </Markdown>
+      )}
       {layerGrissiniValues && layerGrissiniValues.length > 0 && (
         <RiskValues grissiniValues={layerGrissiniValues} />
       )}

@@ -54,7 +54,7 @@ export function PermissionsSection({
               </div>
               {permissions.roles.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="font-bold text-xl">Roles:</h4>
+                  <h4 className="text-heading-20">Roles:</h4>
                   {unchangedRoles.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}
@@ -72,7 +72,7 @@ export function PermissionsSection({
               )}
               {permissions.actors.length > 0 && (
                 <div className="mt-3">
-                  <h4 className="font-bold text-xl">Actors:</h4>
+                  <h4 className="text-heading-20">Actors:</h4>
                   {unchangedActors.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}

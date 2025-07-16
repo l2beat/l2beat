@@ -47,7 +47,7 @@ export function L3RiskAnalysisSection({
 
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
-      <div className="font-normal md:text-lg md:leading-7 dark:text-white/80">
+      <div className="font-normal text-paragraph-15 md:text-paragraph-16 dark:text-white/80">
         The L3 risks depend on the individual properties of L3 and those of the
         host chain combined.
       </div>
@@ -56,7 +56,7 @@ export function L3RiskAnalysisSection({
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={UnverifiedIcon}
         />
       )}
@@ -64,7 +64,7 @@ export function L3RiskAnalysisSection({
         <WarningBar
           text={redWarning}
           color="red"
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}
         />
       )}
@@ -73,7 +73,7 @@ export function L3RiskAnalysisSection({
           text={warning}
           color="yellow"
           isCritical={false}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
         />
       )}
 
@@ -104,7 +104,7 @@ export function L3RiskAnalysisSection({
       <div className="mb-4 font-bold text-xl text-zinc-800 md:text-[28px] dark:text-white">
         L3 {combined ? 'combined' : 'individual'} risks
       </div>
-      <div className="mb-4 text-black/80 md:text-lg dark:text-white/80">
+      <div className="mb-4 text-black/80 text-paragraph-15 md:text-paragraph-16 dark:text-white/80">
         The information below reflects{' '}
         {combined ? 'combined L2 & L3' : 'individual L3'} risks.
       </div>

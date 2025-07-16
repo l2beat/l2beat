@@ -26,7 +26,7 @@ export function NoBridgeGrissiniDetailsPlaceholder({
         sentiment="neutral"
         className="h-[unset] shrink-0 self-stretch max-md:w-1"
       />
-      <div className={cn('p-4', contentClassName)}>
+      <div className={cn('flex flex-col justify-center p-4', contentClassName)}>
         <div
           className={cn(
             'mb-1',

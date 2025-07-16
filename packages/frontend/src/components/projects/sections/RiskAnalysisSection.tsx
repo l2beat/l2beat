@@ -35,7 +35,7 @@ export function RiskAnalysisSection({
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={UnverifiedIcon}
         />
       )}
@@ -43,7 +43,7 @@ export function RiskAnalysisSection({
         <WarningBar
           text={redWarning}
           color="red"
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}
         />
       )}
@@ -52,7 +52,7 @@ export function RiskAnalysisSection({
           text={warning}
           color="yellow"
           isCritical={false}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
         />
       )}
 

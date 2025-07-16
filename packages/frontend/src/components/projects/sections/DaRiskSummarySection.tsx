@@ -40,7 +40,7 @@ export function DaRiskSummarySection({
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-          className="my-4"
+          className="my-4 text-paragraph-15 md:text-paragraph-16"
           icon={UnverifiedIcon}
         />
       )}
@@ -48,7 +48,7 @@ export function DaRiskSummarySection({
         <WarningBar
           text={redWarning}
           color="red"
-          className="my-4"
+          className="my-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}
         />
       )}
@@ -57,7 +57,7 @@ export function DaRiskSummarySection({
           text={warning}
           color="yellow"
           isCritical={false}
-          className="my-4"
+          className="my-4 text-paragraph-15 md:text-paragraph-16"
         />
       )}
       {layer.risks.length > 0 && (

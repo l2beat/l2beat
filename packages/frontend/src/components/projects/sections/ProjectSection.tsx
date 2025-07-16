@@ -70,7 +70,7 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
     <a
       href={`#${props.id}`}
       className={cn(
-        'flex items-center gap-4 md:leading-normal',
+        'flex items-center gap-4',
         props.nested && 'gap-3',
         props.className,
       )}
@@ -78,15 +78,18 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.sectionOrder && (
         <div
           className={cn(
-            'hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 font-bold text-heading-18 text-secondary tabular-nums md:flex',
-            props.nested && 'h-8 w-11 text-xl',
+            'hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 text-heading-18 text-secondary tabular-nums leading-none! md:flex',
+            props.nested && 'h-[26px] w-10',
           )}
         >
           {props.sectionOrder}
         </div>
       )}
       <span
-        className={cn('text-heading-24', props.nested && 'text-xl md:text-3xl')}
+        className={cn(
+          'text-heading-24',
+          props.nested && 'text-heading-20 leading-none!',
+        )}
       >
         {props.title}
       </span>

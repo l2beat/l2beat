@@ -52,7 +52,7 @@ export function ThroughputSection({
           </span>
         </div>
       )}
-      <p className="text-base">
+      <p className="text-paragraph-15 md:text-paragraph-16">
         The chart shows the actual size of data posted to the DA Layer per day
         for the selected time period, as well as the maximum possible throughput
         per day.

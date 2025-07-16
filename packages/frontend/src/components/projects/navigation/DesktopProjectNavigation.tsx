@@ -98,7 +98,7 @@ export function DesktopProjectNavigation({
             <UnderReviewCallout withoutDescription className="mt-2" />
           )}
           {projectVariants && projectVariants.length > 1 && (
-            <div className="mt-2 pl-5">
+            <div className="mt-2">
               <Select
                 defaultValue={
                   projectVariants.find((v) => pathname.startsWith(v.href))?.href

@@ -4,7 +4,6 @@ import { HostChainRisksWarning } from '~/components/HostChainRisksWarning'
 import { WarningBar } from '~/components/WarningBar'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
-import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
 
@@ -47,7 +46,7 @@ export function RiskSummarySection({
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={UnverifiedIcon}
         />
       )}
@@ -55,7 +54,7 @@ export function RiskSummarySection({
         <WarningBar
           text={redWarning}
           color="red"
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}
         />
       )}
@@ -64,7 +63,7 @@ export function RiskSummarySection({
           text={warning}
           color="yellow"
           isCritical={false}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
         />
       )}
       <div className="mt-4 md:mt-6">
@@ -76,10 +75,13 @@ export function RiskSummarySection({
 
 export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
   return risks.map((group, i) => (
-    <div className={cn(i > 0 && 'mt-4 md:mt-6')} key={i}>
-      <h3 className="font-bold text-red-300 md:text-lg">{group.name}</h3>
+    <div
+      className="not-first:mt-4 text-paragraph-15 md:text-paragraph-16"
+      key={i}
+    >
+      <h3 className="font-bold text-red-300">{group.name}</h3>
       <ol
-        className="list-inside list-decimal p-1.5 text-gray-850 dark:text-gray-400"
+        className="list-inside list-decimal px-1.5 text-gray-850 dark:text-gray-400"
         start={group.start}
       >
         {group.items.map((item, i) => (
