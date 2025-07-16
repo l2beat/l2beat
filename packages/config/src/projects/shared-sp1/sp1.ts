@@ -143,7 +143,13 @@ export const sp1: BaseProject = {
           'https://gnosisscan.io/address/0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd',
         ],
         verificationStatus: 'notVerified',
-        usedBy: [ProjectId('hibachi'), ProjectId('omni'), ProjectId('facet')],
+        usedBy: [
+          // hibachi is not in the db cause its not in the layer3s.ts file
+          // uncomment once it is added to the layer3s.ts file
+          // ProjectId('hibachi')
+          ProjectId('omni'),
+          ProjectId('facet'),
+        ],
       },
     ],
   },
