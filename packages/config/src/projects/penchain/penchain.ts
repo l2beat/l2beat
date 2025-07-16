@@ -44,8 +44,6 @@ export const penchain: ScalingProject = polygonCDKStack({
     slug: 'penchain',
     description:
       'Pentagon Chain is a zkEVM blockchain powered by Agglayer and secured by Ethereum. It is dedicated to mainstream adoption of Web3 gaming, DeFi, and SocialFi.',
-
-    stacks: ['ZK Stack'],
     links: {
       websites: ['https://pentagon.games/pentagon-chain'],
       bridges: ['https://bridge.pentagon.games'],
