@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   formatAsciiBorder,
   Hash160,
   type json,
@@ -27,6 +28,7 @@ export class ConfigReader {
   readConfig(name: string, chain: string): ConfigRegistry {
     const rawConfig = this.readRawConfig(name)
 
+    // TODO(radomski): Remove and heavily simplify when doing L2B-10789
     const rawConfigForChain = {
       chain,
       name,
@@ -38,6 +40,44 @@ export class ConfigReader {
         // biome-ignore lint/suspicious/noExplicitAny: it's there
         (rawConfig.chains as any)[chain],
       ),
+    }
+
+    if (
+      'initialAddresses' in rawConfigForChain &&
+      Array.isArray(rawConfigForChain.initialAddresses)
+    ) {
+      const addresses: unknown[] = rawConfigForChain.initialAddresses
+      rawConfigForChain.initialAddresses = addresses.map((x) =>
+        ChainSpecificAddress.fromLong(chain, x as unknown as string),
+      )
+    }
+
+    if (
+      'overrides' in rawConfigForChain &&
+      !Array.isArray(rawConfigForChain.overrides) &&
+      typeof rawConfigForChain.overrides === 'object'
+    ) {
+      const overrides = rawConfigForChain.overrides as Record<string, unknown>
+      const newOverrides: Record<string, unknown> = {}
+      for (const [key, value] of Object.entries(overrides)) {
+        const newKey = ChainSpecificAddress.fromLong(chain, key).toString()
+        newOverrides[newKey] = value
+      }
+      rawConfigForChain.overrides = newOverrides
+    }
+
+    if (
+      'names' in rawConfigForChain &&
+      !Array.isArray(rawConfigForChain.names) &&
+      typeof rawConfigForChain.names === 'object'
+    ) {
+      const names = rawConfigForChain.names as Record<string, unknown>
+      const newNames: Record<string, unknown> = {}
+      for (const [key, value] of Object.entries(names)) {
+        const newKey = ChainSpecificAddress.fromLong(chain, key).toString()
+        newNames[newKey] = value
+      }
+      rawConfigForChain.names = newNames
     }
 
     const config = new ConfigRegistry(rawConfigForChain)

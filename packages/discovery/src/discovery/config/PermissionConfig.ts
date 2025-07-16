@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type PermissionConfiguration = RawPermissionConfiguration & {
@@ -73,7 +73,11 @@ export type PermissionsConfig = v.infer<typeof PermissionsConfig>
 export const _PermissionsConfig = {
   overrides: v
     .record(
-      v.string().transform((v) => EthereumAddress(v).toString()),
+      v
+        .string()
+        .transform((v) =>
+          ChainSpecificAddress.address(ChainSpecificAddress(v)).toString(),
+        ),
       ContractPermission,
     )
     .optional(),

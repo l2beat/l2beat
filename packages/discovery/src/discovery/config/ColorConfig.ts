@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
@@ -50,13 +50,21 @@ export const _ColorConfig = {
   categories: v.record(v.string(), DiscoveryCategory).optional(),
   names: v
     .record(
-      v.string().transform((v) => EthereumAddress(v).toString()),
+      v
+        .string()
+        .transform((v) =>
+          ChainSpecificAddress.address(ChainSpecificAddress(v)).toString(),
+        ),
       v.string(),
     )
     .optional(),
   overrides: v
     .record(
-      v.string().transform((v) => EthereumAddress(v).toString()),
+      v
+        .string()
+        .transform((v) =>
+          ChainSpecificAddress.address(ChainSpecificAddress(v)).toString(),
+        ),
       ColorContract,
     )
     .optional(),
