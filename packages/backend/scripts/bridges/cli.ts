@@ -55,7 +55,7 @@ const cmd = command({
         http,
         logger,
         callsPerMinute: c.callsPerMinute,
-        retryStrategy: 'RELIABLE',
+        retryStrategy: 'SCRIPT',
       }),
     }))
 
@@ -71,39 +71,56 @@ const cmd = command({
       Record<string, { send: Send[]; receive: Receive[] }>
     > = {}
 
-    for (const r of rpcs) {
-      const range = args.range ?? 100
-      const start = args.start
-        ? args.start
-        : (await r.rpc.getLatestBlockNumber()) - range
+    logger.info('Running script', {
+      protocols: protocols.map((p) => p.name),
+      chains: chains.map((c) => c.name),
+    })
 
-      logger.info(`Fetching logs from ${r.name} <${start},${start + range}>`)
+    logger.info('Fetching logs... (this may take a while)')
+    await Promise.all(
+      rpcs.map(async (r) => {
+        const range = args.range ?? 1000
+        const start = args.start
+          ? args.start
+          : (await r.rpc.getLatestBlockNumber()) - range
 
-      const BATCH_SIZE = 100 // Number of blocks per batch
+        const BATCH_SIZE = 100 // Number of blocks per batch
+        const numBatches = Math.ceil(range / BATCH_SIZE)
 
-      const numBatches = Math.ceil(range / BATCH_SIZE)
+        // Fetch all batches concurrently for this RPC instance
+        const batchPromises = Array.from({ length: numBatches }, (_, i) => {
+          const batchStart = start + i * BATCH_SIZE
+          const batchEnd = Math.min(start + range, batchStart + BATCH_SIZE)
+          return r.rpc
+            .getLogs(batchStart, batchEnd)
+            .then((logs) => ({ logs, batchStart, batchEnd }))
+        })
+        const batchResults = await Promise.all(batchPromises)
 
-      for (let i = 0; i < numBatches; i++) {
-        const batchStart = start + i * BATCH_SIZE
-        const batchEnd = Math.min(start + range, batchStart + BATCH_SIZE)
+        // Process logs from each fetched batch
+        for (const { logs } of batchResults) {
+          const logsByTx = groupBy(logs, 'transactionHash')
 
-        const logs = await r.rpc.getLogs(batchStart, batchEnd)
-
-        const logsByTx = groupBy(logs, 'transactionHash')
-
-        for (const [hash, l] of Array.from(Object.entries(logsByTx))) {
-          for (const decoder of decoders) {
-            const decoded = await decoder(r, {
-              hash,
-              logs: l.map(logToViemLog),
-            })
-            if (decoded) {
-              transfers.push(decoded)
-            }
-          }
+          // For each transaction, concurrently decode logs with all decoders
+          await Promise.all(
+            Object.entries(logsByTx).map(async ([hash, l]) => {
+              const decoderPromises = decoders.map((decoder) =>
+                decoder(r, {
+                  hash,
+                  logs: l.map(logToViemLog),
+                }),
+              )
+              const decodedResults = await Promise.all(decoderPromises)
+              decodedResults.forEach((decoded) => {
+                if (decoded) {
+                  transfers.push(decoded)
+                }
+              })
+            }),
+          )
         }
-      }
-    }
+      }),
+    )
 
     for (const transfer of transfers) {
       if (!matching[transfer.protocol]) {
