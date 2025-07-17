@@ -21,7 +21,7 @@ export function TechStackTag({
       <TooltipTrigger asChild disabled={withoutTooltip}>
         <div
           className={cn(
-            'cursor-default select-none rounded-sm border px-1.5 py-1 font-medium text-[13px] leading-none',
+            'select-none rounded-sm border px-1.5 py-1 font-medium text-[13px] leading-none',
             getClassNames(tag),
             className,
           )}
