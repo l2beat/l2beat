@@ -17,6 +17,7 @@ import { cn } from '~/utils/cn'
 import { createOrderedSort } from '~/utils/sort'
 
 const LOGO_LINK = '/scaling/summary'
+
 import { TopBanner } from '~/components/TopBanner'
 
 export function SideNavLayout({
