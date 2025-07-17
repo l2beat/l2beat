@@ -1,4 +1,4 @@
-import { assert, ChainSpecificAddress, unique } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
@@ -9,6 +9,7 @@ import { validateBlip } from '../../../blip/validateBlip'
 import type { ContractValue } from '../../output/types'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
 import type { IProvider } from '../../provider/IProvider'
+import { prefixAddresses } from '../../utils/prefixAddresses'
 import type { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
@@ -327,33 +328,4 @@ function eventsAreCompatible(
   })
 
   return abiCompatible
-}
-
-// TODO(radomski): We need to test this
-function prefixAddresses(
-  longChain: string,
-  value: ContractValue,
-): ContractValue {
-  if (Array.isArray(value)) {
-    return value.map((v) => prefixAddresses(longChain, v))
-  }
-
-  if (typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, value]) => [
-        prefixAddresses(longChain, key),
-        prefixAddresses(longChain, value as ContractValue),
-      ]),
-    )
-  }
-
-  if (typeof value === 'string') {
-    try {
-      return ChainSpecificAddress.fromLong(longChain, value).toString()
-    } catch {
-      return value
-    }
-  }
-
-  return value
 }
