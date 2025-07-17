@@ -1,18 +1,8 @@
-import {
-  assert,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
-import {
-  decodeEventLog,
-  encodeEventTopics,
-  type Hex,
-  type Log,
-  parseAbi,
-} from 'viem'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
-import type { Receive } from '../../types/Receive'
-import type { Send } from '../../types/Send'
+import type { Message } from '../../types/Message'
+import type { TransactionWithViemLogs } from '../../types/TransactionWithViemLogs'
 
 export const CCTPV2 = {
   name: 'cctpv2',
@@ -21,9 +11,9 @@ export const CCTPV2 = {
 
 function decoder(
   chain: Chain,
-  txLogs: { hash: string; logs: Log[] },
-): Send | Receive | undefined {
-  for (const log of txLogs.logs) {
+  transaction: TransactionWithViemLogs,
+): Message | undefined {
+  for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
     if (!bridge) {
@@ -43,7 +33,7 @@ function decoder(
 
       const nonce = computeV2DeterministicNonce(
         bridge.domain,
-        BigInt(data.args.destinationDomain),
+        data.args.destinationDomain,
         data.args.burnToken,
         data.args.mintRecipient,
         data.args.amount,
@@ -52,16 +42,18 @@ function decoder(
         data.args.hookData,
       )
 
+      const destination = BRIDGES.find(
+        (b) => b.domain === data.args.destinationDomain,
+      )?.chainShortName
+
       return {
-        direction: 'send',
+        direction: 'outbound',
         protocol: CCTPV2.name,
-        token: ChainSpecificAddress(
-          `${chain.shortName}:${data.args.burnToken}`,
-        ),
-        amount: data.args.amount,
-        destination: data.args.destinationDomain.toString(),
-        blockNumber: log.blockNumber ?? undefined,
-        txHash: log.transactionHash ?? undefined,
+        origin: chain.shortName,
+        destination: destination ?? data.args.destinationDomain.toString(),
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
         type: 'DepositForBurn',
         matchingId: idFor(bridge.domain, nonce),
       }
@@ -78,21 +70,6 @@ function decoder(
         eventName: 'MessageReceived',
       })
 
-      const withdraw = txLogs.logs.find(
-        (l) =>
-          l.topics[0] ===
-          encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
-      )
-
-      assert(withdraw)
-
-      const withdrawData = decodeEventLog({
-        abi: ABI,
-        data: withdraw.data as Hex,
-        topics: withdraw.topics as [signature: Hex, ...args: Hex[]] | [],
-        eventName: 'MintAndWithdraw',
-      })
-
       const decodedMessage = decodeV2MessageBody(data.args.messageBody)
       if (!decodedMessage) {
         console.error(
@@ -101,7 +78,7 @@ function decoder(
         continue
       }
       const nonce = computeV2DeterministicNonce(
-        BigInt(data.args.sourceDomain),
+        data.args.sourceDomain,
         bridge.domain,
         decodedMessage.burnToken,
         decodedMessage.mintRecipient,
@@ -111,18 +88,20 @@ function decoder(
         decodedMessage.hookData,
       )
 
+      const origin = BRIDGES.find(
+        (b) => b.domain === data.args.sourceDomain,
+      )?.chainShortName
+
       return {
-        direction: 'receive',
+        direction: 'inbound',
         protocol: CCTPV2.name,
-        token: ChainSpecificAddress(
-          `${chain.shortName}:${withdrawData.args.mintToken}`,
-        ),
-        amount: withdrawData.args.amount,
-        origin: data.args.sourceDomain.toString(),
-        blockNumber: log.blockNumber ?? undefined,
-        txHash: log.transactionHash ?? undefined,
+        origin: origin ?? data.args.sourceDomain.toString(),
+        destination: chain.shortName,
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
         type: 'MessageReceived',
-        matchingId: idFor(BigInt(data.args.sourceDomain), nonce),
+        matchingId: idFor(data.args.sourceDomain, nonce),
       }
     }
   }
@@ -138,7 +117,7 @@ const ABI = parseAbi([
 
 const BRIDGES = [
   {
-    domain: 0n,
+    domain: 0,
     chainShortName: 'eth',
     tokenMessenger: EthereumAddress(
       '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d',
@@ -148,7 +127,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 3n,
+    domain: 3,
     chainShortName: 'arb1',
     tokenMessenger: EthereumAddress(
       '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d',
@@ -158,7 +137,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 2n,
+    domain: 2,
     chainShortName: 'oeth',
     tokenMessenger: EthereumAddress(
       '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d',
@@ -168,7 +147,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 6n,
+    domain: 6,
     chainShortName: 'base',
     tokenMessenger: EthereumAddress(
       '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d',
@@ -178,7 +157,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 10n,
+    domain: 10,
     chainShortName: 'unichain',
     tokenMessenger: EthereumAddress(
       '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d',
@@ -188,7 +167,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 11n,
+    domain: 11,
     chainShortName: 'linea',
     tokenMessenger: EthereumAddress(
       '0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d',
@@ -199,12 +178,12 @@ const BRIDGES = [
   },
 ]
 
-const idFor = (domain: bigint, nonce: bigint | string) =>
+const idFor = (domain: number, nonce: bigint | string) =>
   `${domain}_${nonce}` as const
 
 function computeV2DeterministicNonce(
-  sourceDomain: bigint,
-  destinationDomain: bigint,
+  sourceDomain: number,
+  destinationDomain: number,
   burnToken: string,
   mintRecipient: string,
   amount: bigint,

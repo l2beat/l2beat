@@ -4,8 +4,7 @@ import { command, number, option, optional, run, string } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
-import type { Receive } from './types/Receive'
-import type { Send } from './types/Send'
+import type { Message } from './types/Message'
 import { logToViemLog } from './utils/viem'
 
 const args = {
@@ -43,11 +42,11 @@ const cmd = command({
     const logger = Logger.INFO
     const env = getEnv()
 
-    const chains = args.chains
+    const enabledChains = args.chains
       ? CHAINS.filter((c) => args.chains?.split(',').includes(c.name))
       : CHAINS
 
-    const rpcs = chains.map((c) => ({
+    const chains = enabledChains.map((c) => ({
       ...c,
       rpc: new RpcClient({
         url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
@@ -57,70 +56,65 @@ const cmd = command({
         callsPerMinute: c.callsPerMinute,
         retryStrategy: 'SCRIPT',
       }),
+      start: args.start ?? -1, // will be filled later
+      range: args.range ?? 10,
     }))
 
-    const protocols = args.protocols
+    const enabledProtocols = args.protocols
       ? PROTOCOLS.filter((p) => args.protocols?.split(',').includes(p.name))
       : PROTOCOLS
 
-    const decoders = protocols.map((p) => p.decoder)
+    const decoders = enabledProtocols.map((p) => p.decoder)
 
-    const transfers: (Send | Receive)[] = []
+    const transfers: Message[] = []
     const matching: Record<
       string,
-      Record<string, { send: Send[]; receive: Receive[] }>
+      Record<string, { send: Message[]; receive: Message[] }>
     > = {}
 
     logger.info('Running script', {
-      protocols: protocols.map((p) => p.name),
-      chains: chains.map((c) => c.name),
+      protocols: enabledProtocols.map((p) => p.name),
+      chains: enabledChains.map((c) => c.name),
     })
 
-    logger.info('Fetching logs... (this may take a while)')
-    await Promise.all(
-      rpcs.map(async (r) => {
-        const range = args.range ?? 1000
-        const start = args.start
-          ? args.start
-          : (await r.rpc.getLatestBlockNumber()) - range
-
-        const BATCH_SIZE = 100 // Number of blocks per batch
-        const numBatches = Math.ceil(range / BATCH_SIZE)
-
-        // Fetch all batches concurrently for this RPC instance
-        const batchPromises = Array.from({ length: numBatches }, (_, i) => {
-          const batchStart = start + i * BATCH_SIZE
-          const batchEnd = Math.min(start + range, batchStart + BATCH_SIZE)
-          return r.rpc
-            .getLogs(batchStart, batchEnd)
-            .then((logs) => ({ logs, batchStart, batchEnd }))
+    const blockPromises: (() => Promise<void>)[] = []
+    for (const r of chains) {
+      if (r.start === -1) {
+        blockPromises.push(async () => {
+          const latest = await r.rpc.getLatestBlockNumber()
+          r.start = latest - r.range
         })
-        const batchResults = await Promise.all(batchPromises)
+      }
+    }
+    logger.info('Fetching block numbers... (this may take a while)')
+    await Promise.all(blockPromises.map((fn) => fn()))
 
-        // Process logs from each fetched batch
-        for (const { logs } of batchResults) {
-          const logsByTx = groupBy(logs, 'transactionHash')
+    const promises: (() => Promise<void>)[] = []
+    for (const r of chains) {
+      for (let i = r.start; i < r.start + r.range; i++) {
+        promises.push(async () => {
+          const block = await r.rpc.getBlock(i, true)
+          const logs = await r.rpc.getLogs(i, i)
+          const logsByTx = groupBy(logs.map(logToViemLog), 'transactionHash')
 
-          // For each transaction, concurrently decode logs with all decoders
-          await Promise.all(
-            Object.entries(logsByTx).map(async ([hash, l]) => {
-              const decoderPromises = decoders.map((decoder) =>
-                decoder(r, {
-                  hash,
-                  logs: l.map(logToViemLog),
-                }),
-              )
-              const decodedResults = await Promise.all(decoderPromises)
-              decodedResults.forEach((decoded) => {
-                if (decoded) {
-                  transfers.push(decoded)
-                }
+          for (const t of block.transactions) {
+            for (const decoder of decoders) {
+              const d = decoder(r, {
+                ...t,
+                logs: logsByTx[t.hash] ?? [],
+                blockNumber: block.number,
+                blockTimestamp: block.timestamp,
               })
-            }),
-          )
-        }
-      }),
-    )
+              if (d) {
+                transfers.push(d)
+              }
+            }
+          }
+        })
+      }
+    }
+    logger.info('Fetching data... (this may take a while)')
+    await Promise.all(promises.map((fn) => fn()))
 
     for (const transfer of transfers) {
       if (!matching[transfer.protocol]) {
@@ -133,10 +127,10 @@ const cmd = command({
           protocol[transfer.matchingId] = { send: [], receive: [] }
         }
         switch (transfer.direction) {
-          case 'send':
+          case 'outbound':
             protocol[transfer.matchingId].send.push(transfer)
             break
-          case 'receive':
+          case 'inbound':
             protocol[transfer.matchingId].receive.push(transfer)
             break
         }
@@ -145,10 +139,10 @@ const cmd = command({
           protocol['undefined'] = { send: [], receive: [] }
         }
         switch (transfer.direction) {
-          case 'send':
+          case 'outbound':
             protocol['undefined'].send.push(transfer)
             break
-          case 'receive':
+          case 'inbound':
             protocol['undefined'].receive.push(transfer)
             break
         }
@@ -162,32 +156,12 @@ const cmd = command({
     }
 
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
-      for (const [id, mm] of Array.from(Object.entries(m))) {
-        if (mm.send.length === 0 || mm.receive.length === 0) continue
-
-        logger.info(`${protocol} ID: ${id}`)
-
-        for (const t of [...mm.send, ...mm.receive]) {
-          const getTxUrl = CHAINS.find(
-            (c) => c.shortName === t.token.split(':')[0],
-          )?.getTxUrl
-          logger.info(t.direction, {
-            token: t.token,
-            amount: t.amount,
-            ...(t.txHash ? { tx: t.txHash } : {}),
-            ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
-          })
-        }
-      }
-    }
-
-    for (const [protocol, m] of Array.from(Object.entries(matching))) {
       const send = transfers.filter(
-        (t) => t.protocol === protocol && t.direction === 'send',
+        (t) => t.protocol === protocol && t.direction === 'inbound',
       )
 
       const receive = transfers.filter(
-        (t) => t.protocol === protocol && t.direction === 'receive',
+        (t) => t.protocol === protocol && t.direction === 'outbound',
       )
       const matchedBreakdown: Record<string, number> = {}
       Object.entries(m).forEach(([id, match]) => {
@@ -198,11 +172,9 @@ const cmd = command({
         )
           return
 
-        match.send.forEach((sendTx) => {
+        match.send.forEach((_) => {
           match.receive.forEach((receiveTx) => {
-            const senderChain = sendTx.token.split(':')[0]
-            const receiverChain = receiveTx.token.split(':')[0]
-            const pairKey = `${senderChain} -> ${receiverChain}`
+            const pairKey = `${receiveTx.origin} -> ${receiveTx.destination}`
 
             matchedBreakdown[pairKey] = (matchedBreakdown[pairKey] || 0) + 1
           })
@@ -215,8 +187,7 @@ const cmd = command({
         if (id === 'undefined') return
         if (match.send.length > 0 && match.receive.length === 0) {
           match.send.forEach((sendTx) => {
-            const senderChain = sendTx.token.split(':')[0]
-            const pairKey = `${senderChain} -> X`
+            const pairKey = `${sendTx.origin} -> X`
             unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
           })
         }
@@ -226,8 +197,7 @@ const cmd = command({
         if (id === 'undefined') return
         if (match.send.length === 0 && match.receive.length > 0) {
           match.receive.forEach((receiveTx) => {
-            const receiverChain = receiveTx.token.split(':')[0]
-            const pairKey = `X -> ${receiverChain}`
+            const pairKey = `X -> ${receiveTx.destination}`
             unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
           })
         }
@@ -235,14 +205,12 @@ const cmd = command({
 
       if (m['undefined']) {
         m['undefined'].send.forEach((sendTx) => {
-          const senderChain = sendTx.token.split(':')[0]
-          const pairKey = `${senderChain} -> X`
+          const pairKey = `${sendTx.origin} -> X`
           unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
         })
 
         m['undefined'].receive.forEach((receiveTx) => {
-          const receiverChain = receiveTx.token.split(':')[0]
-          const pairKey = `X -> ${receiverChain}`
+          const pairKey = `X -> ${receiveTx.destination}`
           unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
         })
       }
@@ -250,9 +218,7 @@ const cmd = command({
       logger.info(protocol, {
         send: {
           count: send.length,
-          breakdown: Object.entries(
-            groupBy(send, (s) => s.token.split(':')[0]),
-          ).reduce(
+          breakdown: Object.entries(groupBy(send, (s) => s.origin)).reduce(
             (acc, [chain, items]) => {
               acc[chain] = items.length
               return acc
@@ -263,7 +229,7 @@ const cmd = command({
         receive: {
           count: receive.length,
           breakdown: Object.entries(
-            groupBy(receive, (s) => s.token.split(':')[0]),
+            groupBy(receive, (s) => s.destination),
           ).reduce(
             (acc, [chain, items]) => {
               acc[chain] = items.length
