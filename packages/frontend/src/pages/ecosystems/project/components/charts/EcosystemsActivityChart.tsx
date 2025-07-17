@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
-import { AreaChart, Line, YAxis } from 'recharts'
+import { ComposedChart, Line, YAxis } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
 import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -92,13 +92,16 @@ export function EcosystemsActivityChart({
 
   const chartData = useMemo(
     () =>
-      data?.data.map(([timestamp, _, __, projectsUops, ethereumUops]) => {
-        return {
-          timestamp,
-          projects: projectsUops / UnixTime.DAY,
-          ethereum: ethereumUops / UnixTime.DAY,
-        }
-      }),
+      data?.data.map(
+        ([timestamp, projectsTx, __, projectsUops, ethereumUops]) => {
+          return {
+            timestamp,
+            projects: projectsUops / UnixTime.DAY,
+            ethereum: ethereumUops / UnixTime.DAY,
+            ratio: projectsUops / projectsTx,
+          }
+        },
+      ),
     [data?.data],
   )
 
@@ -115,7 +118,7 @@ export function EcosystemsActivityChart({
         className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
-        <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
+        <ComposedChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
             data: compact([
@@ -182,7 +185,7 @@ export function EcosystemsActivityChart({
             <EthereumFillGradientDef id="fillEthereum" />
             <EthereumStrokeGradientDef id="strokeEthereum" />
           </defs>
-        </AreaChart>
+        </ComposedChart>
       </ChartContainer>
       <ChartControlsWrapper className="mt-2.5">
         {isClient ? (
