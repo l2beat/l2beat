@@ -106,7 +106,7 @@ export function EcosystemTvsByStage({
       <EcosystemWidgetTitle className="mb-0 max-xs:hidden">
         TVS breakdown by stage
       </EcosystemWidgetTitle>
-      <p className="mb-6 text-secondary text-subtitle-12 italic">
+      <p className="mb-6 font-medium text-label-value-13 text-secondary italic">
         Total {totalProjects} projects
       </p>
       <div className="flex items-center justify-around">
@@ -114,10 +114,15 @@ export function EcosystemTvsByStage({
           {Object.entries(tvsByStage).map(([stage, data]) => {
             if (stage === 'NotApplicable' && data.tvs === 0) return null
             return (
-              <div key={stage} className="flex gap-2">
+              <div key={stage} className="flex items-center gap-2">
                 <StageBadge stage={stage as Stage} isAppchain={false} />
-                <div className="font-medium text-secondary text-xs leading-[28px]">
-                  {formatPercent(data.tvs / totalTvs)}
+                <div>
+                  <span className="font-medium text-label-value-14 text-secondary">
+                    {formatPercent(data.tvs / totalTvs)}
+                  </span>{' '}
+                  <span className="font-medium text-[#9399A9] text-label-value-14">
+                    ({data.projectCount})
+                  </span>
                 </div>
               </div>
             )
