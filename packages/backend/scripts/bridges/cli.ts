@@ -95,12 +95,13 @@ const cmd = command({
         promises.push(async () => {
           const block = await r.rpc.getBlock(i, true)
           const logs = await r.rpc.getLogs(i, i)
+          const logsByTx = groupBy(logs.map(logToViemLog), 'transactionHash')
 
           for (const t of block.transactions) {
             for (const decoder of decoders) {
               const d = decoder(r, {
                 ...t,
-                logs: logs.map(logToViemLog),
+                logs: logsByTx[t.hash] ?? [],
                 blockNumber: block.number,
                 blockTimestamp: block.timestamp,
               })
