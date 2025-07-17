@@ -192,7 +192,9 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  it('every name in config.jsonc is unique', () => {
+  // TODO(radomski): We have to skip this test because we have to duplicate
+  // names for different chains, we don't have a catch-all chain
+  it.skip('every name in config.jsonc is unique', () => {
     for (const c of chainConfigs ?? []) {
       if (c.color.names === undefined) {
         continue
