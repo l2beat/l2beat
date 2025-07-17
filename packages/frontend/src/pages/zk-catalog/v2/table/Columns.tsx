@@ -113,7 +113,7 @@ export const zkCatalogColumns = [
                         worstRisk === 'red' && 'bg-negative',
                       )}
                     />
-                    <TechStackTag tag={proofSystem} />
+                    <TechStackTag tag={proofSystem} withoutTooltip />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="mb-3 text-paragraph-14">
@@ -121,6 +121,7 @@ export const zkCatalogColumns = [
                       <TechStackTag
                         tag={proofSystem}
                         className="inline-block"
+                        withoutTooltip
                       />
                       :
                     </p>

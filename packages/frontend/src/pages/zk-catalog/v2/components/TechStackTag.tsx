@@ -1,24 +1,36 @@
 import type { ZkCatalogTag } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
 
 export function TechStackTag({
   tag,
+  withoutTooltip,
   className,
 }: {
   tag: ZkCatalogTag
+  withoutTooltip?: boolean
   className?: string
 }) {
   return (
-    <div
-      className={cn(
-        'rounded-sm border px-1.5 py-1 font-medium text-[13px] leading-none',
-        getClassNames(tag),
-        className,
-      )}
-    >
-      {tag.type}: {tag.name}
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild disabled={withoutTooltip}>
+        <div
+          className={cn(
+            'cursor-default select-none rounded-sm border px-1.5 py-1 font-medium text-[13px] leading-none',
+            getClassNames(tag),
+            className,
+          )}
+        >
+          {tag.type}: {tag.name}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>{tag.description}</TooltipContent>
+    </Tooltip>
   )
 }
 
