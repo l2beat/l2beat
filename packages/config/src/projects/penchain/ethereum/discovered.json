@@ -1,8 +1,8 @@
 {
   "name": "penchain",
   "chain": "ethereum",
-  "blockNumber": 22932018,
-  "configHash": "0x200e212193f65fe2a0086b258363602523df5c5c05f3932d660dc7ec8dbdb7b9",
+  "blockNumber": 22938657,
+  "configHash": "0x23c3e12ca869d0ff597238908a180c4cb3096381569259021617556b26967148",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -12,14 +12,14 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+          "from": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
           "role": ".trustedSequencer"
         }
       ]
     },
     {
       "name": "ProxyAdmin",
-      "address": "eth:0x0b361Df2DA934CA55bde14114298Ed4290FBd4bc",
+      "address": "eth:0x1a26Fc326860bb2fbBa0ebc4f63F9349b254C00e",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -29,57 +29,57 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "eth:0xc6B9Df87f2Fa8736dAC284308db8e99B45502647",
+          "from": "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE",
           "role": "admin"
         }
       ],
-      "sinceTimestamp": 1738930079,
-      "sinceBlock": 21794528,
+      "sinceTimestamp": 1741254575,
+      "sinceBlock": 21987060,
       "values": {
         "$immutable": true,
-        "owner": "eth:0x48237D48b19A4C94A25fc5cbbd279CA6e0DcE688"
+        "owner": "eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382"
       },
       "implementationNames": {
-        "eth:0x0b361Df2DA934CA55bde14114298Ed4290FBd4bc": "ProxyAdmin"
+        "eth:0x1a26Fc326860bb2fbBa0ebc4f63F9349b254C00e": "ProxyAdmin"
       }
     },
     {
-      "address": "eth:0x48237D48b19A4C94A25fc5cbbd279CA6e0DcE688",
+      "address": "eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+          "from": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         },
         {
           "permission": "interact",
-          "from": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+          "from": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         },
         {
           "permission": "interact",
-          "from": "eth:0xc6B9Df87f2Fa8736dAC284308db8e99B45502647",
+          "from": "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "eth:0xc6B9Df87f2Fa8736dAC284308db8e99B45502647",
+          "from": "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE",
           "role": "admin",
           "via": [
-            { "address": "eth:0x0b361Df2DA934CA55bde14114298Ed4290FBd4bc" }
+            { "address": "eth:0x1a26Fc326860bb2fbBa0ebc4f63F9349b254C00e" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "eth:0x0b361Df2DA934CA55bde14114298Ed4290FBd4bc",
+          "from": "eth:0x1a26Fc326860bb2fbBa0ebc4f63F9349b254C00e",
           "role": ".owner"
         }
       ]
@@ -109,7 +109,7 @@
     },
     {
       "name": "Validium",
-      "address": "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
+      "address": "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7",
       "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -119,26 +119,26 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main system contract defining the Pentagon Games Layer 2 logic. Entry point for sequencing batches.",
       "ignoreInWatchMode": ["lastAccInputHash"],
-      "sinceTimestamp": 1738847375,
-      "sinceBlock": 21787666,
+      "sinceTimestamp": 1740743363,
+      "sinceBlock": 21944648,
       "values": {
         "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "$implementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
-            "2025-02-06T13:09:35.000Z",
-            "0x1c301b2db924fab96e79bfdd830849f652af51f93d459f6cf37d5d4c60bd225f",
+            "2025-02-28T11:49:23.000Z",
+            "0x351a86bec0a58f513f88024a6a845b25bce736ed78da4ef1c7cda90a717dd61e",
             ["eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
         "$upgradeCount": 1,
-        "admin": "eth:0x48237D48b19A4C94A25fc5cbbd279CA6e0DcE688",
+        "admin": "eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382",
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "eth:0xc6B9Df87f2Fa8736dAC284308db8e99B45502647",
-        "forceBatchAddress": "eth:0x48237D48b19A4C94A25fc5cbbd279CA6e0DcE688",
+        "dataAvailabilityProtocol": "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE",
+        "forceBatchAddress": "eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "eth:0x5Ee3188A3f8aDee1D736EdD4AE85000105C88f66",
+        "gasTokenAddress": "eth:0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
         "gasTokenNetwork": 0,
         "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
@@ -151,7 +151,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xcef6d0280d2a8f86752e3caeededc78ab618d13b6855ec8d6f3d1c5185cb4fb9",
+        "lastAccInputHash": "0xc08488a287722e0829f14591c8d688b3151808a15a21257f2f2fbd482e03587a",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Pentagon Games",
@@ -172,14 +172,14 @@
         }
       },
       "implementationNames": {
-        "eth:0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8": "PolygonTransparentProxy",
+        "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7": "PolygonTransparentProxy",
         "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "PolygonDataCommittee",
-      "address": "eth:0xc6B9Df87f2Fa8736dAC284308db8e99B45502647",
+      "address": "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE",
       "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
@@ -188,16 +188,16 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).",
-      "sinceTimestamp": 1738930091,
-      "sinceBlock": 21794529,
+      "sinceTimestamp": 1741254587,
+      "sinceBlock": 21987061,
       "values": {
-        "$admin": "eth:0x0b361Df2DA934CA55bde14114298Ed4290FBd4bc",
-        "$implementation": "eth:0xb6af75f88D58d76436647dE10Cc2FC051d126a5E",
+        "$admin": "eth:0x1a26Fc326860bb2fbBa0ebc4f63F9349b254C00e",
+        "$implementation": "eth:0xae5A7c682e4D531b1e2e264AcF71B9761748459a",
         "$pastUpgrades": [
           [
-            "2025-02-07T12:08:11.000Z",
-            "0x5b25873b969507450fe30a0450f0cfd379f486d994f6d9ad6ee8c1f6482edf22",
-            ["eth:0xb6af75f88D58d76436647dE10Cc2FC051d126a5E"]
+            "2025-03-06T09:49:47.000Z",
+            "0x99170a72a7fae5f222229ebf94e54391c4757e93203f61909fc882ff293c5dfd",
+            ["eth:0xae5A7c682e4D531b1e2e264AcF71B9761748459a"]
           ]
         ],
         "$upgradeCount": 1,
@@ -210,18 +210,18 @@
             "addr": "eth:0x97FD268E06dFa5202e57dBFAC7A692C35201ce2A"
           }
         ],
-        "owner": "eth:0x48237D48b19A4C94A25fc5cbbd279CA6e0DcE688",
+        "owner": "eth:0x8499B48896660D549b3A55e6c68a3169B5f9B382",
         "requiredAmountOfSignatures": 1
       },
       "implementationNames": {
-        "eth:0xc6B9Df87f2Fa8736dAC284308db8e99B45502647": "TransparentUpgradeableProxy",
-        "eth:0xb6af75f88D58d76436647dE10Cc2FC051d126a5E": "PolygonDataCommittee"
+        "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE": "TransparentUpgradeableProxy",
+        "eth:0xae5A7c682e4D531b1e2e264AcF71B9761748459a": "PolygonDataCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     }
   ],
   "abis": {
-    "0x0b361Df2DA934CA55bde14114298Ed4290FBd4bc": [
+    "eth:0x1a26Fc326860bb2fbBa0ebc4f63F9349b254C00e": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -232,7 +232,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
+    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -354,20 +354,10 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
+    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8": [
-      "constructor(address _logic, address admin, bytes _data) payable",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidAdmin(address admin)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0xb6af75f88D58d76436647dE10Cc2FC051d126a5E": [
+    "eth:0xae5A7c682e4D531b1e2e264AcF71B9761748459a": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",
@@ -391,7 +381,17 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
-    "0xc6B9Df87f2Fa8736dAC284308db8e99B45502647": [
+    "eth:0xb1714954bBc0162A36FB44934F3216aCE81C40d7": [
+      "constructor(address _logic, address admin, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "eth:0xC89AB4F5AEEe5cfbC34F8EEFA7B17414CC9391aE": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -404,5 +404,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xc7d1e3a1d7aff84abc373f65622c467be5cdde87ce47be9dd9c49cbb76babdb7"
+  "permissionsConfigHash": "0xacb0d584737ef9d038ba57dffb0011b557ab809a97b860b35b13b9feb3c5e2a6"
 }
