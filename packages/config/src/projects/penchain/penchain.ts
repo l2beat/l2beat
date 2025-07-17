@@ -15,7 +15,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from '../../templates/polygonCDKStack'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
-const discovery = new ProjectDiscovery('ternoa')
+const discovery = new ProjectDiscovery('penchain')
 const bridge = discovery.getContract('PolygonSharedBridge')
 
 const membersCountDAC = discovery.getContractValue<number>(
