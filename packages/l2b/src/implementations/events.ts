@@ -6,6 +6,7 @@ import {
 } from '@l2beat/discovery'
 import {
   assert,
+  ChainSpecificAddress,
   type EthereumAddress,
   formatAsAsciiTable,
   Hash256,
@@ -32,6 +33,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
 
   const explorer = getExplorerConfig(args)
   const provider = await getProvider(rpcUrl, explorer)
+  const fullAddress = ChainSpecificAddress.fromLong(provider.chain, address)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
   const topics = []
@@ -41,9 +43,9 @@ export async function getEvents(logger: Logger, args: EventArgs) {
     )
 
     const proxyDetector = new ProxyDetector()
-    const result = await proxyDetector.detectProxy(provider, address)
+    const result = await proxyDetector.detectProxy(provider, fullAddress)
 
-    const addresses = [address]
+    const addresses = [fullAddress]
     if (result !== undefined) {
       addresses.push(...get$Implementations(result.values))
     }
@@ -83,7 +85,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
 
   logger.info('Fetching logs...')
   const logs = await provider.getLogs(
-    address,
+    fullAddress,
     topics.map((t) => t),
   )
   logger.info('Done.')

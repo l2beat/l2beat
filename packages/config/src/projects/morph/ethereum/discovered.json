@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 22767866,
-  "configHash": "0x88eccfbc295e408517d0f5665f87c4d01ff04ae7d2ed7cb0f1a268363d6c50df",
+  "configHash": "0x46ca200f8dc01ae0e1910b6fcbb2afec31d835e19e4a9907ac86610f77edd6f7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1275,7 +1275,7 @@
     }
   ],
   "abis": {
-    "0x0cC37d5239F9027A1269f53D83c73084D538f3a9": [
+    "eth:0x0cC37d5239F9027A1269f53D83c73084D538f3a9": [
       "constructor()",
       "error ErrZeroAddress()",
       "event FailedRelayedMessage(bytes32 indexed messageHash)",
@@ -1316,19 +1316,19 @@
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint256 index, bytes32 root) pure returns (bool)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0x0Dc417F8AF88388737c5053FF73f345f080543F7": [
+    "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": [
+    "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": [
+    "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1339,13 +1339,13 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": [
+    "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": [
+    "eth:0x4006FDA79493FEE14dA42BfA34575aAA79bcf953": [
       "constructor(bytes32 _programVkey)",
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
@@ -1357,7 +1357,7 @@
       "function verifyPlonk(bytes proof, bytes publicInputHash) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1405,13 +1405,13 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": [
+    "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": [
+    "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1": [
       "constructor(uint256[] _versions, address[] _verifiers)",
       "error ErrorStartBatchIndexFinalized()",
       "error ErrorStartBatchIndexTooSmall()",
@@ -1431,7 +1431,7 @@
       "function updateVerifier(uint256 _version, uint64 _startBatchIndex, address _verifier)",
       "function verifyAggregateProof(uint256 _version, uint256 _batchIndex, bytes _aggrProof, bytes32 _publicInputHash) view"
     ],
-    "0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": [
+    "eth:0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": [
       "constructor()",
       "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data, uint256 nonce)",
       "event FinalizeWithdrawETH(address indexed from, address indexed to, uint256 amount, bytes data)",
@@ -1451,7 +1451,7 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x6D9623d44C4A1629815D9d6236FF25C4f82Cc819": [
+    "eth:0x6D9623d44C4A1629815D9d6236FF25C4f82Cc819": [
       "constructor()",
       "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
       "event DepositETH(address indexed from, address indexed to, uint256 amount, bytes data, uint256 nonce)",
@@ -1487,19 +1487,19 @@
       "function setETHGateway(address _newEthGateway)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": [
+    "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": [
+    "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301": [
+    "eth:0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301": [
       "constructor()",
       "event DepositERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data, uint256 nonce)",
       "event FinalizeWithdrawERC20(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes data)",
@@ -1522,7 +1522,7 @@
       "function router() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": [
+    "eth:0x9C79e8F5d0fE910d84a6a0d4A03E8136d036eBec": [
       "constructor(uint64 _chainID)",
       "error ErrZeroAddress()",
       "event ChallengeRes(uint256 indexed batchIndex, address indexed winner, string indexed res)",
@@ -1590,7 +1590,7 @@
       "function verifier() view returns (address)",
       "function withdrawalRoots(bytes32 withdrawalRoot) view returns (bool exist)"
     ],
-    "0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
+    "eth:0xa3b5bFB885FF92EB8445f262c289548e77c3c0aA": [
       "constructor(address _messenger, address _rollup, address _enforcedTxGateway)",
       "error ErrZeroAddress()",
       "event DequeueTransaction(uint256 startIndex, uint256 count)",
@@ -1626,16 +1626,16 @@
       "function updateWhitelistChecker(address _newWhitelistChecker)",
       "function whitelistChecker() view returns (address)"
     ],
-    "0xB822319ab7848b7cC4537c8409e50f85BFb04377": [
+    "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377": [
       "constructor(address _singleton)"
     ],
-    "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": [
+    "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xCb13746Fc891fC2e7D824870D00a26F43fE6123e": [
+    "eth:0xCb13746Fc891fC2e7D824870D00a26F43fE6123e": [
       "constructor()",
       "event EIP712DomainChanged()",
       "event Initialized(uint8 version)",
@@ -1658,7 +1658,7 @@
       "function transferOwnership(address newOwner)",
       "function updateFeeVault(address _newFeeVault)"
     ],
-    "0xDb0734109051DaAB5c32E45e9a5ad0548B2df714": [
+    "eth:0xDb0734109051DaAB5c32E45e9a5ad0548B2df714": [
       "constructor(address _messenger)",
       "event ChallengeDepositUpdated(uint256 oldChallengeDeposit, uint256 newChallengeDeposit)",
       "event Claimed(address indexed staker, address receiver)",
@@ -1722,13 +1722,13 @@
       "function withdrawalLockBlocks() view returns (uint256)",
       "function withdrawals(address staker) view returns (uint256 amount)"
     ],
-    "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304": [
+    "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": [
+    "eth:0xeF88951806f69974bD703Cb9E9eFE362EA0Eb154": [
       "constructor(bytes32 _programVkey)",
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
@@ -1740,10 +1740,10 @@
       "function verifyPlonk(bytes proof, bytes publicInputHash) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
+    "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887": [
       "constructor(address _singleton)"
     ],
-    "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": [
+    "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed _oldOwner, address indexed _newOwner)",
       "event WhitelistStatusChanged(address indexed _account, bool _status)",

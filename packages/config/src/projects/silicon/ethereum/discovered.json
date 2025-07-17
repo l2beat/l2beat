@@ -2,7 +2,7 @@
   "name": "silicon",
   "chain": "ethereum",
   "blockNumber": 22397534,
-  "configHash": "0x19b16d9bef3c2c13bed81ddedcdc596f9f0a93277c9c69fbf1efbc96c03828e0",
+  "configHash": "0x534e177049ea6f46ac239ec2e8ce5090eb507147b1f6efa4a9508eac64f26338",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -251,16 +251,16 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
+    "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
+    "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -271,7 +271,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
+    "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -281,7 +281,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
+    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -403,7 +403,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
+    "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",

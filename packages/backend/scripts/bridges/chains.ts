@@ -9,7 +9,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'ethereum',
     shortName: 'eth',
-    callsPerMinute: 1000,
+    callsPerMinute: 120,
     getTxUrl: (hash: string) => `https://etherscan.io/tx/${hash}`,
   },
   {

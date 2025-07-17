@@ -2,7 +2,7 @@
   "name": "cbridge",
   "chain": "ethereum",
   "blockNumber": 21628437,
-  "configHash": "0xdd545e85cece8b2b8883fddec7bd97f46dfca092042196beea8549b2a37e380e",
+  "configHash": "0x569488fbea5f3776b735cdf4b3f768278744f49d3816f2b9c4a20db01ee82c6c",
   "entries": [
     {
       "name": "PeggedTokenBridge",
@@ -466,7 +466,7 @@
     }
   ],
   "abis": {
-    "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB": [
+    "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB": [
       "constructor(address _sigsVerifier)",
       "event Burn(bytes32 burnId, address token, address account, uint256 amount, address withdrawAccount)",
       "event DelayPeriodUpdated(uint256 period)",
@@ -522,7 +522,7 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
-    "0x4066D196A423b2b3B8B054f4F40efB47a74E200C": [
+    "eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -530,7 +530,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8": [
+    "eth:0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8": [
       "constructor(address _sigsVerifier, address _liquidityBridge, address _pegBridge, address _pegVault, address _pegBridgeV2, address _pegVaultV2)",
       "event CallReverted(string reason)",
       "event Executed(uint8 msgType, bytes32 msgId, uint8 status, address indexed receiver, uint64 srcChainId, bytes32 srcTxHash)",
@@ -581,7 +581,7 @@
       "function withdrawFee(address _account, uint256 _cumulativeFee, bytes[] _sigs, address[] _signers, uint256[] _powers)",
       "function withdrawnFees(address) view returns (uint256)"
     ],
-    "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f": [
+    "eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f": [
       "constructor(address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -593,7 +593,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x52E4f244f380f8fA51816c8a10A63105dd4De084": [
+    "eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084": [
       "constructor(address _sigsVerifier)",
       "event Burn(bytes32 burnId, address token, address account, uint256 amount, uint64 toChainId, address toAccount, uint64 nonce)",
       "event DelayPeriodUpdated(uint256 period)",
@@ -655,7 +655,7 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
-    "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": [
+    "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820": [
       "event DelayPeriodUpdated(uint256 period)",
       "event DelayThresholdUpdated(address token, uint256 threshold)",
       "event DelayedTransferAdded(bytes32 id)",
@@ -735,7 +735,7 @@
       "function withdraw(bytes _wdmsg, bytes[] _sigs, address[] _signers, uint256[] _powers)",
       "function withdraws(bytes32) view returns (bool)"
     ],
-    "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": [
+    "eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175": [
       "constructor(address[] _voters, uint256[] _powers, uint256 _activePeriod, uint256 _quorumThreshold)",
       "event Initiated(address[] voters, uint256[] powers, uint256 activePeriod, uint256 quorumThreshold)",
       "event ParamChangeProposalCreated(uint256 proposalId, uint8 name, uint256 value)",
@@ -763,7 +763,7 @@
       "function voterPowers(address) view returns (uint256)",
       "function voters(uint256) view returns (address)"
     ],
-    "0x7510792A3B1969F9307F3845CE88e39578f2bAE1": [
+    "eth:0x7510792A3B1969F9307F3845CE88e39578f2bAE1": [
       "constructor(address _sigsVerifier)",
       "event DelayPeriodUpdated(uint256 period)",
       "event DelayThresholdUpdated(address token, uint256 threshold)",
@@ -821,7 +821,7 @@
       "function unpause()",
       "function withdraw(bytes _request, bytes[] _sigs, address[] _signers, uint256[] _powers) returns (bytes32)"
     ],
-    "0x8E339115b295DeD49880eA62C1F06d1dbec3496b": [
+    "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b": [
       "constructor(address initialOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -833,7 +833,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": [
+    "eth:0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b": [
       "event BridgeUpdated(uint8 bridgeSendType, address bridgeAddr)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Supplement(uint8 bridgeSendType, bytes32 transferId, address sender, bytes receiver, tuple(uint8 Type, bytes Value)[] extensions)",
@@ -844,7 +844,7 @@
       "function transferNative(bytes _receiver, uint256 _amount, uint64 _dstChainId, uint64 _nonce, uint32 _maxSlippage, uint8 _bridgeSendType, tuple(uint8 Type, bytes Value)[] _extensions) payable returns (bytes32)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896": [
+    "eth:0xaE41e6a597f4c65646e94E330D8BAd218Bec7896": [
       "constructor(address[] _guards, address[] _pausers, address[] _governors)",
       "event Failed(address target, string reason)",
       "event GovernorUpdated(address account, bool added)",
@@ -895,7 +895,7 @@
       "function unpause(address _target)",
       "function updateGuards(address[] _add, address[] _remove, uint256 _newRelaxThreshold)"
     ],
-    "0xB37D31b2A74029B5951a2778F959282E2D518595": [
+    "eth:0xB37D31b2A74029B5951a2778F959282E2D518595": [
       "constructor(address _sigsVerifier)",
       "event DelayPeriodUpdated(uint256 period)",
       "event DelayThresholdUpdated(address token, uint256 threshold)",
@@ -951,7 +951,7 @@
       "function unpause()",
       "function withdraw(bytes _request, bytes[] _sigs, address[] _signers, uint256[] _powers)"
     ],
-    "0xF140024969F6c76494a78518D9a99c8776B55f70": [
+    "eth:0xF140024969F6c76494a78518D9a99c8776B55f70": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -961,7 +961,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": [
+    "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575": [
       "constructor(address[] _voters, uint256[] _powers, address[] _proxies, uint256 _activePeriod, uint256 _quorumThreshold, uint256 _fastPassThreshold)",
       "event Initiated(address[] voters, uint256[] powers, address[] proxies, uint256 activePeriod, uint256 quorumThreshold, uint256 fastPassThreshold)",
       "event ParamChangeProposalCreated(uint256 proposalId, uint8 name, uint256 value)",

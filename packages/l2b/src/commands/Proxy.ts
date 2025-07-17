@@ -1,4 +1,5 @@
 import { get$Implementations, ProxyDetector } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
@@ -33,7 +34,10 @@ export const DetectProxy = command({
     const provider = await getProvider(args.rpcUrl, explorer)
 
     const proxyDetector = new ProxyDetector()
-    const result = await proxyDetector.detectProxy(provider, args.address)
+    const result = await proxyDetector.detectProxy(
+      provider,
+      ChainSpecificAddress.fromLong(provider.chain, args.address),
+    )
 
     if (result === undefined) {
       logger.info(

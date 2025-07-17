@@ -3,10 +3,13 @@ import { expect } from 'earl'
 import { decodeHandlerResults } from './decodeHandlerResults'
 
 describe(decodeHandlerResults.name, () => {
+  const longChain = 'ethereum'
   const emptyFieldOverrides = {}
   const emptyTypes = {}
   it('returns empty values and errors', () => {
-    expect(decodeHandlerResults([], emptyFieldOverrides, emptyTypes)).toEqual({
+    expect(
+      decodeHandlerResults(longChain, [], emptyFieldOverrides, emptyTypes),
+    ).toEqual({
       values: {},
       errors: {},
       usedTypes: [],
@@ -16,6 +19,7 @@ describe(decodeHandlerResults.name, () => {
   it('returns values and errors', () => {
     expect(
       decodeHandlerResults(
+        longChain,
         [
           { field: 'a', value: 1 },
           { field: 'b', value: 2 },
@@ -43,6 +47,7 @@ describe(decodeHandlerResults.name, () => {
   it('returns only errors', () => {
     expect(
       decodeHandlerResults(
+        longChain,
         [
           { field: 'd', error: 'Error 1' },
           { field: 'e', error: 'Error 2' },
@@ -63,6 +68,7 @@ describe(decodeHandlerResults.name, () => {
   it('returns only values', () => {
     expect(
       decodeHandlerResults(
+        longChain,
         [
           { field: 'a', value: 1 },
           { field: 'b', value: 2 },

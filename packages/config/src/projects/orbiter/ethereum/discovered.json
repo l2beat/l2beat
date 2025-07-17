@@ -2,7 +2,7 @@
   "name": "orbiter",
   "chain": "ethereum",
   "blockNumber": 21322840,
-  "configHash": "0x69a94bf1bdee1b6132f9b51a38a9d98fad65de10794662bc954412192c10c4b6",
+  "configHash": "0x088c81ad5ba7f43e21d814a1880a6aa81eff541755ee3a68de826340b80a37e8",
   "entries": [
     {
       "address": "eth:0x095D2918B03b2e86D68551DCF11302121fb626c9",
@@ -41,7 +41,7 @@
     }
   ],
   "abis": {
-    "0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc": [
+    "eth:0xD9D74a29307cc6Fc8BF424ee4217f1A587FBc8Dc": [
       "function transfer(address _to, bytes _ext) payable",
       "function transferERC20(address _token, address _to, uint256 _amount, bytes _ext)"
     ]

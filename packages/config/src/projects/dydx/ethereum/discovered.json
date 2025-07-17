@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0x41b30b07673c71d074389ddb99cc85a3eebae3a3178506476c647b80b8d112d4",
+  "configHash": "0x1a60ec3db4f1a04b85322dfc07054f6a6b11c1b33962b3b7b66bf253f9a58c4d",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -1517,7 +1517,7 @@
     }
   ],
   "abis": {
-    "0x01d3348601968aB85b4bb028979006eac235a588": [
+    "eth:0x01d3348601968aB85b4bb028979006eac235a588": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -1528,7 +1528,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73": [
+    "eth:0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -1539,12 +1539,12 @@
       "event SendRandomnessEvent(uint256 val)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830": [
+    "eth:0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830": [
       "function hasRegisteredFact() view returns (bool)",
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyMerkle(uint256[] merkleView, uint256[] initialMerkleQueue, uint256 height, uint256 expectedRoot)"
     ],
-    "0x0fd829C3365A225FB9226e75c97c3A114bD3199e": [
+    "eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e": [
       "constructor(address safetyModule, address liquidityStaking, address merkleDistributor, address rewardsTreasuryVester)",
       "function LIQUIDITY_STAKING() view returns (address)",
       "function MERKLE_DISTRIBUTOR() view returns (address)",
@@ -1552,20 +1552,20 @@
       "function SAFETY_MODULE() view returns (address)",
       "function claimRewards(bool claimSafetyRewards, bool claimLiquidityRewards, uint256 merkleCumulativeAmount, bytes32[] merkleProof, bool vestFromTreasuryVester) returns (uint256)"
     ],
-    "0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92": [
+    "eth:0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D": [
+    "eth:0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D": [
       "function getCompiledProgram() pure returns (uint256[224])"
     ],
-    "0x2C0df87E073755139101b35c0A51e065291cc2d3": [
+    "eth:0x2C0df87E073755139101b35c0A51e065291cc2d3": [
       "function VERSION() view returns (string)",
       "function configurationDelay() view returns (uint256)",
       "function configurationHash(uint256) view returns (bytes32)",
       "function globalConfigurationHash() view returns (bytes32)",
       "function initialize(bytes data)"
     ],
-    "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A": [
+    "eth:0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A": [
       "constructor(address stakedToken, address rewardsToken, address rewardsTreasury, uint256 distributionStart, uint256 distributionEnd)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event BlackoutWindowChanged(uint256 blackoutWindow)",
@@ -1676,7 +1676,7 @@
       "function withdrawStake(address recipient, uint256 stakeAmount)",
       "function withdrawStakeFor(address staker, address recipient, uint256 stakeAmount)"
     ],
-    "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545": [
+    "eth:0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545": [
       "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
       "event LogDepositCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
@@ -1757,7 +1757,7 @@
       "function withdrawNftTo(uint256 starkKey, uint256 assetType, uint256 tokenId, address recipient)",
       "function withdrawTo(uint256 starkKey, uint256 assetType, address recipient)"
     ],
-    "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d": [
+    "eth:0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1768,7 +1768,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9": [
+    "eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9": [
       "constructor(address tokenAddress)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Bridge(uint256 indexed id, uint256 amount, address from, bytes accAddress, bytes data)",
@@ -1811,7 +1811,7 @@
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
-    "0x4922f8750DFd040954b44F23980160342e308863": [
+    "eth:0x4922f8750DFd040954b44F23980160342e308863": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -1822,10 +1822,10 @@
       "event SendRandomnessEvent(uint256 val)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5": [
+    "eth:0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": [
+    "eth:0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -1836,7 +1836,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5": [
+    "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5": [
       "event LogFrozen()",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -1874,7 +1874,7 @@
       "function removeVerifier(address verifier)",
       "function unFreeze()"
     ],
-    "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD": [
+    "eth:0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD": [
       "constructor(address[63] tables)",
       "event LogEscapeVerified(uint256 publicKey, int256 withdrawalAmount, bytes32 sharedStateHash, uint256 positionId)",
       "function hasRegisteredFact() view returns (bool)",
@@ -1882,7 +1882,7 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyEscape(uint256[] merkleProof, uint256 nAssets, uint256[] sharedState)"
     ],
-    "0x639192D54431F8c816368D3FB4107Bc168d0E871": [
+    "eth:0x639192D54431F8c816368D3FB4107Bc168d0E871": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -1893,7 +1893,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": [
+    "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc": [
       "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum)",
       "event CancelledAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
       "event ExecutedAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall, bytes resultData)",
@@ -1929,7 +1929,7 @@
       "function validateCreatorOfProposal(address governance, address user, uint256 blockNumber) view returns (bool)",
       "function validateProposalCancellation(address governance, address user, uint256 blockNumber) view returns (bool)"
     ],
-    "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": [
+    "eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -1940,7 +1940,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": [
+    "eth:0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1951,7 +1951,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": [
+    "eth:0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1962,7 +1962,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": [
+    "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2": [
       "constructor(address governanceStrategy, uint256 votingDelay, address addExecutorAdmin)",
       "event ExecutorAuthorized(address executor)",
       "event ExecutorUnauthorized(address executor)",
@@ -2006,7 +2006,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unauthorizeExecutors(address[] executors)"
     ],
-    "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3": [
+    "eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3": [
       "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts)",
       "event LogMemoryPagesHashes(bytes32 factHash, bytes32[] pagesHashes)",
       "function hasRegisteredFact() view returns (bool)",
@@ -2014,7 +2014,7 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
-    "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": [
+    "eth:0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "function hasRegisteredFact() view returns (bool)",
       "function identify() pure returns (string)",
@@ -2023,7 +2023,7 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0x8d0051943D4c72aF12D638c6b7253C71929A910A": [
+    "eth:0x8d0051943D4c72aF12D638c6b7253C71929A910A": [
       "constructor(address treasuryVester, address bridgeAddress, address burnAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function BRIDGE() view returns (address)",
@@ -2038,7 +2038,7 @@
       "function transfer(address token, address recipient, uint256 amount)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x92D6C1e31e14520e676a687F0a93788B716BEff5": [
+    "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5": [
       "constructor(address distributor, uint256 transfersRestrictedBefore, uint256 transferRestrictionLiftedNoLaterThan, uint256 mintingRestrictedBefore, uint256 mintMaxPercent)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event DelegateChanged(address indexed delegator, address indexed delegatee, uint8 delegationType)",
@@ -2096,7 +2096,7 @@
       "function transferOwnership(address newOwner)",
       "function updateTransfersRestrictedBefore(uint256 transfersRestrictedBefore)"
     ],
-    "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354": [
+    "eth:0x99B0599952a4FD2d1A1561Fa4C010827EaD30354": [
       "constructor(address chainlinkToken, address merkleDistributor, address oracleContract, address oracleExternalAdapter, bytes32 jobId)",
       "event ChainlinkCancelled(bytes32 indexed id)",
       "event ChainlinkFulfilled(bytes32 indexed id)",
@@ -2115,10 +2115,10 @@
       "function transferAndRequestOracleData(uint256 fee)",
       "function writeOracleData(bytes32 merkleRoot, uint256 epoch, bytes ipfsCid)"
     ],
-    "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D": [
+    "eth:0x9Bcf13C6b68450B427bfa86698D61901A8a3456D": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": [
+    "eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE": [
       "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 priorityPeriod, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum, address priorityExecutor)",
       "event CancelledAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
       "event ExecutedAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall, bytes resultData)",
@@ -2163,7 +2163,7 @@
       "function validateCreatorOfProposal(address governance, address user, uint256 blockNumber) view returns (bool)",
       "function validateProposalCancellation(address governance, address user, uint256 blockNumber) view returns (bool)"
     ],
-    "0xAc5D8bCD13da463bea96c75f9085c4e40037F790": [
+    "eth:0xAc5D8bCD13da463bea96c75f9085c4e40037F790": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -2174,7 +2174,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xb9431E19B29B952d9358025f680077C3Fd37292f": [
+    "eth:0xb9431E19B29B952d9358025f680077C3Fd37292f": [
       "constructor(address dydx_, address recipient_, uint256 vestingAmount_, uint256 vestingBegin_, uint256 vestingCliff_, uint256 vestingEnd_)",
       "function claim()",
       "function dydx() view returns (address)",
@@ -2186,7 +2186,7 @@
       "function vestingCliff() view returns (uint256)",
       "function vestingEnd() view returns (uint256)"
     ],
-    "0xBE607a58206180fef691bf1B5aE9670174284388": [
+    "eth:0xBE607a58206180fef691bf1B5aE9670174284388": [
       "constructor(address stakedToken, address rewardsToken, address rewardsTreasury, uint256 distributionStart, uint256 distributionEnd)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event BlackoutWindowChanged(uint256 blackoutWindow)",
@@ -2311,7 +2311,7 @@
       "function withdrawStake(address recipient, uint256 amount)",
       "function withdrawStakeFor(address staker, address recipient, uint256 amount)"
     ],
-    "0xc2f5F3505910Da80F0592a3Cc023881C50b16505": [
+    "eth:0xc2f5F3505910Da80F0592a3Cc023881C50b16505": [
       "constructor(address dydxToken, address stakedDydxToken, address wrappedEthereumDydxToken)",
       "function DYDX_TOKEN() view returns (address)",
       "function STAKED_DYDX_TOKEN() view returns (address)",
@@ -2321,7 +2321,7 @@
       "function getTotalVotingSupplyAt(uint256 blockNumber) view returns (uint256)",
       "function getVotingPowerAt(address user, uint256 blockNumber) view returns (uint256)"
     ],
-    "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3": [
+    "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3": [
       "event LogForcedTradeRequest(uint256 starkKeyA, uint256 starkKeyB, uint256 vaultIdA, uint256 vaultIdB, uint256 collateralAssetId, uint256 syntheticAssetId, uint256 amountCollateral, uint256 amountSynthetic, bool aIsBuyingSynthetic, uint256 nonce)",
       "event LogForcedWithdrawalRequest(uint256 starkKey, uint256 vaultId, uint256 quantizedAmount)",
       "event LogFrozen()",
@@ -2358,10 +2358,10 @@
       "function mainRemoveGovernor(address governorForRemoval)",
       "function unFreeze()"
     ],
-    "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15": [
+    "eth:0xD14fd39630Ec941C3bA6C791E3af9E0027013A15": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xD54f502e184B6B739d7D27a6410a67dc462D69c8": [
+    "eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -2387,7 +2387,7 @@
       "function removeImplementation(address newImplementation)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": [
+    "eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52": [
       "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum)",
       "event CancelledAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
       "event ExecutedAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall, bytes resultData)",
@@ -2423,7 +2423,7 @@
       "function validateCreatorOfProposal(address governance, address user, uint256 blockNumber) view returns (bool)",
       "function validateProposalCancellation(address governance, address user, uint256 blockNumber) view returns (bool)"
     ],
-    "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0": [
+    "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0": [
       "event LogAssetConfigurationApplied(uint256 assetId, bytes32 configHash)",
       "event LogAssetConfigurationRegistered(uint256 assetId, bytes32 configHash)",
       "event LogAssetConfigurationRemoved(uint256 assetId, bytes32 configHash)",
@@ -2485,7 +2485,7 @@
       "function unregisterOperator(address removedOperator)",
       "function updateState(uint256[] programOutput, uint256[] applicationData)"
     ],
-    "0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3": [
+    "eth:0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -2496,7 +2496,7 @@
       "event SendRandomnessEvent(uint256 val)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": [
+    "eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B": [
       "constructor(address admin, uint256 delay, uint256 gracePeriod, uint256 minimumDelay, uint256 maximumDelay, uint256 propositionThreshold, uint256 voteDuration, uint256 voteDifferential, uint256 minimumQuorum)",
       "event CancelledAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall)",
       "event ExecutedAction(bytes32 actionHash, address indexed target, uint256 value, string signature, bytes data, uint256 executionTime, bool withDelegatecall, bytes resultData)",
@@ -2532,7 +2532,7 @@
       "function validateCreatorOfProposal(address governance, address user, uint256 blockNumber) view returns (bool)",
       "function validateProposalCancellation(address governance, address user, uint256 blockNumber) view returns (bool)"
     ],
-    "0xEfbCcE4659db72eC6897F46783303708cf9ACef8": [
+    "eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8": [
       "event LogMemoryPageFactContinuous(bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "event LogMemoryPageFactRegular(bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "function hasRegisteredFact() view returns (bool)",
@@ -2540,7 +2540,7 @@
       "function registerContinuousMemoryPage(uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "function registerRegularMemoryPage(uint256[] memoryPairs, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)"
     ],
-    "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": [
+    "eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
       "event Finalized()",
       "function acceptOwnership()",
@@ -2558,13 +2558,13 @@
       "function removeAdmin(address removedAdmin)",
       "function setProgramHash(uint256 newProgramHash)"
     ],
-    "0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1": [
+    "eth:0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1": [
       "event LogGas(string name, uint256 val)",
       "function hasRegisteredFact() view returns (bool)",
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyFRI(uint256[] proof, uint256[] friQueue, uint256 evaluationPoint, uint256 friStepSize, uint256 expectedRoot)"
     ],
-    "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0": [
+    "eth:0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0": [
       "constructor(address starkPerpetual, address[] mainGovernorsToRemove, address[] proxyGovernorsToRemove)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function MAIN_GOVERNORS_TO_REMOVE(uint256) view returns (address)",
@@ -2580,7 +2580,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0xFE1d5439625a9524a80F66670733129E80E0C112": [
+    "eth:0xFE1d5439625a9524a80F66670733129E80E0C112": [
       "constructor(address rewardsToken, address rewardsTreasury)",
       "event AlwaysAllowClaimForUpdated(address user, bool allow)",
       "event EpochScheduleUpdated(tuple(uint128 interval, uint128 offset) epochParameters)",

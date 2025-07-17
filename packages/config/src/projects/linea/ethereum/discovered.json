@@ -2,7 +2,7 @@
   "name": "linea",
   "chain": "ethereum",
   "blockNumber": 22673062,
-  "configHash": "0xafd3ec6616d92ac6cdc279792e5fd8d1ae0edbd0d87b8a73b1b53958123fb2bd",
+  "configHash": "0x4f86fe10e5bf97c2096451becd3e52bbcf7cf9cb650c7b9acf88ff823e6bf62b",
   "entries": [
     {
       "name": "TokenBridge",
@@ -943,13 +943,13 @@
     }
   ],
   "abis": {
-    "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": [
+    "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": [
+    "eth:0x07ddce60658A61dc1732Cacf2220FcE4A01C49B0": [
       "constructor()",
       "error ArrayLengthsDoNotMatch()",
       "error BlobSubmissionDataEmpty(uint256 emptyBlobIndex)",
@@ -1096,7 +1096,7 @@
       "function unsetVerifierAddress(uint256 _proofType)",
       "function verifiers(uint256 proofType) view returns (address verifierAddress)"
     ],
-    "0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": [
+    "eth:0x2B6A2F8880220a66DfB9059FCB76F7dB54104a34": [
       "constructor()",
       "error AlreadyBridgedToken(address token)",
       "error AlreadyBrigedToNativeTokenSet(address token)",
@@ -1184,11 +1184,11 @@
       "function tokenBeacon() view returns (address)",
       "function unPauseByType(uint8 _pauseType)"
     ],
-    "0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
+    "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D": [
       "constructor(address _target)",
       "function target() view returns (address)"
     ],
-    "0x36f274C1C197F277EA3C57859729398FCc8a3763": [
+    "eth:0x36f274C1C197F277EA3C57859729398FCc8a3763": [
       "constructor()",
       "error OnlyBridge(address bridgeAddress)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -1216,7 +1216,7 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1264,13 +1264,13 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
+    "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
-    "0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
+    "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
     ],
-    "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
+    "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
       "constructor(address implementation_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Upgraded(address indexed implementation)",
@@ -1280,16 +1280,16 @@
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
     ],
-    "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": [
+    "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": [
       "constructor(address _singleton)"
     ],
-    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": [
+    "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd6B95c960779c72B8C6752119849318E5d550574": [
+    "eth:0xd6B95c960779c72B8C6752119849318E5d550574": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1328,7 +1328,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1377,10 +1377,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xED39C0C41A7651006953AB58Ecb3039363620995": [
+    "eth:0xED39C0C41A7651006953AB58Ecb3039363620995": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
-    "0xF24f1DC519d88246809B660eb56D94048575d083": [
+    "eth:0xF24f1DC519d88246809B660eb56D94048575d083": [
       "constructor(address _owner, address _avatar, address _target)",
       "error ArraysDifferentLength()",
       "error ModuleTransactionFailed()",
@@ -1431,7 +1431,7 @@
       "function transferOwnership(address newOwner)",
       "function unscopeParameter(uint16 role, address targetAddress, bytes4 functionSig, uint8 paramIndex)"
     ],
-    "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": [
+    "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1451,7 +1451,7 @@
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
-    "linea/Roles": "0xd60a52a9cab1528e2a8c3adf9d940db4c5760a5f4e648611053f40916972b07b",
+    "linea/Roles": "0xa53488bfd173ae836ebda33b0560f0f0dd61141e44bc38b9ce23133023bde792",
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },

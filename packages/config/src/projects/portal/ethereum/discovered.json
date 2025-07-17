@@ -2,7 +2,7 @@
   "name": "portal",
   "chain": "ethereum",
   "blockNumber": 22865659,
-  "configHash": "0x5683bd095b1934869a68d756f957533c6a8c374d5cd8a7f595ba26f405a51008",
+  "configHash": "0x28b75dc942beee5289760b284acdedcb3132fcf8808cf93e862c4997e713b68a",
   "entries": [
     {
       "address": "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -531,7 +531,7 @@
     }
   ],
   "abis": {
-    "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": [
+    "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": [
       "error AddressIsZero()",
       "error CallerMustBeOwner()",
       "error CallerMustBeOwnerOrPricingWallet()",
@@ -607,7 +607,7 @@
       "function updateWormholeRelayer(address newAddress)",
       "function upgrade(uint16 deliveryProviderChainId, address newImplementation)"
     ],
-    "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": [
+    "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
       "function DOMAIN_SEPARATOR() view returns (bytes32)",
@@ -633,13 +633,13 @@
       "function transferFrom(address sender_, address recipient_, uint256 amount_) returns (bool)",
       "function updateDetails(string name_, string symbol_, uint64 sequence_)"
     ],
-    "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": [
+    "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911": [
       "constructor(address impl)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x37f26277B1927c6bEDbD94e5C21C337A706af31c": [
+    "eth:0x37f26277B1927c6bEDbD94e5C21C337A706af31c": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
@@ -675,7 +675,7 @@
       "function wormhole() view returns (address)",
       "function wormholeFinality() view returns (uint8)"
     ],
-    "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e": [
+    "eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
@@ -725,7 +725,7 @@
       "function wrapAndTransferETHWithPayload(uint16 recipientChain, bytes32 recipient, uint32 nonce, bytes payload) payable returns (uint64 sequence)",
       "function wrappedAsset(uint16 tokenChainId, bytes32 tokenAddress) view returns (address)"
     ],
-    "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0": [
+    "eth:0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
@@ -762,7 +762,7 @@
       "function verifySignatures(bytes32 hash, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, tuple(address[] keys, uint32 expirationTime) guardianSet) pure returns (bool valid, string reason)",
       "function verifyVM(tuple(uint8 version, uint32 timestamp, uint32 nonce, uint16 emitterChainId, bytes32 emitterAddress, uint64 sequence, uint8 consistencyLevel, bytes payload, uint32 guardianSetIndex, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, bytes32 hash) vm) view returns (bool valid, string reason)"
     ],
-    "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C": [
+    "eth:0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
@@ -796,25 +796,25 @@
       "function wormhole() view returns (address)",
       "function wrappedAsset(uint16 tokenChainId, bytes32 tokenAddress) view returns (address)"
     ],
-    "0x3ee18B2214AFF97000D974cf647E7C347E8fa585": [
+    "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585": [
       "constructor(address implementation, bytes initData)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE": [
+    "eth:0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE": [
       "constructor(address implementation, bytes initData)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": [
+    "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81": [
       "constructor(address implementation, bytes initData)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x90995DBd1aae85872451b50A569dE947D34ac4ee": [
+    "eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee": [
       "constructor(address wormhole)",
       "error ChainAlreadyRegistered(uint16 chainId, bytes32 registeredWormholeRelayerContract)",
       "error ContractUpgradeFailed(bytes failure)",
@@ -882,19 +882,19 @@
       "function setDefaultDeliveryProvider(bytes encodedVm)",
       "function submitContractUpgrade(bytes encodedVm)"
     ],
-    "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": [
+    "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B": [
       "constructor(address implementation, bytes initData)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xAaDA05BD399372f0b0463744C09113c137636f6a": [
+    "eth:0xAaDA05BD399372f0b0463744C09113c137636f6a": [
       "constructor(address implementation, bytes initData)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc": [
+    "eth:0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc": [
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
       "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
       "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",

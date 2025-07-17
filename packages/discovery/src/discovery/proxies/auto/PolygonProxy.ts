@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
@@ -16,13 +16,13 @@ const ADMIN_SLOT = Bytes.fromHex(
 
 export async function detectPolygonProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const implementation = await provider.getStorageAsAddress(
     address,
     IMPLEMENTATION_SLOT,
   )
-  if (implementation === EthereumAddress.ZERO) {
+  if (implementation === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
   const admin = await provider.getStorageAsAddress(address, ADMIN_SLOT)

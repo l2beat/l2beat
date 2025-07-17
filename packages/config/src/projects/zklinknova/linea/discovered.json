@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 19494394,
-  "configHash": "0xfef4755ff49762851512ee66ed332370e1528b5711f90796b288428b608e1cde",
+  "configHash": "0x5fca5fc6c67a5316193456f6f3c42e3d4411dd7aa57212c878742bcc5b4a3523",
   "entries": [
     {
       "name": "LineaOwner",
@@ -492,10 +492,10 @@
     }
   ],
   "abis": {
-    "0x0Bff4B38792a95314b3463E1Bf9831BDa1995391": [
+    "linea:0x0Bff4B38792a95314b3463E1Bf9831BDa1995391": [
       "constructor(address _singleton)"
     ],
-    "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": [
+    "linea:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": [
       "constructor(address _zkLink, address _messageService)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -518,7 +518,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+    "linea:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -568,7 +568,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x509ff56c152315EdeE91A2e0f059195519507e01": [
+    "linea:0x509ff56c152315EdeE91A2e0f059195519507e01": [
       "constructor(address _initialOwner, address _zkSyncContract, uint32 _executionDelay, address _validator)",
       "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
       "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
@@ -596,16 +596,16 @@
       "function validator() view returns (address)",
       "function zkSyncContract() view returns (address)"
     ],
-    "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": [
+    "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": [
+    "linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": [
+    "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -613,11 +613,11 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x902C3806A84f4e855a8746e92d7F1C9a51400458": [
+    "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
     ],
-    "0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": [
+    "linea:0xDe1d7311d3eb7bc94f7EBAEd86978d3a82d5328A": [
       "constructor(address _zkSync)",
       "error FunctionNotSupported()",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
@@ -636,7 +636,7 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec": [
+    "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec": [
       "constructor(address _admin, address _securityCouncil, uint256 _minDelay)",
       "event ChangeMinDelay(uint256 _delayBefore, uint256 _delayAfter)",
       "event ChangeSecurityCouncil(address _securityCouncilBefore, address _securityCouncilAfter)",
@@ -668,7 +668,7 @@
       "function updateDelay(uint256 _newDelay)",
       "function updateSecurityCouncil(address _newSecurityCouncil)"
     ],
-    "0xF3d053C29666D653Fa8629190579844BffE9FB92": [
+    "linea:0xF3d053C29666D653Fa8629190579844BffE9FB92": [
       "function facetAddress(bytes4 _selector) view returns (address)",
       "function facetAddresses() view returns (address[])",
       "function facetFunctionSelectors(address _facet) view returns (bytes4[])",

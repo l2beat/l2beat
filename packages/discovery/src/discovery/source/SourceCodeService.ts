@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import zip from 'lodash/zip'
 
 import { contractFlatteningHash, sha2_256bit } from '../../flatten/utils'
@@ -11,7 +11,7 @@ import { skipIgnoredFunctions } from './skipIgnoredFunctions'
 export interface PerContractSource {
   hash?: string
   name: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   source: ContractSource
 }
 
@@ -26,7 +26,7 @@ export interface ContractSources {
 export class SourceCodeService {
   async getSources(
     provider: IProvider,
-    addresses: EthereumAddress[],
+    addresses: ChainSpecificAddress[],
     manualSourcePath: Record<string, string>,
   ): Promise<ContractSources> {
     const metadataPerAddress = await Promise.all(
@@ -69,8 +69,8 @@ export class SourceCodeService {
 
   getRelevantAbi(
     abis: Record<string, string[]>,
-    address: EthereumAddress,
-    implementations?: EthereumAddress[],
+    address: ChainSpecificAddress,
+    implementations?: ChainSpecificAddress[],
     ignoreInWatchMode?: string[],
   ): string[] {
     const addresses = [address, ...(implementations ?? [])]

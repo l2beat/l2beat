@@ -1,4 +1,9 @@
-import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  Bytes,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
@@ -15,7 +20,7 @@ describe(ScrollAccessControlHandler.name, () => {
   ])
 
   const callMethodStub = async <T>(
-    _address: EthereumAddress,
+    _address: ChainSpecificAddress,
     abi: string | utils.FunctionFragment,
   ) => {
     const coder = new utils.Interface([abi])
@@ -39,18 +44,24 @@ describe(ScrollAccessControlHandler.name, () => {
     return iface.getSighash(key)
   }
 
-  function RoleGranted(role: string, account: EthereumAddress): providers.Log {
+  function RoleGranted(
+    role: string,
+    account: ChainSpecificAddress,
+  ): providers.Log {
     return abi.encodeEventLog(abi.getEvent('RoleGranted'), [
       role,
-      account,
+      ChainSpecificAddress.address(account),
       EthereumAddress.ZERO,
     ]) as providers.Log
   }
 
-  function RoleRevoked(role: string, account: EthereumAddress): providers.Log {
+  function RoleRevoked(
+    role: string,
+    account: ChainSpecificAddress,
+  ): providers.Log {
     return abi.encodeEventLog(abi.getEvent('RoleRevoked'), [
       role,
-      account,
+      ChainSpecificAddress.address(account),
       EthereumAddress.ZERO,
     ]) as providers.Log
   }
@@ -65,30 +76,30 @@ describe(ScrollAccessControlHandler.name, () => {
 
   function GrantAccess(
     role: string,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     selectors: string[],
   ): providers.Log {
     return abi.encodeEventLog(abi.getEvent('GrantAccess'), [
       role,
-      address,
+      ChainSpecificAddress.address(address),
       selectors,
     ]) as providers.Log
   }
 
   function RevokeAccess(
     role: string,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     selectors: string[],
   ): providers.Log {
     return abi.encodeEventLog(abi.getEvent('RevokeAccess'), [
       role,
-      address,
+      ChainSpecificAddress.address(address),
       selectors,
     ]) as providers.Log
   }
 
   it('no logs', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
       getDeployment: mockFn().resolvesTo(undefined),
@@ -137,21 +148,22 @@ describe(ScrollAccessControlHandler.name, () => {
     const GOBLIN_ROLE = utils.solidityKeccak256(['string'], ['GOBLIN_ROLE'])
     const DEFAULT_ADMIN_ROLE = '0x' + '0'.repeat(64)
 
-    const Alice = EthereumAddress.random()
-    const Bob = EthereumAddress.random()
-    const Charlie = EthereumAddress.random()
+    const Alice = ChainSpecificAddress.random()
+    const Bob = ChainSpecificAddress.random()
+    const Charlie = ChainSpecificAddress.random()
 
-    const ContractA = EthereumAddress.random()
-    const ContractB = EthereumAddress.random()
-    const ContractC = EthereumAddress.random()
+    const ContractA = ChainSpecificAddress.random()
+    const ContractB = ChainSpecificAddress.random()
+    const ContractC = ChainSpecificAddress.random()
 
     const FunctionA = 'function test(bytes32 id)'
     const FunctionB = 'function testSecond(bytes32 id)'
     const FunctionSigA = getFunctionSelector(FunctionA)
     const FunctionSigB = getFunctionSelector(FunctionB)
 
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
       getDeployment: mockFn().resolvesTo(undefined),
       async getLogs() {
@@ -189,7 +201,9 @@ describe(ScrollAccessControlHandler.name, () => {
         ]
       },
       getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-      getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+      getStorageAsAddress: mockFn().resolvesTo(
+        ChainSpecificAddress.ZERO('ethereum'),
+      ),
       callMethod: callMethodStub,
       call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
       getSource: mockFn().resolvesTo({
@@ -253,7 +267,7 @@ describe(ScrollAccessControlHandler.name, () => {
   })
 
   it('passes relative ignore', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       async getLogs() {
         return []
@@ -262,10 +276,7 @@ describe(ScrollAccessControlHandler.name, () => {
 
     const handler = new ScrollAccessControlHandler(
       'someName',
-      {
-        type: 'scrollAccessControl',
-        ignoreRelative: true,
-      },
+      { type: 'scrollAccessControl', ignoreRelative: true },
       [],
     )
     const value = await handler.execute(provider, address)
@@ -273,10 +284,7 @@ describe(ScrollAccessControlHandler.name, () => {
       field: 'someName',
       value: {
         roles: {
-          DEFAULT_ADMIN_ROLE: {
-            adminRole: 'DEFAULT_ADMIN_ROLE',
-            members: [],
-          },
+          DEFAULT_ADMIN_ROLE: { adminRole: 'DEFAULT_ADMIN_ROLE', members: [] },
         },
         targets: {},
       },

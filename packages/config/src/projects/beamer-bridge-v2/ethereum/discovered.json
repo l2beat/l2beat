@@ -2,7 +2,7 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0x3e5d4551828ec1b9b0c3664dc3ad971811a79b9bb0a90b84ad9266b4aa5b431d",
+  "configHash": "0x53dd1d2923342e426df8e67f34d30ff4d62d52efdc9822f8f5196062b448cddd",
   "entries": [
     {
       "name": "EthereumL1Messenger",
@@ -191,7 +191,7 @@
     }
   ],
   "abis": {
-    "0x12B8489913E2afBCed131d52c345C380BBB65baf": [
+    "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
       "function addCaller(address caller)",
@@ -202,7 +202,7 @@
       "function sendMessage(address target, bytes message)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": [
+    "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": [
       "constructor(address resolver_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -217,7 +217,7 @@
       "function sendMessage(address, bytes message)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": [
+    "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": [
       "constructor(address messenger_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -230,7 +230,7 @@
       "function sendMessage(address target, bytes message)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": [
+    "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": [
       "constructor(address bridge_, address inbox_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -247,7 +247,7 @@
       "function transferOwnership(address newOwner)",
       "function withdraw()"
     ],
-    "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": [
+    "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": [
       "constructor(uint96 _claimStake, uint256 _claimRequestExtension, uint256 _claimPeriod, uint256 _challengePeriodExtension)",
       "event ChainUpdated(uint256 indexed chainId, uint256 finalityPeriod, uint256 transferCost, uint256 targetWeightPPM)",
       "event ClaimMade(bytes32 indexed requestId, uint96 claimId, address claimer, uint96 claimerStake, address lastChallenger, uint96 challengerStakeTotal, uint256 termination, bytes32 fillId)",
@@ -311,7 +311,7 @@
       "function withdrawExpiredRequest(bytes32 requestId)",
       "function withdrawProtocolFees(address tokenAddress, address recipient)"
     ],
-    "0xCb60516819a28431233195A8b7E0227C288B61AD": [
+    "eth:0xCb60516819a28431233195A8b7E0227C288B61AD": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Resolution(uint256 sourceChainId, uint256 fillChainId, bytes32 requestId, address filler, bytes32 fillId)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -324,7 +324,7 @@
       "function sourceChainInfos(uint256 sourceChainId) view returns (address requestManager, address messenger)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": [
+    "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": [
       "constructor(address _messenger)",
       "event FillInvalidated(bytes32 indexed requestId, bytes32 indexed fillId)",
       "event LpAdded(address lp)",

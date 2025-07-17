@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
@@ -7,8 +7,8 @@ import type { ProxyDetails } from '../types'
 
 async function getRegistryAddress(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
   const registry = await provider.callMethod<string>(
     address,
     'function bridgeRegistry() view returns (address)',
@@ -19,13 +19,13 @@ async function getRegistryAddress(
     return address
   }
 
-  return EthereumAddress(registry)
+  return ChainSpecificAddress(registry)
 }
 
 async function getAdminMultisig(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
   const registry = await getRegistryAddress(provider, address)
   const multisig = await provider.callMethod<string>(
     registry,
@@ -34,15 +34,15 @@ async function getAdminMultisig(
   )
   assert(multisig !== undefined, 'Multisig not found')
 
-  return EthereumAddress(multisig.toString())
+  return ChainSpecificAddress(multisig.toString())
 }
 
 export async function getLightLinkProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const implementation = await getImplementation(provider, address)
-  if (implementation === EthereumAddress.ZERO) {
+  if (implementation === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
   const admin = await getAdminMultisig(provider, address)

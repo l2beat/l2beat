@@ -1,8 +1,7 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import type { IProvider } from '../IProvider'
-import { MulticallClient } from './MulticallClient'
+import { type CallProvider, MulticallClient } from './MulticallClient'
 import {
   decodeMulticall3,
   encodeMulticall3,
@@ -34,9 +33,9 @@ describe(MulticallClient.name, () => {
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const discoveryProvider = mockObject<IProvider>({
+    const discoveryProvider = mockObject<CallProvider>({
       async call(address, data) {
-        calls.push({ address, data })
+        calls.push({ address: address, data })
         return data
       },
     })
@@ -69,7 +68,7 @@ describe(MulticallClient.name, () => {
 
   it('uses multicall for new blocks', async () => {
     const calls: Call[] = []
-    const discoveryProvider = mockObject<IProvider>({
+    const discoveryProvider = mockObject<CallProvider>({
       async call(address, data) {
         calls.push({ address, data })
         return Bytes.fromHex(
@@ -117,7 +116,7 @@ describe(MulticallClient.name, () => {
 
   it('batches calls', async () => {
     const calls: number[] = []
-    const discoveryProvider = mockObject<IProvider>({
+    const discoveryProvider = mockObject<CallProvider>({
       async call(_, data) {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
@@ -150,7 +149,7 @@ describe(MulticallClient.name, () => {
   })
 
   it('offers a named interface', async () => {
-    const discoveryProvider = mockObject<IProvider>({
+    const discoveryProvider = mockObject<CallProvider>({
       async call() {
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
@@ -194,7 +193,7 @@ describe(MulticallClient.name, () => {
       const error = new Error('bad') as any
       error['error'] = { error: { code: 123, message } }
 
-      const discoveryProvider = mockObject<IProvider>({
+      const discoveryProvider = mockObject<CallProvider>({
         call: mockFn().throwsOnce(error).returns(Bytes.fromHex('0x42ab')),
       })
 

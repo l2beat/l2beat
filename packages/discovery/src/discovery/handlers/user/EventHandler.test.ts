@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
@@ -21,23 +21,30 @@ describe(EventHandler.name, () => {
   const event =
     <T extends unknown[]>(name: string) =>
     (...args: T) =>
-      abi.encodeEventLog(abi.getEvent(name), args) as providers.Log
+      abi.encodeEventLog(
+        abi.getEvent(name),
+        args.map((k) =>
+          ChainSpecificAddress.check(k as string)
+            ? ChainSpecificAddress.address(k as ChainSpecificAddress)
+            : k,
+        ),
+      ) as providers.Log
 
   const CurrentBatch = event<[number]>('CurrentBatch')
   const CurrentBatch2 = event<[number]>('CurrentBatch2')
   const CurrentBatchMultichain = event<[number, number]>(
     'CurrentBatchMultichain',
   )
-  const Update = event<[EthereumAddress, boolean]>('Update')
-  const Add = event<[EthereumAddress]>('Add')
-  const Add2 = event<[EthereumAddress]>('Add2')
-  const Remove = event<[EthereumAddress]>('Remove')
+  const Update = event<[ChainSpecificAddress, boolean]>('Update')
+  const Add = event<[ChainSpecificAddress]>('Add')
+  const Add2 = event<[ChainSpecificAddress]>('Add2')
+  const Remove = event<[ChainSpecificAddress]>('Remove')
 
-  const ADDRESS = EthereumAddress.random()
+  const ADDRESS = ChainSpecificAddress.random()
 
   const getLogsStub = (events: providers.Log[]) => {
     return (
-      _: EthereumAddress,
+      _: ChainSpecificAddress,
       topics: (string | string[] | null)[],
     ): Promise<providers.Log[]> => {
       const topic0 = typeof topics[0] === 'string' ? topics[0] : topics[0]?.[0]
@@ -52,8 +59,9 @@ describe(EventHandler.name, () => {
 
   describe('adding and removing events', () => {
     it('handles multiple adds and single remove for the same user', async () => {
-      const U1 = EthereumAddress.random()
+      const U1 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([Add(U1), Add(U1), Remove(U1)]),
       })
 
@@ -74,8 +82,9 @@ describe(EventHandler.name, () => {
     })
 
     it('user added, removed, and added again', async () => {
-      const U1 = EthereumAddress.random()
+      const U1 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([Add(U1), Remove(U1), Add(U1)]),
       })
 
@@ -92,13 +101,14 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual([U1])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U1)])
     })
 
     it('two event setting one event unsetting', async () => {
-      const U1 = EthereumAddress.random()
-      const U2 = EthereumAddress.random()
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([Add(U1), Add(U2), Remove(U1), Add2(U2)]),
       })
 
@@ -115,13 +125,14 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual([U2])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
 
     it('one event setting one event unsetting', async () => {
-      const U1 = EthereumAddress.random()
-      const U2 = EthereumAddress.random()
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([Add(U1), Add(U2), Remove(U1), Add(U2)]),
       })
 
@@ -138,13 +149,14 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual([U2])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
 
     it('single event with boolean flag', async () => {
-      const U1 = EthereumAddress.random()
-      const U2 = EthereumAddress.random()
+      const U1 = ChainSpecificAddress.random()
+      const U2 = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           Update(U1, true),
           Update(U2, true),
@@ -166,13 +178,14 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual([U2])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
   })
 
   describe('adding fetch', () => {
     it('multiple events with multiple values, grouped and filtered', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(2, 2),
@@ -203,6 +216,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with no matching filter', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatch(1),
           CurrentBatch(2),
@@ -227,6 +241,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with filter', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatch(1),
           CurrentBatch(2),
@@ -251,6 +266,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatch(2)]),
       })
 
@@ -271,6 +287,7 @@ describe(EventHandler.name, () => {
 
     it('single event', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1)]),
       })
 
@@ -291,6 +308,7 @@ describe(EventHandler.name, () => {
 
     it('no events', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([]),
       })
 
@@ -311,6 +329,7 @@ describe(EventHandler.name, () => {
   describe('setting fetch', () => {
     it('groups with some having no events after filtering', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(3, 3),
@@ -338,6 +357,7 @@ describe(EventHandler.name, () => {
 
     it('works on semi-compatible events', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatchMultichain(2, 3)]),
       })
 
@@ -371,6 +391,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with multiple sources', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatch2(1),
           CurrentBatch(2),
@@ -395,6 +416,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with multiple values, grouped and filtered', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(2, 2),
@@ -425,6 +447,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with multiple values, grouped and filtered', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(2, 2),
@@ -457,6 +480,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with multiple values, grouped', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(2, 2),
@@ -484,6 +508,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with multiple values filtered', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 3),
           CurrentBatchMultichain(2, 3),
@@ -508,6 +533,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events multiple values', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(2, 4),
@@ -531,6 +557,7 @@ describe(EventHandler.name, () => {
 
     it('single event multiple values', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatchMultichain(1, 1)]),
       })
 
@@ -551,6 +578,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with no matching filter', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatch(1),
           CurrentBatch(2),
@@ -575,6 +603,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events with filter', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([
           CurrentBatch(1),
           CurrentBatch(2),
@@ -599,6 +628,7 @@ describe(EventHandler.name, () => {
 
     it('multiple events', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatch(2)]),
       })
 
@@ -619,6 +649,7 @@ describe(EventHandler.name, () => {
 
     it('single event', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1)]),
       })
 
@@ -639,6 +670,7 @@ describe(EventHandler.name, () => {
 
     it('no events', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([]),
       })
 
@@ -661,6 +693,7 @@ describe(EventHandler.name, () => {
   describe('errors', () => {
     it('throws error when where clause references invalid parameter', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1)]),
       })
       const handler = new EventHandler(
@@ -680,6 +713,7 @@ describe(EventHandler.name, () => {
 
     it('throws error when select references invalid parameter', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([CurrentBatch(1)]),
       })
       const handler = new EventHandler(
@@ -699,6 +733,7 @@ describe(EventHandler.name, () => {
 
     it('throws if event is both adding and removing', async () => {
       const provider = mockObject<IProvider>({
+        chain: 'ethereum',
         getLogs: getLogsStub([Update(ADDRESS, true)]),
       })
 

@@ -2,7 +2,7 @@
   "name": "espresso",
   "chain": "ethereum",
   "blockNumber": 22397507,
-  "configHash": "0x1328c039a8ebdb185641cb1cfc3d1778cef2847856bb1c399c913056c49c4347",
+  "configHash": "0xeb7f3ad9c0ebd44caa03a2585b86e00442d287e548d4b28ce43d601e02d41cf6",
   "entries": [
     {
       "name": "EspressoMultisig",
@@ -146,10 +146,10 @@
     }
   ],
   "abis": {
-    "0x34F5af5158171Ffd2475d21dB5fc3B311F221982": [
+    "eth:0x34F5af5158171Ffd2475d21dB5fc3B311F221982": [
       "constructor(address _singleton)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -197,7 +197,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": [
+    "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -205,7 +205,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": [
+    "eth:0xBE0aA3c41A906ABDc48cE21A0960E8311535cA4B": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",

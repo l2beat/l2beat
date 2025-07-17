@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 22823842,
-  "configHash": "0xf9be199e2be071c3bf7513d5c97bd6d628e2cf22fcb8dc7d7fb3e678676ee767",
+  "configHash": "0x99574ad4b8b1a38df71d31a06bca02747cfee9cffa7dbb7f52dcf02591b2e689",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -1322,10 +1322,10 @@
     }
   ],
   "abis": {
-    "0x002721B4790d97dC140a049936aA710152Ba92D5": [
+    "eth:0x002721B4790d97dC140a049936aA710152Ba92D5": [
       "constructor(address _singleton)"
     ],
-    "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": [
+    "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1336,7 +1336,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505": [
+    "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1347,7 +1347,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": [
+    "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1358,7 +1358,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x0c431C66F4dE941d089625E5B423D00707977060": [
+    "eth:0x0c431C66F4dE941d089625E5B423D00707977060": [
       "constructor(address[] _pausers, address _unpauser)",
       "event PauserStatusChanged(address pauser, bool canPause)",
       "event UnpauserChanged(address previousUnpauser, address newUnpauser)",
@@ -1367,7 +1367,7 @@
       "function setUnpauser(address newUnpauser)",
       "function unpauser() view returns (address)"
     ],
-    "0x130d8EA0052B45554e4C99079B84df292149Bd5E": [
+    "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1378,10 +1378,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": [
+    "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A": [
       "constructor(address _singleton)"
     ],
-    "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c": [
+    "eth:0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c": [
       "constructor(address _registryCoordinator)",
       "event Initialized(uint8 version)",
       "event QuorumIndexUpdate(bytes32 indexed operatorId, uint8 quorumNumber, uint32 newOperatorIndex)",
@@ -1398,7 +1398,7 @@
       "function registryCoordinator() view returns (address)",
       "function totalOperatorsForQuorum(uint8 quorumNumber) view returns (uint32)"
     ],
-    "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96": [
+    "eth:0x1C468cf7089D263c2f53e2579b329B16aBc4dd96": [
       "constructor(address _registryCoordinator, address _delegationManager)",
       "event MinimumStakeForQuorumUpdated(uint8 indexed quorumNumber, uint96 minimumStake)",
       "event OperatorStakeUpdate(bytes32 indexed operatorId, uint8 quorumNumber, uint96 stake)",
@@ -1438,7 +1438,7 @@
       "function updateOperatorStake(address operator, bytes32 operatorId, bytes quorumNumbers) returns (uint192)",
       "function weightOfOperatorForQuorum(uint8 quorumNumber, address operator) view returns (uint96)"
     ],
-    "0x2088435ABcB1234A9427B755931C9064C93a2595": [
+    "eth:0x2088435ABcB1234A9427B755931C9064C93a2595": [
       "constructor(address _serviceManager, address _stakeRegistry, address _blsApkRegistry, address _indexRegistry, address _socketRegistry)",
       "event ChurnApproverUpdated(address prevChurnApprover, address newChurnApprover)",
       "event EjectorUpdated(address prevEjector, address newEjector)",
@@ -1504,10 +1504,10 @@
       "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
       "function updateSocket(string socket)"
     ],
-    "0x338477FfaF63c04AC06048787f910671eC914B34": [
+    "eth:0x338477FfaF63c04AC06048787f910671eC914B34": [
       "constructor(address _singleton)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1555,7 +1555,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2": [
+    "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1566,7 +1566,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x5b60105ceD5207D6ad217BF2d426e133454eCFB4": [
+    "eth:0x5b60105ceD5207D6ad217BF2d426e133454eCFB4": [
       "constructor(address _registryCoordinator)",
       "function getOperatorSocket(bytes32 _operatorId) view returns (string)",
       "function migrateOperatorSockets(bytes32[] _operatorIds, string[] _sockets)",
@@ -1574,7 +1574,7 @@
       "function registryCoordinator() view returns (address)",
       "function setOperatorSocket(bytes32 _operatorId, string _socket)"
     ],
-    "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b": [
+    "eth:0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b": [
       "constructor(address _registryCoordinator)",
       "event Initialized(uint8 version)",
       "event NewPubkeyRegistration(address indexed operator, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2)",
@@ -1599,7 +1599,7 @@
       "function registerOperator(address operator, bytes quorumNumbers)",
       "function registryCoordinator() view returns (address)"
     ],
-    "0x62242213E6FA34E943844f9B3124150EFb9CB0dD": [
+    "eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD": [
       "constructor()",
       "event GlobalRatePeriodIntervalUpdated(uint64 previousValue, uint64 newValue)",
       "event GlobalSymbolsPerPeriodUpdated(uint64 previousValue, uint64 newValue)",
@@ -1635,7 +1635,7 @@
       "function withdraw(uint256 _amount)",
       "function withdrawERC20(address _token, uint256 _amount)"
     ],
-    "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad": [
+    "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1646,7 +1646,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5": [
+    "eth:0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5": [
       "constructor()",
       "event DisperserAdded(uint32 indexed key, address indexed disperser)",
       "event Initialized(uint8 version)",
@@ -1659,7 +1659,7 @@
       "function setDisperserInfo(uint32 _disperserKey, tuple(address disperserAddress) _disperserInfo)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x8247EF5705d3345516286B72bFE6D690197C2E99": [
+    "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1670,7 +1670,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": [
+    "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1681,7 +1681,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x92104977f16dAe423966caa5cD9C115F2D25a8D6": [
+    "eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6": [
       "constructor()",
       "event DefaultSecurityThresholdsV2Updated(tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) previousDefaultSecurityThresholdsV2, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) newDefaultSecurityThresholdsV2)",
       "event Initialized(uint8 version)",
@@ -1705,7 +1705,7 @@
       "function transferOwnership(address newOwner)",
       "function versionedBlobParams(uint16) view returns (uint32 maxNumOperators, uint32 numChunks, uint8 codingRate)"
     ],
-    "0xae448D008B6F69033AfdA361b46b36C472B6FEE0": [
+    "eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0": [
       "constructor(address __avsDirectory, address __rewardsCoordinator, address __registryCoordinator, address __stakeRegistry, address __eigenDAThresholdRegistry, address __eigenDARelayRegistry, address __paymentVault, address __eigenDADisperserRegistry)",
       "event BatchConfirmed(bytes32 indexed batchHeaderHash, uint32 batchId)",
       "event BatchConfirmerStatusChanged(address batchConfirmer, bool status)",
@@ -1773,7 +1773,7 @@
       "function unpause(uint256 newPausedStatus)",
       "function updateAVSMetadataURI(string _metadataURI)"
     ],
-    "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05": [
+    "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1784,7 +1784,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030": [
+    "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1795,7 +1795,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A": [
+    "eth:0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A": [
       "constructor(address _registryCoordinator, address _stakeRegistry)",
       "event EjectorUpdated(address ejector, bool status)",
       "event Initialized(uint8 version)",
@@ -1817,7 +1817,7 @@
       "function stakeRegistry() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B": [
+    "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1828,7 +1828,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1877,7 +1877,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdb4c89956eEa6F606135E7d366322F2bDE609F15": [
+    "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1888,7 +1888,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xF6D82FBBdf700c086389e72C3023812e956ECa9e": [
+    "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e": [
       "constructor()",
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
