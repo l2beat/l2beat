@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantle",
   "blockNumber": 81058973,
-  "configHash": "0xf4320864a6c7367a631437f7738700ec196144e86c802c06f211d2ae4ee465a4",
+  "configHash": "0x35b675ae4426b0f1014d5722364f88a9d855577528eaebc441ea2a6b08870c26",
   "entries": [
     {
       "name": "MantleOwner",
@@ -522,5 +522,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
+  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
 }

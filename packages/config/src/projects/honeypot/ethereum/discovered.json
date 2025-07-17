@@ -2,7 +2,7 @@
   "name": "honeypot",
   "chain": "ethereum",
   "blockNumber": 20641250,
-  "configHash": "0x022ae64f39c54aac44df6dfdac489358f849747a8f3822853659fac9b1b1b846",
+  "configHash": "0x698c8f2f61a848e2e19edb139a9105c2ed0031b10cb68cf186b0ee8006014074",
   "entries": [
     {
       "name": "Honeypot",

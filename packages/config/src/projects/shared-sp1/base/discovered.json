@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "base",
   "blockNumber": 32642215,
-  "configHash": "0x8b43c9a26b926c435964d2a3a05fe11a33913f1e711f2380f5541e3d21af6f69",
+  "configHash": "0x0d92ad4bf6f9ca6ee74fd8fc271b886d7174fe114f3ef96cadff02d4fd7043cb",
   "entries": [
     {
       "name": "SP1Verifier",

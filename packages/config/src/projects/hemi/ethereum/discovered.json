@@ -2,7 +2,7 @@
   "name": "hemi",
   "chain": "ethereum",
   "blockNumber": 22765735,
-  "configHash": "0x80ca96cc25f50490a9b866eac9aa313aa2b4bdd517f9822ed40d809f135922fe",
+  "configHash": "0x9bebbaa165be697efa45fa1dd2de399069bd1f75abb5abbaea70a56126cbb80e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

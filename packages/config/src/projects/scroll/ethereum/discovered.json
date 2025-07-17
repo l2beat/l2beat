@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22731106,
-  "configHash": "0x226cd829bab35c3506ce3b1344ed499e6fed34743c53dfa34d3e927c62685bd5",
+  "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -3866,5 +3866,5 @@
     "scroll/ScrollOwner": "0xd4eda93bc90519848ba490c9a9dadcf87bde9d1528e271008a7e726f3bd6e998",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0x2d3a09d9e9d746c6d3b8c34e41a112823e9a06b25260d04b74b65f7c9a54dc24"
+  "permissionsConfigHash": "0xc84f9f9508ee08bcf352d35aa1cf9d6915f5519d4fcce4779b91091ec8a617e8"
 }

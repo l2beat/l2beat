@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 22731117,
-  "configHash": "0x560aac28e6dfc2d2103b8650941af6cd3c3d991635895ede3a632f52d2389018",
+  "configHash": "0x18e200935ad40a34323977a17000ef9a7631363d6f42def2539d488b0dd61c5c",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

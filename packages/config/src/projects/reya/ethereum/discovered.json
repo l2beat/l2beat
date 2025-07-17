@@ -2,7 +2,7 @@
   "name": "reya",
   "chain": "ethereum",
   "blockNumber": 22923595,
-  "configHash": "0xdbbc96a2c978cb3de1dce37ae0ed8408b36f9bff65f5779dbd95d4589ca8fa5e",
+  "configHash": "0x2bc3c230a374b2e5cfa24a0a0cf2ed9e3e27e62de3bd4a258807ed2c6d410747",
   "entries": [
     {
       "name": "OneStepProverHostIo",

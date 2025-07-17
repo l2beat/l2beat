@@ -2,7 +2,7 @@
   "name": "ham",
   "chain": "base",
   "blockNumber": 30252032,
-  "configHash": "0x1f4870aa446156188a7e94bf04ebd297fb1405b7acc01a7a2f4a05eda57ea0a7",
+  "configHash": "0x4e62d4076af22d10db760b0ef0da971cafcfefbf94b60bf4f50e34d29676002a",
   "entries": [
     {
       "address": "base:0x000000000000000000000000000000000000dEaD",

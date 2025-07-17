@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 22593366,
-  "configHash": "0xe311d813161eec40caa8557dea84bc18ed092c5049ca3424832c6c9f8be0bb96",
+  "configHash": "0x765b7ef32df88ff59e7f03948fd9e99bc43636003691cc3fcc7251155fb7a80f",
   "entries": [
     {
       "address": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",

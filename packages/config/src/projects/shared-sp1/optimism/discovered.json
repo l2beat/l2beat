@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "optimism",
   "blockNumber": 138237502,
-  "configHash": "0x7adb0f5bf1738e8edc3f0b66e344e5cc66f6dcd8923c682761a2c81c372d6e52",
+  "configHash": "0x9a0768aa32813fa44a0be9858fb754e64a6fd2877a90248bc02b2fa2df361b22",
   "entries": [
     {
       "name": "SP1Verifier",

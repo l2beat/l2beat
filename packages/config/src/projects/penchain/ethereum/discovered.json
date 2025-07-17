@@ -2,7 +2,7 @@
   "name": "penchain",
   "chain": "ethereum",
   "blockNumber": 22938657,
-  "configHash": "0x23c3e12ca869d0ff597238908a180c4cb3096381569259021617556b26967148",
+  "configHash": "0xcd640d2a9cc32a2655b67be84840d4512a356584e2c913aa42cc50261367d3ca",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
