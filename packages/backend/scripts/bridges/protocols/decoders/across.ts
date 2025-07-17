@@ -10,73 +10,77 @@ export const ACROSS = {
   decoder: decoder,
 }
 
-function decoder(chain: Chain, log: Log): Send | Receive | undefined {
-  const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+function decoder(
+  chain: Chain,
+  txLogs: { hash: string; logs: Log[] },
+): Send | Receive | undefined {
+  for (const log of txLogs.logs) {
+    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
-  if (!bridge || EthereumAddress(log.address) !== bridge.address)
-    return undefined
+    if (!bridge || EthereumAddress(log.address) !== bridge.address) continue
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'FundsDeposited',
-    })
+    if (
+      log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'FundsDeposited',
+      })
 
-    const destination = BRIDGES.find(
-      (b) => b.chainId === +data.args.destinationChainId.toString(),
-    )
+      const destination = BRIDGES.find(
+        (b) => b.chainId === +data.args.destinationChainId.toString(),
+      )
 
-    return {
-      direction: 'send',
-      protocol: ACROSS.name,
-      token: ChainSpecificAddress(
-        `${chain.shortName}:${extractAddressFromPadded(data.args.inputToken)}`,
-      ),
-      amount: data.args.inputAmount,
-      destination: destination
-        ? destination.chainShortName
-        : data.args.destinationChainId.toString(),
-      blockNumber: log.blockNumber ?? undefined,
-      txHash: log.transactionHash ?? undefined,
-      type: 'FundsDeposited',
-      matchingId: data.args.depositId.toString(),
+      return {
+        direction: 'send',
+        protocol: ACROSS.name,
+        token: ChainSpecificAddress(
+          `${chain.shortName}:${extractAddressFromPadded(data.args.inputToken)}`,
+        ),
+        amount: data.args.inputAmount,
+        destination: destination
+          ? destination.chainShortName
+          : data.args.destinationChainId.toString(),
+        blockNumber: log.blockNumber ?? undefined,
+        txHash: log.transactionHash ?? undefined,
+        type: 'FundsDeposited',
+        matchingId: data.args.depositId.toString(),
+      }
     }
-  }
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'FilledRelay',
-    })
+    if (
+      log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'FilledRelay',
+      })
 
-    const origin = BRIDGES.find(
-      (c) => c.chainId === +data.args.originChainId.toString(),
-    )
+      const origin = BRIDGES.find(
+        (c) => c.chainId === +data.args.originChainId.toString(),
+      )
 
-    return {
-      direction: 'receive',
-      protocol: ACROSS.name,
-      token: ChainSpecificAddress(
-        `${chain.shortName}:${extractAddressFromPadded(data.args.outputToken)}`,
-      ),
-      amount: data.args.inputAmount,
-      origin: origin
-        ? origin.chainShortName
-        : data.args.originChainId.toString(),
-      blockNumber: log.blockNumber ?? undefined,
-      txHash: log.transactionHash ?? undefined,
-      type: 'FilledRelay',
-      matchingId: data.args.depositId.toString(),
+      return {
+        direction: 'receive',
+        protocol: ACROSS.name,
+        token: ChainSpecificAddress(
+          `${chain.shortName}:${extractAddressFromPadded(data.args.outputToken)}`,
+        ),
+        amount: data.args.inputAmount,
+        origin: origin
+          ? origin.chainShortName
+          : data.args.originChainId.toString(),
+        blockNumber: log.blockNumber ?? undefined,
+        txHash: log.transactionHash ?? undefined,
+        type: 'FilledRelay',
+        matchingId: data.args.depositId.toString(),
+      }
     }
   }
 

@@ -1,4 +1,3 @@
-import type { RpcClient } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -20,111 +19,111 @@ export const CCTPV2 = {
   decoder: decoder,
 }
 
-async function decoder(
-  chain: Chain & { rpc: RpcClient },
-  log: Log,
-): Promise<Send | Receive | undefined> {
-  const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+function decoder(
+  chain: Chain,
+  txLogs: { hash: string; logs: Log[] },
+): Send | Receive | undefined {
+  for (const log of txLogs.logs) {
+    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
-  if (!bridge) {
-    return undefined
-  }
-
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'DepositForBurn',
-    })
-
-    const nonce = computeV2DeterministicNonce(
-      bridge.domain,
-      BigInt(data.args.destinationDomain),
-      data.args.burnToken,
-      data.args.mintRecipient,
-      data.args.amount,
-      data.args.depositor,
-      data.args.maxFee,
-      data.args.hookData,
-    )
-
-    return {
-      direction: 'send',
-      protocol: CCTPV2.name,
-      token: ChainSpecificAddress(`${chain.shortName}:${data.args.burnToken}`),
-      amount: data.args.amount,
-      destination: data.args.destinationDomain.toString(),
-      blockNumber: log.blockNumber ?? undefined,
-      txHash: log.transactionHash ?? undefined,
-      type: 'DepositForBurn',
-      matchingId: idFor(bridge.domain, nonce),
+    if (!bridge) {
+      continue
     }
-  }
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'MessageReceived',
-    })
+    if (
+      log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'DepositForBurn',
+      })
 
-    assert(log.transactionHash)
-
-    const txReceipt = await chain.rpc.getTransactionReceipt(log.transactionHash)
-
-    const withdraw = txReceipt.logs.find(
-      (l) =>
-        l.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
-    )
-
-    assert(withdraw, log.transactionHash)
-
-    const withdrawData = decodeEventLog({
-      abi: ABI,
-      data: withdraw.data as Hex,
-      topics: withdraw.topics as [signature: Hex, ...args: Hex[]] | [],
-      eventName: 'MintAndWithdraw',
-    })
-
-    const decodedMessage = decodeV2MessageBody(data.args.messageBody)
-    if (!decodedMessage) {
-      console.error(
-        'Failed to decode message body for v2 MessageReceived event',
+      const nonce = computeV2DeterministicNonce(
+        bridge.domain,
+        BigInt(data.args.destinationDomain),
+        data.args.burnToken,
+        data.args.mintRecipient,
+        data.args.amount,
+        data.args.depositor,
+        data.args.maxFee,
+        data.args.hookData,
       )
-      return undefined
-    }
-    const nonce = computeV2DeterministicNonce(
-      BigInt(data.args.sourceDomain),
-      bridge.domain,
-      decodedMessage.burnToken,
-      decodedMessage.mintRecipient,
-      decodedMessage.amount,
-      decodedMessage.messageSender,
-      decodedMessage.maxFee,
-      decodedMessage.hookData,
-    )
 
-    return {
-      direction: 'receive',
-      protocol: CCTPV2.name,
-      token: ChainSpecificAddress(
-        `${chain.shortName}:${withdrawData.args.mintToken}`,
-      ),
-      amount: withdrawData.args.amount,
-      origin: data.args.sourceDomain.toString(),
-      blockNumber: log.blockNumber ?? undefined,
-      txHash: log.transactionHash ?? undefined,
-      type: 'MessageReceived',
-      matchingId: idFor(BigInt(data.args.sourceDomain), nonce),
+      return {
+        direction: 'send',
+        protocol: CCTPV2.name,
+        token: ChainSpecificAddress(
+          `${chain.shortName}:${data.args.burnToken}`,
+        ),
+        amount: data.args.amount,
+        destination: data.args.destinationDomain.toString(),
+        blockNumber: log.blockNumber ?? undefined,
+        txHash: log.transactionHash ?? undefined,
+        type: 'DepositForBurn',
+        matchingId: idFor(bridge.domain, nonce),
+      }
+    }
+
+    if (
+      log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'MessageReceived',
+      })
+
+      const withdraw = txLogs.logs.find(
+        (l) =>
+          l.topics[0] ===
+          encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
+      )
+
+      assert(withdraw)
+
+      const withdrawData = decodeEventLog({
+        abi: ABI,
+        data: withdraw.data as Hex,
+        topics: withdraw.topics as [signature: Hex, ...args: Hex[]] | [],
+        eventName: 'MintAndWithdraw',
+      })
+
+      const decodedMessage = decodeV2MessageBody(data.args.messageBody)
+      if (!decodedMessage) {
+        console.error(
+          'Failed to decode message body for v2 MessageReceived event',
+        )
+        continue
+      }
+      const nonce = computeV2DeterministicNonce(
+        BigInt(data.args.sourceDomain),
+        bridge.domain,
+        decodedMessage.burnToken,
+        decodedMessage.mintRecipient,
+        decodedMessage.amount,
+        decodedMessage.messageSender,
+        decodedMessage.maxFee,
+        decodedMessage.hookData,
+      )
+
+      return {
+        direction: 'receive',
+        protocol: CCTPV2.name,
+        token: ChainSpecificAddress(
+          `${chain.shortName}:${withdrawData.args.mintToken}`,
+        ),
+        amount: withdrawData.args.amount,
+        origin: data.args.sourceDomain.toString(),
+        blockNumber: log.blockNumber ?? undefined,
+        txHash: log.transactionHash ?? undefined,
+        type: 'MessageReceived',
+        matchingId: idFor(BigInt(data.args.sourceDomain), nonce),
+      }
     }
   }
 

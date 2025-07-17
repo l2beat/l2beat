@@ -1,4 +1,3 @@
-import type { RpcClient } from '@l2beat/shared'
 import type { Log } from 'viem'
 import type { Chain } from '../chains'
 import type { Receive } from '../types/Receive'
@@ -10,8 +9,8 @@ import { CCTPV2 } from './decoders/cctpv2'
 interface Protocol {
   name: string
   decoder: (
-    chain: Chain & { rpc: RpcClient },
-    log: Log,
+    chain: Chain,
+    txLogs: { hash: string; logs: Log[] },
   ) => Promise<Send | Receive | undefined> | (Send | Receive | undefined)
 }
 

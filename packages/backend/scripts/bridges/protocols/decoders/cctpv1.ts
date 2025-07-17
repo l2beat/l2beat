@@ -1,4 +1,3 @@
-import type { RpcClient } from '@l2beat/shared'
 import {
   assert,
   ChainSpecificAddress,
@@ -20,82 +19,82 @@ export const CCTPV1 = {
   decoder: decoder,
 }
 
-async function decoder(
-  chain: Chain & { rpc: RpcClient },
-  log: Log,
-): Promise<Send | Receive | undefined> {
-  const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+function decoder(
+  chain: Chain,
+  txLogs: { hash: string; logs: Log[] },
+): Send | Receive | undefined {
+  for (const log of txLogs.logs) {
+    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
-  if (!bridge) {
-    return undefined
-  }
-
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'DepositForBurn',
-    })
-
-    return {
-      direction: 'send',
-      protocol: CCTPV1.name,
-      token: ChainSpecificAddress(`${chain.shortName}:${data.args.burnToken}`),
-      amount: data.args.amount,
-      destination: data.args.destinationDomain.toString(),
-      blockNumber: log.blockNumber ?? undefined,
-      txHash: log.transactionHash ?? undefined,
-      type: 'DepositForBurn',
-      matchingId: idFor(bridge.domain, data.args.nonce),
+    if (!bridge) {
+      continue
     }
-  }
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'MessageReceived',
-    })
+    if (
+      log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'DepositForBurn',
+      })
 
-    assert(log.transactionHash)
+      return {
+        direction: 'send',
+        protocol: CCTPV1.name,
+        token: ChainSpecificAddress(
+          `${chain.shortName}:${data.args.burnToken}`,
+        ),
+        amount: data.args.amount,
+        destination: data.args.destinationDomain.toString(),
+        blockNumber: log.blockNumber ?? undefined,
+        txHash: log.transactionHash ?? undefined,
+        type: 'DepositForBurn',
+        matchingId: idFor(bridge.domain, data.args.nonce),
+      }
+    }
 
-    const txReceipt = await chain.rpc.getTransactionReceipt(log.transactionHash)
+    if (
+      log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'MessageReceived',
+      })
 
-    const withdraw = txReceipt.logs.find(
-      (l) =>
-        l.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
-    )
+      const withdraw = txLogs.logs.find(
+        (l) =>
+          l.topics[0] ===
+          encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
+      )
 
-    assert(withdraw)
+      assert(withdraw)
 
-    const withdrawData = decodeEventLog({
-      abi: ABI,
-      data: withdraw.data as Hex,
-      topics: withdraw.topics as [signature: Hex, ...args: Hex[]] | [],
-      eventName: 'MintAndWithdraw',
-    })
+      const withdrawData = decodeEventLog({
+        abi: ABI,
+        data: withdraw.data as Hex,
+        topics: withdraw.topics as [signature: Hex, ...args: Hex[]] | [],
+        eventName: 'MintAndWithdraw',
+      })
 
-    return {
-      direction: 'receive',
-      protocol: CCTPV1.name,
-      token: ChainSpecificAddress(
-        `${chain.shortName}:${withdrawData.args.mintToken}`,
-      ),
-      amount: withdrawData.args.amount,
-      origin: data.args.sourceDomain.toString(),
-      blockNumber: log.blockNumber ?? undefined,
-      txHash: log.transactionHash ?? undefined,
-      type: 'MessageReceived',
-      matchingId: idFor(BigInt(data.args.sourceDomain), data.args.nonce),
+      return {
+        direction: 'receive',
+        protocol: CCTPV1.name,
+        token: ChainSpecificAddress(
+          `${chain.shortName}:${withdrawData.args.mintToken}`,
+        ),
+        amount: withdrawData.args.amount,
+        origin: data.args.sourceDomain.toString(),
+        blockNumber: log.blockNumber ?? undefined,
+        txHash: log.transactionHash ?? undefined,
+        type: 'MessageReceived',
+        matchingId: idFor(BigInt(data.args.sourceDomain), data.args.nonce),
+      }
     }
   }
 
