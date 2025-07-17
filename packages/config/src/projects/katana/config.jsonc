@@ -2,63 +2,59 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "katana",
   "import": ["../globalConfig.jsonc"],
-  "chains": {
-    "ethereum": {
-      "maxAddresses": 200,
-      "sharedModules": ["shared-polygon-cdk"],
-      "initialAddresses": [
-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E", // l1crossdomainmessenger
-        "0x100d3ca4f97776a40a7d93db4abf0fea34230666", // aggchainFEP
-        // vaultbridge token contracts
-        "0x53E82ABbb12638F09d9e624578ccB666217a765e",
-        "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
-        "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
-        "0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
-        "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
-      ],
-      "overrides": {
-        // name generic vaultBridge tokens
-        "0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
-          "displayName": "vbWBTC"
-        },
-        "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC": {
-          "displayName": "vbUSDT"
-        },
-        "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855": {
-          "displayName": "vbUSDS"
-        },
-        "0x53E82ABbb12638F09d9e624578ccB666217a765e": {
-          "displayName": "vbUSDC"
-        },
-        "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": {
-          "displayName": "vbETH"
-        },
-        // hide unused op stack contracts
-        "0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
-          "category": "spam"
-        },
-        "0x98906C3f90A06B5484DD67bf32938815d2993dBC": {
-          "category": "spam"
-        },
-        "0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": {
-          "category": "spam"
-        },
-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": {
-          "category": "spam"
-        },
-        "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C": {
-          "category": "spam"
-        },
-        "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": {
-          "category": "spam"
-        },
-        "0x74034597d29613CC8C0BDc8780e1d292A553Bd32": {
-          "category": "spam"
-        },
-        "0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E": {
-          "category": "spam"
-        }
-      }
+  "maxAddresses": 200,
+  "sharedModules": ["shared-polygon-cdk"],
+  "initialAddresses": [
+    "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E", // l1crossdomainmessenger
+    "eth:0x100d3ca4f97776a40a7d93db4abf0fea34230666", // aggchainFEP
+    // vaultbridge token contracts
+    "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
+    "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
+    "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
+    "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
+    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
+  ],
+  "overrides": {
+    // name generic vaultBridge tokens
+    "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
+      "displayName": "vbWBTC"
+    },
+    "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC": {
+      "displayName": "vbUSDT"
+    },
+    "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855": {
+      "displayName": "vbUSDS"
+    },
+    "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e": {
+      "displayName": "vbUSDC"
+    },
+    "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": {
+      "displayName": "vbETH"
+    },
+    // hide unused op stack contracts
+    "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
+      "category": "spam"
+    },
+    "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC": {
+      "category": "spam"
+    },
+    "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": {
+      "category": "spam"
+    },
+    "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": {
+      "category": "spam"
+    },
+    "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C": {
+      "category": "spam"
+    },
+    "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": {
+      "category": "spam"
+    },
+    "eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32": {
+      "category": "spam"
+    },
+    "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E": {
+      "category": "spam"
     }
   }
 }

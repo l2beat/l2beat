@@ -25,28 +25,28 @@
           "handler": {
             "type": "call",
             "method": "function farms(address token) view returns (address)",
-            "args": ["eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"]
+            "args": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"]
           }
         },
         "daiFarm": {
           "handler": {
             "type": "call",
             "method": "function farms(address token) view returns (address)",
-            "args": ["eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"]
+            "args": ["0x6B175474E89094C44Da98b954EedeAC495271d0F"]
           }
         },
         "usdcFarm": {
           "handler": {
             "type": "call",
             "method": "function farms(address token) view returns (address)",
-            "args": ["eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+            "args": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
           }
         },
         "wbtcFarm": {
           "handler": {
             "type": "call",
             "method": "function farms(address token) view returns (address)",
-            "args": ["eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
+            "args": ["0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
           }
         },
         "policyAdmin": {

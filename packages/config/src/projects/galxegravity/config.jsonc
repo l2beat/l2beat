@@ -23,7 +23,7 @@
           "handler": {
             "type": "call",
             "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
-            "args": ["eth:0xf993AF239770932A0EDaB88B6A5ba3708Bd58239", 0, 10]
+            "args": ["0xf993AF239770932A0EDaB88B6A5ba3708Bd58239", 0, 10]
           }
         }
       },

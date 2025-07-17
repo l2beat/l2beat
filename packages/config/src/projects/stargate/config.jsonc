@@ -99,14 +99,14 @@
           "handler": {
             "type": "call",
             "method": "getAppConfig",
-            "args": ["214", "eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"]
+            "args": ["214", "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"]
           }
         },
         "stargateArbConfig": {
           "handler": {
             "type": "call",
             "method": "getAppConfig",
-            "args": ["110", "eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"]
+            "args": ["110", "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"]
           }
         }
       }

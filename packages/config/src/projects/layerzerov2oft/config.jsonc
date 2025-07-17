@@ -62,7 +62,7 @@
           "handler": {
             "type": "call",
             "method": "getExecutorConfig",
-            "args": ["eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110]
+            "args": ["0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110]
           }
         },
         "ulnConfig_ENA": {
@@ -70,7 +70,7 @@
           "handler": {
             "method": "getUlnConfig",
             "type": "call",
-            "args": ["eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110]
+            "args": ["0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110]
           }
         },
         "ulnConfig_sfrxETH": {
@@ -78,7 +78,7 @@
           "handler": {
             "method": "getUlnConfig",
             "type": "call",
-            "args": ["eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A", 30110]
+            "args": ["0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A", 30110]
           }
         },
         "ulnConfig_CYBER": {
@@ -86,7 +86,7 @@
           "handler": {
             "method": "getUlnConfig",
             "type": "call",
-            "args": ["eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052", 30102]
+            "args": ["0xCB07992DE144bDeE56fDb66Fff2454B43243b052", 30102]
           }
         },
         "ulnConfig_USDT0": {
@@ -94,7 +94,7 @@
           "handler": {
             "method": "getUlnConfig",
             "type": "call",
-            "args": ["eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee", 30110]
+            "args": ["0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee", 30110]
           }
         }
       }
@@ -111,7 +111,7 @@
           "handler": {
             "type": "call",
             "method": "getSendLibrary",
-            "args": ["eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110]
+            "args": ["0x58538e6A46E07434d7E7375Bc268D3cb839C0133", 30110]
           }
         },
         "defaultReceiveLib_rsETH": {
@@ -120,7 +120,7 @@
           "handler": {
             "type": "call",
             "method": "getReceiveLibrary",
-            "args": ["eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3", 30110]
+            "args": ["0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3", 30110]
           }
         }
       }

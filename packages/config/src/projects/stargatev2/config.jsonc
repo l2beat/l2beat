@@ -209,27 +209,27 @@
         "getSendLibrary": {
           "handler": {
             "type": "call",
-            "args": ["eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
           }
         },
         "getReceiveLibrary": {
           "handler": {
             "type": "call",
-            "args": ["eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
           }
         },
         "delegatesTokenMessaging": {
           "handler": {
             "method": "delegates",
             "type": "call",
-            "args": ["eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980"]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980"]
           }
         },
         "delegatesCreditMessaging": {
           "handler": {
             "method": "delegates",
             "type": "call",
-            "args": ["eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"]
+            "args": ["0x6b8aD17795d89B283e6D0362A87A403f3544bb9d"]
           }
         }
       }
@@ -241,7 +241,7 @@
           "description": "The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])",
           "handler": {
             "type": "call",
-            "args": ["eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
           }
         }
       }
@@ -253,7 +253,7 @@
           "description": "The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])",
           "handler": {
             "type": "call",
-            "args": ["eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
+            "args": ["0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980", 30110]
           }
         }
       }
