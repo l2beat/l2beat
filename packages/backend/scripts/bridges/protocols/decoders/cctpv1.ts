@@ -1,18 +1,8 @@
-import {
-  assert,
-  ChainSpecificAddress,
-  EthereumAddress,
-} from '@l2beat/shared-pure'
-import {
-  decodeEventLog,
-  encodeEventTopics,
-  type Hex,
-  type Log,
-  parseAbi,
-} from 'viem'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
-import type { Receive } from '../../types/Receive'
-import type { Send } from '../../types/Send'
+import type { Message } from '../../types/Message'
+import type { TransactionWithViemLogs } from '../../types/TransactionWithViemLogs'
 
 export const CCTPV1 = {
   name: 'cctpv1',
@@ -21,9 +11,9 @@ export const CCTPV1 = {
 
 function decoder(
   chain: Chain,
-  txLogs: { hash: string; logs: Log[] },
-): Send | Receive | undefined {
-  for (const log of txLogs.logs) {
+  transaction: TransactionWithViemLogs,
+): Message | undefined {
+  for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
     if (!bridge) {
@@ -41,16 +31,18 @@ function decoder(
         eventName: 'DepositForBurn',
       })
 
+      const destination = BRIDGES.find(
+        (b) => b.domain === data.args.destinationDomain,
+      )?.chainShortName
+
       return {
-        direction: 'send',
+        direction: 'outbound',
         protocol: CCTPV1.name,
-        token: ChainSpecificAddress(
-          `${chain.shortName}:${data.args.burnToken}`,
-        ),
-        amount: data.args.amount,
-        destination: data.args.destinationDomain.toString(),
-        blockNumber: log.blockNumber ?? undefined,
-        txHash: log.transactionHash ?? undefined,
+        origin: chain.shortName,
+        destination: destination ?? data.args.destinationDomain.toString(),
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
         type: 'DepositForBurn',
         matchingId: idFor(bridge.domain, data.args.nonce),
       }
@@ -67,33 +59,20 @@ function decoder(
         eventName: 'MessageReceived',
       })
 
-      const withdraw = txLogs.logs.find(
-        (l) =>
-          l.topics[0] ===
-          encodeEventTopics({ abi: ABI, eventName: 'MintAndWithdraw' })[0],
-      )
-
-      assert(withdraw)
-
-      const withdrawData = decodeEventLog({
-        abi: ABI,
-        data: withdraw.data as Hex,
-        topics: withdraw.topics as [signature: Hex, ...args: Hex[]] | [],
-        eventName: 'MintAndWithdraw',
-      })
+      const origin = BRIDGES.find(
+        (b) => b.domain === data.args.sourceDomain,
+      )?.chainShortName
 
       return {
-        direction: 'receive',
+        direction: 'inbound',
         protocol: CCTPV1.name,
-        token: ChainSpecificAddress(
-          `${chain.shortName}:${withdrawData.args.mintToken}`,
-        ),
-        amount: withdrawData.args.amount,
-        origin: data.args.sourceDomain.toString(),
-        blockNumber: log.blockNumber ?? undefined,
-        txHash: log.transactionHash ?? undefined,
+        origin: origin ?? data.args.sourceDomain.toString(),
+        destination: chain.shortName,
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
         type: 'MessageReceived',
-        matchingId: idFor(BigInt(data.args.sourceDomain), data.args.nonce),
+        matchingId: idFor(data.args.sourceDomain, data.args.nonce),
       }
     }
   }
@@ -109,7 +88,7 @@ const ABI = parseAbi([
 
 const BRIDGES = [
   {
-    domain: 0n,
+    domain: 0,
     chainShortName: 'eth',
     tokenMessenger: EthereumAddress(
       '0xBd3fa81B58Ba92a82136038B25aDec7066af3155',
@@ -119,7 +98,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 3n,
+    domain: 3,
     chainShortName: 'arb1',
     tokenMessenger: EthereumAddress(
       '0x19330d10D9Cc8751218eaf51E8885D058642E08A',
@@ -129,7 +108,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 2n,
+    domain: 2,
     chainShortName: 'oeth',
     tokenMessenger: EthereumAddress(
       '0x2B4069517957735bE00ceE0fadAE88a26365528f',
@@ -139,7 +118,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 6n,
+    domain: 6,
     chainShortName: 'base',
     tokenMessenger: EthereumAddress(
       '0x1682Ae6375C4E4A97e4B583BC394c861A46D8962',
@@ -149,7 +128,7 @@ const BRIDGES = [
     ),
   },
   {
-    domain: 10n,
+    domain: 10,
     chainShortName: 'unichain',
     tokenMessenger: EthereumAddress(
       '0x4e744b28E787c3aD0e810eD65A24461D4ac5a762',
@@ -160,5 +139,5 @@ const BRIDGES = [
   },
 ]
 
-const idFor = (domain: bigint, nonce: bigint | string) =>
+const idFor = (domain: number, nonce: bigint | string) =>
   `${domain}_${nonce}` as const
