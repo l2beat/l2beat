@@ -7,11 +7,11 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatDelay } from '../../common/formatDelays'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -102,6 +102,7 @@ export const apex: ScalingProject = {
   type: 'layer2',
   id: ProjectId('apex'),
   addedAt: UnixTime(1663927910), // 2022-09-23T10:11:50Z
+  archivedAt: UnixTime(1752072188),
   capability: 'appchain',
   badges: [
     BADGES.VM.AppChain,
@@ -114,6 +115,8 @@ export const apex: ScalingProject = {
     redWarning:
       'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     architectureImage: 'starkex',
+    headerWarning:
+      'Apex Pro and the associated StarkEx instances [were sunset](https://www.apex.exchange/blog/detail/ApeX-Pro-Sunset-Delisting-Timeline-for-Trading-Pairs).',
     name: 'ApeX',
     slug: 'apex',
     description: `ApeX Pro is a non-custodial trading platform that delivers

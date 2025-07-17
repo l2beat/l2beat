@@ -50,7 +50,7 @@ export class Bytes {
   }
 
   toNumber() {
-    return parseInt(this.value || '0', 16)
+    return Number.parseInt(this.value || '0', 16)
   }
 
   toByteArray() {
@@ -74,7 +74,7 @@ export class Bytes {
       throw new Error('Index out of bounds')
     }
     const value = this.value[index * 2] + this.value[index * 2 + 1]
-    return parseInt(value, 16)
+    return Number.parseInt(value, 16)
   }
 
   get length() {

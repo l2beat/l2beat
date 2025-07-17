@@ -2,7 +2,6 @@ import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
 import { Badge } from '~/components/badge/Badge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
-import { TableLink } from '~/components/table/TableLink'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import {
   TypeExplanationTooltip,
@@ -12,6 +11,7 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
+import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
 

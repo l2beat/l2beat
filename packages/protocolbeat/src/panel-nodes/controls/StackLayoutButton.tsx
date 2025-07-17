@@ -369,7 +369,7 @@ function physicsStep(nodes: LayoutNode[], top: number, step: number) {
     }
   }
 
-  let minY = Infinity
+  let minY = Number.POSITIVE_INFINITY
   for (const node of nodes) {
     minY = Math.min(node.y, minY)
   }

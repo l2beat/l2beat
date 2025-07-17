@@ -1,3 +1,638 @@
+Generated with discovered.json: 0x13ac952f8ed03bc84740e3242525194792ef61c6
+
+# Diff at Mon, 14 Jul 2025 12:45:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22865659
+- current block number: 22865659
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865659 (main branch discovery), not current.
+
+```diff
+    EOA  (0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e) {
+    +++ description: None
+      address:
+-        "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e"
++        "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e"
+    }
+```
+
+```diff
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) {
+    +++ description: None
+      address:
+-        "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
++        "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
+      values.eip712Domain.domainVerifyingContract:
+-        "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
++        "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
+      values.owner:
+-        "0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e"
++        "eth:0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e"
+      implementationNames.0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6:
+-        "TokenImplementation"
+      implementationNames.eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6:
++        "TokenImplementation"
+    }
+```
+
+```diff
+    EOA  (0x107A0086b32d7A0977926A205131d8731D39cbEB) {
+    +++ description: None
+      address:
+-        "0x107A0086b32d7A0977926A205131d8731D39cbEB"
++        "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB"
+    }
+```
+
+```diff
+    EOA  (0x114De8460193bdf3A2fCf81f86a09765F4762fD1) {
+    +++ description: None
+      address:
+-        "0x114De8460193bdf3A2fCf81f86a09765F4762fD1"
++        "eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1"
+    }
+```
+
+```diff
+    EOA  (0x11b39756C042441BE6D8650b69b54EbE715E2343) {
+    +++ description: None
+      address:
+-        "0x11b39756C042441BE6D8650b69b54EbE715E2343"
++        "eth:0x11b39756C042441BE6D8650b69b54EbE715E2343"
+    }
+```
+
+```diff
+    EOA  (0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20) {
+    +++ description: None
+      address:
+-        "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20"
++        "eth:0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20"
+    }
+```
+
+```diff
+    EOA  (0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8) {
+    +++ description: None
+      address:
+-        "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8"
++        "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8"
+    }
+```
+
+```diff
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911) {
+    +++ description: None
+      address:
+-        "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
++        "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x90995DBd1aae85872451b50A569dE947D34ac4ee"
++        "eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee"
+      values.$pastUpgrades.0.2.0:
+-        "0x25688636CEc6CE0F1434b1e7dd0A223F3f258336"
++        "eth:0x25688636CEc6CE0F1434b1e7dd0A223F3f258336"
+      values.$pastUpgrades.1.2.0:
+-        "0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF"
++        "eth:0x00337a31aEE3Ed37f5D5FBF892031d0090Da2EeF"
+      values.$pastUpgrades.2.2.0:
+-        "0x90995DBd1aae85872451b50A569dE947D34ac4ee"
++        "eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee"
+      values.getDefaultDeliveryProvider:
+-        "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
++        "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
+      implementationNames.0x27428DD2d3DD32A4D7f7C497eAaa23130d894911:
+-        "SimpleProxy"
+      implementationNames.0x90995DBd1aae85872451b50A569dE947D34ac4ee:
+-        "WormholeRelayer"
+      implementationNames.eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911:
++        "SimpleProxy"
+      implementationNames.eth:0x90995DBd1aae85872451b50A569dE947D34ac4ee:
++        "WormholeRelayer"
+    }
+```
+
+```diff
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585) {
+    +++ description: None
+      address:
+-        "0x3ee18B2214AFF97000D974cf647E7C347E8fa585"
++        "eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"
++        "eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"
+      values.$pastUpgrades.0.2.0:
+-        "0x51e9027eaBE500466cAA0F4Be882afC4446C4eFE"
++        "eth:0x51e9027eaBE500466cAA0F4Be882afC4446C4eFE"
+      values.$pastUpgrades.1.2.0:
+-        "0x6c4c12987303b2c94b2C76c612Fc5F4D2F0360F7"
++        "eth:0x6c4c12987303b2c94b2C76c612Fc5F4D2F0360F7"
+      values.$pastUpgrades.2.2.0:
+-        "0x67145cdb0d69678e9c48106F646C1b7ef69813A4"
++        "eth:0x67145cdb0d69678e9c48106F646C1b7ef69813A4"
+      values.$pastUpgrades.3.2.0:
+-        "0x91175AEE6dAc41B9C1f749ded077568aD93B84Ca"
++        "eth:0x91175AEE6dAc41B9C1f749ded077568aD93B84Ca"
+      values.$pastUpgrades.4.2.0:
+-        "0xB203b2057E2F08aDCE8F73Cc99709Ffdd8EDffEa"
++        "eth:0xB203b2057E2F08aDCE8F73Cc99709Ffdd8EDffEa"
+      values.$pastUpgrades.5.2.0:
+-        "0x76364611e457b1f97cd58FfC332DDC7561a193F6"
++        "eth:0x76364611e457b1f97cd58FfC332DDC7561a193F6"
+      values.$pastUpgrades.6.2.0:
+-        "0xfA71B241B168d2876722c6D8856d3E4F311B8C1e"
++        "eth:0xfA71B241B168d2876722c6D8856d3E4F311B8C1e"
+      values.$pastUpgrades.7.2.0:
+-        "0xADE06bc75Dc1FC3fB7442e0CFb8Ca544B23aF789"
++        "eth:0xADE06bc75Dc1FC3fB7442e0CFb8Ca544B23aF789"
+      values.$pastUpgrades.8.2.0:
+-        "0x299b4F6066d231521d11FAE8331fb1A4fe794F58"
++        "eth:0x299b4F6066d231521d11FAE8331fb1A4fe794F58"
+      values.$pastUpgrades.9.2.0:
+-        "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"
++        "eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"
+      values.implementation:
+-        "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
++        "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
+      values.tokenImplementation:
+-        "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
++        "eth:0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6"
+      values.WETH:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.wormhole:
+-        "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
++        "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
+      implementationNames.0x3ee18B2214AFF97000D974cf647E7C347E8fa585:
+-        "TokenBridge"
+      implementationNames.0x381752f5458282d317d12C30D2Bd4D6E1FD8841e:
+-        "BridgeImplementation"
+      implementationNames.eth:0x3ee18B2214AFF97000D974cf647E7C347E8fa585:
++        "TokenBridge"
+      implementationNames.eth:0x381752f5458282d317d12C30D2Bd4D6E1FD8841e:
++        "BridgeImplementation"
+    }
+```
+
+```diff
+    EOA  (0x53207E216540125e322CdA8A693b0b89576DEb46) {
+    +++ description: None
+      address:
+-        "0x53207E216540125e322CdA8A693b0b89576DEb46"
++        "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
+    }
+```
+
+```diff
+    EOA  (0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd) {
+    +++ description: None
+      address:
+-        "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd"
++        "eth:0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd"
+    }
+```
+
+```diff
+    EOA  (0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3) {
+    +++ description: None
+      address:
+-        "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3"
++        "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3"
+    }
+```
+
+```diff
+    EOA  (0x59278F587D4cFcDCbbc08019060be7231c37ddc2) {
+    +++ description: None
+      address:
+-        "0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
++        "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
+    }
+```
+
+```diff
+    EOA  (0x5E1487F35515d02A92753504a8D75471b9f49EdB) {
+    +++ description: None
+      address:
+-        "0x5E1487F35515d02A92753504a8D75471b9f49EdB"
++        "eth:0x5E1487F35515d02A92753504a8D75471b9f49EdB"
+    }
+```
+
+```diff
+    EOA  (0x6FbEBc898F403E4773E95feB15E80C9A99c8348d) {
+    +++ description: None
+      address:
+-        "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
++        "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
+    }
+```
+
+```diff
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE) {
+    +++ description: None
+      address:
+-        "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE"
++        "eth:0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C"
++        "eth:0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C"
+      values.$pastUpgrades.0.2.0:
+-        "0xeF31003B774B45963FEa40bdF8653994f991AeAa"
++        "eth:0xeF31003B774B45963FEa40bdF8653994f991AeAa"
+      values.$pastUpgrades.1.2.0:
+-        "0x19AA39217dE9F568cdEb4141be1654670862a596"
++        "eth:0x19AA39217dE9F568cdEb4141be1654670862a596"
+      values.$pastUpgrades.2.2.0:
+-        "0x516f156987fb1C7763b31EA0e8a07d23077f7e04"
++        "eth:0x516f156987fb1C7763b31EA0e8a07d23077f7e04"
+      values.$pastUpgrades.3.2.0:
+-        "0x29C502cF186012734c5F8861C4004C27c55578df"
++        "eth:0x29C502cF186012734c5F8861C4004C27c55578df"
+      values.$pastUpgrades.4.2.0:
+-        "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C"
++        "eth:0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C"
+      values.implementation:
+-        "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc"
++        "eth:0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc"
+      values.tokenImplementation:
+-        "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc"
++        "eth:0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc"
+      values.wormhole:
+-        "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
++        "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
+      implementationNames.0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE:
+-        "NFTBridgeEntrypoint"
+      implementationNames.0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C:
+-        "NFTBridgeImplementation"
+      implementationNames.eth:0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE:
++        "NFTBridgeEntrypoint"
+      implementationNames.eth:0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C:
++        "NFTBridgeImplementation"
+    }
+```
+
+```diff
+    EOA  (0x71AA1BE1D36CaFE3867910F99C09e347899C19C3) {
+    +++ description: None
+      address:
+-        "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3"
++        "eth:0x71AA1BE1D36CaFE3867910F99C09e347899C19C3"
+    }
+```
+
+```diff
+    EOA  (0x74a3bf913953D695260D88BC1aA25A4eeE363ef0) {
+    +++ description: None
+      address:
+-        "0x74a3bf913953D695260D88BC1aA25A4eeE363ef0"
++        "eth:0x74a3bf913953D695260D88BC1aA25A4eeE363ef0"
+    }
+```
+
+```diff
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81) {
+    +++ description: None
+      address:
+-        "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
++        "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
+      values.$admin:
+-        "0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
++        "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
+      values.$implementation:
+-        "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"
++        "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"
+      values.$pastUpgrades.0.2.0:
+-        "0xedd08D4363820603fb1B261F7667B8ee170c37a5"
++        "eth:0xedd08D4363820603fb1B261F7667B8ee170c37a5"
+      values.$pastUpgrades.1.2.0:
+-        "0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c"
++        "eth:0x401d3A2ec0a071e2A8f8Fc9B4C69313C1a04540c"
+      values.$pastUpgrades.2.2.0:
+-        "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"
++        "eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"
+      values.coreRelayer:
+-        "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
++        "eth:0x27428DD2d3DD32A4D7f7C497eAaa23130d894911"
+      values.getRewardAddress:
+-        "0x53207E216540125e322CdA8A693b0b89576DEb46"
++        "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
+      values.owner:
+-        "0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
++        "eth:0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pricingWallet:
+-        "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD"
++        "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD"
+      values.rewardAddress:
+-        "0x53207E216540125e322CdA8A693b0b89576DEb46"
++        "eth:0x53207E216540125e322CdA8A693b0b89576DEb46"
+      implementationNames.0x7A0a53847776f7e94Cc35742971aCb2217b0Db81:
+-        "DeliveryProviderProxy"
+      implementationNames.0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2:
+-        "DeliveryProviderImplementation"
+      implementationNames.eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81:
++        "DeliveryProviderProxy"
+      implementationNames.eth:0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2:
++        "DeliveryProviderImplementation"
+    }
+```
+
+```diff
+    EOA  (0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf) {
+    +++ description: None
+      address:
+-        "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf"
++        "eth:0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf"
+    }
+```
+
+```diff
+    EOA  (0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2) {
+    +++ description: None
+      address:
+-        "0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2"
++        "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2"
+    }
+```
+
+```diff
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B) {
+    +++ description: None
+      address:
+-        "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
++        "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0"
++        "eth:0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0"
+      values.$pastUpgrades.0.2.0:
+-        "0x736D2A394f7810C17b3c6fEd017d5BC7D60c077d"
++        "eth:0x736D2A394f7810C17b3c6fEd017d5BC7D60c077d"
+      values.$pastUpgrades.1.2.0:
+-        "0x8C0041566e0bc27Efe285a9E98D0B4217a46809c"
++        "eth:0x8C0041566e0bc27Efe285a9E98D0B4217a46809c"
+      values.$pastUpgrades.2.2.0:
+-        "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0"
++        "eth:0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0"
+      values.guardianSet.keys.0:
+-        "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3"
++        "eth:0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3"
+      values.guardianSet.keys.1:
+-        "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157"
++        "eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157"
+      values.guardianSet.keys.2:
+-        "0x114De8460193bdf3A2fCf81f86a09765F4762fD1"
++        "eth:0x114De8460193bdf3A2fCf81f86a09765F4762fD1"
+      values.guardianSet.keys.3:
+-        "0x107A0086b32d7A0977926A205131d8731D39cbEB"
++        "eth:0x107A0086b32d7A0977926A205131d8731D39cbEB"
+      values.guardianSet.keys.4:
+-        "0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2"
++        "eth:0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2"
+      values.guardianSet.keys.5:
+-        "0x11b39756C042441BE6D8650b69b54EbE715E2343"
++        "eth:0x11b39756C042441BE6D8650b69b54EbE715E2343"
+      values.guardianSet.keys.6:
+-        "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd"
++        "eth:0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd"
+      values.guardianSet.keys.7:
+-        "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20"
++        "eth:0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20"
+      values.guardianSet.keys.8:
+-        "0x74a3bf913953D695260D88BC1aA25A4eeE363ef0"
++        "eth:0x74a3bf913953D695260D88BC1aA25A4eeE363ef0"
+      values.guardianSet.keys.9:
+-        "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e"
++        "eth:0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e"
+      values.guardianSet.keys.10:
+-        "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14"
++        "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14"
+      values.guardianSet.keys.11:
+-        "0xf93124b7c738843CBB89E864c862c38cddCccF95"
++        "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95"
+      values.guardianSet.keys.12:
+-        "0xD2CC37A4dc036a8D232b48f62cDD4731412f4890"
++        "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890"
+      values.guardianSet.keys.13:
+-        "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811"
++        "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811"
+      values.guardianSet.keys.14:
+-        "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3"
++        "eth:0x71AA1BE1D36CaFE3867910F99C09e347899C19C3"
+      values.guardianSet.keys.15:
+-        "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf"
++        "eth:0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf"
+      values.guardianSet.keys.16:
+-        "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8"
++        "eth:0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8"
+      values.guardianSet.keys.17:
+-        "0x5E1487F35515d02A92753504a8D75471b9f49EdB"
++        "eth:0x5E1487F35515d02A92753504a8D75471b9f49EdB"
+      values.guardianSet.keys.18:
+-        "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
++        "eth:0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
+      implementationNames.0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B:
+-        "Wormhole"
+      implementationNames.0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0:
+-        "Implementation"
+      implementationNames.eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B:
++        "Wormhole"
+      implementationNames.eth:0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0:
++        "Implementation"
+    }
+```
+
+```diff
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a) {
+    +++ description: None
+      address:
+-        "0xAaDA05BD399372f0b0463744C09113c137636f6a"
++        "eth:0xAaDA05BD399372f0b0463744C09113c137636f6a"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x37f26277B1927c6bEDbD94e5C21C337A706af31c"
++        "eth:0x37f26277B1927c6bEDbD94e5C21C337A706af31c"
+      values.$pastUpgrades.0.2.0:
+-        "0x52e3C3D0Ca2fa372263289836c4E258C34a4523B"
++        "eth:0x52e3C3D0Ca2fa372263289836c4E258C34a4523B"
+      values.$pastUpgrades.1.2.0:
+-        "0x37f26277B1927c6bEDbD94e5C21C337A706af31c"
++        "eth:0x37f26277B1927c6bEDbD94e5C21C337A706af31c"
+      values.circleBridge:
+-        "0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
++        "eth:0xBd3fa81B58Ba92a82136038B25aDec7066af3155"
+      values.circleTokenMinter:
+-        "0xc4922d64a24675E16e1586e3e3Aa56C06fABe907"
++        "eth:0xc4922d64a24675E16e1586e3e3Aa56C06fABe907"
+      values.circleTransmitter:
+-        "0x0a992d191DEeC32aFe36203Ad87D7d289a738F81"
++        "eth:0x0a992d191DEeC32aFe36203Ad87D7d289a738F81"
+      values.wormhole:
+-        "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
++        "eth:0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B"
+      implementationNames.0xAaDA05BD399372f0b0463744C09113c137636f6a:
+-        "CircleIntegrationProxy"
+      implementationNames.0x37f26277B1927c6bEDbD94e5C21C337A706af31c:
+-        "CircleIntegrationImplementation"
+      implementationNames.eth:0xAaDA05BD399372f0b0463744C09113c137636f6a:
++        "CircleIntegrationProxy"
+      implementationNames.eth:0x37f26277B1927c6bEDbD94e5C21C337A706af31c:
++        "CircleIntegrationImplementation"
+    }
+```
+
+```diff
+    EOA  (0xAF45Ced136b9D9e24903464AE889F5C8a723FC14) {
+    +++ description: None
+      address:
+-        "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14"
++        "eth:0xAF45Ced136b9D9e24903464AE889F5C8a723FC14"
+    }
+```
+
+```diff
+    EOA  (0xD2CC37A4dc036a8D232b48f62cDD4731412f4890) {
+    +++ description: None
+      address:
+-        "0xD2CC37A4dc036a8D232b48f62cDD4731412f4890"
++        "eth:0xD2CC37A4dc036a8D232b48f62cDD4731412f4890"
+    }
+```
+
+```diff
+    EOA  (0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811) {
+    +++ description: None
+      address:
+-        "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811"
++        "eth:0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811"
+    }
+```
+
+```diff
+    EOA  (0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e) {
+    +++ description: None
+      address:
+-        "0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e"
++        "eth:0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e"
+    }
+```
+
+```diff
+    EOA  (0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD) {
+    +++ description: None
+      address:
+-        "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD"
++        "eth:0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD"
+    }
+```
+
+```diff
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc) {
+    +++ description: None
+      address:
+-        "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc"
++        "eth:0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc"
+      values.owner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc:
+-        "NFTImplementation"
+      implementationNames.eth:0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc:
++        "NFTImplementation"
+    }
+```
+
+```diff
+    EOA  (0xf93124b7c738843CBB89E864c862c38cddCccF95) {
+    +++ description: None
+      address:
+-        "0xf93124b7c738843CBB89E864c862c38cddCccF95"
++        "eth:0xf93124b7c738843CBB89E864c862c38cddCccF95"
+    }
+```
+
+```diff
+    EOA  (0xfF6CB952589BDE862c25Ef4392132fb9D4A42157) {
+    +++ description: None
+      address:
+-        "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157"
++        "eth:0xfF6CB952589BDE862c25Ef4392132fb9D4A42157"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeRelayer (0x27428DD2d3DD32A4D7f7C497eAaa23130d894911)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x3ee18B2214AFF97000D974cf647E7C347E8fa585)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NFTBridge (0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeliveryProviderImplementation (0x7A0a53847776f7e94Cc35742971aCb2217b0Db81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeCore (0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CircleIntegration (0xAaDA05BD399372f0b0463744C09113c137636f6a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NFTImplementation (0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf71739e5f801415ded7233d58a1c8e0df389301e
 
 # Diff at Mon, 07 Jul 2025 06:54:33 GMT:

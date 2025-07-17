@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
-import { env } from 'process'
+import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -125,8 +125,8 @@ export async function getProjectLivenessChart({
 }
 
 function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
-  let min = Infinity
-  let max = -Infinity
+  let min = Number.POSITIVE_INFINITY
+  let max = Number.NEGATIVE_INFINITY
   let weightedSum = 0
   let totalCount = 0
   for (const entry of entries) {

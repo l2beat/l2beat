@@ -1,9 +1,11 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
+import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
 import { languageJoin } from '~/utils/languageJoin'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { Square } from '../Square'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
 export interface TokenBreakdownProps {
@@ -16,7 +18,6 @@ export interface TokenBreakdownProps {
 
 export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
   associatedTokenSymbols: string[]
-
   tvsWarnings: WarningWithSentiment[]
 }
 
@@ -71,9 +72,9 @@ export function TokenBreakdownTooltipContent({
   return (
     <div className="space-y-2 max-md:max-w-xs">
       {total === 0 ? (
-        <span>No tokens</span>
+        <span>No data</span>
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           {values.map(
             (v, i) =>
               v.value > 0 && (
@@ -82,13 +83,22 @@ export function TokenBreakdownTooltipContent({
                   className="flex items-center justify-between gap-x-6"
                 >
                   <span className="flex items-center gap-1">
-                    <Square variant={v.variant} size="small" />
-                    <span className="font-medium text-label-value-14">
+                    <Square
+                      variant={v.variant}
+                      size="small"
+                      className="-top-px relative"
+                    />
+                    <span className="font-medium text-label-value-15">
                       {v.title}
                     </span>
                   </span>
-                  <span className="font-medium text-label-value-15">
-                    {((v.value / total) * 100).toFixed(2)}%
+                  <span>
+                    <span className="mr-1 font-bold text-label-value-15">
+                      {formatCurrency(v.value, 'usd')}
+                    </span>
+                    <span className="font-medium text-label-value-15 text-secondary">
+                      ({formatPercent(v.value / total)})
+                    </span>
                   </span>
                 </div>
               ),

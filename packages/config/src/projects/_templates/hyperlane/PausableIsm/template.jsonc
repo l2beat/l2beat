@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Simple ISM that implements `verify()` and returns true if not paused, false otherwise. This allows its owner ({{owner}}) to pause any system for which this ISMs verification is needed.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause and unpause the ISM."
+        }
+      ]
+    }
+  }
+}

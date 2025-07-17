@@ -15,7 +15,7 @@ export function ProjectHeader(props: Props) {
           alt={`${props.title} logo`}
         />
       )}
-      <span className="!leading-none font-bold text-3xl md:text-4xl">
+      <span className="font-bold text-3xl leading-none! md:text-4xl">
         {props.title}
       </span>
     </h1>

@@ -1,12 +1,13 @@
 import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import {
-  type Hex,
   decodeFunctionResult,
   encodeFunctionData,
+  type Hex,
   parseAbi,
 } from 'viem'
-import type { BridgeTransfer } from '../types/BridgeTransfer'
+import type { Receive } from '../types/Receive'
+import type { Send } from '../types/Send'
 
 const ERC20 = parseAbi([
   'function decimals() view returns (uint8)',
@@ -15,13 +16,13 @@ const ERC20 = parseAbi([
 
 export async function getTokenAmount(
   rpc: RpcClient,
-  decoded: BridgeTransfer,
+  decoded: Send | Receive,
   start: number,
 ) {
   try {
     const decimals = await rpc.call(
       {
-        to: EthereumAddress(decoded.token),
+        to: EthereumAddress(decoded.token.split(':')[1]),
         data: Bytes.fromHex(
           encodeFunctionData({ abi: ERC20, functionName: 'decimals' }),
         ),
@@ -46,13 +47,13 @@ export async function getTokenAmount(
 
 export async function getTokenSymbol(
   rpc: RpcClient,
-  decoded: BridgeTransfer,
+  decoded: Send | Receive,
   start: number,
 ) {
   try {
     const symbol = await rpc.call(
       {
-        to: EthereumAddress(decoded.token),
+        to: EthereumAddress(decoded.token.split(':')[1]),
         data: Bytes.fromHex(
           encodeFunctionData({ abi: ERC20, functionName: 'symbol' }),
         ),

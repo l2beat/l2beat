@@ -4,7 +4,6 @@ import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
 import { Checkbox } from '~/components/core/Checkbox'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -21,6 +20,7 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
@@ -75,7 +75,7 @@ export function EcosystemsActivityChart({
       },
       ethereum: {
         label: 'Ethereum',
-        color: 'hsl(var(--chart-ethereum))',
+        color: 'var(--chart-ethereum)',
         indicatorType: {
           shape: 'line',
         },
@@ -105,7 +105,7 @@ export function EcosystemsActivityChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
         milestones={ecosystemMilestones}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
@@ -157,8 +157,8 @@ export function EcosystemsActivityChart({
           >
             <div className="flex flex-row items-center gap-2">
               <EthereumLineIcon className="hidden h-1.5 w-2.5 sm:inline-block" />
-              <span className="hidden xl:inline">ETH Mainnet Operations</span>
-              <span className="xl:hidden">ETH UOPS</span>
+              <span className="hidden 2xl:inline">ETH Mainnet Operations</span>
+              <span className="2xl:hidden">ETH UOPS</span>
             </div>
           </Checkbox>
         ) : (
@@ -182,7 +182,7 @@ function Header({
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">

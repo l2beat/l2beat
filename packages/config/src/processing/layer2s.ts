@@ -19,8 +19,8 @@ import { astarzkevm } from '../projects/astarzkevm/astarzkevm'
 import { automata } from '../projects/automata/automata'
 import { axonum } from '../projects/axonum/axonum'
 import { azchain } from '../projects/azchain/azchain'
-import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztec } from '../projects/aztec/aztec'
+import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
 import { aztecconnect } from '../projects/aztecconnect/aztecconnect'
 import { base } from '../projects/base/base'
 import { blast } from '../projects/blast/blast'
@@ -134,7 +134,6 @@ import { optimism } from '../projects/optimism/optimism'
 import { optopia } from '../projects/optopia/optopia'
 import { orderly } from '../projects/orderly/orderly'
 import { ozean } from '../projects/ozean/ozean'
-import { palm } from '../projects/palm/palm'
 import { pandasea } from '../projects/pandasea/pandasea'
 import { paradex } from '../projects/paradex/paradex'
 import { parallel } from '../projects/parallel/parallel'
@@ -143,6 +142,7 @@ import { pay } from '../projects/pay/pay'
 import { payy } from '../projects/payy/payy'
 import { penchain } from '../projects/penchain/penchain'
 import { pepeunchained } from '../projects/pepeunchained/pepeunchained'
+import { pepeunchained2 } from '../projects/pepeunchained2/pepeunchained2'
 import { phala } from '../projects/phala/phala'
 import { plumenetwork } from '../projects/plumenetwork/plumenetwork'
 import { polygonpos } from '../projects/polygon-pos/polygon-pos'
@@ -360,7 +360,6 @@ export const layer2s: ScalingProject[] = [
   optopia,
   orderly,
   ozean,
-  palm,
   pandasea,
   paradex,
   parallel,
@@ -369,6 +368,7 @@ export const layer2s: ScalingProject[] = [
   payy,
   penchain,
   pepeunchained,
+  pepeunchained2,
   phala,
   plumenetwork,
   polygonmiden,

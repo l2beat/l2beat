@@ -45,7 +45,7 @@ const CommandDialog = ({
         onEscapeKeyDown={onEscapeKeyDown}
         fullScreenMobile={fullScreenMobile}
       >
-        <Slot className="!border-none [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        <Slot className="border-none! [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-secondary [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
         </Slot>
       </DialogContent>
@@ -68,7 +68,7 @@ const CommandInput = ({
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
-          'placeholder:!text-secondary flex h-11 w-full bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50',
+          'flex h-11 w-full bg-transparent py-3 text-sm outline-none placeholder:text-secondary! disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...props}

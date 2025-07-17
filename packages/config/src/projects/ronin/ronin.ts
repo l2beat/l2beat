@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -76,7 +74,8 @@ export const ronin: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Multisig (16/22)',
-      description: `16/22 Operators from the set. Identities of the signers are not publicly disclosed.`,
+      description:
+        '16/22 Operators from the set. Identities of the signers are not publicly disclosed.',
       sentiment: 'bad',
     },
     livenessFailure: {
@@ -152,7 +151,7 @@ export const ronin: Bridge = {
         {
           ...discovery.getContractDetails(
             'MainchainGateway',
-            `Bridge contract handling deposits and withdrawals. Currently being deprecated. An address with the Migrator role can move all funds to the new escrows.`,
+            'Bridge contract handling deposits and withdrawals. Currently being deprecated. An address with the Migrator role can move all funds to the new escrows.',
           ),
           upgradableBy: [
             { name: 'MainchainBridgeManager Governors', delay: 'no' },
@@ -161,11 +160,11 @@ export const ronin: Bridge = {
         },
         discovery.getContractDetails(
           'MainchainBridgeManager',
-          `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
+          'Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.',
         ),
         discovery.getContractDetails(
           'PauseEnforcer',
-          `Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.`,
+          'Contract owning the emergencyPauser role in the MainchainGateway and managing its access control.',
         ),
       ],
     },
@@ -188,7 +187,7 @@ export const ronin: Bridge = {
             'MainchainBridgeManager',
             'getGovernors',
           ),
-          `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
+          'List of governors that can update their corresponding operators, upgrade and change bridge parameters.',
         ),
         discovery.getMultisigPermission(
           'RoninManagerMultiSig',
@@ -212,7 +211,7 @@ export const ronin: Bridge = {
             'PauseEnforcer',
             'SENTRY_ROLE',
           ),
-          `These accounts can pause and unpause the bridge through the PauseEnforcer.`,
+          'These accounts can pause and unpause the bridge through the PauseEnforcer.',
         ),
         discovery.getPermissionDetails(
           'PauseEnforcer Admins',
@@ -220,7 +219,7 @@ export const ronin: Bridge = {
             'PauseEnforcer',
             'DEFAULT_ADMIN_ROLE',
           ),
-          `These accounts can add and remove sentries (bridge pause-/unpausers) in the PauseEnforcer.`,
+          'These accounts can add and remove sentries (bridge pause-/unpausers) in the PauseEnforcer.',
         ),
         discovery.getPermissionDetails(
           'MainchainGatewayV3 Withdrawal Unlockers',

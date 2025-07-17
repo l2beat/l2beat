@@ -1,15 +1,14 @@
-import { existsSync, readFileSync, readdirSync } from 'fs'
-import { join } from 'path'
-import { isDeepStrictEqual } from 'util'
 import {
   type ConfigReader,
-  type DiscoveryPaths,
   combineImplementationHashes,
+  type DiscoveryPaths,
   flatteningHash,
-  get$Implementations,
+  get$ImplementationsPublic,
   getChainFullName,
-  getChainShortName,
 } from '@l2beat/discovery'
+import { existsSync, readdirSync, readFileSync } from 'fs'
+import { join } from 'path'
+import { isDeepStrictEqual } from 'util'
 import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
@@ -46,13 +45,13 @@ function isFlatCodeCurrent(
   address: string,
   codePaths: CodePathResult['codePaths'],
 ): boolean {
-  const [chainShortName, simpleAddress] = address.split(':')
+  const [chainShortName, _] = address.split(':')
   const chain = getChainFullName(chainShortName)
 
   const discoHashes =
     configReader
       .readDiscovery(project, chain)
-      .entries.find((e) => e.address === simpleAddress)?.sourceHashes ?? []
+      .entries.find((e) => e.address === address)?.sourceHashes ?? []
 
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
@@ -73,7 +72,7 @@ export function getCode(
   configReader: ConfigReader,
   project: string,
   address: string,
-  checkFlatCode: boolean = false,
+  checkFlatCode = false,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(
     paths,
@@ -111,14 +110,10 @@ export function getAllCode(
   const allAddresses = discoveries.flatMap((discovery) =>
     discovery.entries
       .filter((e) => e.type === 'Contract')
-      .map((entry) => ({
-        chain: getChainShortName(discovery.chain),
-        address: entry.address,
-      })),
+      .map((entry) => entry.address),
   )
 
-  for (const { chain, address } of allAddresses) {
-    const fullAddress = `${chain}:${address}`
+  for (const fullAddress of allAddresses) {
     try {
       const { entryName, codePaths } = getCodePaths(
         paths,
@@ -154,18 +149,19 @@ export function getCodePaths(
   project: string,
   address: string,
 ): CodePathResult {
-  const [chainShortName, simpleAddress] = address.split(':')
+  const [chainShortName, _] = address.split(':')
   const chain = getChainFullName(chainShortName)
   const discoveries = getProjectDiscoveries(configReader, project, chain)
 
   for (const discovery of discoveries) {
-    const entry = discovery.entries.find((x) => x.address === simpleAddress)
+    const entry = discovery.entries.find((x) => x.address === address)
     if (!entry) {
       continue
     }
 
     const similar = discovery.entries.filter((x) => x.name === entry.name)
-    const hasImplementations = get$Implementations(entry.values).length > 0
+    const hasImplementations =
+      get$ImplementationsPublic(entry.values).length > 0
 
     const name =
       similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
@@ -178,18 +174,17 @@ export function getCodePaths(
           { name: `${entry.name}.sol`, path: join(root, name + '.sol') },
         ],
       }
-    } else {
-      const dir = readdirSync(join(root, name))
-      const codePaths = dir
-        .map((file) => ({
-          name: file,
-          path: join(root, name, file),
-        }))
-        .sort((a, b) => compareFiles(a.name, b.name))
-      return {
-        entryName: entry.name,
-        codePaths,
-      }
+    }
+    const dir = readdirSync(join(root, name))
+    const codePaths = dir
+      .map((file) => ({
+        name: file,
+        path: join(root, name, file),
+      }))
+      .sort((a, b) => compareFiles(a.name, b.name))
+    return {
+      entryName: entry.name,
+      codePaths,
     }
   }
 
@@ -208,5 +203,5 @@ function fileNameToOrder(name: string) {
   if (ending === 'p') {
     return 0
   }
-  return /^\d+$/.test(ending) ? parseInt(ending) : 2
+  return /^\d+$/.test(ending) ? Number.parseInt(ending) : 2
 }

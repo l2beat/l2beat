@@ -1,16 +1,16 @@
 import type { ReactNode } from 'react'
 import { Breadcrumbs } from '~/components/Breadcrumbs'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/getZkCatalogProjectDetails'
 import { ProjectHeader } from './components/ProjectHeader'
@@ -91,9 +91,7 @@ export function ZkCatalogProjectPage({ projectDetails, ...props }: Props) {
   )
 }
 
-function Summary(props: {
-  details: ZkCatalogProjectDetails
-}) {
+function Summary(props: { details: ZkCatalogProjectDetails }) {
   return (
     <div className="mt-6 flex grid-cols-3 flex-col gap-1 md:mt-8 md:grid md:rounded-xl md:bg-surface-primary md:p-6">
       <HeaderItem title="Number of verifiers">

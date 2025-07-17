@@ -14,12 +14,12 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
-import { ReferenceList } from './ReferenceList'
 import type { Participant } from './permissions/Participants'
 import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
+import { ReferenceList } from './ReferenceList'
 
 export interface TechnologyContract {
   name: string
@@ -69,7 +69,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
       icon={icon}
       body={
         <>
-          <div className="!leading-[1.15] flex flex-wrap items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2 text-paragraph-15 md:text-paragraph-16">
             <strong
               id={contract.name}
               className="word-break-word scroll-mt-14 md:scroll-mt-10"
@@ -104,12 +104,12 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             ))}
           </div>
           {contract.description && (
-            <Markdown className="word-break-word mt-2 text-gray-850 leading-snug dark:text-gray-400">
+            <Markdown className="word-break-word mt-2 text-paragraph-15 md:text-paragraph-16">
               {contract.description}
             </Markdown>
           )}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
+            <div className="mt-2 flex flex-wrap text-paragraph-15 md:text-paragraph-16">
               <strong className="text-primary">Can be upgraded by:</strong>
               <div className="ml-1.5 flex flex-wrap gap-1.5">
                 {contract.upgradeableBy.map((entry) => (
@@ -125,7 +125,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             </div>
           )}
           {contract.upgradeDelay && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
+            <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
               <strong className="text-primary">Upgrade delay:</strong>{' '}
               {contract.upgradeDelay}
             </p>
@@ -214,7 +214,7 @@ export function ContractsWithImpactfulChanges(props: {
   type: 'contracts' | 'permissions'
 }) {
   return (
-    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
+    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3 text-paragraph-15 md:text-paragraph-16">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
         There are impactful changes to the following {props.type}, and part of
         the information might be outdated.

@@ -1,6 +1,6 @@
-import path from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
+import path from 'path'
 import { keyInYN } from 'readline-sync'
 import { powerdiff } from '../powerdiff'
 import {

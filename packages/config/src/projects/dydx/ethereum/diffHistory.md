@@ -1,3 +1,1250 @@
+Generated with discovered.json: 0x083f72bdafa5e992988ef9ab787366f224438a92
+
+# Diff at Mon, 14 Jul 2025 12:44:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0000000000000000000000000000000000000001) {
+    +++ description: None
+      address:
+-        "0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+    }
+```
+
+```diff
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588) {
+    +++ description: None
+      address:
+-        "0x01d3348601968aB85b4bb028979006eac235a588"
++        "eth:0x01d3348601968aB85b4bb028979006eac235a588"
+      values.$admin:
+-        "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
++        "eth:0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
+      values.$implementation:
+-        "0xFE1d5439625a9524a80F66670733129E80E0C112"
++        "eth:0xFE1d5439625a9524a80F66670733129E80E0C112"
+      values.accessControl.OWNER_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.CONFIG_UPDATER_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"
++        "eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"
+      values.accessControl.UNPAUSER_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.CLAIM_OPERATOR_ROLE.members.0:
+-        "0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
++        "eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
+      values.getRewardsOracle:
+-        "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354"
++        "eth:0x99B0599952a4FD2d1A1561Fa4C010827EaD30354"
+      values.REWARDS_TOKEN:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      values.REWARDS_TREASURY:
+-        "0x639192D54431F8c816368D3FB4107Bc168d0E871"
++        "eth:0x639192D54431F8c816368D3FB4107Bc168d0E871"
+      implementationNames.0x01d3348601968aB85b4bb028979006eac235a588:
+-        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.0xFE1d5439625a9524a80F66670733129E80E0C112:
+-        "MerkleDistributorV1"
+      implementationNames.eth:0x01d3348601968aB85b4bb028979006eac235a588:
++        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.eth:0xFE1d5439625a9524a80F66670733129E80E0C112:
++        "MerkleDistributorV1"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73) {
+    +++ description: None
+      address:
+-        "0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73"
++        "eth:0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73"
+      implementationNames.0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73:
+-        "CpuFrilessVerifier"
+      implementationNames.eth:0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73:
++        "CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract CpuOods (0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5) {
+    +++ description: None
+      address:
+-        "0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5"
++        "eth:0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5"
+      implementationNames.0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5:
+-        "CpuOods"
+      implementationNames.eth:0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5:
++        "CpuOods"
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830) {
+    +++ description: None
+      address:
+-        "0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830"
++        "eth:0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830"
+      implementationNames.0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830:
+-        "MerkleStatementContract"
+      implementationNames.eth:0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830:
++        "MerkleStatementContract"
+    }
+```
+
+```diff
+    contract ClaimsProxy (0x0fd829C3365A225FB9226e75c97c3A114bD3199e) {
+    +++ description: None
+      address:
+-        "0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
++        "eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
+      values.LIQUIDITY_STAKING:
+-        "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
++        "eth:0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
+      values.MERKLE_DISTRIBUTOR:
+-        "0x01d3348601968aB85b4bb028979006eac235a588"
++        "eth:0x01d3348601968aB85b4bb028979006eac235a588"
+      values.REWARDS_TREASURY_VESTER:
+-        "0xb9431E19B29B952d9358025f680077C3Fd37292f"
++        "eth:0xb9431E19B29B952d9358025f680077C3Fd37292f"
+      values.SAFETY_MODULE:
+-        "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
++        "eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+      implementationNames.0x0fd829C3365A225FB9226e75c97c3A114bD3199e:
+-        "ClaimsProxy"
+      implementationNames.eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e:
++        "ClaimsProxy"
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92) {
+    +++ description: None
+      address:
+-        "0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92"
++        "eth:0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92"
+      implementationNames.0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92:
+-        "PedersenHashPointsYColumn"
+      implementationNames.eth:0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92:
++        "PedersenHashPointsYColumn"
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D) {
+    +++ description: None
+      address:
+-        "0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D"
++        "eth:0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D"
+      implementationNames.0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D:
+-        "CairoBootloaderProgram"
+      implementationNames.eth:0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D:
++        "CairoBootloaderProgram"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x1F5459AA7857291112A8172ae1328248948d9d13) {
+    +++ description: None
+      address:
+-        "0x1F5459AA7857291112A8172ae1328248948d9d13"
++        "eth:0x1F5459AA7857291112A8172ae1328248948d9d13"
+      implementationNames.0x1F5459AA7857291112A8172ae1328248948d9d13:
+-        "CpuConstraintPoly"
+      implementationNames.eth:0x1F5459AA7857291112A8172ae1328248948d9d13:
++        "CpuConstraintPoly"
+    }
+```
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      address:
+-        "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
++        "eth:0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
+      values.owner:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      implementationNames.0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d:
+-        "ProxyAdmin"
+      implementationNames.eth:0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract WrappedEthereumDydxToken (0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9) {
+    +++ description: None
+      address:
+-        "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
++        "eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
+      values.DYDX_TOKEN:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      implementationNames.0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9:
+-        "WrappedEthereumDydxToken"
+      implementationNames.eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9:
++        "WrappedEthereumDydxToken"
+    }
+```
+
+```diff
+    EOA  (0x47FB811bE111F2F0Df7dff81EFFe890da6D74080) {
+    +++ description: None
+      address:
+-        "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
++        "eth:0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x4922f8750DFd040954b44F23980160342e308863) {
+    +++ description: None
+      address:
+-        "0x4922f8750DFd040954b44F23980160342e308863"
++        "eth:0x4922f8750DFd040954b44F23980160342e308863"
+      values.constructorArgs.0.4:
+-        "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15"
++        "eth:0xD14fd39630Ec941C3bA6C791E3af9E0027013A15"
+      values.constructorArgs.0.3:
+-        "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5"
++        "eth:0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5"
+      values.constructorArgs.0.2:
+-        "0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92"
++        "eth:0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92"
+      values.constructorArgs.0.1:
+-        "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D"
++        "eth:0x9Bcf13C6b68450B427bfa86698D61901A8a3456D"
+      values.constructorArgs.0.0:
+-        "0x1F5459AA7857291112A8172ae1328248948d9d13"
++        "eth:0x1F5459AA7857291112A8172ae1328248948d9d13"
+      values.constructorArgs.1:
+-        "0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5"
++        "eth:0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5"
+      values.constructorArgs.2:
+-        "0xEfbCcE4659db72eC6897F46783303708cf9ACef8"
++        "eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8"
+      values.constructorArgs.3:
+-        "0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830"
++        "eth:0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830"
+      values.constructorArgs.4:
+-        "0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1"
++        "eth:0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1"
+      implementationNames.0x4922f8750DFd040954b44F23980160342e308863:
+-        "CpuFrilessVerifier"
+      implementationNames.eth:0x4922f8750DFd040954b44F23980160342e308863:
++        "CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5) {
+    +++ description: None
+      address:
+-        "0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5"
++        "eth:0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5"
+      implementationNames.0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5:
+-        "EcdsaPointsXColumn"
+      implementationNames.eth:0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5:
++        "EcdsaPointsXColumn"
+    }
+```
+
+```diff
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941) {
+    +++ description: None
+      address:
+-        "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
++        "eth:0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"
+      values.$admin:
+-        "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
++        "eth:0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
+      values.$implementation:
+-        "0xBE607a58206180fef691bf1B5aE9670174284388"
++        "eth:0xBE607a58206180fef691bf1B5aE9670174284388"
+      values.accessControl.OWNER_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.EPOCH_PARAMETERS_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.REWARDS_RATE_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.BORROWER_ADMIN_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.CLAIM_OPERATOR_ROLE.members.0:
+-        "0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
++        "eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
+      values.BORROWERS_LIST.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.BORROWERS_LIST.1:
+-        "0x0b2B08AC98a1568A34208121c26F4F41a9e0FbB6"
++        "eth:0x0b2B08AC98a1568A34208121c26F4F41a9e0FbB6"
+      values.BORROWERS_LIST.2:
+-        "0x3e6E9EFb0A677a24F47093a22044dc5451A028cF"
++        "eth:0x3e6E9EFb0A677a24F47093a22044dc5451A028cF"
+      values.BORROWERS_LIST.3:
+-        "0xCB7fa3a2F47b62293Cc2E1a4C7752fC72E49FCe2"
++        "eth:0xCB7fa3a2F47b62293Cc2E1a4C7752fC72E49FCe2"
+      values.BORROWERS_LIST.4:
+-        "0x16BEC2D9A010e7D8b2D576d17893C52Ddbfe4C06"
++        "eth:0x16BEC2D9A010e7D8b2D576d17893C52Ddbfe4C06"
+      values.BORROWERS_LIST.5:
+-        "0x531F3BE462F10386D01FBeD7fAD1d20A61Ce7874"
++        "eth:0x531F3BE462F10386D01FBeD7fAD1d20A61Ce7874"
+      values.REWARDS_TOKEN:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      values.REWARDS_TREASURY:
+-        "0x639192D54431F8c816368D3FB4107Bc168d0E871"
++        "eth:0x639192D54431F8c816368D3FB4107Bc168d0E871"
+      values.STAKED_TOKEN:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941:
+-        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.0xBE607a58206180fef691bf1B5aE9670174284388:
+-        "LiquidityStakingV1"
+      implementationNames.eth:0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941:
++        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.eth:0xBE607a58206180fef691bf1B5aE9670174284388:
++        "LiquidityStakingV1"
+    }
+```
+
+```diff
+    contract PerpetualEscapeVerifier (0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD) {
+    +++ description: None
+      address:
+-        "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD"
++        "eth:0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD"
+      implementationNames.0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD:
+-        "PerpetualEscapeVerifier"
+      implementationNames.eth:0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD:
++        "PerpetualEscapeVerifier"
+    }
+```
+
+```diff
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871) {
+    +++ description: None
+      address:
+-        "0x639192D54431F8c816368D3FB4107Bc168d0E871"
++        "eth:0x639192D54431F8c816368D3FB4107Bc168d0E871"
+      values.$admin:
+-        "0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
++        "eth:0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d"
+      values.$implementation:
+-        "0x8d0051943D4c72aF12D638c6b7253C71929A910A"
++        "eth:0x8d0051943D4c72aF12D638c6b7253C71929A910A"
+      values.$pastUpgrades.0.2.0:
+-        "0x8d0051943D4c72aF12D638c6b7253C71929A910A"
++        "eth:0x8d0051943D4c72aF12D638c6b7253C71929A910A"
+      values.BRIDGE:
+-        "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
++        "eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
+      values.BURN_ADDRESS:
+-        "0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+      values.owner:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.TREASURY_VESTER:
+-        "0xb9431E19B29B952d9358025f680077C3Fd37292f"
++        "eth:0xb9431E19B29B952d9358025f680077C3Fd37292f"
+      implementationNames.0x639192D54431F8c816368D3FB4107Bc168d0E871:
+-        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.0x8d0051943D4c72aF12D638c6b7253C71929A910A:
+-        "TreasuryBridge"
+      implementationNames.eth:0x639192D54431F8c816368D3FB4107Bc168d0E871:
++        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.eth:0x8d0051943D4c72aF12D638c6b7253C71929A910A:
++        "TreasuryBridge"
+    }
+```
+
+```diff
+    contract ShortTimelockExecutor (0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc) {
+    +++ description: None
+      address:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.getAdmin:
+-        "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
++        "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc:
+-        "Executor"
+      implementationNames.eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc:
++        "Executor"
+    }
+```
+
+```diff
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC) {
+    +++ description: None
+      address:
+-        "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
++        "eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+      values.$admin:
+-        "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
++        "eth:0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
+      values.$implementation:
+-        "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"
++        "eth:0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"
+      values.$pastUpgrades.0.2.0:
+-        "0xD249aD8fA4646C303028a8d29cf8568A38897C55"
++        "eth:0xD249aD8fA4646C303028a8d29cf8568A38897C55"
+      values.$pastUpgrades.1.2.0:
+-        "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"
++        "eth:0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"
+      values.accessControl.OWNER_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.SLASHER_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.EPOCH_PARAMETERS_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.REWARDS_RATE_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.accessControl.CLAIM_OPERATOR_ROLE.members.0:
+-        "0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
++        "eth:0x0fd829C3365A225FB9226e75c97c3A114bD3199e"
+      values.REWARDS_TOKEN:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      values.REWARDS_TREASURY:
+-        "0x639192D54431F8c816368D3FB4107Bc168d0E871"
++        "eth:0x639192D54431F8c816368D3FB4107Bc168d0E871"
+      values.STAKED_TOKEN:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      implementationNames.0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC:
+-        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A:
+-        "SafetyModuleV2"
+      implementationNames.eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC:
++        "InitializableAdminUpgradeabilityProxy"
+      implementationNames.eth:0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A:
++        "SafetyModuleV2"
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      address:
+-        "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
++        "eth:0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
+      values.owner:
+-        "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
++        "eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
+      implementationNames.0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C:
+-        "ProxyAdmin"
+      implementationNames.eth:0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      address:
+-        "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
++        "eth:0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
+      values.owner:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      implementationNames.0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0:
+-        "ProxyAdmin"
+      implementationNames.eth:0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract DydxGovernor (0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2) {
+    +++ description: None
+      address:
+-        "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
++        "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
+      values.accessControl.OWNER_ROLE.members.0:
+-        "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
++        "eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
+      values.accessControl.ADD_EXECUTOR_ROLE.members.0:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.EXECUTORS.0:
+-        "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
++        "eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
+      values.EXECUTORS.1:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      values.EXECUTORS.2:
+-        "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"
++        "eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"
+      values.EXECUTORS.3:
+-        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
++        "eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+      values.getGovernanceStrategy:
+-        "0xc2f5F3505910Da80F0592a3Cc023881C50b16505"
++        "eth:0xc2f5F3505910Da80F0592a3Cc023881C50b16505"
+      implementationNames.0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2:
+-        "DydxGovernor"
+      implementationNames.eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2:
++        "DydxGovernor"
+    }
+```
+
+```diff
+    EOA  (0x8129b737912e17212C8693B781928f5D0303390a) {
+    +++ description: None
+      address:
+-        "0x8129b737912e17212C8693B781928f5D0303390a"
++        "eth:0x8129b737912e17212C8693B781928f5D0303390a"
+    }
+```
+
+```diff
+    EOA  (0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9) {
+    +++ description: None
+      address:
+-        "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9"
++        "eth:0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9"
+    }
+```
+
+```diff
+    contract GpsStatementVerifier (0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3) {
+    +++ description: None
+      address:
+-        "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3"
++        "eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3"
+      values.constructorArgs.0:
+-        "0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D"
++        "eth:0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D"
+      values.constructorArgs.1:
+-        "0xEfbCcE4659db72eC6897F46783303708cf9ACef8"
++        "eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8"
+      values.constructorArgs.2.2:
+-        "0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3"
++        "eth:0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3"
+      values.constructorArgs.2.1:
+-        "0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73"
++        "eth:0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73"
+      values.constructorArgs.2.0:
+-        "0x4922f8750DFd040954b44F23980160342e308863"
++        "eth:0x4922f8750DFd040954b44F23980160342e308863"
+      implementationNames.0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3:
+-        "GpsStatementVerifier"
+      implementationNames.eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3:
++        "GpsStatementVerifier"
+    }
+```
+
+```diff
+    contract Committee (0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1) {
+    +++ description: None
+      address:
+-        "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
++        "eth:0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
+      values.constructorArgs.0.1:
+-        "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9"
++        "eth:0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9"
+      values.constructorArgs.0.0:
+-        "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68"
++        "eth:0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68"
+      implementationNames.0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1:
+-        "Committee"
+      implementationNames.eth:0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1:
++        "Committee"
+    }
+```
+
+```diff
+    contract DydxToken (0x92D6C1e31e14520e676a687F0a93788B716BEff5) {
+    +++ description: None
+      address:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      values.owner:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      implementationNames.0x92D6C1e31e14520e676a687F0a93788B716BEff5:
+-        "DydxToken"
+      implementationNames.eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5:
++        "DydxToken"
+    }
+```
+
+```diff
+    contract ChainlinkAdapter (0x99B0599952a4FD2d1A1561Fa4C010827EaD30354) {
+    +++ description: None
+      address:
+-        "0x99B0599952a4FD2d1A1561Fa4C010827EaD30354"
++        "eth:0x99B0599952a4FD2d1A1561Fa4C010827EaD30354"
+      values.CHAINLINK_TOKEN:
+-        "0x514910771AF9Ca656af840dff83E8264EcF986CA"
++        "eth:0x514910771AF9Ca656af840dff83E8264EcF986CA"
+      values.MERKLE_DISTRIBUTOR:
+-        "0x01d3348601968aB85b4bb028979006eac235a588"
++        "eth:0x01d3348601968aB85b4bb028979006eac235a588"
+      values.ORACLE_CONTRACT:
+-        "0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd"
++        "eth:0x240BaE5A27233Fd3aC5440B5a598467725F7D1cd"
+      values.ORACLE_EXTERNAL_ADAPTER:
+-        "0xD26d233b5e444117d93CdbC676357b9C7Ff55906"
++        "eth:0xD26d233b5e444117d93CdbC676357b9C7Ff55906"
+      implementationNames.0x99B0599952a4FD2d1A1561Fa4C010827EaD30354:
+-        "MD1ChainlinkAdapter"
+      implementationNames.eth:0x99B0599952a4FD2d1A1561Fa4C010827EaD30354:
++        "MD1ChainlinkAdapter"
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x9Bcf13C6b68450B427bfa86698D61901A8a3456D) {
+    +++ description: None
+      address:
+-        "0x9Bcf13C6b68450B427bfa86698D61901A8a3456D"
++        "eth:0x9Bcf13C6b68450B427bfa86698D61901A8a3456D"
+      implementationNames.0x9Bcf13C6b68450B427bfa86698D61901A8a3456D:
+-        "PedersenHashPointsXColumn"
+      implementationNames.eth:0x9Bcf13C6b68450B427bfa86698D61901A8a3456D:
++        "PedersenHashPointsXColumn"
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      address:
+-        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
++        "eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+      values.getAdmin:
+-        "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
++        "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.PRIORITY_CONTROLLERS.0:
+-        "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
++        "eth:0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
+      implementationNames.0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE:
+-        "PriorityExecutor"
+      implementationNames.eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE:
++        "PriorityExecutor"
+    }
+```
+
+```diff
+    EOA  (0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68) {
+    +++ description: None
+      address:
+-        "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68"
++        "eth:0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68"
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      address:
+-        "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
++        "eth:0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
+      values.owner:
+-        "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
++        "eth:0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
+      implementationNames.0xAc5D8bCD13da463bea96c75f9085c4e40037F790:
+-        "ProxyAdmin"
+      implementationNames.eth:0xAc5D8bCD13da463bea96c75f9085c4e40037F790:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract TreasuryVester (0xb9431E19B29B952d9358025f680077C3Fd37292f) {
+    +++ description: None
+      address:
+-        "0xb9431E19B29B952d9358025f680077C3Fd37292f"
++        "eth:0xb9431E19B29B952d9358025f680077C3Fd37292f"
+      values.dydx:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      values.recipient:
+-        "0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+      implementationNames.0xb9431E19B29B952d9358025f680077C3Fd37292f:
+-        "TreasuryVester"
+      implementationNames.eth:0xb9431E19B29B952d9358025f680077C3Fd37292f:
++        "TreasuryVester"
+    }
+```
+
+```diff
+    contract GovernanceStrategyV2 (0xc2f5F3505910Da80F0592a3Cc023881C50b16505) {
+    +++ description: None
+      address:
+-        "0xc2f5F3505910Da80F0592a3Cc023881C50b16505"
++        "eth:0xc2f5F3505910Da80F0592a3Cc023881C50b16505"
+      values.DYDX_TOKEN:
+-        "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
++        "eth:0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+      values.STAKED_DYDX_TOKEN:
+-        "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
++        "eth:0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"
+      values.WRAPPED_ETHEREUM_DYDX_TOKEN:
+-        "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
++        "eth:0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9"
+      implementationNames.0xc2f5F3505910Da80F0592a3Cc023881C50b16505:
+-        "GovernanceStrategyV2"
+      implementationNames.eth:0xc2f5F3505910Da80F0592a3Cc023881C50b16505:
++        "GovernanceStrategyV2"
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0xD14fd39630Ec941C3bA6C791E3af9E0027013A15) {
+    +++ description: None
+      address:
+-        "0xD14fd39630Ec941C3bA6C791E3af9E0027013A15"
++        "eth:0xD14fd39630Ec941C3bA6C791E3af9E0027013A15"
+      implementationNames.0xD14fd39630Ec941C3bA6C791E3af9E0027013A15:
+-        "EcdsaPointsYColumn"
+      implementationNames.eth:0xD14fd39630Ec941C3bA6C791E3af9E0027013A15:
++        "EcdsaPointsYColumn"
+    }
+```
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      address:
+-        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
++        "eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+      values.$admin.0:
+-        "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
++        "eth:0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
+      values.$admin.1:
+-        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
++        "eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+      values.$implementation.0:
+-        "0x2C0df87E073755139101b35c0A51e065291cc2d3"
++        "eth:0x2C0df87E073755139101b35c0A51e065291cc2d3"
+      values.$implementation.1:
+-        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
++        "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
+      values.$implementation.2:
+-        "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545"
++        "eth:0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545"
+      values.$implementation.3:
+-        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
++        "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
+      values.$implementation.4:
+-        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
++        "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      values.$pastUpgrades.0.2.0:
+-        "0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643"
++        "eth:0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643"
+      values.$pastUpgrades.0.2.1:
+-        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
++        "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
+      values.$pastUpgrades.0.2.2:
+-        "0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481"
++        "eth:0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481"
+      values.$pastUpgrades.0.2.3:
+-        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
++        "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
+      values.$pastUpgrades.0.2.4:
+-        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
++        "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      values.$pastUpgrades.1.2.0:
+-        "0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643"
++        "eth:0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643"
+      values.$pastUpgrades.1.2.1:
+-        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
++        "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
+      values.$pastUpgrades.1.2.2:
+-        "0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481"
++        "eth:0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481"
+      values.$pastUpgrades.1.2.3:
+-        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
++        "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
+      values.$pastUpgrades.1.2.4:
+-        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
++        "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      values.$pastUpgrades.2.2.0:
+-        "0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643"
++        "eth:0x0a5a7A738528af22B4f5cfE70E5A1e07A2cfE643"
+      values.$pastUpgrades.2.2.1:
+-        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
++        "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
+      values.$pastUpgrades.2.2.2:
+-        "0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481"
++        "eth:0xEbfeA8AC94FbEEcEe91d457D8cBd3b047bFd2481"
+      values.$pastUpgrades.2.2.3:
+-        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
++        "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
+      values.$pastUpgrades.2.2.4:
+-        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
++        "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      values.$pastUpgrades.3.2.0:
+-        "0x2C0df87E073755139101b35c0A51e065291cc2d3"
++        "eth:0x2C0df87E073755139101b35c0A51e065291cc2d3"
+      values.$pastUpgrades.3.2.1:
+-        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
++        "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
+      values.$pastUpgrades.3.2.2:
+-        "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545"
++        "eth:0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545"
+      values.$pastUpgrades.3.2.3:
+-        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
++        "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
+      values.$pastUpgrades.3.2.4:
+-        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
++        "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      values.$pastUpgrades.4.2.0:
+-        "0x2C0df87E073755139101b35c0A51e065291cc2d3"
++        "eth:0x2C0df87E073755139101b35c0A51e065291cc2d3"
+      values.$pastUpgrades.4.2.1:
+-        "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
++        "eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5"
+      values.$pastUpgrades.4.2.2:
+-        "0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545"
++        "eth:0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545"
+      values.$pastUpgrades.4.2.3:
+-        "0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
++        "eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0"
+      values.$pastUpgrades.4.2.4:
+-        "0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
++        "eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3"
+      values.escapeVerifier:
+-        "0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD"
++        "eth:0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD"
+      values.getRegisteredAvailabilityVerifiers.0:
+-        "0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
++        "eth:0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1"
+      values.getRegisteredVerifiers.0:
+-        "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
++        "eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
+      values.implementation:
+-        "0x2C0df87E073755139101b35c0A51e065291cc2d3"
++        "eth:0x2C0df87E073755139101b35c0A51e065291cc2d3"
+      values.OPERATORS.0:
+-        "0x8129b737912e17212C8693B781928f5D0303390a"
++        "eth:0x8129b737912e17212C8693B781928f5D0303390a"
+      implementationNames.0xD54f502e184B6B739d7D27a6410a67dc462D69c8:
+-        "Proxy"
+      implementationNames.0x2C0df87E073755139101b35c0A51e065291cc2d3:
+-        "StarkPerpetual"
+      implementationNames.0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5:
+-        "AllVerifiers"
+      implementationNames.0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545:
+-        "PerpetualTokensAndRamping"
+      implementationNames.0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0:
+-        "PerpetualState"
+      implementationNames.0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3:
+-        "PerpetualForcedActions"
+      implementationNames.eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8:
++        "Proxy"
+      implementationNames.eth:0x2C0df87E073755139101b35c0A51e065291cc2d3:
++        "StarkPerpetual"
+      implementationNames.eth:0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5:
++        "AllVerifiers"
+      implementationNames.eth:0x3FeD7bF5Bf3E738bc30fBe61B048fDcb82368545:
++        "PerpetualTokensAndRamping"
+      implementationNames.eth:0xDF9c117Cad37F2ED8C99E36A40317D8CC340D4a0:
++        "PerpetualState"
+      implementationNames.eth:0xc43f5526124877F9125E3B48101DcA6D7c6B4Ea3:
++        "PerpetualForcedActions"
+    }
+```
+
+```diff
+    contract MerklePauserExecutor (0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52) {
+    +++ description: None
+      address:
+-        "0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"
++        "eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52"
+      values.getAdmin:
+-        "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
++        "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52:
+-        "Executor"
+      implementationNames.eth:0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52:
++        "Executor"
+    }
+```
+
+```diff
+    EOA  (0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0) {
+    +++ description: None
+      address:
+-        "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
++        "eth:0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3) {
+    +++ description: None
+      address:
+-        "0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3"
++        "eth:0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3"
+      implementationNames.0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3:
+-        "CpuFrilessVerifier"
+      implementationNames.eth:0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3:
++        "CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract LongTimelockExecutor (0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B) {
+    +++ description: None
+      address:
+-        "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
++        "eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
+      values.getAdmin:
+-        "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
++        "eth:0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2"
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B:
+-        "Executor"
+      implementationNames.eth:0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B:
++        "Executor"
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0xEfbCcE4659db72eC6897F46783303708cf9ACef8) {
+    +++ description: None
+      address:
+-        "0xEfbCcE4659db72eC6897F46783303708cf9ACef8"
++        "eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8"
+      implementationNames.0xEfbCcE4659db72eC6897F46783303708cf9ACef8:
+-        "MemoryPageFactRegistry"
+      implementationNames.eth:0xEfbCcE4659db72eC6897F46783303708cf9ACef8:
++        "MemoryPageFactRegistry"
+    }
+```
+
+```diff
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C) {
+    +++ description: Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+      address:
+-        "0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
++        "eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C"
+      description:
+-        "Adapter between the core contract and the 0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`)."
++        "Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`)."
+      values.gpsContract:
+-        "0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3"
++        "eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3"
+      implementationNames.0xF23754231BC4cE8C8E92C3bADfB37d922d46053C:
+-        "FinalizableGpsFactAdapter"
+      implementationNames.eth:0xF23754231BC4cE8C8E92C3bADfB37d922d46053C:
++        "FinalizableGpsFactAdapter"
+    }
+```
+
+```diff
+    contract FriStatementContract (0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1) {
+    +++ description: None
+      address:
+-        "0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1"
++        "eth:0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1"
+      implementationNames.0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1:
+-        "FriStatementContract"
+      implementationNames.eth:0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1:
++        "FriStatementContract"
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      address:
+-        "0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
++        "eth:0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0"
+      values.MAIN_GOVERNORS_TO_REMOVE.0:
+-        "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
++        "eth:0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
+      values.owner:
+-        "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
++        "eth:0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
+      values.PROXY_GOVERNORS_TO_REMOVE.0:
+-        "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
++        "eth:0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
+      values.STARK_PERPETUAL:
+-        "0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
++        "eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8"
+      implementationNames.0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0:
+-        "StarkExRemoverGovernorV2"
+      implementationNames.eth:0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0:
++        "StarkExRemoverGovernorV2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MerkleDistributor (0x01d3348601968aB85b4bb028979006eac235a588)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x04D4E67F8B6c67D63219Cd088bC45E8e89fE6D73)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x0c6dEc0B366b1bb4C14597cf1Da8b4af2E7799b5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MerkleStatementContract (0x0d62bac5c346c78DC1b27107CAbC5F4DE057a830)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ClaimsProxy (0x0fd829C3365A225FB9226e75c97c3A114bD3199e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsYColumn (0x0fED12bD8B1B11c629001c436b90bcd99F4Fec92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (0x1dd8945200f5a09D6Fe0ed68494c2ac41cd02E2D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x1F5459AA7857291112A8172ae1328248948d9d13)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WrappedEthereumDydxToken (0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x4922f8750DFd040954b44F23980160342e308863)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsXColumn (0x52c4bb16FbA75f6EBD672568267BC334255Fb3c5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LiquidityStaking (0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PerpetualEscapeVerifier (0x626211C1e9BC633f4D342Af99f4E8bc93f11F3DD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryBridge (0x639192D54431F8c816368D3FB4107Bc168d0E871)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ShortTimelockExecutor (0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafetyModule (0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DydxGovernor (0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GpsStatementVerifier (0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Committee (0x8A8E80e0762243f0df39f2847808B7F6D62e2bb1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DydxToken (0x92D6C1e31e14520e676a687F0a93788B716BEff5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainlinkAdapter (0x99B0599952a4FD2d1A1561Fa4C010827EaD30354)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsXColumn (0x9Bcf13C6b68450B427bfa86698D61901A8a3456D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryVester (0xb9431E19B29B952d9358025f680077C3Fd37292f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernanceStrategyV2 (0xc2f5F3505910Da80F0592a3Cc023881C50b16505)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsYColumn (0xD14fd39630Ec941C3bA6C791E3af9E0027013A15)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MerklePauserExecutor (0xd98e7A71BacB6F11438A8271dDB2EFd7f9361F52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0xeCa5Da0287D407a23f7c0a13a9AAD87c7fBC10A3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LongTimelockExecutor (0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MemoryPageFactRegistry (0xEfbCcE4659db72eC6897F46783303708cf9ACef8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FinalizableGpsFactAdapter (0xF23754231BC4cE8C8E92C3bADfB37d922d46053C)
+    +++ description: Adapter between the core contract and the eth:0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3. Stores the Cairo programHash (`3022993219738828102988654230098311570191704199468817569337520096526584973032`).
+```
+
+```diff
++   Status: CREATED
+    contract FriStatementContract (0xf6b83CcaDeee478FC372AF6ca7069b14FBc5E1B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe311076f292254bb080ae57259fcb3cc5b19ee8a
 
 # Diff at Fri, 04 Jul 2025 12:18:58 GMT:

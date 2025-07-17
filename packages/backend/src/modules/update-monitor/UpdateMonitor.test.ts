@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import {
   type ConfigReader,
   ConfigRegistry,
@@ -10,13 +11,12 @@ import {
 import {
   ChainConverter,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
@@ -288,24 +288,36 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         3,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         4,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       // calls repository (and gets undefined)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(2)
@@ -506,12 +518,18 @@ describe(UpdateMonitor.name, () => {
         config,
         BLOCK_NUMBER - 1,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         config,
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
@@ -794,6 +812,9 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         committed.blockNumber,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
     })
   })
@@ -1049,7 +1070,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address,
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

@@ -7,7 +7,6 @@ interface Props {
   className?: string
   descriptionAsTooltip?: boolean
   info?: 'compact' | 'full'
-  size?: 'small' | 'regular'
 }
 
 export function GrissiniDetails({
@@ -15,16 +14,14 @@ export function GrissiniDetails({
   className,
   descriptionAsTooltip,
   info,
-  size,
 }: Props) {
   return (
-    <div className={cn('flex w-[264px] flex-col gap-2 md:gap-4', className)}>
+    <div className={cn('flex w-[264px] flex-col gap-3', className)}>
       {values.map((value) => (
         <RiskBanner
           key={value.name}
           {...value}
           descriptionAsTooltip={descriptionAsTooltip}
-          size={size}
           info={info}
         />
       ))}

@@ -1,3 +1,152 @@
+Generated with discovered.json: 0xbd988ff6ba8e90acd4f1c248126d4deb655969c4
+
+# Diff at Mon, 14 Jul 2025 12:47:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 125928338
+- current block number: 125928338
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 125928338 (main branch discovery), not current.
+
+```diff
+    contract History (0x04395d494624D2B6e30C0dfDB74498a2839f805d) {
+    +++ description: None
+      address:
+-        "0x04395d494624D2B6e30C0dfDB74498a2839f805d"
++        "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d"
+      values.owner:
+-        "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
++        "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
+      implementationNames.0x04395d494624D2B6e30C0dfDB74498a2839f805d:
+-        "History"
+      implementationNames.oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d:
++        "History"
+    }
+```
+
+```diff
+    contract BugBuster (0x3FF5C7383F614256053c3F6B86A47bA974937299) {
+    +++ description: None
+      address:
+-        "0x3FF5C7383F614256053c3F6B86A47bA974937299"
++        "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299"
+      values.getConsensus:
+-        "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
++        "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
+      values.owner:
+-        "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
++        "oeth:0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
+      implementationNames.0x3FF5C7383F614256053c3F6B86A47bA974937299:
+-        "CartesiDApp"
+      implementationNames.oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299:
++        "CartesiDApp"
+    }
+```
+
+```diff
+    contract Authority (0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35) {
+    +++ description: None
+      address:
+-        "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
++        "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
+      values.getHistory:
+-        "0x04395d494624D2B6e30C0dfDB74498a2839f805d"
++        "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d"
+      values.owner:
+-        "0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
++        "oeth:0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
+      implementationNames.0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35:
+-        "Authority"
+      implementationNames.oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35:
++        "Authority"
+    }
+```
+
+```diff
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768) {
+    +++ description: None
+      address:
+-        "0x59b22D57D4f067708AB0c00552767405926dc768"
++        "oeth:0x59b22D57D4f067708AB0c00552767405926dc768"
+      implementationNames.0x59b22D57D4f067708AB0c00552767405926dc768:
+-        "InputBox"
+      implementationNames.oeth:0x59b22D57D4f067708AB0c00552767405926dc768:
++        "InputBox"
+    }
+```
+
+```diff
+    EOA  (0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3) {
+    +++ description: None
+      address:
+-        "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
++        "oeth:0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
+    }
+```
+
+```diff
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB) {
+    +++ description: None
+      address:
+-        "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB"
++        "oeth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB"
+      values.getInputBox:
+-        "0x59b22D57D4f067708AB0c00552767405926dc768"
++        "oeth:0x59b22D57D4f067708AB0c00552767405926dc768"
+      implementationNames.0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB:
+-        "ERC20Portal"
+      implementationNames.oeth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB:
++        "ERC20Portal"
+    }
+```
+
+```diff
+    EOA  (0xD330C12e8DBD00570616D9406614106e2B3A1cf5) {
+    +++ description: None
+      address:
+-        "0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
++        "oeth:0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract History (0x04395d494624D2B6e30C0dfDB74498a2839f805d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BugBuster (0x3FF5C7383F614256053c3F6B86A47bA974937299)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Authority (0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract InputBox (0x59b22D57D4f067708AB0c00552767405926dc768)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Portal (0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x9520a0b559bfa03cd0a09f3362b228ec86c93084
 
 # Diff at Tue, 04 Mar 2025 10:40:36 GMT:

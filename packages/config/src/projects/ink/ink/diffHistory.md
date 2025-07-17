@@ -1,3 +1,606 @@
+Generated with discovered.json: 0x2889c6a0cc50b8719fbba60c0c24f33d2adda579
+
+# Diff at Mon, 14 Jul 2025 12:46:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 13539010
+- current block number: 13539010
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 13539010 (main branch discovery), not current.
+
+```diff
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007) {
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+      address:
+-        "0x4200000000000000000000000000000000000007"
++        "ink:0x4200000000000000000000000000000000000007"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007"
++        "ink:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007"
+      values.l1CrossDomainMessenger:
+-        "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      values.OTHER_MESSENGER:
+-        "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      values.otherMessenger:
+-        "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+      implementationNames.0x4200000000000000000000000000000000000007:
+-        "Proxy"
+      implementationNames.0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
+-        "L2CrossDomainMessenger"
+      implementationNames.ink:0x4200000000000000000000000000000000000007:
++        "Proxy"
+      implementationNames.ink:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007:
++        "L2CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      address:
+-        "0x420000000000000000000000000000000000000F"
++        "ink:0x420000000000000000000000000000000000000F"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0x93e57A196454CB919193fa9946f14943cf733845"
++        "ink:0x93e57A196454CB919193fa9946f14943cf733845"
+      values.$pastUpgrades.0.2.0:
+-        "0x93e57A196454CB919193fa9946f14943cf733845"
++        "ink:0x93e57A196454CB919193fa9946f14943cf733845"
+      implementationNames.0x420000000000000000000000000000000000000F:
+-        "Proxy"
+      implementationNames.0x93e57A196454CB919193fa9946f14943cf733845:
+-        "GasPriceOracle"
+      implementationNames.ink:0x420000000000000000000000000000000000000F:
++        "Proxy"
+      implementationNames.ink:0x93e57A196454CB919193fa9946f14943cf733845:
++        "GasPriceOracle"
+    }
+```
+
+```diff
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010) {
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+      address:
+-        "0x4200000000000000000000000000000000000010"
++        "ink:0x4200000000000000000000000000000000000010"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010"
++        "ink:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010"
+      values.l1TokenBridge:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      values.messenger:
+-        "0x4200000000000000000000000000000000000007"
++        "ink:0x4200000000000000000000000000000000000007"
+      values.MESSENGER:
+-        "0x4200000000000000000000000000000000000007"
++        "ink:0x4200000000000000000000000000000000000007"
+      values.OTHER_BRIDGE:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      values.otherBridge:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+      implementationNames.0x4200000000000000000000000000000000000010:
+-        "Proxy"
+      implementationNames.0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
+-        "L2StandardBridge"
+      implementationNames.ink:0x4200000000000000000000000000000000000010:
++        "Proxy"
+      implementationNames.ink:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010:
++        "L2StandardBridge"
+    }
+```
+
+```diff
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011) {
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+      address:
+-        "0x4200000000000000000000000000000000000011"
++        "ink:0x4200000000000000000000000000000000000011"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011"
++        "ink:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011"
+      values.l1FeeWallet:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.recipient:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      implementationNames.0x4200000000000000000000000000000000000011:
+-        "Proxy"
+      implementationNames.0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011:
+-        "SequencerFeeVault"
+      implementationNames.ink:0x4200000000000000000000000000000000000011:
++        "Proxy"
+      implementationNames.ink:0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011:
++        "SequencerFeeVault"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012) {
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+      address:
+-        "0x4200000000000000000000000000000000000012"
++        "ink:0x4200000000000000000000000000000000000012"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012"
++        "ink:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012"
+      values.bridge:
+-        "0x4200000000000000000000000000000000000010"
++        "ink:0x4200000000000000000000000000000000000010"
+      values.BRIDGE:
+-        "0x4200000000000000000000000000000000000010"
++        "ink:0x4200000000000000000000000000000000000010"
+      implementationNames.0x4200000000000000000000000000000000000012:
+-        "Proxy"
+      implementationNames.0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012:
+-        "OptimismMintableERC20Factory"
+      implementationNames.ink:0x4200000000000000000000000000000000000012:
++        "Proxy"
+      implementationNames.ink:0xc0D3c0d3C0d3c0d3c0D3c0d3c0D3c0D3c0D30012:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013) {
+    +++ description: Simple contract that returns the latest L1 block number.
+      address:
+-        "0x4200000000000000000000000000000000000013"
++        "ink:0x4200000000000000000000000000000000000013"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013"
++        "ink:0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013"
+      implementationNames.0x4200000000000000000000000000000000000013:
+-        "Proxy"
+      implementationNames.0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013:
+-        "L1BlockNumber"
+      implementationNames.ink:0x4200000000000000000000000000000000000013:
++        "Proxy"
+      implementationNames.ink:0xC0D3C0d3C0D3c0D3C0d3c0D3C0d3c0d3C0d30013:
++        "L1BlockNumber"
+    }
+```
+
+```diff
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014) {
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+      address:
+-        "0x4200000000000000000000000000000000000014"
++        "ink:0x4200000000000000000000000000000000000014"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014"
++        "ink:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014"
+      values.messenger:
+-        "0x4200000000000000000000000000000000000007"
++        "ink:0x4200000000000000000000000000000000000007"
+      values.MESSENGER:
+-        "0x4200000000000000000000000000000000000007"
++        "ink:0x4200000000000000000000000000000000000007"
+      values.OTHER_BRIDGE:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "ink:0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      values.otherBridge:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "ink:0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+      implementationNames.0x4200000000000000000000000000000000000014:
+-        "Proxy"
+      implementationNames.0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014:
+-        "L2ERC721Bridge"
+      implementationNames.ink:0x4200000000000000000000000000000000000014:
++        "Proxy"
+      implementationNames.ink:0xC0D3c0d3c0d3c0d3c0D3C0d3C0D3C0D3c0d30014:
++        "L2ERC721Bridge"
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      address:
+-        "0x4200000000000000000000000000000000000015"
++        "ink:0x4200000000000000000000000000000000000015"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "ink:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
+      values.$pastUpgrades.0.2.0:
+-        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
++        "ink:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"
+      values.DEPOSITOR_ACCOUNT:
+-        "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
++        "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      values.gasPayingToken.addr_:
+-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
++        "ink:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      implementationNames.0x4200000000000000000000000000000000000015:
+-        "Proxy"
+      implementationNames.0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
+-        "L1Block"
+      implementationNames.ink:0x4200000000000000000000000000000000000015:
++        "Proxy"
+      implementationNames.ink:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12:
++        "L1Block"
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016) {
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+      address:
+-        "0x4200000000000000000000000000000000000016"
++        "ink:0x4200000000000000000000000000000000000016"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016"
++        "ink:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016"
+      implementationNames.0x4200000000000000000000000000000000000016:
+-        "Proxy"
+      implementationNames.0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
+-        "L2ToL1MessagePasser"
+      implementationNames.ink:0x4200000000000000000000000000000000000016:
++        "Proxy"
+      implementationNames.ink:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016:
++        "L2ToL1MessagePasser"
+    }
+```
+
+```diff
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017) {
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+      address:
+-        "0x4200000000000000000000000000000000000017"
++        "ink:0x4200000000000000000000000000000000000017"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017"
++        "ink:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017"
+      values.BRIDGE:
+-        "0x4200000000000000000000000000000000000014"
++        "ink:0x4200000000000000000000000000000000000014"
+      implementationNames.0x4200000000000000000000000000000000000017:
+-        "Proxy"
+      implementationNames.0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017:
+-        "OptimismMintableERC721Factory"
+      implementationNames.ink:0x4200000000000000000000000000000000000017:
++        "Proxy"
+      implementationNames.ink:0xc0d3C0d3C0d3C0d3C0d3c0d3C0D3C0d3C0D30017:
++        "OptimismMintableERC721Factory"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018) {
+    +++ description: Administration contract for other contract proxies.
+      address:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018"
++        "ink:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018"
+      values.addressManager:
+-        "0x0000000000000000000000000000000000000000"
++        "ink:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      implementationNames.0x4200000000000000000000000000000000000018:
+-        "Proxy"
+      implementationNames.0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
+-        "ProxyAdmin"
+      implementationNames.ink:0x4200000000000000000000000000000000000018:
++        "Proxy"
+      implementationNames.ink:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      address:
+-        "0x4200000000000000000000000000000000000019"
++        "ink:0x4200000000000000000000000000000000000019"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019"
++        "ink:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019"
+      values.recipient:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      implementationNames.0x4200000000000000000000000000000000000019:
+-        "Proxy"
+      implementationNames.0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019:
+-        "BaseFeeVault"
+      implementationNames.ink:0x4200000000000000000000000000000000000019:
++        "Proxy"
+      implementationNames.ink:0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019:
++        "BaseFeeVault"
+    }
+```
+
+```diff
+    contract BaseFeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+      address:
+-        "0x420000000000000000000000000000000000001A"
++        "ink:0x420000000000000000000000000000000000001A"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A"
++        "ink:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A"
+      values.recipient:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      values.RECIPIENT:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+      implementationNames.0x420000000000000000000000000000000000001A:
+-        "Proxy"
+      implementationNames.0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A:
+-        "BaseFeeVault"
+      implementationNames.ink:0x420000000000000000000000000000000000001A:
++        "Proxy"
+      implementationNames.ink:0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A:
++        "BaseFeeVault"
+    }
+```
+
+```diff
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020) {
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+      address:
+-        "0x4200000000000000000000000000000000000020"
++        "ink:0x4200000000000000000000000000000000000020"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020"
++        "ink:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020"
+      implementationNames.0x4200000000000000000000000000000000000020:
+-        "Proxy"
+      implementationNames.0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020:
+-        "SchemaRegistry"
+      implementationNames.ink:0x4200000000000000000000000000000000000020:
++        "Proxy"
+      implementationNames.ink:0xc0d3c0d3c0d3C0d3c0d3C0D3C0D3c0d3C0D30020:
++        "SchemaRegistry"
+    }
+```
+
+```diff
+    contract EAS (0x4200000000000000000000000000000000000021) {
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+      address:
+-        "0x4200000000000000000000000000000000000021"
++        "ink:0x4200000000000000000000000000000000000021"
+      values.$admin:
+-        "0x4200000000000000000000000000000000000018"
++        "ink:0x4200000000000000000000000000000000000018"
+      values.$implementation:
+-        "0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021"
++        "ink:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021"
+      values.getSchemaRegistry:
+-        "0x4200000000000000000000000000000000000020"
++        "ink:0x4200000000000000000000000000000000000020"
+      implementationNames.0x4200000000000000000000000000000000000021:
+-        "Proxy"
+      implementationNames.0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021:
+-        "EAS"
+      implementationNames.ink:0x4200000000000000000000000000000000000021:
++        "Proxy"
+      implementationNames.ink:0xC0D3c0D3C0d3c0D3c0D3C0D3c0D3c0d3c0d30021:
++        "EAS"
+    }
+```
+
+```diff
+    EOA  (0x661235a238B11191211fa95D4Dd9E423d521E0Be) {
+    +++ description: None
+      address:
+-        "0x661235a238B11191211fa95D4Dd9E423d521E0Be"
++        "ink:0x661235a238B11191211fa95D4Dd9E423d521E0Be"
+    }
+```
+
+```diff
+    EOA  (0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f) {
+    +++ description: None
+      address:
+-        "0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
++        "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+    }
+```
+
+```diff
+    EOA SuperchainProxyAdminOwner_L2Alias (0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b) {
+    +++ description: None
+      address:
+-        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
++        "ink:0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+    }
+```
+
+```diff
+    EOA  (0x88FF1e5b602916615391F55854588EFcBB7663f0) {
+    +++ description: None
+      address:
+-        "0x88FF1e5b602916615391F55854588EFcBB7663f0"
++        "ink:0x88FF1e5b602916615391F55854588EFcBB7663f0"
+    }
+```
+
+```diff
+    EOA  (0xa6f0F94C13C4255231958079E7331694205F6c93) {
+    +++ description: None
+      address:
+-        "0xa6f0F94C13C4255231958079E7331694205F6c93"
++        "ink:0xa6f0F94C13C4255231958079E7331694205F6c93"
+    }
+```
+
+```diff
+    EOA  (0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001) {
+    +++ description: None
+      address:
+-        "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
++        "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+    }
+```
+
+```diff
+    EOA  (0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE) {
+    +++ description: None
+      address:
+-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
++        "ink:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F)
+    +++ description: Provides the current gas price for L2 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerFeeVault (0x4200000000000000000000000000000000000011)
+    +++ description: Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x4200000000000000000000000000000000000012)
+    +++ description: Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract L1BlockNumber (0x4200000000000000000000000000000000000013)
+    +++ description: Simple contract that returns the latest L1 block number.
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014)
+    +++ description: The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract L1Block (0x4200000000000000000000000000000000000015)
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+```
+
+```diff
++   Status: CREATED
+    contract L2ToL1MessagePasser (0x4200000000000000000000000000000000000016)
+    +++ description: Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC721Factory (0x4200000000000000000000000000000000000017)
+    +++ description: Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (0x4200000000000000000000000000000000000018)
+    +++ description: Administration contract for other contract proxies.
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019)
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
++   Status: CREATED
+    contract BaseFeeVault (0x420000000000000000000000000000000000001A)
+    +++ description: Collects EIP-1559 base fees, which are withdrawable to the FeesCollector on L1.
+```
+
+```diff
++   Status: CREATED
+    contract SchemaRegistry (0x4200000000000000000000000000000000000020)
+    +++ description: Contracts to register schemas for the Ethereum Attestation Service (EAS).
+```
+
+```diff
++   Status: CREATED
+    contract EAS (0x4200000000000000000000000000000000000021)
+    +++ description: Contract containing the main logic for the Ethereum Attestation Service (EAS).
+```
+
 Generated with discovered.json: 0x29be3cacca47789d7b793a8d25372b28742aadcf
 
 # Diff at Fri, 23 May 2025 09:41:17 GMT:

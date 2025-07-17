@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "pepeunchained2",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "pepeunchained2-PEPU",
+      "priceId": "pepe-unchained-2",
+      "symbol": "PEPU",
+      "name": "Pepe Unchained",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66717/large/pepu.jpg?1750303081",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x93aA0ccD1e5628d3A841C4DbdF602D9eb04085d6",
+        "chain": "ethereum",
+        "escrowAddress": "0xd3643255ea784c75a5325CC5a4A549C7CD62E499",
+        "decimals": 18,
+        "sinceTimestamp": 1750291200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

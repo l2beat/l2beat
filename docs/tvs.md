@@ -129,7 +129,7 @@ Examples:
    },
 ```
 
-- preminted token - to calculate value we need to substract constant value from total supply
+- preminted token - to calculate value we need to subtract constant value from total supply
 
 ```
 {
@@ -163,7 +163,7 @@ Examples:
    },
 ```
 
-- lock-minting - to calculate value of a token (WBTC) for project's total we need to substract value locked to mint some other token (SolveBTC) from it's total supply (otherwise we would be double counting)
+- lock-minting - to calculate value of a token (WBTC) for project's total we need to subtract value locked to mint some other token (SolveBTC) from it's total supply (otherwise we would be double counting)
 ```
 {
    "mode": "custom",

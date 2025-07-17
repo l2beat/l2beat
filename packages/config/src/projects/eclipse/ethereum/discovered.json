@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "GnosisSafe",
-      "address": "0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
+      "address": "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -19,10 +19,10 @@
       "sinceBlock": 19832392,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x45894CeBad0a1298D44aF2B528490693E58B322E",
-          "0x825e868F5561352bC875E0C9D08d32e94F915E6b"
+          "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E",
+          "eth:0x825e868F5561352bC875E0C9D08d32e94F915E6b"
         ],
         "$threshold": 1,
         "domainSeparator": "0x5ba0efd4c341d33a8649ec1f2cbf37987a1f2b2a3ba7d1fbfcaca214f3187660",
@@ -33,13 +33,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x0706Ffc1722D53a85ba90f32807880ccee968Fed": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE",
+      "address": "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -53,7 +53,7 @@
     },
     {
       "name": "CanonicalBridgeV1",
-      "address": "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+      "address": "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
       "type": "Contract",
       "template": "eclipse/CanonicalBridge",
       "sourceHashes": [
@@ -76,42 +76,42 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "PAUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
             ]
           },
           "STARTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "WITHDRAW_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "CLAIM_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xD02f545d57536BC1E8F12D867731F006AacE71E3"]
+            "members": ["eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3"]
           },
           "WITHDRAW_CANCELLER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
             ]
           },
           "FRAUD_WINDOW_SETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           }
         },
         "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdminAC": ["0x4720342419C1D316B948690d12C86D5b485C64E0"],
+        "defaultAdminAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
         "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
         "fraudWindowDuration": 604800,
         "getVersionComponents": { "major": 2, "minor": 0, "patch": 0 },
@@ -119,33 +119,35 @@
         "paused": false,
         "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
         "pauserAC": [
-          "0x4720342419C1D316B948690d12C86D5b485C64E0",
-          "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3"
         ],
         "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
-        "TREASURY": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+        "TREASURY": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040",
-        "withdrawAuthorityAC": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+        "withdrawAuthorityAC": [
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0"
+        ]
       },
       "implementationNames": {
-        "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": "CanonicalBridge"
+        "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": "CanonicalBridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x3392fd462d9710Fbf3A5703818b9920C119DC080",
+      "address": "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x45894CeBad0a1298D44aF2B528490693E58B322E",
+      "address": "eth:0x45894CeBad0a1298D44aF2B528490693E58B322E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Eclipse Multisig",
-      "address": "0x4720342419C1D316B948690d12C86D5b485C64E0",
+      "address": "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -208,13 +210,13 @@
       "sinceBlock": 20393653,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xBb534A6Bd0440727cb5883D037DEd7358059D547",
-          "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4",
-          "0x950815d0e585095B06111CD101440fb1E95AB2a5",
-          "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
-          "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
+          "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
+          "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4",
+          "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5",
+          "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
+          "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA"
         ],
         "$threshold": 3,
         "domainSeparator": "0x4fc4aca3db1cad217783537dbcbcb1d69e3377e64c4890ff913a3639c94b9386",
@@ -225,12 +227,12 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x4720342419C1D316B948690d12C86D5b485C64E0": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x4720342419C1D316B948690d12C86D5b485C64E0": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3",
+      "address": "eth:0x681086b630BC3B5f0bf544FDc2A0FC41Cf8977D3",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -243,13 +245,13 @@
       ]
     },
     {
-      "address": "0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
+      "address": "eth:0x757210F15AB48f0F8d328984fc321CfA6BB5BFc2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Eclipse Multisig 2",
-      "address": "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+      "address": "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -293,13 +295,13 @@
       "sinceBlock": 20392523,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
-          "0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
-          "0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
-          "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
-          "0x3392fd462d9710Fbf3A5703818b9920C119DC080"
+          "eth:0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
+          "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed",
+          "eth:0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
+          "eth:0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
+          "eth:0x3392fd462d9710Fbf3A5703818b9920C119DC080"
         ],
         "$threshold": 3,
         "domainSeparator": "0xe1fdfda67b202d80f38e8de79b720e0604176ff551ca60ce5476a8f0c3de9764",
@@ -310,18 +312,18 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x825e868F5561352bC875E0C9D08d32e94F915E6b",
+      "address": "eth:0x825e868F5561352bC875E0C9D08d32e94F915E6b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "EtherBridge",
-      "address": "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
+      "address": "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1",
       "type": "Contract",
       "template": "eclipse/EtherBridge",
       "sourceHashes": [
@@ -333,20 +335,20 @@
       "sinceTimestamp": 1722141227,
       "sinceBlock": 20402682,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9",
         "$pastUpgrades": [
           [
             "2024-07-28T04:33:47.000Z",
             "0x4eed278fc63245a4b2a57a1e1c6dd876c9f18857b515b55a82c2235746c68486",
-            ["0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
+            ["eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9"]
           ]
         ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -358,14 +360,14 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "ERC1967Proxy",
-        "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": "EtherBridge"
+        "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "ERC1967Proxy",
+        "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": "EtherBridge"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CanonicalBridgeV2",
-      "address": "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+      "address": "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
       "type": "Contract",
       "template": "eclipse/CanonicalBridge",
       "sourceHashes": [
@@ -389,43 +391,43 @@
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
             ]
           },
           "PAUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "STARTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "WITHDRAW_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
             ]
           },
           "CLAIM_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "WITHDRAW_CANCELLER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "FRAUD_WINDOW_SETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           }
         },
         "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": [
-          "0x4720342419C1D316B948690d12C86D5b485C64E0",
-          "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
         ],
         "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
         "fraudWindowDuration": 604800,
@@ -433,29 +435,29 @@
         "MIN_DEPOSIT": 2000000000000000,
         "paused": false,
         "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
-        "pauserAC": ["0x4720342419C1D316B948690d12C86D5b485C64E0"],
+        "pauserAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
         "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
-        "TREASURY": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+        "TREASURY": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040",
         "withdrawAuthorityAC": [
-          "0x4720342419C1D316B948690d12C86D5b485C64E0",
-          "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
         ]
       },
       "implementationNames": {
-        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": "CanonicalBridgeV2"
+        "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": "CanonicalBridgeV2"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x950815d0e585095B06111CD101440fb1E95AB2a5",
+      "address": "eth:0x950815d0e585095B06111CD101440fb1E95AB2a5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Mailbox",
-      "address": "0xb23B2492f7A9631104A5877F7FFA00633660968d",
+      "address": "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d",
       "type": "Contract",
       "template": "eclipse/Mailbox",
       "sourceHashes": [
@@ -467,28 +469,28 @@
       "sinceTimestamp": 1722141467,
       "sinceBlock": 20402702,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B",
         "$pastUpgrades": [
           [
             "2024-07-28T04:37:47.000Z",
             "0xd86c84f78d28d7df3ec285544aea3abab536407f88d5e01ca5b7cc1edd1b6c17",
-            ["0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
+            ["eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B"]
           ]
         ],
         "$upgradeCount": 1,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "TRUSTED_RELAYER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "MODULE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"]
+            "members": ["eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -499,24 +501,24 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0xb23B2492f7A9631104A5877F7FFA00633660968d": "ERC1967Proxy",
-        "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": "Mailbox"
+        "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d": "ERC1967Proxy",
+        "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": "Mailbox"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "0xBb534A6Bd0440727cb5883D037DEd7358059D547",
+      "address": "eth:0xBb534A6Bd0440727cb5883D037DEd7358059D547",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xCD2fA978D163c0068167dDff8b6951f0E626e6A4",
+      "address": "eth:0xCD2fA978D163c0068167dDff8b6951f0E626e6A4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Upgrader0to1",
-      "address": "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+      "address": "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
       "type": "Contract",
       "template": "eclipse/Upgrader0to1",
       "sourceHashes": [
@@ -544,37 +546,37 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "UPGRADER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
+            "members": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSITOR_ROLE": "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf",
         "EMERGENCY_ROLE": "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d",
         "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
-        "NULL_ADDRESS": "0x0000000000000000000000000000000000000000",
+        "NULL_ADDRESS": "eth:0x0000000000000000000000000000000000000000",
         "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
         "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
-        "upgraderAC": ["0x4720342419C1D316B948690d12C86D5b485C64E0"],
+        "upgraderAC": ["eth:0x4720342419C1D316B948690d12C86D5b485C64E0"],
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
       },
       "implementationNames": {
-        "0xD02f545d57536BC1E8F12D867731F006AacE71E3": "Upgrader0to1"
+        "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3": "Upgrader0to1"
       }
     },
     {
-      "address": "0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
+      "address": "eth:0xd0615B1D3F24f691153C076d45104eEd3eF8cDb5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Treasury",
-      "address": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+      "address": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
       "type": "Contract",
       "template": "eclipse/Treasury",
       "sourceHashes": [
@@ -586,18 +588,18 @@
       "sinceTimestamp": 1722140987,
       "sinceBlock": 20402663,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978",
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978",
         "$pastUpgrades": [
           [
             "2024-07-28T04:29:47.000Z",
             "0xa34790c0635f1f739540bf7e2998085e6426d1f17cd58617e26be884f625a0dc",
-            ["0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
+            ["eth:0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4"]
           ],
           [
             "2024-11-05T03:53:23.000Z",
             "0x15aecc2b0cac5c03221b0f7ade10e888ad4f944df4bdc19c1f3c40fc56d5ebbb",
-            ["0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"]
+            ["eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978"]
           ]
         ],
         "$upgradeCount": 2,
@@ -605,66 +607,66 @@
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
             ]
           },
           "PAUSER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
             ]
           },
           "STARTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
             ]
           },
           "UPGRADER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
             ]
           },
           "EMERGENCY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
             ]
           },
           "DEPOSITOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
-              "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+              "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
             ]
           },
           "WITHDRAW_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
-              "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+              "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+              "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+              "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
             ]
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": [
-          "0x4720342419C1D316B948690d12C86D5b485C64E0",
-          "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+          "eth:0x4720342419C1D316B948690d12C86D5b485C64E0",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
         ],
         "DEPOSITOR_ROLE": "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf",
         "EMERGENCY_ROLE": "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d",
         "emergencyAC": [
-          "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-          "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+          "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
         ],
         "getVersionComponents": { "major": 2, "minor": 0, "patch": 0 },
         "paused": false,
@@ -674,34 +676,34 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "UPGRADER_ROLE": "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f",
         "upgraderAC": [
-          "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
-          "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+          "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
         ],
         "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
         "withdrawerAC": [
-          "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
-          "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
-          "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+          "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+          "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+          "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
         ]
       },
       "implementationNames": {
-        "0xD7E4b67E735733aC98a88F13d087D8aac670E644": "ERC1967Proxy",
-        "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978": "Treasury"
+        "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644": "ERC1967Proxy",
+        "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978": "Treasury"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
+      "address": "eth:0xDecF20b9213f5d7f16196420377d37ef5f8F9686",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
+      "address": "eth:0xEe058D13A0c25a1ce2f68eb02dE4CE7E621982D9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA",
+      "address": "eth:0xF48C91ca69Aef5ac47E430c3E90DEE1694d246FA",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1085,5 +1087,5 @@
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x14c70c5d671ea28d67c532f3f799c82d1ce057e6ef4105fbc34c0890308d0bdc"
+  "permissionsConfigHash": "0xc2072cb9dee1810a11bcb06b388ed2584dbd44450e99e5467f2b9fbe8f4d29f6"
 }

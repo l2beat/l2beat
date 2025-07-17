@@ -1,8 +1,8 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ClockIcon } from '~/icons/Clock'
 import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 import { ProjectSection } from '../ProjectSection'
@@ -52,7 +52,7 @@ export function ThroughputSection({
           </span>
         </div>
       )}
-      <p className="text-base">
+      <p className="text-paragraph-15 md:text-paragraph-16">
         The chart shows the actual size of data posted to the DA Layer per day
         for the selected time period, as well as the maximum possible throughput
         per day.

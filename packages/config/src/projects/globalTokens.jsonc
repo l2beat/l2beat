@@ -115,6 +115,7 @@
         "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0": "DEXTF Token",
         "0x888888435FDe8e7d4c54cAb67f206e4199454c60": "DFX Token",
         "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84": "dHedge DAO Token",
+        "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419": "DIAToken",
         "0xB9EefC4b0d472A44be93970254Df4f4016569d27": "digitalbits Token",
         "0x246908BfF0b1ba6ECaDCF57fb94F6AE2FcD43a77": "Divi Token",
         "0x43Dfc4159D86F3A37A5A4B3D4580b888ad7d4DDd": "DODO bird Token",
@@ -298,7 +299,7 @@
         "0x02f92800F57BCD74066F5709F1Daa1A4302Df875": "Peapods Token",
         "0x808507121B80c02388fAd14726482e061B8da827": "Pendle Token",
         "0x6982508145454Ce325dDbE47a25d4ec3d2311933": "Pepe Token",
-        "0xadd39272E83895E7d3f244f696B7a25635F34234": "Pepe Unchained Token",
+        "0x93aA0ccD1e5628d3A841C4DbdF602D9eb04085d6": "Pepe Unchained Token",
         "0xb9f599ce614Feb2e1BBe58F180F370D05b39344E": "PepeFork Token",
         "0xbC396689893D065F41bc2C6EcbeE5e0085233447": "Perpetual Token",
         "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E": "Phala Token",
@@ -333,6 +334,7 @@
         "0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b": "Rally Token",
         "0xD291E7a03283640FDc51b121aC401383A46cC623": "Rari Governance Token",
         "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd": "RAZOR Token",
+        "0x57240C3E140f98abe315CA8E0213c7a77F34A334": "RDO Token",
         "0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf": "Reef.finance Token",
         "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D": "renBTC Token",
         "0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24": "Render Token",
@@ -697,7 +699,11 @@
     },
     "abstract": {
       "names": {
+        "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5": "ABSTER Token",
         "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1": "Bridged USDC (Stargate) Token",
+        "0x85Ca16Fd0e81659e0b8Be337294149E722528731": "Noot Noot Token",
+        "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4": "Pengus Wife Token",
+        "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62": "Pudgy Penguins Token",
         "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD": "USDT Token"
       }
     },
@@ -937,6 +943,7 @@
         "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812": "Wrapped Mountain Protocol USD Token",
         "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "Wrapped OETH Token",
         "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07": "Wrapped SOL Token",
+        "0x437cc33344a0B27A429f795ff6B469C72698B291": "WrappedM by M^0 Token",
         "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66": "Xai Token",
         "0x93FA0B88C0C78e45980Fa74cdd87469311b7B3E4": "XBorg Token",
         "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB": "xSolvBTC Token"

@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "abstract-ABSTER",
+      "priceId": "abster",
+      "symbol": "ABSTER",
+      "name": "ABSTER",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54607/large/AbsterCoingecko.png?1740646344",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "abster",
+        "decimals": 18,
+        "sinceTimestamp": 1740614400,
+        "address": "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5",
+        "chain": "abstract"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "abstract-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -18,6 +37,70 @@
         "decimals": 18,
         "sinceTimestamp": 1739109131
       },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "abstract-NOOT",
+      "priceId": "noot-noot",
+      "symbol": "NOOT",
+      "name": "Noot Noot",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54308/large/Screenshot_2025-01-28_132602-remove-background.com_%282%29.png?1739189556",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "noot-noot",
+        "decimals": 18,
+        "sinceTimestamp": 1739145600,
+        "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",
+        "chain": "abstract"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "abstract-PENGU",
+      "priceId": "pudgy-penguins",
+      "symbol": "PENGU",
+      "name": "Pudgy Penguins",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52622/large/PUDGY_PENGUINS_PENGU_PFP.png?1733809110",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62",
+        "chain": "abstract",
+        "decimals": 18,
+        "sinceTimestamp": 1737458169
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "abstract-Polly",
+      "priceId": "pengus-wife",
+      "symbol": "Polly",
+      "name": "Pengus Wife",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55914/large/Polly_Official_PFP.jpg?1747708551",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "pengus-wife",
+        "decimals": 18,
+        "sinceTimestamp": 1747699200,
+        "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
+        "chain": "abstract"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {

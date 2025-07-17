@@ -1,9 +1,8 @@
-import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
+import { expect, mockFn, mockObject } from 'earl'
 import { EtherscanClient } from './EtherscanClient'
 
 describe(EtherscanClient.name, () => {
@@ -60,7 +59,7 @@ describe(EtherscanClient.name, () => {
         {
           contractAddress: ADDRESS.toString(),
           contractCreator: 'GENESIS',
-          txHash: `GENESIS_0x9827589237982347535834795`,
+          txHash: 'GENESIS_0x9827589237982347535834795',
         },
       ],
     }

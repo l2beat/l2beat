@@ -25,7 +25,7 @@ export class BlockTimestampIndexer extends ManagedMultiIndexer<BlockTimestampCon
   constructor(private readonly $: BlockTimestampIndexerDeps) {
     assert(
       $.configurations.length === 1,
-      `This indexer should take only one configuration`,
+      'This indexer should take only one configuration',
     )
     super({
       ...$,

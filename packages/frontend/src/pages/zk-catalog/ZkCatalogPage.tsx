@@ -1,9 +1,8 @@
-import {} from '@radix-ui/react-accordion'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { CustomLink } from '~/components/link/CustomLink'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 
 interface Props extends AppLayoutProps {}

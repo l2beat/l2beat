@@ -1,10 +1,11 @@
-import { Logger, getEnv } from '@l2beat/backend-tools'
+import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
+import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
-import type { BridgeTransfer } from './types/BridgeTransfer'
-import { getTokenAmount, getTokenSymbol } from './utils/erc20'
+import type { Receive } from './types/Receive'
+import type { Send } from './types/Send'
 import { logToViemLog } from './utils/viem'
 
 const args = {
@@ -54,7 +55,7 @@ const cmd = command({
         http,
         logger,
         callsPerMinute: c.callsPerMinute,
-        retryStrategy: 'RELIABLE',
+        retryStrategy: 'SCRIPT',
       }),
     }))
 
@@ -64,94 +65,230 @@ const cmd = command({
 
     const decoders = protocols.map((p) => p.decoder)
 
-    const transfersByProtocolAndId: Record<string, BridgeTransfer[]> = {}
+    const transfers: (Send | Receive)[] = []
+    const matching: Record<
+      string,
+      Record<string, { send: Send[]; receive: Receive[] }>
+    > = {}
 
-    for (const r of rpcs) {
-      const range = args.range ?? 100
-      const start = args.start
-        ? args.start
-        : (await r.rpc.getLatestBlockNumber()) - range
+    logger.info('Running script', {
+      protocols: protocols.map((p) => p.name),
+      chains: chains.map((c) => c.name),
+    })
 
-      const logs = await r.rpc.getLogs(start, start + range)
+    logger.info('Fetching logs... (this may take a while)')
+    await Promise.all(
+      rpcs.map(async (r) => {
+        const range = args.range ?? 1000
+        const start = args.start
+          ? args.start
+          : (await r.rpc.getLatestBlockNumber()) - range
 
-      for (const l of logs) {
-        for (const decoder of decoders) {
-          const decoded = decoder(r.name, logToViemLog(l))
-          if (decoded) {
-            const tokenSymbol = await getTokenSymbol(r.rpc, decoded, start)
-            const amount = await getTokenAmount(r.rpc, decoded, start)
+        const BATCH_SIZE = 100 // Number of blocks per batch
+        const numBatches = Math.ceil(range / BATCH_SIZE)
 
-            logger.info(
-              `${decoded.protocol} on ${decoded.chain} (${decoded.type ?? ''})`,
-              {
-                origin: decoded.origin,
-                destination: decoded.destination,
-                token: tokenSymbol,
-                amount: amount,
-                ...(decoded.sender ? { sender: decoded.sender } : {}),
-                ...(decoded.receiver ? { receiver: decoded.receiver } : {}),
-                ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
-                ...(decoded.txHash
-                  ? { explorerLink: r.getTxUrl(decoded.txHash) }
-                  : {}),
-                ...(decoded.matchingId ? { id: decoded.matchingId } : {}),
-              },
-            )
+        // Fetch all batches concurrently for this RPC instance
+        const batchPromises = Array.from({ length: numBatches }, (_, i) => {
+          const batchStart = start + i * BATCH_SIZE
+          const batchEnd = Math.min(start + range, batchStart + BATCH_SIZE)
+          return r.rpc
+            .getLogs(batchStart, batchEnd)
+            .then((logs) => ({ logs, batchStart, batchEnd }))
+        })
+        const batchResults = await Promise.all(batchPromises)
 
-            if (decoded.matchingId) {
-              const key = `${decoded.protocol}:${decoded.matchingId}`
+        // Process logs from each fetched batch
+        for (const { logs } of batchResults) {
+          const logsByTx = groupBy(logs, 'transactionHash')
 
-              if (!transfersByProtocolAndId[key]) {
-                transfersByProtocolAndId[key] = []
-              }
-              transfersByProtocolAndId[key].push(decoded)
-            }
-          }
+          // For each transaction, concurrently decode logs with all decoders
+          await Promise.all(
+            Object.entries(logsByTx).map(async ([hash, l]) => {
+              const decoderPromises = decoders.map((decoder) =>
+                decoder(r, {
+                  hash,
+                  logs: l.map(logToViemLog),
+                }),
+              )
+              const decodedResults = await Promise.all(decoderPromises)
+              decodedResults.forEach((decoded) => {
+                if (decoded) {
+                  transfers.push(decoded)
+                }
+              })
+            }),
+          )
+        }
+      }),
+    )
+
+    for (const transfer of transfers) {
+      if (!matching[transfer.protocol]) {
+        matching[transfer.protocol] = {}
+      }
+      const protocol = matching[transfer.protocol]
+
+      if (transfer.matchingId) {
+        if (!protocol[transfer.matchingId]) {
+          protocol[transfer.matchingId] = { send: [], receive: [] }
+        }
+        switch (transfer.direction) {
+          case 'send':
+            protocol[transfer.matchingId].send.push(transfer)
+            break
+          case 'receive':
+            protocol[transfer.matchingId].receive.push(transfer)
+            break
+        }
+      } else {
+        if (!protocol['undefined']) {
+          protocol['undefined'] = { send: [], receive: [] }
+        }
+        switch (transfer.direction) {
+          case 'send':
+            protocol['undefined'].send.push(transfer)
+            break
+          case 'receive':
+            protocol['undefined'].receive.push(transfer)
+            break
         }
       }
     }
 
-    const transfersCountByProtocol: Record<string, number> = {}
+    for (const t of transfers) {
+      logger.info(`${t.direction} via ${t.protocol}`, {
+        ...t,
+      })
+    }
 
-    logger.info('--- Related transfers (same protocol and ID) ---')
-    for (const [key, transfers] of Object.entries(transfersByProtocolAndId)) {
-      if (transfers.length > 1) {
-        const [protocol, id] = key.split(':')
-        logger.info(
-          `Found ${transfers.length} related transfers for ${protocol} with ID ${id}:`,
-        )
+    for (const [protocol, m] of Array.from(Object.entries(matching))) {
+      for (const [id, mm] of Array.from(Object.entries(m))) {
+        if (mm.send.length === 0 || mm.receive.length === 0) continue
 
-        transfers.forEach((transfer, index) => {
+        logger.info(`${protocol} ID: ${id}`)
+
+        for (const t of [...mm.send, ...mm.receive]) {
           const getTxUrl = CHAINS.find(
-            (c) => c.name === transfer.chain,
+            (c) => c.shortName === t.token.split(':')[0],
           )?.getTxUrl
+          logger.info(t.direction, {
+            token: t.token,
+            amount: t.amount,
+            ...(t.txHash ? { tx: t.txHash } : {}),
+            ...(t.txHash && getTxUrl ? { explorer: getTxUrl(t.txHash) } : {}),
+          })
+        }
+      }
+    }
 
-          logger.info(
-            `  [${index + 1}] ${transfer.type} on ${transfer.chain}`,
-            {
-              origin: transfer.origin,
-              destination: transfer.destination,
-              token: transfer.token,
-              amount: transfer.amount,
-              ...(transfer.sender ? { sender: transfer.sender } : {}),
-              ...(transfer.receiver ? { receiver: transfer.receiver } : {}),
-              ...(transfer.txHash ? { txHash: transfer.txHash } : {}),
-              ...(transfer.txHash && getTxUrl
-                ? { explorerLink: getTxUrl(transfer.txHash) }
-                : {}),
-            },
-          )
+    for (const [protocol, m] of Array.from(Object.entries(matching))) {
+      const send = transfers.filter(
+        (t) => t.protocol === protocol && t.direction === 'send',
+      )
+
+      const receive = transfers.filter(
+        (t) => t.protocol === protocol && t.direction === 'receive',
+      )
+      const matchedBreakdown: Record<string, number> = {}
+      Object.entries(m).forEach(([id, match]) => {
+        if (
+          id === 'undefined' ||
+          match.send.length === 0 ||
+          match.receive.length === 0
+        )
+          return
+
+        match.send.forEach((sendTx) => {
+          match.receive.forEach((receiveTx) => {
+            const senderChain = sendTx.token.split(':')[0]
+            const receiverChain = receiveTx.token.split(':')[0]
+            const pairKey = `${senderChain} -> ${receiverChain}`
+
+            matchedBreakdown[pairKey] = (matchedBreakdown[pairKey] || 0) + 1
+          })
+        })
+      })
+
+      const unmatchedBreakdown: Record<string, number> = {}
+
+      Object.entries(m).forEach(([id, match]) => {
+        if (id === 'undefined') return
+        if (match.send.length > 0 && match.receive.length === 0) {
+          match.send.forEach((sendTx) => {
+            const senderChain = sendTx.token.split(':')[0]
+            const pairKey = `${senderChain} -> X`
+            unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+          })
+        }
+      })
+
+      Object.entries(m).forEach(([id, match]) => {
+        if (id === 'undefined') return
+        if (match.send.length === 0 && match.receive.length > 0) {
+          match.receive.forEach((receiveTx) => {
+            const receiverChain = receiveTx.token.split(':')[0]
+            const pairKey = `X -> ${receiverChain}`
+            unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+          })
+        }
+      })
+
+      if (m['undefined']) {
+        m['undefined'].send.forEach((sendTx) => {
+          const senderChain = sendTx.token.split(':')[0]
+          const pairKey = `${senderChain} -> X`
+          unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
         })
 
-        if (!transfersCountByProtocol[protocol]) {
-          transfersCountByProtocol[protocol] = 0
-        }
-        transfersCountByProtocol[protocol]++
+        m['undefined'].receive.forEach((receiveTx) => {
+          const receiverChain = receiveTx.token.split(':')[0]
+          const pairKey = `X -> ${receiverChain}`
+          unmatchedBreakdown[pairKey] = (unmatchedBreakdown[pairKey] || 0) + 1
+        })
       }
+
+      logger.info(protocol, {
+        send: {
+          count: send.length,
+          breakdown: Object.entries(
+            groupBy(send, (s) => s.token.split(':')[0]),
+          ).reduce(
+            (acc, [chain, items]) => {
+              acc[chain] = items.length
+              return acc
+            },
+            {} as Record<string, number>,
+          ),
+        },
+        receive: {
+          count: receive.length,
+          breakdown: Object.entries(
+            groupBy(receive, (s) => s.token.split(':')[0]),
+          ).reduce(
+            (acc, [chain, items]) => {
+              acc[chain] = items.length
+              return acc
+            },
+            {} as Record<string, number>,
+          ),
+        },
+        matched: {
+          count: Object.entries(m).filter(
+            ([_, m]) => m.send.length > 0 && m.receive.length > 0,
+          ).length,
+          breakdown: matchedBreakdown,
+        },
+        unmatched: {
+          count:
+            Object.entries(m).filter(
+              ([_, m]) => m.send.length === 0 || m.receive.length === 0,
+            ).length +
+            (m['undefined']?.send.length ?? 0) +
+            (m['undefined']?.receive.length ?? 0),
+          breakdown: unmatchedBreakdown,
+        },
+      })
     }
-
-    logger.info(`Matching summary`, { protocols: transfersCountByProtocol })
-
     process.exit(0)
   },
 })

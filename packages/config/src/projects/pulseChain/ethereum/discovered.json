@@ -5,12 +5,12 @@
   "configHash": "0xf1d1d18cd34006291d917dfc0726943df940d2608a09081efdd18f586964af64",
   "entries": [
     {
-      "address": "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
+      "address": "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
+      "address": "eth:0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -23,7 +23,7 @@
     },
     {
       "name": "ForeignOmnibridge",
-      "address": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+      "address": "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D",
       "type": "Contract",
       "sourceHashes": [
         "0x10e99708bf71d6d77c20b34a6e991e6ca7487e63931b612a5224d32ca72b63b5",
@@ -34,42 +34,42 @@
       "sinceTimestamp": 1684141499,
       "sinceBlock": 17264177,
       "values": {
-        "$admin": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
-        "$implementation": "0xB7DF1E00ae030e966E635ede273625240546B873",
+        "$admin": "eth:0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
+        "$implementation": "eth:0xB7DF1E00ae030e966E635ede273625240546B873",
         "$pastUpgrades": [
           [
             "2023-05-15T09:06:11.000Z",
             "0x210fa683ddb0e587885dea0582bc328b80b7a87d700a10cc7a81f6fa1cf9612b",
-            ["0xB7DF1E00ae030e966E635ede273625240546B873"]
+            ["eth:0xB7DF1E00ae030e966E635ede273625240546B873"]
           ]
         ],
         "$upgradeCount": 1,
-        "bridgeContract": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+        "bridgeContract": "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 0 },
         "getBridgeMode": "0xb1516c26",
         "getCurrentDay": 20215,
-        "implementation": "0xB7DF1E00ae030e966E635ede273625240546B873",
+        "implementation": "eth:0xB7DF1E00ae030e966E635ede273625240546B873",
         "isInitialized": true,
-        "mediatorContractOnOtherSide": "0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef",
-        "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
+        "mediatorContractOnOtherSide": "eth:0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef",
+        "owner": "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
         "requestGasLimit": 2000000,
-        "tokenFactory": "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02",
-        "upgradeabilityOwner": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
+        "tokenFactory": "eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02",
+        "upgradeabilityOwner": "eth:0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
         "version": 1
       },
       "implementationNames": {
-        "0x1715a3E4A142d8b698131108995174F37aEBA10D": "EternalStorageProxy",
-        "0xB7DF1E00ae030e966E635ede273625240546B873": "ForeignOmnibridge"
+        "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D": "EternalStorageProxy",
+        "eth:0xB7DF1E00ae030e966E635ede273625240546B873": "ForeignOmnibridge"
       }
     },
     {
-      "address": "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
+      "address": "eth:0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "BridgeValidators",
-      "address": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+      "address": "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
       "type": "Contract",
       "template": "gnosisbridge/BridgeValidators",
       "sourceHashes": [
@@ -81,38 +81,38 @@
       "sinceTimestamp": 1684140779,
       "sinceBlock": 17264119,
       "values": {
-        "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
-        "$implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+        "$admin": "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+        "$implementation": "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
         "$members": [
-          "0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0",
-          "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
-          "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
-          "0xfB18Da3bCA8057eB05aab6e77a32925949093533",
-          "0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa",
-          "0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E",
-          "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
-          "0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
+          "eth:0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0",
+          "eth:0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c",
+          "eth:0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
+          "eth:0xfB18Da3bCA8057eB05aab6e77a32925949093533",
+          "eth:0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa",
+          "eth:0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E",
+          "eth:0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
+          "eth:0xe3B95d0143956A8E643FA29a0795FC4162A41F69"
         ],
         "$pastUpgrades": [
           [
             "2023-05-15T08:53:47.000Z",
             "0x91a1946de8485c208882fb51238a8771821502849535a638f25651804f3ef0d4",
-            ["0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
+            ["eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab"]
           ]
         ],
         "$threshold": 5,
         "$upgradeCount": 1,
         "deployedAtBlock": 17264123,
-        "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+        "F_ADDR": "eth:0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
         "getBridgeValidatorsInterfacesVersion": {
           "major": 2,
           "minor": 3,
           "patch": 0
         },
-        "implementation": "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
+        "implementation": "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab",
         "isInitialized": true,
-        "owner": "0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f",
-        "upgradeabilityOwner": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+        "owner": "eth:0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f",
+        "upgradeabilityOwner": "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585",
         "validatorCount": 8,
         "version": 1
       },
@@ -122,17 +122,17 @@
         }
       },
       "implementationNames": {
-        "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "EternalStorageProxy",
-        "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": "BridgeValidators"
+        "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": "EternalStorageProxy",
+        "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": "BridgeValidators"
       }
     },
     {
-      "address": "0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539",
+      "address": "eth:0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f",
+      "address": "eth:0x3eA02EF8A3956f69D23B5B30327E0F5e352E513f",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -145,23 +145,23 @@
       ]
     },
     {
-      "address": "0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef",
+      "address": "eth:0x4fD0aaa7506f3d9cB8274bdB946Ec42A1b8751Ef",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E",
+      "address": "eth:0x5ECfE77502317F3677f23C3b8Ab17929ACE3D74E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
+      "address": "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "WETHOmnibridgeRouter",
-      "address": "0x8AC4ae65b3656e26dC4e0e69108B392283350f55",
+      "address": "eth:0x8AC4ae65b3656e26dC4e0e69108B392283350f55",
       "type": "Contract",
       "sourceHashes": [
         "0x55a672aa33e48959212349f94f7522a8a142bc17931854f79636d4564226b7b3"
@@ -171,16 +171,16 @@
       "sinceBlock": 17264181,
       "values": {
         "$immutable": true,
-        "bridge": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
-        "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
+        "bridge": "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "owner": "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6"
       },
       "implementationNames": {
-        "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": "WETHOmnibridgeRouter"
+        "eth:0x8AC4ae65b3656e26dC4e0e69108B392283350f55": "WETHOmnibridgeRouter"
       }
     },
     {
       "name": "TokenFactory",
-      "address": "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02",
+      "address": "eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02",
       "type": "Contract",
       "sourceHashes": [
         "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
@@ -191,16 +191,16 @@
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
-        "owner": "0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
-        "tokenImage": "0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
+        "owner": "eth:0x610094aB29D1bf683719d2Ce3495d8635A47bfc6",
+        "tokenImage": "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27"
       },
       "implementationNames": {
-        "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02": "TokenFactory"
+        "eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02": "TokenFactory"
       }
     },
     {
       "name": "PermittableToken",
-      "address": "0xA1077a294dDE1B09bB078844df40758a5D0f9a27",
+      "address": "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27",
       "type": "Contract",
       "sourceHashes": [
         "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
@@ -210,13 +210,13 @@
       "sinceBlock": 17264179,
       "values": {
         "$immutable": true,
-        "bridgeContract": "0x0000000000000000000000000000000000000000",
+        "bridgeContract": "eth:0x0000000000000000000000000000000000000000",
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0xad71d07d5b632f18e5bca5b4d7888116e184d3172add7146fdfded9619682bd1",
         "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
         "mintingFinished": false,
         "name": "",
-        "owner": "0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539",
+        "owner": "eth:0x30e22ab6e6B576e6A9c5dD73191237a9A5c72539",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "PERMIT_TYPEHASH_LEGACY": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "",
@@ -224,12 +224,12 @@
         "version": "1"
       },
       "implementationNames": {
-        "0xA1077a294dDE1B09bB078844df40758a5D0f9a27": "PermittableToken"
+        "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27": "PermittableToken"
       }
     },
     {
       "name": "ForeignAMB",
-      "address": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+      "address": "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
       "type": "Contract",
       "sourceHashes": [
         "0xc2d647dd43d1a5c348b27b8b2bd671627d194c85cb69a865e67ae8dbdf38b705",
@@ -239,13 +239,13 @@
       "sinceTimestamp": 1684140863,
       "sinceBlock": 17264125,
       "values": {
-        "$admin": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
-        "$implementation": "0xe98699957d3504aCD57ffF861E4b77b57eB02467",
+        "$admin": "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+        "$implementation": "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467",
         "$pastUpgrades": [
           [
             "2023-05-15T08:54:59.000Z",
             "0x5d1c2bd55b6e6af2311067e52dd8a45a69550547c71593ad890f1d8e63caaf04",
-            ["0xe98699957d3504aCD57ffF861E4b77b57eB02467"]
+            ["eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467"]
           ]
         ],
         "$upgradeCount": 1,
@@ -256,33 +256,33 @@
         "gasPrice": 100000000000,
         "getBridgeInterfacesVersion": { "major": 6, "minor": 2, "patch": 0 },
         "getBridgeMode": "0x2544fbb9",
-        "implementation": "0xe98699957d3504aCD57ffF861E4b77b57eB02467",
+        "implementation": "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467",
         "isInitialized": true,
         "maxGasPerTx": 2000000,
         "messageId": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "messageSender": "0x0000000000000000000000000000000000000000",
+        "messageSender": "eth:0x0000000000000000000000000000000000000000",
         "messageSourceChainId": 0,
-        "owner": "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
+        "owner": "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
         "requiredBlockConfirmations": 65,
         "requiredSignatures": 5,
         "sourceChainId": 1,
         "transactionHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "upgradeabilityOwner": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
-        "validatorContract": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+        "upgradeabilityOwner": "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+        "validatorContract": "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
         "version": 1
       },
       "implementationNames": {
-        "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": "EternalStorageProxy",
-        "0xe98699957d3504aCD57ffF861E4b77b57eB02467": "ForeignAMB"
+        "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": "EternalStorageProxy",
+        "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467": "ForeignAMB"
       }
     },
     {
-      "address": "0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
+      "address": "eth:0xd4Aa3dFe78D2B77C5A5618B9E85D1141f2b48fbD",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
+      "address": "eth:0xDf5d165A7EB95D26355c56d53799B7da1240e585",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -300,27 +300,27 @@
       ]
     },
     {
-      "address": "0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa",
+      "address": "eth:0xe158313e347ED8d52e9FBfF7aE5000aEAbDDbeDa",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xe3B95d0143956A8E643FA29a0795FC4162A41F69",
+      "address": "eth:0xe3B95d0143956A8E643FA29a0795FC4162A41F69",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0",
+      "address": "eth:0xf6ab64f43F3f9eB88c9D99D119F26Ece13843FC0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xfB18Da3bCA8057eB05aab6e77a32925949093533",
+      "address": "eth:0xfB18Da3bCA8057eB05aab6e77a32925949093533",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
+      "address": "eth:0xFE9a08BB3ce6C1946c40b8767feF2F97B400dd2C",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -563,5 +563,5 @@
   "usedTemplates": {
     "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019"
   },
-  "permissionsConfigHash": "0x03d138962567f4331ef16f0ad35d0b037cfb8086e5d4eb3fffa8b67772bf4be2"
+  "permissionsConfigHash": "0xe6ef5c2ab20a89ebeba4453204abe6823850236b3544ca6fe741bf5f676be58d"
 }

@@ -1,11 +1,11 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
+import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
@@ -17,10 +17,15 @@ import { ProjectCostsChartStats } from './ProjectCostsChartStats'
 interface Props {
   milestones: Milestone[]
   projectId: string
+  defaultRange: CostsTimeRange
 }
 
-export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('1y')
+export function ProjectCostsChart({
+  milestones,
+  projectId,
+  defaultRange,
+}: Props) {
+  const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const [showDataPosted, setShowDataPosted] = useState(true)
 

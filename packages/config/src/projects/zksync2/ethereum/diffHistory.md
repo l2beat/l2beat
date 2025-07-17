@@ -1,3 +1,800 @@
+Generated with discovered.json: 0x73a46df522f0ae82799388d1a2a5d4f341871a16
+
+# Diff at Mon, 14 Jul 2025 12:47:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22779919
+- current block number: 22779919
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22779919 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+      address:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "eth:0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      values.owner:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.securityCouncil:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x0b622A2061EaccAE1c664eBC3E868b8438e03F61:
+-        "Governance"
+      implementationNames.eth:0x0b622A2061EaccAE1c664eBC3E868b8438e03F61:
++        "Governance"
+    }
+```
+
+```diff
+    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
+    +++ description: None
+      address:
+-        "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
++        "eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
+    }
+```
+
+```diff
+    EOA  (0x30066439887C0a509Cb38E45c9262E6924a29BbD) {
+    +++ description: None
+      address:
+-        "0x30066439887C0a509Cb38E45c9262E6924a29BbD"
++        "eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD"
+    }
+```
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      address:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.$implementation.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$implementation.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$implementation.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$implementation.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$pastUpgrades.0.2.0:
+-        "0xC48d496459e1358D055a79173BEA41efb7449028"
++        "eth:0xC48d496459e1358D055a79173BEA41efb7449028"
+      values.$pastUpgrades.0.2.1:
+-        "0xc30af84A6aFF43D5fd06FEdA6bA20BdfeD539F6C"
++        "eth:0xc30af84A6aFF43D5fd06FEdA6bA20BdfeD539F6C"
+      values.$pastUpgrades.0.2.2:
+-        "0x2EA0CFB9C942058ee5A84411EF2E37C6DE5bfe5c"
++        "eth:0x2EA0CFB9C942058ee5A84411EF2E37C6DE5bfe5c"
+      values.$pastUpgrades.0.2.3:
+-        "0x98E900Eb2e5fdE9786f736e86d6BFBfDb3E4683b"
++        "eth:0x98E900Eb2e5fdE9786f736e86d6BFBfDb3E4683b"
+      values.$pastUpgrades.0.2.4:
+-        "0xa7E8a8F71c3cC43946601CC99997f8Cd6828a9B9"
++        "eth:0xa7E8a8F71c3cC43946601CC99997f8Cd6828a9B9"
+      values.$pastUpgrades.1.2.0:
+-        "0xC48d496459e1358D055a79173BEA41efb7449028"
++        "eth:0xC48d496459e1358D055a79173BEA41efb7449028"
+      values.$pastUpgrades.1.2.1:
+-        "0xc30af84A6aFF43D5fd06FEdA6bA20BdfeD539F6C"
++        "eth:0xc30af84A6aFF43D5fd06FEdA6bA20BdfeD539F6C"
+      values.$pastUpgrades.1.2.2:
+-        "0x2EA0CFB9C942058ee5A84411EF2E37C6DE5bfe5c"
++        "eth:0x2EA0CFB9C942058ee5A84411EF2E37C6DE5bfe5c"
+      values.$pastUpgrades.1.2.3:
+-        "0x98E900Eb2e5fdE9786f736e86d6BFBfDb3E4683b"
++        "eth:0x98E900Eb2e5fdE9786f736e86d6BFBfDb3E4683b"
+      values.$pastUpgrades.1.2.4:
+-        "0xa7E8a8F71c3cC43946601CC99997f8Cd6828a9B9"
++        "eth:0xa7E8a8F71c3cC43946601CC99997f8Cd6828a9B9"
+      values.$pastUpgrades.2.2.0:
+-        "0xC48d496459e1358D055a79173BEA41efb7449028"
++        "eth:0xC48d496459e1358D055a79173BEA41efb7449028"
+      values.$pastUpgrades.2.2.1:
+-        "0xc30af84A6aFF43D5fd06FEdA6bA20BdfeD539F6C"
++        "eth:0xc30af84A6aFF43D5fd06FEdA6bA20BdfeD539F6C"
+      values.$pastUpgrades.2.2.2:
+-        "0x2EA0CFB9C942058ee5A84411EF2E37C6DE5bfe5c"
++        "eth:0x2EA0CFB9C942058ee5A84411EF2E37C6DE5bfe5c"
+      values.$pastUpgrades.2.2.3:
+-        "0x98E900Eb2e5fdE9786f736e86d6BFBfDb3E4683b"
++        "eth:0x98E900Eb2e5fdE9786f736e86d6BFBfDb3E4683b"
+      values.$pastUpgrades.2.2.4:
+-        "0xa7E8a8F71c3cC43946601CC99997f8Cd6828a9B9"
++        "eth:0xa7E8a8F71c3cC43946601CC99997f8Cd6828a9B9"
+      values.$pastUpgrades.3.2.0:
+-        "0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc"
++        "eth:0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc"
+      values.$pastUpgrades.3.2.1:
+-        "0x6df4A6D71622860dcc64C1FD9645d9a5BE96f088"
++        "eth:0x6df4A6D71622860dcc64C1FD9645d9a5BE96f088"
+      values.$pastUpgrades.3.2.2:
+-        "0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE"
++        "eth:0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE"
+      values.$pastUpgrades.3.2.3:
+-        "0xc796A402E1B26eCd2cd38F23e05A2f904504ec89"
++        "eth:0xc796A402E1B26eCd2cd38F23e05A2f904504ec89"
+      values.$pastUpgrades.3.2.4:
+-        "0x389a081BCf20e5803288183b929F08458F1d863D"
++        "eth:0x389a081BCf20e5803288183b929F08458F1d863D"
+      values.$pastUpgrades.4.2.0:
+-        "0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc"
++        "eth:0xF1fB730b7f8E8391B27B91f8f791e10E4a53CEcc"
+      values.$pastUpgrades.4.2.1:
+-        "0x6df4A6D71622860dcc64C1FD9645d9a5BE96f088"
++        "eth:0x6df4A6D71622860dcc64C1FD9645d9a5BE96f088"
+      values.$pastUpgrades.4.2.2:
+-        "0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE"
++        "eth:0x2a2d6010202B93E727b61a60dfC1d5CF2707c1CE"
+      values.$pastUpgrades.4.2.3:
+-        "0x389a081BCf20e5803288183b929F08458F1d863D"
++        "eth:0x389a081BCf20e5803288183b929F08458F1d863D"
+      values.$pastUpgrades.4.2.4:
+-        "0xb2097DBe4410B538a45574B1FCD767E2303c7867"
++        "eth:0xb2097DBe4410B538a45574B1FCD767E2303c7867"
+      values.$pastUpgrades.5.2.0:
+-        "0x9B1A10bDC4A40219544C835263b2cA3f3e689693"
++        "eth:0x9B1A10bDC4A40219544C835263b2cA3f3e689693"
+      values.$pastUpgrades.5.2.1:
+-        "0xA389bF185B301C8e20E79E3098e71399914035dF"
++        "eth:0xA389bF185B301C8e20E79E3098e71399914035dF"
+      values.$pastUpgrades.5.2.2:
+-        "0xf002dFBc52C250a2E14C148041aDB8567a0B19BD"
++        "eth:0xf002dFBc52C250a2E14C148041aDB8567a0B19BD"
+      values.$pastUpgrades.5.2.3:
+-        "0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D"
++        "eth:0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D"
+      values.$pastUpgrades.5.2.4:
+-        "0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD"
++        "eth:0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD"
+      values.$pastUpgrades.6.2.0:
+-        "0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0"
++        "eth:0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0"
+      values.$pastUpgrades.6.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "eth:0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.6.2.2:
+-        "0x5349E94435Cc9Cab9FfB40A492DA46935052733A"
++        "eth:0x5349E94435Cc9Cab9FfB40A492DA46935052733A"
+      values.$pastUpgrades.6.2.3:
+-        "0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A"
++        "eth:0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A"
+      values.$pastUpgrades.6.2.4:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "eth:0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.7.2.0:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
++        "eth:0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.7.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "eth:0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.7.2.2:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "eth:0x62aA95ac4740A367746A664C4C69034d52E968EF"
+      values.$pastUpgrades.7.2.3:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "eth:0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
+      values.$pastUpgrades.7.2.4:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "eth:0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.8.2.0:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
++        "eth:0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.8.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "eth:0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.8.2.2:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "eth:0x62aA95ac4740A367746A664C4C69034d52E968EF"
+      values.$pastUpgrades.8.2.3:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "eth:0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
+      values.$pastUpgrades.8.2.4:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "eth:0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.9.2.0:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
++        "eth:0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.9.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "eth:0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.9.2.2:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "eth:0x62aA95ac4740A367746A664C4C69034d52E968EF"
+      values.$pastUpgrades.9.2.3:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "eth:0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
+      values.$pastUpgrades.9.2.4:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "eth:0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.10.2.0:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
++        "eth:0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.10.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "eth:0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.10.2.2:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "eth:0x62aA95ac4740A367746A664C4C69034d52E968EF"
+      values.$pastUpgrades.10.2.3:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "eth:0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
+      values.$pastUpgrades.10.2.4:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "eth:0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.11.2.0:
+-        "0x409560DE546e057ce5bD5dB487EdF2bB5E785baB"
++        "eth:0x409560DE546e057ce5bD5dB487EdF2bB5E785baB"
+      values.$pastUpgrades.11.2.1:
+-        "0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4"
++        "eth:0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4"
+      values.$pastUpgrades.11.2.2:
+-        "0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08"
++        "eth:0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08"
+      values.$pastUpgrades.11.2.3:
+-        "0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"
++        "eth:0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"
+      values.$pastUpgrades.12.2.0:
+-        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
++        "eth:0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
+      values.$pastUpgrades.12.2.1:
+-        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
++        "eth:0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
+      values.$pastUpgrades.12.2.2:
+-        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
++        "eth:0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
+      values.$pastUpgrades.12.2.3:
+-        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
++        "eth:0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
+      values.$pastUpgrades.13.2.0:
+-        "0xE6426c725cB507168369c10284390E59d91eC821"
++        "eth:0xE6426c725cB507168369c10284390E59d91eC821"
+      values.$pastUpgrades.13.2.1:
+-        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
++        "eth:0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
+      values.$pastUpgrades.13.2.2:
+-        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
++        "eth:0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
+      values.$pastUpgrades.13.2.3:
+-        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
++        "eth:0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
+      values.$pastUpgrades.14.2.0:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "eth:0x230214F0224C7E0485f348a79512ad00514DB1F7"
+      values.$pastUpgrades.14.2.1:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "eth:0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
+      values.$pastUpgrades.14.2.2:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "eth:0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
+      values.$pastUpgrades.14.2.3:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "eth:0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
+      values.$pastUpgrades.15.2.0:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "eth:0x230214F0224C7E0485f348a79512ad00514DB1F7"
+      values.$pastUpgrades.15.2.1:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "eth:0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
+      values.$pastUpgrades.15.2.2:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "eth:0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
+      values.$pastUpgrades.15.2.3:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "eth:0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
+      values.$pastUpgrades.16.2.0:
+-        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
++        "eth:0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.$pastUpgrades.16.2.1:
+-        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
++        "eth:0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.$pastUpgrades.16.2.2:
+-        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
++        "eth:0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.$pastUpgrades.16.2.3:
+-        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
++        "eth:0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.$pastUpgrades.17.2.0:
+-        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
++        "eth:0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.$pastUpgrades.17.2.1:
+-        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
++        "eth:0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.$pastUpgrades.17.2.2:
+-        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
++        "eth:0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.$pastUpgrades.17.2.3:
+-        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
++        "eth:0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.$pastUpgrades.18.2.0:
+-        "0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
++        "eth:0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a"
+      values.$pastUpgrades.18.2.1:
+-        "0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
++        "eth:0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9"
+      values.$pastUpgrades.18.2.2:
+-        "0x5575218cECd370E1d630d1AdB03c254B0B376821"
++        "eth:0x5575218cECd370E1d630d1AdB03c254B0B376821"
+      values.$pastUpgrades.18.2.3:
+-        "0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
++        "eth:0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"
+      values.$pastUpgrades.19.2.0:
+-        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
++        "eth:0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
+      values.$pastUpgrades.19.2.1:
+-        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
++        "eth:0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
+      values.$pastUpgrades.19.2.2:
+-        "0x36b026c39125964D99596CE302866B5A59E4dE27"
++        "eth:0x36b026c39125964D99596CE302866B5A59E4dE27"
+      values.$pastUpgrades.19.2.3:
+-        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
++        "eth:0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+      values.$pastUpgrades.20.2.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
+      values.$pastUpgrades.20.2.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
+      values.$pastUpgrades.20.2.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
+      values.$pastUpgrades.20.2.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+      values.$pastUpgrades.21.2.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$pastUpgrades.21.2.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$pastUpgrades.21.2.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$pastUpgrades.21.2.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facetAddresses.0:
+-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
++        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.facetAddresses.1:
+-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
++        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.facetAddresses.2:
+-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
++        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.facetAddresses.3:
+-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
++        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facets.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
+-        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
+-        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
+-        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
+-        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.facets.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
++++ severity: HIGH
+      values.getAdmin:
+-        "0x2cf3bD6a9056b39999F3883955E183F655345063"
++        "eth:0x2cf3bD6a9056b39999F3883955E183F655345063"
+      values.getBaseToken:
+-        "0x0000000000000000000000000000000000000001"
++        "eth:0x0000000000000000000000000000000000000001"
+      values.getBridgehub:
+-        "0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      values.getChainTypeManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "0x72213dfe8CA61B0A782970dCFebFb877778f9119"
++        "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119"
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
++        "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
++++ severity: HIGH
+      values.getPendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getSettlementLayer:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.
++++ severity: HIGH
+      values.getTransactionFilterer:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getVerifier:
+-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      values.validators.0:
+-        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
++        "eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
+      values.validators.1:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      values.validators.2:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      implementationNames.0x32400084C286CF3E17e7B677ea9583e60a000324:
+-        "DiamondProxy"
+      implementationNames.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
+-        "AdminFacet"
+      implementationNames.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
+-        "GettersFacet"
+      implementationNames.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
+-        "MailboxFacet"
+      implementationNames.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
+-        "ExecutorFacet"
+      implementationNames.eth:0x32400084C286CF3E17e7B677ea9583e60a000324:
++        "DiamondProxy"
+      implementationNames.eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        "AdminFacet"
+      implementationNames.eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        "GettersFacet"
+      implementationNames.eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        "MailboxFacet"
+      implementationNames.eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        "ExecutorFacet"
+    }
+```
+
+```diff
+    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
+    +++ description: None
+      address:
+-        "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
++        "eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989) {
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+      address:
+-        "0x41527B2d03844dB6b0945f25702cB958b6d55989"
++        "eth:0x41527B2d03844dB6b0945f25702cB958b6d55989"
+      values.$admin:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.$implementation:
+-        "0x9a810469F4a451Ebb7ef53672142053b4971587c"
++        "eth:0x9a810469F4a451Ebb7ef53672142053b4971587c"
+      values.$pastUpgrades.0.2.0:
+-        "0x9a810469F4a451Ebb7ef53672142053b4971587c"
++        "eth:0x9a810469F4a451Ebb7ef53672142053b4971587c"
+      values.l1Token:
+-        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
++        "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.l2Bridge:
+-        "0xE1D6A50E7101c8f8db77352897Ee3f1AC53f782B"
++        "eth:0xE1D6A50E7101c8f8db77352897Ee3f1AC53f782B"
+      values.l2Token:
+-        "0x703b52F2b28fEbcB60E1372858AF5b18849FE867"
++        "eth:0x703b52F2b28fEbcB60E1372858AF5b18849FE867"
+      values.proxy__getAdmin:
+-        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
++        "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+      values.proxy__getImplementation:
+-        "0x9a810469F4a451Ebb7ef53672142053b4971587c"
++        "eth:0x9a810469F4a451Ebb7ef53672142053b4971587c"
+      values.zkSync:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      implementationNames.0x41527B2d03844dB6b0945f25702cB958b6d55989:
+-        "OssifiableProxy"
+      implementationNames.0x9a810469F4a451Ebb7ef53672142053b4971587c:
+-        "L1ERC20Bridge"
+      implementationNames.eth:0x41527B2d03844dB6b0945f25702cB958b6d55989:
++        "OssifiableProxy"
+      implementationNames.eth:0x9a810469F4a451Ebb7ef53672142053b4971587c:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579) {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+      address:
+-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      description:
+-        "A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type."
++        "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type."
+      values.FFLONK_VERIFIER:
+-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
++        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
+      values.PLONK_VERIFIER:
+-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
++        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
+      implementationNames.0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579:
+-        "DualVerifier"
+      implementationNames.eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579:
++        "DualVerifier"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+      address:
+-        "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063"
++        "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063"
+      values.$admin:
+-        "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      values.$implementation:
+-        "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
++        "eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
+      values.$pastUpgrades.0.2.0:
+-        "0x22bE40122BA952b81c50bcaa86F84418ff623391"
++        "eth:0x22bE40122BA952b81c50bcaa86F84418ff623391"
+      values.$pastUpgrades.1.2.0:
+-        "0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84"
++        "eth:0x7e5E66B01fe43293545eaB98ec4D31784A5Efa84"
+      values.$pastUpgrades.2.2.0:
+-        "0x38ABF296EE79621A225AA85086853b0dA3225D2F"
++        "eth:0x38ABF296EE79621A225AA85086853b0dA3225D2F"
+      values.$pastUpgrades.3.2.0:
+-        "0x7FB17101A744e156e63d5fF6A4775fb48756577c"
++        "eth:0x7FB17101A744e156e63d5fF6A4775fb48756577c"
+      values.$pastUpgrades.4.2.0:
+-        "0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"
++        "eth:0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"
+      values.$pastUpgrades.5.2.0:
+-        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
++        "eth:0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
+      values.$pastUpgrades.6.2.0:
+-        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
++        "eth:0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
+      values.$pastUpgrades.7.2.0:
+-        "0x8191975d8B0851C7f0740918896Cf298c09aA05E"
++        "eth:0x8191975d8B0851C7f0740918896Cf298c09aA05E"
+      values.$pastUpgrades.8.2.0:
+-        "0x8D231E4097C3cb200Ed62134B466AA615cE60336"
++        "eth:0x8D231E4097C3cb200Ed62134B466AA615cE60336"
+      values.$pastUpgrades.9.2.0:
+-        "0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
++        "eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142"
+      values.L1_ASSET_ROUTER:
+-        "0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      values.L1_NATIVE_TOKEN_VAULT:
+-        "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "eth:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      values.L1_NULLIFIER:
+-        "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "eth:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      values.l2Bridge:
+-        "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102"
++        "eth:0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102"
+      values.l2TokenBeacon:
+-        "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6"
++        "eth:0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6"
+      implementationNames.0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142:
+-        "L1ERC20Bridge"
+      implementationNames.eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x2Dd3329A2Ae9de60Da02828A34f0cB6d6aff9142:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+      address:
+-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
++        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1"
+      implementationNames.0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1:
+-        "L1VerifierPlonk"
+      implementationNames.eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1:
++        "L1VerifierPlonk"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      address:
+-        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      values.owner:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.stateTransitionManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.validatorsVTL.0:
+-        "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
++        "eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
+      values.validatorsVTL.1:
+-        "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
++        "eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+      implementationNames.0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E:
++        "ValidatorTimelock"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      address:
+-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+      values.chainTypeManager:
+-        "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      values.owner:
+-        "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.validatorsVTL.0:
+-        "0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2"
++        "eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2"
+      values.validatorsVTL.1:
+-        "0x30066439887C0a509Cb38E45c9262E6924a29BbD"
++        "eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD"
+      implementationNames.0x8c0Bfc04AdA21fd496c55B8C50331f904306F564:
+-        "ValidatorTimelock"
+      implementationNames.eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564:
++        "ValidatorTimelock"
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+      address:
+-        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
++        "eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
+      values.constructorArgs._initialOwner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "eth:0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      values.constructorArgs._zkSyncContract:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.constructorArgs._validators.0:
+-        "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
++        "eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+      values.constructorArgs._validators.1:
+-        "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
++        "eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
+      values.owner:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "eth:0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.zkSyncContract:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      implementationNames.0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD:
+-        "ValidatorTimelock"
+      implementationNames.eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD:
++        "ValidatorTimelock"
+    }
+```
+
+```diff
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b) {
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+      address:
+-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
++        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b"
+      implementationNames.0xD5dBE903F5382B052317D326FA1a7B63710C6a5b:
+-        "L1VerifierFflonk"
+      implementationNames.eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b:
++        "L1VerifierFflonk"
+    }
+```
+
+```diff
+    EOA  (0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2) {
+    +++ description: None
+      address:
+-        "0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2"
++        "eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989)
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
 Generated with discovered.json: 0xe15f99e7011bfc0f2182bd5f670959b1ccbc8eb4
 
 # Diff at Fri, 04 Jul 2025 12:19:31 GMT:

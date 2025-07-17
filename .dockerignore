@@ -15,3 +15,10 @@ node_modules
 # Docker
 .dockerignore
 Dockerfile.*
+
+# Disco cache (for local development)
+packages/config/cache/**
+
+# env
+.env
+.env.*

@@ -1,6 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-import { getChainShortName } from '../../config/config.discovery'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -13,12 +11,11 @@ import type { DiscoveryBlockNumbers } from './modelPermissions'
 // it matches the historical format of ReceivedPermission.
 // This makes the new Clingo modelling a drop-in replacement for the old one
 // and gives certainty that nothing has been broken.
-export async function combinePermissionsIntoDiscovery(
+export function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
   options: { skipDependentDiscoveries?: boolean } = {},
 ) {
-  const shortChain = getChainShortName(discovery.chain)
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,
@@ -43,7 +40,7 @@ export async function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${shortChain}:${entry.address}`) &&
+          p.receiver.startsWith(entry.address) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -53,7 +50,7 @@ export async function combinePermissionsIntoDiscovery(
               sortReceivedPermissions(
                 ultimatePermissionsForEntry.map((p) => {
                   // Remove some fields for backwards compatibility
-                  const { receiver, isFinal, ...rest } = p
+                  const { receiver: _, isFinal: __, ...rest } = p
                   return rest
                 }),
               ),
@@ -62,7 +59,7 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          ChainSpecificAddress(`${shortChain}:${entry.address}`),
+          entry.address,
         )
           ? true
           : undefined

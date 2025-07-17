@@ -2,8 +2,8 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
 import type { TrackedTxId } from '@l2beat/shared'
 import type { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
-import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import type { TrackedTxResult } from '../../types/model'
+import type { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 
 export class L2CostsUpdater implements TxUpdaterInterface {
   type: TrackedTxsConfigType = 'l2costs'
@@ -30,7 +30,7 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     await this.db.l2Cost.deleteFromById(id, fromInclusive)
   }
 
-  async transform(transactions: TrackedTxResult[]): Promise<L2CostRecord[]> {
+  transform(transactions: TrackedTxResult[]): L2CostRecord[] {
     return transactions.map((tx) => ({
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,

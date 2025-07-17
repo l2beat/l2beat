@@ -1,4 +1,4 @@
-import { UnixTime, pluralize } from '@l2beat/shared-pure'
+import { pluralize, UnixTime } from '@l2beat/shared-pure'
 
 export function LivenessDurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds

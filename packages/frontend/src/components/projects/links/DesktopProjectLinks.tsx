@@ -18,25 +18,16 @@ import type { ProjectLink } from './types'
 
 interface Props {
   projectLinks: ProjectLink[]
-  variant: 'primary' | 'header'
   discoUiHref?: string
 }
 
-export function DesktopProjectLinks({
-  projectLinks,
-  variant,
-  discoUiHref,
-}: Props) {
+export function DesktopProjectLinks({ projectLinks, discoUiHref }: Props) {
   return (
     <NavigationMenu asChild>
       <div>
         <NavigationMenuList>
           {projectLinks.map((link) => (
-            <ProjectLinkItem
-              key={link.name}
-              projectLink={link}
-              variant={variant}
-            />
+            <ProjectLinkItem key={link.name} projectLink={link} />
           ))}
           {discoUiHref && <DiscoUiLink href={discoUiHref} />}
         </NavigationMenuList>
@@ -45,13 +36,7 @@ export function DesktopProjectLinks({
   )
 }
 
-function ProjectLinkItem({
-  projectLink,
-  variant,
-}: {
-  projectLink: ProjectLink
-  variant: 'primary' | 'header'
-}) {
+function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
       <NavigationMenuItem>
@@ -61,7 +46,6 @@ function ProjectLinkItem({
           target="_blank"
           className={cn(
             navigationMenuTriggerStyle(),
-            variant === 'header' && 'bg-header-secondary',
             'ring-brand ring-inset focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
@@ -74,27 +58,19 @@ function ProjectLinkItem({
     )
   }
 
-  return <MultiProjectLink projectLink={projectLink} variant={variant} />
+  return <MultiProjectLink projectLink={projectLink} />
 }
 
-function MultiProjectLink({
-  projectLink,
-  variant,
-}: { projectLink: ProjectLink; variant: 'primary' | 'header' }) {
+function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
-        className={cn(
-          'ring-brand ring-inset focus:ring-2',
-          variant === 'header' && 'bg-header-secondary',
-        )}
+        className={cn('ring-brand ring-inset focus:ring-2')}
       >
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
-      <NavigationMenuContent
-        className={cn(variant === 'header' && 'bg-header-secondary')}
-      >
+      <NavigationMenuContent>
         {projectLink.links.map((link) => {
           const parsedSocial =
             projectLink.name === 'Social' ? parseSocial(link) : undefined
@@ -106,10 +82,7 @@ function MultiProjectLink({
               target="_blank"
               className={cn(
                 navigationMenuTriggerStyle(),
-                variant === 'primary' &&
-                  'bg-surface-primary hover:bg-surface-secondary focus:bg-surface-secondary',
-                variant === 'header' &&
-                  'bg-header-secondary hover:bg-surface-tertiary focus:bg-surface-tertiary',
+                'bg-surface-primary hover:bg-surface-secondary focus:bg-surface-secondary',
                 'flex w-full justify-start gap-1.5',
               )}
             >

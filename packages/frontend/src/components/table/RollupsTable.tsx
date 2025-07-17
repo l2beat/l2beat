@@ -23,7 +23,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
         <BasicTableRow
           row={ethereumEntry}
           table={props.table}
-          className="!border-b-0"
+          className="border-b-0!"
         />
       )}
       {stageTwoAndOne.length !== 0 && (
@@ -34,7 +34,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
           key={row.id}
           row={row}
           table={props.table}
-          className={cn(i === stageTwoAndOne.length - 1 && '!border-b-0')}
+          className={cn(i === stageTwoAndOne.length - 1 && 'border-b-0!')}
         />
       ))}
       {stageZero.length !== 0 && <RowDivider>Stage 0 projects</RowDivider>}
@@ -43,7 +43,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
           key={row.id}
           row={row}
           table={props.table}
-          className={cn(i === stageZero.length - 1 && '!border-b-0')}
+          className={cn(i === stageZero.length - 1 && 'border-b-0!')}
         />
       ))}
       {rest.length !== 0 && <RowDivider>Under review projects</RowDivider>}
@@ -52,7 +52,7 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
           key={row.id}
           row={row}
           table={props.table}
-          className={cn(i === rest.length - 1 && '!border-b-0')}
+          className={cn(i === rest.length - 1 && 'border-b-0!')}
         />
       ))}
     </BasicTable>
@@ -62,7 +62,10 @@ export function RollupsTable<T extends BasicEntry>(props: BasicTableProps<T>) {
 function RowDivider({
   children,
   className,
-}: { children: React.ReactNode; className?: string }) {
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <tr className="group/divider">
       <td colSpan={100} className={cn('group-first/divider:pt-1', className)}>

@@ -3,14 +3,16 @@ import { formatPercent } from '~/utils/calculatePercentageChange'
 
 export function MarketShare({
   marketShare,
-}: { marketShare: number | undefined }) {
+}: {
+  marketShare: number | undefined
+}) {
   if (marketShare === undefined) {
     return <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
   }
 
   return (
-    <div className="font-medium text-[--project-primary] text-xs">
-      {formatPercent(marketShare)} market share
+    <div className="font-medium text-(--project-primary) text-xs">
+      {formatPercent(marketShare)} scaling market share
     </div>
   )
 }

@@ -8,19 +8,17 @@ import type {
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
-import {
-  isActivityChartDataEmpty,
-  isTvsChartDataEmpty,
-} from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
+import { getActivitySection } from '~/utils/project/activity/getActivitySection'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
+import { getCostsSection } from '~/utils/project/costs/getCostsSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -31,10 +29,10 @@ import { getOperatorSection } from '~/utils/project/technology/getOperatorSectio
 import { getOtherConsiderationsSection } from '~/utils/project/technology/getOtherConsiderationsSection'
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
-import { getTrackedTransactions } from '~/utils/project/tracked-txs/getTrackedTransactions'
+import { getStackedTvsSection } from '~/utils/project/tvs/getStackedTvsSection'
 import {
-  type UnderReviewStatus,
   getUnderReviewStatus,
+  type UnderReviewStatus,
 } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
@@ -51,6 +49,7 @@ import { getScalingRosette } from './getScalingRosetteValues'
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
+  shortName: string | undefined
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
@@ -131,36 +130,26 @@ export async function getScalingProjectEntry(
     projectsChangeReport,
     activityProjectStats,
     tvsStats,
-    tvsChartData,
-    activityChartData,
-    costsChartData,
     tokens,
     liveness,
     daSolution,
     contractUtils,
+    stackedTvsSection,
+    activitySection,
+    costsSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    helpers.tvs.chart.fetch({
-      range: { type: '1y' },
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-    }),
-    helpers.activity.chart.fetch({
-      range: { type: '1y' },
-      filter: { type: 'projects', projectIds: [project.id] },
-    }),
-    project.scalingInfo.layer === 'layer2'
-      ? helpers.costs.projectChart.fetch({
-          range: '1y',
-          projectId: project.id,
-        })
-      : undefined,
     getTokensForProject(project),
     getLiveness(project.id),
     getScalingDaSolution(project),
     getContractUtils(),
+    getStackedTvsSection(helpers, project),
+    getActivitySection(helpers, project),
+    project.scalingInfo.layer === 'layer2'
+      ? getCostsSection(helpers, project)
+      : undefined,
   ])
   const projectLiveness = liveness[project.id]
 
@@ -228,6 +217,7 @@ export async function getScalingProjectEntry(
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
+    shortName: project.shortName,
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
@@ -291,11 +281,7 @@ export async function getScalingProjectEntry(
         }
       : undefined
 
-  if (
-    !project.isUpcoming &&
-    !isTvsChartDataEmpty(tvsChartData) &&
-    tvsProjectStats
-  ) {
+  if (!project.isUpcoming && stackedTvsSection && tvsProjectStats) {
     sections.push({
       type: 'StackedTvsSection',
       props: {
@@ -307,11 +293,12 @@ export async function getScalingProjectEntry(
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
+        ...stackedTvsSection,
       },
     })
   }
 
-  if (!isActivityChartDataEmpty(activityChartData)) {
+  if (activitySection) {
     sections.push({
       type: 'ActivitySection',
       props: {
@@ -321,17 +308,12 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
         projectName: project.name,
+        ...activitySection,
       },
     })
   }
 
-  const trackedTransactions = getTrackedTransactions(project, 'l2costs')
-  if (
-    !project.isUpcoming &&
-    trackedTransactions &&
-    costsChartData &&
-    costsChartData.chart.length > 0
-  ) {
+  if (!project.isUpcoming && costsSection) {
     sections.push({
       type: 'CostsSection',
       props: {
@@ -339,7 +321,7 @@ export async function getScalingProjectEntry(
         title: 'Onchain costs',
         projectId: project.id,
         milestones: sortedMilestones,
-        trackedTransactions,
+        ...costsSection,
       },
     })
   }
@@ -581,7 +563,6 @@ export async function getScalingProjectEntry(
           'upgrades-and-governance',
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
-        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })

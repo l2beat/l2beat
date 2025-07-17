@@ -1,8 +1,8 @@
-import type { ProjectUnverifiedContract } from '@l2beat/config'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 
 export function getIsProjectVerified(
-  becameVerifiedContracts: ProjectUnverifiedContract[],
+  becameVerifiedContracts: ChainSpecificAddress[],
   changes: ProjectChanges | undefined,
 ) {
   if (becameVerifiedContracts.length === 0) {
@@ -13,7 +13,11 @@ export function getIsProjectVerified(
     return false
   }
 
-  return becameVerifiedContracts.every((c) =>
-    changes.becameVerifiedContracts[c.chain]?.includes(c.address),
-  )
+  return becameVerifiedContracts.every((c) => {
+    const chain = ChainSpecificAddress.longChain(c)
+
+    return changes.becameVerifiedContracts[chain]?.includes(
+      ChainSpecificAddress.address(c),
+    )
+  })
 }

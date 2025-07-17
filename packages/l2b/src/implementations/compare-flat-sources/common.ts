@@ -1,16 +1,16 @@
-import { join, resolve } from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import {
+  buildSimilarityHashmap,
   ConfigReader,
   type DiscoveryPaths,
-  type HashedFileContent,
-  buildSimilarityHashmap,
   estimateSimilarity,
   format,
+  type HashedFileContent,
 } from '@l2beat/discovery'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { readFile, readdir } from 'fs/promises'
+import { readdir, readFile } from 'fs/promises'
+import { join, resolve } from 'path'
 
 export interface Project {
   name: string
@@ -192,7 +192,7 @@ async function readProject(
       name: projectName,
       chain,
       concatenatedSource: {
-        path: `virtualPath.sol`,
+        path: 'virtualPath.sol',
         hashChunks: concatenatedSourceHashChunks,
         content: concatenatedSources,
       },

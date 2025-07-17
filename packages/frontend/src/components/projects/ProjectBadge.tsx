@@ -33,7 +33,7 @@ export function ProjectBadge({
       width={badge.width}
       height={badge.height}
       className={cn(
-        'h-16 w-auto lg:h-[4.5rem]',
+        'h-16 w-auto lg:h-18',
         !disableInteraction &&
           badge.href &&
           'transition-all ease-in-out hover:scale-[1.08]',

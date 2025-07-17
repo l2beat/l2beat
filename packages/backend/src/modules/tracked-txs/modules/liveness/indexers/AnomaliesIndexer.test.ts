@@ -5,7 +5,7 @@ import type {
   Database,
   LivenessRecord,
 } from '@l2beat/database'
-import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
+import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'

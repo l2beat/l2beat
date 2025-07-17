@@ -116,13 +116,18 @@ function useSynchronizeSelection() {
   const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
+  const hiddenNodes = useStore((state) => state.hidden)
   const selectNodes = useStore((state) => state.selectAndFocus)
 
   useEffect(() => {
     const eq = (a: readonly string[], b: readonly string[]) =>
       a.length === b.length && a.every((x, i) => b[i] === x)
 
-    highlightGlobal(selectedNodes)
+    const visibleSelectedNodes = selectedNodes.filter(
+      (id) => !hiddenNodes.includes(id),
+    )
+
+    highlightGlobal(visibleSelectedNodes)
     if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
       rememberSelection(selectedNodes)
       selectGlobal(selectedNodes[0])
@@ -136,6 +141,7 @@ function useSynchronizeSelection() {
     selectedGlobal,
     selectGlobal,
     selectedNodes,
+    hiddenNodes,
     selectNodes,
   ])
 }
@@ -169,11 +175,13 @@ function getNodeFields(
         bannedValues,
       ),
     )
-  } else if (value.type === 'array') {
+  }
+  if (value.type === 'array') {
     return value.values.flatMap((value, i) =>
       getNodeFields(`${path}[${i}]`, value, bannedKeys, bannedValues),
     )
-  } else if (value.type === 'address') {
+  }
+  if (value.type === 'address') {
     if (bannedValues.includes(value.address)) {
       return []
     }
@@ -188,9 +196,8 @@ function getNodeFields(
         },
       },
     ]
-  } else {
-    return []
   }
+  return []
 }
 
 function extractFieldValue(value: FieldValue): string {
@@ -207,9 +214,11 @@ function extractFieldValue(value: FieldValue): string {
 function getAddresses(value: FieldValue | undefined): string[] {
   if (value?.type === 'array') {
     return value.values.flatMap((v) => getAddresses(v))
-  } else if (value?.type === 'object') {
+  }
+  if (value?.type === 'object') {
     return Object.values(value).flatMap((v) => getAddresses(v))
-  } else if (value?.type === 'address') {
+  }
+  if (value?.type === 'address') {
     return [value.address]
   }
   return []

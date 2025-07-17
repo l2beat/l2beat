@@ -5,7 +5,7 @@
   "configHash": "0x5932216a52e3f1cdf48d9ceb505d673ecdfa6ce8f07228156e39ab7040416fce",
   "entries": [
     {
-      "address": "0x263294039413B96D25E4173a5F7599F8b3801504",
+      "address": "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -30,7 +30,7 @@
     },
     {
       "name": "HyperliquidBridge",
-      "address": "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+      "address": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
       "type": "Contract",
       "template": "hyperliquid/HyperliquidBridge",
       "sourceHashes": [
@@ -44,35 +44,35 @@
         "$immutable": true,
         "blockDurationMillis": 350,
         "coldAddresses": [
-          "0x8003fd297a7aa477b746825e7a506675bf590e91",
-          "0x86d6ae3032732f27239075d77a1317989b52f628",
-          "0xe346b41b47296153a21e64d6bfc857c27874c6e7",
-          "0x5a92b4a6a525445c9b4fff61c0db71dcfe305ede"
+          "arb1:0x8003FD297a7Aa477B746825E7A506675bF590E91",
+          "arb1:0x86d6AE3032732F27239075D77a1317989B52F628",
+          "arb1:0xE346B41B47296153A21E64D6bFc857C27874C6e7",
+          "arb1:0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede"
         ],
         "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f",
         "disputePeriodSeconds": 200,
         "epoch": 5,
         "finalizers": [
-          "0x58E1b0E63C905D5982324FCd9108582623b8132e",
-          "0x263294039413B96D25E4173a5F7599F8b3801504",
-          "0xda6816df552c3f9e0FB64979fb357800d690d79B",
-          "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
-          "0xf9d2282A4A4C216f624717C0747D23146FC048c5"
+          "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
+          "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
+          "arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B",
+          "arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+          "arb1:0xf9d2282A4A4C216f624717C0747D23146FC048c5"
         ],
         "getLockersVotingLock": [],
         "hotAddresses": [
-          "0xef2364db5db6f5539aa0bc111771a94ee47637fc",
-          "0xda6816df552c3f9e0fb64979fb357800d690d79b",
-          "0x58e1b0e63c905d5982324fcd9108582623b8132e",
-          "0x263294039413b96d25e4173a5f7599f8b3801504"
+          "arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+          "arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B",
+          "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
+          "arb1:0x263294039413B96D25E4173a5F7599F8b3801504"
         ],
         "hotValidatorSetHash": "0xf92fbcc7725c7e78596d75626eee1a05908b653aeededc4927fecca41f35e2d6",
         "lockers": [
-          "0x58E1b0E63C905D5982324FCd9108582623b8132e",
-          "0x263294039413B96D25E4173a5F7599F8b3801504",
-          "0xda6816df552c3f9e0FB64979fb357800d690d79B",
-          "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
-          "0xf9d2282A4A4C216f624717C0747D23146FC048c5"
+          "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
+          "arb1:0x263294039413B96D25E4173a5F7599F8b3801504",
+          "arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B",
+          "arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+          "arb1:0xf9d2282A4A4C216f624717C0747D23146FC048c5"
         ],
         "lockerThreshold": 2,
         "nValidators": 4,
@@ -87,7 +87,7 @@
           "coldValidatorSetHash": "0x7d9ba0065e166ea281f295ab005e63f7bfdf51dea2361a4a5aa34905a4b2b20f"
         },
         "totalValidatorPower": 4,
-        "usdcToken": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+        "usdcToken": "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "validatorSetUpdates": [
           {
             "epoch": 0,
@@ -126,11 +126,11 @@
         }
       },
       "implementationNames": {
-        "0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "Bridge2"
+        "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7": "Bridge2"
       }
     },
     {
-      "address": "0x58E1b0E63C905D5982324FCd9108582623b8132e",
+      "address": "arb1:0x58E1b0E63C905D5982324FCd9108582623b8132e",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -154,7 +154,7 @@
       ]
     },
     {
-      "address": "0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede",
+      "address": "arb1:0x5a92b4A6a525445c9B4FFf61C0db71dCfE305ede",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -166,7 +166,7 @@
       ]
     },
     {
-      "address": "0x8003FD297a7Aa477B746825E7A506675bF590E91",
+      "address": "arb1:0x8003FD297a7Aa477B746825E7A506675bF590E91",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -178,7 +178,7 @@
       ]
     },
     {
-      "address": "0x86d6AE3032732F27239075D77a1317989B52F628",
+      "address": "arb1:0x86d6AE3032732F27239075D77a1317989B52F628",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -190,7 +190,7 @@
       ]
     },
     {
-      "address": "0xda6816df552c3f9e0FB64979fb357800d690d79B",
+      "address": "arb1:0xda6816df552c3f9e0FB64979fb357800d690d79B",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -214,7 +214,7 @@
       ]
     },
     {
-      "address": "0xE346B41B47296153A21E64D6bFc857C27874C6e7",
+      "address": "arb1:0xE346B41B47296153A21E64D6bFc857C27874C6e7",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -226,7 +226,7 @@
       ]
     },
     {
-      "address": "0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
+      "address": "arb1:0xEF2364dB5db6F5539Aa0bC111771a94Ee47637Fc",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -250,7 +250,7 @@
       ]
     },
     {
-      "address": "0xf9d2282A4A4C216f624717C0747D23146FC048c5",
+      "address": "arb1:0xf9d2282A4A4C216f624717C0747D23146FC048c5",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -325,5 +325,5 @@
   "usedTemplates": {
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
-  "permissionsConfigHash": "0xc7129a48a5b96a4882f037b24fd1775bfe9fe1b6e39d385e1401ea9c244b812d"
+  "permissionsConfigHash": "0xeb6b96c02c6088d31aff9534024005d56b92d7ae18d98115580bdd5b3d00f5de"
 }

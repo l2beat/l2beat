@@ -1,13 +1,14 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { SentimentText } from '../../SentimentText'
-import { WarningBar, sentimentToWarningBarColor } from '../../WarningBar'
 import { UpcomingBadge } from '../../badge/UpcomingBadge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
+import { SentimentText } from '../../SentimentText'
+import { sentimentToWarningBarColor, WarningBar } from '../../WarningBar'
+import { rosetteParameters } from '../parameters'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
@@ -22,6 +23,7 @@ export interface BigPizzaRosetteProps {
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface'
+  size?: 'small' | 'regular'
   realPizza?: boolean
 }
 
@@ -31,28 +33,33 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
     Object.values(props.values).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
+  const parameters = rosetteParameters[props.size ?? 'regular']
 
   if (isUnderReview || props.isUpcoming) {
     return (
       <div
         className={cn(
-          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center font-medium text-xs uppercase leading-tight',
+          'relative whitespace-pre p-12 pb-7 text-center font-medium text-xs uppercase leading-tight',
           props.className,
         )}
       >
         <PizzaRosetteIcon
           values={props.values}
           isUnderReview={isUnderReview}
-          className={cn(props.isUpcoming && 'opacity-30')}
+          className={cn(
+            props.isUpcoming && 'opacity-30',
+            parameters.rosetteClassName,
+          )}
           background={props.background}
         />
         {props.isUpcoming && (
-          <UpcomingBadge className="absolute top-[130px] left-[90px]" />
+          <UpcomingBadge className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2" />
         )}
         <PizzaRosetteLabels
           values={props.values}
-          containerSize={272}
-          textRadius={102}
+          containerSize={parameters.containerSize}
+          textRadius={parameters.textRadius}
+          size={props.size}
         />
       </div>
     )
@@ -62,7 +69,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
     <RosetteTooltipContextProvider>
       <Tooltip>
         <div
-          className={cn('relative w-[272px] p-12', props.className)}
+          className={cn('relative p-12 pb-7', props.className)}
           data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
         >
           <TooltipTrigger>
@@ -70,12 +77,14 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
               values={props.values}
               isUnderReview={isUnderReview}
               background={props.background}
+              className={parameters.rosetteClassName}
             />
           </TooltipTrigger>
           <PizzaRosetteLabels
             values={props.values}
-            containerSize={272}
-            textRadius={102}
+            containerSize={parameters.containerSize}
+            textRadius={parameters.textRadius}
+            size={props.size}
           />
         </div>
         <RosetteTooltipContent />
@@ -103,7 +112,7 @@ function RosetteTooltipContent() {
       <SentimentText
         sentiment={selectedRisk.sentiment ?? 'neutral'}
         vibrant={true}
-        className="mb-2 flex items-center gap-1 text-heading-18"
+        className="mb-2 flex items-center gap-1 font-medium text-heading-18"
       >
         {selectedRisk.value}
       </SentimentText>

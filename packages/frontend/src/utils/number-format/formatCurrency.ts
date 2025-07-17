@@ -49,11 +49,11 @@ export function formatCurrencyExactValue(value: number, currency: string) {
 function formatCrypto(value: number) {
   if (value < 1) {
     return value.toFixed(6)
-  } else if (value < 100) {
-    return value.toFixed(3)
-  } else {
-    return value.toFixed(2)
   }
+  if (value < 100) {
+    return value.toFixed(3)
+  }
+  return value.toFixed(2)
 }
 
 function formatInteger(integer: number | string): string {

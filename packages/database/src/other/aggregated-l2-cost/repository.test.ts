@@ -36,60 +36,64 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
     expect(result).toEqual([records[0]!, records[1]!])
   })
 
-  describe(AggregatedL2CostRepository.prototype.getByProjectAndTimeRange
-    .name, () => {
-    it('should return all rows for given project', async () => {
-      await repository.deleteAll()
-      const records = [
-        record({ timestamp: NOW - 1 * UnixTime.HOUR }),
-        record(),
-        record({ timestamp: NOW + 1 * UnixTime.HOUR }),
-      ]
-      await repository.upsertMany(records)
+  describe(
+    AggregatedL2CostRepository.prototype.getByProjectAndTimeRange.name,
+    () => {
+      it('should return all rows for given project', async () => {
+        await repository.deleteAll()
+        const records = [
+          record({ timestamp: NOW - 1 * UnixTime.HOUR }),
+          record(),
+          record({ timestamp: NOW + 1 * UnixTime.HOUR }),
+        ]
+        await repository.upsertMany(records)
 
-      const results = await repository.getByProjectAndTimeRange(
-        ProjectId('random'),
-        [NOW - 7 * UnixTime.HOUR, NOW + 2 * UnixTime.HOUR],
-      )
+        const results = await repository.getByProjectAndTimeRange(
+          ProjectId('random'),
+          [NOW - 7 * UnixTime.HOUR, NOW + 2 * UnixTime.HOUR],
+        )
 
-      expect(results).toEqualUnsorted(records)
-    })
+        expect(results).toEqualUnsorted(records)
+      })
 
-    it('should return all rows for given project id and since timestamp with exclusive to', async () => {
-      const records = [
-        record({ timestamp: NOW - 1 * UnixTime.HOUR }),
-        record(),
-        record({ timestamp: NOW + 1 * UnixTime.HOUR }),
-      ]
-      await repository.upsertMany(records)
-      const results = await repository.getByProjectAndTimeRange(
-        ProjectId('random'),
-        [NOW - 1 * UnixTime.HOUR, NOW + 1 * UnixTime.HOUR],
-      )
+      it('should return all rows for given project id and since timestamp with exclusive to', async () => {
+        const records = [
+          record({ timestamp: NOW - 1 * UnixTime.HOUR }),
+          record(),
+          record({ timestamp: NOW + 1 * UnixTime.HOUR }),
+        ]
+        await repository.upsertMany(records)
+        const results = await repository.getByProjectAndTimeRange(
+          ProjectId('random'),
+          [NOW - 1 * UnixTime.HOUR, NOW + 1 * UnixTime.HOUR],
+        )
 
-      expect(results).toEqual(records.slice(0, 2))
-    })
-  })
+        expect(results).toEqual(records.slice(0, 2))
+      })
+    },
+  )
 
-  describe(AggregatedL2CostRepository.prototype.getByProjectsAndTimeRange
-    .name, () => {
-    it('should return all rows for given projects and time range', async () => {
-      const records = [
-        record({ timestamp: NOW - 1 * UnixTime.HOUR }),
-        record(),
-        record({ timestamp: NOW + 2 * UnixTime.HOUR }),
-        record({ projectId: ProjectId('random2') }),
-      ]
-      await repository.upsertMany(records)
+  describe(
+    AggregatedL2CostRepository.prototype.getByProjectsAndTimeRange.name,
+    () => {
+      it('should return all rows for given projects and time range', async () => {
+        const records = [
+          record({ timestamp: NOW - 1 * UnixTime.HOUR }),
+          record(),
+          record({ timestamp: NOW + 2 * UnixTime.HOUR }),
+          record({ projectId: ProjectId('random2') }),
+        ]
+        await repository.upsertMany(records)
 
-      const results = await repository.getByProjectsAndTimeRange(
-        [ProjectId('random')],
-        [NOW - 7 * UnixTime.HOUR, NOW + 2 * UnixTime.HOUR],
-      )
+        const results = await repository.getByProjectsAndTimeRange(
+          [ProjectId('random')],
+          [NOW - 7 * UnixTime.HOUR, NOW + 2 * UnixTime.HOUR],
+        )
 
-      expect(results).toEqual(records.slice(0, 2))
-    })
-  })
+        expect(results).toEqual(records.slice(0, 2))
+      })
+    },
+  )
 })
 
 function record(

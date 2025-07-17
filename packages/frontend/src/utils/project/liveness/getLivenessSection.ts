@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import type { TrackedTxCostsConfig } from '@l2beat/shared/frontend'
+import { assert, type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import groupBy from 'lodash/groupBy'
 import { getDefaultSubtype } from '~/components/chart/liveness/getDefaultSubtype'
@@ -13,7 +13,7 @@ import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
   helpers: SsrHelpers,
-  project: Project<never, 'trackedTxsConfig' | 'livenessConfig'>,
+  project: Project<never, 'archivedAt' | 'trackedTxsConfig' | 'livenessConfig'>,
   liveness: LivenessProject | undefined,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): Promise<
@@ -40,9 +40,11 @@ export async function getLivenessSection(
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
 
+  const range = project.archivedAt ? 'max' : '30d'
+
   const data = await helpers.liveness.projectChart.fetch({
     projectId: project.id,
-    range: '30d',
+    range,
     subtype: getDefaultSubtype(configuredSubtypes),
   })
 
@@ -60,5 +62,7 @@ export async function getLivenessSection(
     anomalies: liveness?.anomalies ?? [],
     hasTrackedContractsChanged,
     trackedTransactions,
+    defaultRange: range,
+    isArchived: project.archivedAt !== undefined,
   }
 }

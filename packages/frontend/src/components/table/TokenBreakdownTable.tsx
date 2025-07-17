@@ -1,7 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
-import type { Table as TanstackTable } from '@tanstack/react-table'
+import type { Row, Table as TanstackTable } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import type { Row } from '@tanstack/react-table'
 import { cn } from '~/utils/cn'
 import {
   Table,
@@ -33,7 +32,7 @@ export function TokenTable<T>({ table, renderSubComponent }: Props<T>) {
       <TableHeader>
         <TableHeaderRow
           key={headers.id}
-          className="!border-0 md:bg-surface-secondary"
+          className="border-0! md:bg-surface-secondary"
         >
           {headers.headers.map((header) => (
             <TableHead

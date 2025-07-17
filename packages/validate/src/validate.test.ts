@@ -53,7 +53,7 @@ describe('validate', () => {
     ]
     expect(PosArray.safeValidate(input)).toEqual({
       success: false,
-      path: `[1].y`,
+      path: '[1].y',
       message: 'Expected number, got string.',
     })
   })

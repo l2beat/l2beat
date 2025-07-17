@@ -241,7 +241,7 @@ describe(ManagedMultiIndexer.name, () => {
     it('finds range correctly for a value before the start', () => {
       const fromBeforeStart = 10
       expect(indexer.findRange(fromBeforeStart)).toEqual({
-        from: -Infinity,
+        from: Number.NEGATIVE_INFINITY,
         to: 99,
         configurations: [],
       })
@@ -278,28 +278,30 @@ describe(ManagedMultiIndexer.name, () => {
       const fromAfterStart = 250
       expect(indexer.findRange(fromAfterStart)).toEqual({
         from: 201,
-        to: Infinity,
+        to: Number.POSITIVE_INFINITY,
         configurations: [],
       })
     })
   })
 
-  describe(ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight
-    .name, () => {
-    it('calls indexer service', async () => {
-      const indexerService = mockObject<IndexerService>({
-        updateConfigurationsCurrentHeight: async () => {},
+  describe(
+    ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
+    () => {
+      it('calls indexer service', async () => {
+        const indexerService = mockObject<IndexerService>({
+          updateConfigurationsCurrentHeight: async () => {},
+        })
+
+        const indexer = new TestIndexer({ ...common, indexerService })
+
+        await indexer.updateConfigurationsCurrentHeight(100)
+
+        expect(
+          indexerService.updateConfigurationsCurrentHeight,
+        ).toHaveBeenOnlyCalledWith(INDEXER_ID, 100)
       })
-
-      const indexer = new TestIndexer({ ...common, indexerService })
-
-      await indexer.updateConfigurationsCurrentHeight(100)
-
-      expect(
-        indexerService.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(INDEXER_ID, 100)
-    })
-  })
+    },
+  )
 
   describe(ManagedMultiIndexer.prototype.invalidate.name, () => {
     it('returns target height', async () => {

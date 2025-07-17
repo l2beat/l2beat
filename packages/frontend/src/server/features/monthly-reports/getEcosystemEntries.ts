@@ -17,8 +17,8 @@ import {
   getActivityLeaderboard,
 } from '../../../server/features/monthly-reports/getActivityLeaderboard'
 import {
-  type TvsLeaderboard,
   getTvsLeaderboard,
+  type TvsLeaderboard,
 } from '../../../server/features/monthly-reports/getTvsLeaderboard'
 import {
   getEcosystemActivityLeaderboard,

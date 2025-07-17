@@ -1,8 +1,8 @@
 import {
   assert,
   type Block,
-  type UnixTime,
   type json,
+  type UnixTime,
 } from '@l2beat/shared-pure'
 
 import { getBlockNumberAtOrBefore } from '../../tools/getBlockNumberAtOrBefore'
@@ -130,7 +130,7 @@ export class ZksyncLiteClient extends ClientCore implements BlockClient {
     const parsedError = ZksyncLiteError.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
       return { success: false }

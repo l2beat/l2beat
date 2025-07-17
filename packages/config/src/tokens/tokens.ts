@@ -11,8 +11,8 @@ You can check the detailed steps on how to add new tokens in the tvl.md file in 
 */
 
 import {
-  assert,
   AssetId,
+  assert,
   type LegacyToken,
   UnixTime,
 } from '@l2beat/shared-pure'

@@ -1,8 +1,7 @@
+import type { Milestone } from '@l2beat/config'
 import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
-
-import type { Milestone } from '@l2beat/config'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
@@ -51,7 +50,7 @@ const chartContainerClassNames = cn(
   // Tooltip cursor bar
   '[&_.recharts-rectangle.recharts-tooltip-cursor]:fill-primary/25',
   // Tooltip
-  '[&_.recharts-tooltip-wrapper]:!transition-none [&_.recharts-tooltip-wrapper]:z-110',
+  '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:transition-none!',
   // Active dots
   "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none [&_.recharts-layer]:outline-none",
   // Cartesian grid line
@@ -114,7 +113,7 @@ function ChartContainer<T extends { timestamp: number }>({
         ref={ref}
         className={cn(
           chartContainerClassNames,
-          'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
+          'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]',
           className,
         )}
         {...props}
@@ -128,7 +127,7 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              '-translate-y-1/2 top-[calc(50%_-_5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%_-_11px)]',
+              '-translate-y-1/2 top-[calc(50%-5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%-11px)]',
               loaderClassName,
             )}
           />

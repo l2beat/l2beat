@@ -1,6 +1,6 @@
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'

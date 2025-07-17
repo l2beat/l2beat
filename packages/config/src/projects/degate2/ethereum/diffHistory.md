@@ -1,3 +1,279 @@
+Generated with discovered.json: 0xb4cf0586a8b3b9590f01d620271f696e0a3a0114
+
+# Diff at Mon, 14 Jul 2025 12:44:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 18554408
+- current block number: 18554408
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18554408 (main branch discovery), not current.
+
+```diff
+    contract LoopringIOExchangeOwner (0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215) {
+    +++ description: None
+      address:
+-        "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215"
++        "eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215"
+      values.blockSubmitters.0:
+-        "0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"
++        "eth:0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.target:
+-        "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
++        "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
+      implementationNames.0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215:
+-        "LoopringIOExchangeOwner"
+      implementationNames.eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215:
++        "LoopringIOExchangeOwner"
+    }
+```
+
+```diff
+    EOA  (0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb) {
+    +++ description: None
+      address:
+-        "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
++        "eth:0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+    }
+```
+
+```diff
+    EOA  (0x4e3FE240B50A445fc6137a6363aC3593Af173b8a) {
+    +++ description: None
+      address:
+-        "0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"
++        "eth:0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"
+    }
+```
+
+```diff
+    contract LoopringV3 (0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7) {
+    +++ description: None
+      address:
+-        "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7"
++        "eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7"
+      values.blockVerifierAddress:
+-        "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2"
++        "eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2"
+      values.lrcAddress:
+-        "0x53C8395465A84955c95159814461466053DedEDE"
++        "eth:0x53C8395465A84955c95159814461466053DedEDE"
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.protocolFeeVault:
+-        "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C"
++        "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C"
+      implementationNames.0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7:
+-        "LoopringV3"
+      implementationNames.eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7:
++        "LoopringV3"
+    }
+```
+
+```diff
+    EOA  (0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8) {
+    +++ description: None
+      address:
+-        "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8"
++        "eth:0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8"
+    }
+```
+
+```diff
+    contract BlockVerifier (0x707B12e8921b442D4015eb03c86E66F3b8042Dd2) {
+    +++ description: None
+      address:
+-        "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2"
++        "eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2"
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x707B12e8921b442D4015eb03c86E66F3b8042Dd2:
+-        "BlockVerifier"
+      implementationNames.eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2:
++        "BlockVerifier"
+    }
+```
+
+```diff
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C) {
+    +++ description: None
+      address:
+-        "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C"
++        "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C"
+      values.getOwners.0:
+-        "0xf5020ADf433645c451A4809eac0d6F680709f11B"
++        "eth:0xf5020ADf433645c451A4809eac0d6F680709f11B"
+      values.getOwners.1:
+-        "0xeD530f3b8675B0a576DaAe64C004676c65368DfD"
++        "eth:0xeD530f3b8675B0a576DaAe64C004676c65368DfD"
+      values.getOwners.2:
+-        "0xB7093FC2d926ADdE48122B70991fe68374879adf"
++        "eth:0xB7093FC2d926ADdE48122B70991fe68374879adf"
+      values.getOwners.3:
+-        "0xC715b8501039d3514787dC55BC09f89c293351e9"
++        "eth:0xC715b8501039d3514787dC55BC09f89c293351e9"
+      values.getOwners.4:
+-        "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8"
++        "eth:0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8"
+      values.getOwners.5:
+-        "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
++        "eth:0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+      implementationNames.0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C:
+-        "MultiSigWallet"
+      implementationNames.eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C:
++        "MultiSigWallet"
+    }
+```
+
+```diff
+    contract ExchangeV3 (0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7) {
+    +++ description: None
+      address:
+-        "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
++        "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
+      values.getDepositContract:
+-        "0xF13e21653AEB763595D5E4baA1dC115689Da49b9"
++        "eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9"
+      values.loopringV3:
+-        "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7"
++        "eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7"
+      values.owner:
+-        "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215"
++        "eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7:
+-        "ExchangeV3"
+      implementationNames.eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7:
++        "ExchangeV3"
+    }
+```
+
+```diff
+    EOA LoopringOwner (0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82) {
+    +++ description: None
+      address:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
+    }
+```
+
+```diff
+    EOA  (0xB7093FC2d926ADdE48122B70991fe68374879adf) {
+    +++ description: None
+      address:
+-        "0xB7093FC2d926ADdE48122B70991fe68374879adf"
++        "eth:0xB7093FC2d926ADdE48122B70991fe68374879adf"
+    }
+```
+
+```diff
+    EOA  (0xC715b8501039d3514787dC55BC09f89c293351e9) {
+    +++ description: None
+      address:
+-        "0xC715b8501039d3514787dC55BC09f89c293351e9"
++        "eth:0xC715b8501039d3514787dC55BC09f89c293351e9"
+    }
+```
+
+```diff
+    EOA  (0xeD530f3b8675B0a576DaAe64C004676c65368DfD) {
+    +++ description: None
+      address:
+-        "0xeD530f3b8675B0a576DaAe64C004676c65368DfD"
++        "eth:0xeD530f3b8675B0a576DaAe64C004676c65368DfD"
+    }
+```
+
+```diff
+    contract DefaultDepositContract (0xF13e21653AEB763595D5E4baA1dC115689Da49b9) {
+    +++ description: None
+      address:
+-        "0xF13e21653AEB763595D5E4baA1dC115689Da49b9"
++        "eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9"
+      values.exchange:
+-        "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
++        "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7"
+      values.owner:
+-        "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
++        "eth:0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xF13e21653AEB763595D5E4baA1dC115689Da49b9:
+-        "DefaultDepositContract"
+      implementationNames.eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9:
++        "DefaultDepositContract"
+    }
+```
+
+```diff
+    EOA  (0xf5020ADf433645c451A4809eac0d6F680709f11B) {
+    +++ description: None
+      address:
+-        "0xf5020ADf433645c451A4809eac0d6F680709f11B"
++        "eth:0xf5020ADf433645c451A4809eac0d6F680709f11B"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LoopringIOExchangeOwner (0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringV3 (0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockVerifier (0x707B12e8921b442D4015eb03c86E66F3b8042Dd2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeVault (0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeV3 (0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultDepositContract (0xF13e21653AEB763595D5E4baA1dC115689Da49b9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0d7fa02d8f9050bf31b0b0b151322d00cf88abfd
 
 # Diff at Tue, 04 Mar 2025 10:39:04 GMT:

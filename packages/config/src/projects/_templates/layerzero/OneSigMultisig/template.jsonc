@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+  "ignoreMethods": ["getSigners", "threshold"],
+  "ignoreInWatchMode": ["nonce"],
+  "fields": {
+    "$members": {
+      "handler": {
+        "type": "call",
+        "method": "getSigners",
+        "args": []
+      }
+    },
+    "$threshold": {
+      "handler": {
+        "type": "call",
+        "method": "threshold",
+        "args": []
+      }
+    },
+    "executorRequired": {
+      "description": "if true, only executor OR any signer can execute a correctly signed tx. else anyone can."
+    }
+  }
+}
