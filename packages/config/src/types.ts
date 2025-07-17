@@ -1060,6 +1060,7 @@ export interface ProjectDiscoveryInfo {
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
   blockNumberPerChain: Record<string, number>
+  hasDiscoUi: boolean
 }
 // #endregion
 

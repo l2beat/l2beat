@@ -61,7 +61,7 @@ export interface BridgesProjectEntry {
     validatedBy: TableReadyValue | undefined
   }
   sections: ProjectDetailsSection[]
-  discoUiHref: string
+  discoUiHref: string | undefined
 }
 
 export async function getBridgesProjectEntry(
@@ -81,6 +81,7 @@ export async function getBridgesProjectEntry(
     | 'milestones'
     | 'contracts'
     | 'permissions'
+    | 'discoveryInfo'
   >,
 ): Promise<BridgesProjectEntry> {
   const [projectsChangeReport, tvsStats, tvsChartData, tokens, contractUtils] =
@@ -142,7 +143,9 @@ export async function getBridgesProjectEntry(
       category: project.bridgeInfo.category,
       validatedBy: project.bridgeRisks.validatedBy,
     },
-    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
+    discoUiHref: project.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
   }
 
   const sections: ProjectDetailsSection[] = []
