@@ -51,7 +51,7 @@ export const penchain: ScalingProject = polygonCDKStack({
       socialMedia: [
         'https://x.com/pentagonchain',
         'https://discord.gg/pentagongamesXP',
-        'https://www.youtube.com/@PentagonGamesXP',
+        'https://youtube.com/@PentagonGamesXP',
         'https://linkedin.com/company/pentagongames',
         'https://x.com/pentagongamesxp',
         'https://t.me/PentagonGamesXP',
