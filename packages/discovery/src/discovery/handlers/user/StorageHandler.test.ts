@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
@@ -8,7 +8,7 @@ import { StorageHandler, type StorageHandlerDefinition } from './StorageHandler'
 describe(StorageHandler.name, () => {
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         async getStorage(passedAddress, slot) {
           expect(passedAddress).toEqual(address)
@@ -37,7 +37,7 @@ describe(StorageHandler.name, () => {
     })
 
     it('can returns storage as number', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
@@ -64,13 +64,16 @@ describe(StorageHandler.name, () => {
     })
 
     it('can returns storage as address', async () => {
-      const address = EthereumAddress.random()
-      const resultAddress = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
+      const resultAddress = ChainSpecificAddress.random()
 
       const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
-            '0x000000000000000000000000' + resultAddress.slice(2).toLowerCase(),
+            '0x000000000000000000000000' +
+              ChainSpecificAddress.address(resultAddress)
+                .slice(2)
+                .toLowerCase(),
           )
         },
         blockNumber: 123,
@@ -87,13 +90,13 @@ describe(StorageHandler.name, () => {
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
         field: 'someName',
-        value: resultAddress.toString(),
+        value: ChainSpecificAddress.address(resultAddress).toString(),
         ignoreRelative: undefined,
       })
     })
 
     it('can returns storage as uint8', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         async getStorage() {
           return Bytes.fromHex(
@@ -202,7 +205,7 @@ describe(StorageHandler.name, () => {
       })
       const result = await handler.execute(
         provider,
-        EthereumAddress.random(),
+        ChainSpecificAddress.random(),
         options.previousResults ?? {},
       )
       if (options.expectedSlot !== undefined) {
@@ -239,12 +242,12 @@ describe(StorageHandler.name, () => {
     })
 
     it('computes a mapping entry', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
 
       await testComputeSlot({
         definition: {
           type: 'storage',
-          slot: [1, address.toString()],
+          slot: [1, ChainSpecificAddress.address(address).toString()],
           offset: 1,
         },
         expectedSlot:
@@ -252,7 +255,7 @@ describe(StorageHandler.name, () => {
             utils.keccak256(
               utils.defaultAbiCoder.encode(
                 ['address', 'uint256'],
-                [address, 1],
+                [ChainSpecificAddress.address(address), 1],
               ),
             ),
           ) + 1n,
@@ -260,12 +263,12 @@ describe(StorageHandler.name, () => {
     })
 
     it('computes a nested mapping entry', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
 
       await testComputeSlot({
         definition: {
           type: 'storage',
-          slot: [1, address.toString(), 5],
+          slot: [1, ChainSpecificAddress.address(address).toString(), 5],
           offset: 1,
         },
         expectedSlot:
@@ -278,7 +281,7 @@ describe(StorageHandler.name, () => {
                   utils.keccak256(
                     utils.defaultAbiCoder.encode(
                       ['address', 'uint256'],
-                      [address, 1],
+                      [ChainSpecificAddress.address(address), 1],
                     ),
                   ),
                 ],
@@ -335,7 +338,7 @@ describe(StorageHandler.name, () => {
       blockNumber: 123,
       chain: 'foo',
     })
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
     expect(result).toEqual({
       field: 'someName',

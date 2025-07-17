@@ -1,11 +1,11 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 import type { IProvider } from '../provider/IProvider'
 
 export async function getModules(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress[] | undefined> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress[] | undefined> {
   // Sentinel value used by Gnosis Safe to indicate the beginning and
   // the end of the circular linked list.
   // https://github.com/safe-global/safe-contracts/blob/52ce39c89cc3e3529963100dd774a6a03c098792/contracts/base/ModuleManager.sol#L23C35-L23C35
@@ -13,7 +13,7 @@ export async function getModules(
   const PAGINATION_SIZE = 10
 
   let next = SENTINEL_MODULES
-  const modules: EthereumAddress[] = []
+  const modules: ChainSpecificAddress[] = []
   do {
     // Result: [modules[], next]
     const result = await provider.callMethod<[string[], string]>(
@@ -26,7 +26,9 @@ export async function getModules(
       return undefined
     }
 
-    result[0].forEach((module) => modules.push(EthereumAddress(module)))
+    result[0].forEach((module) =>
+      modules.push(ChainSpecificAddress.fromLong(provider.chain, module)),
+    )
     next = result[1]
   } while (next !== SENTINEL_MODULES)
   return modules

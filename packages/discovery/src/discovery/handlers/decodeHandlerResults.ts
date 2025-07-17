@@ -1,16 +1,17 @@
-import { getErrorMessage } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, getErrorMessage } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,
   StructureContract,
 } from '../config/StructureConfig'
-import type { EntryParameters } from '../output/types'
+import type { ContractValue, EntryParameters } from '../output/types'
 import { applyReturnFragment } from '../type-casters/applyReturnFragment'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
 
 export function decodeHandlerResults(
+  longChain: string,
   results: HandlerResult[],
   fieldOverrides: StructureContract['fields'],
   types: Record<string, DiscoveryCustomType>,
@@ -25,7 +26,10 @@ export function decodeHandlerResults(
   for (const { value, field, fragment, error } of results) {
     if (value !== undefined) {
       try {
-        values[field] = applyReturnFragment(value, fragment)
+        values[field] = applyReturnFragment(
+          prefixAddresses(longChain, value),
+          fragment,
+        )
       } catch (e) {
         errors[field] = getErrorMessage(e)
       }
@@ -66,4 +70,33 @@ export function decodeHandlerResults(
     errors,
     usedTypes: runtime.usedTypes,
   }
+}
+
+// TODO(radomski): We need to test this
+function prefixAddresses(
+  longChain: string,
+  value: ContractValue,
+): ContractValue {
+  if (Array.isArray(value)) {
+    return value.map((v) => prefixAddresses(longChain, v))
+  }
+
+  if (typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, value]) => [
+        prefixAddresses(longChain, key),
+        prefixAddresses(longChain, value as ContractValue),
+      ]),
+    )
+  }
+
+  if (typeof value === 'string') {
+    try {
+      return ChainSpecificAddress.fromLong(longChain, value).toString()
+    } catch {
+      return value
+    }
+  }
+
+  return value
 }

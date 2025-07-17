@@ -1,4 +1,8 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Bytes,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
@@ -11,8 +15,8 @@ export const IMPLEMENTATION_SLOT = Bytes.fromHex(
 
 export function getImplementation(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
   return provider.getStorageAsAddress(address, IMPLEMENTATION_SLOT)
 }
 
@@ -23,29 +27,32 @@ const ADMIN_SLOT = Bytes.fromHex(
 
 export function getAdmin(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
   return provider.getStorageAsAddress(address, ADMIN_SLOT)
 }
 
 async function getOwner(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
-  const result = await provider.callMethod<EthereumAddress>(
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
+  const rawAddress = await provider.callMethod<EthereumAddress>(
     address,
     'function owner() view returns (address)',
     [],
   )
-  return result ?? EthereumAddress.ZERO
+  return ChainSpecificAddress.fromLong(
+    provider.chain,
+    rawAddress ?? EthereumAddress.ZERO,
+  )
 }
 
 export async function detectEip1967Proxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const implementation = await getImplementation(provider, address)
-  if (implementation === EthereumAddress.ZERO) {
+  if (implementation === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
   const pastUpgrades = await getPastUpgradesSingleEvent(
@@ -55,7 +62,7 @@ export async function detectEip1967Proxy(
   )
   let admin = await getAdmin(provider, address)
   // TODO: (sz-piotr) potential for errors
-  if (admin === EthereumAddress.ZERO) {
+  if (admin === ChainSpecificAddress.ZERO(provider.chain)) {
     admin = await getOwner(provider, address)
   }
   return {

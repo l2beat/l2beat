@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0xe9b17598abde9b294eb702dcf4ffcb18de5012813bddd09845a0a41f8776e058",
+  "configHash": "0x8b0bb981d22e2fd4450373c5aac86ca0d78dbf578e32b9b95f099e3c79f74e26",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -374,7 +374,7 @@
     }
   ],
   "abis": {
-    "0x18FED1E19dC564DC917D203be9d40790472D22e9": [
+    "eth:0x18FED1E19dC564DC917D203be9d40790472D22e9": [
       "constructor()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -426,13 +426,13 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function wrappedTokenAddress() view returns (address)"
     ],
-    "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": [
+    "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": [
+    "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -442,13 +442,13 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
+    "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
       "constructor(address impl_, bytes data_) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": [
+    "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -561,7 +561,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
+    "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
       "constructor()",
       "error NotValidAmount()",
       "error NotValidOwner()",
@@ -594,10 +594,10 @@
       "function zkMinterBurner() view returns (address)",
       "function zkNetworkId() view returns (uint32)"
     ],
-    "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": [
+    "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -646,13 +646,13 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": [
+    "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b": [
+    "eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b": [
       "constructor()",
       "error BeneficiaryInvalid(address newBeneficiary)",
       "error BridgeAmountInvalid()",
@@ -712,7 +712,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function zkEvmBridge() view returns (address)"
     ],
-    "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": [
+    "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": [
       "constructor(address _singleton)"
     ]
   },

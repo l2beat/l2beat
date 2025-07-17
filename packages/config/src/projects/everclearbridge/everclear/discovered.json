@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "everclear",
   "blockNumber": 1846362,
-  "configHash": "0x28722c147bec42a5913187cfed740c0bda49a00ec6a6a5eb7ea42a875a971652",
+  "configHash": "0x03b35e3b50cfb4e7f1b622a233290521deb52f8e7eff30074f7eb814064a409d",
   "entries": [
     {
       "address": "everclear:0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -201,7 +201,7 @@
     }
   ],
   "abis": {
-    "0x255aba6E7f08d40B19872D11313688c2ED65d1C9": [
+    "everclear:0x255aba6E7f08d40B19872D11313688c2ED65d1C9": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AssetManager_SetTokenConfigs_FeesExceedsDenominator()",
@@ -364,7 +364,7 @@
       "function watchtower() view returns (address)",
       "function withdrawFees(bytes32, bytes32, uint256, uint32[])"
     ],
-    "0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66": [
+    "everclear:0x4e2bbbFb10058E0D248a78fe2F469562f4eDbe66": [
       "error HubMessageReceiver_ReceiveMessage_InvalidMessageType()",
       "error HubStorage_InvalidAddress()",
       "error HubStorage_InvalidDbpsValue()",
@@ -420,7 +420,7 @@
       "function updateVirtualBalance(bytes32 _user) view returns (bool _updateVirtualBalance)",
       "function watchtower() view returns (address)"
     ],
-    "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7": [
+    "everclear:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7": [
       "error ECDSAInvalidSignature()",
       "error ECDSAInvalidSignatureLength(uint256 length)",
       "error ECDSAInvalidSignatureS(bytes32 s)",
@@ -488,7 +488,7 @@
       "function updateVirtualBalance(bytes32 _user) view returns (bool _updateVirtualBalance)",
       "function watchtower() view returns (address)"
     ],
-    "0xa05A3380889115bf313f1Db9d5f335157Be4D816": [
+    "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -496,7 +496,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe0F010e465f15dcD42098dF9b99F1038c11B3056": [
+    "everclear:0xe0F010e465f15dcD42098dF9b99F1038c11B3056": [
       "error AssetManager_SetTokenConfigs_FeesExceedsDenominator()",
       "error AssetManager_SetTokenConfigs_TickerHashMismatch()",
       "error HubStorage_InvalidAddress()",
@@ -617,7 +617,7 @@
       "function updateWatchtower(address _newWatchtower) payable",
       "function watchtower() view returns (address)"
     ],
-    "0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99": [
+    "everclear:0xeFa6Ac3F931620fD0449eC8c619f2A14A0A78E99": [
       "error Handler_HandleExpiredIntents_InvalidStatus(bytes32 _intentId, uint8 _status)",
       "error Handler_HandleExpiredIntents_NotExpired(bytes32 _intentId, uint256 _blockTimestamp, uint256 _expirationTimestamp)",
       "error Handler_HandleExpiredIntents_ZeroTTL(bytes32 _intentId)",
@@ -682,7 +682,7 @@
       "function watchtower() view returns (address)",
       "function withdrawFees(bytes32 _feeRecipient, bytes32 _tickerHash, uint256 _amount, uint32[] _destinations)"
     ],
-    "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa": [
+    "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",

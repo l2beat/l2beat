@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -8,18 +8,19 @@ import { get$Implementations } from './extractors'
 
 export class FunctionSelectorDecoder {
   readonly proxyDetector: ProxyDetector
-  readonly knownTargets: Set<EthereumAddress> = new Set<EthereumAddress>()
-  readonly implementations: Record<string, EthereumAddress[]> = {}
+  readonly knownTargets: Set<ChainSpecificAddress> =
+    new Set<ChainSpecificAddress>()
+  readonly implementations: Record<string, ChainSpecificAddress[]> = {}
   readonly targetSources: Record<string, ContractSource> = {}
 
   constructor(readonly provider: IProvider) {
     this.proxyDetector = new ProxyDetector()
   }
 
-  async fetchTargets(targets: EthereumAddress[]): Promise<void> {
+  async fetchTargets(targets: ChainSpecificAddress[]): Promise<void> {
     const filtered = targets.filter((t) => !this.knownTargets.has(t))
 
-    const implementations: EthereumAddress[] = []
+    const implementations: ChainSpecificAddress[] = []
     await Promise.all(
       [...filtered].map(async (address) => {
         const proxy = await this.proxyDetector.detectProxy(
@@ -34,9 +35,14 @@ export class FunctionSelectorDecoder {
       }),
     )
 
-    const implementationContracts = new Set<EthereumAddress>(implementations)
+    const implementationContracts = new Set<ChainSpecificAddress>(
+      implementations,
+    )
 
-    const toFetch: EthereumAddress[] = [...filtered, ...implementationContracts]
+    const toFetch: ChainSpecificAddress[] = [
+      ...filtered,
+      ...implementationContracts,
+    ]
     await Promise.all(
       toFetch.map(async (address) => {
         this.targetSources[address.toString()] =
@@ -48,7 +54,7 @@ export class FunctionSelectorDecoder {
   }
 
   async decodeSelector(
-    target: EthereumAddress,
+    target: ChainSpecificAddress,
     selector: string,
   ): Promise<string> {
     if (!this.knownTargets.has(target)) {

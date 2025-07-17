@@ -1,14 +1,14 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 
 describe(getRelativesWithSuggestedTemplates.name, () => {
-  const ADDRESS_A = EthereumAddress.random()
-  const ADDRESS_B = EthereumAddress.random()
-  const ADDRESS_C = EthereumAddress.random()
-  const ADDRESS_D = EthereumAddress.random()
-  const ADDRESS_E = EthereumAddress.random()
+  const ADDRESS_A = ChainSpecificAddress.random()
+  const ADDRESS_B = ChainSpecificAddress.random()
+  const ADDRESS_C = ChainSpecificAddress.random()
+  const ADDRESS_D = ChainSpecificAddress.random()
+  const ADDRESS_E = ChainSpecificAddress.random()
 
   it('returns addresses found in values', () => {
     const relatives = getRelativesWithSuggestedTemplates([

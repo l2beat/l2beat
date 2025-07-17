@@ -1,4 +1,4 @@
-import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { ethers } from 'ethers'
 import type { ContractValue } from '../../output/types'
@@ -37,7 +37,7 @@ export class ConstructorArgsHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const result = await this.getSerializedConstructorArgs(provider, address)
 
@@ -63,7 +63,7 @@ export class ConstructorArgsHandler implements Handler {
 
   async getSerializedConstructorArgs(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<ContractValue> {
     try {
       const decodedConstructorArguments =
@@ -81,7 +81,7 @@ export class ConstructorArgsHandler implements Handler {
 
   async getWithDeploymentTransaction(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<ethers.utils.Result> {
     const deployment = await provider.getDeployment(address)
     if (deployment === undefined) {
@@ -109,7 +109,7 @@ export class ConstructorArgsHandler implements Handler {
 
   async getWithBlockExplorer(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<ethers.utils.Result> {
     const { constructorArguments } = await provider.getSource(address)
 

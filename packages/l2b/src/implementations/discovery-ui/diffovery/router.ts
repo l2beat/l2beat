@@ -1,14 +1,9 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { Express } from 'express'
 import type { DiffoveryController } from './DiffoveryController'
 
-const ethereumAddressSchema = v
-  .string()
-  .check(
-    (v) => /^[\w\d]+:0x[a-fA-F0-9]{40}$/.test(v),
-    'Invalid address format. Must be chainId:0x...',
-  )
+const ethereumAddressSchema = v.string().transform(ChainSpecificAddress)
 
 export function attachDiffoveryRouter(
   app: Express,
@@ -21,16 +16,10 @@ export function attachDiffoveryRouter(
       return
     }
 
-    const [chain, address] = encodedAddress.data.split(':')
-    if (!chain || !address) {
-      res
-        .status(400)
-        .json({ error: 'Invalid address format. Must be chainId:0x...' })
-      return
-    }
+    const address = encodedAddress.data
 
     try {
-      const result = await controller.handle(chain, EthereumAddress(address))
+      const result = await controller.handle(address)
       res.json(result)
     } catch (e) {
       console.error(e)

@@ -2,7 +2,7 @@
   "name": "degate2",
   "chain": "ethereum",
   "blockNumber": 18554408,
-  "configHash": "0x24aad05dc98b0ee7b0d20efc0466120db3b0ed884e81472275353e2d9d25e4af",
+  "configHash": "0x7ae4f103bb9e478c6c24fe7bfb64f32ce37cb79e4dfdb8a2e19f7c8fc8e9d989",
   "entries": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -257,7 +257,7 @@
     }
   ],
   "abis": {
-    "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215": [
+    "eth:0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215": [
       "constructor(address _exchange)",
       "event Drained(address to, address token, uint256 amount)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -281,7 +281,7 @@
       "function transact(bytes data) payable",
       "function transferOwnership(address newOwner)"
     ],
-    "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7": [
+    "eth:0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7": [
       "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
       "event ExchangeStakeBurned(address exchangeAddr, uint256 amount)",
       "event ExchangeStakeDeposited(address exchangeAddr, uint256 amount)",
@@ -307,7 +307,7 @@
       "function updateSettings(address _protocolFeeVault, uint256 _forcedWithdrawalFee)",
       "function withdrawExchangeStake(address recipient, uint256 requestedAmount) returns (uint256 amountLRC)"
     ],
-    "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2": [
+    "eth:0x707B12e8921b442D4015eb03c86E66F3b8042Dd2": [
       "constructor()",
       "event CircuitDisabled(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
       "event CircuitRegistered(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
@@ -323,7 +323,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyProofs(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[] publicInputs, uint256[] proofs) view returns (bool)"
     ],
-    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": [
+    "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": [
       "function owners(uint256) view returns (address)",
       "function removeOwner(address owner)",
       "function revokeConfirmation(uint256 transactionId)",
@@ -356,7 +356,7 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
-    "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7": [
+    "eth:0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7": [
       "constructor()",
       "event AllowOnchainTransferFrom(bool value)",
       "event BlockSubmitted(uint256 indexed blockIdx, bytes32 merkleRoot, bytes32 publicDataHash)",
@@ -434,7 +434,7 @@
       "function withdrawFromDepositRequest(address from, address token)",
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ],
-    "0xF13e21653AEB763595D5E4baA1dC115689Da49b9": [
+    "eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9": [
       "event CheckBalance(address indexed token, bool checkBalance)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function claimOwnership()",

@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0xa9f13b63c56b0aa040652f746599aa51c18f35796d579f184920f55429f115de",
+  "configHash": "0xb53e6c38f0dcf7bf5dcc51a5fc75c15c0428cb30ff6745eab0e4d77a6f578d02",
   "entries": [
     {
       "address": "zksync:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -198,7 +198,7 @@
     }
   ],
   "abis": {
-    "0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [
+    "zksync:0x1727c2c531cf966f902E5927b98490fDFb3b2b70": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -248,22 +248,22 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x3334552599C9aA1FE08CfF276A02033FF37646ca": [
+    "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca": [
       "constructor(address _singleton)"
     ],
-    "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08": [
+    "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A": [
+    "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": [
+    "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",

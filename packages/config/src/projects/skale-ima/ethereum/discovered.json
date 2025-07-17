@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0x45b71abafa37ddb89fa9a749092eee3bba4d3dcc7d0e4940c83db3e1e833cf4b",
+  "configHash": "0xee8f2b2e69b84b01c7277a40f5898a5731e21fb73c370cc37f543c7500c19e64",
   "entries": [
     {
       "name": "ProxyAdminOwner",
@@ -692,7 +692,7 @@
     }
   ],
   "abis": {
-    "0x0AE92a5105111281151b980A0aD680b890bf1944": [
+    "eth:0x0AE92a5105111281151b980A0aD680b890bf1944": [
       "event ExtraContractRegistered(bytes32 indexed chainHash, address contractAddress)",
       "event ExtraContractRemoved(bytes32 indexed chainHash, address contractAddress)",
       "event GasCostMessageHeaderWasChanged(uint256 oldValue, uint256 newValue)",
@@ -768,10 +768,10 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() view returns (string)"
     ],
-    "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": [
+    "eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": [
       "constructor(address _masterCopy)"
     ],
-    "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a": [
+    "eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a": [
       "event ActiveEthTransfers(bytes32 indexed schainHash, bool active)",
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -816,7 +816,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferredAmount(bytes32) view returns (uint256)"
     ],
-    "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a": [
+    "eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a": [
       "event Initialized(uint8 version)",
       "event MinTransactionGasWasChanged(uint256 oldValue, uint256 newValue)",
       "event MultiplierWasChanged(uint256 oldMultiplierNumerator, uint256 oldMultiplierDivider, uint256 newMultiplierNumerator, uint256 newMultiplierDivider)",
@@ -860,7 +860,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function withdrawFunds(string schainName, uint256 amount)"
     ],
-    "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": [
+    "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -871,7 +871,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x49F583d263e4Ef938b9E09772D3394c71605Df94": [
+    "eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -882,7 +882,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x588801cA36558310D91234aFC2511502282b1621": [
+    "eth:0x588801cA36558310D91234aFC2511502282b1621": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -893,7 +893,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x676FAFCE73F5a304988C519407AAc06bD117CdD0": [
+    "eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0": [
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
@@ -929,7 +929,7 @@
       "function statuses(bytes32) view returns (uint8)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x6ef406953bac772C2146389ED37846BA3b6086D1": [
+    "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -940,7 +940,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d": [
+    "eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -951,7 +951,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x8629703a9903515818C2FeB45a6f6fA5df8Da404": [
+    "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -962,7 +962,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669": [
+    "eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -973,7 +973,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986": [
+    "eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -984,7 +984,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627": [
+    "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -995,7 +995,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5": [
+    "eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5": [
       "event ERC721TokenAdded(string schainName, address indexed contractOnMainnet)",
       "event ERC721TokenReady(address indexed contractOnMainnet, uint256 tokenId)",
       "event Initialized(uint8 version)",
@@ -1040,7 +1040,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferredAmount(address, uint256) view returns (bytes32)"
     ],
-    "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788": [
+    "eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788": [
       "error Empty()",
       "error OutOfBounds()",
       "event ArbitrageDurationIsChanged(bytes32 indexed schainHash, uint256 oldValue, uint256 newValue)",
@@ -1116,7 +1116,7 @@
       "function trustReceiver(string schainName, address receiver)",
       "function validateTransfer(uint256 transferId)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1165,7 +1165,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304": [
+    "eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304": [
       "event ERC1155TokenAdded(string schainName, address indexed contractOnMainnet)",
       "event ERC1155TokenReady(address indexed contractOnMainnet, uint256[] ids, uint256[] amounts)",
       "event Initialized(uint8 version)",
@@ -1214,7 +1214,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferredAmount(bytes32, address, uint256) view returns (uint256)"
     ],
-    "0xF99F446340483C5d9D63697a60232ECb9274E1e7": [
+    "eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7": [
       "event ERC721TokenAdded(string schainName, address indexed contractOnMainnet)",
       "event ERC721TokenReady(address indexed contractOnMainnet, uint256 tokenId)",
       "event Initialized(uint8 version)",

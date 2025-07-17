@@ -56,7 +56,7 @@
         "0xFd234971881a7c72965175fA8E438c97B2Dcd273": {
           "description": "Contract used to compute hashes. It is used by the ZKMerkeTrie. The contract has been generated using the circomlibjs library.",
           "manualSourcePaths": {
-            "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"
+            "eth:0xFd234971881a7c72965175fA8E438c97B2Dcd273": "https://github.com/iden3/circomlibjs/blob/main/src/poseidon_gencontract.js"
           }
         },
         "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3": {

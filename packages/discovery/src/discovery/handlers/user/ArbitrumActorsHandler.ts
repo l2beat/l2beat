@@ -1,4 +1,4 @@
-import { type EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { type ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
@@ -37,7 +37,7 @@ export class ArbitrumActorsHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     // Find transactions in which setValidator/setIsBatchPoster was called
     const logs = await this.getRelevantLogs(provider, address)
@@ -64,7 +64,7 @@ export class ArbitrumActorsHandler implements Handler {
 
   private getRelevantLogs(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<providers.Log[]> {
     const topic0 = this.interface.getEventTopic(this.ownerFunctionCalledEvent)
     // eventParam is 6 for validators and 1 for batch posters

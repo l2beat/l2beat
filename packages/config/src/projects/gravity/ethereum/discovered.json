@@ -2,7 +2,7 @@
   "name": "gravity",
   "chain": "ethereum",
   "blockNumber": 17065004,
-  "configHash": "0xf9a8253ce0db9301190595e073cb8b0e7c24e075bb2ea78e47ca7dd47e6ac9a1",
+  "configHash": "0x3865e60de37389736215f4fe4373c7ab561e3359ee2b74d2aeb538424ed6db1e",
   "entries": [
     {
       "name": "Gravity",
@@ -33,7 +33,7 @@
     }
   ],
   "abis": {
-    "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": [
+    "eth:0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906": [
       "constructor(bytes32 _gravityId, address[] _validators, uint256[] _powers)",
       "error BatchTimedOut()",
       "error IncorrectCheckpoint()",

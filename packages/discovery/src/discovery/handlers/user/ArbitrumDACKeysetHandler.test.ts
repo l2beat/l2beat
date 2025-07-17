@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
@@ -35,7 +35,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
   }
 
   it('fetches last event and decodes the values correctly', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
@@ -66,7 +66,7 @@ describe(ArbitrumDACKeysetHandler.name, () => {
   })
 
   it('returns zero for no events found', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)

@@ -2,7 +2,7 @@
   "name": "lumia",
   "chain": "ethereum",
   "blockNumber": 21981677,
-  "configHash": "0x1ed1cbc7b8cf8a57f5dab7f50187fc4d1f1726988f78f822a77a8f8d94a08839",
+  "configHash": "0x2b0502321d33c1428f24431050ce3d5a761be13049a14ef7f9b48f22f1204384",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -242,16 +242,16 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": [
+    "eth:0x25ba7858b4592b777A2fF3f7da79cB080aAb15c8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": [
+    "eth:0x2Db26DD090aDf2CC23C3506cB2F0646c517C93fB": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",
@@ -275,7 +275,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
-    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
+    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -397,7 +397,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x92726F7dE49300DBdb60930066bc1d0803c0740B": [
+    "eth:0x92726F7dE49300DBdb60930066bc1d0803c0740B": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -407,7 +407,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a": [
+    "eth:0xb3F294dAEd917b33FFcC687DFfB8Cd77565FF54a": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",

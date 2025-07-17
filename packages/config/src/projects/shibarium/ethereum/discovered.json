@@ -2,7 +2,7 @@
   "name": "shibarium",
   "chain": "ethereum",
   "blockNumber": 22337733,
-  "configHash": "0x0146d3ec1500f09a6cf045616588698f81dd76d91d99dcbde0ef2c70185443c0",
+  "configHash": "0x161591cfb7965d89b755c6feb8a2cd266a9c5b561c20dbac8238a93fd61c80fa",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -1004,7 +1004,7 @@
     }
   ],
   "abis": {
-    "0x0057bed57066F61c64DACB395B38c6E1792e03B8": [
+    "eth:0x0057bed57066F61c64DACB395B38c6E1792e03B8": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1015,7 +1015,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x01E988D4b8E86496a45C842E60155a9472541266": [
+    "eth:0x01E988D4b8E86496a45C842E60155a9472541266": [
       "event DelegatorUnstakeWithId(uint256 indexed validatorId, address indexed user, uint256 amount, uint256 nonce)",
       "event RewardParams(uint256 rewardDecreasePerCheckpoint, uint256 maxRewardedCheckpoints, uint256 checkpointRewardDelta)",
       "event ShareBurnedWithId(uint256 indexed validatorId, address indexed user, uint256 indexed amount, uint256 tokens, uint256 nonce)",
@@ -1029,7 +1029,7 @@
       "function logUpdateCommissionRate(uint256 validatorId, uint256 newCommissionRate, uint256 oldCommissionRate)",
       "function registry() view returns (address)"
     ],
-    "0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665": [
+    "eth:0x03c77e03dB8183C8a9eFC178eC1Dfd98c1EfD665": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1040,7 +1040,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82": [
+    "eth:0x08C4b60fda8aA6239b7de7d165BCF6F1686Cad82": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1051,7 +1051,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x12185669Dac70749f717247971E0B8819b2e472e": [
+    "eth:0x12185669Dac70749f717247971E0B8819b2e472e": [
       "constructor(address _proxyTo)",
       "event OwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1062,7 +1062,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x17174796E0eF24330aed565c87Ba5e85431DE19e": [
+    "eth:0x17174796E0eF24330aed565c87Ba5e85431DE19e": [
       "constructor()",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event RootChainChanged(address indexed previousRootChain, address indexed newRootChain)",
@@ -1124,7 +1124,7 @@
       "function validatorThreshold() view returns (uint256)",
       "function validators(uint256) view returns (uint256 amount, uint256 reward, uint256 activationEpoch, uint256 deactivationEpoch, uint256 jailTime, address signer, address contractAddress, uint8 status, uint256 commissionRate, uint256 lastCommissionUpdate, uint256 delegatorsReward, uint256 delegatedAmount, uint256 initialRewardPerStake)"
     ],
-    "0x1b50d902F01ad1e6358FD6116BC115E0a43Fe925": [
+    "eth:0x1b50d902F01ad1e6358FD6116BC115E0a43Fe925": [
       "event MetaTransactionExecuted(address userAddress, address relayerAddress, bytes functionSignature)",
       "event PredicateRegistered(bytes32 indexed tokenType, address indexed predicateAddress)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -1170,7 +1170,7 @@
       "function tokenToType(address) view returns (bytes32)",
       "function typeToPredicate(bytes32) view returns (address)"
     ],
-    "0x1be79AED4088A55f5ED249a14f777758d9F888c6": [
+    "eth:0x1be79AED4088A55f5ED249a14f777758d9F888c6": [
       "constructor()",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event RootChainChanged(address indexed previousRootChain, address indexed newRootChain)",
@@ -1278,7 +1278,7 @@
       "function withdrawRewards(uint256 validatorId)",
       "function withdrawalDelay() view returns (uint256)"
     ],
-    "0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b": [
+    "eth:0x37A9b4e7c327c449858dba9F5e39CE6771cBc31b": [
       "constructor()",
       "event LockedMintableERC721(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 tokenId)",
       "event LockedMintableERC721Batch(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] tokenIds)",
@@ -1304,7 +1304,7 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C": [
+    "eth:0x3a122785bC4d951D132B2CAD31FC187D6DC7A21C": [
       "event NewRegistration(address indexed user, address indexed sender, address indexed receiver)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event RegistrationUpdated(address indexed user, address indexed sender, address indexed receiver)",
@@ -1318,7 +1318,7 @@
       "function syncState(address receiver, bytes data)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x3ca9770a30c61e6cF0a4bDD66A26Cee61AE51e65": [
+    "eth:0x3ca9770a30c61e6cF0a4bDD66A26Cee61AE51e65": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function isOwner() view returns (bool)",
       "function owner() view returns (address)",
@@ -1326,7 +1326,7 @@
       "function transferOwnership(address newOwner)",
       "function update(address target, bytes data)"
     ],
-    "0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA": [
+    "eth:0x3f3bF9Ce73CE5a152561f4BF0306de3E3526f8FA": [
       "constructor()",
       "event ExitedEther(address indexed exitor, uint256 amount)",
       "event LockedEther(address indexed depositor, address indexed depositReceiver, uint256 amount)",
@@ -1348,7 +1348,7 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0": [
+    "eth:0x495eea66B0f8b636D441dC6a98d8F5C3D455C4c0": [
       "constructor(string name, string symbol)",
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
       "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
@@ -1377,7 +1377,7 @@
       "function transferFrom(address from, address to, uint256 tokenId)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x539964b3d225194717fb896D26c8b3E635b8A1aE": [
+    "eth:0x539964b3d225194717fb896D26c8b3E635b8A1aE": [
       "constructor(address _registry)",
       "event ClaimFee(address indexed user, uint256 indexed fee)",
       "event ClaimRewards(uint256 indexed validatorId, uint256 indexed amount, uint256 indexed totalAmount)",
@@ -1440,7 +1440,7 @@
       "function updateNonce(uint256[] validatorIds, uint256[] nonces)",
       "function validatorNonce(uint256) view returns (uint256)"
     ],
-    "0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6": [
+    "eth:0x53D63B9523Ab13399e2071BB4056bbc7Bf98e6A6": [
       "constructor()",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event WhitelistUpdated(address indexed validator, bool isWhitelisted)",
@@ -1453,7 +1453,7 @@
       "function validatorWhitelistingEnable() view returns (bool)",
       "function validators(address) view returns (bool)"
     ],
-    "0x5F683665ca87dbC3D1358913da80e3C71c328Fb0": [
+    "eth:0x5F683665ca87dbC3D1358913da80e3C71c328Fb0": [
       "constructor(address _proxyTo, address _registry, address _rootChain, address _exitNft)",
       "event ExitCancelled(uint256 indexed exitId)",
       "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
@@ -1478,7 +1478,7 @@
       "function transferOwnership(address newOwner)",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x65218A41Fb92637254B4f8c97448d3dF343A3064": [
+    "eth:0x65218A41Fb92637254B4f8c97448d3dF343A3064": [
       "constructor(address _proxyTo)",
       "event OwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1489,7 +1489,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa": [
+    "eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1500,7 +1500,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x79a674D373551e6CfD22b2ed65cc1Ac09250F430": [
+    "eth:0x79a674D373551e6CfD22b2ed65cc1Ac09250F430": [
       "constructor()",
       "event MaxErc20DepositUpdate(uint256 indexed oldLimit, uint256 indexed newLimit)",
       "event NewDepositBlock(address indexed owner, address indexed token, uint256 amountOrNFTId, uint256 depositBlockId)",
@@ -1531,7 +1531,7 @@
       "function updateMaxErc20Deposit(uint256 maxDepositAmount)",
       "function updateRootChain(address _rootChain)"
     ],
-    "0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307": [
+    "eth:0x7ad7f98f229c5C1EA5161bEd952c3007DBE1F307": [
       "constructor(address _registry)",
       "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
       "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
@@ -1550,7 +1550,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferFrom(address from, address to, uint256 tokenId)"
     ],
-    "0x885fcE983b6a01633f764325B8c3c5D31032C995": [
+    "eth:0x885fcE983b6a01633f764325B8c3c5D31032C995": [
       "constructor(address _proxyTo, address _registry, address _rootChain, address _governance)",
       "event MaxErc20DepositUpdate(uint256 indexed oldLimit, uint256 indexed newLimit)",
       "event NewDepositBlock(address indexed owner, address indexed token, uint256 amountOrNFTId, uint256 depositBlockId)",
@@ -1575,7 +1575,7 @@
       "function unlock()",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce": [
+    "eth:0x8ed7d143Ef452316Ab1123d28Ab302dC3b80d3ce": [
       "constructor(address _registry, address _logger, string _heimdallId)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function VOTE_TYPE() view returns (uint8)",
@@ -1597,7 +1597,7 @@
       "function updateSlashedAmounts(bytes data, bytes sigs)",
       "function verifyConsensus(bytes32 voteHash, bytes sigs) view returns (bool)"
     ],
-    "0x98C831cFB18852f7deB3E3a970e907475b49730f": [
+    "eth:0x98C831cFB18852f7deB3E3a970e907475b49730f": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1608,7 +1608,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3": [
+    "eth:0x9df56e63CD340F0f3D811dd2aAAEEa42ec27D5a3": [
       "constructor(address _withdrawManager, address _depositManager)",
       "function CHAINID() view returns (uint256)",
       "function interpretStateUpdate(bytes state) view returns (bytes b)",
@@ -1617,7 +1617,7 @@
       "function startExitWithBurntTokens(bytes data) returns (bytes)",
       "function verifyDeprecation(bytes exit, bytes inputUtxo, bytes challengeData) returns (bool)"
     ],
-    "0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3": [
+    "eth:0xA5E0bD9dc1F1d55e53ca87496731aE6B768094D3": [
       "event ExitCancelled(uint256 indexed exitId)",
       "event ExitPeriodUpdate(uint256 indexed oldExitPeriod, uint256 indexed newExitPeriod)",
       "event ExitStarted(address indexed exitor, uint256 indexed exitId, address indexed token, uint256 amount, bool isRegularExit)",
@@ -1645,7 +1645,7 @@
       "function updateExitPeriod(uint256 halfExitPeriod)",
       "function verifyInclusion(bytes data, uint8 offset, bool verifyTxInclusion) view returns (uint256)"
     ],
-    "0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA": [
+    "eth:0xb3bfb2aE369a0e9D9735ac679e4A14eD81E837fA": [
       "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event ResetHeaderBlock(address indexed proposer, uint256 indexed headerBlockId)",
@@ -1668,7 +1668,7 @@
       "function transferOwnership(address newOwner)",
       "function updateDepositId(uint256 numDeposits) returns (uint256 depositId)"
     ],
-    "0xc3897302aB4B42931cB4857050Fa60f53B775870": [
+    "eth:0xc3897302aB4B42931cB4857050Fa60f53B775870": [
       "constructor(address _proxyTo)",
       "event ProxyOwnerUpdate(address _new, address _old)",
       "event ProxyUpdated(address indexed _new, address indexed _old)",
@@ -1679,7 +1679,7 @@
       "function updateAndCall(address _newProxyTo, bytes data) payable",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0xC476E20c2F7FA3B35aC242aBE71B59e902242f06": [
+    "eth:0xC476E20c2F7FA3B35aC242aBE71B59e902242f06": [
       "constructor(address _proxyTo)",
       "event OwnerUpdate(address _prevOwner, address _newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1692,7 +1692,7 @@
       "function transferOwnership(address newOwner)",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0xCbb0D2eCBEDBF2D0F0D5616dFE25bC286D8F8610": [
+    "eth:0xCbb0D2eCBEDBF2D0F0D5616dFE25bC286D8F8610": [
       "constructor()",
       "event LockedBatchERC1155(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256[] ids, uint256[] amounts)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -1717,7 +1717,7 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": [
+    "eth:0xd46042f503B8Ec0A166af8C0BFbB0a3C562353F9": [
       "constructor(address _proxyTo, address _registry, string _heimdallId)",
       "event NewHeaderBlock(address indexed proposer, uint256 indexed headerBlockId, uint256 indexed reward, uint256 start, uint256 end, bytes32 root)",
       "event OwnerUpdate(address _prevOwner, address _newOwner)",
@@ -1738,7 +1738,7 @@
       "function transferOwnership(address newOwner)",
       "function updateImplementation(address _newProxyTo)"
     ],
-    "0xdaF14950155DF895E9D0fd2521D05477d26F462c": [
+    "eth:0xdaF14950155DF895E9D0fd2521D05477d26F462c": [
       "constructor(address _withdrawManager, address _depositManager)",
       "function CHAINID() view returns (uint256)",
       "function interpretStateUpdate(bytes state) view returns (bytes)",
@@ -1747,7 +1747,7 @@
       "function startExitWithBurntTokens(bytes data)",
       "function verifyDeprecation(bytes exit, bytes inputUtxo, bytes challengeData) returns (bool)"
     ],
-    "0xe0f4555Fcffb181B1D7566d89200105226F29580": [
+    "eth:0xe0f4555Fcffb181B1D7566d89200105226F29580": [
       "constructor()",
       "event ExitedERC721(address indexed exitor, address indexed rootToken, uint256 tokenId)",
       "event LockedERC721(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 tokenId)",
@@ -1771,7 +1771,7 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB": [
+    "eth:0xF486e3B6A432Bdd6EDaAe85a565CD7682A7862BB": [
       "constructor(address _governance)",
       "event ContractMapUpdated(bytes32 indexed key, address indexed previousContract, address indexed newContract)",
       "event PredicateAdded(address indexed predicate, address indexed from)",
@@ -1806,7 +1806,7 @@
       "function rootToChildToken(address) view returns (address)",
       "function updateContractMap(bytes32 _key, address _address)"
     ],
-    "0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd": [
+    "eth:0xfffC2D781999F09A8b127f8Ef419a3EeD2EDa1dd": [
       "constructor()",
       "event LockedERC20(address indexed depositor, address indexed depositReceiver, address indexed rootToken, uint256 amount)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",

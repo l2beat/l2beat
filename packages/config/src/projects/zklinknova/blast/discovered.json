@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "blast",
   "blockNumber": 16435499,
-  "configHash": "0x8553f532090e9cb406c219e5ad51b6ff48e092d497c6f44b99a9e97412ed74a8",
+  "configHash": "0x9a2067912fd20158169d48d149a42f9ba5a226ec53c3522d118b60b344e9b4ab",
   "entries": [
     {
       "address": "blastmainnet:0x17887788E01A1192a26F636Cfcfc033c7Bb42348",
@@ -287,7 +287,7 @@
     }
   ],
   "abis": {
-    "0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD": [
+    "blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -295,7 +295,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+    "blastmainnet:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -345,7 +345,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x3f64e2e09732969813904a8473074CFADeE66AF1": [
+    "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -353,10 +353,10 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x730200f698cc8Ff16C00F4E8520Fd780B916D50E": [
+    "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E": [
       "constructor(address _singleton)"
     ],
-    "0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b": [
+    "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -367,7 +367,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19": [
+    "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -378,7 +378,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xc24864769346073f5fEf0386A18734F0eF5503F5": [
+    "blastmainnet:0xc24864769346073f5fEf0386A18734F0eF5503F5": [
       "constructor(address _zkSync)",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
       "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
@@ -396,7 +396,7 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD": [
+    "blastmainnet:0xd1dCd063A4e650DCECd8BD211fe6D18a934ecCaD": [
       "constructor(address _zkLink)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -419,7 +419,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xDe4Be50Bfe9503180231357Eab19d709F8F73C66": [
+    "blastmainnet:0xDe4Be50Bfe9503180231357Eab19d709F8F73C66": [
       "constructor(bool _isEthGasToken)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

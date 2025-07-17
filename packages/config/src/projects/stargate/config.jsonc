@@ -72,7 +72,7 @@
                     [
                       "=",
                       "#userApplication",
-                      "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                      "eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
                     ],
                     ["=", "#configType", 6]
                   ]
@@ -90,7 +90,7 @@
                     [
                       "=",
                       "#userApplication",
-                      "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
+                      "eth:0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97"
                     ],
                     ["=", "#configType", 3]
                   ]

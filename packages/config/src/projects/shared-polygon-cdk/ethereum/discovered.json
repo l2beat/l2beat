@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 22924125,
-  "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
+  "configHash": "0x9c126ada5088027f315436cd07e603e798843fbdb61dc8eb5acca775f87a51e0",
   "entries": [
     {
       "address": "eth:0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
@@ -1708,7 +1708,7 @@
     }
   ],
   "abis": {
-    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
       "function VERIFIER_HASH() pure returns (bytes32)",
@@ -1717,13 +1717,13 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": [
+    "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
+    "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1734,10 +1734,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
+    "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
       "constructor(address _singleton)"
     ],
-    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
+    "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1748,10 +1748,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
+    "eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
       "constructor(address _singleton)"
     ],
-    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
+    "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1762,7 +1762,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": [
+    "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1773,7 +1773,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": [
+    "eth:0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -1855,7 +1855,7 @@
       "function wrappedTokenBytecodeStorer() view returns (address)",
       "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
-    "0x7bB0e8f1950722694929dB392abA805AAc6e9346": [
+    "eth:0x7bB0e8f1950722694929dB392abA805AAc6e9346": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -1900,7 +1900,7 @@
       "function updateDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newDefaultAggchainVKey)",
       "function verifyPessimisticProof(bytes publicValues, bytes proofBytes) view"
     ],
-    "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab": [
+    "eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _aggLayerGateway)",
       "error AccessControlOnlyCanRenounceRolesForSelf()",
       "error AddressDoNotHaveRequiredRole()",
@@ -2040,7 +2040,7 @@
       "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
       "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof, bytes aggchainData)"
     ],
-    "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": [
+    "eth:0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": [
       "constructor(address _rollupManager, address _bridgeAddress)",
       "error GlobalExitRootAlreadySet()",
       "error GlobalExitRootNotFound()",
@@ -2071,10 +2071,10 @@
       "function updateExitRoot(bytes32 newRoot)",
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
     ],
-    "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
+    "eth:0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2123,7 +2123,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": [
+    "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin, address _polygonZkEVM)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",

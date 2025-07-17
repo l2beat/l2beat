@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0xaae96648697d2dfbd599701cebf8bf7da84bebcfd2f9179dec8d27f2dea6b7c5",
+  "configHash": "0x9451649a8c0ff595249e0924e4e752ae496e9326f500fea659a2504ae81916e1",
   "entries": [
     {
       "address": "eth:0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
@@ -220,7 +220,7 @@
     }
   ],
   "abis": {
-    "0x13a4cC0750296bB72Eb0006febec306551A4f472": [
+    "eth:0x13a4cC0750296bB72Eb0006febec306551A4f472": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -231,7 +231,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b": [
+    "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -242,7 +242,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103": [
+    "eth:0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103": [
       "event CurrentLiquidityChanged(address indexed token, uint256 indexed newValue)",
       "event EthReceived(address indexed sender, uint256 value)",
       "event FeeAdded(address indexed tokenAddress, uint256 indexed fee)",
@@ -295,7 +295,7 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
-    "0x4906b8E690EB1E09Fec924422452d1105D59d042": [
+    "eth:0x4906b8E690EB1E09Fec924422452d1105D59d042": [
       "event AssetSent(address indexed asset, uint256 indexed amount, uint256 indexed transferredAmount, address target, bytes depositHash, uint256 fromChainId, uint256 lpFee, uint256 transferFee, uint256 gasFee)",
       "event BaseGasUpdated(uint256 indexed baseGas)",
       "event Deposit(address indexed from, address indexed tokenAddress, address indexed receiver, uint256 toChainId, uint256 amount, uint256 reward, string tag)",
@@ -356,7 +356,7 @@
       "function withdrawErc20GasFee(address tokenAddress)",
       "function withdrawNativeGasFee()"
     ],
-    "0x79E559AC5b499A5676e28f0074e29763F6c2A27e": [
+    "eth:0x79E559AC5b499A5676e28f0074e29763F6c2A27e": [
       "event ExcessStateTransferFeePercChanged(address indexed tokenAddress, uint256 indexed fee)",
       "event FeeChanged(address indexed tokenAddress, uint256 indexed equilibriumFee, uint256 indexed maxFee)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -393,7 +393,7 @@
       "function unpause()",
       "function updateTokenCap(address tokenAddress, uint256 minCapLimit, uint256 maxCapLimit)"
     ],
-    "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399": [
+    "eth:0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399": [
       "event ExecutorAdded(address executor, address owner)",
       "event ExecutorRemoved(address executor, address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -407,7 +407,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168": [
+    "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -418,7 +418,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": [
+    "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

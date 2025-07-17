@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
@@ -57,7 +57,7 @@ export class CallHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    currentContractAddress: EthereumAddress,
+    currentContractAddress: ChainSpecificAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const referenceInput = generateReferenceInput(
@@ -96,7 +96,7 @@ function resolveDependencies(
 ): {
   method: string | undefined
   args: ContractValue[]
-  address: EthereumAddress | undefined
+  address: ChainSpecificAddress | undefined
 } {
   const args = definition.args.map((x) => resolveReference(x, referenceInput))
   const address = resolveReference(definition.address, referenceInput)
@@ -104,7 +104,9 @@ function resolveDependencies(
     method: definition.method,
     args,
     address:
-      address !== undefined ? EthereumAddress(address.toString()) : undefined,
+      address !== undefined
+        ? ChainSpecificAddress(address.toString())
+        : undefined,
   }
 }
 

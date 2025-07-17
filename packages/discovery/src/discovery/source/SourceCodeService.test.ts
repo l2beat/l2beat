@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -6,7 +6,7 @@ import type { IProvider } from '../provider/IProvider'
 import { SourceCodeService } from './SourceCodeService'
 
 describe(SourceCodeService.name, () => {
-  const FOO_ADDRESS = EthereumAddress.random()
+  const FOO_ADDRESS = ChainSpecificAddress.random()
   const FOO_METADATA: ContractSource = {
     abi: [],
     name: 'Foo',
@@ -17,7 +17,7 @@ describe(SourceCodeService.name, () => {
     remappings: [],
   }
 
-  const BAR_ADDRESS = EthereumAddress.random()
+  const BAR_ADDRESS = ChainSpecificAddress.random()
   const BAR_METADATA: ContractSource = {
     abi: ['function bar()'],
     name: 'Bar',
@@ -28,7 +28,7 @@ describe(SourceCodeService.name, () => {
     remappings: [],
   }
 
-  const BAZ_ADDRESS = EthereumAddress.random()
+  const BAZ_ADDRESS = ChainSpecificAddress.random()
   const BAZ_METADATA: ContractSource = {
     abi: ['function baz()'],
     name: 'Baz',
