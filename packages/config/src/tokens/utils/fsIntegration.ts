@@ -1,5 +1,5 @@
-import { getChainShortName, getDiscoveryPaths } from '@l2beat/discovery'
-import { ChainSpecificAddress, type ChainConverter } from '@l2beat/shared-pure'
+import { getDiscoveryPaths } from '@l2beat/discovery'
+import { type ChainConverter, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readFileSync, writeFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
 import groupBy from 'lodash/groupBy'
