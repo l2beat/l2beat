@@ -741,12 +741,10 @@ export interface ProjectZkCatalogInfo {
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetups: {
-    [key in ZkCatalogProofSystem]?: TrustedSetup[]
-  }
+  trustedSetups: TrustedSetup[]
   verifierHashes: {
     hash: string
-    proofSystem: ZkCatalogProofSystem
+    proofSystem: ZkCatalogTag
     knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
@@ -754,12 +752,6 @@ export interface ProjectZkCatalogInfo {
     attesters?: ZkCatalogAttester[]
   }[]
 }
-
-export type ZkCatalogProofSystem =
-  | 'PlonkBellman'
-  | 'PlonkGnark'
-  | 'Groth16Gnark'
-  | 'FflonkZksync'
 
 export interface ZkCatalogTag {
   id: string
@@ -770,6 +762,7 @@ export interface ZkCatalogTag {
 
 export interface TrustedSetup {
   id: string
+  proofSystem: ZkCatalogTag
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
