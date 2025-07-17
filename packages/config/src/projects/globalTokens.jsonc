@@ -700,7 +700,11 @@
     },
     "abstract": {
       "names": {
+        "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5": "ABSTER Token",
         "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1": "Bridged USDC (Stargate) Token",
+        "0x85Ca16Fd0e81659e0b8Be337294149E722528731": "Noot Noot Token",
+        "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4": "Pengus Wife Token",
+        "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62": "Pudgy Penguins Token",
         "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD": "USDT Token"
       }
     },
