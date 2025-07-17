@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 22923900,
-  "configHash": "0x7e1ce9e3f1fe731bcdf3902b3179a0fe626f6d34c730b06e3eb60aa61a762440",
+  "configHash": "0x2acff0b5fb65d3efe0a5a663d1f1d164d4b5ad03cefe13c3d04734fd0d3239b4",
   "entries": [
     {
       "address": "eth:0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -1105,7 +1105,7 @@
     }
   ],
   "abis": {
-    "0x0371AE4960FC4Dd8ef08464080331573D386D6b4": [
+    "eth:0x0371AE4960FC4Dd8ef08464080331573D386D6b4": [
       "constructor(address erc20, address _mailbox)",
       "event GasSet(uint32 domain, uint256 gas)",
       "event HookSet(address _hook)",
@@ -1141,7 +1141,7 @@
       "function unenrollRemoteRouters(uint32[] _domains)",
       "function wrappedToken() view returns (address)"
     ],
-    "0x2eA653968633b1c91d35f62821fc019158B214dC": [
+    "eth:0x2eA653968633b1c91d35f62821fc019158B214dC": [
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function domains() view returns (uint256[])",
@@ -1157,7 +1157,7 @@
       "function transferOwnership(address newOwner)",
       "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
-    "0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08": [
+    "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1168,10 +1168,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": [
+    "eth:0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": [
       "constructor(address _singleton)"
     ],
-    "0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7": [
+    "eth:0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7": [
       "constructor(address erc20, address _mailbox)",
       "event GasSet(uint32 domain, uint256 gas)",
       "event HookSet(address _hook)",
@@ -1207,10 +1207,10 @@
       "function unenrollRemoteRouters(uint32[] _domains)",
       "function wrappedToken() view returns (address)"
     ],
-    "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7": [
+    "eth:0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7": [
       "constructor(address _singleton)"
     ],
-    "0x5ADdEB216C6dB923b4DE9449A27120da9F399021": [
+    "eth:0x5ADdEB216C6dB923b4DE9449A27120da9F399021": [
       "constructor(address erc20, address _mailbox)",
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1242,24 +1242,24 @@
       "function unenrollRemoteRouters(uint32[] _domains)",
       "function wrappedToken() view returns (address)"
     ],
-    "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A": [
+    "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x647C621CEb36853Ef6A907E397Adf18568E70543": [
+    "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x69d39cd0B60d47460F30f0bD5200f9C46E924Ce1": [
+    "eth:0x69d39cd0B60d47460F30f0bD5200f9C46E924Ce1": [
       "function moduleType() view returns (uint8)",
       "function modulesAndThreshold(bytes) view returns (address[], uint8)",
       "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
-    "0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659": [
+    "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1270,7 +1270,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x7A294add0Ec417E6AA99541B4A2F1c92590E846a": [
+    "eth:0x7A294add0Ec417E6AA99541B4A2F1c92590E846a": [
       "constructor(address erc20, address _mailbox)",
       "event GasSet(uint32 domain, uint256 gas)",
       "event HookSet(address _hook)",
@@ -1306,7 +1306,7 @@
       "function unenrollRemoteRouters(uint32[] _domains)",
       "function wrappedToken() view returns (address)"
     ],
-    "0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455": [
+    "eth:0x7b4D881c122a5e61adCFfb56A2e3CE9927D53455": [
       "constructor(uint32 _localDomain)",
       "event DefaultHookSet(address indexed hook)",
       "event DefaultIsmSet(address indexed module)",
@@ -1344,7 +1344,7 @@
       "function setRequiredHook(address _hook)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e": [
+    "eth:0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e": [
       "constructor(address erc20, address _mailbox)",
       "event GasSet(uint32 domain, uint256 gas)",
       "event HookSet(address _hook)",
@@ -1380,7 +1380,7 @@
       "function unenrollRemoteRouters(uint32[] _domains)",
       "function wrappedToken() view returns (address)"
     ],
-    "0x9Fca159607687AE26367d66166e680A930af0780": [
+    "eth:0x9Fca159607687AE26367d66166e680A930af0780": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1391,15 +1391,15 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": [
+    "eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": [
       "function moduleType() view returns (uint8)",
       "function modulesAndThreshold(bytes) view returns (address[], uint8)",
       "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
-    "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e": [
+    "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e": [
       "constructor(address _singleton)"
     ],
-    "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67": [
+    "eth:0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67": [
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function domains() view returns (uint256[])",
@@ -1415,12 +1415,12 @@
       "function transferOwnership(address newOwner)",
       "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
-    "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": [
+    "eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": [
       "function moduleType() view returns (uint8)",
       "function validatorsAndThreshold(bytes) pure returns (address[], uint8)",
       "function verify(bytes _metadata, bytes _message) view returns (bool)"
     ],
-    "0xc005dc82818d67AF737725bD4bf75435d065D239": [
+    "eth:0xc005dc82818d67AF737725bD4bf75435d065D239": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1431,13 +1431,13 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09": [
+    "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33": [
+    "eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33": [
       "constructor(address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
@@ -1452,16 +1452,16 @@
       "function unpause()",
       "function verify(bytes, bytes) view returns (bool)"
     ],
-    "0xCEA8039076E35a825854c5C2f85659430b06ec96": [
+    "eth:0xCEA8039076E35a825854c5C2f85659430b06ec96": [
       "constructor(address _singleton)"
     ],
-    "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c": [
+    "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1510,13 +1510,13 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe1De9910fe71cC216490AC7FCF019e13a34481D7": [
+    "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe8CC4FF9203196A90734d2C4328B83775486163C": [
+    "eth:0xe8CC4FF9203196A90734d2C4328B83775486163C": [
       "constructor(address erc20, address _mailbox)",
       "event Initialized(uint8 version)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1548,13 +1548,13 @@
       "function unenrollRemoteRouters(uint32[] _domains)",
       "function wrappedToken() view returns (address)"
     ],
-    "0xef899e92DA472E014bE795Ecce948308958E25A2": [
+    "eth:0xef899e92DA472E014bE795Ecce948308958E25A2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": [
+    "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": [
       "function moduleType() view returns (uint8)",
       "function validatorsAndThreshold(bytes) pure returns (address[], uint8)",
       "function verify(bytes _metadata, bytes _message) view returns (bool)"

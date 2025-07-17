@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 884077,
-  "configHash": "0x9e66cb435f4b48191a231127f7c29969a9478af4896e09771c9ec128ac936cd7",
+  "configHash": "0xf4b16e9097fb2060fcc75443dc83980e5dd215989784bac923184d3f2aab9490",
   "entries": [
     {
       "name": "NioGuardians",
@@ -3199,7 +3199,7 @@
     }
   ],
   "abis": {
-    "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": [
+    "kinto:0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": [
       "constructor(address initialOwner)",
       "error CheckpointUnorderedInsertion()",
       "error ERC5805FutureLookup(uint256 timepoint, uint48 clock)",
@@ -3258,7 +3258,7 @@
       "function transferFrom(address from, address to, uint256 tokenId)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": [
+    "kinto:0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": [
       "constructor(address token, address manager)",
       "error FailedInnerCall()",
       "error GovernorAlreadyCastVote(address voter)",
@@ -3352,19 +3352,19 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": [
+    "kinto:0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": [
       "constructor(address _implementation, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": [
+    "kinto:0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x1Bc47279D052Edb9C1770242287eFC23317Ed675": [
+    "kinto:0x1Bc47279D052Edb9C1770242287eFC23317Ed675": [
       "constructor(address _implAddressP, address _appRegistry, address _kintoID, address _rewardsDistributor)",
       "error AmountMismatch()",
       "error DeploymentNotAllowed(string reason)",
@@ -3418,7 +3418,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletTs(address) view returns (uint256)"
     ],
-    "0x1d61772AE2e157f9F6A4127526eD86AB5801a477": [
+    "kinto:0x1d61772AE2e157f9F6A4127526eD86AB5801a477": [
       "constructor(address _walletFactory, address _faucet)",
       "error AccountsAmountExceeded()",
       "error BalanceNotZero()",
@@ -3509,7 +3509,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletFactory() view returns (address)"
     ],
-    "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": [
+    "kinto:0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": [
       "error DelegateAndRevert(bool success, bytes ret)",
       "error FailedOp(uint256 opIndex, string reason)",
       "error FailedOpWithRevert(uint256 opIndex, string reason, bytes inner)",
@@ -3549,7 +3549,7 @@
       "function withdrawStake(address withdrawAddress)",
       "function withdrawTo(address withdrawAddress, uint256 withdrawAmount)"
     ],
-    "0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB": [
+    "kinto:0x2A10b80bE8Ee546C52Fde9b58d65D089C6B929BB": [
       "constructor(address __entryPoint, address _walletFactory)",
       "error AccountKYCRequired()",
       "error AppGasLimitExceeded()",
@@ -3612,13 +3612,13 @@
       "function withdrawStake(address withdrawAddress)",
       "function withdrawTokensTo(address target, uint256 amount)"
     ],
-    "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": [
+    "kinto:0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": [
       "constructor(address beacon, bytes data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": [
+    "kinto:0x3e9727470C66B1e77034590926CDe0242B5A3dCc": [
       "constructor(uint32 chainSlug_, address hasher_, address capacitorFactory_, address owner_, string version_)",
       "error ErrInSourceValidation()",
       "error InvalidCapacitorAddress()",
@@ -3696,13 +3696,13 @@
       "function useSiblingSwitchboard(uint32 siblingChainSlug_, address siblingSwitchboard_)",
       "function version() view returns (bytes32)"
     ],
-    "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": [
+    "kinto:0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x6F04c790db5e6Cc7c041E1B8a9440a5045dFC550": [
+    "kinto:0x6F04c790db5e6Cc7c041E1B8a9440a5045dFC550": [
       "constructor(address _kintoWalletFactory)",
       "error AlreadyClaimed()",
       "error FaucetNotActive()",
@@ -3739,7 +3739,7 @@
       "function walletFactory() view returns (address)",
       "function withdrawAll()"
     ],
-    "0x87f0eE85bF3198654900a422832157abBba30828": [
+    "kinto:0x87f0eE85bF3198654900a422832157abBba30828": [
       "constructor(address implementation_) payable",
       "function implementation() view returns (address)",
       "function owner() view returns (address)",
@@ -3749,13 +3749,13 @@
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": [
+    "kinto:0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d": [
+    "kinto:0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d": [
       "constructor(address _entryPoint)",
       "event InflatorRegistered(uint32 id, address inflator)",
       "function entryPoint() view returns (address)",
@@ -3764,7 +3764,7 @@
       "function inflatorToID(address) view returns (uint32)",
       "function registerInflator(uint32 inflatorId, address inflator)"
     ],
-    "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": [
+    "kinto:0xacC000818e5Bbd911D5d449aA81CB5cA24024739": [
       "constructor(address initialAdmin)",
       "error AccessManagerAlreadyScheduled(bytes32 operationId)",
       "error AccessManagerBadConfirmation()",
@@ -3827,7 +3827,7 @@
       "function setTargetFunctionRole(address target, bytes4[] selectors, uint64 roleId)",
       "function updateAuthority(address target, address newAuthority)"
     ],
-    "0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1": [
+    "kinto:0xb9cE6BC89b79c713f34fd15D82a70900fEFD0de1": [
       "constructor(address _walletFactory, address _paymaster)",
       "error AlreadyRegistered(address app)",
       "error CannotRegisterWallet(address wallet)",
@@ -3922,7 +3922,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function walletToDeployer(address) view returns (address)"
     ],
-    "0xbFE260680514e0D669fdC5A5f7334b97a5513d9D": [
+    "kinto:0xbFE260680514e0D669fdC5A5f7334b97a5513d9D": [
       "constructor(address __entryPoint, address _kintoID, address _kintoApp, address _factory)",
       "error AppNotSponsored(address app, address addr)",
       "error AppNotWhitelisted(address app, address addr)",
@@ -4000,7 +4000,7 @@
       "function whitelistApp(address[] apps, bool[] flags)",
       "function whitelistAppAndSetKey(address app, address signer)"
     ],
-    "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": [
+    "kinto:0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -4009,7 +4009,7 @@
   },
   "usedTemplates": {
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "kinto/AccessManager": "0x5f613078dec03b478066cd2e27d73c558a7b01db7e74fc21aa87bd67e05d4548",
+    "kinto/AccessManager": "0xec109aec1e31874e26b522efdbea95efafb8071431b85b12e3fe1f7be846cc6c",
     "kinto/KintoAppRegistry": "0xb37bd2f43ee0daa14c470dd51a29784276dfaadfb3a6e142e9753d27d138df1d",
     "kinto/KintoID": "0x60c7db78a1d45df2b83b6c019907865abc7fb5b31ab065b7d69aafa67c19fb8b"
   },

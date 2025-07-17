@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 
@@ -24,7 +24,7 @@ export class LimitedArrayHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const results = await Promise.all(
       Array.from({ length: this.limit }).map((_, index) =>

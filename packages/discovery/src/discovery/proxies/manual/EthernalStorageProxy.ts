@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
@@ -6,7 +6,7 @@ import type { ProxyDetails } from '../types'
 
 export async function getEternalStorageProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const implementation = await provider.callMethod<EthereumAddress>(
     address,
@@ -29,8 +29,11 @@ export async function getEternalStorageProxy(
   return {
     type: 'Eternal Storage proxy',
     values: {
-      $admin: admin.toString(),
-      $implementation: implementation.toString(),
+      $admin: ChainSpecificAddress.fromLong(provider.chain, admin).toString(),
+      $implementation: ChainSpecificAddress.fromLong(
+        provider.chain,
+        implementation,
+      ).toString(),
       $pastUpgrades: pastUpgrades as ContractValue,
       $upgradeCount: pastUpgrades.length,
     },

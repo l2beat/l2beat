@@ -2,7 +2,7 @@
   "name": "polynetwork",
   "chain": "ethereum",
   "blockNumber": 20675914,
-  "configHash": "0xf31f1a647491faa84528675b19a444a9c78c1da09d09324e08740dacbda4e44d",
+  "configHash": "0xd0e8463115bc775aed0b15b2a0b9417bb45c5be5b86d94b0c574d89e432cdf64",
   "entries": [
     {
       "address": "eth:0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
@@ -305,7 +305,7 @@
     }
   ],
   "abis": {
-    "0x14413419452Aaf089762A0c5e95eD2A13bBC488C": [
+    "eth:0x14413419452Aaf089762A0c5e95eD2A13bBC488C": [
       "constructor(address _eccd, uint64 _chainId, address[] fromContractWhiteList, bytes[] contractMethodWhiteList)",
       "event ChangeBookKeeperEvent(uint256 height, bytes rawHeader)",
       "event CrossChainEvent(address indexed sender, bytes txId, address proxyOrAssetContract, uint64 toChainId, bytes toContract, bytes rawdata)",
@@ -338,7 +338,7 @@
       "function whiteListFromContract(address) view returns (bool)",
       "function whiteLister() view returns (address)"
     ],
-    "0x250e76987d838a75310c34bf422ea9f1AC4Cc906": [
+    "eth:0x250e76987d838a75310c34bf422ea9f1AC4Cc906": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
       "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",
@@ -359,7 +359,7 @@
       "function transferOwnership(address newOwner)",
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ],
-    "0x51ba447DaD1de30b91286471BcB570F69ECE968D": [
+    "eth:0x51ba447DaD1de30b91286471BcB570F69ECE968D": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
       "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",
@@ -380,7 +380,7 @@
       "function transferOwnership(address newOwner)",
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ],
-    "0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868": [
+    "eth:0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
       "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",
@@ -401,7 +401,7 @@
       "function transferOwnership(address newOwner)",
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ],
-    "0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": [
+    "eth:0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb": [
       "constructor(address _ethCrossChainManagerAddr)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
@@ -418,7 +418,7 @@
       "function unpauseEthCrossChainManager() returns (bool)",
       "function upgradeEthCrossChainManager(address _newEthCrossChainManagerAddr) returns (bool)"
     ],
-    "0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": [
+    "eth:0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindLPToAssetEvent(address originAssetAddress, address LPTokenAddress)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
@@ -456,7 +456,7 @@
       "function unpause() returns (bool)",
       "function withdraw(address targetTokenAddress, uint256 amount) returns (bool)"
     ],
-    "0x81910675DbaF69deE0fD77570BFD07f8E436386A": [
+    "eth:0x81910675DbaF69deE0fD77570BFD07f8E436386A": [
       "constructor(address _owner, uint256 _chainId)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
@@ -484,7 +484,7 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
-    "0xcF2afe102057bA5c16f899271045a0A37fCb10f2": [
+    "eth:0xcF2afe102057bA5c16f899271045a0A37fCb10f2": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
       "event Unpaused(address account)",
@@ -512,7 +512,7 @@
       "function transferOwnership(address newOwner)",
       "function unpause() returns (bool)"
     ],
-    "0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": [
+    "eth:0xead16Ae2c301C48Ea011A36Eef9337507673DFc0": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
       "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",
@@ -533,7 +533,7 @@
       "function transferOwnership(address newOwner)",
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ],
-    "0xf6378141BC900020a438F3914e4C3ceA29907b27": [
+    "eth:0xf6378141BC900020a438F3914e4C3ceA29907b27": [
       "event BindAssetEvent(address fromAssetHash, uint64 toChainId, bytes targetProxyHash, uint256 initialAmount)",
       "event BindProxyEvent(uint64 toChainId, bytes targetProxyHash)",
       "event LockEvent(address fromAssetHash, address fromAddress, uint64 toChainId, bytes toAssetHash, bytes toAddress, uint256 amount)",

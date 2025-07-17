@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -8,15 +8,19 @@ describe(LimitedArrayHandler.name, () => {
   const method = 'function owners(uint256 index) view returns (address)'
 
   it('calls the passed method n times', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const owners = [
-      EthereumAddress.random(),
-      EthereumAddress.random(),
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+      async callMethod<T>(
+        a: ChainSpecificAddress,
+        _abi: string,
+        data: unknown[],
+      ) {
         expect(a).toEqual(address)
         const index = data[0] as number
         expect(data).toEqual([index])
@@ -36,15 +40,19 @@ describe(LimitedArrayHandler.name, () => {
   })
 
   it('handles a revert', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const owners = [
-      EthereumAddress.random(),
-      EthereumAddress.random(),
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+      async callMethod<T>(
+        a: ChainSpecificAddress,
+        _abi: string,
+        data: unknown[],
+      ) {
         expect(a).toEqual(address)
 
         const index = data[0] as number
@@ -66,15 +74,19 @@ describe(LimitedArrayHandler.name, () => {
   })
 
   it('handles other errors', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const owners = [
-      EthereumAddress.random(),
-      EthereumAddress.random(),
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+      async callMethod<T>(
+        a: ChainSpecificAddress,
+        _abi: string,
+        data: unknown[],
+      ) {
         expect(a).toEqual(address)
 
         const index = data[0] as number
@@ -96,9 +108,13 @@ describe(LimitedArrayHandler.name, () => {
   })
 
   it('rewrites $foo to _$foo', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
-      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+      async callMethod<T>(
+        a: ChainSpecificAddress,
+        _abi: string,
+        data: unknown[],
+      ) {
         expect(a).toEqual(address)
         const index = data[0] as number
         expect(data).toEqual([index])

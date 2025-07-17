@@ -2,7 +2,7 @@
   "name": "eclipse",
   "chain": "ethereum",
   "blockNumber": 22868281,
-  "configHash": "0x66113fceadd6d5f2fb830f4c361e9ab7fe0e7aae8ab9684286110e5928203a79",
+  "configHash": "0xd08f5cd97d1e4f7a24cb9d38541f6202ed37a17bb8bab579c123bb8bd49c8fdd",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -709,10 +709,10 @@
     }
   ],
   "abis": {
-    "0x0706Ffc1722D53a85ba90f32807880ccee968Fed": [
+    "eth:0x0706Ffc1722D53a85ba90f32807880ccee968Fed": [
       "constructor(address _singleton)"
     ],
-    "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": [
+    "eth:0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11": [
       "constructor(address owner, address treasuryAddress)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -770,7 +770,7 @@
       "function withdrawMessageStatus(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) view returns (uint8)",
       "function withdrawMsgIdProcessed(uint64 withdrawMessageId) view returns (uint256 blockNumber)"
     ],
-    "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": [
+    "eth:0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -812,10 +812,10 @@
       "function unpause()",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x4720342419C1D316B948690d12C86D5b485C64E0": [
+    "eth:0x4720342419C1D316B948690d12C86D5b485C64E0": [
       "constructor(address _singleton)"
     ],
-    "0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": [
+    "eth:0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -854,10 +854,10 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": [
+    "eth:0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC": [
       "constructor(address _singleton)"
     ],
-    "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": [
+    "eth:0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -865,7 +865,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": [
+    "eth:0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": [
       "constructor(address owner, address treasuryAddress, address canonicalBridgeV1)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -924,7 +924,7 @@
       "function withdrawMessageStatus(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) view returns (uint8)",
       "function withdrawMsgIdProcessed(uint64 withdrawMessageId) view returns (uint256 blockNumber)"
     ],
-    "0xb23B2492f7A9631104A5877F7FFA00633660968d": [
+    "eth:0xb23B2492f7A9631104A5877F7FFA00633660968d": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -932,7 +932,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xD02f545d57536BC1E8F12D867731F006AacE71E3": [
+    "eth:0xD02f545d57536BC1E8F12D867731F006AacE71E3": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -967,7 +967,7 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0xD7E4b67E735733aC98a88F13d087D8aac670E644": [
+    "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -975,7 +975,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1024,7 +1024,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978": [
+    "eth:0xF1F7a359C3f33EE8A66bdCbf4c897D25Caf90978": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",

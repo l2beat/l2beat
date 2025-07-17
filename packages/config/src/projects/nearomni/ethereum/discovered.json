@@ -2,7 +2,7 @@
   "name": "nearomni",
   "chain": "ethereum",
   "blockNumber": 22545890,
-  "configHash": "0x8559943f024e13f57c52935d28909641fb77f1e226c893955ef46d8a98455117",
+  "configHash": "0x7773454202e82575ec75fef629a4255b7e098c85572150f10d58509a456a145d",
   "entries": [
     {
       "address": "eth:0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
@@ -195,10 +195,10 @@
     }
   ],
   "abis": {
-    "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": [
+    "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": [
       "constructor(address _masterCopy)"
     ],
-    "0x53785920165FbDf33B3F56885DBC8D12854ac414": [
+    "eth:0x53785920165FbDf33B3F56885DBC8D12854ac414": [
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
       "error AddressEmptyCode(address target)",
@@ -265,7 +265,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function upgradeToken(address tokenAddress, address implementation)"
     ],
-    "0xd5A0165BA4E83769AEF74e0855497258aCe4C88F": [
+    "eth:0xd5A0165BA4E83769AEF74e0855497258aCe4C88F": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -311,7 +311,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -360,7 +360,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe00c629aFaCCb0510995A2B95560E446A24c85B9": [
+    "eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",

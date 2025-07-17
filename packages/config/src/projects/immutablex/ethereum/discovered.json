@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21995398,
-  "configHash": "0x07b2bf928b3f0a2d6c9f452203dba1a07835f15be61e0deaf7e1dd59225773ba",
+  "configHash": "0xcf9c3750ae141419db87aa6ff13914fcae8cb9daa2d05c6af8773bfd268f437b",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -470,7 +470,7 @@
     }
   ],
   "abis": {
-    "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
+    "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
       "event LogDepositToVault(address ethKey, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -510,7 +510,7 @@
       "function setDefaultVaultWithdrawalLock(uint256 newDefaultTime)",
       "function withdrawFromVault(uint256 assetId, uint256 vaultId, uint256 quantizedAmount)"
     ],
-    "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": [
+    "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "function hasRegisteredFact() view returns (bool)",
       "function identify() pure returns (string)",
@@ -519,7 +519,7 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": [
+    "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2": [
       "event LogFrozen()",
       "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -570,7 +570,7 @@
       "function unregisterOperator(address removedOperator)",
       "function updateState(uint256[] publicInput, uint256[] applicationData)"
     ],
-    "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": [
+    "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1": [
       "event LogFrozen()",
       "event LogFullWithdrawalRequest(uint256 starkKey, uint256 vaultId)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -605,11 +605,11 @@
       "function orderRegistryAddress() view returns (address)",
       "function unFreeze()"
     ],
-    "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": [
+    "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B": [
       "function VERSION() view returns (string)",
       "function initialize(bytes data)"
     ],
-    "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
+    "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
       "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
       "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
@@ -620,7 +620,7 @@
       "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "function registerMessage(address to, bytes32 messageHash)"
     ],
-    "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": [
+    "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -645,7 +645,7 @@
       "function removeImplementation(address newImplementation)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0x62BCA4DB742A99c834e2c24b609656A70EA25379": [
+    "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379": [
       "event LogFrozen()",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -683,7 +683,7 @@
       "function removeVerifier(address verifier)",
       "function unFreeze()"
     ],
-    "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": [
+    "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
       "function gpsContract() view returns (address)",
       "function hasRegisteredFact() view returns (bool)",
@@ -691,7 +691,7 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function programHash() view returns (uint256)"
     ],
-    "0x8536850750956c2FEebeCAB786d82271a5467687": [
+    "eth:0x8536850750956c2FEebeCAB786d82271a5467687": [
       "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
       "event LogDepositCancelReclaimed(uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
@@ -765,7 +765,7 @@
       "function withdrawAndMint(uint256 ownerKey, uint256 assetType, bytes mintingBlob)",
       "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
     ],
-    "0xB3788a88F063B217227E27ae16Ba550db3132bE6": [
+    "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6": [
       "event ImplementationActivationRescheduled(address indexed implementation, uint256 updatedActivationTime)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -783,10 +783,10 @@
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)"
     ],
-    "0xD2C37fC6fD89563187f3679304975655e448D192": [
+    "eth:0xD2C37fC6fD89563187f3679304975655e448D192": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

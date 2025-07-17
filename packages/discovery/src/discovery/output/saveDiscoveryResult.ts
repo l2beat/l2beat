@@ -108,7 +108,7 @@ async function saveSources(
           i,
           contract.sourceBundles.length,
           contract.name,
-          contract.address,
+          ChainSpecificAddress.address(contract.address), // TODO(radomski): The output path should prolly change
           sourcesPath,
           allContractNames,
         )
@@ -204,7 +204,7 @@ function remapNames(
     }
 
     const matchingEntry = discoveryOutput.entries.find(
-      (e) => ChainSpecificAddress.address(e.address) === entry.address,
+      (e) => e.address === entry.address,
     )
 
     if (!matchingEntry) {

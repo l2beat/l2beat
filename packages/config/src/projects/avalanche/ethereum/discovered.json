@@ -2,7 +2,7 @@
   "name": "avalanche",
   "chain": "ethereum",
   "blockNumber": 22430762,
-  "configHash": "0xee3a7a46ae9f9465e04cfb2e3a49daf9cd6876405dbd61bb6a5009543f690858",
+  "configHash": "0x5ea7aa6df567a16734995e0278ce3c2ba38d479adb4c2565cf00354340c7065a",
   "entries": [
     {
       "address": "eth:0x8EB8a3b98659Cce290402893d0123abb75E3ab28",

@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
 import type { ProxyDetails } from '../types'
 
@@ -8,7 +8,7 @@ const ETHEREUM_ADDRESS_LENGTH = 20
 
 export async function detectEip1167Proxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const bytecode = await provider.getBytecode(address)
 
@@ -32,7 +32,10 @@ export async function detectEip1167Proxy(
   return {
     type: 'EIP1167 proxy',
     values: {
-      $implementation: EthereumAddress(addressBytes.toString()),
+      $implementation: ChainSpecificAddress.fromLong(
+        provider.chain,
+        addressBytes.toString(),
+      ),
     },
   }
 }

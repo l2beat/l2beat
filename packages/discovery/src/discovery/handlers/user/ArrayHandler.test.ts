@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -156,11 +156,11 @@ describe(ArrayHandler.name, () => {
   describe('execute', () => {
     const method = 'function owners(uint256 index) view returns (address)'
     const arrayFragment = getArrayFragment(toFunctionFragment(method))
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const owners = [
-      EthereumAddress.random(),
-      EthereumAddress.random(),
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
+      ChainSpecificAddress.random(),
     ]
 
     it('calls the method "length" times', async () => {
@@ -168,7 +168,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -200,7 +200,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -229,7 +229,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -260,7 +260,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -290,7 +290,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -318,7 +318,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -344,7 +344,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>() {
-          return EthereumAddress.ZERO as T
+          return ChainSpecificAddress.ZERO('ethereum') as T
         },
       })
 
@@ -354,7 +354,7 @@ describe(ArrayHandler.name, () => {
         field: 'owners',
         fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
-        value: new Array(100).fill('0x' + '0'.repeat(40)),
+        value: new Array(100).fill(ChainSpecificAddress.ZERO('ethereum')),
       })
     })
 
@@ -363,7 +363,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>() {
-          return EthereumAddress.ZERO as T
+          return ChainSpecificAddress.ZERO('ethereum') as T
         },
       })
 
@@ -377,7 +377,7 @@ describe(ArrayHandler.name, () => {
         field: 'owners',
         fragment: arrayFragment,
         error: 'Too many values. Provide a higher maxLength value',
-        value: new Array(15).fill('0x' + '0'.repeat(40)),
+        value: new Array(15).fill(ChainSpecificAddress.ZERO('ethereum')),
       })
     })
 
@@ -386,7 +386,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -410,13 +410,15 @@ describe(ArrayHandler.name, () => {
       })
     })
     it('returns correct order of indices', async () => {
-      const owners = new Array(10).fill(0).map(() => EthereumAddress.random())
+      const owners = new Array(10)
+        .fill(0)
+        .map(() => ChainSpecificAddress.random())
 
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {
@@ -456,7 +458,7 @@ describe(ArrayHandler.name, () => {
         blockNumber: 123,
         chain: 'foo',
         async callMethod<T>(
-          passedAddress: EthereumAddress,
+          passedAddress: ChainSpecificAddress,
           _abi: string,
           data: unknown[],
         ) {

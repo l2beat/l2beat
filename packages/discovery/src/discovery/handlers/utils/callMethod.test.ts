@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { utils } from 'ethers'
 
@@ -6,7 +6,7 @@ import type { IProvider } from '../../provider/IProvider'
 import { callMethod } from './callMethod'
 
 describe('callMethod', () => {
-  const ADDRESS = EthereumAddress.random()
+  const ADDRESS = ChainSpecificAddress.random()
 
   it('decodes multiple return values', async () => {
     const RESULT_VALUE = EthereumAddress.random().toString()
@@ -67,7 +67,7 @@ describe('callMethod', () => {
   })
 
   it('decodes a scalar return value', async () => {
-    const RETURN_VALUE = EthereumAddress.random()
+    const RETURN_VALUE = EthereumAddress.random().toString()
     const abi = new utils.Interface([
       'function testFunction() view returns (address)',
     ])

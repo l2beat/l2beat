@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "scroll",
   "blockNumber": 16325944,
-  "configHash": "0xa720eba4d29ce762a8eb314cc09dccbe438c73137939306f7b8e00d7fb045d93",
+  "configHash": "0x3d3aa36b82cc318b2a6a4d7438aee0ab23e6400e46503b11c21bcbde4efa3f16",
   "entries": [
     {
       "name": "StargatePoolUSDC",
@@ -161,7 +161,7 @@
     }
   ],
   "abis": {
-    "0x3Fc69CC4A842838bCDC9499178740226062b14E4": [
+    "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -248,7 +248,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": [
+    "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
       "error BusCodec_InvalidMessage()",
@@ -345,7 +345,7 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": [
+    "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",

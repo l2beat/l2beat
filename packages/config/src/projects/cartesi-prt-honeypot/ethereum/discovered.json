@@ -2,7 +2,7 @@
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
   "blockNumber": 22732019,
-  "configHash": "0x2953eb0241d1b940a15b800642a2f7b3b52eff4fe6c815a049c6147c4895319c",
+  "configHash": "0x5013df36fd3817330400ae518e82d793f42010bf403f9488f83b118425cac80f",
   "entries": [
     {
       "name": "TopTournament",
@@ -369,7 +369,7 @@
     }
   ],
   "abis": {
-    "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": [
+    "eth:0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": [
       "error ChildTournamentCannotBeEliminated()",
       "error ChildTournamentMustBeEliminated()",
       "error ChildTournamentNotFinished()",
@@ -405,7 +405,7 @@
       "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
       "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
     ],
-    "0x18256941eC7B661F9F46C228b74e775b581e63f8": [
+    "eth:0x18256941eC7B661F9F46C228b74e775b581e63f8": [
       "error CommitmentMismatch(bytes32 received, bytes32 expected)",
       "error EliminateByTimeout()",
       "error IncorrectAgreeState(bytes32 initialState, bytes32 agreeState)",
@@ -438,14 +438,14 @@
       "function winLeafMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes proofs)",
       "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
     ],
-    "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": [
+    "eth:0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": [
       "constructor(address impl)",
       "error CloneArgumentsTooLong()",
       "error FailedDeployment()",
       "error InsufficientBalance(uint256 balance, uint256 needed)",
       "function instantiate(bytes32 initialHash, bytes32 contestedCommitmentOne, bytes32 contestedFinalStateOne, bytes32 contestedCommitmentTwo, bytes32 contestedFinalStateTwo, uint64 allowance, uint256 startCycle, uint64 level, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address tournamentFactory) returns (address)"
     ],
-    "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": [
+    "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": [
       "constructor(address outputsMerkleRootValidator, address initialOwner, bytes32 templateHash, bytes dataAvailability)",
       "error InsufficientFunds(uint256 value, uint256 balance)",
       "error InvalidOutputHashesSiblingsArrayLength()",
@@ -475,17 +475,17 @@
       "function validateOutputHash(bytes32 outputHash, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof) view",
       "function wasOutputExecuted(uint256 outputIndex) view returns (bool)"
     ],
-    "0x4C7ab101e9B114A253475485b301E0D0c9e20647": [
+    "eth:0x4C7ab101e9B114A253475485b301E0D0c9e20647": [
       "constructor(address impl)",
       "error CloneArgumentsTooLong()",
       "error FailedDeployment()",
       "error InsufficientBalance(uint256 balance, uint256 needed)",
       "function instantiate(bytes32 initialHash, bytes32 contestedCommitmentOne, bytes32 contestedFinalStateOne, bytes32 contestedCommitmentTwo, bytes32 contestedFinalStateTwo, uint64 allowance, uint256 startCycle, uint64 level, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address stateTransition) returns (address)"
     ],
-    "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": [
+    "eth:0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": [
       "constructor(address _masterCopy)"
     ],
-    "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": [
+    "eth:0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": [
       "constructor(address inputBox, address appContract, address tournamentFactory, bytes32 initialMachineStateHash)",
       "error ApplicationMismatch(address expected, address received)",
       "error IncorrectEpochNumber(uint256 received, uint256 actual)",
@@ -505,18 +505,18 @@
       "function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] proof)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": [
+    "eth:0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": [
       "constructor(address impl)",
       "error CloneArgumentsTooLong()",
       "error FailedDeployment()",
       "error InsufficientBalance(uint256 balance, uint256 needed)",
       "function instantiate(bytes32 initialHash, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address tournamentFactory) returns (address)"
     ],
-    "0x772732EFbDE6559B2960327276ed33d707fF057f": [
+    "eth:0x772732EFbDE6559B2960327276ed33d707fF057f": [
       "constructor(address _riscVStateTransition, address _cmioStateTransition)",
       "function transitionState(bytes32 machineState, uint256 counter, bytes proofs, address provider) view returns (bytes32)"
     ],
-    "0xA31C2aCfF3464658866960c0fBD3d798310272D7": [
+    "eth:0xA31C2aCfF3464658866960c0fBD3d798310272D7": [
       "constructor(address _topFactory, address _middleFactory, address _bottomFactory, address _tournamentParametersProvider, address _stateTransition)",
       "event tournamentCreated(address tournament)",
       "function instantiate(bytes32 _initialHash, address _provider) returns (address)",
@@ -524,7 +524,7 @@
       "function instantiateMiddle(bytes32 _initialHash, bytes32 _contestedCommitmentOne, bytes32 _contestedFinalStateOne, bytes32 _contestedCommitmentTwo, bytes32 _contestedFinalStateTwo, uint64 _allowance, uint256 _startCycle, uint64 _level, address _provider) returns (address)",
       "function instantiateTop(bytes32 _initialHash, address _provider) returns (address)"
     ],
-    "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": [
+    "eth:0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": [
       "error InputTooLarge(address appContract, uint256 inputLength, uint256 maxInputLength)",
       "event InputAdded(address indexed appContract, uint256 indexed index, bytes input)",
       "function addInput(address appContract, bytes payload) returns (bytes32)",
@@ -532,17 +532,17 @@
       "function getInputHash(address appContract, uint256 index) view returns (bytes32)",
       "function getNumberOfInputs(address appContract) view returns (uint256)"
     ],
-    "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051": [
+    "eth:0xc700D6aDd016eECd59d989C028214Eaa0fCC0051": [
       "constructor(address inputBox)",
       "error ERC20TransferFailed()",
       "function depositERC20Tokens(address token, address appContract, uint256 value, bytes execLayerData)",
       "function getInputBox() view returns (address)"
     ],
-    "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": [
+    "eth:0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": [
       "constructor(uint64 matchEffort, uint64 maxAllowance)",
       "function tournamentParameters(uint64 level) view returns (tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance))"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -591,7 +591,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": [
+    "eth:0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": [
       "error ChildTournamentCannotBeEliminated()",
       "error ChildTournamentMustBeEliminated()",
       "error ChildTournamentNotFinished()",

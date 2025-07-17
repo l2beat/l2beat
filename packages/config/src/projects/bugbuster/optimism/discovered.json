@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0xd0e4126c8f04e3344633cf33e742f0775bd166ffd3009db420b6987c65ac7090",
+  "configHash": "0xf2d32a096391846e6b17feb174e6b61db4ca13ef72327894f56b14b69b18a7ab",
   "entries": [
     {
       "name": "History",
@@ -106,7 +106,7 @@
     }
   ],
   "abis": {
-    "0x04395d494624D2B6e30C0dfDB74498a2839f805d": [
+    "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d": [
       "constructor(address _owner)",
       "error InvalidClaimIndex()",
       "error InvalidInputIndices()",
@@ -120,7 +120,7 @@
       "function submitClaim(bytes _claimData)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x3FF5C7383F614256053c3F6B86A47bA974937299": [
+    "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299": [
       "constructor(address _consensus, address _owner, bytes32 _templateHash)",
       "error EtherTransferFailed()",
       "error IncorrectEpochHash()",
@@ -147,7 +147,7 @@
       "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
       "function withdrawEther(address _receiver, uint256 _value)"
     ],
-    "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": [
+    "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": [
       "constructor(address _owner)",
       "error AuthorityWithdrawalFailed()",
       "event ApplicationJoined(address application)",
@@ -164,14 +164,14 @@
       "function transferOwnership(address newOwner)",
       "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
     ],
-    "0x59b22D57D4f067708AB0c00552767405926dc768": [
+    "oeth:0x59b22D57D4f067708AB0c00552767405926dc768": [
       "error InputSizeExceedsLimit()",
       "event InputAdded(address indexed dapp, uint256 indexed inputIndex, address sender, bytes input)",
       "function addInput(address _dapp, bytes _input) returns (bytes32)",
       "function getInputHash(address _dapp, uint256 _index) view returns (bytes32)",
       "function getNumberOfInputs(address _dapp) view returns (uint256)"
     ],
-    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
+    "oeth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
       "constructor(address _inputBox)",
       "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
       "function getInputBox() view returns (address)"

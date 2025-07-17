@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
@@ -54,7 +54,7 @@ export class LayerZeroMultisigHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const constructorArgs = await this.constructorArgsHandler.execute(
       provider,
@@ -74,7 +74,7 @@ export class LayerZeroMultisigHandler implements Handler {
     assert(
       typeof ctorValue === 'object' &&
         !Array.isArray(ctorValue) &&
-        isNotEthereumAddress(ctorValue),
+        isNotChainSpecificAddress(ctorValue),
       'constructorArgs.value is not an object',
     )
     assert(Array.isArray(ctorValue._signers), 'signers is not an array')
@@ -109,8 +109,8 @@ export class LayerZeroMultisigHandler implements Handler {
   }
 }
 
-function isNotEthereumAddress<T extends object>(
-  value: T | EthereumAddress,
+function isNotChainSpecificAddress<T extends object>(
+  value: T | ChainSpecificAddress,
 ): value is T {
   return typeof value !== 'string'
 }

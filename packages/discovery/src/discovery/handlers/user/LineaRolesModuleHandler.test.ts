@@ -1,4 +1,9 @@
-import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  Bytes,
+  ChainSpecificAddress,
+  type EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
@@ -25,7 +30,7 @@ describe(LineaRolesModuleHandler.name, () => {
   ])
 
   const callMethodStub = async <T>(
-    _address: EthereumAddress,
+    _address: ChainSpecificAddress,
     abi: string | utils.FunctionFragment,
   ) => {
     const coder = new utils.Interface([abi])
@@ -285,8 +290,9 @@ describe(LineaRolesModuleHandler.name, () => {
   }
 
   it('no logs', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
       getDeployment: mockFn().resolvesTo(undefined),
       async getLogs(providedAddress, topics) {
@@ -328,15 +334,21 @@ describe(LineaRolesModuleHandler.name, () => {
   })
 
   it('many logs', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const abiCoder = utils.defaultAbiCoder
 
-    const MODULE_A = EthereumAddress.random()
-    const MODULE_B = EthereumAddress.random()
+    const MODULE_A = ChainSpecificAddress.random()
+    const MODULE_B = ChainSpecificAddress.random()
 
-    const TARGET_A = EthereumAddress.random()
-    const TARGET_B = EthereumAddress.random()
-    const TARGET_C = EthereumAddress.random()
+    const MODULE_A_R = ChainSpecificAddress.address(MODULE_A)
+    const MODULE_B_R = ChainSpecificAddress.address(MODULE_B)
+
+    const TARGET_A = ChainSpecificAddress.random()
+    const TARGET_B = ChainSpecificAddress.random()
+    const TARGET_C = ChainSpecificAddress.random()
+    const TARGET_A_R = ChainSpecificAddress.address(TARGET_A)
+    const TARGET_B_R = ChainSpecificAddress.address(TARGET_B)
+    const TARGET_C_R = ChainSpecificAddress.address(TARGET_C)
 
     const FunctionA = 'function test(bytes32 id)'
     const FunctionB = 'function testSecond(bytes32 id)'
@@ -344,6 +356,7 @@ describe(LineaRolesModuleHandler.name, () => {
     const FunctionSigB = getFunctionSelector(FunctionB)
 
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       getBytecode: mockFn().resolvesTo(Bytes.fromHex('0xdeadbeef')),
       getDeployment: mockFn().resolvesTo(undefined),
       async getLogs(providedAddress, topics) {
@@ -365,26 +378,26 @@ describe(LineaRolesModuleHandler.name, () => {
           ],
         ])
         return [
-          SetDefaultRole(MODULE_A, 2),
-          SetDefaultRole(MODULE_B, 3),
-          SetDefaultRole(MODULE_A, 4),
-          AssignRoles(MODULE_A, [2, 3, 5], [true, true, true]),
-          AssignRoles(MODULE_B, [2, 4], [true, true]),
-          AssignRoles(MODULE_A, [5], [false]),
-          AllowTarget(2, TARGET_A, 1),
-          AllowTarget(2, TARGET_A, 0),
-          AllowTarget(3, TARGET_B, 1),
-          AllowTarget(4, TARGET_C, 2),
-          AllowTarget(5, TARGET_A, 2),
-          AllowTarget(6, TARGET_B, 2),
-          RevokeTarget(5, TARGET_A),
-          RevokeTarget(6, TARGET_B),
-          ScopeTarget(2, TARGET_A),
-          ScopeTarget(2, TARGET_B),
+          SetDefaultRole(MODULE_A_R, 2),
+          SetDefaultRole(MODULE_B_R, 3),
+          SetDefaultRole(MODULE_A_R, 4),
+          AssignRoles(MODULE_A_R, [2, 3, 5], [true, true, true]),
+          AssignRoles(MODULE_B_R, [2, 4], [true, true]),
+          AssignRoles(MODULE_A_R, [5], [false]),
+          AllowTarget(2, TARGET_A_R, 1),
+          AllowTarget(2, TARGET_A_R, 0),
+          AllowTarget(3, TARGET_B_R, 1),
+          AllowTarget(4, TARGET_C_R, 2),
+          AllowTarget(5, TARGET_A_R, 2),
+          AllowTarget(6, TARGET_B_R, 2),
+          RevokeTarget(5, TARGET_A_R),
+          RevokeTarget(6, TARGET_B_R),
+          ScopeTarget(2, TARGET_A_R),
+          ScopeTarget(2, TARGET_B_R),
 
           ScopeAllowFunction(
             2,
-            TARGET_A,
+            TARGET_A_R,
             FunctionSigA,
             2,
             packScopeConfig({
@@ -395,7 +408,7 @@ describe(LineaRolesModuleHandler.name, () => {
           ), // biome-ignore format: readability
           ScopeAllowFunction(
             5,
-            TARGET_A,
+            TARGET_A_R,
             FunctionSigB,
             1,
             packScopeConfig({
@@ -406,7 +419,7 @@ describe(LineaRolesModuleHandler.name, () => {
           ), // biome-ignore format: readability
           ScopeAllowFunction(
             3,
-            TARGET_C,
+            TARGET_C_R,
             FunctionSigA,
             0,
             packScopeConfig({
@@ -417,7 +430,7 @@ describe(LineaRolesModuleHandler.name, () => {
           ), // biome-ignore format: readability
           ScopeAllowFunction(
             4,
-            TARGET_B,
+            TARGET_B_R,
             FunctionSigB,
             3,
             packScopeConfig({
@@ -428,7 +441,7 @@ describe(LineaRolesModuleHandler.name, () => {
           ), // biome-ignore format: readability
           ScopeAllowFunction(
             6,
-            TARGET_B,
+            TARGET_B_R,
             FunctionSigB,
             3,
             packScopeConfig({
@@ -437,13 +450,13 @@ describe(LineaRolesModuleHandler.name, () => {
               parameters: [],
             }),
           ), // biome-ignore format: readability
-          ScopeRevokeFunction(5, TARGET_A, FunctionSigA, '0'),
-          ScopeRevokeFunction(6, TARGET_B, FunctionSigB, '0'),
+          ScopeRevokeFunction(5, TARGET_A_R, FunctionSigA, '0'),
+          ScopeRevokeFunction(6, TARGET_B_R, FunctionSigB, '0'),
 
           // biome-ignore format: readability
           ScopeFunction(
             2,
-            TARGET_C,
+            TARGET_C_R,
             FunctionSigB,
             [false, true, true, false],
             [0, 0, 2, 1],
@@ -451,7 +464,7 @@ describe(LineaRolesModuleHandler.name, () => {
             [
               abiCoder.encode(['uint8'], [15]),
               abiCoder.encode(['uint256'], [420]),
-              abiCoder.encode(['address[]'], [[MODULE_A, MODULE_B]]),
+              abiCoder.encode(['address[]'], [[MODULE_A_R, MODULE_B_R]]),
               abiCoder.encode(['string'], ['hello im a string']),
             ],
             2,
@@ -477,7 +490,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeFunction(
             3,
-            TARGET_B,
+            TARGET_B_R,
             FunctionSigB,
             [true, true],
             [0, 0],
@@ -503,7 +516,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeFunctionExecutionOptions(
             3,
-            TARGET_B,
+            TARGET_B_R,
             FunctionSigB,
             0,
             packScopeConfig({
@@ -522,7 +535,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeParameter(
             2,
-            TARGET_C,
+            TARGET_C_R,
             FunctionSigB,
             1,
             2,
@@ -546,7 +559,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeParameter(
             4,
-            TARGET_A,
+            TARGET_A_R,
             FunctionSigA,
             0,
             0,
@@ -563,7 +576,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeParameterAsOneOf(
             4,
-            TARGET_A,
+            TARGET_A_R,
             FunctionSigA,
             0,
             2,
@@ -582,7 +595,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeParameterAsOneOf(
             4,
-            TARGET_C,
+            TARGET_C_R,
             FunctionSigA,
             0,
             2,
@@ -604,7 +617,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           ScopeParameter(
             4,
-            TARGET_C,
+            TARGET_C_R,
             FunctionSigA,
             0,
             0,
@@ -621,7 +634,7 @@ describe(LineaRolesModuleHandler.name, () => {
           // biome-ignore format: readability
           UnscopeParameter(
             3,
-            TARGET_B,
+            TARGET_B_R,
             FunctionSigB,
             0,
             packScopeConfig({
@@ -639,7 +652,9 @@ describe(LineaRolesModuleHandler.name, () => {
           ),
         ]
       },
-      getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+      getStorageAsAddress: mockFn().resolvesTo(
+        ChainSpecificAddress.ZERO('ethereum'),
+      ),
       callMethod: callMethodStub,
       call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
       getSource: mockFn().resolvesTo({
@@ -725,7 +740,7 @@ describe(LineaRolesModuleHandler.name, () => {
               ),
               [`${TARGET_C.toString()}:testSecond(bytes32):2`]: abiCoder.encode(
                 ['address[]'],
-                [[MODULE_A, MODULE_B]],
+                [[MODULE_A_R, MODULE_B_R]],
               ),
               [`${TARGET_C.toString()}:testSecond(bytes32):3`]:
                 '0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001168656c6c6f20696d206120737472696e67000000000000000000000000000000',
@@ -841,7 +856,7 @@ describe(LineaRolesModuleHandler.name, () => {
   })
 
   it('passes relative ignore', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
       async getLogs() {
         return []

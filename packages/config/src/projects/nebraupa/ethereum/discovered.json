@@ -2,7 +2,7 @@
   "name": "nebraupa",
   "chain": "ethereum",
   "blockNumber": 22666223,
-  "configHash": "0x18ad673c7e1c45b029fd0c01b17acdb3f9e5114d9ec31264e0dc311c2f434013",
+  "configHash": "0x00e0b800c358e23789acb9281a4707f4249332f1289a775ef28c66a6e6ac3a60",
   "entries": [
     {
       "address": "eth:0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
@@ -173,7 +173,7 @@
     }
   ],
   "abis": {
-    "0x3B946743DEB7B6C97F05B7a31B23562448047E3E": [
+    "eth:0x3B946743DEB7B6C97F05B7a31B23562448047E3E": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -181,10 +181,10 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xb463603469Bf31f189E3F6625baf8378880Df14e": [
+    "eth:0xb463603469Bf31f189E3F6625baf8378880Df14e": [
       "constructor(address _singleton)"
     ],
-    "0xB6cD7eD75c008d0033ED241872639a1D8a35020a": [
+    "eth:0xB6cD7eD75c008d0033ED241872639a1D8a35020a": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AlreadyRegisteredVK()",
@@ -315,7 +315,7 @@
       "function withdrawAggregatorBalance()",
       "function worker() view returns (address)"
     ],
-    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+    "eth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",

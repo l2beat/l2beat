@@ -3,6 +3,7 @@ import { createRef, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getProjects } from './api/api'
 import type { ApiProjectEntry } from './api/types'
+import { Title } from './common/Title'
 import { ErrorState } from './components/ErrorState'
 import { IconStarEmpty } from './icons/IconStarEmpty'
 import { IconStarFull } from './icons/IconStarFull'
@@ -17,19 +18,26 @@ export function HomePage() {
   }, [])
 
   return (
-    <div className="mx-auto max-w-screen-md p-4">
-      <h1 className="my-8 flex justify-center">
-        <img className="w-[200px] md:w-[400px]" src="/logo.svg" alt="DSCVRY" />
-      </h1>
-      <input
-        ref={inputRef}
-        className="mx-auto mb-8 block w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
-        placeholder="Filter projects"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <AllProjects search={search} />
-    </div>
+    <>
+      <Title title="DiscoUI - Home" />
+      <div className="mx-auto max-w-screen-md p-4">
+        <h1 className="my-8 flex justify-center">
+          <img
+            className="w-[200px] md:w-[400px]"
+            src="/logo.svg"
+            alt="DSCVRY"
+          />
+        </h1>
+        <input
+          ref={inputRef}
+          className="mx-auto mb-8 block w-full max-w-[464px] border border-coffee-600 bg-coffee-800 px-4 py-2 placeholder:text-coffee-400"
+          placeholder="Filter projects"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <AllProjects search={search} />
+      </div>
+    </>
   )
 }
 

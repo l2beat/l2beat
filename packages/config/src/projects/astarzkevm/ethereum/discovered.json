@@ -2,7 +2,7 @@
   "name": "astarzkevm",
   "chain": "ethereum",
   "blockNumber": 20325048,
-  "configHash": "0xc52a954ebd00a744bd2dc49b0cf452585c7d756c80e4c8412c96c398ec5d3442",
+  "configHash": "0x6aadd2277c05828afd83a71719497660c3fc1ca4358a10a8ff3deae86e9d5038",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -367,10 +367,10 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -489,7 +489,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": [
+    "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -500,7 +500,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": [
+    "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -510,16 +510,16 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x6c4876Ecb5de33f76700f44d547C593065806dAC": [
+    "eth:0x6c4876Ecb5de33f76700f44d547C593065806dAC": [
       "constructor(address _singleton)"
     ],
-    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": [
+    "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -568,7 +568,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xF4e87685e323818E0aE35dCdFc3B65106002E456": [
+    "eth:0xF4e87685e323818E0aE35dCdFc3B65106002E456": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",
@@ -592,7 +592,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
-    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": [
+    "eth:0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": [
       "constructor(address _singleton)"
     ]
   },

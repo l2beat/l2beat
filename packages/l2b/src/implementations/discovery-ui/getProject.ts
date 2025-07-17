@@ -5,7 +5,6 @@ import {
   type DiscoveryOutput,
   type EntryParameters,
   get$Implementations,
-  getChainShortName,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
@@ -73,7 +72,7 @@ export function getProject(
       .map((entry) => {
         const contractConfig = makeEntryStructureConfig(
           config.structure,
-          ChainSpecificAddress.address(entry.address),
+          entry.address,
         )
 
         if (entry.template !== undefined) {
@@ -85,7 +84,7 @@ export function getProject(
 
         const contractColorConfig = makeEntryColorConfig(
           config.color,
-          ChainSpecificAddress.address(entry.address),
+          entry.address,
           templateService.loadContractTemplateColor(entry.template),
         )
 
@@ -102,10 +101,7 @@ export function getProject(
         )
       })
       .sort(orderAddressEntries)
-    const initialAddresses = config.structure.initialAddresses.map(
-      (address) => `${getChainShortName(chain)}:${address}`,
-    )
-
+    const initialAddresses = config.structure.initialAddresses
     const chainInfo = {
       project: config.name,
       chain: chain,
