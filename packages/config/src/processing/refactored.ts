@@ -1,5 +1,6 @@
 import { avail } from '../projects/avail/avail'
 import { blobstream } from '../projects/blobstream/blobstream'
+import { boojum } from '../projects/boojum/boojum'
 import { bsc } from '../projects/bsc/bsc'
 import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
@@ -33,6 +34,7 @@ export const refactored: BaseProject[] = [
   worldcoinsmtb,
   // zk catalog v2
   sp1,
+  boojum,
   // da-beat
   ethereum,
   avail,

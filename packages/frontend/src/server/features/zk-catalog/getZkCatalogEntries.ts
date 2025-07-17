@@ -1,6 +1,12 @@
-import type { Project, ProjectZkCatalogInfo } from '@l2beat/config'
+import type {
+  Project,
+  ProjectZkCatalogInfo,
+  TrustedSetup,
+  ZkCatalogTag,
+} from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
 import { assert, notUndefined, type ProjectId } from '@l2beat/shared-pure'
+import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
@@ -25,6 +31,10 @@ export interface ZkCatalogEntry extends CommonProjectEntry {
   }
   attesters: (ZkCatalogAttester & { icon: string })[]
   techStack: ProjectZkCatalogInfo['techStack']
+  trustedSetups: Record<
+    string,
+    (TrustedSetup & { proofSystem: ZkCatalogTag })[]
+  >
 }
 
 export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
@@ -72,6 +82,11 @@ function getZkCatalogEntry(
     return acc + projectTvs
   }, 0)
 
+  const trustedSetups = groupBy(
+    project.zkCatalogInfo.trustedSetups,
+    (e) => e.proofSystem.id,
+  )
+
   return {
     id: project.id,
     slug: project.slug,
@@ -101,6 +116,7 @@ function getZkCatalogEntry(
     ),
     techStack: project.zkCatalogInfo.techStack,
     projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
+    trustedSetups,
   }
 }
 

@@ -1,9 +1,17 @@
+import type { TrustedSetup } from '@l2beat/config'
 import { createColumnHelper } from '@tanstack/react-table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
+import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { TechStackCell } from '../components/TechStackCell'
+import { TechStackTag } from '../components/TechStackTag'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
@@ -79,29 +87,77 @@ export const zkCatalogColumns = [
       return <TechStackCell techStack={ctx.row.original.techStack} />
     },
   }),
-  // columnHelper.accessor((row) => row.trustedSetup, {
-  //   id: 'trusted-setup',
-  //   header: 'Trusted Setup',
-  //   cell: (ctx) => {
-  //     const { risk, shortDescription } = ctx.row.original.trustedSetup
-  //     return (
-  //       <Tooltip>
-  //         <TooltipTrigger className="flex items-center gap-2">
-  //           <div
-  //             className={cn(
-  //               'size-6 rounded-full',
-  //               risk === 'green' && 'bg-positive',
-  //               risk === 'yellow' && 'bg-warning',
-  //               risk === 'red' && 'bg-negative',
-  //             )}
-  //           />
-  //           <InfoIcon className="size-[14px]" />
-  //         </TooltipTrigger>
-  //         <TooltipContent>
-  //           <div className="text-sm leading-normal">{shortDescription}</div>
-  //         </TooltipContent>
-  //       </Tooltip>
-  //     )
-  //   },
-  // }),
+  columnHelper.accessor((row) => row.trustedSetups, {
+    id: 'trusted-setups',
+    header: 'Trusted setups',
+    cell: (ctx) => {
+      return (
+        <div className="flex h-full flex-col justify-around">
+          {Object.values(ctx.row.original.trustedSetups).map(
+            (trustedSetups) => {
+              if (trustedSetups.length === 0) return null
+              /** biome-ignore lint/style/noNonNullAssertion: it's there */
+              const proofSystem = trustedSetups[0]!.proofSystem
+              const worstRisk = pickWorstRisk(trustedSetups)
+              return (
+                <Tooltip>
+                  <TooltipTrigger className="flex items-center gap-2">
+                    <div
+                      className={cn(
+                        'size-6 rounded-full',
+                        worstRisk === 'green' && 'bg-positive',
+                        worstRisk === 'yellow' && 'bg-warning',
+                        worstRisk === 'red' && 'bg-negative',
+                      )}
+                    />
+                    <TechStackTag tag={proofSystem} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="mb-3 text-paragraph-14">
+                      Trusted setups for{' '}
+                      <TechStackTag
+                        tag={proofSystem}
+                        className="inline-block"
+                      />
+                      :
+                    </p>
+                    {trustedSetups.map((trustedSetup) => {
+                      return (
+                        <div key={trustedSetup.id} className="flex gap-2">
+                          <div
+                            className={cn(
+                              'size-5 shrink-0 rounded-full',
+                              trustedSetup.risk === 'green' && 'bg-positive',
+                              trustedSetup.risk === 'yellow' && 'bg-warning',
+                              trustedSetup.risk === 'red' && 'bg-negative',
+                            )}
+                          />
+                          <span className="text-xs leading-normal">
+                            {trustedSetup.shortDescription}
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </TooltipContent>
+                </Tooltip>
+              )
+            },
+          )}
+        </div>
+      )
+    },
+  }),
 ]
+
+function pickWorstRisk(trustedSetups: TrustedSetup[]) {
+  return trustedSetups.reduce<'green' | 'yellow' | 'red'>(
+    (acc, trustedSetup) => {
+      if (acc === 'red') return acc
+      if (trustedSetup.risk === 'red') return 'red'
+      if (acc === 'yellow') return acc
+      if (trustedSetup.risk === 'yellow') return 'yellow'
+      return 'green'
+    },
+    'green',
+  )
+}

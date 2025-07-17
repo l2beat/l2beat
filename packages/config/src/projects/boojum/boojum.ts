@@ -22,6 +22,13 @@ export const boojum: BaseProject = {
     },
     badges: [],
   },
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   zkCatalogInfo: {
     creator: 'Matter Labs',
     techStack: {

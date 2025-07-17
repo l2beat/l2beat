@@ -2,12 +2,19 @@ import type { ZkCatalogTag } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 
-export function TechStackTag({ tag }: { tag: ZkCatalogTag }) {
+export function TechStackTag({
+  tag,
+  className,
+}: {
+  tag: ZkCatalogTag
+  className?: string
+}) {
   return (
     <div
       className={cn(
-        'rounded-sm border p-1.5 font-medium text-[13px] leading-none',
+        'rounded-sm border px-1.5 py-1 font-medium text-[13px] leading-none',
         getClassNames(tag),
+        className,
       )}
     >
       {tag.type}: {tag.name}

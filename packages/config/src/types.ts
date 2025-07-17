@@ -741,7 +741,9 @@ export interface ProjectZkCatalogInfo {
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetups: TrustedSetup[]
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
   verifierHashes: {
     hash: string
     proofSystem: ZkCatalogTag
@@ -762,7 +764,6 @@ export interface ZkCatalogTag {
 
 export interface TrustedSetup {
   id: string
-  proofSystem: ZkCatalogTag
   risk: 'green' | 'yellow' | 'red' | 'N/A'
   shortDescription: string
   longDescription: string
