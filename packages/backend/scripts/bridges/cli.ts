@@ -57,7 +57,7 @@ const cmd = command({
         retryStrategy: 'SCRIPT',
       }),
       start: args.start ?? -1, // will be filled later
-      range: args.range ?? 10,
+      range: args.range ?? 100,
     }))
 
     const enabledProtocols = args.protocols
@@ -65,12 +65,6 @@ const cmd = command({
       : PROTOCOLS
 
     const decoders = enabledProtocols.map((p) => p.decoder)
-
-    const transfers: Message[] = []
-    const matching: Record<
-      string,
-      Record<string, { send: Message[]; receive: Message[] }>
-    > = {}
 
     logger.info('Running script', {
       protocols: enabledProtocols.map((p) => p.name),
@@ -86,7 +80,9 @@ const cmd = command({
         })
       }
     }
-    logger.info('Fetching block numbers... (this may take a while)')
+
+    const messages: Message[] = []
+    logger.info('Fetching block numbers...')
     await Promise.all(blockPromises.map((fn) => fn()))
 
     const promises: (() => Promise<void>)[] = []
@@ -106,7 +102,7 @@ const cmd = command({
                 blockTimestamp: block.timestamp,
               })
               if (d) {
-                transfers.push(d)
+                messages.push(d)
               }
             }
           }
@@ -116,7 +112,11 @@ const cmd = command({
     logger.info('Fetching data... (this may take a while)')
     await Promise.all(promises.map((fn) => fn()))
 
-    for (const transfer of transfers) {
+    const matching: Record<
+      string,
+      Record<string, { send: Message[]; receive: Message[] }>
+    > = {}
+    for (const transfer of messages) {
       if (!matching[transfer.protocol]) {
         matching[transfer.protocol] = {}
       }
@@ -149,19 +149,19 @@ const cmd = command({
       }
     }
 
-    for (const t of transfers) {
+    for (const t of messages) {
       logger.info(`${t.direction} via ${t.protocol}`, {
         ...t,
       })
     }
 
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
-      const send = transfers.filter(
-        (t) => t.protocol === protocol && t.direction === 'inbound',
+      const send = messages.filter(
+        (t) => t.protocol === protocol && t.direction === 'outbound',
       )
 
-      const receive = transfers.filter(
-        (t) => t.protocol === protocol && t.direction === 'outbound',
+      const receive = messages.filter(
+        (t) => t.protocol === protocol && t.direction === 'inbound',
       )
       const matchedBreakdown: Record<string, number> = {}
       Object.entries(m).forEach(([id, match]) => {
