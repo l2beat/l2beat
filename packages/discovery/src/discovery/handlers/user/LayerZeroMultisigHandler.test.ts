@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
@@ -44,7 +44,7 @@ describe(LayerZeroMultisigHandler.name, () => {
       SAMPLE_CONSTRUCTOR_FRAGMENT,
     )
 
-    const contractAddress = EthereumAddress.random()
+    const contractAddress = ChainSpecificAddress.random()
 
     const provider = mockObject<IProvider>({
       getSource: async () =>
@@ -72,7 +72,7 @@ describe(LayerZeroMultisigHandler.name, () => {
       'layerZeroMultisig',
       SAMPLE_CONSTRUCTOR_FRAGMENT,
     )
-    const contractAddress = EthereumAddress.random()
+    const contractAddress = ChainSpecificAddress.random()
 
     const events = [
       'event UpdateSigner(address _signer, bool _active)',
@@ -80,11 +80,11 @@ describe(LayerZeroMultisigHandler.name, () => {
     ]
     const abi = new utils.Interface(events)
     function SignerChanged(
-      account: EthereumAddress,
+      account: ChainSpecificAddress,
       status: boolean,
     ): providers.Log {
       return abi.encodeEventLog(abi.getEvent('UpdateSigner'), [
-        account,
+        ChainSpecificAddress.address(account),
         status,
       ]) as providers.Log
     }
@@ -98,11 +98,13 @@ describe(LayerZeroMultisigHandler.name, () => {
     const provider = mockObject<IProvider>({
       getSource: async () =>
         ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
-      getLogs: async (_addr: EthereumAddress, topics: string[]) => {
+      getLogs: async (_addr: ChainSpecificAddress, topics: string[]) => {
         if (topics[0] === abi.getEventTopic('UpdateSigner')) {
           return [
             SignerChanged(
-              EthereumAddress('0x0D099360A069359fE7c9503ab44cbCb9eB2A7466'),
+              ChainSpecificAddress(
+                'eth:0x0D099360A069359fE7c9503ab44cbCb9eB2A7466',
+              ),
               false,
             ),
           ]

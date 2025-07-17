@@ -94,7 +94,7 @@ async function getPastUpgrades(
       const module = log.args.type
       addressEvolution[module] ??= []
       addressEvolution[module].push(
-        ChainSpecificAddress(log.args.previousAddress),
+        ChainSpecificAddress.fromLong(provider.chain, log.args.previousAddress),
       )
     }
   }
