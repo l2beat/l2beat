@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x52aa234ddc7ace416870ccb32dada2c53eb40f12
+
+# Diff at Wed, 16 Jul 2025 11:37:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3bb8654e980eabcfa49545d07abf8103b5696f58 block: 22567749
+- current block number: 22930337
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567749 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"interact","from":"eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","description":"can blacklist games and update the respected game type.","role":".guardian"}
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","description":"can blacklist games and update the respected game type.","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"},{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"eth:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","description":"can blacklist games and update the respected game type.","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"},{"address":"eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748","condition":"if the number of eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 members falls below 8."}]}
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","description":"can blacklist games and update the respected game type.","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      fieldMeta.guardian:
++        {"description":"The guardian can blacklist game and update the respected game type. It is set to reference the SuperchainConfig guardian."}
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"interact","from":"eth:0xbEb5Fc579115071764c7423A4f12eDde41f106Ed","description":"can blacklist games and update the respected game type.","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"}]}
+    }
+```
+
 Generated with discovered.json: 0xdcc93ee3044e89ab6d7ffffcf8e990262810f581
 
 # Diff at Mon, 14 Jul 2025 12:47:06 GMT:
