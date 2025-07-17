@@ -4161,6 +4161,20 @@
       "supply": "zero"
     },
     {
+      "name": "PentagonChain",
+      "coingeckoId": "pentagon-chain",
+      "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
+      "symbol": "PC",
+      "decimals": 18,
+      "deploymentTimestamp": 1740594359,
+      "coingeckoListingTimestamp": 1750032000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66638/large/pentagon-chain-token-fcp.png?1750094674",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Pepe",
       "coingeckoId": "pepe",
       "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
