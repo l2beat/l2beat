@@ -15,7 +15,9 @@ export function TechStackCell({
     <div className="space-y-2 py-3">
       {techStack.zkVM && (
         <div>
-          <span className="font-medium text-label-value-13">zkVM:</span>
+          <span className="font-medium text-[11px] text-secondary leading-none">
+            zkVM
+          </span>
           <div className="flex flex-wrap gap-x-[5px] gap-y-1">
             {techStack.zkVM.map((zkVM) => (
               <TechStackTag key={zkVM.name} tag={zkVM} />
@@ -25,7 +27,9 @@ export function TechStackCell({
       )}
       {techStack.finalWrap && (
         <div>
-          <span className="font-medium text-label-value-13">Final wrap:</span>
+          <span className="font-medium text-[11px] text-secondary leading-none">
+            Final wrap
+          </span>
           <div className="flex flex-wrap gap-x-[5px] gap-y-1">
             {techStack.finalWrap.map((finalWrap) => (
               <TechStackTag key={finalWrap.name} tag={finalWrap} />

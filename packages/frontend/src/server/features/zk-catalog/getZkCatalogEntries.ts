@@ -43,7 +43,7 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
       select: ['zkCatalogInfo', 'display', 'statuses'],
     }),
     ps.getProjects({
-      optional: ['daBridge'],
+      optional: ['daBridge', 'isBridge', 'isScaling', 'isDaLayer'],
     }),
     get7dTvsBreakdown({ type: 'layer2' }),
   ])
@@ -55,7 +55,10 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
 
 function getZkCatalogEntry(
   project: Project<'zkCatalogInfo' | 'display' | 'statuses'>,
-  allProjects: Project<never, 'daBridge'>[],
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
   tvs: SevenDayTvsBreakdown,
 ): ZkCatalogEntry {
   const usedInVerifiers = uniq(
@@ -122,17 +125,48 @@ function getZkCatalogEntry(
 
 function getProjectsUsedIn(
   usedInVerifiers: ProjectId[],
-  allProjects: Project[],
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
 ): UsedInProjectWithIcon[] {
   return usedInVerifiers.map((id) => {
     const project = allProjects.find((p) => p.id === id)
     assert(project, `Project ${id} not found`)
+
+    const href = getProjectHref(project, allProjects)
 
     return {
       id: id,
       name: project.name,
       slug: project.slug,
       icon: getProjectIcon(project.slug),
+      href,
     }
   })
+}
+
+function getProjectHref(
+  project: Project<never, 'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'>,
+  allProjects: Project<
+    never,
+    'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
+  >[],
+) {
+  if (project.isBridge) return `/bridges/projects/${project.slug}`
+  if (project.isScaling) return `/scaling/projects/${project.slug}`
+  if (project.isDaLayer) {
+    const daBridge = allProjects.find((p) => p.id === project.daBridge?.daLayer)
+    assert(daBridge, `DA bridge ${project.id} not found`)
+
+    return `/data-availability/projects/${project.slug}/${daBridge.slug}`
+  }
+  if (project.daBridge) {
+    const daLayer = allProjects.find((p) => p.id === project.daBridge?.daLayer)
+    assert(daLayer, `DA layer ${project.daBridge.daLayer} not found`)
+
+    return `/data-availability/projects/${daLayer.slug}/${project.slug}`
+  }
+
+  throw new Error(`Unknown project type: ${project.id}`)
 }

@@ -140,6 +140,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
+          href: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     }),
@@ -160,6 +161,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
+          href: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     })
@@ -222,6 +224,7 @@ function getDacEntry(
     usedIn: usedIn.map((project) => ({
       ...project,
       icon: getProjectIcon(project.slug),
+      href: `/scaling/projects/${project.slug}`,
     })),
   }
 
@@ -273,6 +276,7 @@ function getEthereumEntry(
           .map((project) => ({
             ...project,
             icon: getProjectIcon(project.slug),
+            href: `/scaling/projects/${project.slug}`,
           })),
       },
     ],

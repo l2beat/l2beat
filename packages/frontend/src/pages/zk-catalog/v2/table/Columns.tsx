@@ -61,6 +61,9 @@ export const zkCatalogColumns = [
   columnHelper.accessor((row) => row.attesters, {
     id: 'attesters',
     cell: (ctx) => {
+      if (ctx.row.original.attesters.length === 0)
+        return <span className="font-semibold text-xs leading-none">N/A</span>
+
       return (
         <div>
           {ctx.row.original.attesters.map((attester) => (
