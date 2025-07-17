@@ -4035,22 +4035,6 @@
       }
     },
     {
-      "symbol": "rsETH",
-      "category": "ether",
-      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-      "source": "external",
-      "supply": "totalSupply",
-      "coingeckoId": "kelp-dao-restaked-eth",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
-    },
-    {
       "symbol": "SDEX",
       "address": "0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f",
       "source": "external",

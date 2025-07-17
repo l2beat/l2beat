@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x261ed1497dc5b19eeedb597d08189e9be31d1cfc
+Generated with discovered.json: 0x9a4cbdb9f00ac8a0548c950faa31791756ee2bc7
 
-# Diff at Thu, 17 Jul 2025 08:28:03 GMT:
+# Diff at Thu, 17 Jul 2025 08:33:35 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- current block number: 357988693
+- current block number: 32975933
 
 ## Description
 
@@ -13,6 +13,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Wormhole Token (0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91)
+    contract RSETH_OFT (0x1Bc71130A0e39942a7658878169764Bbd8A45993)
     +++ description: None
 ```

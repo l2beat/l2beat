@@ -1,11 +1,11 @@
 {
   "name": "w",
-  "chain": "arbitrum",
-  "blockNumber": 357988693,
-  "configHash": "0xca0d4db5579890024a5972106b3772b4957c77c1eb459c32dc868c5a8ca71947",
+  "chain": "base",
+  "blockNumber": 32975766,
+  "configHash": "0x3649a08fce242b67cda94c298e9698d78b5e3c105b88a2557bea380f0f1742be",
   "entries": [
     {
-      "name": "Wormhole Token",
+      "name": "WToken",
       "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
@@ -13,15 +13,15 @@
         "0xae7747ba69b9cd64276b32152e64b4e68fc64d4530f73c5984f57132fa2a01bb"
       ],
       "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1713221460,
-      "sinceBlock": 201421053,
+      "sinceTimestamp": 1713221517,
+      "sinceBlock": 13216085,
       "values": {
-        "$admin": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
+        "$admin": "0x838a95B6a3E06B6f11C437e22f3C7561a6ec40F1",
         "$implementation": "0x344518934533ec82b49eA533b196dce5cfA64411",
         "$pastUpgrades": [
           [
-            "2024-04-15T22:51:00.000Z",
-            "0xbf7ede7c1652eca8aa0bad6c46c39c01b5ea65b758d907a903a05e199fc80e66",
+            "2024-04-15T22:51:57.000Z",
+            "0x87fed6da1743e2ba0c7fbfd373a3e508978900298d3754e4679d2e2c0ac7a028",
             ["0x344518934533ec82b49eA533b196dce5cfA64411"]
           ]
         ],
@@ -31,11 +31,11 @@
           "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
           "symbol": "W",
           "decimals": 18,
-          "deploymentTimestamp": 1713221460,
+          "deploymentTimestamp": 1713221517,
           "coingeckoListingTimestamp": 1712102400,
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
-          "chainId": 42161,
+          "chainId": 8453,
           "supply": "totalSupply",
           "source": "external",
           "bridgedUsing": {
@@ -44,19 +44,19 @@
         },
         "$upgradeCount": 1,
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1752591051,
+        "clock": 1752740879,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmin": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
+        "defaultAdmin": "0x838a95B6a3E06B6f11C437e22f3C7561a6ec40F1",
         "defaultAdminDelay": 0,
         "defaultAdminDelayIncreaseWait": 432000,
-        "DOMAIN_SEPARATOR": "0x99c02091f90db79912e762836ae37aa59ed40bd5fe2a4f937d7dceabc62780d6",
+        "DOMAIN_SEPARATOR": "0xeefd11cbe1d5f60f5ca2536b9b872e579bf1497a682f67871b9f443e05d5f5f3",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "Wormhole Token",
           "version": "1",
-          "chainId": 42161,
+          "chainId": 8453,
           "verifyingContract": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
@@ -65,7 +65,7 @@
         "MINTER_AND_BURNER_ADMIN": "0x94fa52329a774c590492dd80ea9dcb867c8e45fcf44ebe594977447db27d90a3",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wormhole Token",
-        "owner": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
+        "owner": "0x838a95B6a3E06B6f11C437e22f3C7561a6ec40F1",
         "pendingDefaultAdmin": {
           "newAdmin": "0x0000000000000000000000000000000000000000",
           "schedule": 0
@@ -73,7 +73,7 @@
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "SET_DELEGATE_ROLE": "0x7c759a0ecb3ef47a7afbc7c764671240f2e4bf5f46fed3889343f9c0a7e7b541",
         "symbol": "W",
-        "totalSupply": "40422943300773550000000000",
+        "totalSupply": "92200641377129470000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
