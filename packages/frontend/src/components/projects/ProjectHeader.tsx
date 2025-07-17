@@ -17,8 +17,8 @@ export function ProjectHeader({ project, ongoingAnomaly }: Props) {
   return (
     <div
       className={cn(
-        'flex gap-6 max-md:flex-col md:items-center',
-        ongoingAnomaly ? 'mb-4' : 'mb-6',
+        'flex gap-6 max-md:flex-col md:items-center mb-6',
+        ongoingAnomaly && 'max-md:mb-4',
       )}
     >
       <h1 className="flex items-center justify-start gap-3">
