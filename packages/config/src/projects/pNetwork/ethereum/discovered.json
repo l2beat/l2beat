@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0xb8b9e58559b5f8474507599207c4f8dca1abef378bf3e4da4649c6893cbf7a12",
+  "configHash": "0xacba04e7ffe0c87c5c2f9dfa29f1da37837a46823c6e88282881dbfe791dea4a",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -585,7 +585,7 @@
     }
   ],
   "abis": {
-    "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": [
+    "eth:0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": [
       "constructor(address _weth, address[] _tokensToSupport)",
       "event LogWithdrawToken(address indexed _from, address indexed _token, uint256 amount)",
       "event PegIn(address _tokenAddress, address _tokenSender, uint256 _tokenAmount, string _destinationAddress, bytes _userData)",
@@ -609,7 +609,7 @@
       "function tokensReceived(address, address from, address to, uint256 amount, bytes userData, bytes)",
       "function weth() view returns (address)"
     ],
-    "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4": [
+    "eth:0x17bFDa688b43245A399200a284F81CA0A0b25Bf4": [
       "function hasInitialized() view returns (bool)",
       "function MODIFY_MIN_OPEN_VOTE_AMOUNT_ROLE() view returns (bytes32)",
       "function changeMinOpenVoteAmount(uint256 _minOpenVoteAmount)",
@@ -670,7 +670,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4": [
+    "eth:0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -679,7 +679,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b": [
+    "eth:0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function apps(bytes32, bytes32) view returns (address)",
       "function isDepositable() view returns (bool)",
@@ -689,7 +689,7 @@
       "event ProxyDeposit(address sender, uint256 value)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
-    "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425": [
+    "eth:0x2b33CF282f867A7FF693A66e11B0FcC5552e4425": [
       "function hasInitialized() view returns (bool)",
       "function KERNEL_APP_ID() pure returns (bytes32)",
       "function APP_ADDR_NAMESPACE() pure returns (bytes32)",
@@ -723,7 +723,7 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
-    "0x34D085516f9D7794192aDB10C995d9c532E335aF": [
+    "eth:0x34D085516f9D7794192aDB10C995d9c532E335aF": [
       "event Initialized(uint8 version)",
       "event LogWithdrawToken(address indexed _from, address indexed _token, uint256 amount)",
       "event PegIn(address _tokenAddress, address _tokenSender, uint256 _tokenAmount, string _destinationAddress, bytes _userData, bytes4 _originChainId, bytes4 _destinationChainId)",
@@ -750,7 +750,7 @@
       "function tokensReceived(address, address from, address to, uint256 amount, bytes userData, bytes)",
       "function weth() view returns (address)"
     ],
-    "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478": [
+    "eth:0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -759,7 +759,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x81F7564e413586f1f99fDe55740Ac52b43cA99c9": [
+    "eth:0x81F7564e413586f1f99fDe55740Ac52b43cA99c9": [
       "function hasInitialized() view returns (bool)",
       "function createBurnedPermission(address _app, bytes32 _role)",
       "function burnPermissionManager(address _app, bytes32 _role)",
@@ -797,7 +797,7 @@
       "event ChangePermissionManager(address indexed app, bytes32 indexed role, address indexed manager)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)"
     ],
-    "0x9f8622b11984AfC8f0a42A394928702017c5968D": [
+    "eth:0x9f8622b11984AfC8f0a42A394928702017c5968D": [
       "constructor(address _weth, address[] _tokensToSupport)",
       "event LogWithdrawToken(address indexed _from, address indexed _token, uint256 amount)",
       "event PegIn(address _tokenAddress, address _tokenSender, uint256 _tokenAmount, string _destinationAddress, bytes _userData)",
@@ -821,13 +821,13 @@
       "function tokensReceived(address, address from, address to, uint256 amount, bytes userData, bytes)",
       "function weth() view returns (address)"
     ],
-    "0xA29EF584c389c67178aE9152aC9C543f9156E2B3": [
+    "eth:0xA29EF584c389c67178aE9152aC9C543f9156E2B3": [
       "function createCloneToken(address _parentToken, uint256 _snapshotBlock, string _tokenName, uint8 _decimalUnits, string _tokenSymbol, bool _transfersEnabled) returns (address)"
     ],
-    "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB": [
+    "eth:0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB": [
       "constructor(address _singleton)"
     ],
-    "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535": [
+    "eth:0xB6D14DdFBE01AC537accBe35cCd771C30D53c535": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -838,7 +838,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb": [
+    "eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb": [
       "function getScriptExecutor(bytes _script) view returns (address)",
       "function hasInitialized() view returns (bool)",
       "function REGISTRY_ADD_EXECUTOR_ROLE() view returns (bytes32)",
@@ -863,7 +863,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254": [
+    "eth:0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -872,7 +872,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b": [
+    "eth:0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b": [
       "error InflationRecipientNotWhitelisted(address)",
       "error MonthlyRateGreaterThanYearlyRate(uint256, uint256)",
       "error NotInflationOwner(address)",
@@ -930,7 +930,7 @@
       "function yearlyRateCap() view returns (uint16)",
       "function yearlyWithdrawableLimit() view returns (uint256)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -979,7 +979,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a": [
+    "eth:0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -990,7 +990,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xde3A93028F2283cc28756B3674BD657eaFB992f4": [
+    "eth:0xde3A93028F2283cc28756B3674BD657eaFB992f4": [
       "function hasInitialized() view returns (bool)",
       "function MAX_VESTINGS_PER_ADDRESS() view returns (uint256)",
       "function spendableBalanceOf(address _holder) view returns (uint256)",
@@ -1032,7 +1032,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8": [
+    "eth:0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8": [
       "constructor(address _logic, address _admin, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1043,7 +1043,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E": [
+    "eth:0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E": [
       "function name() view returns (string)",
       "function approve(address _spender, uint256 _amount) returns (bool success)",
       "function creationBlock() view returns (uint256)",
@@ -1075,7 +1075,7 @@
       "event NewCloneToken(address indexed _cloneToken, uint256 _snapshotBlock)",
       "event Approval(address indexed _owner, address indexed _spender, uint256 _amount)"
     ],
-    "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2": [
+    "eth:0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1086,7 +1086,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe": [
+    "eth:0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",

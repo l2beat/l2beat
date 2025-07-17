@@ -1,4 +1,4 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { RLP } from 'ethers/lib/utils'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
@@ -11,7 +11,9 @@ import type { IProvider } from '../../../provider/IProvider'
 const EIGEN_DA_CONSTANTS = {
   COMMITMENT_FIRST_BYTE: '01',
   COMMITMENT_THIRD_BYTE: '00',
-  EIGEN_AVS: EthereumAddress('0x870679e138bcdf293b7ff14dd44b70fc97e12fc0'),
+  EIGEN_AVS: ChainSpecificAddress(
+    'eth:0x870679e138bcdf293b7ff14dd44b70fc97e12fc0',
+  ),
 } as const
 
 export async function checkForEigenDA(

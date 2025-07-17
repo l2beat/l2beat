@@ -96,6 +96,7 @@ export const lumia: ScalingProject = polygonCDKStack({
   chainConfig: {
     name: 'lumia',
     chainId: 994873017,
+    gasTokens: ['LUMIA'],
     explorerUrl: 'https://explorer.lumia.org',
     sinceTimestamp: UnixTime(1719499031),
     apis: [

@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -21,7 +21,7 @@ export class SimpleMethodHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const callResult = await callMethod(provider, address, this.fragment, [])
     return { field: this.field, fragment: this.fragment, ...callResult }

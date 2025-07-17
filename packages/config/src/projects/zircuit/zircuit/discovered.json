@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "zircuit",
   "blockNumber": 15364203,
-  "configHash": "0x15be06f79f2c3bad509bc3b0229caf057e7f2a4e6819fa05c779ebc7f9e56e13",
+  "configHash": "0xe815373714954ed6565ff8cbeb51d8d41c76c6bb8c7a0dc5322a7d5b7449c6e6",
   "entries": [
     {
       "address": "zircuit:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
@@ -195,7 +195,7 @@
     }
   ],
   "abis": {
-    "0x4200000000000000000000000000000000000015": [
+    "zircuit:0x4200000000000000000000000000000000000015": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -205,7 +205,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x4200000000000000000000000000000000000018": [
+    "zircuit:0x4200000000000000000000000000000000000018": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -215,7 +215,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
+    "zircuit:0x69f4D1788e39c87893C980c06EdF4b7f686e2938": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -264,7 +264,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
+    "zircuit:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
       "constructor(address _owner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -280,7 +280,7 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
+    "zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
       "function DEPOSITOR_ACCOUNT() view returns (address)",
       "function baseFeeScalar() view returns (uint32)",
       "function basefee() view returns (uint256)",

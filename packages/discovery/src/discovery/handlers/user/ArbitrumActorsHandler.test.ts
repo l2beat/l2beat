@@ -1,4 +1,4 @@
-import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
@@ -12,7 +12,7 @@ describe(ArbitrumActorsHandler.name, () => {
       actorType: 'validator',
     })
 
-    const contractAddress = EthereumAddress.random()
+    const contractAddress = ChainSpecificAddress.random()
 
     const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_VALIDATORS_LOGS,
@@ -40,7 +40,7 @@ describe(ArbitrumActorsHandler.name, () => {
       actorType: 'batchPoster',
     })
 
-    const contractAddress = EthereumAddress.random()
+    const contractAddress = ChainSpecificAddress.random()
 
     const provider = mockObject<IProvider>({
       getLogs: async () => EXAMPLE_BATCHPOSTERS_LOGS,

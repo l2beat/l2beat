@@ -72,6 +72,7 @@ export const xlayer: ScalingProject = polygonCDKStack({
     name: 'xlayer',
     chainId: 196,
     explorerUrl: 'https://rpc.xlayer.tech',
+    gasTokens: ['OKB'],
     sinceTimestamp: UnixTime(1711782180),
     multicallContracts: [
       {

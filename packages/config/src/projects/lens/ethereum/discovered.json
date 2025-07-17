@@ -2,7 +2,7 @@
   "name": "lens",
   "chain": "ethereum",
   "blockNumber": 22865631,
-  "configHash": "0xedb2c75df7fb1489e33f8ac48c33fab29a16e68e2e42ef9b70c0875ad56f73e5",
+  "configHash": "0x3259623e4cd1e88a4416ef80ffa20c7662704f6b232a9a1167b16adcb9c68f1d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -765,7 +765,7 @@
     }
   ],
   "abis": {
-    "0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB": [
+    "eth:0x2ccD5486Ea1b2A52dcD387c01314F6A328f66cbB": [
       "constructor(address _l1UsdcAddress, address _bridgehub)",
       "event BridgehubDepositBaseTokenInitiated(uint256 indexed chainId, address indexed from, address l1Token, uint256 amount)",
       "event BridgehubDepositFinalized(uint256 indexed chainId, bytes32 indexed txDataHash, bytes32 indexed l2DepositTxHash)",
@@ -807,7 +807,7 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
-    "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
+    "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
       "error BatchNumberMismatch(uint256 expectedBatchNumber, uint256 providedBatchNumber)",
@@ -867,7 +867,7 @@
       "function proveBatchesSharedBridge(uint256, uint256 _processBatchFrom, uint256 _processBatchTo, bytes _proofData)",
       "function revertBatchesSharedBridge(uint256, uint256 _newLastBatch)"
     ],
-    "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": [
+    "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": [
       "constructor(uint256 _eraChainId, uint256 _l1ChainId)",
       "error BaseTokenGasPriceDenominatorNotSet()",
       "error BatchNotExecuted(uint256 batchNumber)",
@@ -911,7 +911,7 @@
       "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionToGatewayMailbox(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp) returns (bytes32 canonicalTxHash)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -959,7 +959,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
+    "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
       "error AddressHasNoCode(address)",
       "error AlreadyMigrated()",
@@ -1044,10 +1044,10 @@
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "0x4968A0E4b025eD7d095753E54058377969b41abC": [
+    "eth:0x4968A0E4b025eD7d095753E54058377969b41abC": [
       "constructor(address _singleton)"
     ],
-    "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": [
+    "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": [
       "constructor(address _fflonkVerifier, address _plonkVerifier)",
       "error EmptyProofLength()",
       "error UnknownVerifierType()",
@@ -1057,11 +1057,11 @@
       "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
       "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
     ],
-    "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": [
+    "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
-    "0x5C03468829A26981c410a7930bD4853622F0B2E5": [
+    "eth:0x5C03468829A26981c410a7930bD4853622F0B2E5": [
       "constructor(address _initialOwner, uint32 _executionDelay, uint256 _eraChainId)",
       "error AddressAlreadyValidator(uint256 _chainId)",
       "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
@@ -1100,7 +1100,7 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
+    "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
       "constructor(address _initialOwner, uint32 _executionDelay, uint256 _eraChainId)",
       "error AddressAlreadyValidator(uint256 _chainId)",
       "error ValidatorDoesNotExist(uint256 _chainId)",
@@ -1136,7 +1136,7 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": [
+    "eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
       "error NoCallsProvided()",
       "error Unauthorized(address caller)",
@@ -1158,7 +1158,7 @@
       "function tokenMultiplierSetter() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
+    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
       "error AddressAlreadyValidator(uint256 _chainId)",
       "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
@@ -1193,7 +1193,7 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
+    "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
       "constructor(address _availBridge)",
       "error InvalidAttestationProof()",
       "error InvalidValidatorOutputHash()",
@@ -1202,7 +1202,7 @@
       "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
       "function vectorx() view returns (address)"
     ],
-    "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
+    "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
       "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
       "function facetAddress(bytes4 _selector) view returns (address)",
@@ -1253,7 +1253,7 @@
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
     ],
-    "0xc29d04A93F893700015138E3E334eB828dAC3cef": [
+    "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "error AddressHasNoCode(address)",
       "error DelegateCallFailed(bytes returnData)",
@@ -1267,11 +1267,11 @@
       "error UndefinedDiamondCutAction()",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
-    "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": [
+    "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
-    "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987": [
+    "eth:0xf553E6D903AA43420ED7e3bc2313bE9286A8F987": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'
 import type { ContractDeployment } from '../provider/IProvider'
 
@@ -8,6 +8,6 @@ export interface ProxyDetails {
 }
 
 export type ProxyResult = {
-  addresses: EthereumAddress[]
+  addresses: ChainSpecificAddress[]
   deployment: ContractDeployment | undefined
 } & ProxyDetails

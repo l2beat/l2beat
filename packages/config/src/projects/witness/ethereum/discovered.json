@@ -2,7 +2,7 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 21736867,
-  "configHash": "0x4da4101162630878535cf19cf32170a8fb5d9fff5a566eb89707ca875342ec04",
+  "configHash": "0xf0f358115198df7d6b35d9d5a334244563fab7c24d89155da3e70f11bfc6bcf6",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -237,10 +237,10 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -359,7 +359,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": [
+    "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -369,7 +369,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": [
+    "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -380,13 +380,13 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8": [
+    "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xD26B535AD58715C4c2ffFAC32908b13674533DAe": [
+    "eth:0xD26B535AD58715C4c2ffFAC32908b13674533DAe": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",

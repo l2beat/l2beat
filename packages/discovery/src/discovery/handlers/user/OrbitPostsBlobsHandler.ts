@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
@@ -29,7 +29,7 @@ export class OrbitPostsBlobsHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const lastEvents =
       (await this.getLast10Events(provider, address, provider.blockNumber)) ??
@@ -48,16 +48,17 @@ export class OrbitPostsBlobsHandler implements Handler {
 
   async getLast10Events(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     blockNumber: number,
   ): Promise<providers.Log[] | undefined> {
+    const rawAddress = ChainSpecificAddress.address(address)
     let currentBlockNumber = blockNumber
     const blockStep = 1000
     let multiplier = 1
     const fetchedEvents: providers.Log[] = []
     while (currentBlockNumber > 0) {
       const events = await provider.raw(
-        `arbitrum_sequencer_batches.${address}.${Math.max(
+        `arbitrum_sequencer_batches.${rawAddress}.${Math.max(
           0,
           currentBlockNumber - blockStep * multiplier,
         )}.${currentBlockNumber}`,
@@ -69,14 +70,14 @@ export class OrbitPostsBlobsHandler implements Handler {
           return await rpcWithRetries(
             async () => {
               return await eventProvider.getLogs({
-                address: address.toString(),
+                address: rawAddress.toString(),
                 topics: [abi.getEventTopic('SequencerBatchDelivered')],
                 fromBlock,
                 toBlock: currentBlockNumber,
               })
             },
             logger,
-            `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
+            `getLogs ${rawAddress.toString()} ${fromBlock} - ${currentBlockNumber}`,
           )
         },
       )

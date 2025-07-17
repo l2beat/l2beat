@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 133041012,
-  "configHash": "0xd273873d4d90791857244b7edbbb81ce8995d35ed85b8f2347ce365b5b653307",
+  "configHash": "0x727d0781ce95314a6357ef5220dc98af8f748cbaadabbe46d6bdd540cf327b8a",
   "entries": [
     {
       "address": "oeth:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -292,7 +292,7 @@
     }
   ],
   "abis": {
-    "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": [
+    "oeth:0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": [
       "constructor(address _zkSync)",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
       "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
@@ -310,10 +310,10 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9": [
+    "oeth:0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9": [
       "constructor(address _singleton)"
     ],
-    "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e": [
+    "oeth:0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e": [
       "constructor(address _zkLink)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -336,7 +336,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b": [
+    "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -344,7 +344,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x5Bd51296423A9079b931414C1De65e7057326EaA": [
+    "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -355,7 +355,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": [
+    "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -366,7 +366,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": [
+    "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -374,7 +374,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E": [
+    "oeth:0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E": [
       "constructor(bool _isEthGasToken)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -450,7 +450,7 @@
       "function validators(address validatorAddress) view returns (bool isValidator)",
       "function withdrawForwardFee(address _receiver, uint256 _amount)"
     ],
-    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+    "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",

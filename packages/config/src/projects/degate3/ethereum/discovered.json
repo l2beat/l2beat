@@ -2,7 +2,7 @@
   "name": "degate3",
   "chain": "ethereum",
   "blockNumber": 22796394,
-  "configHash": "0xc3c76df9e79df60f040e393d07457d4ce3d0960b916af77eb86b3a66e96a4656",
+  "configHash": "0xed63d3953b0f6e2fa09c841829034ba1c5659350606c8d93deb026c788c739b6",
   "entries": [
     {
       "name": "TimeLock1",
@@ -374,7 +374,7 @@
     }
   ],
   "abis": {
-    "0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d": [
+    "eth:0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d": [
       "constructor(address admin_, uint256 delay_)",
       "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
       "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
@@ -396,7 +396,7 @@
       "function setDelay(uint256 delay_)",
       "function setPendingAdmin(address pendingAdmin_)"
     ],
-    "0x2028834B2c0A36A918c10937EeA71BE4f932da52": [
+    "eth:0x2028834B2c0A36A918c10937EeA71BE4f932da52": [
       "function owners(uint256) view returns (address)",
       "function removeOwner(address owner)",
       "function revokeConfirmation(uint256 transactionId)",
@@ -429,7 +429,7 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
-    "0x54D7aE423Edb07282645e740C046B9373970a168": [
+    "eth:0x54D7aE423Edb07282645e740C046B9373970a168": [
       "constructor()",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(address indexed implementation)",
@@ -439,7 +439,7 @@
       "function upgradeTo(address implementation)",
       "function upgradeToAndCall(address implementation, bytes data) payable"
     ],
-    "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": [
+    "eth:0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C": [
       "function owners(uint256) view returns (address)",
       "function removeOwner(address owner)",
       "function revokeConfirmation(uint256 transactionId)",
@@ -472,7 +472,7 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
-    "0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973": [
+    "eth:0x8CCc06C4C3B2b06616EeE1B62F558f5b9C08f973": [
       "event CheckBalance(address indexed token, bool checkBalance)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function claimOwnership()",
@@ -489,7 +489,7 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount) payable"
     ],
-    "0x9385aCd9d78dFE854c543294770d0C94c2B07EDC": [
+    "eth:0x9385aCd9d78dFE854c543294770d0C94c2B07EDC": [
       "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
       "event ExchangeStakeBurned(address exchangeAddr, uint256 amount)",
       "event ExchangeStakeDeposited(address exchangeAddr, uint256 amount)",
@@ -515,7 +515,7 @@
       "function updateSettings(address _protocolFeeVault, uint256 _forcedWithdrawalFee)",
       "function withdrawExchangeStake(address recipient, uint256 requestedAmount) returns (uint256 amountLRC)"
     ],
-    "0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD": [
+    "eth:0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD": [
       "constructor(address _exchange)",
       "event Drained(address to, address token, uint256 amount)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -539,7 +539,7 @@
       "function transact(bytes data) payable",
       "function transferOwnership(address newOwner)"
     ],
-    "0x9C07A72177c5A05410cA338823e790876E79D73B": [
+    "eth:0x9C07A72177c5A05410cA338823e790876E79D73B": [
       "constructor()",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(address indexed implementation)",
@@ -549,7 +549,7 @@
       "function upgradeTo(address implementation)",
       "function upgradeToAndCall(address implementation, bytes data) payable"
     ],
-    "0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b": [
+    "eth:0xc56C1dfE64D21A345E3A3C715FFcA1c6450b964b": [
       "constructor()",
       "event AllowOnchainTransferFrom(bool value)",
       "event BlockSubmitted(uint256 indexed blockIdx, bytes32 merkleRoot, bytes32 publicDataHash)",
@@ -627,7 +627,7 @@
       "function withdrawFromDepositRequest(address from, address token)",
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ],
-    "0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6": [
+    "eth:0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6": [
       "constructor()",
       "event CircuitDisabled(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
       "event CircuitRegistered(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
@@ -643,7 +643,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyProofs(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[] publicInputs, uint256[] proofs) view returns (bool)"
     ],
-    "0xf2991507952d9594E71A44A54fb19f3109D213A5": [
+    "eth:0xf2991507952d9594E71A44A54fb19f3109D213A5": [
       "constructor(address admin_, uint256 delay_)",
       "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
       "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",

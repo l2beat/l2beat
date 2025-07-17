@@ -1,4 +1,8 @@
-import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import type {
+  ChainSpecificAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import type { DiscoveryCustomType } from '../config/StructureConfig'
 import type { StructureContractConfig } from '../config/structureUtils'
@@ -24,13 +28,13 @@ import type { TemplateService } from './TemplateService'
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
 interface AnalyzedCommon {
-  address: EthereumAddress
+  address: ChainSpecificAddress
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
-  implementationNames?: Record<EthereumAddress, string>
+  implementationNames?: Record<ChainSpecificAddress, string>
   isVerified: boolean
   proxyType?: string
-  implementations: EthereumAddress[]
+  implementations: ChainSpecificAddress[]
   values: Record<string, ContractValue | undefined>
   errors: Record<string, string>
   abis: Record<string, string[]>
@@ -69,7 +73,7 @@ export class AddressAnalyzer {
 
   async analyze(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     config: StructureContractConfig,
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {

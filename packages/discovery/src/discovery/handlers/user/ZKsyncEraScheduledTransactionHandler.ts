@@ -1,4 +1,4 @@
-import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
@@ -69,7 +69,7 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const transparentTxs = await this.getTransparentTxs(provider, address)
     const shadowTxs = await this.getShadowTxs(provider, address)
@@ -108,7 +108,7 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     return shadowContractValue.concat(transparentContractValue)
   }
 
-  async getShadowTxs(provider: IProvider, address: EthereumAddress) {
+  async getShadowTxs(provider: IProvider, address: ChainSpecificAddress) {
     const shadowOperationLogs = await provider.getLogs(address, [
       abi.getEventTopic('ShadowOperationScheduled'),
     ])
@@ -129,7 +129,7 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     )
   }
 
-  async getTransparentTxs(provider: IProvider, address: EthereumAddress) {
+  async getTransparentTxs(provider: IProvider, address: ChainSpecificAddress) {
     const transparentOperationLogs = await provider.getLogs(address, [
       abi.getEventTopic('TransparentOperationScheduled'),
     ])
@@ -190,9 +190,9 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     const detector = new ProxyDetector()
     const result = await detector.detectProxy(
       provider,
-      EthereumAddress(call.target),
+      ChainSpecificAddress(call.target),
     )
-    const addresses = [EthereumAddress(call.target)]
+    const addresses = [ChainSpecificAddress(call.target)]
     if (result !== undefined) {
       addresses.push(...get$Implementations(result.values))
     }

@@ -2,7 +2,7 @@
   "name": "hibachi",
   "chain": "arbitrum",
   "blockNumber": 351073243,
-  "configHash": "0xf03ce2f8ee9dd128e7cdb78be7406f8bfbea40fff28a5faf710d245d4f21ff4e",
+  "configHash": "0x4e1db2bd50baa98b17b8b4b24a341d32486bacc73d51a2caa4287450de89c6f6",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000000",
@@ -523,7 +523,7 @@
     }
   ],
   "abis": {
-    "0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": [
+    "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": [
       "constructor(address admin)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -545,7 +545,7 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
-    "0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400": [
+    "arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -556,7 +556,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
+    "arb1:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -575,7 +575,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0x4407f4F272f78D1157C59E8557729be36137158F": [
+    "arb1:0x4407f4F272f78D1157C59E8557729be36137158F": [
       "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
       "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
       "error ERC20InvalidApprover(address approver)",
@@ -602,7 +602,7 @@
       "function transfer(address to, uint256 value) returns (bool)",
       "function transferFrom(address from, address to, uint256 value) returns (bool)"
     ],
-    "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
+    "arb1:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
       "error InvalidProof()",
       "error ProofInvalid()",
       "error PublicInputNotInField()",
@@ -615,7 +615,7 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0x621199f6beB2ba6fbD962E8A52A320EA4F6D4aA3": [
+    "arb1:0x621199f6beB2ba6fbD962E8A52A320EA4F6D4aA3": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ContractUpgraded(address indexed oldContract, address indexed newContract)",
@@ -652,7 +652,7 @@
       "function verifySignatures(bytes32 hash, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, tuple(address[] keys, uint32 expirationTime) guardianSet) pure returns (bool valid, string reason)",
       "function verifyVM(tuple(uint8 version, uint32 timestamp, uint32 nonce, uint16 emitterChainId, bytes32 emitterAddress, uint64 sequence, uint8 consistencyLevel, bytes payload, uint32 guardianSetIndex, tuple(bytes32 r, bytes32 s, uint8 v, uint8 guardianIndex)[] signatures, bytes32 hash) vm) view returns (bool valid, string reason)"
     ],
-    "0x66EBbea46E474e4e1C10fE2209184182a89736a4": [
+    "arb1:0x66EBbea46E474e4e1C10fE2209184182a89736a4": [
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
       "error AddressEmptyCode(address target)",
@@ -786,7 +786,7 @@
       "function wormholeChainIdToHibachiChainId(uint16) view returns (uint16)",
       "function wormholeConsistency() view returns (uint8)"
     ],
-    "0x818351386C3a63A8244C78aDAD42B9b4f9a516d4": [
+    "arb1:0x818351386C3a63A8244C78aDAD42B9b4f9a516d4": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -797,7 +797,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x86C58d5853E05110e9297A324ceFD455A9585b9E": [
+    "arb1:0x86C58d5853E05110e9297A324ceFD455A9585b9E": [
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
       "error AmountTooHigh()",
@@ -864,7 +864,7 @@
       "function wormholeConsistency() view returns (uint8)",
       "function xChainNonce() view returns (uint256)"
     ],
-    "0x951e848eAD9c2B4aFaEa5e0649b36A00f97f01b1": [
+    "arb1:0x951e848eAD9c2B4aFaEa5e0649b36A00f97f01b1": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -875,7 +875,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xa3F61770BBd12e705734Ad940f382227d0fD82fE": [
+    "arb1:0xa3F61770BBd12e705734Ad940f382227d0fD82fE": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -886,16 +886,16 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xa5f208e072434bC67592E4C49C1B991BA79BCA46": [
+    "arb1:0xa5f208e072434bC67592E4C49C1B991BA79BCA46": [
       "constructor(address setup, bytes initData)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "arb1:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -944,7 +944,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xDC986a09728F76110FF666eE7b20d99086501d15": [
+    "arb1:0xDC986a09728F76110FF666eE7b20d99086501d15": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",

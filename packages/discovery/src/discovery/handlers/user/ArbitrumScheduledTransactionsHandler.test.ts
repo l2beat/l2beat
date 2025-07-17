@@ -1,12 +1,11 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { ContractValue } from '../../output/types'
-
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
 
-const RETRYABLE_TICKET_MAGIC = EthereumAddress(
-  '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
+const RETRYABLE_TICKET_MAGIC = ChainSpecificAddress(
+  'eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
 )
 
 describe(ArbitrumScheduledTransactionsHandler.name, () => {
@@ -18,7 +17,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       ],
     )
 
-    const mockGetMetadata = async (address: EthereumAddress) => ({
+    const mockGetMetadata = async (address: ChainSpecificAddress) => ({
       abi: [
         'function execute(address upgrade, bytes upgradeCallData) payable',
         'function perform() public',
@@ -34,12 +33,13 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
     })
     handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       getLogs: async () => EXAMPLE_LOGS,
       getSource: mockGetMetadata,
     })
     provider.switchChain = mockFn().returns(provider) as any
 
-    const contractAddress = EthereumAddress.random()
+    const contractAddress = ChainSpecificAddress.random()
     const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
@@ -534,13 +534,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x85368b7ca2ee99b3d479ddff6298f69f0ce7d35227a731b70e8bc689074ba0af',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x6274106eedD4848371D2C09e0352d67B795ED516',
+      contractName: 'name_of_eth:0x6274106eedD4848371D2C09e0352d67B795ED516',
       function: 'perform',
       inputs: [],
-      address: '0x6274106eedD4848371D2C09e0352d67B795ED516',
+      address: 'eth:0x6274106eedD4848371D2C09e0352d67B795ED516',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -553,13 +553,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x6f801c57f0acf08c9688585c8b1cbb4b36f7053267befee7b2ee996b58592f2f',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x85792f6BF346e3Bfd3A275318aDd2c44A1058447',
+      contractName: 'name_of_eth:0x85792f6BF346e3Bfd3A275318aDd2c44A1058447',
       function: 'perform',
       inputs: [],
-      address: '0x85792f6BF346e3Bfd3A275318aDd2c44A1058447',
+      address: 'eth:0x85792f6BF346e3Bfd3A275318aDd2c44A1058447',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -572,12 +572,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0a0e8ebc47cd2cc5c020dc6a52e1c0c349165c7133547d811956c973e6b03ee2',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0',
+      contractName: 'name_of_eth:0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0',
       function: 'perform',
       inputs: [],
-      address: '0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0',
+      address: 'eth:0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -590,13 +590,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0a0e8ebc47cd2cc5c020dc6a52e1c0c349165c7133547d811956c973e6b03ee2',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x1015c1Ae166C4C39D18a1151b7029bAC1530c9aa',
+      contractName: 'name_of_eth:0x1015c1Ae166C4C39D18a1151b7029bAC1530c9aa',
       function: 'perform',
       inputs: [],
-      address: '0x1015c1Ae166C4C39D18a1151b7029bAC1530c9aa',
+      address: 'eth:0x1015c1Ae166C4C39D18a1151b7029bAC1530c9aa',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -609,10 +609,10 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0a0e8ebc47cd2cc5c020dc6a52e1c0c349165c7133547d811956c973e6b03ee2',
     decoded: {
       chain: 'nova',
-      address: '0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0',
+      address: 'eth:0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0',
       calldata: '0xb147f40c',
-      executor: '0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
-      inboxOnEthereum: '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
+      executor: 'eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
+      inboxOnEthereum: 'eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -625,13 +625,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x57ae5d951014e5b6dad9718af7c1b2fd41172f8957de355c15fbdd9a6e28395f',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x7B1247f443359d1447Cf25e73380Bc9b99F2628f',
+      contractName: 'name_of_eth:0x7B1247f443359d1447Cf25e73380Bc9b99F2628f',
       function: 'perform',
       inputs: [],
-      address: '0x7B1247f443359d1447Cf25e73380Bc9b99F2628f',
+      address: 'eth:0x7B1247f443359d1447Cf25e73380Bc9b99F2628f',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -644,13 +644,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x57ae5d951014e5b6dad9718af7c1b2fd41172f8957de355c15fbdd9a6e28395f',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0xBabA4DAf5800B9746f58C724F05E03880850D578',
+      contractName: 'name_of_eth:0xBabA4DAf5800B9746f58C724F05E03880850D578',
       function: 'perform',
       inputs: [],
-      address: '0xBabA4DAf5800B9746f58C724F05E03880850D578',
+      address: 'eth:0xBabA4DAf5800B9746f58C724F05E03880850D578',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -663,12 +663,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x57ae5d951014e5b6dad9718af7c1b2fd41172f8957de355c15fbdd9a6e28395f',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0xBabA4DAf5800B9746f58C724F05E03880850D578',
+      contractName: 'name_of_eth:0xBabA4DAf5800B9746f58C724F05E03880850D578',
       function: 'perform',
       inputs: [],
-      address: '0xBabA4DAf5800B9746f58C724F05E03880850D578',
+      address: 'eth:0xBabA4DAf5800B9746f58C724F05E03880850D578',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -681,7 +681,7 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x4de857395557aa68ca8e4ac5c12a0a8427b39b01c33e27882d473c25ed69cd93',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      contractName: 'name_of_eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       function: 'perform',
       inputs: [
         {
@@ -707,10 +707,10 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
         },
         { name: '_nonce', value: 1 },
       ],
-      address: '0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      address: 'eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       calldata:
         '0x536d8944000000000000000000000000f06e95ef589d9c38af242a8aaee8375f14023f8500000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -723,7 +723,7 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x4de857395557aa68ca8e4ac5c12a0a8427b39b01c33e27882d473c25ed69cd93',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      contractName: 'name_of_eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       function: 'perform',
       inputs: [
         {
@@ -749,11 +749,11 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
         },
         { name: '_nonce', value: 1 },
       ],
-      address: '0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      address: 'eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       calldata:
         '0x536d8944000000000000000000000000423552c0f05baccac5bfa91c6dcf1dc53a0a164100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -766,11 +766,11 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x4de857395557aa68ca8e4ac5c12a0a8427b39b01c33e27882d473c25ed69cd93',
     decoded: {
       chain: 'nova',
-      address: '0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      address: 'eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       calldata:
         '0x536d8944000000000000000000000000c232ee726e3c51b86778bb4dbe61c52cc07a60f300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09',
-      executor: '0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
-      inboxOnEthereum: '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
+      executor: 'eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
+      inboxOnEthereum: 'eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -783,7 +783,7 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x4de857395557aa68ca8e4ac5c12a0a8427b39b01c33e27882d473c25ed69cd93',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      contractName: 'name_of_eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       function: 'perform',
       inputs: [
         {
@@ -809,11 +809,11 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
         },
         { name: '_nonce', value: 1 },
       ],
-      address: '0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
+      address: 'eth:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a',
       calldata:
         '0x536d8944000000000000000000000000add68bcb0f66878ab9d37a447c7b9067c5dfa94100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -826,12 +826,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x492a8fccff029378b8566bdb6157123d1626cbfe2530a9b1f0ad5df688c10471',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E',
+      contractName: 'name_of_eth:0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E',
       function: 'perform',
       inputs: [],
-      address: '0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E',
+      address: 'eth:0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -844,12 +844,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x3b70f2Da6F3b01F9a53dCBcB3e59AD3ad8bed924',
+      contractName: 'name_of_eth:0x3b70f2Da6F3b01F9a53dCBcB3e59AD3ad8bed924',
       function: 'perform',
       inputs: [],
-      address: '0x3b70f2Da6F3b01F9a53dCBcB3e59AD3ad8bed924',
+      address: 'eth:0x3b70f2Da6F3b01F9a53dCBcB3e59AD3ad8bed924',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -862,12 +862,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x54c2C372943572Ac2a8E84D502ebc13F14B62246',
+      contractName: 'name_of_eth:0x54c2C372943572Ac2a8E84D502ebc13F14B62246',
       function: 'perform',
       inputs: [],
-      address: '0x54c2C372943572Ac2a8E84D502ebc13F14B62246',
+      address: 'eth:0x54c2C372943572Ac2a8E84D502ebc13F14B62246',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -880,13 +880,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0xF6c7Dc6eaE78aBF2f32df899654ca425Dfa99481',
+      contractName: 'name_of_eth:0xF6c7Dc6eaE78aBF2f32df899654ca425Dfa99481',
       function: 'perform',
       inputs: [],
-      address: '0xF6c7Dc6eaE78aBF2f32df899654ca425Dfa99481',
+      address: 'eth:0xF6c7Dc6eaE78aBF2f32df899654ca425Dfa99481',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -899,10 +899,10 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e',
     decoded: {
       chain: 'nova',
-      address: '0x5357f4D3e8f8250A77bcddd5E58886AD1358220c',
+      address: 'eth:0x5357f4D3e8f8250A77bcddd5E58886AD1358220c',
       calldata: '0xb147f40c',
-      executor: '0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
-      inboxOnEthereum: '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
+      executor: 'eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
+      inboxOnEthereum: 'eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -915,13 +915,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xe4f81d02f2581e9b7a8815af6925d3c277859994fde496629554989b7c91d254',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0xd9a2e0E5d7509F0BF1B2d33884F8C1b4D4490879',
+      contractName: 'name_of_eth:0xd9a2e0E5d7509F0BF1B2d33884F8C1b4D4490879',
       function: 'perform',
       inputs: [],
-      address: '0xd9a2e0E5d7509F0BF1B2d33884F8C1b4D4490879',
+      address: 'eth:0xd9a2e0E5d7509F0BF1B2d33884F8C1b4D4490879',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -934,12 +934,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
+      contractName: 'name_of_eth:0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
       function: 'perform',
       inputs: [],
-      address: '0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
+      address: 'eth:0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -952,12 +952,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x47a85C0a118127F3968A6A1A61e2a326517540D4',
+      contractName: 'name_of_eth:0x47a85C0a118127F3968A6A1A61e2a326517540D4',
       function: 'perform',
       inputs: [],
-      address: '0x47a85C0a118127F3968A6A1A61e2a326517540D4',
+      address: 'eth:0x47a85C0a118127F3968A6A1A61e2a326517540D4',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -970,12 +970,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x76D8e97Cd4514bebBc21d2044fF4a8d9eA1f0CC4',
+      contractName: 'name_of_eth:0x76D8e97Cd4514bebBc21d2044fF4a8d9eA1f0CC4',
       function: 'perform',
       inputs: [],
-      address: '0x76D8e97Cd4514bebBc21d2044fF4a8d9eA1f0CC4',
+      address: 'eth:0x76D8e97Cd4514bebBc21d2044fF4a8d9eA1f0CC4',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -988,12 +988,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0xCe0aF261EB511CB41b8D0A2e31DF80BA37e265aB',
+      contractName: 'name_of_eth:0xCe0aF261EB511CB41b8D0A2e31DF80BA37e265aB',
       function: 'perform',
       inputs: [],
-      address: '0xCe0aF261EB511CB41b8D0A2e31DF80BA37e265aB',
+      address: 'eth:0xCe0aF261EB511CB41b8D0A2e31DF80BA37e265aB',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -1006,12 +1006,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x874356173CFd6C739aeab1F5ABfB5F3AFB3d4d33',
+      contractName: 'name_of_eth:0x874356173CFd6C739aeab1F5ABfB5F3AFB3d4d33',
       function: 'perform',
       inputs: [],
-      address: '0x874356173CFd6C739aeab1F5ABfB5F3AFB3d4d33',
+      address: 'eth:0x874356173CFd6C739aeab1F5ABfB5F3AFB3d4d33',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -1024,12 +1024,12 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'ethereum',
-      contractName: 'name_of_0x501f30810D2b0EaEC15Cc3785dBB29e4a8a92a70',
+      contractName: 'name_of_eth:0x501f30810D2b0EaEC15Cc3785dBB29e4a8a92a70',
       function: 'perform',
       inputs: [],
-      address: '0x501f30810D2b0EaEC15Cc3785dBB29e4a8a92a70',
+      address: 'eth:0x501f30810D2b0EaEC15Cc3785dBB29e4a8a92a70',
       calldata: '0xb147f40c',
-      executor: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
+      executor: 'eth:0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
     },
     raw: {
       target: '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd',
@@ -1042,13 +1042,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
+      contractName: 'name_of_eth:0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
       function: 'perform',
       inputs: [],
-      address: '0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
+      address: 'eth:0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -1061,10 +1061,10 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0x0b8dc4a8b99d2302c77e4eaeb1b06dd4038dd796bd8e5016dcb292018543ef91',
     decoded: {
       chain: 'nova',
-      address: '0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
+      address: 'eth:0x3E313Eeed58E851CA3841C6109697B9eb35C7726',
       calldata: '0xb147f40c',
-      executor: '0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
-      inboxOnEthereum: '0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
+      executor: 'eth:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482',
+      inboxOnEthereum: 'eth:0xc4448b71118c9071Bcb9734A0EAc55D18A153949',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -1077,13 +1077,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xdda98e62c0827b0ea976efa9fa7eab4086f6ecc5aa6715e02868bb2972b12cad',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x36D0170D92F66e8949eB276C3AC4FEA64f83704d',
+      contractName: 'name_of_eth:0x36D0170D92F66e8949eB276C3AC4FEA64f83704d',
       function: 'perform',
       inputs: [],
-      address: '0x36D0170D92F66e8949eB276C3AC4FEA64f83704d',
+      address: 'eth:0x36D0170D92F66e8949eB276C3AC4FEA64f83704d',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
@@ -1096,13 +1096,13 @@ const EXPECTED_DECODED_SCHEDULED_TRANSACTIONS = [
     id: '0xdda98e62c0827b0ea976efa9fa7eab4086f6ecc5aa6715e02868bb2972b12cad',
     decoded: {
       chain: 'arbitrum',
-      contractName: 'name_of_0x849E360a247132F961c9CBE95Ba39106c72e1268',
+      contractName: 'name_of_eth:0x849E360a247132F961c9CBE95Ba39106c72e1268',
       function: 'perform',
       inputs: [],
-      address: '0x849E360a247132F961c9CBE95Ba39106c72e1268',
+      address: 'eth:0x849E360a247132F961c9CBE95Ba39106c72e1268',
       calldata: '0xb147f40c',
-      executor: '0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
-      inboxOnEthereum: '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
+      executor: 'eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827',
+      inboxOnEthereum: 'eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f',
     },
     raw: {
       target: '0xa723C008e76E379c55599D2E4d93879BeaFDa79C',

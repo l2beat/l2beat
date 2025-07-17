@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantle",
   "blockNumber": 81058973,
-  "configHash": "0x6484247fcb535d3262744e974d4336e4efd4a885ab7f0489d49f24866a22610f",
+  "configHash": "0xf4320864a6c7367a631437f7738700ec196144e86c802c06f211d2ae4ee465a4",
   "entries": [
     {
       "name": "MantleOwner",
@@ -306,7 +306,7 @@
     }
   ],
   "abis": {
-    "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821": [
+    "mantle:0x0C04046546C46652969Aa9eB4BFB758cFDf1e821": [
       "constructor()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -381,10 +381,10 @@
       "function validators(address validatorAddress) view returns (bool isValidator)",
       "function withdrawForwardFee(address _receiver, uint256 _amount)"
     ],
-    "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60": [
+    "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60": [
       "constructor(address _singleton)"
     ],
-    "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2": [
+    "mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -395,7 +395,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x7769C18828569692Dfb65affa0856533613ea458": [
+    "mantle:0x7769C18828569692Dfb65affa0856533613ea458": [
       "constructor(address _zkSync)",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
       "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
@@ -413,7 +413,7 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": [
+    "mantle:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": [
       "constructor(address _zkLink)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -438,7 +438,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": [
+    "mantle:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -446,7 +446,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": [
+    "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -454,7 +454,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82": [
+    "mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -465,7 +465,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+    "mantle:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",

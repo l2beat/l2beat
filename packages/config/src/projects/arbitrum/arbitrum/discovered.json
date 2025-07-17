@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "arbitrum",
   "blockNumber": 348602301,
-  "configHash": "0x9b8772ad1fa05f2f6fa339ec76b9aa9034beb8c1a2c210f27976eef1ba09bb9f",
+  "configHash": "0x7e0f9f85d477b0f818bdfe2f81525a11b8c4ae43682a74a926a78b0da879fb55",
   "entries": [
     {
       "address": "arb1:0x0000000000000000000000000000000000000001",
@@ -2660,7 +2660,7 @@
     }
   ],
   "abis": {
-    "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9": [
+    "arb1:0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9": [
       "constructor()",
       "error Empty()",
       "event Initialized(uint8 version)",
@@ -2728,7 +2728,7 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0x09e9222E96E7B4AE2a407B98d48e330053351EEe": [
+    "arb1:0x09e9222E96E7B4AE2a407B98d48e330053351EEe": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -2738,7 +2738,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x1D62fFeB72e4c360CcBbacf7c965153b00260417": [
+    "arb1:0x1D62fFeB72e4c360CcBbacf7c965153b00260417": [
       "constructor(bytes32 _constitutionHash)",
       "event ConstitutionHashSet(bytes32 constitutionHash)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -2748,7 +2748,7 @@
       "function setConstitutionHash(bytes32 _constitutionHash)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93": [
+    "arb1:0x1DCf7D03574fbC7C205F41f2e116eE094a652e93": [
       "event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _to, uint256 _amount)",
       "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
       "event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)",
@@ -2766,7 +2766,7 @@
       "function postUpgradeInit()",
       "function router() view returns (address)"
     ],
-    "0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635": [
+    "arb1:0x2F06643fc2CC18585Ae790b546388F0DE4Ec6635": [
       "constructor()",
       "error AbstainDisallowed()",
       "error CallNotRemoveMember(bytes4 selector, bytes4 expectedSelector)",
@@ -2846,7 +2846,7 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d": [
+    "arb1:0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d": [
       "constructor(address[] recipients, uint256[] weights)",
       "error EmptyRecipients()",
       "error InputLengthMismatch()",
@@ -2870,7 +2870,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": [
+    "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -2881,7 +2881,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+    "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -2931,7 +2931,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x3f770Ac673856F105b586bb393d122721265aD46": [
+    "arb1:0x3f770Ac673856F105b586bb393d122721265aD46": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value, bytes data)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
@@ -2957,7 +2957,7 @@
       "function transferAndCall(address _to, uint256 _value, bytes _data) returns (bool success)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
-    "0x3fE38087A94903A9D946fa1915e1772fe611000f": [
+    "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f": [
       "function beacon() view returns (address)",
       "function calculateExpectedAddress(bytes32 salt) view returns (address)",
       "function calculateExpectedAddress(address user, bytes32 userSalt) view returns (address)",
@@ -2966,7 +2966,7 @@
       "function getSalt(address user, bytes32 userSalt) pure returns (bytes32)",
       "function initialize(address _beacon)"
     ],
-    "0x41740588b86B4e0629b83A4e28786FF94361c3A3": [
+    "arb1:0x41740588b86B4e0629b83A4e28786FF94361c3A3": [
       "constructor()",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
@@ -3006,10 +3006,10 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641": [
+    "arb1:0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641": [
       "constructor(address _singleton)"
     ],
-    "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": [
+    "arb1:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": [
       "constructor(address _l1Counterpart, address _l2Router, address _l1Dai, address _l2Dai)",
       "event Closed()",
       "event Deny(address indexed usr)",
@@ -3033,7 +3033,7 @@
       "function rely(address usr)",
       "function wards(address) view returns (uint256)"
     ],
-    "0x467923B9AE90BDB36BA88eCA11604D45F13b712C": [
+    "arb1:0x467923B9AE90BDB36BA88eCA11604D45F13b712C": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3044,7 +3044,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64": [
+    "arb1:0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64": [
       "constructor()",
       "error CohortFull(uint8 cohort)",
       "error CohortLengthMismatch(address[] cohort1, address[] cohort2)",
@@ -3109,7 +3109,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateNonce() view returns (uint256)"
     ],
-    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": [
+    "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -3119,7 +3119,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056": [
+    "arb1:0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056": [
       "event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _to, uint256 _amount)",
       "event TokenSet(address indexed l1Address, address indexed l2Address)",
       "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
@@ -3137,7 +3137,7 @@
       "function registerTokenFromL1(address[] l1Address, address[] l2Address)",
       "function router() view returns (address)"
     ],
-    "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": [
+    "arb1:0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -3147,7 +3147,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x6D2457a4ad276000A615295f7A80F79E48CcD318": [
+    "arb1:0x6D2457a4ad276000A615295f7A80F79E48CcD318": [
       "constructor(address _l2Router, address _l1Lpt, address _l2Lpt, address _l2LPTDataCache)",
       "event DepositFinalized(address indexed _l1Token, address indexed _from, address indexed _to, uint256 _amount)",
       "event L1CounterpartUpdate(address _l1Counterpart)",
@@ -3181,7 +3181,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unpause()"
     ],
-    "0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad": [
+    "arb1:0x6f3a242cA91A119F872f0073BC14BC8a74a315Ad": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3192,7 +3192,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": [
+    "arb1:0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": [
       "constructor(tuple(uint256 chainId, tuple(address inbox, address upgradeExecutor) location)[] _upgradeExecutors, address _l1ArbitrumTimelock, uint256 _l1TimelockMinDelay)",
       "error EmptyActionBytesData(bytes[])",
       "error ParamLengthMismatch(uint256 len1, uint256 len2)",
@@ -3210,7 +3210,7 @@
       "function upExecLocationExists(uint256 _chainId) view returns (bool)",
       "function upExecLocations(uint256) view returns (address inbox, address upgradeExecutor)"
     ],
-    "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": [
+    "arb1:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3221,7 +3221,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115": [
+    "arb1:0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115": [
       "constructor()",
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -3240,7 +3240,7 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x806421D09cDb253aa9d128a658e60c0B95eFFA01": [
+    "arb1:0x806421D09cDb253aa9d128a658e60c0B95eFFA01": [
       "event DepositFinalized(address indexed l1Token, address indexed _from, address indexed _to, uint256 _amount)",
       "event TxToL1(address indexed _from, address indexed _to, uint256 indexed _id, bytes _data)",
       "event WithdrawalInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _l2ToL1Id, uint256 _exitNum, uint256 _amount)",
@@ -3257,7 +3257,7 @@
       "function postUpgradeInit()",
       "function router() view returns (address)"
     ],
-    "0x8a1cDA8dee421cD06023470608605934c16A05a0": [
+    "arb1:0x8a1cDA8dee421cD06023470608605934c16A05a0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3268,7 +3268,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x912CE59144191C1204E64559FE8253a0e49E6548": [
+    "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3279,7 +3279,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": [
+    "arb1:0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": [
       "constructor(address _store)",
       "error ExecFromModuleError(bytes data, address securityCouncil)",
       "error PreviousOwnerNotFound(address targetOwner, address securityCouncil)",
@@ -3292,10 +3292,10 @@
       "function perform(address _securityCouncil, address[] _updatedMembers, uint256 _nonce) returns (bool res)",
       "function store() view returns (address)"
     ],
-    "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941": [
+    "arb1:0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941": [
       "constructor(address _singleton)"
     ],
-    "0xbD5016a7946a82b938242573ED63ccB8962A4acB": [
+    "arb1:0xbD5016a7946a82b938242573ED63ccB8962A4acB": [
       "constructor()",
       "error CastVoteDisabled()",
       "error Empty()",
@@ -3377,7 +3377,7 @@
       "function votingPeriod() view returns (uint256)",
       "function weightReceived(uint256 proposalId, address nominee) view returns (uint256)"
     ],
-    "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649": [
+    "arb1:0xbF5041Fc07E1c866D15c749156657B8eEd0fb649": [
       "constructor(address[] recipients, uint256[] weights)",
       "error EmptyRecipients()",
       "error InputLengthMismatch()",
@@ -3401,7 +3401,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": [
+    "arb1:0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3412,7 +3412,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882": [
+    "arb1:0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882": [
       "constructor()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
@@ -3457,10 +3457,10 @@
       "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C": [
+    "arb1:0xc610984d9C96a7CE54Bcd335CEee9b0e3874380C": [
       "constructor(address _singleton)"
     ],
-    "0xCaD7828a19b363A2B44717AFB1786B5196974D8E": [
+    "arb1:0xCaD7828a19b363A2B44717AFB1786B5196974D8E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3471,7 +3471,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": [
+    "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3482,7 +3482,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd3Ae921B220bedC2f94a5968E25535a476A9518C": [
+    "arb1:0xd3Ae921B220bedC2f94a5968E25535a476A9518C": [
       "constructor()",
       "error AccountInOtherCohort(uint8 cohort, address account)",
       "error AlreadyContender(address contender)",
@@ -3605,7 +3605,7 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": [
+    "arb1:0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3616,7 +3616,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": [
+    "arb1:0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -3627,7 +3627,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xdb216562328215E010F819B5aBe947bad4ca961e": [
+    "arb1:0xdb216562328215E010F819B5aBe947bad4ca961e": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -3638,7 +3638,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": [
+    "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": [
       "constructor(address implementation_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Upgraded(address indexed implementation)",
@@ -3648,7 +3648,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
     ],
-    "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278": [
+    "arb1:0xe80eb0238029333e368e0bDDB7acDf1b9cb28278": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
       "event GatewaySet(address indexed l1Token, address indexed gateway)",
       "event TransferRouted(address indexed token, address indexed _userFrom, address indexed _userTo, address gateway)",
@@ -3668,7 +3668,7 @@
       "function setDefaultGateway(address newL2DefaultGateway)",
       "function setGateway(address[] _l1Token, address[] _gateway)"
     ],
-    "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": [
+    "arb1:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

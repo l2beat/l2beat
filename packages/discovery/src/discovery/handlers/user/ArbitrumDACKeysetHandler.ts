@@ -1,4 +1,4 @@
-import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 
@@ -28,7 +28,7 @@ export class ArbitrumDACKeysetHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const events = await provider.getLogs(address, [
       [abi.getEventTopic('SetValidKeyset')],
