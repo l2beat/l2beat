@@ -21,8 +21,9 @@ function decoder(
     }
 
     if (
+      EthereumAddress(log.address) === bridge.tokenMessenger &&
       log.topics[0] ===
-      encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
+        encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
     ) {
       const data = decodeEventLog({
         abi: ABI,
@@ -60,8 +61,9 @@ function decoder(
     }
 
     if (
+      EthereumAddress(log.address) === bridge.messageTransmitter &&
       log.topics[0] ===
-      encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
+        encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
     ) {
       const data = decodeEventLog({
         abi: ABI,
