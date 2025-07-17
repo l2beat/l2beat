@@ -12,6 +12,7 @@ export const oevnetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1707313169), // 2024-02-07T13:39:29Z
   additionalPurposes: ['Oracles'],
   additionalBadges: [BADGES.RaaS.Caldera],
+  archivedAt: UnixTime(1752755168),
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
