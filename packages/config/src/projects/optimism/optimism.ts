@@ -249,6 +249,14 @@ export const optimism: ScalingProject = opStackL2({
     'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `OpFoundationOperationsSafe` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
+      title: 'Upgrade #16  Interop Contracts + Upgrades to Cannon',
+      url: 'https://vote.optimism.io/proposals/42233809968417684816035432917226202543057967150073565253597304573923844823222',
+      date: '2025-07-14T00:00:00Z',
+      description:
+        'Optimism readies Superchain interop and boosts security, scale, and Cannon.',
+      type: 'general',
+    },
+    {
       title: 'Upgrade #15  Isthmus Hard Fork',
       url: 'https://vote.optimism.io/proposals/8705916809146420472067303211131851783087744913535435360574720946039078686841',
       date: '2025-04-12T00:00:00Z',
