@@ -45,21 +45,23 @@ export const zkCatalogColumns = [
       )
     },
   }),
-  columnHelper.accessor((row) => row.projectsUsedIn, {
+  columnHelper.display({
     id: 'used-in',
     header: 'Used in',
     cell: (ctx) => {
       return <ProjectsUsedIn usedIn={ctx.row.original.projectsUsedIn} />
     },
   }),
-  columnHelper.accessor((row) => row.verifiers, {
+  columnHelper.display({
     id: 'verifiers',
+    header: 'Verifiers',
     cell: (ctx) => {
       return <VerifiedCountWithDetails {...ctx.row.original.verifiers} />
     },
   }),
-  columnHelper.accessor((row) => row.attesters, {
+  columnHelper.display({
     id: 'attesters',
+    header: 'Attesters',
     cell: (ctx) => {
       if (ctx.row.original.attesters.length === 0)
         return <span className="font-semibold text-xs leading-none">N/A</span>
@@ -83,14 +85,14 @@ export const zkCatalogColumns = [
       )
     },
   }),
-  columnHelper.accessor((row) => row.techStack, {
+  columnHelper.display({
     id: 'tech-stack',
     header: 'Tech stack',
     cell: (ctx) => {
       return <TechStackCell techStack={ctx.row.original.techStack} />
     },
   }),
-  columnHelper.accessor((row) => row.trustedSetups, {
+  columnHelper.display({
     id: 'trusted-setups',
     header: 'Trusted setups',
     cell: (ctx) => {
