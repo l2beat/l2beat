@@ -1,8 +1,10 @@
 import {
   assert,
+  ChainSpecificAddress,
   formatAsciiBorder,
   Hash160,
   type json,
+  unique,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
@@ -104,7 +106,36 @@ export class ConfigReader {
   // discovered.json file. Most of the time you want to use
   // readAllDiscoveredProjects()
   readAllConfiguredProjects(): { project: string; chains: string[] }[] {
-    return this.readAllDiscoveredProjects()
+    return readdirSync(path.join(this.rootPath), { withFileTypes: true })
+      .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
+      .map((projectDir) => {
+        const projectPath = path.join(this.rootPath, projectDir.name)
+        const configPath = path.join(projectPath, 'config.jsonc')
+
+        if (!existsSync(configPath)) {
+          return { project: projectDir.name, chains: [] as string[] }
+        }
+
+        const config = readJsonc(configPath)
+
+        if (
+          'initialAddresses' in config &&
+          Array.isArray(config.initialAddresses) &&
+          config.initialAddresses.every((x) => typeof x === 'string')
+        ) {
+          const addresses = config.initialAddresses.map((a) =>
+            ChainSpecificAddress(a),
+          )
+          const chains = addresses.map((a) =>
+            ChainSpecificAddress.longChain(a).toString(),
+          )
+          const uniqueChains = unique(chains)
+          return { project: projectDir.name, chains: uniqueChains }
+        }
+
+        return { project: projectDir.name, chains: [] as string[] }
+      })
+      .filter((x) => x.chains.length > 0)
   }
 
   // NOTE(radomski): Generates a list of projects that _have_ a
