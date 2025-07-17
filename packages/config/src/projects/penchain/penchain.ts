@@ -94,7 +94,7 @@ export const penchain: ScalingProject = polygonCDKStack({
   isForcedBatchDisallowed,
   chainConfig: {
     name: 'penchain',
-    chainId: 623,
+    chainId: 3344,
     gasTokens: ['PC'],
     explorerUrl: 'https://explorer.pentagon.games',
     sinceTimestamp: UnixTime(1740743363),
