@@ -17,7 +17,7 @@ export const moonchain: ScalingProject = underReviewL3({
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
-      websites: ['https://moonchain.com'],
+      websites: ['https://www.moonchain.com'],
       bridges: [
         'https://bridge.moonchain.com/',
         'https://mns.moonchain.com/',
