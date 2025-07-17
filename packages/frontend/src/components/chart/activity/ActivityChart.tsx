@@ -1,8 +1,11 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import partition from 'lodash/partition'
+import round from 'lodash/round'
 import type { TooltipProps } from 'recharts'
-import { AreaChart } from 'recharts'
+import { ComposedChart, Line, YAxis } from 'recharts'
+import type { Payload } from 'recharts/types/component/DefaultTooltipContent'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -12,7 +15,10 @@ import {
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
-import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import {
+  ChartDataIndicator,
+  type ChartDataIndicatorType,
+} from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
   CyanStrokeGradientDef,
@@ -44,6 +50,7 @@ interface ActivityChartDataPoint {
   timestamp: number
   projects: number
   ethereum: number
+  ratio: number
 }
 
 interface Props {
@@ -88,6 +95,13 @@ export function ActivityChart({
         shape: 'line',
       },
     },
+    ratio: {
+      label: 'UOPS/TPS ratio',
+      color: 'var(--chart-emerald)',
+      indicatorType: {
+        shape: 'line',
+      },
+    },
   } satisfies ChartMeta
 
   return (
@@ -98,7 +112,7 @@ export function ActivityChart({
       isLoading={isLoading}
       milestones={milestones}
     >
-      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <ComposedChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: compact([
@@ -106,24 +120,53 @@ export function ActivityChart({
               dataKey: 'ethereum',
               stroke: 'url(#strokeEthereum)',
               fill: 'url(#fillEthereum)',
+              yAxisId: 'left',
             },
             {
               dataKey: 'projects',
               stroke: 'url(#strokeProjects)',
               fill: 'url(#fillProjects)',
+              yAxisId: 'left',
             },
           ]),
         })}
+        <Line
+          yAxisId="right"
+          dataKey="ratio"
+          strokeWidth={2}
+          stroke={chartMeta.ratio.color}
+          dot={false}
+          isAnimationActive={false}
+        />
+        <YAxis
+          yAxisId="right"
+          orientation="right"
+          tickLine={false}
+          axisLine={false}
+          mirror
+          tickCount={3}
+          dy={-10}
+          unit={'x'}
+          tick={{
+            width: 100,
+          }}
+        />
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
+            yAxisId: 'left',
             scale,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
           },
         })}
         <ChartTooltip
-          content={<ActivityCustomTooltip syncedUntil={syncedUntil} />}
+          content={
+            <ActivityCustomTooltip
+              syncedUntil={syncedUntil}
+              chartMeta={chartMeta}
+            />
+          }
         />
         <defs>
           {type === 'Rollups' && (
@@ -147,7 +190,7 @@ export function ActivityChart({
           <EthereumFillGradientDef id="fillEthereum" />
           <EthereumStrokeGradientDef id="strokeEthereum" />
         </defs>
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
@@ -157,9 +200,21 @@ export function ActivityCustomTooltip({
   payload,
   label: timestamp,
   syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+  chartMeta,
+}: TooltipProps<number, string> & {
+  syncedUntil: number | undefined
+  chartMeta: {
+    ratio: {
+      label: string
+      color: string
+      indicatorType: ChartDataIndicatorType
+    }
+  }
+}) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
+  const { ratio, primaryValues } = groupPayload(payload)
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -168,10 +223,10 @@ export function ActivityCustomTooltip({
             longMonthName: true,
           })}
         </div>
+
         <span className="text-heading-16">Average UOPS</span>
-        <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
+          {primaryValues.map((entry) => {
             if (
               entry.name === undefined ||
               entry.value === undefined ||
@@ -204,11 +259,11 @@ export function ActivityCustomTooltip({
             )
           })}
         </div>
+        <HorizontalSeparator className="my-2" />
 
-        <span className="mt-3 text-heading-16">Operations count</span>
-        <HorizontalSeparator className="mt-1.5" />
+        <span className="text-heading-16">Operations count</span>
         <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
+          {primaryValues.map((entry) => {
             if (
               entry.name === undefined ||
               entry.value === undefined ||
@@ -241,9 +296,35 @@ export function ActivityCustomTooltip({
             )
           })}
         </div>
+        <HorizontalSeparator className="my-2" />
+
+        <div className="flex w-full items-center justify-between gap-2">
+          <div className="flex items-center gap-1">
+            <ChartDataIndicator
+              backgroundColor={chartMeta.ratio.color}
+              type={chartMeta.ratio.indicatorType}
+            />
+            <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+              {chartMeta.ratio.label}
+            </span>
+          </div>
+          <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
+            {syncedUntil && syncedUntil < timestamp
+              ? 'Not synced'
+              : /** biome-ignore lint/style/noNonNullAssertion: we know its there */
+                `${round(ratio.value!, 3)}x`}
+          </span>
+        </div>
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+function groupPayload(payload: Payload<number, string>[]) {
+  const [ratios, primaryValues] = partition(payload, (p) => p.name === 'ratio')
+  const ratio = ratios[0]
+  assert(ratio, 'Ratio not found')
+  return { ratio, primaryValues }
 }
 
 function typeToColor(type: ActivityChartType) {

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
-import { AreaChart } from 'recharts'
+import { AreaChart, Line, YAxis } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
 import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -80,6 +80,13 @@ export function EcosystemsActivityChart({
           shape: 'line',
         },
       },
+      ratio: {
+        label: 'UOPS/TPS ratio',
+        color: 'var(--chart-emerald)',
+        indicatorType: {
+          shape: 'line',
+        },
+      },
     } satisfies ChartMeta
   }, [name])
 
@@ -116,11 +123,13 @@ export function EcosystemsActivityChart({
                 dataKey: 'ethereum',
                 stroke: 'url(#strokeEthereum)',
                 fill: 'url(#fillEthereum)',
+                yAxisId: 'left',
               },
               {
                 dataKey: 'projects',
                 stroke: 'var(--ecosystem-primary)',
                 fill: 'url(#fillProjects)',
+                yAxisId: 'left',
               },
             ]),
           })}
@@ -130,10 +139,37 @@ export function EcosystemsActivityChart({
             yAxis: {
               scale: 'lin',
               unit: ' UOPS',
+              yAxisId: 'left',
             },
           })}
+          <Line
+            yAxisId="right"
+            dataKey="ratio"
+            strokeWidth={2}
+            stroke={chartMeta.ratio.color}
+            dot={false}
+            isAnimationActive={false}
+          />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickLine={false}
+            axisLine={false}
+            mirror
+            tickCount={3}
+            dy={-10}
+            unit={'x'}
+            tick={{
+              width: 100,
+            }}
+          />
           <ChartTooltip
-            content={<ActivityCustomTooltip syncedUntil={undefined} />}
+            content={
+              <ActivityCustomTooltip
+                syncedUntil={undefined}
+                chartMeta={chartMeta}
+              />
+            }
           />
           <defs>
             <CustomFillGradientDef

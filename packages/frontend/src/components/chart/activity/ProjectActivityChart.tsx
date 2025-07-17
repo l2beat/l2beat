@@ -57,6 +57,7 @@ export function ProjectActivityChart({
             timestamp,
             projects: projectMetric / UnixTime.DAY,
             ethereum: ethereumMetric / UnixTime.DAY,
+            ratio: projectsUops / projectsTx,
           }
         },
       ),

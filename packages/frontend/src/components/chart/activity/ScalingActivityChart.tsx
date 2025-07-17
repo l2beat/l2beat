@@ -78,11 +78,13 @@ export function ScalingActivityChart({
             timestamp,
             projects: projectMetric / UnixTime.DAY,
             ethereum: ethereumMetric / UnixTime.DAY,
+            ratio: projectsUops / projectsTx,
           }
         },
       ),
     [data?.data, metric],
   )
+
   const chartRange = getChartRange(chartData)
 
   return (
