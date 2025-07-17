@@ -20,7 +20,10 @@ export function prefixAddresses(
 
   if (typeof value === 'string') {
     try {
-      return ChainSpecificAddress.fromLong(longChain, value.toLowerCase()).toString()
+      return ChainSpecificAddress.fromLong(
+        longChain,
+        value.toLowerCase(),
+      ).toString()
     } catch {
       return value
     }

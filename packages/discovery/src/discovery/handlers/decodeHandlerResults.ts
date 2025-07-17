@@ -1,15 +1,15 @@
-import { ChainSpecificAddress, getErrorMessage } from '@l2beat/shared-pure'
+import { getErrorMessage } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,
   StructureContract,
 } from '../config/StructureConfig'
-import type { ContractValue, EntryParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import { applyReturnFragment } from '../type-casters/applyReturnFragment'
+import { prefixAddresses } from '../utils/prefixAddresses'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
-import { prefixAddresses } from '../utils/prefixAddresses'
 
 export function decodeHandlerResults(
   longChain: string,
