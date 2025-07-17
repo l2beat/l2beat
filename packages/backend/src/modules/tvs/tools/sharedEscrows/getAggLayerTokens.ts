@@ -100,9 +100,6 @@ export async function getAggLayerTokens(
         'getTokenWrappedAddress',
         response,
       )
-      if (isEmptyAddress(address)) {
-        continue
-      }
       await localStorage.writeAddress(`${project.id}-${id}`, address)
       resolved.push({ id, address: EthereumAddress(address) })
     }
@@ -231,7 +228,6 @@ export async function getAggLayerTokens(
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
-
       tokensToAssignFromL1.push(
         createEscrowToken(
           project,

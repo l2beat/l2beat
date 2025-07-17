@@ -128,10 +128,6 @@ export async function getElasticChainTokens(
         ? toCheckTotalSupply[index].address
         : '0x'
 
-      if (isEmptyAddress(address)) {
-        continue
-      }
-
       await localStorage.writeAddress(`${project.id}-${id}`, address)
       resolved.push({ id, address: EthereumAddress(address) })
     }
@@ -204,7 +200,6 @@ export async function getElasticChainTokens(
     for (const l1Token of escrow.sharedEscrow.tokensToAssignFromL1) {
       const token = escrow.tokens.find((t) => t.symbol === l1Token)
       assert(token, `${l1Token} not found`)
-
       tokensToAssignFromL1.push(
         createEscrowToken(
           project,
