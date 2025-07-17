@@ -2,7 +2,7 @@
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
   "blockNumber": 22732019,
-  "configHash": "0x5013df36fd3817330400ae518e82d793f42010bf403f9488f83b118425cac80f",
+  "configHash": "0x96b9e7274ae02e5ff46efce01ef04557d7e31826c2a85095c3dbbe9ee1be4105",
   "entries": [
     {
       "name": "TopTournament",

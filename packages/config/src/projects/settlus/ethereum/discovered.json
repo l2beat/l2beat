@@ -2,7 +2,7 @@
   "name": "settlus",
   "chain": "ethereum",
   "blockNumber": 22731117,
-  "configHash": "0x9f703708dcb06950cbbc6daf2e033df9336a679dce45abcbeabacf973b583670",
+  "configHash": "0x79ac1df75f6ced94d90a53540802fe221a76e6745989687d28a58afac30c2f84",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

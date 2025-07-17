@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0x25eece36958d316a4a777d8689383822ddf86859564d35d467af548a8e0a7777",
+  "configHash": "0x9fb134dce112b0184f8a290e77c8f71fab043bc9ec216f295b9368c89423b8de",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

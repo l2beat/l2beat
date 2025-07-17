@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "ethereum",
   "blockNumber": 22645524,
-  "configHash": "0x1a7a7a3f3638a8c3b942b3a1065851d0e61736f3fc3630a98a9ea14f442b6df9",
+  "configHash": "0xdc905eb1d472f94b8221a5bf6e6b85f51a85ace024524ec6ffb8f1231b97dbc7",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -3186,5 +3186,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x07abd5959eba88b69580babe0ac0dd9451372a6f9cc79f4e919464b808c53587"
+  "permissionsConfigHash": "0x386e9c4e991ecc4eea78341f31b91e09f2e3cc50b37560ff0f17df8c649f5032"
 }

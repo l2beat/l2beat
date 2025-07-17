@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 22882452,
-  "configHash": "0xe5ffc94baddf2ed440d9f72544c44b745ee3dbf768c74f673cd6a71dd5db9264",
+  "configHash": "0xfafd6fd9c21b1decf6cf0a9b603266907867155382f9848fa31d2660f6cfbb46",
   "entries": [
     {
       "address": "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
@@ -2257,5 +2257,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

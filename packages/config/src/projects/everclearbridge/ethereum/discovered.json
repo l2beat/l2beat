@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "ethereum",
   "blockNumber": 22895905,
-  "configHash": "0x30828766ec913c1e87485ab524264e5953f42b864bab1cbfc9d63e249d094f82",
+  "configHash": "0x42c1375ef4adc20f46ca456718adc1138e9a8956fe62509b9aab261c71dcf404",
   "entries": [
     {
       "name": "Permit2",

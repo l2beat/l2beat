@@ -2,7 +2,7 @@
   "name": "sxnetwork",
   "chain": "ethereum",
   "blockNumber": 22923598,
-  "configHash": "0x84c8dced46e6a8d91443cdc15e9f0c2c39543d181183d8026d35b5a73bce1dea",
+  "configHash": "0x2be73f01a1a6d156882d7dd06ea40e4b37aae07d43d970a9c0bcf768d3c46174",
   "entries": [
     {
       "name": "OneStepProverHostIo",

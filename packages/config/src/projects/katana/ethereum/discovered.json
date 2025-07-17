@@ -2,7 +2,7 @@
   "name": "katana",
   "chain": "ethereum",
   "blockNumber": 22895938,
-  "configHash": "0xf09979a5de295978afc5f245a638e5a7ce1a2c680be9600bbbdb749e4320190e",
+  "configHash": "0xa29cce979f02451c6117d619654123a3e517735b29a6018de613fbc9eb92832c",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

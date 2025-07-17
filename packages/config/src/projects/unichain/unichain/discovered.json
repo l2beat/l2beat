@@ -2,8 +2,13 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 17837889,
-  "configHash": "0xfa06dc804edc871bfcc0f0c2c792e5ae6779a340eaa887d396be1182014e5a47",
+  "configHash": "0x0a0b1f66fb22eb36ea46a12431a609e640a61da77ef962382aa8e39b4048df9d",
   "entries": [
+    {
+      "address": "unichain:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "unichain:0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
       "type": "EOA",
@@ -1449,5 +1454,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "unichain/L1Splitter": "0xf1512f595a0a8fc0981c747d8b7c7b4939bc3136849b90b2bbf68c4b236c93d7"
   },
-  "permissionsConfigHash": "0x07abd5959eba88b69580babe0ac0dd9451372a6f9cc79f4e919464b808c53587"
+  "permissionsConfigHash": "0x386e9c4e991ecc4eea78341f31b91e09f2e3cc50b37560ff0f17df8c649f5032"
 }

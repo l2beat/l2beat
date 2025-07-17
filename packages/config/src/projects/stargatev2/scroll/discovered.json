@@ -2,8 +2,13 @@
   "name": "stargatev2",
   "chain": "scroll",
   "blockNumber": 16325944,
-  "configHash": "0x3d3aa36b82cc318b2a6a4d7438aee0ab23e6400e46503b11c21bcbde4efa3f16",
+  "configHash": "0xedb12b9eac272860df81f99f9e3a9320c19cc3b21a70c7cfdc8d9e27ee67074e",
   "entries": [
+    {
+      "address": "scr:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "StargatePoolUSDC",
       "address": "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4",
@@ -431,5 +436,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }
