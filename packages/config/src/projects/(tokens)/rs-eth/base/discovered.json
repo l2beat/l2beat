@@ -1,8 +1,8 @@
 {
   "name": "rs-eth",
   "chain": "base",
-  "blockNumber": 32975933,
-  "configHash": "0xd3747ac407ca6ec4dc0e3760f6abab1c8d3f0c896265af8fc3bcb0947159621a",
+  "blockNumber": 32976024,
+  "configHash": "0x19e21b2c94308076630c1c9e65068776ba8226cee0958683ea91d14ada850755",
   "entries": [
     {
       "name": "RSETH_OFT",
@@ -17,20 +17,6 @@
       "values": {
         "$immutable": true,
         "$tokenData": {
-          "$peers": [
-            "eth:0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
-            "arb1:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "oeth:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "unknown:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "scr:0x65421ba909200b81640d98b979d07487c9781b66",
-            "unknown:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "blastmainnet:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "mode:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "zircuit:0x4186bfc76e2e237523cbc30fd220fe055156b41f",
-            "unknown:0xc3eacf0612346366db554c991d7858716db09f58",
-            "unknown:0x9ecaf80c1303cca8791afbc0ad405c8a35e8d9f1",
-            "unknown:0xc3eacf0612346366db554c991d7858716db09f58"
-          ],
           "name": "KelpDao Restaked ETH",
           "coingeckoId": "kelp-dao-restaked-eth",
           "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",

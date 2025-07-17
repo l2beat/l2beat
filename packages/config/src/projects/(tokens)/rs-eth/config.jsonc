@@ -12,7 +12,6 @@
             "$tokenData": {
               "handler": {
                 "type": "ERC20Data",
-                "plugins": ["oftPeers"],
                 "overrides": {
                   "source": "external",
                   "supply": "totalSupply",
