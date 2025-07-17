@@ -96,14 +96,14 @@ export const zkCatalogColumns = [
     cell: (ctx) => {
       return (
         <div className="flex h-full flex-col justify-around">
-          {Object.values(ctx.row.original.trustedSetups).map(
-            (trustedSetups) => {
+          {Object.entries(ctx.row.original.trustedSetups).map(
+            ([proofSystemId, trustedSetups]) => {
               if (trustedSetups.length === 0) return null
               /** biome-ignore lint/style/noNonNullAssertion: it's there */
               const proofSystem = trustedSetups[0]!.proofSystem
               const worstRisk = pickWorstRisk(trustedSetups)
               return (
-                <Tooltip>
+                <Tooltip key={proofSystemId}>
                   <TooltipTrigger className="flex items-center gap-2">
                     <div
                       className={cn(

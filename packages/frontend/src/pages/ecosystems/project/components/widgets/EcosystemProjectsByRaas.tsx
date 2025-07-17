@@ -1,12 +1,12 @@
 import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
-import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { ArrowIcon } from '~/icons/Arrow'
 import type { ProjectByRaas } from '~/server/features/ecosystems/getProjectsByRaas'
 import { cn } from '~/utils/cn'

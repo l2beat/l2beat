@@ -1,4 +1,3 @@
-import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Drawer,
@@ -12,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { RiskBanner } from '~/components/projects/RiskBanner'
 import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
 import { GrissiniIcon } from '~/components/rosette/grissini/GrissiniIcon'
