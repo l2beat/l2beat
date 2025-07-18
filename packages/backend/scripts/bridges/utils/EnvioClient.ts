@@ -1,6 +1,9 @@
 import { ClientCore, type ClientCoreDependencies } from '@l2beat/shared'
-import type { json } from '@l2beat/shared-pure'
+import { type json, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import groupBy from 'lodash/groupBy'
+import type { Hex } from 'viem'
+import type { TransactionWithLogs } from '../types/TransactionWithLogs'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -37,7 +40,10 @@ export class EnvioClient extends ClientCore {
     super($)
   }
 
-  async getAllLogsAndBlocks(fromBlock: number, toBlock: number) {
+  async getTransactionsWithLogs(
+    fromBlock: number,
+    toBlock: number,
+  ): Promise<TransactionWithLogs[]> {
     // https://docs.envio.dev/docs/HyperSync/hypersync-query#response-structure
     const query = {
       // The block to start the query from
@@ -66,8 +72,6 @@ export class EnvioClient extends ClientCore {
       },
     }
 
-    console.log(query)
-
     const response = await this.query(query)
 
     const envioResponse = EnvioLogsAndBlocksResponse.safeParse(response)
@@ -81,7 +85,40 @@ export class EnvioClient extends ClientCore {
       throw new Error(`Query <${fromBlock},${toBlock}>: Error during parsing`)
     }
 
-    return envioResponse.data.data[0]
+    const blocksByNumber = groupBy(envioResponse.data.data[0].blocks, 'number')
+    const logsByTx = groupBy(
+      envioResponse.data.data[0].logs,
+      'transaction_hash',
+    )
+
+    return Array.from(Object.values(logsByTx)).map((l) => {
+      const block = blocksByNumber[l[0].block_number]
+
+      return {
+        hash: l[0].transaction_hash,
+        blockNumber: block[0].number,
+        blockTimestamp: UnixTime(Number(block[0].timestamp)),
+        logs: l.map((ll) => {
+          const topics = [ll.topic0, ll.topic1, ll.topic2, ll.topic3].filter(
+            (topic): topic is string => topic !== null,
+          )
+
+          return {
+            blockNumber: BigInt(ll.block_number),
+            transactionHash: ll.transaction_hash as Hex,
+            address: ll.address as Hex,
+            topics: topics as [Hex, ...Hex[]] | [],
+            data: ll.data as Hex,
+
+            // Unsupported values for now
+            blockHash: 'UNSUPPORTED' as Hex,
+            logIndex: -1,
+            transactionIndex: -1,
+            removed: false,
+          }
+        }),
+      }
+    })
   }
 
   async query(query: json) {
