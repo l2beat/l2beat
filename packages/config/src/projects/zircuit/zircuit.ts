@@ -1,4 +1,9 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   ESCROW,
   OPERATOR,
@@ -54,10 +59,10 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
   ],
 }
 
-const sequencerAddress = EthereumAddress(
+const sequencerAddress = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'batcherHash'),
 )
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'sequencerInbox',
 )
@@ -169,8 +174,8 @@ export const zircuit: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: sequencerAddress,
-        to: sequencerInbox,
+        from: ChainSpecificAddress.address(sequencerAddress),
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: genesisTimestamp,
       },
     },

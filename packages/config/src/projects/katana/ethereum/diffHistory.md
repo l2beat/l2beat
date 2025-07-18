@@ -1,3 +1,1983 @@
+Generated with discovered.json: 0xdd6f8c72b7d5f1d1507f9d3bf9b72685cface25c
+
+# Diff at Mon, 14 Jul 2025 12:45:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22895938
+- current block number: 22895938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22895938 (main branch discovery), not current.
+
+```diff
+    EOA  (0x000000000000000000000000000000000000dEaD) {
+    +++ description: None
+      address:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+    }
+```
+
+```diff
+    EOA  (0x000d4411cdeb152378626B5C5E33fd5D6808939a) {
+    +++ description: None
+      address:
+-        "0x000d4411cdeb152378626B5C5E33fd5D6808939a"
++        "eth:0x000d4411cdeb152378626B5C5E33fd5D6808939a"
+    }
+```
+
+```diff
+    EOA  (0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b) {
+    +++ description: None
+      address:
+-        "0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
++        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
+    }
+```
+
+```diff
+    EOA  (0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b) {
+    +++ description: None
+      address:
+-        "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
++        "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
+    }
+```
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+      address:
+-        "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666"
++        "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666"
+      values.$admin:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.$implementation:
+-        "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
++        "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
+      values.$pastUpgrades.0.2.0:
+-        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.$pastUpgrades.1.2.0:
+-        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "eth:0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.$pastUpgrades.2.2.0:
+-        "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
++        "eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
+      values.admin:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.aggchainManager:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.aggLayerGateway:
+-        "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
++        "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      values.bridgeAddress:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.forceBatchAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gasTokenAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.globalExitRootManager:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.optimisticModeManager:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pendingAggchainManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pendingOptimisticModeManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pendingVKeyManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pol:
+-        "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
++        "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
+      values.rollupManager:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.trustedSequencer:
+-        "0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"
++        "eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"
+      values.vKeyManager:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      implementationNames.0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666:
+-        "PolygonTransparentProxy"
+      implementationNames.0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682:
+-        "AggchainFEP"
+      implementationNames.eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666:
++        "PolygonTransparentProxy"
+      implementationNames.eth:0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682:
++        "AggchainFEP"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x14Be6579A41342ca6B402ec85E7be538e6Ade951) {
+    +++ description: None
+      address:
+-        "0x14Be6579A41342ca6B402ec85E7be538e6Ade951"
++        "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951"
+      values.owner:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      implementationNames.0x14Be6579A41342ca6B402ec85E7be538e6Ade951:
+-        "ProxyAdmin"
+      implementationNames.eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      address:
+-        "0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
++        "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
++        "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+      values.$pastUpgrades.0.2.0:
+-        "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
++        "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+      values.messenger:
+-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.MESSENGER:
+-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000014"
++        "eth:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "0x4200000000000000000000000000000000000014"
++        "eth:0x4200000000000000000000000000000000000014"
+      values.superchainConfig:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      implementationNames.0x15a32FCeA89617Ff450F094cDE102CCa46598B7F:
+-        "Proxy"
+      implementationNames.0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F:
++        "Proxy"
+      implementationNames.eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract Yearn Strategist Multisig (0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7) {
+    +++ description: None
+      address:
+-        "0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7"
++        "eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xB13C8f58a233607569D2F8411B912148aeC4aEe2"
++        "eth:0xB13C8f58a233607569D2F8411B912148aeC4aEe2"
+      values.$members.1:
+-        "0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092"
++        "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092"
+      values.$members.2:
+-        "0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665"
++        "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665"
+      values.$members.3:
+-        "0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C"
++        "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C"
+      values.$members.4:
+-        "0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03"
++        "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03"
+      values.$members.5:
+-        "0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271"
++        "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271"
+      values.$members.6:
+-        "0x254f44F45ac892730e511f143DEd3Cd920b075aF"
++        "eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF"
+      implementationNames.0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) {
+    +++ description: None
+      address:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.addressManager:
+-        "0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65"
++        "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65"
+      values.owner:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      implementationNames.0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832:
+-        "ProxyAdmin"
+      implementationNames.eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271) {
+    +++ description: None
+      address:
+-        "0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271"
++        "eth:0x1b5f15DCb82d25f91c65b53CEe151E8b9fBdD271"
+    }
+```
+
+```diff
+    EOA  (0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164) {
+    +++ description: None
+      address:
+-        "0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164"
++        "eth:0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164"
+    }
+```
+
+```diff
+    EOA  (0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a) {
+    +++ description: None
+      address:
+-        "0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a"
++        "eth:0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      address:
+-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
++        "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      values.$pastUpgrades.0.2.0:
+-        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
++        "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      values.OTHER_MESSENGER:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+      values.portal:
+-        "0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
++        "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
+      values.PORTAL:
+-        "0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
++        "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
+      values.ResolvedDelegateProxy_addressManager:
+-        "0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65"
++        "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65"
+      values.superchainConfig:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      implementationNames.0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E:
+-        "ResolvedDelegateProxy"
+      implementationNames.0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E:
++        "ResolvedDelegateProxy"
+      implementationNames.eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    EOA  (0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c) {
+    +++ description: None
+      address:
+-        "0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
++        "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      address:
+-        "0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
++        "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb"
++        "eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb"
+      values.$pastUpgrades.0.2.0:
+-        "0xe2F826324b2faf99E513D16D266c3F80aE87832B"
++        "eth:0xe2F826324b2faf99E513D16D266c3F80aE87832B"
+      values.$pastUpgrades.1.2.0:
+-        "0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb"
++        "eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb"
+      values.disputeGameFactory:
+-        "0xe06278351d120288eDfCB963F934113Ca3C21AFe"
++        "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe"
+      values.guardian:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.l2Sender:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+      values.superchainConfig:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      values.systemConfig:
+-        "0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174"
++        "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174"
+      implementationNames.0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E:
+-        "Proxy"
+      implementationNames.0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb:
+-        "OptimismPortal2"
+      implementationNames.eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E:
++        "Proxy"
+      implementationNames.eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb:
++        "OptimismPortal2"
+    }
+```
+
+```diff
+    EOA  (0x254f44F45ac892730e511f143DEd3Cd920b075aF) {
+    +++ description: None
+      address:
+-        "0x254f44F45ac892730e511f143DEd3Cd920b075aF"
++        "eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x263b251D67BB154DD6b8352539466ACE7948ED56) {
+    +++ description: None
+      address:
+-        "0x263b251D67BB154DD6b8352539466ACE7948ED56"
++        "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56"
+      values.owner:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      implementationNames.0x263b251D67BB154DD6b8352539466ACE7948ED56:
+-        "ProxyAdmin"
+      implementationNames.eth:0x263b251D67BB154DD6b8352539466ACE7948ED56:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      address:
+-        "0x2C24B57e2CCd1f273045Af6A5f632504C432374F"
++        "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F"
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
+      values.$admin:
+-        "0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69"
++        "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69"
+      values.$implementation:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.$pastUpgrades.0.2.0:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.REBALANCER_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
+-        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
++        "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.asset:
+-        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
++        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      values.eip712Domain.verifyingContract:
+-        "0x2C24B57e2CCd1f273045Af6A5f632504C432374F"
++        "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F"
+      values.lxlyBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.migrationManager:
+-        "0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
++        "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
+      values.underlyingToken:
+-        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
++        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      implementationNames.0x2C24B57e2CCd1f273045Af6A5f632504C432374F:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xcC865B0324121b43728176024f58bdbB3afd6f29:
+-        "GenericVaultBridgeToken"
+      implementationNames.eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xcC865B0324121b43728176024f58bdbB3afd6f29:
++        "GenericVaultBridgeToken"
+    }
+```
+
+```diff
+    EOA  (0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C) {
+    +++ description: None
+      address:
+-        "0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C"
++        "eth:0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C"
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4) {
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+      address:
+-        "0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4"
++        "eth:0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4"
+      values.anchorStateRegistry:
+-        "0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5"
++        "eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5"
+      values.challenger:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.gameCreator:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.l2BlockNumberChallenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.proposer:
+-        "0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258"
++        "eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258"
+      values.vm:
+-        "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C"
++        "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C"
+      values.weth:
+-        "0x74034597d29613CC8C0BDc8780e1d292A553Bd32"
++        "eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32"
+      implementationNames.0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4:
+-        "PermissionedDisputeGame"
+      implementationNames.eth:0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4:
++        "PermissionedDisputeGame"
+    }
+```
+
+```diff
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      address:
+-        "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF"
++        "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF"
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
+      values.$admin:
+-        "0x14Be6579A41342ca6B402ec85E7be538e6Ade951"
++        "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951"
+      values.$implementation:
+-        "0x81c16F89222C32806Daf01f5129937dFE19D525e"
++        "eth:0x81c16F89222C32806Daf01f5129937dFE19D525e"
+      values.$pastUpgrades.0.2.0:
+-        "0x81c16F89222C32806Daf01f5129937dFE19D525e"
++        "eth:0x81c16F89222C32806Daf01f5129937dFE19D525e"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.REBALANCER_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
+-        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
++        "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.asset:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.eip712Domain.verifyingContract:
+-        "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF"
++        "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF"
+      values.lxlyBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.migrationManager:
+-        "0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
++        "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
+      values.underlyingToken:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x81c16F89222C32806Daf01f5129937dFE19D525e:
+-        "VbETH"
+      implementationNames.eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x81c16F89222C32806Daf01f5129937dFE19D525e:
++        "VbETH"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 1 (0x2De242e27386e224E5fbF110EA8406d5B70740ec) {
+    +++ description: None
+      address:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x4082A1D91A353b16e112FbE36b55d222bF417919"
++        "eth:0x4082A1D91A353b16e112FbE36b55d222bF417919"
+      values.$members.1:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      values.$members.2:
+-        "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.0x2De242e27386e224E5fbF110EA8406d5B70740ec:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      address:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      values.$admin:
+-        "0x6d0ff67fb427422AfF35EEa8596949B374b09a52"
++        "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52"
+      values.$implementation:
+-        "0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
++        "eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
+      values.$pastUpgrades.0.2.0:
+-        "0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
++        "eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
+      values.$pastUpgrades.1.2.0:
+-        "0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
++        "eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+      values.$pastUpgrades.2.2.0:
+-        "0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
++        "eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"
+      values.guardian:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      implementationNames.0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811:
+-        "Proxy"
+      implementationNames.0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A:
+-        "SuperchainConfig"
+      implementationNames.eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811:
++        "Proxy"
+      implementationNames.eth:0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A:
++        "SuperchainConfig"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x377a9e5df2882DC1DF8A0bD162cbc640eA634010) {
+    +++ description: None
+      address:
+-        "0x377a9e5df2882DC1DF8A0bD162cbc640eA634010"
++        "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010"
+      values.owner:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      implementationNames.0x377a9e5df2882DC1DF8A0bD162cbc640eA634010:
+-        "ProxyAdmin"
+      implementationNames.eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f) {
+    +++ description: None
+      address:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+```diff
+    EOA  (0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344) {
+    +++ description: None
+      address:
+-        "0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
++        "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
+    }
+```
+
+```diff
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      address:
+-        "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
++        "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
+      values.$admin:
+-        "0xD1e389c046FB734D2a0c7C390312210c408ba832"
++        "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832"
+      values.$implementation:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.$pastUpgrades.0.2.0:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
++        "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
+      values.accessControl.REBALANCER_ROLE.members.0:
+-        "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
++        "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.0:
+-        "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
++        "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
+-        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
++        "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
++        "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
+      values.asset:
+-        "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      values.eip712Domain.verifyingContract:
+-        "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
++        "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
+      values.lxlyBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.migrationManager:
+-        "0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
++        "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
+      values.underlyingToken:
+-        "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
++        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"
+      implementationNames.0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xcC865B0324121b43728176024f58bdbB3afd6f29:
+-        "GenericVaultBridgeToken"
+      implementationNames.eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xcC865B0324121b43728176024f58bdbB3afd6f29:
++        "GenericVaultBridgeToken"
+    }
+```
+
+```diff
+    EOA  (0x4082A1D91A353b16e112FbE36b55d222bF417919) {
+    +++ description: None
+      address:
+-        "0x4082A1D91A353b16e112FbE36b55d222bF417919"
++        "eth:0x4082A1D91A353b16e112FbE36b55d222bF417919"
+    }
+```
+
+```diff
+    contract MigrationManager (0x417d01B64Ea30C4E163873f3a1f77b727c689e02) {
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+      address:
+-        "0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
++        "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
+      values.$admin:
+-        "0x263b251D67BB154DD6b8352539466ACE7948ED56"
++        "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56"
+      values.$implementation:
+-        "0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45"
++        "eth:0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45"
+      values.$pastUpgrades.0.2.0:
+-        "0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45"
++        "eth:0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      values.lxlyBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      implementationNames.0x417d01B64Ea30C4E163873f3a1f77b727c689e02:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45:
+-        "MigrationManager"
+      implementationNames.eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45:
++        "MigrationManager"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69) {
+    +++ description: None
+      address:
+-        "0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69"
++        "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69"
+      values.owner:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      implementationNames.0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69:
+-        "ProxyAdmin"
+      implementationNames.eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x450A3A6AE85904cb4Aa0809Fb41E53B687a28397) {
+    +++ description: None
+      address:
+-        "0x450A3A6AE85904cb4Aa0809Fb41E53B687a28397"
++        "eth:0x450A3A6AE85904cb4Aa0809Fb41E53B687a28397"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      address:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
++        "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+      values.$members.1:
+-        "0x860e06Fe384D1A3340111e7D142E02642178c053"
++        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.$members.2:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.$members.3:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.4:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.5:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.6:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.7:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.8:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.9:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.10:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      implementationNames.0x4a4962275DF8C60a80d3a25faEc5AA7De116A746:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258) {
+    +++ description: None
+      address:
+-        "0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258"
++        "eth:0x4A6f5889409Bf4Bf3Bff0Fef585D7A29FdA64258"
+    }
+```
+
+```diff
+    EOA  (0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe) {
+    +++ description: None
+      address:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    }
+```
+
+```diff
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      address:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0x516eEcfb38aA308c5f1878497108c7d054fd46B7"
++        "eth:0x516eEcfb38aA308c5f1878497108c7d054fd46B7"
+      values.$members.1:
+-        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "eth:0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+      values.$members.2:
+-        "0x54c401eD03D086fE13221E5422165f3b024265d9"
++        "eth:0x54c401eD03D086fE13221E5422165f3b024265d9"
+      values.$members.3:
+-        "0xAb3506507449bF1880f3337825efd19ac89E235E"
++        "eth:0xAb3506507449bF1880f3337825efd19ac89E235E"
+      values.$members.4:
+-        "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
++        "eth:0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
+      implementationNames.0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a:
+-        "GnosisSafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a:
++        "GnosisSafeProxy"
+      implementationNames.eth:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0x50930d652266EF4127FA3A1906B7Cb9951076628) {
+    +++ description: None
+      address:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+    }
+```
+
+```diff
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      address:
+-        "0x53E82ABbb12638F09d9e624578ccB666217a765e"
++        "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e"
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
+      values.$admin:
+-        "0x8970650CF3f1E57cA804C65B4DBcFf698789FE30"
++        "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30"
+      values.$implementation:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.$pastUpgrades.0.2.0:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
++        "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
+      values.accessControl.REBALANCER_ROLE.members.0:
+-        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
++        "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.0:
+-        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
++        "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
+-        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
++        "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
++        "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
+      values.asset:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.eip712Domain.verifyingContract:
+-        "0x53E82ABbb12638F09d9e624578ccB666217a765e"
++        "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e"
+      values.lxlyBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.migrationManager:
+-        "0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
++        "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
+      values.underlyingToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x53E82ABbb12638F09d9e624578ccB666217a765e:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xcC865B0324121b43728176024f58bdbB3afd6f29:
+-        "GenericVaultBridgeToken"
+      implementationNames.eth:0x53E82ABbb12638F09d9e624578ccB666217a765e:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xcC865B0324121b43728176024f58bdbB3afd6f29:
++        "GenericVaultBridgeToken"
+    }
+```
+
+```diff
+    EOA  (0x54DFA4B635E7eB98515fEBA81d360A3871739277) {
+    +++ description: None
+      address:
+-        "0x54DFA4B635E7eB98515fEBA81d360A3871739277"
++        "eth:0x54DFA4B635E7eB98515fEBA81d360A3871739277"
+    }
+```
+
+```diff
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      address:
+-        "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C"
++        "eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C"
+      values.oracle:
+-        "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277"
++        "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277"
+      implementationNames.0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C:
+-        "MIPS"
+      implementationNames.eth:0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C:
++        "MIPS"
+    }
+```
+
+```diff
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      address:
+-        "0x67C912fF560951526BffDff66dFbD4DF8AE23756"
++        "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
++        "eth:0x0A4857fD89ABfB7536a6D0Bd4400EF769E84Ec8b"
+      values.$members.1:
+-        "0x54DFA4B635E7eB98515fEBA81d360A3871739277"
++        "eth:0x54DFA4B635E7eB98515fEBA81d360A3871739277"
+      values.$members.2:
+-        "0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
++        "eth:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
+      values.$members.3:
+-        "0xa1a4C71024a0CAD6a1cEf85561f1B9a34E00ff62"
++        "eth:0xa1a4C71024a0CAD6a1cEf85561f1B9a34E00ff62"
+      values.$members.4:
+-        "0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
++        "eth:0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c"
+      implementationNames.0x67C912fF560951526BffDff66dFbD4DF8AE23756:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d0ff67fb427422AfF35EEa8596949B374b09a52) {
+    +++ description: None
+      address:
+-        "0x6d0ff67fb427422AfF35EEa8596949B374b09a52"
++        "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52"
+      values.addressManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      implementationNames.0x6d0ff67fb427422AfF35EEa8596949B374b09a52:
+-        "ProxyAdmin"
+      implementationNames.eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      address:
+-        "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC"
++        "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC"
+      description:
+-        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756."
+      values.$admin:
+-        "0x377a9e5df2882DC1DF8A0bD162cbc640eA634010"
++        "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010"
+      values.$implementation:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.$pastUpgrades.0.2.0:
+-        "0xcC865B0324121b43728176024f58bdbB3afd6f29"
++        "eth:0xcC865B0324121b43728176024f58bdbB3afd6f29"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.REBALANCER_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
+-        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
++        "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x2De242e27386e224E5fbF110EA8406d5B70740ec"
++        "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec"
+      values.asset:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      values.eip712Domain.verifyingContract:
+-        "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC"
++        "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC"
+      values.lxlyBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.migrationManager:
+-        "0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
++        "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02"
+      values.underlyingToken:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      implementationNames.0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xcC865B0324121b43728176024f58bdbB3afd6f29:
+-        "GenericVaultBridgeToken"
+      implementationNames.eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xcC865B0324121b43728176024f58bdbB3afd6f29:
++        "GenericVaultBridgeToken"
+    }
+```
+
+```diff
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      address:
+-        "0x74034597d29613CC8C0BDc8780e1d292A553Bd32"
++        "eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"
++        "eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"
+      values.$pastUpgrades.0.2.0:
+-        "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"
++        "eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087"
+      values.config:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      values.owner:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      implementationNames.0x74034597d29613CC8C0BDc8780e1d292A553Bd32:
+-        "Proxy"
+      implementationNames.0x71e966Ae981d1ce531a7b6d23DC0f27B38409087:
+-        "DelayedWETH"
+      implementationNames.eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32:
++        "Proxy"
+      implementationNames.eth:0x71e966Ae981d1ce531a7b6d23DC0f27B38409087:
++        "DelayedWETH"
+    }
+```
+
+```diff
+    EOA  (0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665) {
+    +++ description: None
+      address:
+-        "0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665"
++        "eth:0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5) {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+      address:
+-        "0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5"
++        "eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0x393d0b46A30226Fa60AB3BD7D20e9C7890344A79"
++        "eth:0x393d0b46A30226Fa60AB3BD7D20e9C7890344A79"
+      values.$pastUpgrades.0.2.0:
+-        "0x393d0b46A30226Fa60AB3BD7D20e9C7890344A79"
++        "eth:0x393d0b46A30226Fa60AB3BD7D20e9C7890344A79"
+      values.disputeGameFactory:
+-        "0xe06278351d120288eDfCB963F934113Ca3C21AFe"
++        "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe"
+      values.superchainConfig:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      implementationNames.0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5:
+-        "Proxy"
+      implementationNames.0x393d0b46A30226Fa60AB3BD7D20e9C7890344A79:
+-        "AnchorStateRegistry"
+      implementationNames.eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5:
++        "Proxy"
+      implementationNames.eth:0x393d0b46A30226Fa60AB3BD7D20e9C7890344A79:
++        "AnchorStateRegistry"
+    }
+```
+
+```diff
+    EOA  (0x81175155D85377C337d92f1FA52Da166C3A4E7Ac) {
+    +++ description: None
+      address:
+-        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
++        "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    contract Katana Steakhouse Financial / Morpho Multisig (0x827e86072B06674a077f592A531dcE4590aDeCdB) {
+    +++ description: None
+      address:
+-        "0x827e86072B06674a077f592A531dcE4590aDeCdB"
++        "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
++        "eth:0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b"
+      values.$members.1:
+-        "0xcC771952fdE840E30C6802734e5ad20479c2959f"
++        "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f"
+      values.$members.2:
+-        "0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
++        "eth:0x387Cde8598E1CBb297FDc5bAEbA5E5c5c2735344"
+      values.$members.3:
+-        "0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
++        "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
+      implementationNames.0x827e86072B06674a077f592A531dcE4590aDeCdB:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x827e86072B06674a077f592A531dcE4590aDeCdB:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x860e06Fe384D1A3340111e7D142E02642178c053) {
+    +++ description: None
+      address:
+-        "0x860e06Fe384D1A3340111e7D142E02642178c053"
++        "eth:0x860e06Fe384D1A3340111e7D142E02642178c053"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8970650CF3f1E57cA804C65B4DBcFf698789FE30) {
+    +++ description: None
+      address:
+-        "0x8970650CF3f1E57cA804C65B4DBcFf698789FE30"
++        "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30"
+      values.owner:
+-        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
++        "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
+      implementationNames.0x8970650CF3f1E57cA804C65B4DBcFf698789FE30:
+-        "ProxyAdmin"
+      implementationNames.eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x98906C3f90A06B5484DD67bf32938815d2993dBC) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      address:
+-        "0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
++        "eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
+      values.l2TokenBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.messenger:
+-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.MESSENGER:
+-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.superchainConfig:
+-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
+      implementationNames.0x98906C3f90A06B5484DD67bf32938815d2993dBC:
+-        "L1ChugSplashProxy"
+      implementationNames.0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF:
+-        "L1StandardBridge"
+      implementationNames.eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      address:
+-        "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277"
++        "eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277"
+      implementationNames.0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277:
+-        "PreimageOracle"
+      implementationNames.eth:0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277:
++        "PreimageOracle"
+    }
+```
+
+```diff
+    contract Polygon Labs Engineering/Security Multisig (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) {
+    +++ description: None
+      address:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
++        "eth:0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+      values.$members.1:
+-        "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238"
++        "eth:0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238"
+      values.$members.2:
+-        "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da"
++        "eth:0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da"
+      values.$members.3:
+-        "0xED7cC82235A7757702475c8f77c7830c095FB5a2"
++        "eth:0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.$members.4:
+-        "0x21618593F7147235aC8D511d68A547C935F9d417"
++        "eth:0x21618593F7147235aC8D511d68A547C935F9d417"
+      implementationNames.0x9d851f8b8751c5FbC09b9E74E6e68E9950949052:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0xA0737fea60F0601A192E3d2c98865A883ab0bda2) {
+    +++ description: None
+      address:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+    }
+```
+
+```diff
+    EOA  (0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038) {
+    +++ description: None
+      address:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    }
+```
+
+```diff
+    EOA  (0xa1a4C71024a0CAD6a1cEf85561f1B9a34E00ff62) {
+    +++ description: None
+      address:
+-        "0xa1a4C71024a0CAD6a1cEf85561f1B9a34E00ff62"
++        "eth:0xa1a4C71024a0CAD6a1cEf85561f1B9a34E00ff62"
+    }
+```
+
+```diff
+    EOA  (0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4) {
+    +++ description: None
+      address:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      address:
+-        "0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E"
++        "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
++        "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
+      values.$pastUpgrades.0.2.0:
+-        "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
++        "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
+      values.bridge:
+-        "0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      values.BRIDGE:
+-        "0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      implementationNames.0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E:
+-        "Proxy"
+      implementationNames.0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E:
++        "Proxy"
+      implementationNames.eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 2 (0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff) {
+    +++ description: None
+      address:
+-        "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
++        "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7"
++        "eth:0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7"
+      values.$members.1:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      values.$members.2:
+-        "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      implementationNames.0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0xB13C8f58a233607569D2F8411B912148aeC4aEe2) {
+    +++ description: None
+      address:
+-        "0xB13C8f58a233607569D2F8411B912148aeC4aEe2"
++        "eth:0xB13C8f58a233607569D2F8411B912148aeC4aEe2"
+    }
+```
+
+```diff
+    EOA  (0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac) {
+    +++ description: None
+      address:
+-        "0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
++        "eth:0xb3dA4c1Ba8De9E04f22B1554a070189F518FDCac"
+    }
+```
+
+```diff
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      address:
+-        "0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174"
++        "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.0.2.0:
+-        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.1.2.0:
+-        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.batcherHash:
+-        "0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a"
++        "eth:0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a"
+      values.batchInbox:
+-        "0x000d4411cdeb152378626B5C5E33fd5D6808939a"
++        "eth:0x000d4411cdeb152378626B5C5E33fd5D6808939a"
+      values.disputeGameFactory:
+-        "0xe06278351d120288eDfCB963F934113Ca3C21AFe"
++        "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe"
+      values.gasPayingToken.addr_:
+-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
++        "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
+      values.l1CrossDomainMessenger:
+-        "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
++        "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E"
+      values.l1ERC721Bridge:
+-        "0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
++        "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F"
+      values.l1StandardBridge:
+-        "0x98906C3f90A06B5484DD67bf32938815d2993dBC"
++        "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC"
+      values.optimismMintableERC20Factory:
+-        "0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E"
++        "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E"
+      values.optimismPortal:
+-        "0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
++        "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E"
+      values.owner:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      values.sequencerInbox:
+-        "0x000d4411cdeb152378626B5C5E33fd5D6808939a"
++        "eth:0x000d4411cdeb152378626B5C5E33fd5D6808939a"
+      values.unsafeBlockSigner:
+-        "0x450A3A6AE85904cb4Aa0809Fb41E53B687a28397"
++        "eth:0x450A3A6AE85904cb4Aa0809Fb41E53B687a28397"
+      implementationNames.0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174:
+-        "Proxy"
+      implementationNames.0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375:
+-        "SystemConfig"
+      implementationNames.eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174:
++        "Proxy"
+      implementationNames.eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375:
++        "SystemConfig"
+    }
+```
+
+```diff
+    EOA  (0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092) {
+    +++ description: None
+      address:
+-        "0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092"
++        "eth:0xBD5f1429Ab467E69BEeba51E547C00A21F2a2092"
+    }
+```
+
+```diff
+    EOA  (0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439) {
+    +++ description: None
+      address:
+-        "0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"
++        "eth:0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439"
+    }
+```
+
+```diff
+    EOA  (0xcB1e45481461aeF38E6B0a34F1444E9C5D647645) {
+    +++ description: None
+      address:
+-        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
++        "eth:0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+    }
+```
+
+```diff
+    EOA  (0xcC771952fdE840E30C6802734e5ad20479c2959f) {
+    +++ description: None
+      address:
+-        "0xcC771952fdE840E30C6802734e5ad20479c2959f"
++        "eth:0xcC771952fdE840E30C6802734e5ad20479c2959f"
+    }
+```
+
+```diff
+    EOA  (0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03) {
+    +++ description: None
+      address:
+-        "0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03"
++        "eth:0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      address:
+-        "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164"
++        "eth:0x1DD6473a6bb5fF9041D945C7d15AC8fBc2Ee1164"
+      values.$members.1:
+-        "0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
++        "eth:0xa43901c63f7702C407378E55E0d0EB4064a2AE31"
+      implementationNames.0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD1e389c046FB734D2a0c7C390312210c408ba832) {
+    +++ description: None
+      address:
+-        "0xD1e389c046FB734D2a0c7C390312210c408ba832"
++        "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832"
+      values.owner:
+-        "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
++        "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff"
+      implementationNames.0xD1e389c046FB734D2a0c7C390312210c408ba832:
+-        "ProxyAdmin"
+      implementationNames.eth:0xD1e389c046FB734D2a0c7C390312210c408ba832:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      address:
+-        "0xe06278351d120288eDfCB963F934113Ca3C21AFe"
++        "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe"
+      values.$admin:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      values.$implementation:
+-        "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
++        "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
+      values.$pastUpgrades.0.2.0:
+-        "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
++        "eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B"
+      values.gameImpls.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls.1:
+-        "0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4"
++        "eth:0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4"
+      values.gameImpls.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls.3:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls.4:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
++        "eth:0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+      implementationNames.0xe06278351d120288eDfCB963F934113Ca3C21AFe:
+-        "Proxy"
+      implementationNames.0xc641A33cab81C559F2bd4b21EA34C290E2440C2B:
+-        "DisputeGameFactory"
+      implementationNames.eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe:
++        "Proxy"
+      implementationNames.eth:0xc641A33cab81C559F2bd4b21EA34C290E2440C2B:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    EOA  (0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120) {
+    +++ description: None
+      address:
+-        "0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
++        "eth:0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120"
+    }
+```
+
+```diff
+    contract AddressManager (0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      address:
+-        "0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65"
++        "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65"
+      values.owner:
+-        "0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
++        "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"
+      implementationNames.0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65:
+-        "AddressManager"
+      implementationNames.eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65:
++        "AddressManager"
+    }
+```
+
+```diff
+    EOA  (0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C) {
+    +++ description: None
+      address:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    }
+```
+
+```diff
+    EOA  (0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0) {
+    +++ description: None
+      address:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
+```diff
+    EOA  (0xF3313C48BD8E17b823d5498D62F37019dFEA647D) {
+    +++ description: None
+      address:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 3 (0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E) {
+    +++ description: None
+      address:
+-        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
++        "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
++        "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052"
+      values.$members.1:
+-        "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
++        "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
+      values.$members.2:
+-        "0x827e86072B06674a077f592A531dcE4590aDeCdB"
++        "eth:0x827e86072B06674a077f592A531dcE4590aDeCdB"
+      implementationNames.0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666)
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x14Be6579A41342ca6B402ec85E7be538e6Ade951)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x15a32FCeA89617Ff450F094cDE102CCa46598B7F)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract Yearn Strategist Multisig (0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E)
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x263b251D67BB154DD6b8352539466ACE7948ED56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0x2d4B822F8B74AdE7fcD5F740967f4dFcD2fef5e4)
+    +++ description: Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.
+```
+
+```diff
++   Status: CREATED
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract Katana vaultBridge Multisig 1 (0x2De242e27386e224E5fbF110EA8406d5B70740ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x377a9e5df2882DC1DF8A0bD162cbc640eA634010)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract MigrationManager (0x417d01B64Ea30C4E163873f3a1f77b727c689e02)
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C)
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+```
+
+```diff
++   Status: CREATED
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x6d0ff67fb427422AfF35EEa8596949B374b09a52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC)
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract AnchorStateRegistry (0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5)
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract Katana Steakhouse Financial / Morpho Multisig (0x827e86072B06674a077f592A531dcE4590aDeCdB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8970650CF3f1E57cA804C65B4DBcFf698789FE30)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x98906C3f90A06B5484DD67bf32938815d2993dBC)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277)
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon Labs Engineering/Security Multisig (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract Katana vaultBridge Multisig 2 (0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xD1e389c046FB734D2a0c7C390312210c408ba832)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe)
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Katana vaultBridge Multisig 3 (0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x4de9b7e488759b6a86bc33ee8a000f43196bb151
+
+# Diff at Mon, 14 Jul 2025 08:02:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0dc82cd5064c9c6dc9fb20e2291a8bb6b2048e27 block: 22895938
+- current block number: 22895938
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22895938 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      description:
+-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
 Generated with discovered.json: 0xcd8b1f519e36434eaf3e03c79a3ba0d0d39c873a
 
 # Diff at Fri, 11 Jul 2025 12:28:54 GMT:

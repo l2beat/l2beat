@@ -57,7 +57,7 @@ function enqueueDelayedMessage(
 ) external payable returns (uint256)
 ```
 
-A `messageHash` is constructed using the `kind` (set to `L2_MSG` when called through the `sendL2MessageFromOrigin` function), the sender (the L1-to-L2 alised `msg.sender`), the `messageDataHash`, but also the current block number, block timestamp and base fee. This value is then hashed with the latest message hash and pushed to the `delayedInboxAccs` array. The new message count is returned.
+A `messageHash` is constructed using the `kind` (set to `L2_MSG` when called through the `sendL2MessageFromOrigin` function), the sender (the L1-to-L2 aliased `msg.sender`), the `messageDataHash`, but also the current block number, block timestamp and base fee. This value is then hashed with the latest message hash and pushed to the `delayedInboxAccs` array. The new message count is returned.
 
 ### `SequencerInbox`: the `forceInclusion` function
 The purpose of this function is to be able to force include messages that have been queued to the `delayedInboxAccs` array.

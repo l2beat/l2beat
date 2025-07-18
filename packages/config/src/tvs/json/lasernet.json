@@ -1,0 +1,25 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "lasernet",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "lasernet-DIA",
+      "priceId": "dia-data",
+      "symbol": "DIA",
+      "name": "DIAToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
+        "chain": "ethereum",
+        "escrowAddress": "0x1eeE9b9F024188E54930D2927d7a28e66E7649a7",
+        "decimals": 18,
+        "sinceTimestamp": 1741964363
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

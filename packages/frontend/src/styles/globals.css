@@ -275,22 +275,20 @@ body:has(.reading) {
 
   --text-paragraph-18: 18px;
   --text-paragraph-18--line-height: 150%;
-  --text-paragraph-18--font-weight: 400;
   --text-paragraph-16: 16px;
   --text-paragraph-16--line-height: 150%;
-  --text-paragraph-16--font-weight: 400;
   --text-paragraph-15: 15px;
   --text-paragraph-15--line-height: 150%;
-  --text-paragraph-15--font-weight: 400;
   --text-paragraph-14: 14px;
   --text-paragraph-14--line-height: 145%;
-  --text-paragraph-14--font-weight: 400;
   --text-paragraph-13: 13px;
   --text-paragraph-13--line-height: 140%;
-  --text-paragraph-13--font-weight: 400;
+  --text-paragraph-12: 12px;
+  --text-paragraph-12--line-height: 140%;
 
   --font-weight-\*: initial;
   --font-weight-thin: 100;
+  --font-weight-extralight: 200;
   --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -677,8 +675,8 @@ body:has(.reading) {
 
 @utility scrollbar-hide {
   &::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
 }

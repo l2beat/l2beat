@@ -1,3 +1,326 @@
+Generated with discovered.json: 0x5dfce6762cf5d683e11a794e0cebef183aeaa346
+
+# Diff at Mon, 14 Jul 2025 12:44:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21041827
+- current block number: 21041827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1D93fE338A035f297819EA867275661a4f5B4fdD) {
+    +++ description: None
+      address:
+-        "0x1D93fE338A035f297819EA867275661a4f5B4fdD"
++        "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD"
+    }
+```
+
+```diff
+    contract AztecFeeDistributor (0x4cf32670a53657596E641DFCC6d40f01e4d64927) {
+    +++ description: None
+      address:
+-        "0x4cf32670a53657596E641DFCC6d40f01e4d64927"
++        "eth:0x4cf32670a53657596E641DFCC6d40f01e4d64927"
+      values.aztecFeeClaimer:
+-        "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
++        "eth:0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+      values.owner:
+-        "0xE298a76986336686CC3566469e3520d23D1a8aaD"
++        "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD"
+      values.rollupProcessor:
+-        "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
++        "eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
+      implementationNames.0x4cf32670a53657596E641DFCC6d40f01e4d64927:
+-        "AztecFeeDistributor"
+      implementationNames.eth:0x4cf32670a53657596E641DFCC6d40f01e4d64927:
++        "AztecFeeDistributor"
+    }
+```
+
+```diff
+    EOA  (0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f) {
+    +++ description: None
+      address:
+-        "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
++        "eth:0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
+    }
+```
+
+```diff
+    EOA  (0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7) {
+    +++ description: None
+      address:
+-        "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
++        "eth:0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+    }
+```
+
+```diff
+    contract DefiBridgeProxy (0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487) {
+    +++ description: None
+      address:
+-        "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487"
++        "eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487"
+      implementationNames.0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487:
+-        "DefiBridgeProxy"
+      implementationNames.eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487:
++        "DefiBridgeProxy"
+    }
+```
+
+```diff
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB) {
+    +++ description: None
+      address:
+-        "0xb7baA1420f88b7758E341c93463426A2b7651CFB"
++        "eth:0xb7baA1420f88b7758E341c93463426A2b7651CFB"
+      implementationNames.0xb7baA1420f88b7758E341c93463426A2b7651CFB:
+-        "Verifier28x32"
+      implementationNames.eth:0xb7baA1420f88b7758E341c93463426A2b7651CFB:
++        "Verifier28x32"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      address:
+-        "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
++        "eth:0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+      values.owner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xC5b735d05c26579B701Be9bED253Bb588503B26B:
+-        "ProxyAdmin"
+      implementationNames.eth:0xC5b735d05c26579B701Be9bED253Bb588503B26B:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xD64791E747188b0e5061fC65b56Bf20FeE2e3321) {
+    +++ description: None
+      address:
+-        "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
++        "eth:0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+    }
+```
+
+```diff
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      address:
+-        "0xE298a76986336686CC3566469e3520d23D1a8aaD"
++        "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x1D93fE338A035f297819EA867275661a4f5B4fdD"
++        "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD"
+      values.$members.1:
+-        "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
++        "eth:0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
+      implementationNames.0xE298a76986336686CC3566469e3520d23D1a8aaD:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xE298a76986336686CC3566469e3520d23D1a8aaD:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455) {
+    +++ description: None
+      address:
+-        "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
++        "eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
+      values.$admin:
+-        "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
++        "eth:0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+      values.$implementation:
+-        "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"
++        "eth:0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"
+      values.$pastUpgrades.0.2.0:
+-        "0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28"
++        "eth:0x3f972e325CecD99a6be267fd36ceB46DCa7C3F28"
+      values.$pastUpgrades.1.2.0:
+-        "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09"
++        "eth:0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09"
+      values.$pastUpgrades.2.2.0:
+-        "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"
++        "eth:0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"
+      values.defiBridgeProxy:
+-        "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487"
++        "eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487"
+      values.getSupportedAsset.0:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.getSupportedAsset.1:
+-        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
++        "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.getSupportedAsset.2:
+-        "0xdA816459F1AB5631232FE5e97a05BBBb94970c95"
++        "eth:0xdA816459F1AB5631232FE5e97a05BBBb94970c95"
+      values.getSupportedAsset.3:
+-        "0xa258C4606Ca8206D8aA700cE2143D7db854D168c"
++        "eth:0xa258C4606Ca8206D8aA700cE2143D7db854D168c"
+      values.getSupportedAsset.4:
+-        "0x3c66B18F67CA6C1A71F829E2F6a0c987f97462d0"
++        "eth:0x3c66B18F67CA6C1A71F829E2F6a0c987f97462d0"
+      values.getSupportedAsset.5:
+-        "0x60897720AA966452e8706e74296B018990aEc527"
++        "eth:0x60897720AA966452e8706e74296B018990aEc527"
+      values.getSupportedAsset.6:
+-        "0x4169Df1B7820702f566cc10938DA51F6F597d264"
++        "eth:0x4169Df1B7820702f566cc10938DA51F6F597d264"
+      values.getSupportedAsset.7:
+-        "0xbcb91e0B4Ad56b0d41e0C168E3090361c0039abC"
++        "eth:0xbcb91e0B4Ad56b0d41e0C168E3090361c0039abC"
+      values.getSupportedAsset.8:
+-        "0xc21F107933612eCF5677894d45fc060767479A9b"
++        "eth:0xc21F107933612eCF5677894d45fc060767479A9b"
+      values.getSupportedAsset.9:
+-        "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
++        "eth:0x5f98805A4E8be255a32880FDeC7F6728C6568bA0"
+      values.getSupportedAsset.10:
+-        "0x998650bf01A6424F9B11debd85a29090906cB559"
++        "eth:0x998650bf01A6424F9B11debd85a29090906cB559"
+      values.getSupportedAsset.11:
+-        "0x646Df2Dc98741a0Ab5798DeAC6Fc62411dA41D96"
++        "eth:0x646Df2Dc98741a0Ab5798DeAC6Fc62411dA41D96"
+      values.getSupportedAsset.12:
+-        "0x6D088fe2500Da41D7fA7ab39c76a506D7c91f53b"
++        "eth:0x6D088fe2500Da41D7fA7ab39c76a506D7c91f53b"
+      values.getSupportedAsset.13:
+-        "0x7C07F7aBe10CE8e33DC6C5aD68FE033085256A84"
++        "eth:0x7C07F7aBe10CE8e33DC6C5aD68FE033085256A84"
+      values.getSupportedAsset.14:
+-        "0x378cb52b00F9D0921cb46dFc099CFf73b42419dC"
++        "eth:0x378cb52b00F9D0921cb46dFc099CFf73b42419dC"
+      values.getSupportedBridge.0:
+-        "0xaeD181779A8AAbD8Ce996949853FEA442C2CDB47"
++        "eth:0xaeD181779A8AAbD8Ce996949853FEA442C2CDB47"
+      values.getSupportedBridge.1:
+-        "0x381abF150B53cc699f0dBBBEF3C5c0D1fA4B3Efd"
++        "eth:0x381abF150B53cc699f0dBBBEF3C5c0D1fA4B3Efd"
+      values.getSupportedBridge.2:
+-        "0x381abF150B53cc699f0dBBBEF3C5c0D1fA4B3Efd"
++        "eth:0x381abF150B53cc699f0dBBBEF3C5c0D1fA4B3Efd"
+      values.getSupportedBridge.3:
+-        "0x0eb7F9464060289fE4FDDFDe2258f518c6347a70"
++        "eth:0x0eb7F9464060289fE4FDDFDe2258f518c6347a70"
+      values.getSupportedBridge.4:
+-        "0x0031130c56162e00A7e9C01eE4147b11cbac8776"
++        "eth:0x0031130c56162e00A7e9C01eE4147b11cbac8776"
+      values.getSupportedBridge.5:
+-        "0xe09801dA4C74e62fB42DFC8303a1C1BD68073D1a"
++        "eth:0xe09801dA4C74e62fB42DFC8303a1C1BD68073D1a"
+      values.getSupportedBridge.6:
+-        "0xE71A50a78CcCff7e20D8349EED295F12f0C8C9eF"
++        "eth:0xE71A50a78CcCff7e20D8349EED295F12f0C8C9eF"
+      values.getSupportedBridge.7:
+-        "0xE71A50a78CcCff7e20D8349EED295F12f0C8C9eF"
++        "eth:0xE71A50a78CcCff7e20D8349EED295F12f0C8C9eF"
+      values.getSupportedBridge.8:
+-        "0xaeD181779A8AAbD8Ce996949853FEA442C2CDB47"
++        "eth:0xaeD181779A8AAbD8Ce996949853FEA442C2CDB47"
+      values.getSupportedBridge.9:
+-        "0x3578D6D5e1B4F07A48bb1c958CBfEc135bef7d98"
++        "eth:0x3578D6D5e1B4F07A48bb1c958CBfEc135bef7d98"
+      values.getSupportedBridge.10:
+-        "0x94679A39679ffE53B53b6a1187aa1c649A101321"
++        "eth:0x94679A39679ffE53B53b6a1187aa1c649A101321"
+      values.getSupportedBridge.11:
+-        "0x3578D6D5e1B4F07A48bb1c958CBfEc135bef7d98"
++        "eth:0x3578D6D5e1B4F07A48bb1c958CBfEc135bef7d98"
+      values.getSupportedBridge.12:
+-        "0x3578D6D5e1B4F07A48bb1c958CBfEc135bef7d98"
++        "eth:0x3578D6D5e1B4F07A48bb1c958CBfEc135bef7d98"
+      values.getSupportedBridge.13:
+-        "0x998650bf01A6424F9B11debd85a29090906cB559"
++        "eth:0x998650bf01A6424F9B11debd85a29090906cB559"
+      values.getSupportedBridge.14:
+-        "0x646Df2Dc98741a0Ab5798DeAC6Fc62411dA41D96"
++        "eth:0x646Df2Dc98741a0Ab5798DeAC6Fc62411dA41D96"
+      values.getSupportedBridge.15:
+-        "0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0"
++        "eth:0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0"
+      values.getSupportedBridge.16:
+-        "0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0"
++        "eth:0x5594808e8A7b44da9D2382E6d72ad50a3e2571E0"
+      values.getSupportedBridge.17:
+-        "0xA915B9C104F865105Caa29E122C8e558cC22bd41"
++        "eth:0xA915B9C104F865105Caa29E122C8e558cC22bd41"
+      values.rollupProviders.0:
+-        "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
++        "eth:0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+      values.rollupProviders.1:
+-        "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
++        "eth:0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+      values.verifier:
+-        "0xb7baA1420f88b7758E341c93463426A2b7651CFB"
++        "eth:0xb7baA1420f88b7758E341c93463426A2b7651CFB"
+      implementationNames.0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728:
+-        "RollupProcessorV3"
+      implementationNames.eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728:
++        "RollupProcessorV3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AztecFeeDistributor (0x4cf32670a53657596E641DFCC6d40f01e4d64927)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefiBridgeProxy (0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f39ea16436b43ca9f6f83508cb30b67e0a10ed6
 
 # Diff at Fri, 04 Jul 2025 12:18:53 GMT:

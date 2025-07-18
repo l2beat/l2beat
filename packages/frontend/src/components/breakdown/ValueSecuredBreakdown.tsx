@@ -2,6 +2,10 @@ import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatPercent } from '~/utils/calculatePercentageChange'
 import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { HorizontalSeparator } from '../core/HorizontalSeparator'
+import { Square } from '../Square'
+import { ValueWithPercentageChange } from '../table/cells/ValueWithPercentageChange'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
@@ -16,6 +20,7 @@ export interface ValueSecuredBreakdownTooltipContentProps
   extends ValueSecuredBreakdownProps {
   associatedTokenSymbols?: string[]
   tvsWarnings?: WarningWithSentiment[]
+  change: number
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
@@ -40,56 +45,70 @@ export function ValueSecuredBreakdownTooltipContent({
   canonical,
   external,
   native,
+  change,
   tvsWarnings,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
   if (total === 0) {
-    return 'No tokens'
+    return 'No data'
   }
   const values = [
     {
       title: 'Canonical',
       value: canonical,
-      className: 'bg-purple-100 dark:bg-purple-100',
+      variant: 'canonical',
     },
     {
       title: 'Native',
       value: native,
-      className: 'bg-pink-100 dark:bg-pink-100',
+      variant: 'native',
     },
     {
       title: 'External',
       value: external,
-      className: 'bg-yellow-200 dark:bg-yellow-200',
+      variant: 'external',
     },
-  ]
+  ] as const
   return (
     <div className="space-y-2">
       <div>
-        {values.map(
-          (v, i) =>
-            v.value > 0 && (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-x-6"
-              >
-                <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className={cn(
-                      'size-3 rounded bg-rose-500 dark:bg-rose-700',
-                      v.className,
-                    )}
-                  />
-                  <span>{v.title}</span>
-                </span>
-                <span className="font-medium">
-                  {formatPercent(v.value / total)}
-                </span>
-              </div>
-            ),
-        )}
+        <div className="flex items-center justify-between gap-1">
+          <span className="text-heading-16">TVS</span>
+          <ValueWithPercentageChange change={change}>
+            {formatCurrency(total, 'usd')}
+          </ValueWithPercentageChange>
+        </div>
+        <HorizontalSeparator className="mt-1.5 mb-3" />
+        <div className="space-y-1">
+          {values.map(
+            (v, i) =>
+              v.value > 0 && (
+                <div
+                  key={i}
+                  className="flex items-center justify-between gap-x-6"
+                >
+                  <span className="flex items-center gap-1">
+                    <Square
+                      variant={v.variant}
+                      size="small"
+                      className="-top-px relative"
+                    />
+                    <span className="font-medium text-label-value-15">
+                      {v.title}
+                    </span>
+                  </span>
+                  <span>
+                    <span className="mr-1 font-bold text-label-value-15">
+                      {formatCurrency(v.value, 'usd')}
+                    </span>
+                    <span className="font-medium text-label-value-15 text-secondary">
+                      ({formatPercent(v.value / total)})
+                    </span>
+                  </span>
+                </div>
+              ),
+          )}
+        </div>
       </div>
       {tvsWarnings?.map((warning, i) => (
         <WarningBar

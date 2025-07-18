@@ -62,6 +62,7 @@ export function TotalValueSecuredCell(props: TotalValueSecuredCellProps) {
           canonical={props.breakdown.canonical}
           external={props.breakdown.external}
           native={props.breakdown.native}
+          change={props.change}
           tvsWarnings={tvsWarnings}
         />
       </TooltipContent>

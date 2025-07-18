@@ -1,5 +1,7 @@
 // This file is duplicated in protocolbeat and l2b!
 
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
+
 export type ApiProjectsResponse = ApiProjectEntry[]
 
 export interface ApiProjectEntry {
@@ -63,7 +65,7 @@ export interface ApiAddressEntry {
   roles: string[]
   type: ApiAddressType
   referencedBy: ApiAddressReference[]
-  address: string
+  address: ChainSpecificAddress
 }
 
 export interface ApiAddressReference extends AddressFieldValue {

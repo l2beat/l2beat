@@ -2,11 +2,11 @@
   "name": "omgnetwork",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0xb1f1e588e8c89344e307b23caca330f88e2bc8c5d0f1f82562bee86b69541bbb",
+  "configHash": "0x5c6e3612d6fbbc2d391da134d17aa994b9d19270909742215e73869ef18f8e43",
   "entries": [
     {
       "name": "Erc20Vault",
-      "address": "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
+      "address": "eth:0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B",
       "type": "Contract",
       "sourceHashes": [
         "0xd782393522c4b13f91b789a821bd38ba6238b49e1488e701aefe6e9402344572"
@@ -17,19 +17,19 @@
       "values": {
         "$immutable": true,
         "depositVerifiers": [
-          "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
-          "0x0000000000000000000000000000000000000000"
+          "eth:0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
+          "eth:0x0000000000000000000000000000000000000000"
         ],
-        "getEffectiveDepositVerifier": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
+        "getEffectiveDepositVerifier": "eth:0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
         "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968"
       },
       "implementationNames": {
-        "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": "Erc20Vault"
+        "eth:0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": "Erc20Vault"
       }
     },
     {
       "name": "PlasmaFramework",
-      "address": "0x0D4C1222f5e839a911e2053860e45F18921D72ac",
+      "address": "eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac",
       "type": "Contract",
       "sourceHashes": [
         "0x4337d3128a631d1b4f82a9ac02d2a461ef9b0aa7221fee00fd10a49736acbb6e"
@@ -39,10 +39,10 @@
       "sinceBlock": 9687257,
       "values": {
         "$immutable": true,
-        "authority": "0x22405c1782913fb676bc74Ef54a60727B0e1026F",
+        "authority": "eth:0x22405c1782913fb676bc74Ef54a60727B0e1026F",
         "CHILD_BLOCK_INTERVAL": 1000,
         "childBlockInterval": 1000,
-        "getMaintainer": "0x27b4C9e627F66eB3c7Bf0E98751Bd721615D3B21",
+        "getMaintainer": "eth:0x27b4C9e627F66eB3c7Bf0E98751Bd721615D3B21",
         "getVersion": "1.0.4+a69c763",
         "isChildChainActivated": true,
         "isDeposit": [true],
@@ -53,22 +53,22 @@
         "version": "1.0.4+a69c763"
       },
       "implementationNames": {
-        "0x0D4C1222f5e839a911e2053860e45F18921D72ac": "PlasmaFramework"
+        "eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac": "PlasmaFramework"
       }
     },
     {
-      "address": "0x22405c1782913fb676bc74Ef54a60727B0e1026F",
+      "address": "eth:0x22405c1782913fb676bc74Ef54a60727B0e1026F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x27b4C9e627F66eB3c7Bf0E98751Bd721615D3B21",
+      "address": "eth:0x27b4C9e627F66eB3c7Bf0E98751Bd721615D3B21",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "EthVault",
-      "address": "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
+      "address": "eth:0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0",
       "type": "Contract",
       "sourceHashes": [
         "0x63a556881f43e9c0e34ce5ecc046e510dbaa80fa44c7805dcf06d8644bc509e8"
@@ -79,20 +79,20 @@
       "values": {
         "$immutable": true,
         "depositVerifiers": [
-          "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
-          "0x0000000000000000000000000000000000000000"
+          "eth:0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
+          "eth:0x0000000000000000000000000000000000000000"
         ],
-        "getEffectiveDepositVerifier": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
+        "getEffectiveDepositVerifier": "eth:0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
         "newDepositVerifierMaturityTimestamp": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
         "safeGasStipend": 2300
       },
       "implementationNames": {
-        "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": "EthVault"
+        "eth:0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": "EthVault"
       }
     },
     {
       "name": "PaymentExitGame",
-      "address": "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",
+      "address": "eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3",
       "type": "Contract",
       "sourceHashes": [
         "0xfd5384956dd8b536ce35315bd551abba275ef61d520ece5dadca2c751e09ff0f"
@@ -112,12 +112,12 @@
         "startStandardExitBondSize": "14000000000000000"
       },
       "implementationNames": {
-        "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": "PaymentExitGame"
+        "eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": "PaymentExitGame"
       }
     },
     {
       "name": "ETHDepositVerifier",
-      "address": "0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
+      "address": "eth:0x649f37203c365DE759c8fc8CA35beBF5448F70Be",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -125,12 +125,12 @@
       "sinceBlock": 9687268,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x649f37203c365DE759c8fc8CA35beBF5448F70Be": ""
+        "eth:0x649f37203c365DE759c8fc8CA35beBF5448F70Be": ""
       }
     },
     {
       "name": "ERC20DepositVerifier",
-      "address": "0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
+      "address": "eth:0xD876aeb3a443FBC03B7349AAc115E9054563CD82",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -138,12 +138,12 @@
       "sinceBlock": 9687281,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xD876aeb3a443FBC03B7349AAc115E9054563CD82": ""
+        "eth:0xD876aeb3a443FBC03B7349AAc115E9054563CD82": ""
       }
     }
   ],
   "abis": {
-    "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": [
+    "eth:0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": [
       "function depositVerifiers(uint256) view returns (address)",
       "function setDepositVerifier(address _verifier)",
       "function getEffectiveDepositVerifier() view returns (address)",
@@ -155,7 +155,7 @@
       "event DepositCreated(address indexed depositor, uint256 indexed blknum, address indexed token, uint256 amount)",
       "event SetDepositVerifierCalled(address nextDepositVerifier)"
     ],
-    "0x0D4C1222f5e839a911e2053860e45F18921D72ac": [
+    "eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac": [
       "function getVersion() view returns (string)",
       "function isChildChainActivated() view returns (bool)",
       "function getNextExit(uint256 vaultId, address token) view returns (uint256)",
@@ -204,7 +204,7 @@
       "event ExitGameRegistered(uint256 txType, address exitGameAddress, uint8 protocol)",
       "event VaultRegistered(uint256 vaultId, address vaultAddress)"
     ],
-    "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": [
+    "eth:0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": [
       "function depositVerifiers(uint256) view returns (address)",
       "function setDepositVerifier(address _verifier)",
       "function getEffectiveDepositVerifier() view returns (address)",
@@ -218,7 +218,7 @@
       "event DepositCreated(address indexed depositor, uint256 indexed blknum, address indexed token, uint256 amount)",
       "event SetDepositVerifierCalled(address nextDepositVerifier)"
     ],
-    "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": [
+    "eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": [
       "function standardExits(uint160[] exitIds) view returns (tuple(bool exitable, uint256 utxoPos, bytes32 outputId, address exitTarget, uint256 amount, uint256 bondSize)[])",
       "function updateStartStandardExitBondSize(uint128 newBondSize)",
       "function challengeInFlightExitOutputSpent(tuple(bytes inFlightTx, bytes inFlightTxInclusionProof, uint256 outputUtxoPos, bytes challengingTx, uint16 challengingTxInputIndex, bytes challengingTxWitness, bytes32 senderData) args)",
@@ -269,5 +269,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x2442c5c2a2df8311d3ace17844dce3364f81ee98cf1f4b1c907154037586baa9"
+  "permissionsConfigHash": "0xeae31ff1c613313baa60f84e4157dd6b730cf51dae613ee0d1ea3d681b14e0e7"
 }

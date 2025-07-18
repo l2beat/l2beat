@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -95,6 +99,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
     chainId: 752025,
     explorerUrl: 'https://explorer-mainnet.zkevm.ternoa.network',
     sinceTimestamp: UnixTime(1735650935),
+    gasTokens: ['CAPS'],
     apis: [
       {
         type: 'rpc',
@@ -107,7 +112,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
   associatedTokens: ['CAPS'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',

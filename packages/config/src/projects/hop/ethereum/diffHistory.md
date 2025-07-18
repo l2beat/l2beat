@@ -1,3 +1,370 @@
+Generated with discovered.json: 0x6547a8b63c143039bbb4f0e8d8a439430b3ae4af
+
+# Diff at Mon, 14 Jul 2025 12:45:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 19531595
+- current block number: 19531595
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531595 (main branch discovery), not current.
+
+```diff
+    contract Hop Multisig (0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d) {
+    +++ description: None
+      address:
+-        "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d"
++        "eth:0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d"
+      values.$implementation:
+-        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      values.$members.0:
+-        "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07"
++        "eth:0x9f8d2dafE9978268aC7c67966B366d6d55e97f07"
+      values.$members.1:
+-        "0x404c2184a4027b0092C5877BC4599099cd63E62D"
++        "eth:0x404c2184a4027b0092C5877BC4599099cd63E62D"
+      values.$members.2:
+-        "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
++        "eth:0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
+      implementationNames.0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d:
+-        "Proxy"
+      implementationNames.0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d:
++        "Proxy"
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract MATIC Bridge (0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2) {
+    +++ description: None
+      address:
+-        "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2"
++        "eth:0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.l1CanonicalToken:
+-        "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
++        "eth:0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+      implementationNames.0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2:
+-        "L1_ERC20_Bridge"
+      implementationNames.eth:0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2:
++        "L1_ERC20_Bridge"
+    }
+```
+
+```diff
+    contract Timelock (0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7) {
+    +++ description: None
+      address:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.admin:
+-        "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d"
++        "eth:0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7:
+-        "Timelock"
+      implementationNames.eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7:
++        "Timelock"
+    }
+```
+
+```diff
+    contract USDC Bridge (0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a) {
+    +++ description: None
+      address:
+-        "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a"
++        "eth:0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.l1CanonicalToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      implementationNames.0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a:
+-        "L1_ERC20_Bridge"
+      implementationNames.eth:0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a:
++        "L1_ERC20_Bridge"
+    }
+```
+
+```diff
+    contract DAI Bridge (0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1) {
+    +++ description: None
+      address:
+-        "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1"
++        "eth:0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.l1CanonicalToken:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      implementationNames.0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1:
+-        "L1_ERC20_Bridge"
+      implementationNames.eth:0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1:
++        "L1_ERC20_Bridge"
+    }
+```
+
+```diff
+    contract USDT Bridge (0x3E4a3a4796d16c0Cd582C382691998f7c06420B6) {
+    +++ description: None
+      address:
+-        "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6"
++        "eth:0x3E4a3a4796d16c0Cd582C382691998f7c06420B6"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.l1CanonicalToken:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      implementationNames.0x3E4a3a4796d16c0Cd582C382691998f7c06420B6:
+-        "L1_ERC20_Bridge"
+      implementationNames.eth:0x3E4a3a4796d16c0Cd582C382691998f7c06420B6:
++        "L1_ERC20_Bridge"
+    }
+```
+
+```diff
+    EOA  (0x404c2184a4027b0092C5877BC4599099cd63E62D) {
+    +++ description: None
+      address:
+-        "0x404c2184a4027b0092C5877BC4599099cd63E62D"
++        "eth:0x404c2184a4027b0092C5877BC4599099cd63E62D"
+    }
+```
+
+```diff
+    contract SNX Bridge (0x893246FACF345c99e4235E5A7bbEE7404c988b96) {
+    +++ description: None
+      address:
+-        "0x893246FACF345c99e4235E5A7bbEE7404c988b96"
++        "eth:0x893246FACF345c99e4235E5A7bbEE7404c988b96"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.l1CanonicalToken:
+-        "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
++        "eth:0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
+      implementationNames.0x893246FACF345c99e4235E5A7bbEE7404c988b96:
+-        "L1_ERC20_Bridge"
+      implementationNames.eth:0x893246FACF345c99e4235E5A7bbEE7404c988b96:
++        "L1_ERC20_Bridge"
+    }
+```
+
+```diff
+    contract HOP Bridge (0x914f986a44AcB623A277d6Bd17368171FCbe4273) {
+    +++ description: None
+      address:
+-        "0x914f986a44AcB623A277d6Bd17368171FCbe4273"
++        "eth:0x914f986a44AcB623A277d6Bd17368171FCbe4273"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      values.l1CanonicalToken:
+-        "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
++        "eth:0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
+      values.migrator:
+-        "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
++        "eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
+      implementationNames.0x914f986a44AcB623A277d6Bd17368171FCbe4273:
+-        "L1_HOP_Bridge"
+      implementationNames.eth:0x914f986a44AcB623A277d6Bd17368171FCbe4273:
++        "L1_HOP_Bridge"
+    }
+```
+
+```diff
+    EOA  (0x9f8d2dafE9978268aC7c67966B366d6d55e97f07) {
+    +++ description: None
+      address:
+-        "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07"
++        "eth:0x9f8d2dafE9978268aC7c67966B366d6d55e97f07"
+    }
+```
+
+```diff
+    contract ETH Bridge (0xb8901acB165ed027E32754E0FFe830802919727f) {
+    +++ description: None
+      address:
+-        "0xb8901acB165ed027E32754E0FFe830802919727f"
++        "eth:0xb8901acB165ed027E32754E0FFe830802919727f"
+      values.governance:
+-        "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
++        "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7"
+      implementationNames.0xb8901acB165ed027E32754E0FFe830802919727f:
+-        "L1_ETH_Bridge"
+      implementationNames.eth:0xb8901acB165ed027E32754E0FFe830802919727f:
++        "L1_ETH_Bridge"
+    }
+```
+
+```diff
+    contract WBTC Bridge (0xb98454270065A31D71Bf635F6F7Ee6A518dFb849) {
+    +++ description: None
+      address:
+-        "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849"
++        "eth:0xb98454270065A31D71Bf635F6F7Ee6A518dFb849"
+      values.governance:
+-        "0xF56e305024B195383245A075737d16dBdb8487Fb"
++        "eth:0xF56e305024B195383245A075737d16dBdb8487Fb"
+      values.l1CanonicalToken:
+-        "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
++        "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+      implementationNames.0xb98454270065A31D71Bf635F6F7Ee6A518dFb849:
+-        "L1_ERC20_Bridge"
+      implementationNames.eth:0xb98454270065A31D71Bf635F6F7Ee6A518dFb849:
++        "L1_ERC20_Bridge"
+    }
+```
+
+```diff
+    EOA  (0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62) {
+    +++ description: None
+      address:
+-        "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
++        "eth:0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
+    }
+```
+
+```diff
+    contract Hop Governor (0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48) {
+    +++ description: None
+      address:
+-        "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48"
++        "eth:0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48"
+      values.timelock:
+-        "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
++        "eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
+      values.token:
+-        "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
++        "eth:0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
+      implementationNames.0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48:
+-        "HOPGovernor"
+      implementationNames.eth:0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48:
++        "HOPGovernor"
+    }
+```
+
+```diff
+    contract Timelock Controller (0xeeA8422a08258e73c139Fc32a25e10410c14bd7a) {
+    +++ description: None
+      address:
+-        "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
++        "eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
++        "eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48"
++        "eth:0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xeeA8422a08258e73c139Fc32a25e10410c14bd7a:
+-        "TimelockController"
+      implementationNames.eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a:
++        "TimelockController"
+    }
+```
+
+```diff
+    EOA  (0xF56e305024B195383245A075737d16dBdb8487Fb) {
+    +++ description: None
+      address:
+-        "0xF56e305024B195383245A075737d16dBdb8487Fb"
++        "eth:0xF56e305024B195383245A075737d16dBdb8487Fb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Hop Multisig (0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MATIC Bridge (0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock (0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Bridge (0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Bridge (0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Bridge (0x3E4a3a4796d16c0Cd582C382691998f7c06420B6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SNX Bridge (0x893246FACF345c99e4235E5A7bbEE7404c988b96)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HOP Bridge (0x914f986a44AcB623A277d6Bd17368171FCbe4273)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETH Bridge (0xb8901acB165ed027E32754E0FFe830802919727f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Bridge (0xb98454270065A31D71Bf635F6F7Ee6A518dFb849)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hop Governor (0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Timelock Controller (0xeeA8422a08258e73c139Fc32a25e10410c14bd7a)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa134bd62ee0195e9ab7ab7d9877d6c4545e3a291
 
 # Diff at Tue, 04 Mar 2025 10:39:14 GMT:

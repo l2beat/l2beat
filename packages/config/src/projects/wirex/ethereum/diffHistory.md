@@ -1,3 +1,224 @@
+Generated with discovered.json: 0x02e101014bff78e1704a2c43e7ebf9a124f3091b
+
+# Diff at Mon, 14 Jul 2025 12:46:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22187530
+- current block number: 22187530
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22187530 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      address:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      implementationNames.0x0775e11309d75aA6b0967917fB0213C5673eDf81:
+-        "FflonkVerifier"
+      implementationNames.eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81:
++        "FflonkVerifier"
+    }
+```
+
+```diff
+    EOA  (0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164) {
+    +++ description: None
+      address:
+-        "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
++        "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78) {
+    +++ description: None
+      address:
+-        "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
++        "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
+      values.owner:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+      implementationNames.0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78:
+-        "ProxyAdmin"
+      implementationNames.eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986) {
+    +++ description: None
+      address:
+-        "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
++        "eth:0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
+    }
+```
+
+```diff
+    contract PolygonDataCommittee (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5) {
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+      address:
+-        "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
++        "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
+      values.$admin:
+-        "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
++        "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78"
+      values.$implementation:
+-        "0xAce9269EaC3419937093154dea0AD44C36Df6963"
++        "eth:0xAce9269EaC3419937093154dea0AD44C36Df6963"
+      values.$pastUpgrades.0.2.0:
+-        "0xAce9269EaC3419937093154dea0AD44C36Df6963"
++        "eth:0xAce9269EaC3419937093154dea0AD44C36Df6963"
+      values.members.0.addr:
+-        "0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
++        "eth:0x57d836bD4834bc2DB8C3F9Eb769cEbC0d93E6986"
+      values.members.1.addr:
+-        "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
++        "eth:0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
+      values.owner:
+-        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
++        "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      implementationNames.0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xAce9269EaC3419937093154dea0AD44C36Df6963:
+-        "PolygonDataCommittee"
+      implementationNames.eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xAce9269EaC3419937093154dea0AD44C36Df6963:
++        "PolygonDataCommittee"
+    }
+```
+
+```diff
+    contract Validium (0x78253E2E6120164bd826668A4C96Db20f78A94c9) {
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+      address:
+-        "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
++        "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9"
+      values.$admin:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.$implementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.$pastUpgrades.0.2.0:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.admin:
+-        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
++        "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      values.bridgeAddress:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.dataAvailabilityProtocol:
+-        "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
++        "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5"
++++ description: If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.
++++ severity: HIGH
+      values.forceBatchAddress:
+-        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
++        "eth:0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
+      values.gasTokenAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.GLOBAL_EXIT_ROOT_MANAGER_L2:
+-        "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
++        "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+      values.globalExitRootManager:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.pendingAdmin:
+-        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
++        "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+      values.pol:
+-        "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
++        "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
+      values.rollupManager:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.trustedSequencer:
+-        "0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
++        "eth:0x0AE999d2d668f12f2b46C4Fd3e13A32D478A9164"
+      implementationNames.0x78253E2E6120164bd826668A4C96Db20f78A94c9:
+-        "PolygonTransparentProxy"
+      implementationNames.0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C:
+-        "PolygonValidiumStorageMigration"
+      implementationNames.eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9:
++        "PolygonTransparentProxy"
+      implementationNames.eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C:
++        "PolygonValidiumStorageMigration"
+    }
+```
+
+```diff
+    EOA  (0xb8605297399baEb6628C9E8F5D3E52A056492cfe) {
+    +++ description: None
+      address:
+-        "0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
++        "eth:0xb8605297399baEb6628C9E8F5D3E52A056492cfe"
+    }
+```
+
+```diff
+    EOA  (0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD) {
+    +++ description: None
+      address:
+-        "0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
++        "eth:0xe218f50Aa347687E449B8FCcAc81B6Fbe27C7aDD"
+    }
+```
+
+```diff
+    EOA  (0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A) {
+    +++ description: None
+      address:
+-        "0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
++        "eth:0xecEA75e2854FD52b0aE5C51C88f5eA8e2eC4bf9A"
+    }
+```
+
+```diff
+    EOA  (0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0) {
+    +++ description: None
+      address:
+-        "0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
++        "eth:0xee754f8Da8e2D8F0F97f6EBe1554390c0266d4d0"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 2/1).
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x78253E2E6120164bd826668A4C96Db20f78A94c9)
+    +++ description: The main system contract defining the pay-chain Layer 2 logic. Entry point for sequencing batches.
+```
+
 Generated with discovered.json: 0xbb9bda1197c0054137d64f025e159cc3d8b7edb1
 
 # Diff at Fri, 04 Jul 2025 12:19:27 GMT:

@@ -12,7 +12,12 @@ export function ReferenceList({ references, tight }: ReferenceListProps) {
     return null
   }
   return (
-    <ol className={cn('text-xs', tight ? 'mt-2' : 'mt-4 md:mt-6')}>
+    <ol
+      className={cn(
+        'text-paragraph-15 md:text-paragraph-16',
+        tight ? 'mt-2' : 'mt-4 md:mt-6',
+      )}
+    >
       {references.map((reference, i) => (
         <li key={i}>
           <CustomLink href={reference.url}>{reference.title}</CustomLink>

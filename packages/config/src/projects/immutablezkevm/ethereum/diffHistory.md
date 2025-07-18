@@ -1,3 +1,357 @@
+Generated with discovered.json: 0x4203472e6710f091d994f887452937d7cf89bcfe
+
+# Diff at Mon, 14 Jul 2025 12:45:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21995404
+- current block number: 21995404
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995404 (main branch discovery), not current.
+
+```diff
+    EOA  (0x000000000000000000000000000000000000007B) {
+    +++ description: None
+      address:
+-        "0x000000000000000000000000000000000000007B"
++        "eth:0x000000000000000000000000000000000000007B"
+    }
+```
+
+```diff
+    EOA  (0x0000000000000000000000000000000000000Eee) {
+    +++ description: None
+      address:
+-        "0x0000000000000000000000000000000000000Eee"
++        "eth:0x0000000000000000000000000000000000000Eee"
+    }
+```
+
+```diff
+    EOA  (0x0000000000000000000000000000000000000FfF) {
+    +++ description: None
+      address:
+-        "0x0000000000000000000000000000000000000FfF"
++        "eth:0x0000000000000000000000000000000000000FfF"
+    }
+```
+
+```diff
+    EOA  (0x296A19A4e87F5824DBE8DEd53415A4704538bB30) {
+    +++ description: None
+      address:
+-        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
++        "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+    }
+```
+
+```diff
+    EOA  (0x37AC4a9Bf184aa1130016525631f3Daec11f7b26) {
+    +++ description: None
+      address:
+-        "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
++        "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
+    }
+```
+
+```diff
+    EOA  (0x3d395f623D8954d71132F5caC10778CA275806e0) {
+    +++ description: None
+      address:
+-        "0x3d395f623D8954d71132F5caC10778CA275806e0"
++        "eth:0x3d395f623D8954d71132F5caC10778CA275806e0"
+    }
+```
+
+```diff
+    contract AxelarGatewayProxyMultisig (0x4F4495243837681061C4743b74B3eEdf548D56A5) {
+    +++ description: None
+      address:
+-        "0x4F4495243837681061C4743b74B3eEdf548D56A5"
++        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5"
+      implementationNames.0x4F4495243837681061C4743b74B3eEdf548D56A5:
+-        "AxelarGatewayProxyMultisig"
+      implementationNames.eth:0x4F4495243837681061C4743b74B3eEdf548D56A5:
++        "AxelarGatewayProxyMultisig"
+    }
+```
+
+```diff
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932) {
+    +++ description: None
+      address:
+-        "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
++        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+      values.$admin:
+-        "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+      values.$implementation:
+-        "0xE2E91C1Ae2873720C3b975a8034e887A35323345"
++        "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345"
+      values.$pastUpgrades.0.2.0:
+-        "0xE2E91C1Ae2873720C3b975a8034e887A35323345"
++        "eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.accessControl.0x77eacfcb6207f26b72edc4f15c48e5518843e7e98ccfd7e0d6c16f92ed1fef8d.members.0:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.accessControl.0x2b5bda39c23731c6890b6a6f985ff1c326c66dc20aa14dc2e50fc5ec656ecc35.members.0:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.accessControl.0x28a0840e09502c63ed1e83b95421995a3ea654657390bb15ac27b2b85aef53b2.members.0:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.childBridgeAdaptor:
+-        "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
++        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+      values.gasService:
+-        "0x2d5d7d31F671F86C782533cc367F14109a082712"
++        "eth:0x2d5d7d31F671F86C782533cc367F14109a082712"
+      values.gateway:
+-        "0x4F4495243837681061C4743b74B3eEdf548D56A5"
++        "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5"
+      values.initializerAddress:
+-        "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
++        "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
+      values.rootBridge:
+-        "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      implementationNames.0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xE2E91C1Ae2873720C3b975a8034e887A35323345:
+-        "RootAxelarBridgeAdaptor"
+      implementationNames.eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xE2E91C1Ae2873720C3b975a8034e887A35323345:
++        "RootAxelarBridgeAdaptor"
+    }
+```
+
+```diff
+    EOA  (0x52A6c53869Ce09a731CD772f245b97A4401d3348) {
+    +++ description: None
+      address:
+-        "0x52A6c53869Ce09a731CD772f245b97A4401d3348"
++        "eth:0x52A6c53869Ce09a731CD772f245b97A4401d3348"
+    }
+```
+
+```diff
+    contract ChildERC20 (0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1) {
+    +++ description: None
+      address:
+-        "0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1"
++        "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1"
+      values.bridge:
+-        "0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+      values.rootToken:
+-        "0x000000000000000000000000000000000000007B"
++        "eth:0x000000000000000000000000000000000000007B"
+      implementationNames.0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1:
+-        "ChildERC20"
+      implementationNames.eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1:
++        "ChildERC20"
+    }
+```
+
+```diff
+    EOA  (0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7) {
+    +++ description: None
+      address:
+-        "0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
++        "eth:0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    }
+```
+
+```diff
+    EOA  (0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b) {
+    +++ description: None
+      address:
+-        "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
++        "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
+    }
+```
+
+```diff
+    EOA  (0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB) {
+    +++ description: None
+      address:
+-        "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
++        "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+    }
+```
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      address:
+-        "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      values.$admin:
+-        "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+      values.$implementation:
+-        "0x177EaFe0f1F3359375B1728dae0530a75C83E154"
++        "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154"
+      values.$pastUpgrades.0.2.0:
+-        "0x177EaFe0f1F3359375B1728dae0530a75C83E154"
++        "eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154"
+      values.childERC20Bridge:
+-        "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      values.childETHToken:
+-        "0x52A6c53869Ce09a731CD772f245b97A4401d3348"
++        "eth:0x52A6c53869Ce09a731CD772f245b97A4401d3348"
+      values.childTokenTemplate:
+-        "0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1"
++        "eth:0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1"
+      values.initializerAddress:
+-        "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
++        "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
+      values.NATIVE_ETH:
+-        "0x0000000000000000000000000000000000000Eee"
++        "eth:0x0000000000000000000000000000000000000Eee"
+      values.NATIVE_IMX:
+-        "0x0000000000000000000000000000000000000FfF"
++        "eth:0x0000000000000000000000000000000000000FfF"
+      values.rootBridgeAdaptor:
+-        "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
++        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+      values.rootIMXToken:
+-        "0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF"
++        "eth:0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF"
+      values.rootWETHToken:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x177EaFe0f1F3359375B1728dae0530a75C83E154:
+-        "RootERC20BridgeFlowRate"
+      implementationNames.eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x177EaFe0f1F3359375B1728dae0530a75C83E154:
++        "RootERC20BridgeFlowRate"
+    }
+```
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      address:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
++        "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
+      values.$members.1:
+-        "0x3d395f623D8954d71132F5caC10778CA275806e0"
++        "eth:0x3d395f623D8954d71132F5caC10778CA275806e0"
+      values.$members.2:
+-        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
++        "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba"
+      values.$members.3:
+-        "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
++        "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
+      values.$members.4:
+-        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
++        "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+      values.$members.5:
+-        "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
++        "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+      implementationNames.0xD2C37fC6fD89563187f3679304975655e448D192:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xD2C37fC6fD89563187f3679304975655e448D192:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xdb6c271060571A96A62E3947E373395C89f765Ba) {
+    +++ description: None
+      address:
+-        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
++        "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba"
+    }
+```
+
+```diff
+    EOA  (0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333) {
+    +++ description: None
+      address:
+-        "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
++        "eth:0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      address:
+-        "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+      values.owner:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      implementationNames.0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8:
+-        "ProxyAdmin"
+      implementationNames.eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8:
++        "ProxyAdmin"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGatewayProxyMultisig (0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChildERC20 (0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f5cccde02c834b7ccec85f0e136bf969eda3d4a
 
 # Diff at Fri, 04 Jul 2025 12:19:04 GMT:

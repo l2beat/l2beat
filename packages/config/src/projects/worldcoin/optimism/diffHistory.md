@@ -1,3 +1,792 @@
+Generated with discovered.json: 0x3f8fc1292b825d9fbb9928c1080340e74c9081ba
+
+# Diff at Mon, 14 Jul 2025 12:47:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 133912814
+- current block number: 133912814
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133912814 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695) {
+    +++ description: None
+      address:
+-        "0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
++        "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
++        "oeth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
+      implementationNames.0x0897316DFE7141DB1E182551c3e8077cf5dd9695:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744) {
+    +++ description: None
+      address:
+-        "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
++        "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
++        "oeth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
+      implementationNames.0x140C0227Cbe493A56868DDF4ea582E92ef3e9744:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x163f8C2467924be0ae7B5347228CABF260318753) {
+    +++ description: None
+      address:
+-        "0x163f8C2467924be0ae7B5347228CABF260318753"
++        "oeth:0x163f8C2467924be0ae7B5347228CABF260318753"
+    }
+```
+
+```diff
+    EOA  (0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7) {
+    +++ description: None
+      address:
+-        "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
++        "oeth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c) {
+    +++ description: None
+      address:
+-        "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c"
++        "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c"
+      implementationNames.0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c:
+-        "SemaphoreVerifier"
+      implementationNames.oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c:
++        "SemaphoreVerifier"
+    }
+```
+
+```diff
+    EOA  (0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be) {
+    +++ description: None
+      address:
+-        "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
++        "oeth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF) {
+    +++ description: None
+      address:
+-        "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
++        "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
+      implementationNames.0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF:
+-        "SemaphoreVerifier"
+      implementationNames.oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF:
++        "SemaphoreVerifier"
+    }
+```
+
+```diff
+    contract OpWorldID_Zero (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02) {
+    +++ description: None
+      address:
+-        "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02"
++        "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02"
+      values.owner:
+-        "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
++        "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+      values.verifier:
+-        "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB"
++        "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB"
+      implementationNames.0x42FF98C4E85212a5D31358ACbFe76a621b50fC02:
+-        "OpWorldID"
+      implementationNames.oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02:
++        "OpWorldID"
+    }
+```
+
+```diff
+    EOA  (0x541f3cc5772a64f2ba0a47e83236CcE2F089b188) {
+    +++ description: None
+      address:
+-        "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
++        "oeth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
+    }
+```
+
+```diff
+    EOA  (0x57c72EB3f74e3A1c95656253214A018818818ec3) {
+    +++ description: None
+      address:
+-        "0x57c72EB3f74e3A1c95656253214A018818818ec3"
++        "oeth:0x57c72EB3f74e3A1c95656253214A018818818ec3"
+    }
+```
+
+```diff
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611) {
+    +++ description: None
+      address:
+-        "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
++        "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+      values.$admin:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$implementation:
+-        "0x11cA3127182f7583EfC416a8771BD4d11Fae4334"
++        "oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334"
+      values.$pastUpgrades.0.2.0:
+-        "0x11cA3127182f7583EfC416a8771BD4d11Fae4334"
++        "oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334"
+      values.owner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.routeFor.0:
+-        "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02"
++        "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02"
+      values.routeFor.1:
+-        "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d"
++        "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d"
+      implementationNames.0x57f928158C3EE7CDad1e4D8642503c4D0201f611:
+-        "WorldIDRouter"
+      implementationNames.0x11cA3127182f7583EfC416a8771BD4d11Fae4334:
+-        "WorldIDRouterImplV1"
+      implementationNames.oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611:
++        "WorldIDRouter"
+      implementationNames.oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334:
++        "WorldIDRouterImplV1"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x59a0f98345f54bAB245A043488ECE7FCecD7B596) {
+    +++ description: None
+      address:
+-        "0x59a0f98345f54bAB245A043488ECE7FCecD7B596"
++        "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      implementationNames.0x59a0f98345f54bAB245A043488ECE7FCecD7B596:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB) {
+    +++ description: None
+      address:
+-        "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB"
++        "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB"
+      implementationNames.0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB:
+-        "SemaphoreVerifier"
+      implementationNames.oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB:
++        "SemaphoreVerifier"
+    }
+```
+
+```diff
+    EOA  (0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04) {
+    +++ description: None
+      address:
+-        "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
++        "oeth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6) {
+    +++ description: None
+      address:
+-        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
++        "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xB6d1621B770A088C16bfec22bAd00F77D874d011"
++        "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011"
+      values.$members.1:
+-        "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
++        "oeth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+      implementationNames.0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract WLDGrant (0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674) {
+    +++ description: None
+      address:
+-        "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674"
++        "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674"
+      implementationNames.0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674:
+-        "WLDGrant"
+      implementationNames.oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674:
++        "WLDGrant"
+    }
+```
+
+```diff
+    EOA  (0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421) {
+    +++ description: None
+      address:
+-        "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
++        "oeth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+    }
+```
+
+```diff
+    EOA  (0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde) {
+    +++ description: None
+      address:
+-        "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
++        "oeth:0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
+    }
+```
+
+```diff
+    EOA  (0x79b998ded1f4503CE3A0A76993c72a65449f4590) {
+    +++ description: None
+      address:
+-        "0x79b998ded1f4503CE3A0A76993c72a65449f4590"
++        "oeth:0x79b998ded1f4503CE3A0A76993c72a65449f4590"
+    }
+```
+
+```diff
+    contract RecurringGrantDrop (0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d) {
+    +++ description: None
+      address:
+-        "0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d"
++        "oeth:0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d"
+      values.grant:
+-        "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674"
++        "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674"
+      values.holder:
+-        "0x7f26A7572E8B877654eeDcBc4E573657619FA3CE"
++        "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE"
+      values.owner:
+-        "0x59a0f98345f54bAB245A043488ECE7FCecD7B596"
++        "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      values.token:
+-        "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
++        "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
+      values.worldIdRouter:
+-        "0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
++        "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+      implementationNames.0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d:
+-        "RecurringGrantDrop"
+      implementationNames.oeth:0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d:
++        "RecurringGrantDrop"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x7f26A7572E8B877654eeDcBc4E573657619FA3CE) {
+    +++ description: None
+      address:
+-        "0x7f26A7572E8B877654eeDcBc4E573657619FA3CE"
++        "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE"
+      values.$implementation:
+-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
++        "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+      values.$members.0:
+-        "0x57c72EB3f74e3A1c95656253214A018818818ec3"
++        "oeth:0x57c72EB3f74e3A1c95656253214A018818818ec3"
+      values.$members.1:
+-        "0x59a0f98345f54bAB245A043488ECE7FCecD7B596"
++        "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596"
+      values.$members.2:
+-        "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
++        "oeth:0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
+      implementationNames.0x7f26A7572E8B877654eeDcBc4E573657619FA3CE:
+-        "GnosisSafeProxy"
+      implementationNames.0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        "GnosisSafeL2"
+      implementationNames.oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a) {
+    +++ description: None
+      address:
+-        "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
++        "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+      values.$admin:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.$implementation:
+-        "0xa3d93B74214B80760288091675688E1EaD7838F2"
++        "oeth:0xa3d93B74214B80760288091675688E1EaD7838F2"
+      values.$pastUpgrades.0.2.0:
+-        "0x5198DD63b9cA3DcA4FD6f62f615e6989CA74F49B"
++        "oeth:0x5198DD63b9cA3DcA4FD6f62f615e6989CA74F49B"
+      values.$pastUpgrades.1.2.0:
+-        "0xa3d93B74214B80760288091675688E1EaD7838F2"
++        "oeth:0xa3d93B74214B80760288091675688E1EaD7838F2"
+      values.getDeleteIdentitiesVerifierLookupTableAddress:
+-        "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86"
++        "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86"
+      values.getRegisterIdentitiesVerifierLookupTableAddress:
+-        "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb"
++        "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb"
+      values.getSemaphoreVerifierAddress:
+-        "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c"
++        "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c"
+      values.identityOperator:
+-        "0x997c96386A7D0A491170742346570eb8E8A4E96E"
++        "oeth:0x997c96386A7D0A491170742346570eb8E8A4E96E"
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x86D26Ed31556EA7694BD0cC4e674D7526f70511a:
+-        "WorldIDIdentityManager"
+      implementationNames.0xa3d93B74214B80760288091675688E1EaD7838F2:
+-        "WorldIDIdentityManagerImplV2"
+      implementationNames.oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a:
++        "WorldIDIdentityManager"
+      implementationNames.oeth:0xa3d93B74214B80760288091675688E1EaD7838F2:
++        "WorldIDIdentityManagerImplV2"
+    }
+```
+
+```diff
+    EOA  (0x96d55BD9c8C4706FED243c1e15825FF7854920fA) {
+    +++ description: None
+      address:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    }
+```
+
+```diff
+    EOA  (0x997c96386A7D0A491170742346570eb8E8A4E96E) {
+    +++ description: None
+      address:
+-        "0x997c96386A7D0A491170742346570eb8E8A4E96E"
++        "oeth:0x997c96386A7D0A491170742346570eb8E8A4E96E"
+    }
+```
+
+```diff
+    contract Verifier (0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F) {
+    +++ description: None
+      address:
+-        "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F"
++        "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F"
+      implementationNames.0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F:
+-        "Verifier"
+      implementationNames.oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F:
++        "Verifier"
+    }
+```
+
+```diff
+    contract VerifierLookupTable (0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb) {
+    +++ description: None
+      address:
+-        "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb"
++        "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb"
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb:
+-        "VerifierLookupTable"
+      implementationNames.oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb:
++        "VerifierLookupTable"
+    }
+```
+
+```diff
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d) {
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+      address:
+-        "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d"
++        "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d"
+      values.owner:
+-        "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F"
++        "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F"
+      values.verifier:
+-        "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
++        "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
+      implementationNames.0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d:
+-        "OpWorldID"
+      implementationNames.oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d:
++        "OpWorldID"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26) {
+    +++ description: None
+      address:
+-        "0xb67ac19693fB89880Ca5873f6a890E865b259c26"
++        "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x79b998ded1f4503CE3A0A76993c72a65449f4590"
++        "oeth:0x79b998ded1f4503CE3A0A76993c72a65449f4590"
+      values.$members.1:
+-        "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
++        "oeth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+      implementationNames.0xb67ac19693fB89880Ca5873f6a890E865b259c26:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xB6d1621B770A088C16bfec22bAd00F77D874d011) {
+    +++ description: None
+      address:
+-        "0xB6d1621B770A088C16bfec22bAd00F77D874d011"
++        "oeth:0xB6d1621B770A088C16bfec22bAd00F77D874d011"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      address:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
++        "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
+      values.$members.1:
+-        "0xb67ac19693fB89880Ca5873f6a890E865b259c26"
++        "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26"
+      values.$members.2:
+-        "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
++        "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
+      values.$members.3:
+-        "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
++        "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
+      values.$members.4:
+-        "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A"
++        "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A"
+      values.$members.5:
+-        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
++        "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+      implementationNames.0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract WLD token (0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1) {
+    +++ description: None
+      address:
+-        "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
++        "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1"
+      values.bridge:
+-        "0x4200000000000000000000000000000000000010"
++        "oeth:0x4200000000000000000000000000000000000010"
+      values.BRIDGE:
+-        "0x4200000000000000000000000000000000000010"
++        "oeth:0x4200000000000000000000000000000000000010"
+      values.l1Token:
+-        "0x163f8C2467924be0ae7B5347228CABF260318753"
++        "oeth:0x163f8C2467924be0ae7B5347228CABF260318753"
+      values.l2Bridge:
+-        "0x4200000000000000000000000000000000000010"
++        "oeth:0x4200000000000000000000000000000000000010"
+      values.REMOTE_TOKEN:
+-        "0x163f8C2467924be0ae7B5347228CABF260318753"
++        "oeth:0x163f8C2467924be0ae7B5347228CABF260318753"
+      values.remoteToken:
+-        "0x163f8C2467924be0ae7B5347228CABF260318753"
++        "oeth:0x163f8C2467924be0ae7B5347228CABF260318753"
+      implementationNames.0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1:
+-        "OptimismMintableERC20"
+      implementationNames.oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1:
++        "OptimismMintableERC20"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c) {
+    +++ description: None
+      address:
+-        "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
++        "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
++        "oeth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
+      implementationNames.0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A) {
+    +++ description: None
+      address:
+-        "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A"
++        "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
++        "oeth:0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
+      implementationNames.0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A:
++        "GnosisSafeProxy"
+      implementationNames.oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09) {
+    +++ description: None
+      address:
+-        "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
++        "oeth:0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
+    }
+```
+
+```diff
+    contract VerifierLookupTable (0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86) {
+    +++ description: None
+      address:
+-        "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86"
++        "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86"
+      values.owner:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "oeth:0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "oeth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86:
+-        "VerifierLookupTable"
+      implementationNames.oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86:
++        "VerifierLookupTable"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpWorldID_Zero (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x59a0f98345f54bAB245A043488ECE7FCecD7B596)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WLDGrant (0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RecurringGrantDrop (0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x7f26A7572E8B877654eeDcBc4E573657619FA3CE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierLookupTable (0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WLD token (0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierLookupTable (0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xabcbd421b763e4fb3312b3651f4a3a2714393682
 
 # Diff at Fri, 04 Jul 2025 12:19:28 GMT:

@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   ContractPermission,
   RawPermissionConfiguration,
@@ -167,7 +167,10 @@ export function buildPermissionsModel(
 export function getPermissionsDefinedOnFields(
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
-): (RawPermissionConfiguration & { to: EthereumAddress; field: string })[] {
+): (RawPermissionConfiguration & {
+  to: ChainSpecificAddress
+  field: string
+})[] {
   const issuedPermissions = Object.entries(
     contractPermission.fields ?? {},
   ).flatMap(([field, values]) => {
@@ -198,7 +201,10 @@ export function getPermissionsDefinedOnFields(
 
 export function getPermissionsForAdmins(
   structureEntry: StructureEntry,
-): (RawPermissionConfiguration & { to: EthereumAddress; field: string })[] {
+): (RawPermissionConfiguration & {
+  to: ChainSpecificAddress
+  field: string
+})[] {
   const admins = get$Admins(structureEntry.values)
   return admins.map((admin) => {
     return {

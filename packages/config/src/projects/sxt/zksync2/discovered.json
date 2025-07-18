@@ -2,10 +2,10 @@
   "name": "sxt",
   "chain": "zksync2",
   "blockNumber": 60986372,
-  "configHash": "0xee96f0046baf94f232e4c9814501190894f327e645d007577ea33fe7b0428af5",
+  "configHash": "0xff4a32ee830bbc7008f4baa6a394ad9ed1fe4957861a7a6400938fc83571e1ec",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
   "usedTemplates": {},
-  "permissionsConfigHash": "0x7c71a15c9b85c7f5afe4ad749f92aa3bfc4d3f638d0e5dd007ca9fc744e14019"
+  "permissionsConfigHash": "0x5fdba03b8bdaf9762cf6820da15a3c3f7ce1d7a88bb75856b3d4225fc5b2eca9"
 }

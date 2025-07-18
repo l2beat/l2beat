@@ -1,6 +1,18 @@
 {
   "ethereum": [
     {
+      "symbol": "PC",
+      "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272"
+    },
+    {
+      "symbol": "RDO",
+      "address": "0x57240C3E140f98abe315CA8E0213c7a77F34A334"
+    },
+    {
+      "symbol": "DIA",
+      "address": "0x84ca8bc7997272c7cfb4d0cd3d55cd942b3c9419"
+    },
+    {
       "symbol": "EUL",
       "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b"
     },
@@ -1443,7 +1455,7 @@
     },
     {
       "symbol": "PEPU",
-      "address": "0xadd39272e83895e7d3f244f696b7a25635f34234"
+      "address": "0x93aA0ccD1e5628d3A841C4DbdF602D9eb04085d6"
     },
     {
       "symbol": "PERP",
@@ -2229,6 +2241,12 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "wM",
+      "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
+      "source": "native",
+      "supply": "totalSupply" // normal wrapper, underlying M is bridged via wormhole, wM backs USDai on arbi
+    },
     {
       "symbol": "MLK",
       "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
@@ -6690,6 +6708,38 @@
     }
   ],
   "abstract": [
+    {
+      "symbol": "Polly",
+      "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "NOOT",
+      "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "ABSTER",
+      "address": "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "PENGU",
+      "address": "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USDT",
       "address": "0x0709F39376dEEe2A2dfC94A58EdEb2Eb9DF012bD",

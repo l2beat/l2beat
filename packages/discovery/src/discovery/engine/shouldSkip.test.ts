@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ConfigReader } from '../config/ConfigReader'
 import { ConfigRegistry } from '../config/ConfigRegistry'
@@ -8,7 +8,7 @@ import { shouldSkip } from './shouldSkip'
 
 describe(shouldSkip.name, () => {
   it('skips addresses marked as ignored', () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
@@ -25,7 +25,7 @@ describe(shouldSkip.name, () => {
   })
 
   it('skips addresses from a shared module', () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const configReader = mockObject<ConfigReader>({
       readDiscovery: () => ({
         name: 'SharedFoo',
@@ -35,7 +35,7 @@ describe(shouldSkip.name, () => {
           {
             type: 'Contract',
             name: 'Foo',
-            address,
+            address: address,
             upgradeability: { type: 'immutable' },
           },
         ],
@@ -60,7 +60,7 @@ describe(shouldSkip.name, () => {
   })
 
   it('skips addresses that exceed max depth', () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
@@ -73,7 +73,7 @@ describe(shouldSkip.name, () => {
   })
 
   it('skips addresses that exceed max addresses', () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',
@@ -86,7 +86,7 @@ describe(shouldSkip.name, () => {
   })
 
   it('does not skip addresses that are not ignored', () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const config = new ConfigRegistry({
       name: 'Test',
       chain: 'ethereum',

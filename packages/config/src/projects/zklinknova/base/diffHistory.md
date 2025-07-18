@@ -1,3 +1,327 @@
+Generated with discovered.json: 0xb8e7b9ec7e67b9be0285ea59a89729686e24bb86
+
+# Diff at Mon, 14 Jul 2025 12:47:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 27445725
+- current block number: 27445725
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 27445725 (main branch discovery), not current.
+
+```diff
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011) {
+    +++ description: None
+      address:
+-        "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
++        "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
+      values.$admin:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      values.$implementation:
+-        "0x7f00134427437b2883F59EF3880597FDc836E356"
++        "base:0x7f00134427437b2883F59EF3880597FDc836E356"
+      values.$pastUpgrades.0.2.0:
+-        "0x7f00134427437b2883F59EF3880597FDc836E356"
++        "base:0x7f00134427437b2883F59EF3880597FDc836E356"
+      values.getRemoteGateway:
+-        "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
++        "base:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
+      values.MESSAGE_SERVICE:
+-        "0x4200000000000000000000000000000000000007"
++        "base:0x4200000000000000000000000000000000000007"
+      values.owner:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      values.ZKLINK:
+-        "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
++        "base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
+      implementationNames.0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011:
+-        "ERC1967Proxy"
+      implementationNames.0x7f00134427437b2883F59EF3880597FDc836E356:
+-        "OptimismL2Gateway"
+      implementationNames.base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011:
++        "ERC1967Proxy"
+      implementationNames.base:0x7f00134427437b2883F59EF3880597FDc836E356:
++        "OptimismL2Gateway"
+    }
+```
+
+```diff
+    EOA  (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9) {
+    +++ description: None
+      address:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "base:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    }
+```
+
+```diff
+    EOA  (0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9) {
+    +++ description: None
+      address:
+-        "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9"
++        "base:0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9"
+    }
+```
+
+```diff
+    EOA  (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      address:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "base:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    EOA  (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5) {
+    +++ description: None
+      address:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "base:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    }
+```
+
+```diff
+    EOA  (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10) {
+    +++ description: None
+      address:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "base:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5) {
+    +++ description: None
+      address:
+-        "0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
++        "base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5"
+      values.$admin:
+-        "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
++        "base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
+      values.$implementation:
+-        "0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"
++        "base:0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"
+      values.$pastUpgrades.0.2.0:
+-        "0x413552461b0b2c13f117d885b52AaA2f23374B1D"
++        "base:0x413552461b0b2c13f117d885b52AaA2f23374B1D"
+      values.$pastUpgrades.1.2.0:
+-        "0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"
++        "base:0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"
+      values.l2Bridge:
+-        "0xa03248B029b4e348F156f4b1d93CB433a4e1361e"
++        "base:0xa03248B029b4e348F156f4b1d93CB433a4e1361e"
+      values.l2TokenBeacon:
+-        "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9"
++        "base:0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9"
+      implementationNames.0x80d12A78EfE7604F00ed07aB2f16F643301674D5:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xA89aa7e3D34516EAB7129E401215d5d1239Ce715:
+-        "L1ERC20Bridge"
+      implementationNames.base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5:
++        "TransparentUpgradeableProxy"
+      implementationNames.base:0xA89aa7e3D34516EAB7129E401215d5d1239Ce715:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db) {
+    +++ description: None
+      address:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "base:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+    }
+```
+
+```diff
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE) {
+    +++ description: None
+      address:
+-        "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
++        "base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
+      values.owner:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      implementationNames.0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE:
+-        "ProxyAdmin"
+      implementationNames.base:0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xa03248B029b4e348F156f4b1d93CB433a4e1361e) {
+    +++ description: None
+      address:
+-        "0xa03248B029b4e348F156f4b1d93CB433a4e1361e"
++        "base:0xa03248B029b4e348F156f4b1d93CB433a4e1361e"
+    }
+```
+
+```diff
+    EOA  (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5) {
+    +++ description: None
+      address:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "base:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    EOA  (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5) {
+    +++ description: None
+      address:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "base:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    EOA  (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92) {
+    +++ description: None
+      address:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "base:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd) {
+    +++ description: None
+      address:
+-        "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
++        "base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"
+      values.$admin:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      values.$implementation:
+-        "0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388"
++        "base:0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388"
+      values.$pastUpgrades.0.2.0:
+-        "0x314bF0D901361F2e31A18cb3500bFD33aF51dE47"
++        "base:0x314bF0D901361F2e31A18cb3500bFD33aF51dE47"
+      values.$pastUpgrades.1.2.0:
+-        "0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388"
++        "base:0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388"
+      values.forwardFeeAllocator:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      values.gateway:
+-        "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
++        "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
+      values.getGateway:
+-        "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
++        "base:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
+      values.getGovernor:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      values.owner:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      implementationNames.0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd:
+-        "ERC1967Proxy"
+      implementationNames.0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388:
+-        "ZkLink"
+      implementationNames.base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd:
++        "ERC1967Proxy"
+      implementationNames.base:0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388:
++        "ZkLink"
+    }
+```
+
+```diff
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C) {
+    +++ description: None
+      address:
+-        "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
++        "base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
+      values.$implementation:
+-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
++        "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+      values.$members.0:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "base:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.$members.1:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "base:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "base:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.3:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "base:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.4:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "base:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.5:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "base:0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+      values.$members.6:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "base:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.7:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "base:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      implementationNames.0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C:
+-        "GnosisSafeProxy"
+      implementationNames.0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        "GnosisSafeL2"
+      implementationNames.base:0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C:
++        "GnosisSafeProxy"
+      implementationNames.base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0xF801886AE2e127A269B0F11892edb54F692d02dF) {
+    +++ description: None
+      address:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "base:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd92c542ff4905099a417694f17c9e5d88530f20e
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

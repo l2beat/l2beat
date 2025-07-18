@@ -1,6 +1,7 @@
 import {
   assert,
-  EthereumAddress,
+  type ChainSpecificAddress,
+  type EthereumAddress,
   formatJson,
   Hash256,
 } from '@l2beat/shared-pure'
@@ -86,7 +87,6 @@ export class TemplateService {
       const criteria = existsSync(criteriaPath)
         ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
         : undefined
-      criteria?.validAddresses?.map((a: string) => EthereumAddress(a))
 
       const templateId = path.substring(resolvedRootPath.length + 1)
       result[templateId] = {
@@ -99,7 +99,7 @@ export class TemplateService {
 
   findMatchingTemplates(
     sources: ContractSources,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): string[] {
     if (!sources.isVerified) {
       return []
@@ -116,7 +116,7 @@ export class TemplateService {
 
   findMatchingTemplatesByHash(
     sourcesHash: Hash256,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): string[] {
     const candidates = this.getHashIndex().get(sourcesHash.toString()) ?? []
 

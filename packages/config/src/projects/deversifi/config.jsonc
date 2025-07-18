@@ -3,13 +3,9 @@
   "name": "deversifi",
   "import": ["../globalConfig.jsonc"],
   "archived": true,
-  "chains": {
-    "ethereum": {
-      "initialAddresses": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
-      "names": {
-        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "RhinofiAdminMultisig"
-      },
-      "sharedModules": ["shared-sharp-verifier"]
-    }
-  }
+  "initialAddresses": ["eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"],
+  "names": {
+    "eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "RhinofiAdminMultisig"
+  },
+  "sharedModules": ["shared-sharp-verifier"]
 }

@@ -1,3 +1,214 @@
+Generated with discovered.json: 0x9771ce3c581b881d3840e8caca2197edac8dd526
+
+# Diff at Mon, 14 Jul 2025 12:44:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 19531448
+- current block number: 19531448
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531448 (main branch discovery), not current.
+
+```diff
+    contract EthereumL1Messenger (0x12B8489913E2afBCed131d52c345C380BBB65baf) {
+    +++ description: None
+      address:
+-        "0x12B8489913E2afBCed131d52c345C380BBB65baf"
++        "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      implementationNames.0x12B8489913E2afBCed131d52c345C380BBB65baf:
+-        "EthereumL1Messenger"
+      implementationNames.eth:0x12B8489913E2afBCed131d52c345C380BBB65baf:
++        "EthereumL1Messenger"
+    }
+```
+
+```diff
+    contract EthereumL2Messenger (0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da) {
+    +++ description: None
+      address:
+-        "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da"
++        "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      values.resolver:
+-        "0xCb60516819a28431233195A8b7E0227C288B61AD"
++        "eth:0xCb60516819a28431233195A8b7E0227C288B61AD"
+      implementationNames.0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da:
+-        "EthereumL2Messenger"
+      implementationNames.eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da:
++        "EthereumL2Messenger"
+    }
+```
+
+```diff
+    EOA  (0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70) {
+    +++ description: None
+      address:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+    }
+```
+
+```diff
+    contract OptimismL1Messenger (0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34) {
+    +++ description: None
+      address:
+-        "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34"
++        "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34"
+      values.nativeMessenger:
+-        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
++        "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      implementationNames.0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34:
+-        "OptimismL1Messenger"
+      implementationNames.eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34:
++        "OptimismL1Messenger"
+    }
+```
+
+```diff
+    contract ArbitrumL1Messenger (0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3) {
+    +++ description: None
+      address:
+-        "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3"
++        "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3"
+      values.bridge:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      values.inbox:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      implementationNames.0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3:
+-        "ArbitrumL1Messenger"
+      implementationNames.eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3:
++        "ArbitrumL1Messenger"
+    }
+```
+
+```diff
+    contract EthereumRequestManager (0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50) {
+    +++ description: None
+      address:
+-        "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50"
++        "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      implementationNames.0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50:
+-        "RequestManager"
+      implementationNames.eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50:
++        "RequestManager"
+    }
+```
+
+```diff
+    contract Resolver (0xCb60516819a28431233195A8b7E0227C288B61AD) {
+    +++ description: None
+      address:
+-        "0xCb60516819a28431233195A8b7E0227C288B61AD"
++        "eth:0xCb60516819a28431233195A8b7E0227C288B61AD"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      implementationNames.0xCb60516819a28431233195A8b7E0227C288B61AD:
+-        "Resolver"
+      implementationNames.eth:0xCb60516819a28431233195A8b7E0227C288B61AD:
++        "Resolver"
+    }
+```
+
+```diff
+    contract EthereumFillManager (0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29) {
+    +++ description: None
+      address:
+-        "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29"
++        "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29"
+      values.l1Resolver:
+-        "0xCb60516819a28431233195A8b7E0227C288B61AD"
++        "eth:0xCb60516819a28431233195A8b7E0227C288B61AD"
+      values.liquidityProviders.0:
+-        "0xdC256EC77E97448d29D88118e55C82067150b768"
++        "eth:0xdC256EC77E97448d29D88118e55C82067150b768"
+      values.messenger:
+-        "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da"
++        "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da"
+      values.owner:
+-        "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
++        "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+      implementationNames.0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29:
+-        "FillManager"
+      implementationNames.eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29:
++        "FillManager"
+    }
+```
+
+```diff
+    EOA  (0xdC256EC77E97448d29D88118e55C82067150b768) {
+    +++ description: None
+      address:
+-        "0xdC256EC77E97448d29D88118e55C82067150b768"
++        "eth:0xdC256EC77E97448d29D88118e55C82067150b768"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EthereumL1Messenger (0x12B8489913E2afBCed131d52c345C380BBB65baf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumL2Messenger (0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL1Messenger (0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL1Messenger (0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumRequestManager (0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Resolver (0xCb60516819a28431233195A8b7E0227C288B61AD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumFillManager (0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x31bc85104a5f5cc63ba7a6830f0e9ac0161ed95f
 
 # Diff at Tue, 04 Mar 2025 10:38:59 GMT:

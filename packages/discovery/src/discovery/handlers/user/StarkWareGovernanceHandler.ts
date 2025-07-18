@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
@@ -47,7 +47,7 @@ export class StarkWareGovernanceHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const logs = await provider.getLogs(address, [
       [ABI.getEventTopic(EVENT_FRAGMENT)],

@@ -1,3 +1,526 @@
+Generated with discovered.json: 0xc79f0bd06090c0f22d8ea3a724da150f88c6de37
+
+# Diff at Mon, 14 Jul 2025 12:45:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21995398
+- current block number: 21995398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995398 (main branch discovery), not current.
+
+```diff
+    contract DACommittee (0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295) {
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 5.
+      address:
+-        "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
++        "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.6:
+-        "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
++        "eth:0xfF506616E8C53EE5e513b906AC00B5D76664C537"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.5:
+-        "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61"
++        "eth:0xB71FC111D7BA82D5955BaDdD7717f3467184FF61"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.4:
+-        "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17"
++        "eth:0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.3:
+-        "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E"
++        "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.2:
+-        "0x48AF849535DDFa560A0EB0FbDEf436688169B949"
++        "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.1:
+-        "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b"
++        "eth:0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b"
++++ description: Includes DAC members and threshold.
+      values.constructorArgs.0.0:
+-        "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1"
++        "eth:0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1"
+      implementationNames.0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295:
+-        "Committee"
+      implementationNames.eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295:
++        "Committee"
+    }
+```
+
+```diff
+    EOA  (0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1) {
+    +++ description: None
+      address:
+-        "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1"
++        "eth:0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1"
+    }
+```
+
+```diff
+    EOA  (0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b) {
+    +++ description: None
+      address:
+-        "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b"
++        "eth:0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b"
+    }
+```
+
+```diff
+    EOA  (0x296A19A4e87F5824DBE8DEd53415A4704538bB30) {
+    +++ description: None
+      address:
+-        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
++        "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+    }
+```
+
+```diff
+    EOA  (0x37AC4a9Bf184aa1130016525631f3Daec11f7b26) {
+    +++ description: None
+      address:
+-        "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
++        "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
+    }
+```
+
+```diff
+    EOA  (0x3d395f623D8954d71132F5caC10778CA275806e0) {
+    +++ description: None
+      address:
+-        "0x3d395f623D8954d71132F5caC10778CA275806e0"
++        "eth:0x3d395f623D8954d71132F5caC10778CA275806e0"
+    }
+```
+
+```diff
+    EOA  (0x48AF849535DDFa560A0EB0FbDEf436688169B949) {
+    +++ description: None
+      address:
+-        "0x48AF849535DDFa560A0EB0FbDEf436688169B949"
++        "eth:0x48AF849535DDFa560A0EB0FbDEf436688169B949"
+    }
+```
+
+```diff
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8) {
+    +++ description: Helper contract for registering limit orders from L1.
+      address:
+-        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8"
++        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8"
+      implementationNames.0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8:
+-        "OrderRegistry"
+      implementationNames.eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8:
++        "OrderRegistry"
+    }
+```
+
+```diff
+    EOA  (0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E) {
+    +++ description: None
+      address:
+-        "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E"
++        "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E"
+    }
+```
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      address:
+-        "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
++        "eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
++++ description: Permissioned to upgrade the proxy implementations and access all `onlyGovernance` restricted functions in the various implementation contracts.
++++ severity: HIGH
+      values.$admin:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.$implementation.0:
+-        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
++        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      values.$implementation.1:
+-        "0x62BCA4DB742A99c834e2c24b609656A70EA25379"
++        "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379"
+      values.$implementation.2:
+-        "0x8536850750956c2FEebeCAB786d82271a5467687"
++        "eth:0x8536850750956c2FEebeCAB786d82271a5467687"
+      values.$implementation.3:
+-        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
++        "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
+      values.$implementation.4:
+-        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
++        "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
+      values.$implementation.5:
+-        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
++        "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
+      values.$implementation.6:
+-        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
++        "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+      values.$pastUpgrades.0.2.0:
+-        "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
++        "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
+      values.$pastUpgrades.0.2.1:
+-        "0x61d3389Aa2d001c860859cC021153e40D557BF4b"
++        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.0.2.2:
+-        "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
++        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.0.2.3:
+-        "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
++        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.1.2.0:
+-        "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
++        "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
+      values.$pastUpgrades.1.2.1:
+-        "0x61d3389Aa2d001c860859cC021153e40D557BF4b"
++        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.1.2.2:
+-        "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
++        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.1.2.3:
+-        "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
++        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.2.2.0:
+-        "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
++        "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
+      values.$pastUpgrades.2.2.1:
+-        "0x61d3389Aa2d001c860859cC021153e40D557BF4b"
++        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.2.2.2:
+-        "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
++        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.2.2.3:
+-        "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
++        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.3.2.0:
+-        "0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
++        "eth:0x49401Ddc4E0A858B5B4cf3D6De38393B7fAC7378"
+      values.$pastUpgrades.3.2.1:
+-        "0x61d3389Aa2d001c860859cC021153e40D557BF4b"
++        "eth:0x61d3389Aa2d001c860859cC021153e40D557BF4b"
+      values.$pastUpgrades.3.2.2:
+-        "0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
++        "eth:0xA4E9524EfbA0CB6BD7474a48C14582dEb300469E"
+      values.$pastUpgrades.3.2.3:
+-        "0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
++        "eth:0xedB67D40161D9fa660DCFFE60f859B7381E4793a"
+      values.$pastUpgrades.4.2.0:
+-        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
++        "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
+      values.$pastUpgrades.4.2.1:
+-        "0xF65C115efd24102315Af53f84aD65aD240bc9D57"
++        "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57"
+      values.$pastUpgrades.4.2.2:
+-        "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
++        "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
+      values.$pastUpgrades.4.2.3:
+-        "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
++        "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
+      values.$pastUpgrades.4.2.4:
+-        "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
++        "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
+      values.$pastUpgrades.4.2.5:
+-        "0x2D542881E93491e765E5110c1e373FC2968E720A"
++        "eth:0x2D542881E93491e765E5110c1e373FC2968E720A"
+      values.$pastUpgrades.4.2.6:
+-        "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
++        "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+      values.$pastUpgrades.5.2.0:
+-        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
++        "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
+      values.$pastUpgrades.5.2.1:
+-        "0xF65C115efd24102315Af53f84aD65aD240bc9D57"
++        "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57"
+      values.$pastUpgrades.5.2.2:
+-        "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
++        "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
+      values.$pastUpgrades.5.2.3:
+-        "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
++        "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
+      values.$pastUpgrades.5.2.4:
+-        "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
++        "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
+      values.$pastUpgrades.5.2.5:
+-        "0x2D542881E93491e765E5110c1e373FC2968E720A"
++        "eth:0x2D542881E93491e765E5110c1e373FC2968E720A"
+      values.$pastUpgrades.5.2.6:
+-        "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
++        "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+      values.$pastUpgrades.6.2.0:
+-        "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
++        "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC"
+      values.$pastUpgrades.6.2.1:
+-        "0xF65C115efd24102315Af53f84aD65aD240bc9D57"
++        "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57"
+      values.$pastUpgrades.6.2.2:
+-        "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
++        "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E"
+      values.$pastUpgrades.6.2.3:
+-        "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
++        "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773"
+      values.$pastUpgrades.6.2.4:
+-        "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
++        "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A"
+      values.$pastUpgrades.6.2.5:
+-        "0x2D542881E93491e765E5110c1e373FC2968E720A"
++        "eth:0x2D542881E93491e765E5110c1e373FC2968E720A"
+      values.$pastUpgrades.6.2.6:
+-        "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
++        "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+      values.$pastUpgrades.7.2.0:
+-        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
++        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      values.$pastUpgrades.7.2.1:
+-        "0x62BCA4DB742A99c834e2c24b609656A70EA25379"
++        "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379"
+      values.$pastUpgrades.7.2.2:
+-        "0x8536850750956c2FEebeCAB786d82271a5467687"
++        "eth:0x8536850750956c2FEebeCAB786d82271a5467687"
+      values.$pastUpgrades.7.2.3:
+-        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
++        "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2"
+      values.$pastUpgrades.7.2.4:
+-        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
++        "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1"
+      values.$pastUpgrades.7.2.5:
+-        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
++        "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339"
+      values.$pastUpgrades.7.2.6:
+-        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
++        "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+      values.getRegisteredAvailabilityVerifiers.0:
+-        "0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
++        "eth:0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295"
+      values.getRegisteredVerifiers.0:
+-        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
++        "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
+      values.implementation:
+-        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
++        "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B"
+      values.operators.0:
+-        "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
++        "eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
+      values.orderRegistryAddress:
+-        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8"
++        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8"
+      values.tokenAdmins.0:
+-        "0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A"
++        "eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A"
+      values.tokenAdmins.1:
+-        "0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
++        "eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
+      implementationNames.0x5FDCCA53617f4d2b9134B29090C87D01058e27e9:
+-        "Proxy"
+      implementationNames.0x4EDD62189732e9fF476ABa880b48c29432A7AC9B:
+-        "StarkExchange"
+      implementationNames.0x62BCA4DB742A99c834e2c24b609656A70EA25379:
+-        "AllVerifiers"
+      implementationNames.0x8536850750956c2FEebeCAB786d82271a5467687:
+-        "TokensAndRamping"
+      implementationNames.0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2:
+-        "StarkExState"
+      implementationNames.0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1:
+-        "ForcedActions"
+      implementationNames.0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339:
+-        "OnchainVaults"
+      implementationNames.0xB3788a88F063B217227E27ae16Ba550db3132bE6:
+-        "ProxyUtils"
+      implementationNames.eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9:
++        "Proxy"
+      implementationNames.eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B:
++        "StarkExchange"
+      implementationNames.eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379:
++        "AllVerifiers"
+      implementationNames.eth:0x8536850750956c2FEebeCAB786d82271a5467687:
++        "TokensAndRamping"
+      implementationNames.eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2:
++        "StarkExState"
+      implementationNames.eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1:
++        "ForcedActions"
+      implementationNames.eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339:
++        "OnchainVaults"
+      implementationNames.eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6:
++        "ProxyUtils"
+    }
+```
+
+```diff
+    contract GpsFactRegistryAdapter (0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE) {
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+      address:
+-        "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
++        "eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE"
+      description:
+-        "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`)."
++        "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`)."
+      values.gpsContract:
+-        "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
++        "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      implementationNames.0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE:
+-        "GpsFactRegistryAdapter"
+      implementationNames.eth:0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE:
++        "GpsFactRegistryAdapter"
+    }
+```
+
+```diff
+    EOA  (0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e) {
+    +++ description: None
+      address:
+-        "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
++        "eth:0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
+    }
+```
+
+```diff
+    EOA  (0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b) {
+    +++ description: None
+      address:
+-        "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
++        "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
+    }
+```
+
+```diff
+    EOA  (0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17) {
+    +++ description: None
+      address:
+-        "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17"
++        "eth:0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17"
+    }
+```
+
+```diff
+    EOA  (0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB) {
+    +++ description: None
+      address:
+-        "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
++        "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+    }
+```
+
+```diff
+    EOA  (0xB71FC111D7BA82D5955BaDdD7717f3467184FF61) {
+    +++ description: None
+      address:
+-        "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61"
++        "eth:0xB71FC111D7BA82D5955BaDdD7717f3467184FF61"
+    }
+```
+
+```diff
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      address:
+-        "0xD2C37fC6fD89563187f3679304975655e448D192"
++        "eth:0xD2C37fC6fD89563187f3679304975655e448D192"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
++        "eth:0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
+      values.$members.1:
+-        "0x3d395f623D8954d71132F5caC10778CA275806e0"
++        "eth:0x3d395f623D8954d71132F5caC10778CA275806e0"
+      values.$members.2:
+-        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
++        "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba"
+      values.$members.3:
+-        "0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
++        "eth:0xA28A84676E3Cec39e6F1D06CD0EEF6cAAa2F7f7b"
+      values.$members.4:
+-        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
++        "eth:0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+      values.$members.5:
+-        "0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
++        "eth:0xb3538EDB1cD74AE43e0aD25eac6F03553657E3fB"
+      implementationNames.0xD2C37fC6fD89563187f3679304975655e448D192:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xD2C37fC6fD89563187f3679304975655e448D192:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xdb6c271060571A96A62E3947E373395C89f765Ba) {
+    +++ description: None
+      address:
+-        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
++        "eth:0xdb6c271060571A96A62E3947E373395C89f765Ba"
+    }
+```
+
+```diff
+    EOA  (0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A) {
+    +++ description: None
+      address:
+-        "0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A"
++        "eth:0xdc1bFbC2B8f01439eEea8e4659bbb452D0f9eE2A"
+    }
+```
+
+```diff
+    EOA  (0xeDb0219557ba13816f1dEb7fA54688362B05A5aE) {
+    +++ description: None
+      address:
+-        "0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
++        "eth:0xeDb0219557ba13816f1dEb7fA54688362B05A5aE"
+    }
+```
+
+```diff
+    EOA  (0xfF506616E8C53EE5e513b906AC00B5D76664C537) {
+    +++ description: None
+      address:
+-        "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
++        "eth:0xfF506616E8C53EE5e513b906AC00B5D76664C537"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DACommittee (0x16BA0f221664A5189cf2C1a7AF0d3AbFc70aA295)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 5.
+```
+
+```diff
++   Status: CREATED
+    contract OrderRegistry (0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
++   Status: CREATED
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract GpsFactRegistryAdapter (0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE)
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3485280386001712778192330279103973322645241679001461923469191557000342180556`).
+```
+
+```diff
++   Status: CREATED
+    contract IMXAdminMultisig (0xD2C37fC6fD89563187f3679304975655e448D192)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x33eb6a36c4dbf10bc805e17b9e732643f2b3ec89
 
 # Diff at Fri, 04 Jul 2025 12:19:04 GMT:

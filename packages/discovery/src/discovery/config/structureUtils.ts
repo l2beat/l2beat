@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { ConfigReader } from './ConfigReader'
 import { getDiscoveryPaths } from './getDiscoveryPaths'
@@ -7,8 +7,8 @@ import { type StructureConfig, StructureContract } from './StructureConfig'
 export function buildSharedModuleIndex(
   config: StructureConfig,
   configReader?: ConfigReader,
-): Set<EthereumAddress> {
-  const result = new Set<EthereumAddress>()
+): Set<ChainSpecificAddress> {
+  const result = new Set<ChainSpecificAddress>()
   configReader ??= new ConfigReader(getDiscoveryPaths().discovery)
 
   for (const sharedModule of config.sharedModules) {
@@ -21,7 +21,7 @@ export function buildSharedModuleIndex(
 }
 
 export type StructureContractOverrides = StructureContract & {
-  address: EthereumAddress
+  address: ChainSpecificAddress
 }
 
 export type StructureContractConfig = StructureContractOverrides & {
@@ -30,7 +30,7 @@ export type StructureContractConfig = StructureContractOverrides & {
 
 export function makeEntryStructureConfig(
   config: Pick<StructureConfig, 'overrides' | 'types'>,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): StructureContractConfig {
   const override =
     config.overrides?.[address.toString()] ?? StructureContract.parse({})

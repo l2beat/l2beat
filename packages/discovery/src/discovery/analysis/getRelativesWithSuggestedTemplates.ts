@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 
 import type { StructureContractField } from '../config/StructureConfig'
 import type { HandlerResult } from '../handlers/Handler'
@@ -8,7 +8,7 @@ import type { AddressesWithTemplates } from './AddressAnalyzer'
 export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],
   ignoredFields?: string[],
-  ignoredAddresses?: EthereumAddress[],
+  ignoredAddresses?: ChainSpecificAddress[],
   fields?: { [field: string]: StructureContractField },
 ): AddressesWithTemplates {
   const result: AddressesWithTemplates = {}

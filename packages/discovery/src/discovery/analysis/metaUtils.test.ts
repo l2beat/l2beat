@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ContractValue } from '../output/types'
 import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
@@ -11,7 +11,7 @@ describe('metaUtils', () => {
       const description =
         'Contract with address {{ $.address }} and value {{ someValue }}'
       const analysis = generateFakeAnalysis(
-        EthereumAddress.from('0x1234567890123456789012345678901234567890'),
+        ChainSpecificAddress('eth:0x1234567890123456789012345678901234567890'),
         undefined,
         undefined,
         {
@@ -22,14 +22,14 @@ describe('metaUtils', () => {
       const result = interpolateString(description, analysis)
 
       expect(result).toEqual(
-        'Contract with address 0x1234567890123456789012345678901234567890 and value 42',
+        'Contract with address eth:0x1234567890123456789012345678901234567890 and value 42',
       )
     })
 
     it('should throw an error if a variable is not found in the analysis', () => {
       const description = 'Contract with missing {{ missingValue }}'
       const analysis = generateFakeAnalysis(
-        EthereumAddress.from('0x1234567890123456789012345678901234567890'),
+        ChainSpecificAddress('eth:0x1234567890123456789012345678901234567890'),
       )
 
       expect(() => interpolateString(description, analysis)).toThrow(
@@ -40,7 +40,7 @@ describe('metaUtils', () => {
 })
 
 const generateFakeAnalysis = (
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   extendedTemplate?: ExtendedTemplate,
   errors?: Record<string, string>,
   values?: Record<string, ContractValue | undefined>,

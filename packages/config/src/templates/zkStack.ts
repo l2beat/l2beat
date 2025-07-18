@@ -2,6 +2,7 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -98,6 +99,7 @@ export interface ZkStackConfigCommon {
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
+  archivedAt?: UnixTime
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -245,6 +247,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
+    archivedAt: templateVars.archivedAt,
     badges: mergeBadges(
       [
         BADGES.Stack.ZKStack,
@@ -595,10 +598,9 @@ function getDaTracking(
     const validatorTimelock =
       templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
-    const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      'validatorsVTL',
-    )
+    const validatorsVTL = templateVars.discovery.getContractValue<
+      ChainSpecificAddress[]
+    >('ValidatorTimelock', 'validatorsVTL')
 
     const inboxDeploymentBlockNumber =
       templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
@@ -609,7 +611,7 @@ function getDaTracking(
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
         inbox: validatorTimelock,
-        sequencers: validatorsVTL,
+        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
       },
     ]
   }

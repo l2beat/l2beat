@@ -7,6 +7,7 @@ import type {
 } from '@l2beat/shared'
 import type {
   Bytes,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
@@ -47,38 +48,38 @@ export interface IProvider {
     fn: (providers: RawProviders, logger: Logger) => Promise<T>,
   ): Promise<T>
 
-  call(address: EthereumAddress, data: Bytes): Promise<Bytes>
-  callUnbatched(address: EthereumAddress, data: Bytes): Promise<Bytes>
+  call(address: ChainSpecificAddress, data: Bytes): Promise<Bytes>
+  callUnbatched(address: ChainSpecificAddress, data: Bytes): Promise<Bytes>
   callMethod<T>(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     abi: string | utils.FunctionFragment,
     args: unknown[],
   ): Promise<T | undefined>
   callMethodUnbatched<T>(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     abi: string | utils.FunctionFragment,
     args: unknown[],
   ): Promise<T | undefined>
 
   getStorage(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     slot: number | bigint | Bytes,
   ): Promise<Bytes>
   getStorageAsAddress(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     slot: number | bigint | Bytes,
-  ): Promise<EthereumAddress>
+  ): Promise<ChainSpecificAddress>
   getStorageAsBigint(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     slot: number | bigint | Bytes,
   ): Promise<bigint>
 
   getLogs(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     topics: (string | string[] | null)[],
   ): Promise<providers.Log[]>
   getEvents(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     abi: string,
     args: unknown[],
     // biome-ignore lint/suspicious/noExplicitAny: TODO: LogDescription
@@ -90,10 +91,10 @@ export interface IProvider {
   ): Promise<providers.TransactionResponse | undefined>
   getDebugTrace(transactionHash: Hash256): Promise<DebugTransactionCallResponse>
 
-  getBytecode(address: EthereumAddress): Promise<Bytes>
-  getSource(address: EthereumAddress): Promise<ContractSource>
+  getBytecode(address: ChainSpecificAddress): Promise<Bytes>
+  getSource(address: ChainSpecificAddress): Promise<ContractSource>
   getDeployment(
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<ContractDeployment | undefined>
 
   getBlobs(txHash: string): Promise<BlobsInBlock>

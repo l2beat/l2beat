@@ -2,17 +2,17 @@
   "name": "silicon",
   "chain": "ethereum",
   "blockNumber": 22397534,
-  "configHash": "0x19b16d9bef3c2c13bed81ddedcdc596f9f0a93277c9c69fbf1efbc96c03828e0",
+  "configHash": "0xdc6f7c3e5f3921f2c7a29cd60fb40000a6246a85d97f710db4bd18dabc3a6ed4",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
-      "address": "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0",
+      "address": "eth:0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Verifier",
-      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "address": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
       "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
@@ -24,17 +24,17 @@
       "sinceBlock": 19505052,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
+        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb",
+      "address": "eth:0x113958b2E9FFDECC74EEDb206A12b5f1168164fb",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
+      "address": "eth:0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -48,7 +48,7 @@
     },
     {
       "name": "PolygonDataCommittee",
-      "address": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+      "address": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
       "type": "Contract",
       "template": "polygon-cdk/PolygonDataCommittee",
       "sourceHashes": [
@@ -60,13 +60,13 @@
       "sinceTimestamp": 1724259359,
       "sinceBlock": 20578326,
       "values": {
-        "$admin": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
-        "$implementation": "0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608",
+        "$admin": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
+        "$implementation": "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608",
         "$pastUpgrades": [
           [
             "2024-08-21T16:55:59.000Z",
             "0xee62b099c28e601917f60c0abff8441d48a2e7aee41711ff89a9ae0cc2fc647c",
-            ["0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608"]
+            ["eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608"]
           ]
         ],
         "$upgradeCount": 1,
@@ -76,29 +76,29 @@
         "members": [
           {
             "url": "http://silicon-mainnet-da-3.nodeinfra.com:8444",
-            "addr": "0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
+            "addr": "eth:0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0"
           },
           {
             "url": "http://da1.silicon.network:8444",
-            "addr": "0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
+            "addr": "eth:0x113958b2E9FFDECC74EEDb206A12b5f1168164fb"
           },
           {
             "url": "http://da2.silicon.network:8444",
-            "addr": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
+            "addr": "eth:0x88eb99475d70cCdB891171344c7Ee90688Fa134c"
           }
         ],
-        "owner": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+        "owner": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
         "requiredAmountOfSignatures": 2
       },
       "implementationNames": {
-        "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": "TransparentUpgradeableProxy",
-        "0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": "PolygonDataCommittee"
+        "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": "TransparentUpgradeableProxy",
+        "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": "PolygonDataCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
+      "address": "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -116,15 +116,15 @@
       "sinceBlock": 20578325,
       "values": {
         "$immutable": true,
-        "owner": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
+        "owner": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7"
       },
       "implementationNames": {
-        "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": "ProxyAdmin"
+        "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": "ProxyAdmin"
       }
     },
     {
       "name": "Validium",
-      "address": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+      "address": "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
       "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -137,31 +137,31 @@
       "sinceTimestamp": 1724183531,
       "sinceBlock": 20572039,
       "values": {
-        "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
+        "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "$implementation": "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F",
         "$pastUpgrades": [
           [
             "2024-08-20T19:52:11.000Z",
             "0xc47c5c6b0ea1740437487c101b78895a761501a35bfa97a77d79e803151ccf41",
-            ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
+            ["eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"]
           ],
           [
             "2025-04-29T13:09:35.000Z",
             "0xdadc987a1a0f2da5a24bcf9c6958c3e4bbe015686cfd2f954ba4f3ee4884dc07",
-            ["0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
+            ["eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"]
           ]
         ],
         "$upgradeCount": 2,
-        "admin": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "admin": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-        "forceBatchAddress": "0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
+        "dataAvailabilityProtocol": "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+        "forceBatchAddress": "eth:0x121EA966b6AA6A361CD4c0b01cb39C6dc65e1b71",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0x0000000000000000000000000000000000000000",
+        "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
         "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
         "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
@@ -175,14 +175,14 @@
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "silicon-zk",
-        "pendingAdmin": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "pendingAdmin": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
+        "trustedSequencer": "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
         "trustedSequencerURL": "https://rpc.silicon.network"
       },
       "fieldMeta": {
@@ -192,13 +192,13 @@
         }
       },
       "implementationNames": {
-        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "PolygonTransparentProxy",
-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
+        "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": "PolygonTransparentProxy",
+        "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": "PolygonValidiumEtrog"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
+      "address": "eth:0x47ed9538faA1522be7abD8a8BCAEc8d9C04Ed60D",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -210,12 +210,12 @@
       ]
     },
     {
-      "address": "0x88eb99475d70cCdB891171344c7Ee90688Fa134c",
+      "address": "eth:0x88eb99475d70cCdB891171344c7Ee90688Fa134c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
+      "address": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -251,16 +251,16 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
+    "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
+    "eth:0x3F74698A4ADb075c0501DF739745ACA55Ae543a1": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -271,7 +271,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
+    "eth:0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -281,7 +281,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
+    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -403,7 +403,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
+    "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",
@@ -434,5 +434,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x8b6d3de5a5761c14a4bc87999b85440880cf3d7474cc0208eccea8726a33f96d"
+  "permissionsConfigHash": "0xd7a5d1a062c689b2116c0e4ba991ca153a438718710e36d74172fbd7ca91dc8e"
 }

@@ -5,7 +5,7 @@ import type {
   ReferenceLink,
 } from '@l2beat/config'
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { assert } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
@@ -113,7 +113,7 @@ function makeTechnologyContract(
 
   const mainContractBecameVerified = projectChangeReport?.[
     item.chain
-  ]?.becameVerified.includes(item.address)
+  ]?.becameVerified.includes(ChainSpecificAddress.address(item.address))
 
   const getAddress = (opts: { address: EthereumAddress; name?: string }) => {
     const name =
@@ -130,7 +130,9 @@ function makeTechnologyContract(
     }
   }
 
-  const addresses = [getAddress({ address: item.address })]
+  const addresses = [
+    getAddress({ address: ChainSpecificAddress.address(item.address) }),
+  ]
 
   const implementations = item.upgradeability?.implementations ?? []
   for (const [i, implementation] of implementations.entries()) {
@@ -142,7 +144,7 @@ function makeTechnologyContract(
           implementations.length > 1
             ? `Implementation #${i + 1}${upgradeableText}`
             : `Implementation${upgradeableText}`,
-        address: implementation,
+        address: ChainSpecificAddress.address(implementation),
       }),
     )
   }
@@ -153,7 +155,7 @@ function makeTechnologyContract(
     admins.push(
       getAddress({
         name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
-        address: admin,
+        address: ChainSpecificAddress.address(admin),
       }),
     )
   }
@@ -174,7 +176,7 @@ function makeTechnologyContract(
   }
 
   const tokens = projectParams.contracts?.escrows?.find(
-    (x) => x.address === item.address,
+    (x) => x.address === ChainSpecificAddress.address(item.address),
   )?.tokens
   // if contract is an escrow we already tweak it's name so we don't need to add this
   if (tokens && !isEscrow) {
@@ -204,7 +206,11 @@ function makeTechnologyContract(
   const usedInProjects = uniqBy(
     [item.address, ...(item.upgradeability?.implementations ?? [])].flatMap(
       (address) =>
-        contractUtils.getUsedIn(projectParams.id, item.chain, address),
+        contractUtils.getUsedIn(
+          projectParams.id,
+          item.chain,
+          ChainSpecificAddress.address(address),
+        ),
     ),
     'id',
   )
@@ -235,7 +241,7 @@ function escrowToProjectContract(escrow: ProjectEscrow): ProjectContract {
   return {
     ...escrow.contract,
     name,
-    address: escrow.address,
+    address: ChainSpecificAddress.fromLong(escrow.chain, escrow.address),
   }
 }
 

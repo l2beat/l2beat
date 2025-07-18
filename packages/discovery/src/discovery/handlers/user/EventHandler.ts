@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress, unique } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress, unique } from '@l2beat/shared-pure'
 import { type Parser, type Validator, v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
@@ -9,6 +9,7 @@ import { validateBlip } from '../../../blip/validateBlip'
 import type { ContractValue } from '../../output/types'
 import { orderLogs } from '../../provider/BatchingAndCachingProvider'
 import type { IProvider } from '../../provider/IProvider'
+import { prefixAddresses } from '../../utils/prefixAddresses'
 import type { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
@@ -110,7 +111,7 @@ export class EventHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const logs = await fetchLogs(provider, address, this.topic0s)
 
@@ -133,10 +134,10 @@ export class EventHandler implements Handler {
       value = {}
       for (const key in grouped) {
         // biome-ignore lint/style/noNonNullAssertion: we know it's there
-        value[key] = this.processLogs(grouped[key]!)
+        value[key] = this.processLogs(provider.chain, grouped[key]!)
       }
     } else {
-      value = this.processLogs(logRows)
+      value = this.processLogs(provider.chain, logRows)
     }
 
     return {
@@ -146,18 +147,22 @@ export class EventHandler implements Handler {
     }
   }
 
-  processLogs(logRows: LogRow[]): ContractValue | ContractValue[] | undefined {
+  processLogs(
+    longChain: string,
+    logRows: LogRow[],
+  ): ContractValue | ContractValue[] | undefined {
     const select = ensureArray(this.definition.select ?? [])
 
     const extractArray = this.definition.set !== undefined
     if (this.definition.set !== undefined) {
       const setActions = ensureArray(this.definition.set)
-      logRows = this.executeSets(logRows, setActions)
+      logRows = this.executeSets(longChain, logRows, setActions)
     } else if (this.definition.add !== undefined) {
       const addActions = ensureArray(this.definition.add)
       const removeActions = ensureArray(this.definition.remove ?? [])
 
       logRows = this.executeAddRemove(
+        longChain,
         logRows,
         addActions,
         removeActions,
@@ -179,11 +184,17 @@ export class EventHandler implements Handler {
     return extractArray ? values[0] : values
   }
 
-  executeSets(logs: LogRow[], setActions: EventHandlerAction[]): LogRow[] {
+  executeSets(
+    longChain: string,
+    logs: LogRow[],
+    setActions: EventHandlerAction[],
+  ): LogRow[] {
     let result: LogRow | undefined = undefined
 
     for (const entry of logs) {
-      const keep = setActions.some((action) => evaluateAction(entry, action))
+      const keep = setActions.some((action) =>
+        evaluateAction(longChain, entry, action),
+      )
       if (!keep) {
         continue
       }
@@ -195,6 +206,7 @@ export class EventHandler implements Handler {
   }
 
   executeAddRemove(
+    longChain: string,
     logs: LogRow[],
     addActions: EventHandlerAction[],
     removeActions: EventHandlerAction[],
@@ -203,9 +215,11 @@ export class EventHandler implements Handler {
     const result: Map<string, LogRow> = new Map()
 
     for (const entry of logs) {
-      const add = addActions.some((action) => evaluateAction(entry, action))
+      const add = addActions.some((action) =>
+        evaluateAction(longChain, entry, action),
+      )
       const remove = removeActions.some((action) =>
-        evaluateAction(entry, action),
+        evaluateAction(longChain, entry, action),
       )
 
       assert(
@@ -235,7 +249,7 @@ export class EventHandler implements Handler {
 
 async function fetchLogs(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   topic0s: string[],
 ): Promise<providers.Log[]> {
   const logs = await Promise.all(
@@ -245,12 +259,19 @@ async function fetchLogs(
   return logs.flat().sort(orderLogs)
 }
 
-function evaluateAction(log: LogRow, { event, where }: EventHandlerAction) {
+function evaluateAction(
+  longChain: string,
+  log: LogRow,
+  { event, where }: EventHandlerAction,
+) {
   const eventMatch = ensureArray(event).some(
     (e) => getEventName(e) === log.log.name,
   )
 
-  return eventMatch && executeBlip(log.value, where ?? true)
+  return (
+    eventMatch &&
+    executeBlip(prefixAddresses(longChain, log.value), where ?? true)
+  )
 }
 
 function extractKeys(

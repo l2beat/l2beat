@@ -11,6 +11,7 @@ import {
 import {
   ChainConverter,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
@@ -743,13 +744,14 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
+      const chain = 'ethereum'
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         // different config hash
         new ConfigRegistry({
           name: PROJECT_A,
-          chain: 'ethereum',
-          initialAddresses: [EthereumAddress.ZERO],
+          chain,
+          initialAddresses: [ChainSpecificAddress.ZERO(chain)],
         }),
       )
 
@@ -1069,7 +1071,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address,
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

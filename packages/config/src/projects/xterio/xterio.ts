@@ -1,4 +1,9 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -16,11 +21,11 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('xterio')
 const genesisTimestamp = UnixTime(1716537433)
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'sequencerInbox',
 )
-const sequencerAddress = discovery.getContractValue<EthereumAddress>(
+const sequencerAddress = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'batcherHash',
 )
@@ -98,7 +103,7 @@ export const xterio: ScalingProject = opStackL2({
       query: {
         formula: 'transfer',
         from: EthereumAddress('0x7d6251D49A102a330CfB46d132982781620700Cb'), // old sequencer
-        to: sequencerInbox,
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: genesisTimestamp,
         untilTimestamp: UnixTime(1743862115),
       },
@@ -110,8 +115,8 @@ export const xterio: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: sequencerAddress,
-        to: sequencerInbox,
+        from: ChainSpecificAddress.address(sequencerAddress),
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: UnixTime(1743862115),
       },
     },
@@ -122,7 +127,7 @@ export const xterio: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: l2OutputOracle.address,
+        address: ChainSpecificAddress.address(l2OutputOracle.address),
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',

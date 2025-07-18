@@ -2,16 +2,16 @@
   "name": "layer2finance",
   "chain": "ethereum",
   "blockNumber": 21322782,
-  "configHash": "0x1dadc37d64fb7e57dadb7a1ae1069d85a7936b4fae8e3d7979287fb16b0ce803",
+  "configHash": "0x917062719ba6db78d48351698083ec47eef22077e50bc504c203b61556966c07",
   "entries": [
     {
-      "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+      "address": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "TransitionDisputer",
-      "address": "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f",
+      "address": "eth:0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f",
       "type": "Contract",
       "sourceHashes": [
         "0x6ef430d51894cfb8e777520f64a1df14975bcd0d02c642bc3a7230a0c9407a33"
@@ -24,17 +24,17 @@
         "INIT_TRANSITION_STATE_ROOT": "0xcf277fb80a82478460e8988570b718f1e083ceb76f7e271a1a1497e5975f53ae"
       },
       "implementationNames": {
-        "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": "TransitionDisputer"
+        "eth:0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": "TransitionDisputer"
       }
     },
     {
-      "address": "0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
+      "address": "eth:0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "RollupChain",
-      "address": "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
+      "address": "eth:0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05",
       "type": "Contract",
       "sourceHashes": [
         "0x4e59983723a2311ff5ff300ba5aa1533dca94726b04932b57697741b294d47c3"
@@ -48,8 +48,8 @@
         "countExecuted": 1457,
         "getCurrentBlockId": 1457,
         "maxPriorityTxDelay": 60,
-        "operator": "0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
-        "owner": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
+        "operator": "eth:0x6c0aF0E2a174AAffE9F336C0Ae4D0e535735294F",
+        "owner": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
         "paused": false,
         "pendingBalanceSyncsCommitHead": 3810,
         "pendingBalanceSyncsExecuteHead": 3807,
@@ -59,12 +59,12 @@
         "pendingDepositsTail": 321
       },
       "implementationNames": {
-        "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": "RollupChain"
+        "eth:0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": "RollupChain"
       }
     },
     {
       "name": "Registry",
-      "address": "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8",
+      "address": "eth:0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8",
       "type": "Contract",
       "sourceHashes": [
         "0xebb65e547192b3206d06923231dcd1eed98be7f1c64c6ded8b96f7cc248f5708"
@@ -74,20 +74,20 @@
       "sinceBlock": 12283733,
       "values": {
         "$immutable": true,
-        "owner": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+        "owner": "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
       },
       "implementationNames": {
-        "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": "Registry"
+        "eth:0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": "Registry"
       }
     }
   ],
   "abis": {
-    "0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": [
+    "eth:0x5D3c0F4cA5EE99f8E8F59Ff9A5fAb04F6a7e007f": [
       "constructor(address _transitionEvaluator)",
       "function INIT_TRANSITION_STATE_ROOT() view returns (bytes32)",
       "function disputeTransition(tuple(bytes transition, uint256 blockId, uint32 index, bytes32[] siblings) _prevTransitionProof, tuple(bytes transition, uint256 blockId, uint32 index, bytes32[] siblings) _invalidTransitionProof, tuple(bytes32 stateRoot, tuple(address account, uint32 accountId, uint256[] idleAssets, uint256[] stTokens, uint64 timestamp) value, uint32 index, bytes32[] siblings) _accountProof, tuple(bytes32 stateRoot, tuple(uint32 assetId, uint256 assetBalance, uint256 stTokenSupply, uint256 pendingCommitAmount, uint256 pendingUncommitAmount) value, uint32 index, bytes32[] siblings) _strategyProof, tuple(bytes32 rootHash, bytes32 intentHash, uint128 blockTime, uint128 blockSize) _prevTransitionBlock, tuple(bytes32 rootHash, bytes32 intentHash, uint128 blockTime, uint128 blockSize) _invalidTransitionBlock, address _registry) returns (string)"
     ],
-    "0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": [
+    "eth:0xf86FD6735f88d5b6aa709B357AD5Be22CEDf1A05": [
       "constructor(uint256 _blockChallengePeriod, uint256 _maxPriorityTxDelay, address _transitionDisputerAddress, address _registryAddress, address _operator)",
       "event AssetDeposited(address account, uint32 assetId, uint256 amount, uint256 depositId)",
       "event AssetWithdrawn(address account, uint32 assetId, uint256 amount)",
@@ -140,7 +140,7 @@
       "function withdraw(address _account, address _asset)",
       "function withdrawETH(address _account, address _weth)"
     ],
-    "0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": [
+    "eth:0xFe81ab6930A30BdaE731fe7b6C6ABFbEAFc014a8": [
       "event AssetRegistered(address asset, uint32 assetId)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event StrategyRegistered(address strategy, uint32 strategyId)",
@@ -158,5 +158,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x1e5d871872fc4034d26fc97a064e33ec2f6083637e447d12f813218c5148cc23"
+  "permissionsConfigHash": "0x6bd18bc8429622d1522ab48e5387f39a315b0d74727ba2c2da80d81ef4e2fd15"
 }

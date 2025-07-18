@@ -1,7 +1,7 @@
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 
 export function AboutUsPage(props: AppLayoutProps) {

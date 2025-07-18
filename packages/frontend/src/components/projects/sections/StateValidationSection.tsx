@@ -32,7 +32,7 @@ export function StateValidationSection({
       <div className="flex flex-col gap-6">
         {stateValidation.description && (
           <>
-            <Markdown className="text-gray-850 leading-snug md:text-lg dark:text-gray-400">
+            <Markdown className="text-paragraph-15 md:text-paragraph-16">
               {stateValidation.description}
             </Markdown>
             <HorizontalSeparator />
@@ -60,7 +60,7 @@ function Category({ category }: CategoryProps) {
     <div>
       <span className="font-bold text-lg md:text-xl">{category.title}</span>
       {category.isIncomplete && <SectionIncompleteNote />}
-      <Markdown className="mt-2 text-gray-850 leading-snug md:text-lg dark:text-gray-400">
+      <Markdown className="mt-2 text-paragraph-15 md:text-paragraph-16">
         {category.description}
       </Markdown>
       {risks && <RiskList risks={risks} />}

@@ -1,3 +1,613 @@
+Generated with discovered.json: 0xe7e0aa86404a86ca4b592bedd640b11d1f0fe52a
+
+# Diff at Mon, 14 Jul 2025 12:44:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 19531527
+- current block number: 19531527
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531527 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1c0720B124e7251e881a0fbCfe259d085C59f205) {
+    +++ description: None
+      address:
+-        "0x1c0720B124e7251e881a0fbCfe259d085C59f205"
++        "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205"
+    }
+```
+
+```diff
+    EOA  (0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96) {
+    +++ description: None
+      address:
+-        "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
++        "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
+    }
+```
+
+```diff
+    EOA  (0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0) {
+    +++ description: None
+      address:
+-        "0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0"
++        "eth:0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0"
+    }
+```
+
+```diff
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA) {
+    +++ description: None
+      address:
+-        "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
++        "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
+      values.$admin:
+-        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
++        "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
+      values.$implementation:
+-        "0x797161BCC625155D2302251404ccB93c2632658e"
++        "eth:0x797161BCC625155D2302251404ccB93c2632658e"
+      values.$pastUpgrades.0.2.0:
+-        "0xB1A20D1c885fd775df97396397d6f8F07Abdd20D"
++        "eth:0xB1A20D1c885fd775df97396397d6f8F07Abdd20D"
+      values.$pastUpgrades.1.2.0:
+-        "0xFCe0502293dCacbFc2d663f7814b2771dEcfd576"
++        "eth:0xFCe0502293dCacbFc2d663f7814b2771dEcfd576"
+      values.$pastUpgrades.2.2.0:
+-        "0x51bFD427D06B2a5FC3588f9d023994A9f70e0Ce0"
++        "eth:0x51bFD427D06B2a5FC3588f9d023994A9f70e0Ce0"
+      values.$pastUpgrades.3.2.0:
+-        "0xc8550d85759BAbE6851235212563Fa2Ff04961BF"
++        "eth:0xc8550d85759BAbE6851235212563Fa2Ff04961BF"
+      values.$pastUpgrades.4.2.0:
+-        "0x24455aa55DED7728783c9474bE8eA2f5C935f8EB"
++        "eth:0x24455aa55DED7728783c9474bE8eA2f5C935f8EB"
+      values.$pastUpgrades.5.2.0:
+-        "0x797161BCC625155D2302251404ccB93c2632658e"
++        "eth:0x797161BCC625155D2302251404ccB93c2632658e"
+      values.callProxy:
+-        "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
++        "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
+      values.deBridgeTokenDeployer:
+-        "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
++        "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
+      values.feeContractUpdater:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.feeProxy:
+-        "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
++        "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
+      values.gap1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.signatureVerifier:
+-        "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
++        "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
+      values.weth:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.wethGate:
+-        "0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59"
++        "eth:0xFCf83648b8cDeF62e5d03319a6f1FCE16e4D6A59"
+      implementationNames.0x43dE2d77BF8027e25dBD179B491e8d64f38398aA:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x797161BCC625155D2302251404ccB93c2632658e:
+-        "DeBridgeGate"
+      implementationNames.eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x797161BCC625155D2302251404ccB93c2632658e:
++        "DeBridgeGate"
+    }
+```
+
+```diff
+    EOA  (0x4bC16662A2cE381E7bb54Dc577c05619C5E67526) {
+    +++ description: None
+      address:
+-        "0x4bC16662A2cE381E7bb54Dc577c05619C5E67526"
++        "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526"
+    }
+```
+
+```diff
+    EOA  (0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D) {
+    +++ description: None
+      address:
+-        "0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D"
++        "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D"
+    }
+```
+
+```diff
+    EOA  (0x573F5E2940789B378BA09cf7d3fD010C422a9ff5) {
+    +++ description: None
+      address:
+-        "0x573F5E2940789B378BA09cf7d3fD010C422a9ff5"
++        "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5"
+    }
+```
+
+```diff
+    EOA  (0x59CE95b8955F0E7Be128d5Af77161B36f6084214) {
+    +++ description: None
+      address:
+-        "0x59CE95b8955F0E7Be128d5Af77161B36f6084214"
++        "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214"
+    }
+```
+
+```diff
+    EOA  (0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426) {
+    +++ description: None
+      address:
+-        "0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426"
++        "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426"
+    }
+```
+
+```diff
+    contract Admin Multisig (0x6bec1faF33183e1Bc316984202eCc09d46AC92D5) {
+    +++ description: None
+      address:
+-        "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
++        "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5"
++        "eth:0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5"
+      values.$members.1:
+-        "0xC351f905d810Cb33c54fE771e1bE4ec5A5048c2D"
++        "eth:0xC351f905d810Cb33c54fE771e1bE4ec5A5048c2D"
+      values.$members.2:
+-        "0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C"
++        "eth:0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C"
+      values.$members.3:
+-        "0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1"
++        "eth:0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1"
+      values.$members.4:
+-        "0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7"
++        "eth:0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7"
+      values.$members.5:
+-        "0x6f572a24c5C009fC8C844Fab5352edf79F132FBD"
++        "eth:0x6f572a24c5C009fC8C844Fab5352edf79F132FBD"
+      values.$members.6:
+-        "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
++        "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
+      values.$members.7:
+-        "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
++        "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
+      implementationNames.0x6bec1faF33183e1Bc316984202eCc09d46AC92D5:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x6f572a24c5C009fC8C844Fab5352edf79F132FBD) {
+    +++ description: None
+      address:
+-        "0x6f572a24c5C009fC8C844Fab5352edf79F132FBD"
++        "eth:0x6f572a24c5C009fC8C844Fab5352edf79F132FBD"
+    }
+```
+
+```diff
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464) {
+    +++ description: None
+      address:
+-        "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
++        "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464"
+      values.$admin:
+-        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
++        "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
+      values.$implementation:
+-        "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"
++        "eth:0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"
+      values.$pastUpgrades.0.2.0:
+-        "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"
++        "eth:0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491"
+      values.debridgeAddress:
+-        "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
++        "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
+      values.deBridgeTokenAdmin:
+-        "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
++        "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+      values.implementation:
+-        "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
++        "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
+      values.tokenImplementation:
+-        "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
++        "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
+      implementationNames.0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491:
+-        "DeBridgeTokenDeployer"
+      implementationNames.eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491:
++        "DeBridgeTokenDeployer"
+    }
+```
+
+```diff
+    EOA  (0x83f81E7f9E284AAFFEDED797008663595f7342bF) {
+    +++ description: None
+      address:
+-        "0x83f81E7f9E284AAFFEDED797008663595f7342bF"
++        "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF"
+    }
+```
+
+```diff
+    EOA  (0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1) {
+    +++ description: None
+      address:
+-        "0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1"
++        "eth:0x874B1d14bF4FE455C9eCAcDf66b629e10664c6E1"
+    }
+```
+
+```diff
+    EOA  (0x874f46124C1DAaD4749B94f82eD142754826240E) {
+    +++ description: None
+      address:
+-        "0x874f46124C1DAaD4749B94f82eD142754826240E"
++        "eth:0x874f46124C1DAaD4749B94f82eD142754826240E"
+    }
+```
+
+```diff
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824) {
+    +++ description: None
+      address:
+-        "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
++        "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824"
+      values.$admin:
+-        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
++        "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
+      values.$implementation:
+-        "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"
++        "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"
+      values.$pastUpgrades.0.2.0:
+-        "0x4e446b6Cf4d127827c83Ca0c848Db0B43841c391"
++        "eth:0x4e446b6Cf4d127827c83Ca0c848Db0B43841c391"
+      values.$pastUpgrades.1.2.0:
+-        "0xd5317E82BFEFf70b4773f0fcab5e2ABFA3c7D63b"
++        "eth:0xd5317E82BFEFf70b4773f0fcab5e2ABFA3c7D63b"
+      values.$pastUpgrades.2.2.0:
+-        "0x752A9e96e8683400ae238270C97c1D0160861fEF"
++        "eth:0x752A9e96e8683400ae238270C97c1D0160861fEF"
+      values.$pastUpgrades.3.2.0:
+-        "0x0C4B79205F6Cc20c0E0201b61b99e77F3CE3B67A"
++        "eth:0x0C4B79205F6Cc20c0E0201b61b99e77F3CE3B67A"
+      values.$pastUpgrades.4.2.0:
+-        "0xe5a04b307B31Af07F4DfCaA840952Ff7d3845c7e"
++        "eth:0xe5a04b307B31Af07F4DfCaA840952Ff7d3845c7e"
+      values.$pastUpgrades.5.2.0:
+-        "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"
++        "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8"
+      implementationNames.0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8:
+-        "CallProxy"
+      implementationNames.eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8:
++        "CallProxy"
+    }
+```
+
+```diff
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c) {
+    +++ description: None
+      address:
+-        "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
++        "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c"
+      values.$admin:
+-        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
++        "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
+      values.$implementation:
+-        "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"
++        "eth:0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"
+      values.$pastUpgrades.0.2.0:
+-        "0x2a3e72eD893b5958690e16c3BBe1BD92137b6250"
++        "eth:0x2a3e72eD893b5958690e16c3BBe1BD92137b6250"
+      values.$pastUpgrades.1.2.0:
+-        "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"
++        "eth:0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4"
+      values.debridgeAddress:
+-        "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
++        "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
+      values.oracles.0:
+-        "0x4bC16662A2cE381E7bb54Dc577c05619C5E67526"
++        "eth:0x4bC16662A2cE381E7bb54Dc577c05619C5E67526"
+      values.oracles.1:
+-        "0x1c0720B124e7251e881a0fbCfe259d085C59f205"
++        "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205"
+      values.oracles.2:
+-        "0x573F5E2940789B378BA09cf7d3fD010C422a9ff5"
++        "eth:0x573F5E2940789B378BA09cf7d3fD010C422a9ff5"
+      values.oracles.3:
+-        "0x59CE95b8955F0E7Be128d5Af77161B36f6084214"
++        "eth:0x59CE95b8955F0E7Be128d5Af77161B36f6084214"
+      values.oracles.4:
+-        "0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC"
++        "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC"
+      values.oracles.5:
+-        "0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8"
++        "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8"
+      values.oracles.6:
+-        "0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426"
++        "eth:0x6436BBcA322b8cD0c56d8b9aD7837b13960dA426"
+      values.oracles.7:
+-        "0x874f46124C1DAaD4749B94f82eD142754826240E"
++        "eth:0x874f46124C1DAaD4749B94f82eD142754826240E"
+      values.oracles.8:
+-        "0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0"
++        "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0"
+      values.oracles.9:
+-        "0x83f81E7f9E284AAFFEDED797008663595f7342bF"
++        "eth:0x83f81E7f9E284AAFFEDED797008663595f7342bF"
+      values.oracles.10:
+-        "0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D"
++        "eth:0x4CA2191cDE585d65EB6AFC09D23D60b8A0AB677D"
+      values.oracles.11:
+-        "0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"
++        "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"
+      implementationNames.0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4:
+-        "SignatureVerifier"
+      implementationNames.eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4:
++        "SignatureVerifier"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xa0D6062Be29710c666aE850395Ac1A2AeCd14885) {
+    +++ description: None
+      address:
+-        "0xa0D6062Be29710c666aE850395Ac1A2AeCd14885"
++        "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0"
++        "eth:0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0"
+      values.$members.1:
+-        "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
++        "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
+      values.$members.2:
+-        "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
++        "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
+      implementationNames.0xa0D6062Be29710c666aE850395Ac1A2AeCd14885:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5) {
+    +++ description: None
+      address:
+-        "0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5"
++        "eth:0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5"
+    }
+```
+
+```diff
+    EOA  (0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC) {
+    +++ description: None
+      address:
+-        "0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC"
++        "eth:0xbCF516826eD7F3b0E487C7ca6A87b3b4EccDD4DC"
+    }
+```
+
+```diff
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      address:
+-        "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
++        "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636"
+      values.$admin:
+-        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
++        "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
+      values.$implementation:
+-        "0x37a52ddb753c924f8C914de65ef00b5210Caa83C"
++        "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C"
+      values.$pastUpgrades.0.2.0:
+-        "0x27406EbF0b76923d93b4C6c6224bCaB7fFf11f87"
++        "eth:0x27406EbF0b76923d93b4C6c6224bCaB7fFf11f87"
+      values.$pastUpgrades.1.2.0:
+-        "0x37a52ddb753c924f8C914de65ef00b5210Caa83C"
++        "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C"
+      values.debridgeGate:
+-        "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
++        "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA"
+      values.treasury:
+-        "0xa0D6062Be29710c666aE850395Ac1A2AeCd14885"
++        "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885"
+      implementationNames.0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x37a52ddb753c924f8C914de65ef00b5210Caa83C:
+-        "SimpleFeeProxy"
+      implementationNames.eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C:
++        "SimpleFeeProxy"
+    }
+```
+
+```diff
+    EOA  (0xC351f905d810Cb33c54fE771e1bE4ec5A5048c2D) {
+    +++ description: None
+      address:
+-        "0xC351f905d810Cb33c54fE771e1bE4ec5A5048c2D"
++        "eth:0xC351f905d810Cb33c54fE771e1bE4ec5A5048c2D"
+    }
+```
+
+```diff
+    contract DeBridgeToken (0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B) {
+    +++ description: None
+      address:
+-        "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
++        "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B"
+      implementationNames.0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B:
+-        "DeBridgeToken"
+      implementationNames.eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B:
++        "DeBridgeToken"
+    }
+```
+
+```diff
+    EOA  (0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C) {
+    +++ description: None
+      address:
+-        "0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C"
++        "eth:0xD4Aa80C7a35B2C996Ef3F83baf91D5721c86dA2C"
+    }
+```
+
+```diff
+    EOA  (0xd725E456D5beD8275E297C4Dd11135e3C5cDe544) {
+    +++ description: None
+      address:
+-        "0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
++        "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544"
+    }
+```
+
+```diff
+    EOA  (0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0) {
+    +++ description: None
+      address:
+-        "0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0"
++        "eth:0xDD523FD4DebcF0dB6f0B2c2D30D075CaaeE023e0"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe) {
+    +++ description: None
+      address:
+-        "0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
++        "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe"
+      values.owner:
+-        "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
++        "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
+      implementationNames.0xE4427af3555CD9303D728C491364FAdFDD7494Fe:
+-        "ProxyAdmin"
+      implementationNames.eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7) {
+    +++ description: None
+      address:
+-        "0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7"
++        "eth:0xE9666D80e5617bA1470E2cA09F2D9B0C8CCd56B7"
+    }
+```
+
+```diff
+    EOA  (0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54) {
+    +++ description: None
+      address:
+-        "0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"
++        "eth:0xebec9bc53f9C65f69DB8591B9f240BbCDb563c54"
+    }
+```
+
+```diff
+    EOA  (0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8) {
+    +++ description: None
+      address:
+-        "0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8"
++        "eth:0xf27Af436A6F2d9C64B4CA40a483eC46acDc33fe8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Admin Multisig (0x6bec1faF33183e1Bc316984202eCc09d46AC92D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xa0D6062Be29710c666aE850395Ac1A2AeCd14885)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeToken (0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2aec27aa64c5336f9f1e1f2957396d766dc2b892
 
 # Diff at Fri, 04 Jul 2025 12:18:57 GMT:

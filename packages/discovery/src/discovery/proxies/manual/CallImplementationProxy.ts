@@ -1,10 +1,10 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
 import type { ProxyDetails } from '../types'
 
 export async function getCallImplementationProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const implementation = await provider.callMethod<EthereumAddress>(
     address,
@@ -17,7 +17,10 @@ export async function getCallImplementationProxy(
   return {
     type: 'call implementation proxy',
     values: {
-      $implementation: implementation.toString(),
+      $implementation: ChainSpecificAddress.fromLong(
+        provider.chain,
+        implementation,
+      ).toString(),
     },
   }
 }

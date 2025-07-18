@@ -1,8 +1,10 @@
 import {
   assert,
+  ChainSpecificAddress,
   formatAsciiBorder,
   Hash160,
   type json,
+  unique,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { createHash } from 'crypto'
@@ -35,16 +37,9 @@ export class ConfigReader {
     const rawConfig = this.readRawConfig(name)
 
     const rawConfigForChain = {
+      ...rawConfig,
       chain,
-      name,
       ...(rawConfig.archived ? { archived: true } : {}),
-      modelCrossChainPermissions: rawConfig.modelCrossChainPermissions,
-      ...merge(
-        // biome-ignore lint/suspicious/noExplicitAny: it's there
-        (rawConfig.chains as any)['all'],
-        // biome-ignore lint/suspicious/noExplicitAny: it's there
-        (rawConfig.chains as any)[chain],
-      ),
     }
 
     const config = new ConfigRegistry(rawConfigForChain)
@@ -118,20 +113,30 @@ export class ConfigReader {
     return this.enumerateProjectDirectories()
       .map((projectPath) => {
         const projectName = path.basename(projectPath)
-        try {
-          const parsed = readJsonc(path.join(projectPath, 'config.jsonc'))
-          assert(
-            'chains' in parsed &&
-              typeof parsed.chains === 'object' &&
-              parsed.chains !== null,
-          )
-          return {
-            project: projectName,
-            chains: Object.keys(parsed.chains),
-          }
-        } catch {
-          return { project: projectName, chains: [] }
+        const configPath = path.join(projectPath, 'config.jsonc')
+
+        if (!existsSync(configPath)) {
+          return { project: projectName, chains: [] as string[] }
         }
+
+        const config = readJsonc(configPath)
+
+        if (
+          'initialAddresses' in config &&
+          Array.isArray(config.initialAddresses) &&
+          config.initialAddresses.every((x) => typeof x === 'string')
+        ) {
+          const addresses = config.initialAddresses.map((a) =>
+            ChainSpecificAddress(a),
+          )
+          const chains = addresses.map((a) =>
+            ChainSpecificAddress.longChain(a).toString(),
+          )
+          const uniqueChains = unique(chains)
+          return { project: projectName, chains: uniqueChains }
+        }
+
+        return { project: projectName, chains: [] as string[] }
       })
       .filter((x) => x.chains.length > 0)
   }
@@ -180,18 +185,14 @@ export class ConfigReader {
       return []
     }
 
-    const parsed = readJsonc(path.join(projectPath, 'config.jsonc'))
-    assert(
-      'chains' in parsed &&
-        typeof parsed.chains === 'object' &&
-        parsed.chains !== null,
-    )
-    const chains = Object.keys(parsed.chains)
-    const result = chains.filter((chain) =>
-      existsSync(path.join(projectPath, chain, 'discovered.json')),
-    )
+    const chains = readdirSync(projectPath, { withFileTypes: true })
+      .filter((x) => x.isDirectory())
+      .map((x) => x.name)
+      .filter((chain) =>
+        existsSync(path.join(projectPath, chain, 'discovered.json')),
+      )
 
-    return result
+    return chains
   }
 
   readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {

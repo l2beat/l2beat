@@ -2,21 +2,21 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "blockNumber": 22882451,
-  "configHash": "0x40b5f6adb80d520e8c33c2372caffc14b74d35691fcb449b9dbc7ec4bfeb37c1",
+  "configHash": "0x175cd7afbe402cf1884164e66cc10859fcb594c2d0ee8b94acff154f516eed79",
   "entries": [
     {
-      "address": "0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
+      "address": "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2",
+      "address": "eth:0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "WTIA_OFTAdapter",
-      "address": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
+      "address": "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
       "type": "Contract",
       "sourceHashes": [
         "0xc645ae3293eef96881a8a34ad011853701ce0fc0f84f1e16be21348243dc23cd"
@@ -27,71 +27,71 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
+        "composeMsgSender": "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x1964f3Eaf7d8fca7E559468a384453d2d8490744",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x1964f3Eaf7d8fca7E559468a384453d2d8490744",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2": "WTIA_OFTAdapter"
+        "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2": "WTIA_OFTAdapter"
       }
     },
     {
-      "address": "0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
+      "address": "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x1082E92A0b92e15212fD5879C1dd672AB548302c",
+      "address": "eth:0x1082E92A0b92e15212fD5879C1dd672AB548302c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LayerZero Executor",
-      "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
+      "address": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "type": "Contract",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1706308043,
       "sinceBlock": 19093746,
       "values": {
-        "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-        "$implementation": "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805",
+        "$admin": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+        "$implementation": "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805",
         "$pastUpgrades": [
           [
             "2024-01-26T22:27:23.000Z",
             "0x5df683475486093be4a4f92d6f7c47548d3bf38e1a39e25bf0028353f83d4a2b",
-            ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
+            ["eth:0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"]
           ],
           [
             "2024-07-04T23:54:35.000Z",
             "0x22c22ee402c4be83ef7c851992c3125008be9ee0a39c0d83cf6be91a0506f7c4",
-            ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
+            ["eth:0xDaC2d26317C42ae3CB21357B73404120E1dA4232"]
           ],
           [
             "2024-11-01T19:07:23.000Z",
             "0x8714871659f7ff2feb7968256c3baf39e5cdbe9160f36649f8a530a536456ed5",
-            ["0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]
+            ["eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805"]
           ]
         ],
         "$upgradeCount": 3
       },
       "implementationNames": {
-        "0x173272739Bd7Aa6e4e214714048a9fE699453059": "OptimizedTransparentUpgradeableProxy",
-        "0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": ""
+        "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": "OptimizedTransparentUpgradeableProxy",
+        "eth:0xfE9AB78eD4f9f3DbB168d9f5E5213d78605C9805": ""
       }
     },
     {
       "name": "TBankOFT",
-      "address": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
+      "address": "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0",
       "type": "Contract",
       "sourceHashes": [
         "0xba83e8b07a793eb94956a82d951d156b8192e46d2ec4a546c0582ec3012caca4"
@@ -102,26 +102,26 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
+        "composeMsgSender": "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x33C78a4EBE7950277B0Ba8b8F4C66526db73C502",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x33C78a4EBE7950277B0Ba8b8F4C66526db73C502",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x1762c17f671FA27cE6C59256f5F28242de9274d0": "TBankOFT"
+        "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0": "TBankOFT"
       }
     },
     {
       "name": "TRESTLE_OFTAdapter",
-      "address": "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
+      "address": "eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
       "type": "Contract",
       "sourceHashes": [
         "0x545dea510da54ad1f4ef1409aa1b7b6c39ffa522331dfcfdbaba275722af5b12"
@@ -133,24 +133,24 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x1964f3Eaf7d8fca7E559468a384453d2d8490744",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x1964f3Eaf7d8fca7E559468a384453d2d8490744",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E": "TRESTLE_OFTAdapter"
+        "eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E": "TRESTLE_OFTAdapter"
       }
     },
     {
       "name": "EndpointV2",
-      "address": "0x1a44076050125825900e736c501f859c50fE728c",
+      "address": "eth:0x1a44076050125825900e736c501f859c50fE728c",
       "type": "Contract",
       "sourceHashes": [
         "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
@@ -160,26 +160,26 @@
       "sinceBlock": 19093715,
       "values": {
         "$immutable": true,
-        "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+        "blockedLibrary": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
         "defaultReceiveLib_rsETH": {
-          "lib": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "lib": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
           "isDefault": true
         },
-        "defaultSendLib_ENA": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+        "defaultSendLib_ENA": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
         "eid": 30101,
         "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getRegisteredLibraries": [
-          "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
-          "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-          "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
-          "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
+          "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+          "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+          "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+          "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D"
         ],
-        "getSendContext": [0, "0x0000000000000000000000000000000000000000"],
+        "getSendContext": [0, "eth:0x0000000000000000000000000000000000000000"],
         "isSendingMessage": false,
-        "lzToken": "0x0000000000000000000000000000000000000000",
-        "nativeToken": "0x0000000000000000000000000000000000000000",
+        "lzToken": "eth:0x0000000000000000000000000000000000000000",
+        "nativeToken": "eth:0x0000000000000000000000000000000000000000",
         "NIL_PAYLOAD_HASH": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+        "owner": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
       },
       "fieldMeta": {
         "getRegisteredLibraries": {
@@ -196,12 +196,12 @@
         }
       },
       "implementationNames": {
-        "0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2"
+        "eth:0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2"
       }
     },
     {
       "name": "BlockedMessageLib",
-      "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+      "address": "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "type": "Contract",
       "sourceHashes": [
         "0xf00c4e5b1b0f8da8f50ec8b06aa9f6c7275c5f03398e8b607c0ed093e7c4fe40"
@@ -219,12 +219,12 @@
         }
       },
       "implementationNames": {
-        "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": "BlockedMessageLib"
+        "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": "BlockedMessageLib"
       }
     },
     {
       "name": "DineroOFTLockbox",
-      "address": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
+      "address": "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
       "type": "Contract",
       "sourceHashes": [
         "0xd0900deb37eddc5cdfd57b8661fdc3ce4992abe9370076218206793aa712f44c"
@@ -235,31 +235,31 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
+        "composeMsgSender": "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208": "DineroOFTLockbox"
+        "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208": "DineroOFTLockbox"
       }
     },
     {
-      "address": "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C",
+      "address": "eth:0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "StakedFraxEtherOFTAdapter",
-      "address": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
+      "address": "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
       "type": "Contract",
       "sourceHashes": [
         "0x4a403198a2a3bcd35a947c909f95e42965212a8cfee7b7f0a492a81b290343cb"
@@ -270,26 +270,26 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
+        "composeMsgSender": "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A": "StakedFraxEtherOFTAdapter"
+        "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A": "StakedFraxEtherOFTAdapter"
       }
     },
     {
       "name": "StakedUSDeOFTAdapter",
-      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "address": "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
       "type": "Contract",
       "sourceHashes": [
         "0x24c3e4cbee746bcb3966b274859dcf02dd148b892f0b42a8ce393052c55e2066"
@@ -300,28 +300,28 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "composeMsgSender": "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "preCrime": "0x0000000000000000000000000000000000000000",
-        "rateLimiter": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
+        "rateLimiter": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2": "StakedUSDeOFTAdapter"
+        "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2": "StakedUSDeOFTAdapter"
       }
     },
     {
       "name": "FraxSharesOFTAdapter",
-      "address": "0x23432452B720C80553458496D4D9d7C5003280d0",
+      "address": "eth:0x23432452B720C80553458496D4D9d7C5003280d0",
       "type": "Contract",
       "sourceHashes": [
         "0x3bced0e183d2d8be858477bfefec195b6ff414c579fba5e35fc6ba6f67dd7296"
@@ -332,26 +332,26 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x23432452B720C80553458496D4D9d7C5003280d0",
+        "composeMsgSender": "eth:0x23432452B720C80553458496D4D9d7C5003280d0",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x23432452B720C80553458496D4D9d7C5003280d0",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x23432452B720C80553458496D4D9d7C5003280d0",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x23432452B720C80553458496D4D9d7C5003280d0": "FraxSharesOFTAdapter"
+        "eth:0x23432452B720C80553458496D4D9d7C5003280d0": "FraxSharesOFTAdapter"
       }
     },
     {
       "name": "EvmZkMptValidator",
-      "address": "0x276816F1931aFac123BdaeA54afF02BE6fd73e14",
+      "address": "eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14",
       "type": "Contract",
       "sourceHashes": [
         "0xe952102137467d854c3f913999e558ec3ae8f0eb75955df935bcf96bd5d0400d"
@@ -361,12 +361,12 @@
       "sinceBlock": 21077569,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x276816F1931aFac123BdaeA54afF02BE6fd73e14": "EvmZkMptValidator"
+        "eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14": "EvmZkMptValidator"
       }
     },
     {
       "name": "HorizenDVN",
-      "address": "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+      "address": "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
       "type": "Contract",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
@@ -380,19 +380,19 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12000,
         "paused": false,
-        "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 2,
         "signerSize": 2,
         "vid": 101,
-        "workerFeeLib": "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
+        "workerFeeLib": "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB"
       },
       "implementationNames": {
-        "0x380275805876Ff19055EA900CDb2B46a94ecF20D": "DVN"
+        "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D": "DVN"
       }
     },
     {
       "name": "EvmMptValidator",
-      "address": "0x38C967856d17E900042Af447B3346bfF26C8ed4B",
+      "address": "eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B",
       "type": "Contract",
       "sourceHashes": [
         "0x890745d1e6feaede421414da4e2b6d09e77e94fdd377fcbbc5d57be308788bce"
@@ -406,17 +406,17 @@
         "MESSAGE_TOPIC_V2": "0x1ab700d4ced0c005b164c0f789fd09fcbb0156d4c2041b8a3bfbcd961cd1567f"
       },
       "implementationNames": {
-        "0x38C967856d17E900042Af447B3346bfF26C8ed4B": "EvmMptValidator"
+        "eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B": "EvmMptValidator"
       }
     },
     {
-      "address": "0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346",
+      "address": "eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "USDT0DVN",
-      "address": "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2",
+      "address": "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2",
       "type": "Contract",
       "sourceHashes": [
         "0x6891d5860b39102382c883ddfe5fb9bce9b432c06b70c867ea830ab74e5755a5"
@@ -430,24 +430,24 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12000,
         "getSigners": [
-          "0xB88dca912E27EB7929a145458B99649C1120fE6b",
-          "0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2"
+          "eth:0xB88dca912E27EB7929a145458B99649C1120fE6b",
+          "eth:0x016B9F17C65d55Fd3b6b7A8d112df1A7Ef73A1a2"
         ],
         "localEidV2": 30101,
         "paused": false,
-        "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 1,
         "signerSize": 2,
         "vid": 101,
-        "workerFeeLib": "0x7087B8011caC9541b388B639a1460D9cbA4eA0A2"
+        "workerFeeLib": "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2"
       },
       "implementationNames": {
-        "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2": "DVN"
+        "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2": "DVN"
       }
     },
     {
       "name": "CyberTokenAdapter",
-      "address": "0x3d2fe83ea885C2E43A422C82C738847669708210",
+      "address": "eth:0x3d2fe83ea885C2E43A422C82C738847669708210",
       "type": "Contract",
       "sourceHashes": [
         "0xe07dd12133eb1c78e9a2cb67f7cb405dbbedc163d62174b5ffe3357666572473"
@@ -459,24 +459,24 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x3d2fe83ea885C2E43A422C82C738847669708210",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x3d2fe83ea885C2E43A422C82C738847669708210",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x455DB34c99A866489F3ac63fa2F068c726BC286b",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x455DB34c99A866489F3ac63fa2F068c726BC286b",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 18
       },
       "implementationNames": {
-        "0x3d2fe83ea885C2E43A422C82C738847669708210": "CyberTokenAdapter"
+        "eth:0x3d2fe83ea885C2E43A422C82C738847669708210": "CyberTokenAdapter"
       }
     },
     {
       "name": "MysoOFTAdapter",
-      "address": "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
+      "address": "eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
       "type": "Contract",
       "sourceHashes": [
         "0x89688d13ddfdb2a91fb45b3eac55658cc0cd5b58fd0924e24cad003ba9b04758"
@@ -488,34 +488,34 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xF3E76af90A74fE743db172996db484052e2bC61f",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xF3E76af90A74fE743db172996db484052e2bC61f",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6": "MysoOFTAdapter"
+        "eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6": "MysoOFTAdapter"
       }
     },
     {
-      "address": "0x4192D72c281dB0eF10464dD274EE583C33256ac5",
+      "address": "eth:0x4192D72c281dB0eF10464dD274EE583C33256ac5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x488A3d37442F583c1c0a356118d1d6181b22434c",
+      "address": "eth:0x488A3d37442F583c1c0a356118d1d6181b22434c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc",
+      "address": "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -533,15 +533,15 @@
       "sinceBlock": 21580779,
       "values": {
         "$immutable": true,
-        "owner": "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
+        "owner": "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8"
       },
       "implementationNames": {
-        "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc": "ProxyAdmin"
+        "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc": "ProxyAdmin"
       }
     },
     {
       "name": "Safe",
-      "address": "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8",
+      "address": "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -571,13 +571,13 @@
       "sinceBlock": 21543905,
       "values": {
         "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0x4192D72c281dB0eF10464dD274EE583C33256ac5",
-          "0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA",
-          "0x488A3d37442F583c1c0a356118d1d6181b22434c",
-          "0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
-          "0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982"
+          "eth:0x4192D72c281dB0eF10464dD274EE583C33256ac5",
+          "eth:0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA",
+          "eth:0x488A3d37442F583c1c0a356118d1d6181b22434c",
+          "eth:0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
+          "eth:0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982"
         ],
         "$threshold": 3,
         "domainSeparator": "0x145f5553097e0ffd707dbe986a48e9db6be88eca90cf3d2e1b3738f20a6be89f",
@@ -588,13 +588,13 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8": "SafeProxy",
-        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+        "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
       "name": "ENAOFTAdapter",
-      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "address": "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
       "type": "Contract",
       "sourceHashes": [
         "0x40d7122474d8afc304e108f00e9254fe8ef72f42c28ee634f42aa1ea6b8499cf"
@@ -605,28 +605,28 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+        "composeMsgSender": "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "preCrime": "0x0000000000000000000000000000000000000000",
-        "rateLimiter": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
+        "rateLimiter": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x58538e6A46E07434d7E7375Bc268D3cb839C0133": "ENAOFTAdapter"
+        "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133": "ENAOFTAdapter"
       }
     },
     {
       "name": "LayerZeroDVN",
-      "address": "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+      "address": "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
       "type": "Contract",
       "sourceHashes": [
         "0x67b975b3ef00e71be27727f49933e41872aa848504565806e3e3482a2245f99c"
@@ -640,24 +640,24 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12200,
         "paused": false,
-        "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 2,
         "signerSize": 3,
         "vid": 101,
-        "workerFeeLib": "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b"
+        "workerFeeLib": "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b"
       },
       "implementationNames": {
-        "0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "DVN"
+        "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "DVN"
       }
     },
     {
-      "address": "0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
+      "address": "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "USDeOFTAdapter",
-      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "address": "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "type": "Contract",
       "sourceHashes": [
         "0xccd3f36cc1147f6282362915f6dfbd4ad890475203975c33b3733ee32c3f75cf"
@@ -668,28 +668,28 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "composeMsgSender": "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "preCrime": "0x0000000000000000000000000000000000000000",
-        "rateLimiter": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
+        "rateLimiter": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34": "USDeOFTAdapter"
+        "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34": "USDeOFTAdapter"
       }
     },
     {
       "name": "Treasury",
-      "address": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
+      "address": "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056",
       "type": "Contract",
       "sourceHashes": [
         "0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"
@@ -702,20 +702,20 @@
         "lzTokenEnabled": false,
         "lzTokenFee": 0,
         "nativeBP": 0,
-        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+        "owner": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478"
       },
       "implementationNames": {
-        "0x5ebB3f2feaA15271101a927869B3A56837e73056": "Treasury"
+        "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056": "Treasury"
       }
     },
     {
-      "address": "0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982",
+      "address": "eth:0x5F0DcA105195Bd58277aa4b4CABC90a791E1b982",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ParamOFTAdapter",
-      "address": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
+      "address": "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a",
       "type": "Contract",
       "sourceHashes": [
         "0xf5e370b31bd00c58182289a46e61d7a01400ad2073e75d0d64108c27cbfebf8f"
@@ -726,26 +726,26 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
+        "composeMsgSender": "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x3B89fC2918D9F25977d6F85C13ff2395ba2f8022",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x3B89fC2918D9F25977d6F85C13ff2395ba2f8022",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x6182995916d79DeDb60db1570776F9994fCdCA0a": "ParamOFTAdapter"
+        "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a": "ParamOFTAdapter"
       }
     },
     {
       "name": "OAdapterUpgradeable",
-      "address": "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
+      "address": "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
       "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
@@ -755,37 +755,37 @@
       "sinceTimestamp": 1736351639,
       "sinceBlock": 21580781,
       "values": {
-        "$admin": "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc",
-        "$implementation": "0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4",
+        "$admin": "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc",
+        "$implementation": "eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4",
         "$pastUpgrades": [
           [
             "2025-01-08T15:53:59.000Z",
             "0xb7f37ae41b32bb799abceac828499792d17d75b9e0f06932e64cf93f2178780c",
-            ["0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4"]
+            ["eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4"]
           ]
         ],
         "$upgradeCount": 1,
         "approvalRequired": true,
         "decimalConversionRate": 1,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee": "TransparentUpgradeableProxy",
-        "0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4": "OAdapterUpgradeable"
+        "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee": "TransparentUpgradeableProxy",
+        "eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4": "OAdapterUpgradeable"
       }
     },
     {
       "name": "",
-      "address": "0x7087B8011caC9541b388B639a1460D9cbA4eA0A2",
+      "address": "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2",
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
@@ -793,17 +793,17 @@
       "sinceBlock": 21627731,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x7087B8011caC9541b388B639a1460D9cbA4eA0A2": ""
+        "eth:0x7087B8011caC9541b388B639a1460D9cbA4eA0A2": ""
       }
     },
     {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "address": "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ReadLib1002",
-      "address": "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
+      "address": "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D",
       "type": "Contract",
       "sourceHashes": [
         "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
@@ -814,40 +814,40 @@
       "values": {
         "$immutable": true,
         "getTreasuryAndNativeFeeCap": [
-          "0x0000000000000000000000000000000000000000",
+          "eth:0x0000000000000000000000000000000000000000",
           450000000000000
         ],
         "messageLibType": 2,
-        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
+        "owner": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
         "version": { "major": 10, "minor": 0, "endpointVersion": 2 }
       },
       "implementationNames": {
-        "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": "ReadLib1002"
+        "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": "ReadLib1002"
       }
     },
     {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
+      "address": "eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "address": "eth:0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634",
+      "address": "eth:0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA",
+      "address": "eth:0x7D8e979dcC6EC933c70FBe28B2B7700907D2aFEA",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MyOFTAdapter",
-      "address": "0x801642B6efB861fE624dAD704b7A747779d9B433",
+      "address": "eth:0x801642B6efB861fE624dAD704b7A747779d9B433",
       "type": "Contract",
       "sourceHashes": [
         "0x8f58c00c46fa24ad1de2834e09eb6c9113cb1bd0f3f93e317d41848b4267aed5"
@@ -858,26 +858,26 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x801642B6efB861fE624dAD704b7A747779d9B433",
+        "composeMsgSender": "eth:0x801642B6efB861fE624dAD704b7A747779d9B433",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x801642B6efB861fE624dAD704b7A747779d9B433",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x801642B6efB861fE624dAD704b7A747779d9B433",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x21FE3e26E824783cA7E374355A8D30Ae8BBf6E37",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x21FE3e26E824783cA7E374355A8D30Ae8BBf6E37",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x801642B6efB861fE624dAD704b7A747779d9B433": "MyOFTAdapter"
+        "eth:0x801642B6efB861fE624dAD704b7A747779d9B433": "MyOFTAdapter"
       }
     },
     {
       "name": "RSETH_OFTAdapter",
-      "address": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
+      "address": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
       "type": "Contract",
       "sourceHashes": [
         "0x846cd86e3fbb7c7164e6107fcf83b92b24b0f4cf399c4b7b39e01cc88f44c91a"
@@ -888,26 +888,26 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
+        "composeMsgSender": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xCbcdd778AA25476F203814214dD3E9b9c46829A1",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xCbcdd778AA25476F203814214dD3E9b9c46829A1",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": "RSETH_OFTAdapter"
+        "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": "RSETH_OFTAdapter"
       }
     },
     {
       "name": "PolyhedraDVN",
-      "address": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
+      "address": "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
       "type": "Contract",
       "sourceHashes": [
         "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
@@ -917,43 +917,43 @@
       "sinceTimestamp": 1708740203,
       "sinceBlock": 19294337,
       "values": {
-        "$admin": "0xe16d201cA134345601631D327a971A3741646B0d",
-        "$implementation": "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390",
+        "$admin": "eth:0xe16d201cA134345601631D327a971A3741646B0d",
+        "$implementation": "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390",
         "$pastUpgrades": [
           [
             "2024-02-24T02:03:23.000Z",
             "0xa4e1836bf1b83f9b018b33923bd8df6152b08b6ab94860e3cf51c563711ca18c",
-            ["0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
+            ["eth:0x156C3E0384459E07Dca7849b79196FbC5877dc3A"]
           ],
           [
             "2024-02-24T03:05:35.000Z",
             "0xb44d10c422927d170b63ff39214aec136115e4fb60ac93abd4c8c9598f06a115",
-            ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
+            ["eth:0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"]
           ],
           [
             "2024-11-12T05:45:11.000Z",
             "0xc8f7a01b73f35e11ca4263d71196b6490da462b11cda69f32b53f91177b9b04f",
-            ["0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"]
+            ["eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390"]
           ]
         ],
         "$upgradeCount": 3,
-        "defaultTxValidator": "0x38C967856d17E900042Af447B3346bfF26C8ed4B",
-        "defaultZkValidator": "0x276816F1931aFac123BdaeA54afF02BE6fd73e14",
+        "defaultTxValidator": "eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B",
+        "defaultZkValidator": "eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14",
         "getLzMessageLibLength": 1,
-        "layerZeroEndpointV1": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-        "layerZeroEndpointV2": "0x1a44076050125825900e736c501f859c50fE728c",
+        "layerZeroEndpointV1": "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+        "layerZeroEndpointV2": "eth:0x1a44076050125825900e736c501f859c50fE728c",
         "localEid": 30101,
-        "owner": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7",
-        "sender": "0x0000000000000000000000000000000000000000"
+        "owner": "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7",
+        "sender": "eth:0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "TransparentUpgradeableProxy",
-        "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390": "ZkBridgeOracleV2"
+        "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "TransparentUpgradeableProxy",
+        "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390": "ZkBridgeOracleV2"
       }
     },
     {
       "name": "DVNFeeLib",
-      "address": "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB",
+      "address": "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB",
       "type": "Contract",
       "sourceHashes": [
         "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
@@ -963,20 +963,20 @@
       "sinceBlock": 19109197,
       "values": {
         "$immutable": true,
-        "owner": "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+        "owner": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
       },
       "implementationNames": {
-        "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": "DVNFeeLib"
+        "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": "DVNFeeLib"
       }
     },
     {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+      "address": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ProxyAdmin",
-      "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+      "address": "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
       "type": "Contract",
       "sourceHashes": [
         "0x130b90ae0c02f239d1ce8b414a1a9a49d97708bb4f07d7e9c69af4f7c8a8f5bc"
@@ -993,15 +993,15 @@
       "sinceBlock": 19093732,
       "values": {
         "$immutable": true,
-        "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
+        "owner": "eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       },
       "implementationNames": {
-        "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": "ProxyAdmin"
+        "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": "ProxyAdmin"
       }
     },
     {
       "name": "GnosisSafe",
-      "address": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7",
+      "address": "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -1014,13 +1014,13 @@
       "sinceBlock": 19296636,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xd1846C61A063edA820305A5e568A12a570420cf6",
-          "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C",
-          "0xF94b16157948E10597481Da0523927c8BA0bd182",
-          "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634",
-          "0x1082E92A0b92e15212fD5879C1dd672AB548302c"
+          "eth:0xd1846C61A063edA820305A5e568A12a570420cf6",
+          "eth:0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C",
+          "eth:0xF94b16157948E10597481Da0523927c8BA0bd182",
+          "eth:0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634",
+          "eth:0x1082E92A0b92e15212fD5879C1dd672AB548302c"
         ],
         "$threshold": 3,
         "domainSeparator": "0x2733a735ed44ec7aaa644c6adc279215e332994d242364b19b2ca7462991b1eb",
@@ -1031,13 +1031,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "WooTokenOFTAdapter",
-      "address": "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
+      "address": "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
       "type": "Contract",
       "sourceHashes": [
         "0xf00fd4e6de8da1f5359ed1cbafdbeaf3ca5063b2099fd4eb70d150876d908e33"
@@ -1049,24 +1049,24 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x155EEF9731aFf5aE6cB2741F7bEC0f005037aCB0",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711": "WooTokenOFTAdapter"
+        "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711": "WooTokenOFTAdapter"
       }
     },
     {
       "name": "DVNFeeLib",
-      "address": "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b",
+      "address": "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b",
       "type": "Contract",
       "sourceHashes": [
         "0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"
@@ -1076,25 +1076,25 @@
       "sinceBlock": 19093741,
       "values": {
         "$immutable": true,
-        "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+        "owner": "eth:0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
       },
       "implementationNames": {
-        "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": "DVNFeeLib"
+        "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": "DVNFeeLib"
       }
     },
     {
-      "address": "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
+      "address": "eth:0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xB88dca912E27EB7929a145458B99649C1120fE6b",
+      "address": "eth:0xB88dca912E27EB7929a145458B99649C1120fE6b",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "SendUln302",
-      "address": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
+      "address": "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
       "type": "Contract",
       "sourceHashes": [
         "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
@@ -1106,19 +1106,19 @@
         "$immutable": true,
         "defaultExecutor_ENA": {
           "maxMessageSize": 10000,
-          "executor": "0x173272739Bd7Aa6e4e214714048a9fE699453059"
+          "executor": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
         },
         "messageLibType": 0,
-        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
-        "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
+        "owner": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
+        "treasury": "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056",
         "ulnConfig_CYBER": {
           "confirmations": 15,
           "requiredDVNCount": 2,
           "optionalDVNCount": 0,
           "optionalDVNThreshold": 0,
           "requiredDVNs": [
-            "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
-            "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
+            "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
+            "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
           ],
           "optionalDVNs": []
         },
@@ -1128,8 +1128,8 @@
           "optionalDVNCount": 0,
           "optionalDVNThreshold": 0,
           "requiredDVNs": [
-            "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
-            "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+            "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+            "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
           "optionalDVNs": []
         },
@@ -1139,8 +1139,8 @@
           "optionalDVNCount": 0,
           "optionalDVNThreshold": 0,
           "requiredDVNs": [
-            "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
-            "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+            "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D",
+            "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
           "optionalDVNs": []
         },
@@ -1150,8 +1150,8 @@
           "optionalDVNCount": 0,
           "optionalDVNThreshold": 0,
           "requiredDVNs": [
-            "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2",
-            "0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
+            "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2",
+            "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b"
           ],
           "optionalDVNs": []
         },
@@ -1176,12 +1176,12 @@
         }
       },
       "implementationNames": {
-        "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": "SendUln302"
+        "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": "SendUln302"
       }
     },
     {
       "name": "LayerZero Multisig",
-      "address": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
+      "address": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
       "type": "Contract",
       "template": "layerzero/OneSigMultisig",
       "sourceHashes": [
@@ -1195,15 +1195,15 @@
       "values": {
         "$immutable": true,
         "$members": [
-          "0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
-          "0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
-          "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-          "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
-          "0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
+          "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
+          "eth:0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
+          "eth:0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+          "eth:0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+          "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
         ],
         "$threshold": 3,
         "executorRequired": true,
-        "getExecutors": ["0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
+        "getExecutors": ["eth:0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
         "LEAF_ENCODING_VERSION": 1,
         "nonce": 2,
         "ONE_SIG_ID": 30101,
@@ -1218,12 +1218,12 @@
         }
       },
       "implementationNames": {
-        "0xBe010A7e3686FdF65E93344ab664D065A0B02478": "OneSig"
+        "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": "OneSig"
       }
     },
     {
       "name": "ReceiveUln302",
-      "address": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
+      "address": "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2",
       "type": "Contract",
       "sourceHashes": [
         "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
@@ -1234,16 +1234,16 @@
       "values": {
         "$immutable": true,
         "messageLibType": 1,
-        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
+        "owner": "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
       "implementationNames": {
-        "0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302"
+        "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": "ReceiveUln302"
       }
     },
     {
       "name": "CyberTokenAdapter",
-      "address": "0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
+      "address": "eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
       "type": "Contract",
       "sourceHashes": [
         "0xdce3b87706451ccc7b085067f6799a004de54f2f3a9a58acc51b736e8c5b50c5"
@@ -1255,29 +1255,29 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x455DB34c99A866489F3ac63fa2F068c726BC286b",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x455DB34c99A866489F3ac63fa2F068c726BC286b",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0xCB07992DE144bDeE56fDb66Fff2454B43243b052": "CyberTokenAdapter"
+        "eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052": "CyberTokenAdapter"
       }
     },
     {
-      "address": "0xd1846C61A063edA820305A5e568A12a570420cf6",
+      "address": "eth:0xd1846C61A063edA820305A5e568A12a570420cf6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "GoogleCloudDVN",
-      "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+      "address": "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
       "type": "Contract",
       "sourceHashes": [
         "0x1be31a02ca7158d467a49eeb964f0f8aa1d1e74019df854c1881d89d51260701"
@@ -1291,19 +1291,19 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12100,
         "paused": false,
-        "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+        "priceFeed": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 2,
         "signerSize": 3,
         "vid": 101,
-        "workerFeeLib": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
+        "workerFeeLib": "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49"
       },
       "implementationNames": {
-        "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "VerifierNetwork"
+        "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "VerifierNetwork"
       }
     },
     {
       "name": "KinetixFinanceTokenOFTAdapter",
-      "address": "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
+      "address": "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
       "type": "Contract",
       "sourceHashes": [
         "0xbdb5d856720cc4b696952d51301dd3c0e81cff33f44b2b099679d8fe2d343861"
@@ -1315,24 +1315,24 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x58591456DD9FEdf8F629819F88cC02F4C6e9Aeb9",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x58591456DD9FEdf8F629819F88cC02F4C6e9Aeb9",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf": "KinetixFinanceTokenOFTAdapter"
+        "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf": "KinetixFinanceTokenOFTAdapter"
       }
     },
     {
       "name": "VerifierFeeLib",
-      "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "address": "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
       "type": "Contract",
       "sourceHashes": [
         "0x37e1cee9d0a4ad6ebb439d27dbbf23925fcd9f9c0d5b43a33a6335e62b54d18c"
@@ -1342,12 +1342,12 @@
       "sinceBlock": 18095085,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
+        "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
       }
     },
     {
       "name": "ZkBridgeAdmin",
-      "address": "0xe16d201cA134345601631D327a971A3741646B0d",
+      "address": "eth:0xe16d201cA134345601631D327a971A3741646B0d",
       "type": "Contract",
       "sourceHashes": [
         "0x062ac536d5e166756d049e5291a179675915fffdd3c12bd2d98cc2d83f77403c"
@@ -1364,15 +1364,15 @@
       "sinceBlock": 19291481,
       "values": {
         "$immutable": true,
-        "owner": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
+        "owner": "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
       },
       "implementationNames": {
-        "0xe16d201cA134345601631D327a971A3741646B0d": "ZkBridgeAdmin"
+        "eth:0xe16d201cA134345601631D327a971A3741646B0d": "ZkBridgeAdmin"
       }
     },
     {
       "name": "StakedFraxOFTAdapter",
-      "address": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
+      "address": "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
       "type": "Contract",
       "sourceHashes": [
         "0x4e7c9ed835cefe312e55b3bec6bd77fca1a30058b4bb1a6b1d32ce2968bd0e3e"
@@ -1383,31 +1383,31 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
+        "composeMsgSender": "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E": "StakedFraxOFTAdapter"
+        "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E": "StakedFraxOFTAdapter"
       }
     },
     {
-      "address": "0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
+      "address": "eth:0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "MaviaOFTAdapter",
-      "address": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
+      "address": "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
       "type": "Contract",
       "sourceHashes": [
         "0xa6367e87486cfaf6777e95cef7398c1ad3fc2c50bdbdec7e25af7d2494eb448f"
@@ -1418,31 +1418,31 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "composeMsgSender": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
+        "composeMsgSender": "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0xEd43EaA4ADd5FCBf009e3E2d362a217745A11Cf3",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xEd43EaA4ADd5FCBf009e3E2d362a217745A11Cf3",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D": "MaviaOFTAdapter"
+        "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D": "MaviaOFTAdapter"
       }
     },
     {
-      "address": "0xF94b16157948E10597481Da0523927c8BA0bd182",
+      "address": "eth:0xF94b16157948E10597481Da0523927c8BA0bd182",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "EtherFiOFTAdapter",
-      "address": "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
+      "address": "eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
       "type": "Contract",
       "sourceHashes": [
         "0xfc3378db03fff87c68201589b229f1bb65fea0d487f8f4e41aa8f0381a7e0465"
@@ -1454,24 +1454,24 @@
         "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
-        "oApp": "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
+        "endpoint": "eth:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "eth:0x0000000000000000000000000000000000000000",
+        "oApp": "eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
+        "preCrime": "eth:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6
       },
       "implementationNames": {
-        "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D": "EtherFiOFTAdapter"
+        "eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D": "EtherFiOFTAdapter"
       }
     }
   ],
   "abis": {
-    "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2": [
+    "eth:0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -1532,7 +1532,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x173272739Bd7Aa6e4e214714048a9fE699453059": [
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1542,7 +1542,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x1762c17f671FA27cE6C59256f5F28242de9274d0": [
+    "eth:0x1762c17f671FA27cE6C59256f5F28242de9274d0": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error InvalidDelegate()",
       "error InvalidEndpointCall()",
@@ -1597,7 +1597,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E": [
+    "eth:0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -1658,7 +1658,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x1a44076050125825900e736c501f859c50fE728c": [
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": [
       "constructor(uint32 _eid, address _owner)",
       "error LZ_AlreadyRegistered()",
       "error LZ_ComposeExists()",
@@ -1763,14 +1763,14 @@
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
     ],
-    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
+    "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
       "error LZ_NotImplemented()",
       "function isSupportedEid(uint32) pure returns (bool)",
       "function messageLibType() pure returns (uint8)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
-    "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208": [
+    "eth:0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error InvalidDelegate()",
       "error InvalidEndpointCall()",
@@ -1825,7 +1825,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A": [
+    "eth:0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -1886,7 +1886,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2": [
+    "eth:0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2": [
       "constructor(tuple(uint32 dstEid, uint256 limit, uint256 window)[] _rateLimitConfigs, address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -1961,7 +1961,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x23432452B720C80553458496D4D9d7C5003280d0": [
+    "eth:0x23432452B720C80553458496D4D9d7C5003280d0": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2022,11 +2022,11 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x276816F1931aFac123BdaeA54afF02BE6fd73e14": [
+    "eth:0x276816F1931aFac123BdaeA54afF02BE6fd73e14": [
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)",
       "function verifyTx(bytes _proof) view returns (tuple(bytes32 receiptHash, bytes32 logsHash) receipt)"
     ],
-    "0x380275805876Ff19055EA900CDb2B46a94ecF20D": [
+    "eth:0x380275805876Ff19055EA900CDb2B46a94ecF20D": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
       "error DVN_DuplicatedHash(bytes32 executableHash)",
       "error DVN_InstructionExpired()",
@@ -2102,12 +2102,12 @@
       "function withdrawToken(address _token, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
-    "0x38C967856d17E900042Af447B3346bfF26C8ed4B": [
+    "eth:0x38C967856d17E900042Af447B3346bfF26C8ed4B": [
       "function MESSAGE_TOPIC_V1() view returns (bytes32)",
       "function MESSAGE_TOPIC_V2() view returns (bytes32)",
       "function verifyTx(bytes _txData) pure returns (tuple(bytes32 receiptHash, address logContract, bytes encodedPayload) receipt)"
     ],
-    "0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2": [
+    "eth:0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2": [
       "constructor(uint32 _localEidV2, uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
       "error DVN_DuplicatedHash(bytes32 executableHash)",
       "error DVN_InstructionExpired()",
@@ -2190,7 +2190,7 @@
       "function withdrawToken(address _token, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
-    "0x3d2fe83ea885C2E43A422C82C738847669708210": [
+    "eth:0x3d2fe83ea885C2E43A422C82C738847669708210": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2251,7 +2251,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6": [
+    "eth:0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2312,7 +2312,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2360,7 +2360,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc": [
+    "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc": [
       "constructor(address initialOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -2372,10 +2372,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8": [
+    "eth:0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8": [
       "constructor(address _singleton)"
     ],
-    "0x58538e6A46E07434d7E7375Bc268D3cb839C0133": [
+    "eth:0x58538e6A46E07434d7E7375Bc268D3cb839C0133": [
       "constructor(tuple(uint32 dstEid, uint256 limit, uint256 window)[] _rateLimitConfigs, address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2449,7 +2449,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x589dEDbD617e0CBcB916A9223F4d1300c294236b": [
+    "eth:0x589dEDbD617e0CBcB916A9223F4d1300c294236b": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
       "error DVN_DuplicatedHash(bytes32 executableHash)",
       "error DVN_InstructionExpired()",
@@ -2525,7 +2525,7 @@
       "function withdrawToken(address _token, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
-    "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34": [
+    "eth:0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34": [
       "constructor(tuple(uint32 dstEid, uint256 limit, uint256 window)[] _rateLimitConfigs, address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2599,7 +2599,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x5ebB3f2feaA15271101a927869B3A56837e73056": [
+    "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056": [
       "error LZ_Treasury_LzTokenNotEnabled()",
       "error Transfer_NativeFailed(address _to, uint256 _value)",
       "error Transfer_ToAddressIsZero()",
@@ -2619,7 +2619,7 @@
       "function withdrawNativeFee(address _messageLib, address _to, uint256 _amount)",
       "function withdrawToken(address _token, address _to, uint256 _amount)"
     ],
-    "0x6182995916d79DeDb60db1570776F9994fCdCA0a": [
+    "eth:0x6182995916d79DeDb60db1570776F9994fCdCA0a": [
       "constructor(address _token, address _layerZeroEndpoint)",
       "error InvalidDelegate()",
       "error InvalidEndpointCall()",
@@ -2674,7 +2674,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee": [
+    "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -2685,7 +2685,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": [
+    "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
       "error DVN_InvalidDVNIdx()",
       "error DVN_InvalidDVNOptions(uint256 cursor)",
@@ -2750,7 +2750,7 @@
       "function withdrawFee(address _to, uint256 _amount)",
       "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
     ],
-    "0x801642B6efB861fE624dAD704b7A747779d9B433": [
+    "eth:0x801642B6efB861fE624dAD704b7A747779d9B433": [
       "constructor(address _token, address _lzEndpoint, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2811,7 +2811,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": [
+    "eth:0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2872,13 +2872,13 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": [
+    "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": [
+    "eth:0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB": [
       "constructor(uint256 _nativeDecimalsRate)",
       "error DVN_EidNotSupported(uint32 eid)",
       "error DVN_InvalidDVNOptions(uint256 cursor)",
@@ -2893,7 +2893,7 @@
       "function transferOwnership(address newOwner)",
       "function withdrawToken(address _token, address _to, uint256 _amount)"
     ],
-    "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
+    "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
       "constructor(address initialOwner)",
       "error AdminCallFailed()",
       "error ImplementationCallFailed()",
@@ -2907,10 +2907,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7": [
+    "eth:0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7": [
       "constructor(address _singleton)"
     ],
-    "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711": [
+    "eth:0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -2971,7 +2971,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": [
+    "eth:0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b": [
       "constructor(uint256 _nativeDecimalsRate)",
       "error DVN_EidNotSupported(uint32 eid)",
       "error DVN_InvalidDVNOptions(uint256 cursor)",
@@ -2986,7 +2986,7 @@
       "function transferOwnership(address newOwner)",
       "function withdrawToken(address _token, address _to, uint256 _amount)"
     ],
-    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
       "error DVN_InvalidDVNIdx()",
       "error DVN_InvalidDVNOptions(uint256 cursor)",
@@ -3048,7 +3048,7 @@
       "function withdrawFee(address _to, uint256 _amount)",
       "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
     ],
-    "0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
+    "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
       "constructor(uint64 _oneSigId, address[] _signers, uint256 _threshold, address[] _executors, bool _executorRequired, bytes32 _seed)",
       "error ECDSAInvalidSignature()",
       "error ECDSAInvalidSignatureLength(uint256 length)",
@@ -3101,7 +3101,7 @@
       "function verifySignatures(bytes32 _digest, bytes _signatures) view",
       "function verifyTransactionProof(bytes32 _merkleRoot, tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction) view"
     ],
-    "0xc02Ab410f0734EFa3F14628780e6e695156024C2": [
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": [
       "constructor(address _endpoint)",
       "error LZ_MessageLib_OnlyEndpoint()",
       "error LZ_ULN_AtLeastOneDVN()",
@@ -3138,7 +3138,7 @@
       "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
-    "0xCB07992DE144bDeE56fDb66Fff2454B43243b052": [
+    "eth:0xCB07992DE144bDeE56fDb66Fff2454B43243b052": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -3199,7 +3199,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4": [
+    "eth:0xCD979B10A55FCdAC23ec785CE3066c6ef8a479A4": [
       "constructor(address _token, address _lzEndpoint)",
       "error InvalidDelegate()",
       "error InvalidEndpointCall()",
@@ -3261,7 +3261,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": [
+    "eth:0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
       "event ExecuteFailed(uint256 _index, bytes _data)",
       "event HashAlreadyUsed(tuple(uint32 vid, address target, bytes callData, uint256 expiration, bytes signatures) param, bytes32 _hash)",
@@ -3317,7 +3317,7 @@
       "function withdrawFeeFromUlnV2(address _lib, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -3366,7 +3366,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf": [
+    "eth:0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -3427,11 +3427,11 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
+    "eth:0xdeA04ef31C4B4FDf31CB58923F37869739280d49": [
       "function getFee(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) view returns (uint256)",
       "function getFeeOnSend(tuple(address priceFeed, uint32 dstEid, uint64 confirmations, address sender, uint64 quorum, uint16 defaultMultiplierBps) _params, tuple(uint64 gas, uint16 multiplierBps, uint128 floorMarginUSD) _dstConfig, bytes) payable returns (uint256)"
     ],
-    "0xdFf54e8d2B31A197DC5859739E7177AA31fC3390": [
+    "eth:0xdFf54e8d2B31A197DC5859739E7177AA31fC3390": [
       "constructor(address _layerZeroEndpointV2, address _layerZeroEndpointV1)",
       "error AlreadySet()",
       "error BlockNotSet()",
@@ -3509,7 +3509,7 @@
       "function withdrawFee(address _messageLib, address _to)",
       "function withdrawFeeAll(address _to)"
     ],
-    "0xe16d201cA134345601631D327a971A3741646B0d": [
+    "eth:0xe16d201cA134345601631D327a971A3741646B0d": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -3520,7 +3520,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E": [
+    "eth:0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E": [
       "constructor(address _token, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -3581,7 +3581,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D": [
+    "eth:0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error InvalidDelegate()",
       "error InvalidEndpointCall()",
@@ -3636,7 +3636,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D": [
+    "eth:0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D": [
       "constructor(address _token, address _layerZeroEndpoint, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -3703,5 +3703,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
-  "permissionsConfigHash": "0x1236fee6ab1988471e1dc85a6b56257d6e972862b83547c7fb510502f3d31e01"
+  "permissionsConfigHash": "0xc90c2bf4cee0f08ecbfa21c04ee5078fefcbda2709ea6d4533da241d0083aaaa"
 }

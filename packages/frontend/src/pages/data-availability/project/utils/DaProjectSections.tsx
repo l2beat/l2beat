@@ -92,8 +92,7 @@ export async function getRegularDaProjectSections({
       title: 'Technology',
       diagram: getDiagramParams('da-layer-technology', layer.slug),
       content: layer.daLayer.technology.description,
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: layer.daLayer.technology.risks?.map(toTechnologyRisk),
       references: layer.daLayer.technology.references,
     },
@@ -125,8 +124,7 @@ export async function getRegularDaProjectSections({
       content:
         bridge?.daBridge.technology.description ??
         'No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.',
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: bridge?.daBridge.technology.risks?.map(toTechnologyRisk),
       references: bridge?.daBridge.technology.references,
     },
@@ -304,8 +302,7 @@ export async function getEthereumDaProjectSections({
         '\n\n',
         bridge.daBridge.technology.description,
       ),
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: layer.daLayer.technology.risks?.map(toTechnologyRisk),
       references: layer.daLayer.technology.references?.concat(
         ...(bridge.daBridge.technology.references ?? []),

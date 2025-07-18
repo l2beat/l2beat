@@ -47,6 +47,9 @@ export const katana: ScalingProject = {
     BADGES.Infra.AggLayer,
     BADGES.Stack.OPStack,
   ],
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
+  },
   display: {
     name: 'Katana',
     slug: 'katana',
@@ -116,8 +119,10 @@ export const katana: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 22441925,
-        inbox: '0x000d4411cdeb152378626B5C5E33fd5D6808939a',
-        sequencers: ['0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a'],
+        inbox: EthereumAddress('0x000d4411cdeb152378626B5C5E33fd5D6808939a'),
+        sequencers: [
+          EthereumAddress('0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a'),
+        ],
       },
     ],
     activityConfig: {

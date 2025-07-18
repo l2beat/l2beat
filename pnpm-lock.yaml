@@ -704,6 +704,9 @@ importers:
       graphviz-wasm:
         specifier: ^3.0.2
         version: 3.0.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       node-fetch:
         specifier: ^2.6.7
         version: 2.7.0(encoding@0.1.13)
@@ -726,6 +729,9 @@ importers:
       '@types/express':
         specifier: ^5.0.0
         version: 5.0.0
+      '@types/lodash':
+        specifier: ^4.14.198
+        version: 4.17.13
       '@types/mock-fs':
         specifier: ^4.13.4
         version: 4.13.4

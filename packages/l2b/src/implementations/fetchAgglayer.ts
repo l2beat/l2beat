@@ -55,8 +55,8 @@ export class AgglayerDataFetcher {
     '12': 'haust.network',
     '13': 'ternoa.network',
     '14': 'cdk-sov test (z-chain/token)',
-    '15': 'pentagon.games/pen-chain ',
-    '16': 'pentagon games testnet?',
+    '15': 'pentagon games testnet?',
+    '16': 'pentagon.games/pen-chain',
     '17': 'Okto (wallet?)',
     '20': 'Katana',
   }

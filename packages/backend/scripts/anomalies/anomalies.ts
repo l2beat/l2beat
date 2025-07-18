@@ -92,10 +92,7 @@ const cmd = command({
 
     if (args.list) {
       console.log('Fetching ongoing anomalies...')
-      const projects = await getLivenessProjects()
-      const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies(
-        projects.map((p) => p.id),
-      )
+      const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies()
 
       if (ongoingAnomalies.length === 0) {
         console.log('No ongoing anomalies found.')
@@ -176,20 +173,5 @@ const cmd = command({
     process.exit(0)
   },
 })
-
-function getLivenessProjects() {
-  return ps.getProjects({
-    select: [
-      'statuses',
-      'scalingInfo',
-      'livenessInfo',
-      'display',
-      'trackedTxsConfig',
-    ],
-    optional: ['scalingDa'],
-    where: ['isScaling'],
-    whereNot: ['isUpcoming', 'archivedAt'],
-  })
-}
 
 run(cmd, process.argv.slice(2))

@@ -1,4 +1,1083 @@
-Generated with discovered.json: 0x25faf30a5ca3481a50e6129672d60d029e6c5a0d
+Generated with discovered.json: 0x0f6b05d1cf7f9effb1b3911aee019e43ca27b384
+
+# Diff at Mon, 14 Jul 2025 12:44:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 356573977
+- current block number: 356573977
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 356573977 (main branch discovery), not current.
+
+```diff
+    EOA  (0x026919DbCFab70a2A45775088C933331A7B25Ac6) {
+    +++ description: None
+      address:
+-        "0x026919DbCFab70a2A45775088C933331A7B25Ac6"
++        "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6"
+    }
+```
+
+```diff
+    EOA  (0x053970A9AA9638F54370764E6E9c7B2f5854Ef21) {
+    +++ description: None
+      address:
+-        "0x053970A9AA9638F54370764E6E9c7B2f5854Ef21"
++        "arb1:0x053970A9AA9638F54370764E6E9c7B2f5854Ef21"
+    }
+```
+
+```diff
+    contract Bridge (0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6) {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      address:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"
++        "arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"
+      values.$pastUpgrades.0.2.0:
+-        "0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"
++        "arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0"
+      values.activeOutbox:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
++++ description: Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.
++++ severity: HIGH
+      values.allowedDelayedInboxList.0:
+-        "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
++        "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
++++ description: Allowed to mint the gastoken on L2 and call `enqueueDelayedMessage()` on the bridge.
++++ severity: HIGH
+      values.allowedDelayedInboxList.1:
+-        "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
++        "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
++++ description: Can make calls as the bridge, steal all funds.
++++ severity: HIGH
+      values.allowedOutboxList.0:
+-        "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
++        "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory.0:
+-        "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
++        "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
++++ description: All Inboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.inboxHistory.1:
+-        "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
++        "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
++++ description: All Outboxes that were ever set as allowed in the bridge.
++++ severity: HIGH
+      values.outboxHistory.0:
+-        "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
++        "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
+      values.rollup:
+-        "0x65AD139061B3f6DDb16170a07b925337ddf42407"
++        "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
+      values.sequencerInbox:
+-        "0xa58F38102579dAE7C584850780dDA55744f67DF1"
++        "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1"
+      implementationNames.0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0:
+-        "Bridge"
+      implementationNames.arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0xB23214f241bdEb275f7dCBfbb1EA79349101d4B0:
++        "Bridge"
+    }
+```
+
+```diff
+    EOA  (0x0C79a90C94E1C1091D7D3a188730105be00798f9) {
+    +++ description: None
+      address:
+-        "0x0C79a90C94E1C1091D7D3a188730105be00798f9"
++        "arb1:0x0C79a90C94E1C1091D7D3a188730105be00798f9"
+    }
+```
+
+```diff
+    contract Outbox (0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2) {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      address:
+-        "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
++        "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
+      values.$pastUpgrades.0.2.0:
+-        "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
++        "arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494"
+      values.bridge:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.l2ToL1Sender:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.rollup:
+-        "0x65AD139061B3f6DDb16170a07b925337ddf42407"
++        "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
+      implementationNames.0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
+-        "Outbox"
+      implementationNames.arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494:
++        "Outbox"
+    }
+```
+
+```diff
+    EOA  (0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E) {
+    +++ description: None
+      address:
+-        "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
++        "arb1:0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
+    }
+```
+
+```diff
+    EOA  (0x336dD5a1aB948058E4c699fD7732c2AA78C10d90) {
+    +++ description: None
+      address:
+-        "0x336dD5a1aB948058E4c699fD7732c2AA78C10d90"
++        "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90"
+    }
+```
+
+```diff
+    contract OneStepProverHostIo (0x33c1514Bf90e202d242C299b37C60f908aa206D4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0x33c1514Bf90e202d242C299b37C60f908aa206D4"
++        "arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4"
+      implementationNames.0x33c1514Bf90e202d242C299b37C60f908aa206D4:
+-        "OneStepProverHostIo"
+      implementationNames.arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4:
++        "OneStepProverHostIo"
+    }
+```
+
+```diff
+    EOA  (0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f) {
+    +++ description: None
+      address:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x3d0b021E1d2A8747411E3724d5165716B35448f3) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      address:
+-        "0x3d0b021E1d2A8747411E3724d5165716B35448f3"
++        "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+      values.$pastUpgrades.0.2.0:
+-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
++        "arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0x3d0b021E1d2A8747411E3724d5165716B35448f3"
++        "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
++        "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
+      values.executors.0:
+-        "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
++        "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
+      implementationNames.0x3d0b021E1d2A8747411E3724d5165716B35448f3:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1:
+-        "UpgradeExecutor"
+      implementationNames.arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1:
++        "UpgradeExecutor"
+    }
+```
+
+```diff
+    EOA  (0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe) {
+    +++ description: None
+      address:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    }
+```
+
+```diff
+    EOA  (0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5) {
+    +++ description: None
+      address:
+-        "0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5"
++        "arb1:0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5"
+    }
+```
+
+```diff
+    EOA  (0x50930d652266EF4127FA3A1906B7Cb9951076628) {
+    +++ description: None
+      address:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "arb1:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+    }
+```
+
+```diff
+    EOA  (0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885) {
+    +++ description: None
+      address:
+-        "0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885"
++        "arb1:0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885"
+    }
+```
+
+```diff
+    EOA  (0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31) {
+    +++ description: None
+      address:
+-        "0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31"
++        "arb1:0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31"
+    }
+```
+
+```diff
+    EOA  (0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a) {
+    +++ description: None
+      address:
+-        "0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a"
++        "arb1:0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a"
+    }
+```
+
+```diff
+    contract OneStepProver0 (0x54E0923782b701044444De5d8c3A45aC890b0881) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0x54E0923782b701044444De5d8c3A45aC890b0881"
++        "arb1:0x54E0923782b701044444De5d8c3A45aC890b0881"
+      implementationNames.0x54E0923782b701044444De5d8c3A45aC890b0881:
+-        "OneStepProver0"
+      implementationNames.arb1:0x54E0923782b701044444De5d8c3A45aC890b0881:
++        "OneStepProver0"
+    }
+```
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      address:
+-        "0x65AD139061B3f6DDb16170a07b925337ddf42407"
++        "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
+      values.$admin:
+-        "0x3d0b021E1d2A8747411E3724d5165716B35448f3"
++        "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+      values.$implementation.0:
+-        "0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446"
++        "arb1:0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446"
+      values.$implementation.1:
+-        "0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
++        "arb1:0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
+      values.$pastUpgrades.0.2.0:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "arb1:0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
+      values.$pastUpgrades.0.2.1:
+-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
++        "arb1:0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
+      values.$pastUpgrades.1.2.0:
+-        "0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446"
++        "arb1:0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446"
+      values.$pastUpgrades.1.2.1:
+-        "0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
++        "arb1:0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77"
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.bridge:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.challengeManager:
+-        "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea"
++        "arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea"
+      values.inbox:
+-        "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
++        "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
+      values.loserStakeEscrow:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.outbox:
+-        "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
++        "arb1:0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"
+      values.owner:
+-        "0x3d0b021E1d2A8747411E3724d5165716B35448f3"
++        "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+      values.rollupEventInbox:
+-        "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
++        "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
+      values.sequencerInbox:
+-        "0xa58F38102579dAE7C584850780dDA55744f67DF1"
++        "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1"
+      values.stakeToken:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.validators.0:
+-        "0x026919DbCFab70a2A45775088C933331A7B25Ac6"
++        "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6"
+      values.validators.1:
+-        "0x053970A9AA9638F54370764E6E9c7B2f5854Ef21"
++        "arb1:0x053970A9AA9638F54370764E6E9c7B2f5854Ef21"
+      values.validators.2:
+-        "0x0C79a90C94E1C1091D7D3a188730105be00798f9"
++        "arb1:0x0C79a90C94E1C1091D7D3a188730105be00798f9"
+      values.validators.3:
+-        "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
++        "arb1:0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
+      values.validators.4:
+-        "0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB"
++        "arb1:0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB"
+      values.validators.5:
+-        "0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7"
++        "arb1:0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7"
+      values.validators.6:
+-        "0x83433d51B327392aA694455231D2db092eE2A5Db"
++        "arb1:0x83433d51B327392aA694455231D2db092eE2A5Db"
+      values.validators.7:
+-        "0xB180d28c01D3248C3fa88d67154a5070e5039135"
++        "arb1:0xB180d28c01D3248C3fa88d67154a5070e5039135"
+      values.validators.8:
+-        "0xC929c820dC03C2a22e44F440721Af3c835e071fc"
++        "arb1:0xC929c820dC03C2a22e44F440721Af3c835e071fc"
+      values.validators.9:
+-        "0xD47FB043557CB2289B31d813dd4BC1223C91f872"
++        "arb1:0xD47FB043557CB2289B31d813dd4BC1223C91f872"
+      values.validators.10:
+-        "0xEBe1766201dd69A09a2953B08081829E90f4a8d3"
++        "arb1:0xEBe1766201dd69A09a2953B08081829E90f4a8d3"
+      values.validators.11:
+-        "0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"
++        "arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"
+      values.validators.12:
+-        "0xe7685c09633B47Fe123ff47ebeA903C3763924a2"
++        "arb1:0xe7685c09633B47Fe123ff47ebeA903C3763924a2"
+      values.validators.13:
+-        "0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
++        "arb1:0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
+      values.validatorUtils:
+-        "0x6c21303F5986180B1394d2C89f3e883890E2867b"
++        "arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b"
+      values.validatorWalletCreator:
+-        "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF"
++        "arb1:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF"
+      implementationNames.0x65AD139061B3f6DDb16170a07b925337ddf42407:
+-        "RollupProxy"
+      implementationNames.0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446:
+-        "RollupAdminLogic"
+      implementationNames.0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77:
+-        "RollupUserLogic"
+      implementationNames.arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407:
++        "RollupProxy"
+      implementationNames.arb1:0xdD91f6e88576fEc4A38A518DA39C92e13CBB6446:
++        "RollupAdminLogic"
+      implementationNames.arb1:0x1BeD37FeDFE8B2721a69A559313D2b58d16Ecd77:
++        "RollupUserLogic"
+    }
+```
+
+```diff
+    EOA  (0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB) {
+    +++ description: None
+      address:
+-        "0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB"
++        "arb1:0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB"
+    }
+```
+
+```diff
+    contract ValidatorUtils (0x6c21303F5986180B1394d2C89f3e883890E2867b) {
+    +++ description: This contract implements view only utilities for validators.
+      address:
+-        "0x6c21303F5986180B1394d2C89f3e883890E2867b"
++        "arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b"
+      implementationNames.0x6c21303F5986180B1394d2C89f3e883890E2867b:
+-        "ValidatorUtils"
+      implementationNames.arb1:0x6c21303F5986180B1394d2C89f3e883890E2867b:
++        "ValidatorUtils"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      address:
+-        "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
++        "arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
++        "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+      values.$members.1:
+-        "0x860e06Fe384D1A3340111e7D142E02642178c053"
++        "arb1:0x860e06Fe384D1A3340111e7D142E02642178c053"
+      values.$members.2:
+-        "0x50930d652266EF4127FA3A1906B7Cb9951076628"
++        "arb1:0x50930d652266EF4127FA3A1906B7Cb9951076628"
+      values.$members.3:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.4:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+      values.$members.5:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.6:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.$members.7:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "arb1:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.$members.8:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "arb1:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.$members.9:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.10:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "arb1:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      implementationNames.0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56:
+-        "GnosisSafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56:
++        "GnosisSafeProxy"
+      implementationNames.arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0x79F4b4f9103298460486EC644499Df9985E34170) {
+    +++ description: None
+      address:
+-        "0x79F4b4f9103298460486EC644499Df9985E34170"
++        "arb1:0x79F4b4f9103298460486EC644499Df9985E34170"
+    }
+```
+
+```diff
+    contract RollupEventInbox (0x7b18A3073774e00C072DeBd390ed6fE4251493A7) {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      address:
+-        "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
++        "arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"
++        "arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"
+      values.$pastUpgrades.0.2.0:
+-        "0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"
++        "arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C"
+      values.bridge:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.rollup:
+-        "0x65AD139061B3f6DDb16170a07b925337ddf42407"
++        "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
+      implementationNames.0x7b18A3073774e00C072DeBd390ed6fE4251493A7:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C:
+-        "RollupEventInbox"
+      implementationNames.arb1:0x7b18A3073774e00C072DeBd390ed6fE4251493A7:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0xF40C24bA346aA459ED28e196D4A46Cf17174bD6C:
++        "RollupEventInbox"
+    }
+```
+
+```diff
+    EOA  (0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7) {
+    +++ description: None
+      address:
+-        "0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7"
++        "arb1:0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7"
+    }
+```
+
+```diff
+    EOA  (0x7CD925c107dE5C06C100F2084bFA0422F21140f0) {
+    +++ description: None
+      address:
+-        "0x7CD925c107dE5C06C100F2084bFA0422F21140f0"
++        "arb1:0x7CD925c107dE5C06C100F2084bFA0422F21140f0"
+    }
+```
+
+```diff
+    EOA  (0x81175155D85377C337d92f1FA52Da166C3A4E7Ac) {
+    +++ description: None
+      address:
+-        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
++        "arb1:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+    }
+```
+
+```diff
+    EOA  (0x83433d51B327392aA694455231D2db092eE2A5Db) {
+    +++ description: None
+      address:
+-        "0x83433d51B327392aA694455231D2db092eE2A5Db"
++        "arb1:0x83433d51B327392aA694455231D2db092eE2A5Db"
+    }
+```
+
+```diff
+    EOA  (0x860e06Fe384D1A3340111e7D142E02642178c053) {
+    +++ description: None
+      address:
+-        "0x860e06Fe384D1A3340111e7D142E02642178c053"
++        "arb1:0x860e06Fe384D1A3340111e7D142E02642178c053"
+    }
+```
+
+```diff
+    EOA  (0x936cCC684c091b20806fA3C6668F7F1fD2B3C772) {
+    +++ description: None
+      address:
+-        "0x936cCC684c091b20806fA3C6668F7F1fD2B3C772"
++        "arb1:0x936cCC684c091b20806fA3C6668F7F1fD2B3C772"
+    }
+```
+
+```diff
+    EOA  (0xA0737fea60F0601A192E3d2c98865A883ab0bda2) {
+    +++ description: None
+      address:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "arb1:0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+    }
+```
+
+```diff
+    EOA  (0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038) {
+    +++ description: None
+      address:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "arb1:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    }
+```
+
+```diff
+    EOA  (0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4) {
+    +++ description: None
+      address:
+-        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
++        "arb1:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      address:
+-        "0xa58F38102579dAE7C584850780dDA55744f67DF1"
++        "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
++        "arb1:0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.$pastUpgrades.0.2.0:
+-        "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
++        "arb1:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"
+      values.$pastUpgrades.1.2.0:
+-        "0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"
++        "arb1:0x18ed2d5bF7c5943bFd20a2995b9879E30c9E8dDa"
+      values.$pastUpgrades.2.2.0:
+-        "0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
++        "arb1:0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2"
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.batchPosters.0:
+-        "0x336dD5a1aB948058E4c699fD7732c2AA78C10d90"
++        "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90"
+      values.batchPosters.1:
+-        "0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5"
++        "arb1:0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5"
+      values.batchPosters.2:
+-        "0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885"
++        "arb1:0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885"
+      values.batchPosters.3:
+-        "0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31"
++        "arb1:0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31"
+      values.batchPosters.4:
+-        "0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a"
++        "arb1:0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a"
+      values.batchPosters.5:
+-        "0x79F4b4f9103298460486EC644499Df9985E34170"
++        "arb1:0x79F4b4f9103298460486EC644499Df9985E34170"
+      values.batchPosters.6:
+-        "0x7CD925c107dE5C06C100F2084bFA0422F21140f0"
++        "arb1:0x7CD925c107dE5C06C100F2084bFA0422F21140f0"
+      values.batchPosters.7:
+-        "0x936cCC684c091b20806fA3C6668F7F1fD2B3C772"
++        "arb1:0x936cCC684c091b20806fA3C6668F7F1fD2B3C772"
+      values.batchPosters.8:
+-        "0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F"
++        "arb1:0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F"
+      values.batchPosters.9:
+-        "0xD327b75C2CA829835b2B5EA9535827e9a06a480B"
++        "arb1:0xD327b75C2CA829835b2B5EA9535827e9a06a480B"
+      values.batchPosters.10:
+-        "0xD6433a681832BD2020fc6d984Efb5f57fe9ac155"
++        "arb1:0xD6433a681832BD2020fc6d984Efb5f57fe9ac155"
+      values.batchPosters.11:
+-        "0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc"
++        "arb1:0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc"
+      values.batchPosters.12:
+-        "0xa65100caA20c06Bd278D83C60475ec4F69b23dc1"
++        "arb1:0xa65100caA20c06Bd278D83C60475ec4F69b23dc1"
+      values.batchPosters.13:
+-        "0xbE119cCc44373B15517e921e9a7D54362250662D"
++        "arb1:0xbE119cCc44373B15517e921e9a7D54362250662D"
+      values.bridge:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.reader4844:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.rollup:
+-        "0x65AD139061B3f6DDb16170a07b925337ddf42407"
++        "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
+      implementationNames.0xa58F38102579dAE7C584850780dDA55744f67DF1:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2:
+-        "SequencerInbox"
+      implementationNames.arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x066a4D939302470Bd83F1868A1Ae2485Fe75ccF2:
++        "SequencerInbox"
+    }
+```
+
+```diff
+    EOA  (0xa65100caA20c06Bd278D83C60475ec4F69b23dc1) {
+    +++ description: None
+      address:
+-        "0xa65100caA20c06Bd278D83C60475ec4F69b23dc1"
++        "arb1:0xa65100caA20c06Bd278D83C60475ec4F69b23dc1"
+    }
+```
+
+```diff
+    contract ChallengeManager (0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea) {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      address:
+-        "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea"
++        "arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"
++        "arb1:0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"
+      values.$pastUpgrades.0.2.0:
+-        "0x09824fe72BFF474d16D9c2774432E381BBD60662"
++        "arb1:0x09824fe72BFF474d16D9c2774432E381BBD60662"
+      values.$pastUpgrades.1.2.0:
+-        "0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"
++        "arb1:0x5cA988F213EfbCB86ED7e2AACB0C15c91e648f8d"
+      values.$pastUpgrades.2.2.0:
+-        "0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"
++        "arb1:0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED"
+      values.bridge:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.osp:
+-        "0xD89d54007079071cBA859127318b9F34eeB78049"
++        "arb1:0xD89d54007079071cBA859127318b9F34eeB78049"
+      values.resultReceiver:
+-        "0x65AD139061B3f6DDb16170a07b925337ddf42407"
++        "arb1:0x65AD139061B3f6DDb16170a07b925337ddf42407"
+      values.sequencerInbox:
+-        "0xa58F38102579dAE7C584850780dDA55744f67DF1"
++        "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1"
+      implementationNames.0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED:
+-        "ChallengeManager"
+      implementationNames.arb1:0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x5AA806015FEC88669bF7DAd746BB4ADC1E79BcED:
++        "ChallengeManager"
+    }
+```
+
+```diff
+    EOA  (0xB180d28c01D3248C3fa88d67154a5070e5039135) {
+    +++ description: None
+      address:
+-        "0xB180d28c01D3248C3fa88d67154a5070e5039135"
++        "arb1:0xB180d28c01D3248C3fa88d67154a5070e5039135"
+    }
+```
+
+```diff
+    EOA  (0xbE119cCc44373B15517e921e9a7D54362250662D) {
+    +++ description: None
+      address:
+-        "0xbE119cCc44373B15517e921e9a7D54362250662D"
++        "arb1:0xbE119cCc44373B15517e921e9a7D54362250662D"
+    }
+```
+
+```diff
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      address:
+-        "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
++        "arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"
+      values.$admin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.$implementation:
+-        "0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
++        "arb1:0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
+      values.$pastUpgrades.0.2.0:
+-        "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
++        "arb1:0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
+      values.$pastUpgrades.1.2.0:
+-        "0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
++        "arb1:0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447"
+      values.bridge:
+-        "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
++        "arb1:0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6"
+      values.getProxyAdmin:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.sequencerInbox:
+-        "0xa58F38102579dAE7C584850780dDA55744f67DF1"
++        "arb1:0xa58F38102579dAE7C584850780dDA55744f67DF1"
+      implementationNames.0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447:
+-        "Inbox"
+      implementationNames.arb1:0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb1:0x6C6cf18f13C3e9b969e3acE6b8F21DfF95d4D447:
++        "Inbox"
+    }
+```
+
+```diff
+    EOA  (0xC929c820dC03C2a22e44F440721Af3c835e071fc) {
+    +++ description: None
+      address:
+-        "0xC929c820dC03C2a22e44F440721Af3c835e071fc"
++        "arb1:0xC929c820dC03C2a22e44F440721Af3c835e071fc"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCC6f49cff395c4d160C61112522700dcB007c41d) {
+    +++ description: None
+      address:
+-        "0xCC6f49cff395c4d160C61112522700dcB007c41d"
++        "arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d"
+      values.owner:
+-        "0x3d0b021E1d2A8747411E3724d5165716B35448f3"
++        "arb1:0x3d0b021E1d2A8747411E3724d5165716B35448f3"
+      implementationNames.0xCC6f49cff395c4d160C61112522700dcB007c41d:
+-        "ProxyAdmin"
+      implementationNames.arb1:0xCC6f49cff395c4d160C61112522700dcB007c41d:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F) {
+    +++ description: None
+      address:
+-        "0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F"
++        "arb1:0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F"
+    }
+```
+
+```diff
+    EOA  (0xD327b75C2CA829835b2B5EA9535827e9a06a480B) {
+    +++ description: None
+      address:
+-        "0xD327b75C2CA829835b2B5EA9535827e9a06a480B"
++        "arb1:0xD327b75C2CA829835b2B5EA9535827e9a06a480B"
+    }
+```
+
+```diff
+    EOA  (0xD47FB043557CB2289B31d813dd4BC1223C91f872) {
+    +++ description: None
+      address:
+-        "0xD47FB043557CB2289B31d813dd4BC1223C91f872"
++        "arb1:0xD47FB043557CB2289B31d813dd4BC1223C91f872"
+    }
+```
+
+```diff
+    EOA  (0xD6433a681832BD2020fc6d984Efb5f57fe9ac155) {
+    +++ description: None
+      address:
+-        "0xD6433a681832BD2020fc6d984Efb5f57fe9ac155"
++        "arb1:0xD6433a681832BD2020fc6d984Efb5f57fe9ac155"
+    }
+```
+
+```diff
+    EOA  (0xd76a3aCEd4115B017301C54C211EC36aA5E37e05) {
+    +++ description: None
+      address:
+-        "0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"
++        "arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (0xD89d54007079071cBA859127318b9F34eeB78049) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0xD89d54007079071cBA859127318b9F34eeB78049"
++        "arb1:0xD89d54007079071cBA859127318b9F34eeB78049"
+      values.prover0:
+-        "0x54E0923782b701044444De5d8c3A45aC890b0881"
++        "arb1:0x54E0923782b701044444De5d8c3A45aC890b0881"
+      values.proverHostIo:
+-        "0x33c1514Bf90e202d242C299b37C60f908aa206D4"
++        "arb1:0x33c1514Bf90e202d242C299b37C60f908aa206D4"
+      values.proverMath:
+-        "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4"
++        "arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4"
+      values.proverMem:
+-        "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881"
++        "arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881"
+      implementationNames.0xD89d54007079071cBA859127318b9F34eeB78049:
+-        "OneStepProofEntry"
+      implementationNames.arb1:0xD89d54007079071cBA859127318b9F34eeB78049:
++        "OneStepProofEntry"
+    }
+```
+
+```diff
+    EOA  (0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc) {
+    +++ description: None
+      address:
+-        "0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc"
++        "arb1:0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc"
+    }
+```
+
+```diff
+    contract OneStepProverMath (0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4"
++        "arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4"
+      implementationNames.0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4:
+-        "OneStepProverMath"
+      implementationNames.arb1:0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4:
++        "OneStepProverMath"
+    }
+```
+
+```diff
+    EOA  (0xe7685c09633B47Fe123ff47ebeA903C3763924a2) {
+    +++ description: None
+      address:
+-        "0xe7685c09633B47Fe123ff47ebeA903C3763924a2"
++        "arb1:0xe7685c09633B47Fe123ff47ebeA903C3763924a2"
+    }
+```
+
+```diff
+    EOA  (0xEBe1766201dd69A09a2953B08081829E90f4a8d3) {
+    +++ description: None
+      address:
+-        "0xEBe1766201dd69A09a2953B08081829E90f4a8d3"
++        "arb1:0xEBe1766201dd69A09a2953B08081829E90f4a8d3"
+    }
+```
+
+```diff
+    EOA  (0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C) {
+    +++ description: None
+      address:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "arb1:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    }
+```
+
+```diff
+    EOA  (0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0) {
+    +++ description: None
+      address:
+-        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
++        "arb1:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
+```diff
+    EOA  (0xF3313C48BD8E17b823d5498D62F37019dFEA647D) {
+    +++ description: None
+      address:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "arb1:0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    }
+```
+
+```diff
+    EOA  (0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822) {
+    +++ description: None
+      address:
+-        "0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
++        "arb1:0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881) {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      address:
+-        "0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881"
++        "arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881"
+      implementationNames.0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881:
+-        "OneStepProverMemory"
+      implementationNames.arb1:0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881:
++        "OneStepProverMemory"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x33c1514Bf90e202d242C299b37C60f908aa206D4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x3d0b021E1d2A8747411E3724d5165716B35448f3)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x54E0923782b701044444De5d8c3A45aC890b0881)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x6c21303F5986180B1394d2C89f3e883890E2867b)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x7b18A3073774e00C072DeBd390ed6fE4251493A7)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xCC6f49cff395c4d160C61112522700dcB007c41d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xD89d54007079071cBA859127318b9F34eeB78049)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xE58a2dEb5718F9aAF2C1DdD0E366ED076D204cc4)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xf8E5e5562c2c12d8690786f5C9FA65F20F6bD881)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+Generated with discovered.json: 0x6a34831beaaf63b0e06c1425302e7bb2ab8b471d
 
 # Diff at Fri, 11 Jul 2025 12:39:16 GMT:
 

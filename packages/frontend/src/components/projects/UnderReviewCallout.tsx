@@ -2,37 +2,36 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { cn } from '~/utils/cn'
 
 interface Props {
-  small?: boolean
+  withoutDescription?: boolean
   className?: string
 }
 
-export function UnderReviewCallout({ small, className }: Props) {
+export function UnderReviewCallout({ withoutDescription, className }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-col rounded-lg bg-yellow-700/20',
-        small ? 'gap-2 p-4' : 'items-center gap-4 p-8',
+        'flex flex-col rounded bg-warning/20',
+        withoutDescription ? 'gap-2 p-2' : 'items-center gap-4 p-8',
         className,
       )}
     >
-      <div>
+      <div className="flex items-center">
         <UnderReviewIcon
           className={cn(
-            '-top-0.5 relative inline-block',
-            small ? 'size-4' : 'size-6',
+            'relative inline-block',
+            withoutDescription ? 'size-4' : 'size-6',
           )}
         />
         <span
-          className={cn('ml-2 inline-block font-medium', !small && 'text-2xl')}
+          className={cn(
+            'ml-2 inline-block font-medium',
+            withoutDescription && 'text-label-value-14',
+          )}
         >
           Under Review
         </span>
       </div>
-      {small ? (
-        <p className="text-balance text-sm">
-          Projects under review might present incomplete info & data.
-        </p>
-      ) : (
+      {!withoutDescription && (
         <p className="text-balance text-center text-sm">
           The information in the section might be incomplete or outdated.
           <br />

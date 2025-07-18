@@ -1,5 +1,5 @@
 import type { ContractValue } from '@l2beat/discovery'
-import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 
 // TODO(radomski): This is duplicated from discovery/extractors.ts. Pulling
 // functions from discovery would make config dependent on discovery. We want
@@ -8,13 +8,13 @@ import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 // this since in the future ProjectDiscovery might be removed.
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,
-): EthereumAddress[] {
+): ChainSpecificAddress[] {
   return toAddressArray(values?.$implementation)
 }
 
 export function get$Admins(
   values: Record<string, ContractValue | undefined> | undefined,
-): EthereumAddress[] {
+): ChainSpecificAddress[] {
   return toAddressArray(values?.$admin)
 }
 
@@ -25,19 +25,28 @@ export function toAddressRecord(value: ContractValue | undefined) {
         [
           e[0] as string,
           e[1] as unknown as Hash256,
-          e[2] as unknown as EthereumAddress[],
-        ] as [string, Hash256, EthereumAddress[]],
+          e[2] as unknown as ChainSpecificAddress[],
+        ] as [string, Hash256, ChainSpecificAddress[]],
     )
   }
   return []
 }
 
-export function toAddressArray(value: ContractValue | undefined) {
-  if (typeof value === 'string') {
-    return [value as unknown as EthereumAddress]
+export function toAddressArray(
+  value: ContractValue | undefined,
+): ChainSpecificAddress[] {
+  if (Array.isArray(value)) {
+    return value.flatMap((v) => toAddressArray(v))
   }
-  if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
-    return value.map((v) => v as unknown as EthereumAddress)
+  if (typeof value === 'object') {
+    return Object.values(value).flatMap((v) => toAddressArray(v))
+  }
+  if (typeof value === 'string') {
+    try {
+      return [ChainSpecificAddress(value)]
+    } catch {
+      return []
+    }
   }
   return []
 }

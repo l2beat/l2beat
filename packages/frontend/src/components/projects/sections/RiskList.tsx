@@ -19,7 +19,7 @@ export function RiskList({ risks }: RiskList) {
       {risks.map((risk, i) => (
         <li className="mt-2 flex gap-3 first:mt-0" key={i}>
           <ShieldIcon className="shrink-0 fill-red-300" />
-          <p className="leading-snug">
+          <p className="text-paragraph-15 md:text-paragraph-16">
             {risk.isCritical ? (
               <>
                 {risk.text.slice(0, -1)}{' '}

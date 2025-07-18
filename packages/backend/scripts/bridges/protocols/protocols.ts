@@ -1,12 +1,17 @@
-import type { Log } from 'viem'
 import type { Chain } from '../chains'
-import type { Receive } from '../types/Receive'
-import type { Send } from '../types/Send'
+import type { Message } from '../types/Message'
+import type { TransactionWithViemLogs } from '../types/TransactionWithViemLogs'
 import { ACROSS } from './decoders/across'
+import { CCTPV1 } from './decoders/cctpv1'
+import { CCTPV2 } from './decoders/cctpv2'
+import { LAYERZEROV2 } from './decoders/layerzerov2'
 
 interface Protocol {
   name: string
-  decoder: (chain: Chain, log: Log) => Send | Receive | undefined
+  decoder: (
+    chain: Chain,
+    transaction: TransactionWithViemLogs,
+  ) => Message | undefined
 }
 
-export const PROTOCOLS: Protocol[] = [ACROSS]
+export const PROTOCOLS: Protocol[] = [ACROSS, CCTPV1, CCTPV2, LAYERZEROV2]

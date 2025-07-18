@@ -1,4 +1,10 @@
-import { assert, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
@@ -8,7 +14,7 @@ import type { ProxyDetails } from '../types'
 
 async function getPastUpgrades(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<DateAddresses[]> {
   const abi = new utils.Interface([
     'event Upgraded(address indexed implementation)',
@@ -30,32 +36,43 @@ async function getPastUpgrades(
   return await Promise.all(
     logs.map(async (l) => {
       const parsed = abi.parseLog(l)
-      let implementation: EthereumAddress | undefined
+      let implementation: ChainSpecificAddress | undefined
       parsed.eventFragment.inputs.forEach((input, index) => {
         if (input.name === 'implementation') {
-          implementation = parsed.args[index]
+          implementation = ChainSpecificAddress.fromLong(
+            provider.chain,
+            parsed.args[index],
+          )
         }
       })
       assert(implementation !== undefined)
 
       const providerAtBlock = provider.switchBlock(l.blockNumber)
-      const oldFork =
-        (await providerAtBlock.callMethod<EthereumAddress>(
-          address,
-          'function oldFork() view returns (address)',
-          [],
-        )) ?? EthereumAddress.ZERO
-      const newFork =
-        (await providerAtBlock.callMethod<EthereumAddress>(
-          address,
-          'function newFork() view returns (address)',
-          [],
-        )) ?? EthereumAddress.ZERO
+      const oldFork = await providerAtBlock.callMethod<EthereumAddress>(
+        address,
+        'function oldFork() view returns (address)',
+        [],
+      )
+      const newFork = await providerAtBlock.callMethod<EthereumAddress>(
+        address,
+        'function newFork() view returns (address)',
+        [],
+      )
 
       return [
         dateMap[l.blockNumber] ?? 'ERROR',
         Hash256(l.transactionHash),
-        [implementation, oldFork, newFork],
+        [
+          implementation,
+          ChainSpecificAddress.fromLong(
+            provider.chain,
+            oldFork ?? EthereumAddress.ZERO,
+          ),
+          ChainSpecificAddress.fromLong(
+            provider.chain,
+            newFork ?? EthereumAddress.ZERO,
+          ),
+        ],
       ]
     }),
   )
@@ -63,21 +80,19 @@ async function getPastUpgrades(
 
 export async function gatTaikoForkProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const mainImplementation = await getImplementation(provider, address)
-  const oldFork =
-    (await provider.callMethod<EthereumAddress>(
-      address,
-      'function oldFork() view returns (address)',
-      [],
-    )) ?? EthereumAddress.ZERO
-  const newFork =
-    (await provider.callMethod<EthereumAddress>(
-      address,
-      'function newFork() view returns (address)',
-      [],
-    )) ?? EthereumAddress.ZERO
+  const oldFork = await provider.callMethod<EthereumAddress>(
+    address,
+    'function oldFork() view returns (address)',
+    [],
+  )
+  const newFork = await provider.callMethod<EthereumAddress>(
+    address,
+    'function newFork() view returns (address)',
+    [],
+  )
 
   const admin = await provider.callMethod<EthereumAddress>(
     address,
@@ -86,13 +101,28 @@ export async function gatTaikoForkProxy(
   )
 
   const pastUpgrades = await getPastUpgrades(provider, address)
-  const implementations = [...new Set([mainImplementation, oldFork, newFork])]
+  const implementations = [
+    ...new Set([
+      mainImplementation,
+      ChainSpecificAddress.fromLong(
+        provider.chain,
+        oldFork ?? EthereumAddress.ZERO,
+      ),
+      ChainSpecificAddress.fromLong(
+        provider.chain,
+        newFork ?? EthereumAddress.ZERO,
+      ),
+    ]),
+  ]
   return {
     type: 'TaikoFork proxy',
     values: {
-      $admin: (admin ?? EthereumAddress.ZERO).toString(),
+      $admin: ChainSpecificAddress.fromLong(
+        provider.chain,
+        admin ?? EthereumAddress.ZERO,
+      ).toString(),
       $implementation: implementations.filter(
-        (i) => i !== EthereumAddress.ZERO,
+        (i) => i !== ChainSpecificAddress.ZERO(provider.chain),
       ),
       $pastUpgrades: pastUpgrades as ContractValue,
       $upgradeCount: pastUpgrades.length,

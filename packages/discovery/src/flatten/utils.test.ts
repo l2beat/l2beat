@@ -1,10 +1,10 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { ContractSources } from '../discovery/source/SourceCodeService'
 import { getHashForMatchingFromSources } from './utils'
 
-const CORRECT_SUPERCHAIN_CONFIG_ADDR = EthereumAddress(
-  '0x95703e0982140D16f8ebA6d158FccEde42f04a4C',
+const CORRECT_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
+  'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C',
 )
 const CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH = Hash256(
   '0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d',
@@ -133,7 +133,9 @@ const superchainConfigSources: ContractSources = {
     {
       hash: CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH.toString(),
       name: 'SuperchainConfig',
-      address: EthereumAddress('0x53c165169401764778F780a69701385eb0FF19B7'),
+      address: ChainSpecificAddress(
+        'eth:0x53c165169401764778F780a69701385eb0FF19B7',
+      ),
       source: {
         name: 'SuperchainConfig',
         isVerified: true,

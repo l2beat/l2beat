@@ -1,6 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-import { getChainShortName } from '../../config/config.discovery'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -18,7 +16,6 @@ export function combinePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   options: { skipDependentDiscoveries?: boolean } = {},
 ) {
-  const shortChain = getChainShortName(discovery.chain)
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,
@@ -43,7 +40,7 @@ export function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${shortChain}:${entry.address}`) &&
+          p.receiver.startsWith(entry.address) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -62,7 +59,7 @@ export function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          ChainSpecificAddress(`${shortChain}:${entry.address}`),
+          entry.address,
         )
           ? true
           : undefined

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -20,11 +25,14 @@ export const treasure: ScalingProject = zkStackL2({
   discovery,
   additionalBadges: [BADGES.DA.CustomDA],
   addedAt: UnixTime(1733875200), // 2024-12-11T00:00:00Z
+  archivedAt: UnixTime(1752676593), // 2025-07-16T15:36:00Z
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Treasure',
     slug: 'treasure',
+    headerWarning:
+      'The project had a planned shutdown after a [governance vote](https://snapshot.box/#/s:treasuregaming.eth/proposal/0x733799d525cec0794f157cbace52851b28809706eb87d51472dac8584949d791).',
     description:
       'Treasure is a gaming-specific L2 built on ZKsync, the Elastic Network. Treasure offers an end-to-end tech stack for developers and consumer apps to build the next generation of gaming.',
     links: {
@@ -61,7 +69,7 @@ export const treasure: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: ['MAGIC'],
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',

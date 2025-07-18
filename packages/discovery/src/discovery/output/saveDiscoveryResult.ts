@@ -1,5 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { assert, type EthereumAddress, formatJson } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type EthereumAddress,
+  formatJson,
+} from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'
@@ -111,7 +116,7 @@ async function saveSources(
           i,
           contract.sourceBundles.length,
           contract.name,
-          contract.address,
+          ChainSpecificAddress.address(contract.address), // TODO(radomski): The output path should prolly change
           sourcesPath,
           allContractNames,
         )

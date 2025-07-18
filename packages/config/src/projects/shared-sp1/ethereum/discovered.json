@@ -2,11 +2,11 @@
   "name": "shared-sp1",
   "chain": "ethereum",
   "blockNumber": 22882427,
-  "configHash": "0x84dddf90825e64697171d1d6005cf2dee7c00686ffa4dc3305861c0d95eb98aa",
+  "configHash": "0x02b549225201f0f9f6f2f5ebcacd2330e573b866b32d449f73b8ae0c433d03d0",
   "entries": [
     {
       "name": "SP1Verifier",
-      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "address": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
       "type": "Contract",
       "template": "succinct/SP1Verifier",
       "sourceHashes": [
@@ -22,12 +22,12 @@
         "VERSION": "v5.0.0"
       },
       "implementationNames": {
-        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
     },
     {
       "name": "SP1VerifierGateway",
-      "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "address": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
       "type": "Contract",
       "template": "succinct/SP1VerifierGateway",
       "sourceHashes": [
@@ -42,52 +42,52 @@
         "activeVerifiers": [
           {
             "selector": "0xd4e8ecd2",
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
           }
         ],
         "allVerifiers": [
           {
             "selector": "0x801c66ac",
-            "verifier": "0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"
+            "verifier": "eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"
           },
           {
             "selector": "0x8c5bc5e4",
-            "verifier": "0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"
+            "verifier": "eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"
           },
           {
             "selector": "0xfedc1fcc",
-            "verifier": "0x36B353776AF6EF3A2bD707049e783F52c4209017"
+            "verifier": "eth:0x36B353776AF6EF3A2bD707049e783F52c4209017"
           },
           {
             "selector": "0xc430ff7f",
-            "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
+            "verifier": "eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
           },
           {
             "selector": "0xc865c1b6",
-            "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
+            "verifier": "eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
           },
           {
             "selector": "0x4aca240a",
-            "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d"
+            "verifier": "eth:0x1764C29FBd94865198588f10FC75D4f6636d158d"
           },
           {
             "selector": "0x09069090",
-            "verifier": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"
+            "verifier": "eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"
           },
           {
             "selector": "0x54bdcae3",
-            "verifier": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
+            "verifier": "eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
           },
           {
             "selector": "0x1b34fe11",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+            "verifier": "eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
           },
           {
             "selector": "0xd4e8ecd2",
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+            "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
           }
         ],
-        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
+        "owner": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
       },
       "fieldMeta": {
         "activeVerifiers": {
@@ -98,27 +98,27 @@
         }
       },
       "implementationNames": {
-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
+        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
       }
     },
     {
-      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "address": "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
+      "address": "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "address": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "SP1VerifierGatewayMultisig",
-      "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "address": "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -139,11 +139,11 @@
       "sinceBlock": 20573748,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-          "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
+          "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+          "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "eth:0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
         ],
         "$threshold": 2,
         "domainSeparator": "0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e",
@@ -154,13 +154,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     }
   ],
   "abis": {
-    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
       "function VERIFIER_HASH() pure returns (bytes32)",
@@ -169,7 +169,7 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -188,10 +188,10 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -246,5 +246,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x2fcc3a419c4134ca8a046911ef959b108691eee1a3259350f2c5b6a45afd3ba0"
+  "permissionsConfigHash": "0xdc2deb6f7087a92eb180fce5107eb4f47fcf970b11072b4b4fcdb9b6d6b8a416"
 }

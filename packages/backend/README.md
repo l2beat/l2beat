@@ -31,7 +31,7 @@ online.
 Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
 
 To update database schema to the latest version run `pnpm dev:migrate`. That way you will have the
-lastest schema in your local database.
+latest schema in your local database.
 
 ### Third party services
 

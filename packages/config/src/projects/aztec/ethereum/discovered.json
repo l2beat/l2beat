@@ -2,16 +2,16 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 22466421,
-  "configHash": "0x9195f1997790303f7f535a2456ab2f89f144af4c924977dbb77b401200e74234",
+  "configHash": "0x7720ae88a9378ef0834030c333b28875e3682082aa2010685f94a0604c05139f",
   "entries": [
     {
-      "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
+      "address": "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "AztecFeeDistributor",
-      "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
+      "address": "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
       "type": "Contract",
       "template": "aztecv1/AztecFeeDistributor",
       "sourceHashes": [
@@ -25,13 +25,13 @@
       "values": {
         "$immutable": true,
         "convertConstant": 3155360,
-        "factory": "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
-        "owner": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
+        "factory": "eth:0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f",
+        "owner": "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD",
         "reimburseConstant": 0,
-        "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
-        "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+        "rollupProcessor": "eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+        "router": "eth:0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
         "txFeeBalance": ["5339097179978451320", 0, 59000],
-        "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "WETH": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "fieldMeta": {
         "reimburseConstant": {
@@ -40,12 +40,12 @@
         }
       },
       "implementationNames": {
-        "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": "AztecFeeDistributor"
+        "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": "AztecFeeDistributor"
       }
     },
     {
       "name": "TurboVerifier",
-      "address": "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8",
+      "address": "eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8",
       "type": "Contract",
       "template": "aztecv1/TurboVerifier",
       "sourceHashes": [
@@ -57,12 +57,12 @@
       "sinceBlock": 19232962,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": "TurboVerifier"
+        "eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": "TurboVerifier"
       }
     },
     {
       "name": "RollupProcessor",
-      "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+      "address": "eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
       "type": "Contract",
       "template": "aztecv1/RollupProcessor",
       "sourceHashes": [
@@ -94,7 +94,7 @@
         "escapeBlockLowerBound": 4560,
         "escapeBlockUpperBound": 4800,
         "ethAssetId": 0,
-        "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
+        "feeDistributor": "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
         "getEscapeHatchStatus": [false, 2139],
         "getTotalDeposited": [
@@ -120,11 +120,11 @@
         "nextRollupId": 4465,
         "nullRoot": "0x08a711d730567bcf2be2f5906a04dc3c56073572041022f9155aa5764204b093",
         "numberOfAssets": 4,
-        "owner": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
         "paused": false,
         "removedRollupProviders": [],
         "rollupNumPubInputs": 14,
-        "rollupProviders": ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
+        "rollupProviders": ["eth:0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
         "rollupPubInputLength": 448,
         "rootRoot": "0x26df1e6cfb8b21afaab4b0e5f0672c667194ce627a85357c0ed2ca7c91319a4c",
         "totalDeposited": [
@@ -149,7 +149,7 @@
         ],
         "txNumPubInputs": 12,
         "txPubInputLength": 384,
-        "verifier": "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8"
+        "verifier": "eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8"
       },
       "fieldMeta": {
         "rollupProviders": {
@@ -164,17 +164,17 @@
         }
       },
       "implementationNames": {
-        "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": "RollupProcessor"
+        "eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": "RollupProcessor"
       }
     },
     {
-      "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
+      "address": "eth:0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Aztec Multisig",
-      "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
+      "address": "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -187,10 +187,10 @@
       "sinceBlock": 11647532,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
-          "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
+          "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD",
+          "eth:0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "$threshold": 1,
         "domainSeparator": "0xf37d5181cb1c7c67c7e79d1dd66f78e41f525d498f652270e8f68c486406872b",
@@ -201,26 +201,26 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xE298a76986336686CC3566469e3520d23D1a8aaD": "Proxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD": "Proxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "FirstAnvilAddress",
-      "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "address": "eth:0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
       "proxyType": "immutable",
       "ignoreInWatchMode": ["$implementation"],
       "values": { "$immutable": true }
     },
     {
-      "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
+      "address": "eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": [
+    "eth:0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": [
       "constructor(address _rollupProcessor, address _router)",
       "event Convert(uint256 assetId, uint256 inputValue, uint256 outputValue)",
       "event FeeReimbursed(address receiver, uint256 amount)",
@@ -241,10 +241,10 @@
       "function transferOwnership(address newOwner)",
       "function txFeeBalance(uint256 assetId) view returns (uint256)"
     ],
-    "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": [
+    "eth:0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": [
       "function verify(bytes, uint256 rollup_size)"
     ],
-    "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": [
+    "eth:0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": [
       "constructor(address _verifierAddress, uint256 _escapeBlockLowerBound, uint256 _escapeBlockUpperBound, address _contractOwner)",
       "event AssetAdded(uint256 indexed assetId, address indexed assetAddress)",
       "event Deposit(uint256 assetId, address depositorAddress, uint256 depositValue)",
@@ -303,7 +303,7 @@
       "function userPendingDeposits(uint256, address) view returns (uint256)",
       "function verifier() view returns (address)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -352,7 +352,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xE298a76986336686CC3566469e3520d23D1a8aaD": [
+    "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD": [
       "constructor(address _masterCopy)"
     ]
   },
@@ -362,5 +362,5 @@
     "aztecv1/TurboVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xec42ca9e55d51f2d749ad0d6b769728d534e506cc2457d461d66a2f1f74396f5"
+  "permissionsConfigHash": "0x070536a744866688212a99f1e8ed5b203a4eda91a14acffd20c71e349ab49445"
 }
