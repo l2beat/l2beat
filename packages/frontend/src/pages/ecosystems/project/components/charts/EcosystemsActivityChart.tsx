@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import round from 'lodash/round'
 import { useMemo, useState } from 'react'
 import { ComposedChart, Line, YAxis } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
@@ -161,10 +162,11 @@ export function EcosystemsActivityChart({
             mirror
             tickCount={3}
             dy={-10}
-            unit={'x'}
+            tickFormatter={(value) => `${round(value, 2)}x`}
             tick={{
               width: 100,
             }}
+            domain={([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1]}
           />
           <ChartTooltip
             content={

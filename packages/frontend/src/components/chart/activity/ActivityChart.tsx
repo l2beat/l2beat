@@ -146,10 +146,11 @@ export function ActivityChart({
           mirror
           tickCount={3}
           dy={-10}
-          unit={'x'}
+          tickFormatter={(value) => `${round(value, 2)}x`}
           tick={{
             width: 100,
           }}
+          domain={([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1]}
         />
         {getCommonChartComponents({
           data,
