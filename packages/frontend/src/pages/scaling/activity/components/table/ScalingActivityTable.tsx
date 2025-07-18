@@ -8,7 +8,7 @@ import type { ScalingActivityEntry } from '~/server/features/scaling/activity/ge
 import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compareActivityEntry'
 import type { ActivityMetric } from '../ActivityMetricContext'
 import { useActivityMetricContext } from '../ActivityMetricContext'
-import { getScalingActivityColumns } from './Columns'
+import { getScalingActivityColumns } from './columns'
 
 interface Props {
   entries: ScalingActivityEntry[]

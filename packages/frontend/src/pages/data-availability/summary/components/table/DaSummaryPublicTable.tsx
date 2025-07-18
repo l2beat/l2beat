@@ -21,7 +21,7 @@ import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../components/BasicDaTable'
-import { publicSystemsColumns } from './Columns'
+import { publicSystemsColumns } from './columns'
 import { ProjectsUsedIn } from './ProjectsUsedIn'
 
 export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {

@@ -4,7 +4,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/getBridgesArchivedEntries'
-import { getBridgesArchivedColumns } from './Columns'
+import { getBridgesArchivedColumns } from './columns'
 
 export interface Props {
   entries: BridgesArchivedEntry[]
