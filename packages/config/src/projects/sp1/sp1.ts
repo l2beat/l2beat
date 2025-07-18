@@ -44,33 +44,33 @@ export const sp1: BaseProject = {
       ],
     },
     proofSystemInfo: `
-        
+
         ## Description
 
-        SP1 is a RISC-V ZKVM using the Plonky3 stack. ZKVM execution is proven recursively and is wrapped into a SNARK for final verification. 
+        SP1 is a RISC-V ZKVM using the Plonky3 stack. ZKVM execution is proven recursively and is wrapped into a SNARK for final verification.
         It provides tools to generate onchain Groth16 or Plonk verifiers.
 
         ## Proof system
 
-        SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3. 
-        VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system. 
-        The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof 
+        SP1 proves execution of a RISC-V VM using several ZK circuits connected by lookup arguments, as implemented in Plonky3.
+        VM execution trace is split into several chunks that could be proven in parallel with a STARK proving system.
+        The parallelized proofs are recursively checked by the next layer of STARK circuits. The correctness of the final STARK proof
         is verified with the final wrap SNARK program, the wrap SNARK proof is verified onchain.
 
         ### Top-level proof system
 
-        Verifies execution of a RISC-V program in a ZKVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with 
+        Verifies execution of a RISC-V program in a ZKVM. Uses [Plonky3](https://github.com/Plonky3/Plonky3) STARK toolkit with
         AIR arithmetization and FRI-based polynomial commitment scheme. ([link](https://github.com/succinctlabs/sp1/tree/dev?tab=readme-ov-file#acknowledgements))
 
         ### Recursion circuits
 
-        Verifies execution of a RISC-V program in a ZKVM. Uses the same toolkit as top-level proof system, but proves the correct 
+        Verifies execution of a RISC-V program in a ZKVM. Uses the same toolkit as top-level proof system, but proves the correct
         verification of all proofs generated on the previous step. ([link](https://docs.succinct.xyz/docs/sp1/writing-programs/proof-aggregation))
 
         ### Final wrap
 
-        SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof 
-        verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark) 
+        SP1 supports Plonk (with KZG polynomial commitments) or Groth16 final SNARK wrap of the STARK proof for performant onchain proof
+        verification ([link](https://docs.succinct.xyz/docs/sp1/generating-proofs/proof-types#compressed)). The [gnark](https://github.com/Consensys/gnark)
         implementation of these proof systems is used.
 
         ## Trusted setup
@@ -83,8 +83,8 @@ export const sp1: BaseProject = {
 
         ### Plonk
 
-        Plonk proving system used by Succinct utilizes Aztec Ignition universal Plonk setup files. 
-        The setup data is downloaded from URL [https://aztec-ignition.s3.amazonaws.com/](https://aztec-ignition.s3.amazonaws.com/) in the 
+        Plonk proving system used by Succinct utilizes Aztec Ignition universal Plonk setup files.
+        The setup data is downloaded from URL [https://aztec-ignition.s3.amazonaws.com/](https://aztec-ignition.s3.amazonaws.com/) in the
         [DownloadAndSaveAztecIgnitionSrs](https://github.com/succinctlabs/sp1/blob/ad212dd52bdf8f630ea47f2b58aa94d5b6e79904/crates/recursion/gnark-ffi/go/sp1/trusted_setup/trusted_setup.go#L69) function.
         `,
     trustedSetups: [
