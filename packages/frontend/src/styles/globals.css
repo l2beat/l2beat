@@ -37,6 +37,12 @@ body:has(.reading) {
   }
 }
 
+@custom-variant project-page {
+  &:where(.project-page *) {
+    @slot;
+  }
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
