@@ -6,7 +6,7 @@ import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { formatCostValue } from '../utils/formatCostValue'
 import { useCostsMetricContext } from './CostsMetricContext'
 import { useCostsUnitContext } from './CostsUnitContext'
-import type { CostsData } from './table/Columns'
+import type { CostsData } from './table/columns'
 
 interface Props {
   data: CostsData

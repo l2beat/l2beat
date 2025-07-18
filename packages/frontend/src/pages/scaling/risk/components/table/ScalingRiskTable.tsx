@@ -4,7 +4,7 @@ import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
-import { getScalingRiskColumns } from './Columns'
+import { getScalingRiskColumns } from './columns'
 
 export function ScalingRiskTable({
   entries,

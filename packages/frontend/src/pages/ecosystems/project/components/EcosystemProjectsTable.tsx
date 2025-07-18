@@ -4,7 +4,7 @@ import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
-import { getEcosystemProjectsColumns } from './table/Columns'
+import { getEcosystemProjectsColumns } from './table/columns'
 
 interface Props {
   entries: EcosystemProjectEntry[]

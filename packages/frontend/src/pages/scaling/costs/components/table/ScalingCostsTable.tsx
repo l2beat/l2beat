@@ -12,8 +12,8 @@ import type { CostsMetric } from '../CostsMetricContext'
 import { useCostsMetricContext } from '../CostsMetricContext'
 import { useCostsTimeRangeContext } from '../CostsTimeRangeContext'
 import { useCostsUnitContext } from '../CostsUnitContext'
-import type { ScalingCostsTableEntry } from './Columns'
-import { getScalingCostsColumns } from './Columns'
+import type { ScalingCostsTableEntry } from './columns'
+import { getScalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]

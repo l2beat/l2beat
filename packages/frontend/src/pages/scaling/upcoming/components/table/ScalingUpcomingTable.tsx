@@ -3,7 +3,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
-import { scalingUpcomingColumns } from './Columns'
+import { scalingUpcomingColumns } from './columns'
 
 interface Props {
   entries: ScalingUpcomingEntry[]

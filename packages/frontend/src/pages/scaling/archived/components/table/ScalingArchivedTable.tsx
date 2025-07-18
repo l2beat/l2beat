@@ -3,7 +3,7 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
-import { getScalingArchivedColumns } from './Columns'
+import { getScalingArchivedColumns } from './columns'
 
 interface Props {
   entries: ScalingArchivedEntry[]
