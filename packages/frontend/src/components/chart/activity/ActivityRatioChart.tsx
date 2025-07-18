@@ -14,6 +14,7 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
@@ -29,6 +30,8 @@ interface Props {
 }
 
 export function ActivityRatioChart({ data, isLoading, className }: Props) {
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'xs' || breakpoint === 'sm'
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -38,7 +41,6 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
       },
     },
   } satisfies ChartMeta
-
   return (
     <ChartContainer
       data={data}
@@ -52,7 +54,7 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
         accessibilityLayer
         data={data}
         margin={{ top: 20 }}
-        syncId="activity"
+        syncId={isMobile ? undefined : 'activity'}
       >
         <Area
           dataKey="ratio"

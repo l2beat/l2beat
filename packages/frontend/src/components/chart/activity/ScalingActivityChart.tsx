@@ -86,12 +86,10 @@ export function ScalingActivityChart({
   )
 
   const ratioData = useMemo(() => {
-    return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => {
-      return {
-        timestamp,
-        ratio: projectsUops / projectsTx,
-      }
-    })
+    return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
+      timestamp,
+      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+    }))
   }, [data?.data])
 
   const chartRange = getChartRange(chartData)
