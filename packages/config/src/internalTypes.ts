@@ -246,6 +246,7 @@ export interface Bridge {
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
   display: BridgeDisplay
+  colors?: ProjectColors
   config: BridgeConfig
   chainConfig?: ChainConfig
   riskView: ProjectBridgeRisks

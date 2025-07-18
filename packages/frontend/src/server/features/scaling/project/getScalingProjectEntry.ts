@@ -1,5 +1,6 @@
 import type {
   Project,
+  ProjectColors,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
@@ -55,6 +56,7 @@ export interface ProjectScalingEntry {
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
+  colors: ProjectColors | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -123,6 +125,7 @@ export async function getScalingProjectEntry(
     | 'milestones'
     | 'trackedTxsConfig'
     | 'livenessConfig'
+    | 'colors'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
@@ -151,6 +154,7 @@ export async function getScalingProjectEntry(
       ? getCostsSection(helpers, project)
       : undefined,
   ])
+
   const projectLiveness = liveness[project.id]
 
   const ongoingAnomalies = projectLiveness?.anomalies.filter(
@@ -227,6 +231,7 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
+    colors: env.CLIENT_SIDE_PARTNERS ? project.colors : undefined,
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project),

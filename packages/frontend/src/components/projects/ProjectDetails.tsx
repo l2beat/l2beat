@@ -1,5 +1,4 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-
 import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
