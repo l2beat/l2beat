@@ -20,5 +20,6 @@ export function getDiscoveryInfo(
     permissionsDiscoDriven: false,
     contractsDiscoDriven: false,
     blockNumberPerChain,
+    hasDiscoUi: false,
   }
 }

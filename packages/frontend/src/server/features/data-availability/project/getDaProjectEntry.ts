@@ -97,7 +97,7 @@ export async function getDaProjectEntry(
   const bridges = (
     await ps.getProjects({
       select: ['daBridge', 'display', 'statuses'],
-      optional: ['permissions', 'contracts'],
+      optional: ['permissions', 'contracts', 'discoveryInfo'],
     })
   ).filter((x) => x.daBridge.daLayer === layer.id)
 
@@ -204,7 +204,7 @@ export async function getDaProjectEntry(
       title: bridge.daBridge.name,
       href: `/data-availability/projects/${layer.slug}/${bridge.slug}`,
     })),
-    discoUiHref: selected
+    discoUiHref: selected?.discoveryInfo?.hasDiscoUi
       ? `https://disco.l2beat.com/ui/p/${selected.id}`
       : undefined,
   }

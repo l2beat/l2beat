@@ -174,7 +174,8 @@ body:has(.reading) {
   --breakpoint-sm: 550px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1200px;
-  --breakpoint-xl: 1920px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1920px;
 
   --font-\*: initial;
   --font-roboto: "Roboto", "Arial", sans-serif;

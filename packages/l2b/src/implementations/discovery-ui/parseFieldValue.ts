@@ -1,5 +1,5 @@
-import { getChainFullName, isChainShortName } from '@l2beat/discovery'
-import { toAddress } from './toAddress'
+import { isChainShortName } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ApiAddressType, FieldValue } from './types'
 
 export function parseFieldValue(
@@ -10,7 +10,7 @@ export function parseFieldValue(
   if (typeof value === 'string') {
     if (/^0x[a-f\d]*$/i.test(value)) {
       if (value.length === 42) {
-        const address = toAddress(chain, value)
+        const address = ChainSpecificAddress.fromLong(chain, value)
         return {
           type: 'address',
           name: meta[address]?.name,
@@ -24,7 +24,7 @@ export function parseFieldValue(
       const [prefix, rawAddress] = value.split(':')
 
       if (isChainShortName(prefix) && rawAddress.length === 42) {
-        const address = toAddress(getChainFullName(prefix), rawAddress)
+        const address = ChainSpecificAddress.from(prefix, rawAddress)
         return {
           type: 'address',
           name: meta[address]?.name,
