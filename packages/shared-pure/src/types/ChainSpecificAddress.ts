@@ -77,7 +77,9 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
   return `${chain}:${result.address}` as unknown as ChainSpecificAddress
 }
 
-ChainSpecificAddress.check = function check(value: string) {
+ChainSpecificAddress.check = function check(
+  value: string,
+): value is ChainSpecificAddress {
   try {
     return ChainSpecificAddress(value).toString() === value
   } catch {
