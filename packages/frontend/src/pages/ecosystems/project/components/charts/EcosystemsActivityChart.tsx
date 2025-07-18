@@ -53,7 +53,7 @@ export function EcosystemsActivityChart({
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
   const [showMainnet, setShowMainnet] = useLocalStorage(
     'ecosystems-activity-show-mainnet',
-    true,
+    false,
   )
 
   const { data, isLoading } = api.activity.chart.useQuery({
