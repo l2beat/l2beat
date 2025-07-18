@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { BaseProject } from '../../types'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
+import type { BaseProject } from '../../types'
 
 export const stone: BaseProject = {
   id: ProjectId('stone'),
