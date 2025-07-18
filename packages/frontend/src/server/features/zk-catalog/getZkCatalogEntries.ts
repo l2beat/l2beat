@@ -87,7 +87,7 @@ function getZkCatalogEntry(
 
   const trustedSetups = groupBy(
     project.zkCatalogInfo.trustedSetups,
-    (e) => e.proofSystem.id,
+    (e) => `${e.proofSystem.type}-${e.proofSystem.id}`,
   )
 
   return {
