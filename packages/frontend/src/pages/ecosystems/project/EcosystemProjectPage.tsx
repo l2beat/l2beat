@@ -18,6 +18,7 @@ import { EcosystemGovernanceLinks } from './components/widgets/EcosystemGovernan
 import { EcosystemLearnMoreLink } from './components/widgets/EcosystemLearnMoreLink'
 import { EcosystemMilestonesAndIncidents } from './components/widgets/EcosystemMilestonesAndIncidents'
 import { EcosystemMobileProjectLinks } from './components/widgets/EcosystemMobileProjectLinks'
+import { EcosystemMonthlyReportLink } from './components/widgets/EcosystemMonthlyReportLink'
 import { EcosystemProjectsByDaLayer } from './components/widgets/EcosystemProjectsByDaLayer'
 import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsByRaas'
 import { EcosystemToken } from './components/widgets/EcosystemToken'
@@ -140,6 +141,10 @@ export function EcosystemProjectPage({
                     ecosystem.images.delegateToL2BEAT
                   }
                   className="col-span-12 lg:col-span-8"
+                />
+                <EcosystemMonthlyReportLink
+                  className="col-span-12"
+                  href={ecosystem.links.ecosystemReport}
                 />
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />

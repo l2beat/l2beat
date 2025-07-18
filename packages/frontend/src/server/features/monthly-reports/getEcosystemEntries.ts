@@ -31,7 +31,9 @@ interface BaseLeaderboard {
   change: number
 }
 
-export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
+export interface EcosystemMonthlyUpdateEntry
+  extends Omit<EcosystemUpdate, 'ecosystemId'> {
+  id: string
   name: string
   colors: ProjectColors
   projects: ProjectId[]

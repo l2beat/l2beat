@@ -75,6 +75,7 @@ export interface EcosystemEntry {
     buildOn: string
     learnMore: string
     governance: EcosystemGovernanceLinks
+    ecosystemReport: string
   }
   images: {
     buildOn: string
@@ -160,6 +161,7 @@ export async function getEcosystemEntry(
       buildOn: ecosystem.ecosystemConfig.links.buildOn,
       learnMore: ecosystem.ecosystemConfig.links.learnMore,
       governance: getGovernanceLinks(ecosystem),
+      ecosystemReport: getEcosystemReportLink(ecosystem),
     },
     allScalingProjects: {
       tvs: tvs.total,
@@ -246,4 +248,13 @@ function getGovernanceLinks(
     review: `/governance/publications/${lastPublication.id}`,
     bankImage,
   }
+}
+
+function getEcosystemReportLink(ecosystem: Project<'ecosystemConfig'>): string {
+  const lastReport = getCollection('monthly-updates')
+    .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
+    .at(-1)
+  assert(lastReport, 'No last report')
+
+  return `/publications/monthly-updates/${lastReport.id}#${ecosystem.id}`
 }
