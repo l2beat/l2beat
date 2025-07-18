@@ -4,6 +4,7 @@ import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLin
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { BridgesProjectStats } from './BridgesProjectStats'
+import { cn } from '~/utils/cn'
 
 interface Props {
   project: BridgesProjectEntry
@@ -18,7 +19,7 @@ export function BridgesProjectSummary({ project }: Props) {
     >
       <BridgesProjectStats project={project} />
 
-      <div className="md:hidden">
+{project.discoUiHref &&  <div className="md:hidden">
         <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 w-[calc(100%+2rem)] md:hidden" />
         <div className="flex items-center justify-between">
           <a className="text-link text-xs underline" href={project.discoUiHref}>
@@ -26,9 +27,9 @@ export function BridgesProjectSummary({ project }: Props) {
           </a>
           <DiscoUiLink href={project.discoUiHref} />
         </div>
-      </div>
+      </div>}
 
-      <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-[calc(100%+2rem)] md:my-6" />
+      <HorizontalSeparator className={cn("max-md:-mx-4 mt-2 max-md:w-[calc(100%+2rem)] md:my-6", !project.discoUiHref && 'mt-4 mb-2')} />
       <div className="md:hidden">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
