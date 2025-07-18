@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf7c41a678a18b6ac5315eb505047879732cd0516
+Generated with discovered.json: 0x5bcbd4a8c808e375647fdbe09fa109debad112aa
 
-# Diff at Fri, 18 Jul 2025 09:21:53 GMT:
+# Diff at Fri, 18 Jul 2025 10:03:33 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current block number: 22945156
@@ -13,6 +13,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Renzo Restaked ETH Token (0xbf5495Efe5DB9ce00f80364C8B423567e58d2110)
+    contract EzEthToken (0xbf5495Efe5DB9ce00f80364C8B423567e58d2110)
     +++ description: None
 ```

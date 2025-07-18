@@ -2,7 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "rs-eth",
   "import": ["../../globalConfig.jsonc"],
-  "maxAddresses": 0,
+  "maxDepth": 0,
   "initialAddresses": ["base:0x1Bc71130A0e39942a7658878169764Bbd8A45993"],
   "overrides": {
     "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": {

@@ -2,7 +2,7 @@
   "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
   "name": "eurs",
   "import": ["../../globalConfig.jsonc"],
-  "maxAddresses": 0,
+  "maxDepth": 0,
   "initialAddresses": ["eth:0xdb25f211ab05b1c97d595516f45794528a807ad8"],
   "overrides": {
     "eth:0xdb25f211ab05b1c97d595516f45794528a807ad8": {

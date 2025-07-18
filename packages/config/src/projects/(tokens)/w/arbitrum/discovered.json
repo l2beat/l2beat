@@ -1,11 +1,11 @@
 {
   "name": "w",
   "chain": "arbitrum",
-  "blockNumber": 358948606,
-  "configHash": "0x9c71d8da3dfe84061ff5bd10e03249484566dfbc644610e1bec3b2352d9e4f33",
+  "blockNumber": 358957199,
+  "configHash": "0x3ecc9f7525905bbec88edb81920ff5cf6d323abcf6ce86d1879a48942549b030",
   "entries": [
     {
-      "name": "Wormhole Token",
+      "name": "WToken",
       "address": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
@@ -44,7 +44,7 @@
         },
         "$upgradeCount": 1,
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1752830582,
+        "clock": 1752832723,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -198,5 +198,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x55a5bcff737d389db22ebcc77c9c1bf20e7a52d85cc50e7e3cfa945606c07db5"
+  "permissionsConfigHash": "0xbf26798ca05b0bc405679b225391e400f5344c4285f6147857aeccbf9996407e"
 }

@@ -2,10 +2,10 @@
   "name": "buidl",
   "chain": "arbitrum",
   "blockNumber": 358948247,
-  "configHash": "0xa3fa50229c7fee9e28c904921ddc68b5bba237e23c3161c72a8db9b3d9a0c327",
+  "configHash": "0xaded8e19ea86a025b723e125d53eb9a9e90c6ea680f899cdab101df4ea1beec0",
   "entries": [
     {
-      "name": "BlackRock USD Institutional Digital Liquidity Fund Token",
+      "name": "DSToken",
       "address": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
       "type": "Contract",
       "sourceHashes": [
@@ -203,5 +203,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x2a82a405963425c693d9f2dd82d1dbfbf2e3b57fe263aee148af26a1c97ff044"
+  "permissionsConfigHash": "0xf0603d8ef61478ca7a44794b8dac43959228882ef6aecd40dbe7ebbe65d064c8"
 }

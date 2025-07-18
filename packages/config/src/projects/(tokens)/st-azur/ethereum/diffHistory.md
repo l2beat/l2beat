@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xaf020cd0b97e25ceb3eadd028c36024649ac564e
+Generated with discovered.json: 0x660a6371fda1636869d43782b6fb8ff37b5a45ea
 
-# Diff at Fri, 18 Jul 2025 09:22:33 GMT:
+# Diff at Fri, 18 Jul 2025 10:03:34 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current block number: 22945159
@@ -13,6 +13,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Staked $AZUR Token (0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB)
+    contract RewardPoolV2 (0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB)
     +++ description: None
 ```

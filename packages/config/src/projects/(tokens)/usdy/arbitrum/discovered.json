@@ -2,10 +2,10 @@
   "name": "usdy",
   "chain": "arbitrum",
   "blockNumber": 358948574,
-  "configHash": "0x5b301e75acb6403f04fb4238f16005758c49fb72d0a1f5c5d6a732da40118aaa",
+  "configHash": "0x314d9f6e3495dc56f9521ed193001cbc374886259d36d0befc8617f3c80e9657",
   "entries": [
     {
-      "name": "Ondo U.S. Dollar Yield Token",
+      "name": "USDY",
       "address": "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
       "type": "Contract",
       "sourceHashes": [
@@ -136,5 +136,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x8041ee8ab273c50e25b7b89ccdc735d7520f41ab2dc1c6425989ef72dc7043e1"
+  "permissionsConfigHash": "0xd067c445cd74713df85f8897c7294426a2df8417b4c512c45817474ba22fff9a"
 }

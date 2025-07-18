@@ -2,10 +2,10 @@
   "name": "pz-eth",
   "chain": "ethereum",
   "blockNumber": 22945156,
-  "configHash": "0x1b79b3e4ed7b58d1b1aa92e4828d6d49ae83a3692463b1ba7e7e534d80a2fd70",
+  "configHash": "0x209c754fdf7a73b59a198d20539a967a81c34e6b09aa393df45130376a62cafb",
   "entries": [
     {
-      "name": "Renzo Restaked LST  Token",
+      "name": "MultiVault",
       "address": "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
       "type": "Contract",
       "sourceHashes": [
@@ -247,5 +247,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x8fe74906d593c4911ea19ee28d0f5efffbe5f9a931ad789212dd625cfba1d1ad"
+  "permissionsConfigHash": "0xbf114edc6af3389d5f7f3b26d336ff9cea7f92b840f3b415fdd459adc0891132"
 }

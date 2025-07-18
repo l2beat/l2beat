@@ -2,10 +2,10 @@
   "name": "usds",
   "chain": "ethereum",
   "blockNumber": 22945160,
-  "configHash": "0x1e78e763991c42666c08e9d06721aac85927e0384d6d70e10fd78d6743d1ed16",
+  "configHash": "0x93af9ff3859dfeeb073465db0985cef771b33e8bedaacb0e7497699cf08d8ebf",
   "entries": [
     {
-      "name": "USDS Stablecoin Token",
+      "name": "Usds",
       "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
       "type": "Contract",
       "sourceHashes": [
@@ -109,5 +109,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x4f93842d6e39c725d5c69d178a0a6ffa728cb594fe3d4d6afdd8caf52bce2796"
+  "permissionsConfigHash": "0x5205dc96e8dbf0f049f36c160f3166e9a47683bc14df7b0432a6f4db8676ff2d"
 }

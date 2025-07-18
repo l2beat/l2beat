@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x29f5951607e0ab858b4701b797fdb69ef3049446
+Generated with discovered.json: 0x6dcf6c4fd0aeb8fcb04775525f2c0a98409208de
 
-# Diff at Fri, 18 Jul 2025 09:22:09 GMT:
+# Diff at Fri, 18 Jul 2025 10:03:32 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
 - current block number: 33020590
@@ -13,6 +13,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract KelpDao Restaked ETH Token (0x1Bc71130A0e39942a7658878169764Bbd8A45993)
+    contract RSETH_OFT (0x1Bc71130A0e39942a7658878169764Bbd8A45993)
     +++ description: None
 ```

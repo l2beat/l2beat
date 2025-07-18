@@ -1,10 +1,18 @@
-Generated with discovered.json: 0x724807c0e2aee1fa223ddf1d7cb159b57bf7753c
+Generated with discovered.json: 0xf67a16cbd60593e534fc025b4dd36c28bcaceaba
 
-# Diff at Fri, 18 Jul 2025 09:23:04 GMT:
+# Diff at Fri, 18 Jul 2025 10:03:33 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- current block number: 33020618
+- current block number: 33021689
 
 ## Description
 
 Provide description of changes. This section will be preserved.
+
+## Initial discovery
+
+```diff
++   Status: CREATED
+    contract WToken (0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91)
+    +++ description: None
+```

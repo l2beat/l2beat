@@ -2,10 +2,10 @@
   "name": "st-azur",
   "chain": "ethereum",
   "blockNumber": 22945159,
-  "configHash": "0x21b4876958a18c98fcd3c4a5727ef2c2224cc66ffb65371766a0e6cb89f5254f",
+  "configHash": "0x4c0905f1024f60054223fb59264e4b88e644792e5bbe90aa0a81825f5b6fc3d4",
   "entries": [
     {
-      "name": "Staked $AZUR Token",
+      "name": "RewardPoolV2",
       "address": "eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB",
       "type": "Contract",
       "sourceHashes": [
@@ -141,5 +141,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x72184e6c86135abd55bfe60cceb5c07b56a569e3d81f53ec4346fb068a3525f2"
+  "permissionsConfigHash": "0xc4c127362212229a3cce7abdb28af548bbd6f3953967f5dd9b25af4324f21020"
 }
