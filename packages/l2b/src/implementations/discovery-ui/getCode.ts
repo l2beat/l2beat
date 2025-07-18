@@ -4,8 +4,8 @@ import {
   type DiscoveryPaths,
   flatteningHash,
   get$Implementations,
-  getChainFullName,
 } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
@@ -42,11 +42,10 @@ interface CodePathResult {
 function isFlatCodeCurrent(
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
   codePaths: CodePathResult['codePaths'],
 ): boolean {
-  const [chainShortName, _] = address.split(':')
-  const chain = getChainFullName(chainShortName)
+  const chain = ChainSpecificAddress.longChain(address)
 
   const discoHashes =
     configReader
@@ -71,7 +70,7 @@ export function getCode(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
   checkFlatCode = false,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(
@@ -147,10 +146,9 @@ export function getCodePaths(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
 ): CodePathResult {
-  const [chainShortName, _] = address.split(':')
-  const chain = getChainFullName(chainShortName)
+  const chain = ChainSpecificAddress.longChain(address)
   const discoveries = getProjectDiscoveries(configReader, project, chain)
 
   for (const discovery of discoveries) {
