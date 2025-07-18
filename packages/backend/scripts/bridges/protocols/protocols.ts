@@ -1,6 +1,6 @@
 import type { Chain } from '../chains'
 import type { Message } from '../types/Message'
-import type { TransactionWithViemLogs } from '../types/TransactionWithViemLogs'
+import type { TransactionWithLogs } from '../types/TransactionWithLogs'
 import { ACROSS } from './decoders/across'
 import { CCTPV1 } from './decoders/cctpv1'
 import { CCTPV2 } from './decoders/cctpv2'
@@ -10,7 +10,7 @@ interface Protocol {
   name: string
   decoder: (
     chain: Chain,
-    transaction: TransactionWithViemLogs,
+    transaction: TransactionWithLogs,
   ) => Message | undefined
 }
 
