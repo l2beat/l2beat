@@ -18,7 +18,7 @@ import { EcosystemGovernanceLinks } from './components/widgets/EcosystemGovernan
 import { EcosystemLearnMoreLink } from './components/widgets/EcosystemLearnMoreLink'
 import { EcosystemMilestonesAndIncidents } from './components/widgets/EcosystemMilestonesAndIncidents'
 import { EcosystemMobileProjectLinks } from './components/widgets/EcosystemMobileProjectLinks'
-import { EcosystemMonthlyReportLink } from './components/widgets/EcosystemMonthlyReportLink'
+import { EcosystemReportLink } from './components/widgets/EcosystemMonthlyReportLink'
 import { EcosystemProjectsByDaLayer } from './components/widgets/EcosystemProjectsByDaLayer'
 import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsByRaas'
 import { EcosystemToken } from './components/widgets/EcosystemToken'
@@ -142,7 +142,7 @@ export function EcosystemProjectPage({
                   }
                   className="col-span-12 lg:col-span-8"
                 />
-                <EcosystemMonthlyReportLink
+                <EcosystemReportLink
                   className="col-span-12"
                   href={ecosystem.links.ecosystemReport}
                 />
