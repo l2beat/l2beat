@@ -44,6 +44,10 @@ export const zkCatalogColumns = [
         </div>
       )
     },
+    meta: {
+      tooltip:
+        'The values secured by the listed verifiers, calculated as a sum of the total value secured of all projects that use them.',
+    },
   }),
   columnHelper.display({
     id: 'used-in',
@@ -57,6 +61,10 @@ export const zkCatalogColumns = [
     header: 'Verifiers',
     cell: (ctx) => {
       return <VerifiedCountWithDetails {...ctx.row.original.verifiers} />
+    },
+    meta: {
+      tooltip:
+        'Shows the count of verifiers and their verification status - successful or unsuccessful, if verification was performed.',
     },
   }),
   columnHelper.display({
@@ -84,6 +92,9 @@ export const zkCatalogColumns = [
         </div>
       )
     },
+    meta: {
+      tooltip: 'Shows the entities who have performed a verification.',
+    },
   }),
   columnHelper.display({
     id: 'tech-stack',
@@ -95,6 +106,10 @@ export const zkCatalogColumns = [
   columnHelper.display({
     id: 'trusted-setups',
     header: 'Trusted setups',
+    meta: {
+      tooltip:
+        'Shows the trusted setups used within the proving stack and their risks.',
+    },
     cell: (ctx) => {
       return (
         <div className="flex h-full flex-col justify-around">

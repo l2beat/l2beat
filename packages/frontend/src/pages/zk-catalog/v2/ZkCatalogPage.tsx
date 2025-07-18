@@ -1,3 +1,4 @@
+import { CustomLink } from '~/components/link/CustomLink'
 import { env } from '~/env'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -18,7 +19,15 @@ export function ZkCatalogPage({ ...props }: Props) {
         {!env.CLIENT_SIDE_ZK_CATALOG_V2 ? (
           <WorkInProgressNotice />
         ) : (
-          <ZkCatalogTable entries={props.entries} />
+          <>
+            <ZkCatalogTable entries={props.entries} />
+            <p className="mt-2 text-balance text-center text-paragraph-15 text-secondary">
+              We appreciate your patience as we work to improve your experience.
+              <br />
+              The previous version of ZK Catalog can be found{' '}
+              <CustomLink href="/zk-catalog/v1">here</CustomLink>.
+            </p>
+          </>
         )}
       </SideNavLayout>
     </AppLayout>
