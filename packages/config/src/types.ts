@@ -760,6 +760,7 @@ export type ZkCatalogProofSystem =
   | 'Groth16Gnark'
   | 'FflonkZksync'
   | 'StoneStark'
+  | 'SnarkLinea'
 
 export interface ZkCatalogTag {
   id: string

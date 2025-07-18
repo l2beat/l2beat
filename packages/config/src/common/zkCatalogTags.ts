@@ -123,6 +123,13 @@ export const zkCatalogTags = [
       'Consensys implementation of Groth16 proving system written in Go.',
   },
   {
+    id: 'SnarkLinea',
+    type: ZkCatalogTagType.SNARK,
+    name: 'SNARK: linea',
+    description:
+      'Prover system of Linea written in Go, includs Vortex polynomial commitment and Arcane compiler.',
+  },
+  {
     id: 'FflonkSnarkjs',
     type: ZkCatalogTagType.SNARK,
     name: 'Fflonk: snarkjs',
