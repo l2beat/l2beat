@@ -163,14 +163,6 @@ export const celestia: BaseProject = {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
       fraudDetection: DaFraudDetectionRisk.DasWithNoBlobsReconstruction(true),
     },
-    economicSecurity: {
-      name: 'Celestia',
-      token: {
-        symbol: 'TIA',
-        decimals: 6,
-        coingeckoId: 'celestia',
-      },
-    },
   },
   milestones: [
     {
