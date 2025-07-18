@@ -45,6 +45,9 @@ export const polygonzkevmprover: BaseProject = {
     },
     verifierHashes: [
       {
+        // Custom verifier ID: SHA256 hash of the following values from the verifier smart contract
+        // abi packed in the same order they are defined: verification key data,
+        // omegas, verifier preprocessed inputs (from k1 to X2y2)
         hash: '0x28ddf3744fb9b64bc428bee318e026bee0cf210e23ff5932f645e32aa916c28f',
         proofSystem: 'FflonkSnarkjs',
         knownDeployments: [
@@ -59,6 +62,9 @@ export const polygonzkevmprover: BaseProject = {
         ],
       },
       {
+        // Custom verifier ID: SHA256 hash of the following values from the verifier smart contract
+        // abi packed in the same order they are defined: verification key data,
+        // omegas, verifier preprocessed inputs (from k1 to X2y2)
         hash: '0x237bc5d6efad6d844534c4a45f5f19fa86344615ac00054821915c219e9abd81',
         proofSystem: 'FflonkSnarkjs',
         knownDeployments: [
@@ -74,6 +80,9 @@ export const polygonzkevmprover: BaseProject = {
         ],
       },
       {
+        // Custom verifier ID: SHA256 hash of the following values from the verifier smart contract
+        // abi packed in the same order they are defined: verification key data,
+        // omegas, verifier preprocessed inputs (from k1 to X2y2)
         hash: '0xd7331eca890a6201708336d89e099d242f8b5b57ead785225220f7ef36b6aaf6',
         proofSystem: 'FflonkSnarkjs',
         knownDeployments: [

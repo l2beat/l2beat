@@ -49,7 +49,7 @@ export const lineaprover: BaseProject = {
     },
     verifierHashes: [
       {
-        // Custom verifier ID: hash of all VK_... values from the smart contract
+        // Custom verifier ID: SHA256 hash of all VK_... values from the smart contract
         // abi packed in the same order they are defined
         hash: '0xcfdff368eb0a9961712338df56f966f0f28899dcd1892b9898fce4928ca0d582',
         proofSystem: 'PlonkGnark',

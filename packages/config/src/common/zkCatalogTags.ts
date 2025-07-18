@@ -127,7 +127,7 @@ export const zkCatalogTags = [
     type: ZkCatalogTagType.SNARK,
     name: 'SNARK: linea',
     description:
-      'Prover system of Linea written in Go, includs Vortex polynomial commitment and Arcane compiler.',
+      'Prover system of Linea written in Go, includes Vortex polynomial commitment and Arcane compiler.',
   },
   {
     id: 'FflonkSnarkjs',

@@ -57,7 +57,7 @@ export const TRUSTED_SETUPS = {
     ## Celo Plumo trusted setup 
 
     Ceremony generated trusted setup for KZG commitments over BW6-761 curve, it was originally run for Celo
-    Plumo and later reused for Linea prover. Ceremony contained 55 participants.
+    Plumo and later reused for Linea prover. Ceremony has 55 participants.
 
   - Repo with ceremony instructions: https://github.com/celo-org/snark-setup?tab=readme-ov-file
   - Link to the ceremony details: https://celo.org/plumo (it is broken. Archived version here: https://web.archive.org/web/20221201203227/https://celo.org/plumo)
@@ -88,7 +88,7 @@ export const TRUSTED_SETUPS = {
       'Trusted setup for KZG commitments over BN254 curve used by Polygon zkEVM. Is a subset of Perpetual Powers of Tau ceremony.',
     longDescription: `
     
-    ## Polygon zkEVM (🟡?)
+    ## Polygon zkEVM
 
     Ceremony uses 54 first contributions from the [Perpetual Powers of Tau ceremony](https://github.com/privacy-scaling-explorations/perpetualpowersoftau)
     and adds one more contribution to the total of 55 participants.
