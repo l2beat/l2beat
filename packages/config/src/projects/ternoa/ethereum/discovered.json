@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 22774947,
-  "configHash": "0x92a257d0623db862dcfa27e6749254777f09daa0397d5e185bb09f88f2cf71b6",
+  "configHash": "0xba4f4a912409eb0784e9ccca6daafb8d07b3bee9fd6fbdca81e82de6fc68ecb3",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -221,7 +221,7 @@
     }
   ],
   "abis": {
-    "0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11": [
+    "eth:0x0f32d8C0eB1cE4C5FFb1A6C4bb3b879D2184Ed11": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",
@@ -245,7 +245,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
-    "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
+    "eth:0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -367,7 +367,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": [
+    "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -377,16 +377,16 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
+    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0xB408a216927d31A27fd96176dbF1B825630f0301": [
+    "eth:0xB408a216927d31A27fd96176dbF1B825630f0301": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b": [
+    "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",

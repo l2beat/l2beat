@@ -2,7 +2,7 @@
   "name": "symbiosis",
   "chain": "ethereum",
   "blockNumber": 22022451,
-  "configHash": "0xda1f535816d2f6bb386fe9f947b5e6dc9da5674494a3a6b75840fba3471f7d41",
+  "configHash": "0x6597443b4bd36673185bbe67f1f9e50ece6257c20e632ceafdb713e9c11c2e50",
   "entries": [
     {
       "address": "eth:0x0ee552336134B6f8F0a72927b6124f8A81865928",
@@ -309,7 +309,7 @@
     }
   ],
   "abis": {
-    "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": [
+    "eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -320,7 +320,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": [
+    "eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -331,10 +331,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": [
+    "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": [
       "constructor(address _singleton)"
     ],
-    "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E": [
+    "eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -345,7 +345,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365": [
+    "eth:0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365": [
       "event LogChangeMPC(address indexed oldMPC, address indexed newMPC, uint256 indexed effectiveTime, uint256 chainId)",
       "event OracleRequest(address bridge, bytes callData, address receiveSide, address oppositeBridge, uint256 chainId)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -371,7 +371,7 @@
       "function transmitRequestV2(bytes _callData, address _receiveSide, address _oppositeBridge, uint256 _chainId)",
       "function withdrawFee(address token, address to, uint256 amount) returns (bool)"
     ],
-    "0x755a967298c96d50216C6ED8D68869747B4f6878": [
+    "eth:0x755a967298c96d50216C6ED8D68869747B4f6878": [
       "event BurnCompleted(bytes32 indexed id, bytes32 indexed crossChainID, address indexed to, uint256 amount, uint256 bridgingFee, address token)",
       "event ClientIdLog(bytes32 requestId, bytes32 indexed clientId)",
       "event MetaRevertRequest(bytes32 indexed id, address indexed to)",
@@ -417,7 +417,7 @@
       "function versionRecipient() pure returns (string)",
       "function wrapper() view returns (address)"
     ],
-    "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": [
+    "eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -428,7 +428,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": [
+    "eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -439,7 +439,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -488,7 +488,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F": [
+    "eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F": [
       "constructor()",
       "event TransitTokenSent(address to, uint256 amount, address token)",
       "function externalCall(address _token, uint256 _amount, address _receiveSide, bytes _calldata, uint256 _offset, address _to)",
@@ -497,7 +497,7 @@
       "function metaRouterGateway() view returns (address)",
       "function returnSwap(address _token, uint256 _amount, address _router, bytes _swapCalldata, address _burnToken, address _synthesis, bytes _burnCalldata)"
     ],
-    "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd": [
+    "eth:0xfCEF2Fe72413b65d3F393d278A714caD87512bcd": [
       "constructor(address _metaRouter)",
       "function claimTokens(address _token, address _from, uint256 _amount)",
       "function metaRouter() view returns (address)"

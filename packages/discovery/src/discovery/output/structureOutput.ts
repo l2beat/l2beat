@@ -1,18 +1,12 @@
 import {
-  ChainSpecificAddress,
   type Hash256,
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
-import { getChainShortName } from '../../config/config.discovery'
 import { recalculateSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { hashJsonStable } from '../config/hashJsonStable'
 import type { StructureConfig } from '../config/StructureConfig'
-import {
-  migrateImplementationNames,
-  migrateValues,
-} from './chainSpecificMigration'
 import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
@@ -26,7 +20,7 @@ export function getStructureOutput(
     blockNumber,
     configHash: hashJsonStable(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),
-    ...processAnalysis(results, config.chain),
+    ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
   })
 }
@@ -44,9 +38,7 @@ function collectUsedTemplatesWithHashes(
 
 export function processAnalysis(
   results: Analysis[],
-  chain: string,
 ): Pick<StructureOutput, 'entries' | 'abis'> {
-  const shortChainName = getChainShortName(chain)
   const { contracts, abis } = getEntries(results)
 
   return {
@@ -55,7 +47,7 @@ export function processAnalysis(
       .map((x): EntryParameters => {
         return withoutUndefinedKeys({
           name: x.name,
-          address: ChainSpecificAddress.from(shortChainName, x.address),
+          address: x.address,
           type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
@@ -69,15 +61,12 @@ export function processAnalysis(
           values:
             Object.keys(x.values).length === 0
               ? undefined
-              : sortByKeys(migrateValues(x.values, shortChainName)),
+              : sortByKeys(x.values),
           errors:
             Object.keys(x.errors).length === 0
               ? undefined
               : sortByKeys(x.errors),
-          implementationNames: migrateImplementationNames(
-            x.implementationNames,
-            shortChainName,
-          ),
+          implementationNames: x.implementationNames,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies EntryParameters)
       }),

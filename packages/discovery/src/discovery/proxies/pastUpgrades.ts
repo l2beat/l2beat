@@ -1,6 +1,6 @@
 import {
   assert,
-  type EthereumAddress,
+  ChainSpecificAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -8,11 +8,11 @@ import { utils } from 'ethers'
 import type { LogDescription } from 'ethers/lib/utils'
 import type { IProvider } from '../provider/IProvider'
 
-export type DateAddresses = [string, Hash256, EthereumAddress[]]
+export type DateAddresses = [string, Hash256, ChainSpecificAddress[]]
 
 export async function getPastUpgradesSingleEvent(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   eventABI: string,
   eventFiltering?: (log: LogDescription) => boolean,
 ): Promise<DateAddresses[]> {
@@ -46,10 +46,13 @@ export async function getPastUpgradesSingleEvent(
     // `args.implementation` is faulty
 
     const parsed = abi.parseLog(l)
-    let implementation: EthereumAddress | undefined
+    let implementation: ChainSpecificAddress | undefined
     parsed.eventFragment.inputs.forEach((input, index) => {
       if (input.name === 'implementation') {
-        implementation = parsed.args[index]
+        implementation = ChainSpecificAddress.fromLong(
+          provider.chain,
+          parsed.args[index],
+        )
       }
     })
     assert(implementation !== undefined)

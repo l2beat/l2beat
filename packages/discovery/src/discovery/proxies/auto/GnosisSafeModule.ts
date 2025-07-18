@@ -1,4 +1,8 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Bytes,
+  ChainSpecificAddress,
+  type EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'
 import type { ProxyDetails } from '../types'
@@ -13,18 +17,24 @@ const TARGET_SLOT = Bytes.fromHex(
 
 async function getGuard(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress | undefined> {
-  return await provider.callMethod<EthereumAddress>(
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress | undefined> {
+  const rawAddress = await provider.callMethod<EthereumAddress>(
     address,
     'function getGuard() external view returns (address)',
     [],
   )
+
+  if (rawAddress === undefined) {
+    return
+  }
+
+  return ChainSpecificAddress.fromLong(provider.chain, rawAddress)
 }
 
 export async function detectGnosisSafeZodiacModule(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const [guard, avatar, target] = await Promise.all([
     getGuard(provider, address),
@@ -34,8 +44,8 @@ export async function detectGnosisSafeZodiacModule(
 
   if (
     guard === undefined ||
-    avatar === EthereumAddress.ZERO ||
-    target === EthereumAddress.ZERO
+    avatar === ChainSpecificAddress.ZERO(provider.chain) ||
+    target === ChainSpecificAddress.ZERO(provider.chain)
   ) {
     return
   }

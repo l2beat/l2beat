@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x122a95c45ad7254441535d5785cdf2d32647a3eb
+
+# Diff at Wed, 16 Jul 2025 15:00:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99f4c3c49844de20b37b0c4c9c35d616989eef7d block: 22923197
+- current block number: 22923197
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22923197 (main branch discovery), not current.
+
+```diff
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E) {
+    +++ description: Defines withdrawal limits per token.
+      usedTypes.0.arg.eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:
++        "USDC"
+      usedTypes.0.arg.eth:0xdAC17F958D2ee523a2206206994597C13D831ec7:
++        "USDT"
+      usedTypes.0.arg.eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800:
++        "TAIKO"
+      usedTypes.0.arg.eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:
++        "WETH"
+      usedTypes.0.arg.eth:0x0000000000000000000000000000000000000000:
++        "Ether"
+      usedTypes.0.arg.0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:
+-        "USDC"
+      usedTypes.0.arg.0xdAC17F958D2ee523a2206206994597C13D831ec7:
+-        "USDT"
+      usedTypes.0.arg.0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800:
+-        "TAIKO"
+      usedTypes.0.arg.0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:
+-        "WETH"
+      usedTypes.0.arg.0x0000000000000000000000000000000000000000:
+-        "Ether"
+    }
+```
+
 Generated with discovered.json: 0xb699939d690e0dc1d5373e5a2e4bc38539774aff
 
 # Diff at Tue, 15 Jul 2025 08:05:18 GMT:

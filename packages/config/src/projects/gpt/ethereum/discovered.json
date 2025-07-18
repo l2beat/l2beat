@@ -2,7 +2,7 @@
   "name": "gpt",
   "chain": "ethereum",
   "blockNumber": 21744154,
-  "configHash": "0x2bb4708b1acd7fc22bb2b4f849f5035eaac6f1acf08256328bbfcc5939061f9c",
+  "configHash": "0x357508da30a31c83cd284a091d9921a69e8edf67c8807ac20ef7f6b9b0f3acb2",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -237,10 +237,10 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -359,13 +359,13 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8": [
+    "eth:0x75E26A2996DEAbA20386B6f3c1C957eFadb3f6E8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8": [
+    "eth:0xA36aFB6b79A3d164a3d12C141c916BECc6e012D8": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",
@@ -389,7 +389,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
-    "0xada59D145126A746976F0F56477aafFEB3acc8e3": [
+    "eth:0xada59D145126A746976F0F56477aafFEB3acc8e3": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -400,7 +400,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858": [
+    "eth:0xC4E903D3Af4c3d2e437492d602adcC9d9b536858": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",

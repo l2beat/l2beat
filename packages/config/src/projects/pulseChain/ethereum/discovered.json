@@ -2,7 +2,7 @@
   "name": "pulseChain",
   "chain": "ethereum",
   "blockNumber": 22431228,
-  "configHash": "0xf1d1d18cd34006291d917dfc0726943df940d2608a09081efdd18f586964af64",
+  "configHash": "0x643d816fd4afddc582434b3f719c553b4b9983833e44219a1d8b779f111949dd",
   "entries": [
     {
       "address": "eth:0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
@@ -326,7 +326,7 @@
     }
   ],
   "abis": {
-    "0x1715a3E4A142d8b698131108995174F37aEBA10D": [
+    "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D": [
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)",
       "function implementation() view returns (address)",
@@ -336,7 +336,7 @@
       "function upgradeabilityOwner() view returns (address)",
       "function version() view returns (uint256)"
     ],
-    "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": [
+    "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
       "function implementation() view returns (address)",
@@ -346,7 +346,7 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
-    "0x8AC4ae65b3656e26dC4e0e69108B392283350f55": [
+    "eth:0x8AC4ae65b3656e26dC4e0e69108B392283350f55": [
       "constructor(address _bridge, address _weth, address _owner)",
       "function WETH() view returns (address)",
       "function bridge() view returns (address)",
@@ -357,7 +357,7 @@
       "function wrapAndRelayTokens() payable",
       "function wrapAndRelayTokens(address _receiver) payable"
     ],
-    "0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": [
+    "eth:0x95B303987A60C71504D99Aa1b13B4DA07b0790ab": [
       "function validatorCount() view returns (uint256)",
       "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
       "function isInitialized() view returns (bool)",
@@ -379,7 +379,7 @@
       "event RequiredSignaturesChanged(uint256 requiredSignatures)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
-    "0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02": [
+    "eth:0x98bf93ebf5c380C0e6Ae8e192A7e2AE08edAcc02": [
       "constructor(address _owner, address _tokenImage)",
       "function deploy(string _name, string _symbol, uint8 _decimals, uint256 _chainId) returns (address)",
       "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
@@ -388,7 +388,7 @@
       "function tokenImage() view returns (address)",
       "function transferOwnership(address _newOwner)"
     ],
-    "0xA1077a294dDE1B09bB078844df40758a5D0f9a27": [
+    "eth:0xA1077a294dDE1B09bB078844df40758a5D0f9a27": [
       "function mintingFinished() view returns (bool)",
       "function name() view returns (string)",
       "function approve(address _to, uint256 _value) returns (bool result)",
@@ -436,7 +436,7 @@
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value)"
     ],
-    "0xB7DF1E00ae030e966E635ede273625240546B873": [
+    "eth:0xB7DF1E00ae030e966E635ede273625240546B873": [
       "constructor(string _suffix)",
       "event DailyLimitChanged(address indexed token, uint256 newLimit)",
       "event ExecutionDailyLimitChanged(address indexed token, uint256 newLimit)",
@@ -506,7 +506,7 @@
       "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
       "function withinLimit(address _token, uint256 _amount) view returns (bool)"
     ],
-    "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": [
+    "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
       "function implementation() view returns (address)",
@@ -516,7 +516,7 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
-    "0xe98699957d3504aCD57ffF861E4b77b57eB02467": [
+    "eth:0xe98699957d3504aCD57ffF861E4b77b57eB02467": [
       "function transactionHash() view returns (bytes32)",
       "function sourceChainId() view returns (uint256)",
       "function relayedMessages(bytes32 _txHash) view returns (bool)",

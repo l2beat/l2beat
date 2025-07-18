@@ -2,8 +2,13 @@
   "name": "stargatev2",
   "chain": "linea",
   "blockNumber": 19822366,
-  "configHash": "0x654ad52301f07c7021fb8e918e991ccebf7d2085eb550aae6c15dcf92d5e1f13",
+  "configHash": "0x96d1b4c545555531fdb0bd244fc1e09ac1c1965e704e07ebe92b782c3af59968",
   "entries": [
+    {
+      "address": "linea:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "TokenMessaging",
       "address": "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD",
@@ -109,7 +114,7 @@
     }
   ],
   "abis": {
-    "0x5f688F563Dc16590e570f97b542FA87931AF2feD": [
+    "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
       "error BusCodec_InvalidMessage()",
@@ -206,7 +211,7 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": [
+    "linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -291,5 +296,5 @@
   "usedTemplates": {
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

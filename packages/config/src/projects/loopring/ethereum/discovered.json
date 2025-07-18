@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 22865639,
-  "configHash": "0xc068a0b773b32af5fd3757e7ec3d4312d9f653d329c51202e17714463193d7e5",
+  "configHash": "0xaf5bcd8c886cb30f1ad7d1dd612d976978d10df1f24d6b09429184ec1b62bd81",
   "entries": [
     {
       "name": "ExchangeV3",
@@ -673,7 +673,7 @@
     }
   ],
   "abis": {
-    "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": [
+    "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4": [
       "constructor()",
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(address indexed implementation)",
@@ -683,7 +683,7 @@
       "function upgradeTo(address implementation)",
       "function upgradeToAndCall(address implementation, bytes data) payable"
     ],
-    "0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": [
+    "eth:0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512": [
       "constructor(address _exchange)",
       "event Drained(address to, address token, uint256 amount)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -706,7 +706,7 @@
       "function transact(bytes data) payable",
       "function transferOwnership(address newOwner)"
     ],
-    "0x26d8Ba776a067C5928841985bCe342f75BAE7E82": [
+    "eth:0x26d8Ba776a067C5928841985bCe342f75BAE7E82": [
       "constructor()",
       "event BlockSubmitted(uint256 indexed blockIdx, bytes32 merkleRoot, bytes32 publicDataHash)",
       "event DepositRequested(address from, address to, address token, uint16 tokenId, uint96 amount)",
@@ -788,7 +788,7 @@
       "function withdrawFromNFTDepositRequest(address owner, address token, uint8 nftType, uint256 nftID)",
       "function withdrawProtocolFees(address token) payable"
     ],
-    "0x39B9bf169a7e225ba037C443A40460c77438ea14": [
+    "eth:0x39B9bf169a7e225ba037C443A40460c77438ea14": [
       "constructor()",
       "event AgentRegistered(address indexed user, address indexed agent, bool registered)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -805,7 +805,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -853,7 +853,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": [
+    "eth:0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171": [
       "constructor(address _lrcAddress)",
       "event DAOFunded(uint256 amountDAO, uint256 amountBurn)",
       "event LRCClaimed(uint256 amount)",
@@ -877,7 +877,7 @@
       "function updateSettings(address _userStakingPoolAddress, address _tokenSellerAddress, address _daoAddress)",
       "function userStakingPoolAddress() view returns (address)"
     ],
-    "0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": [
+    "eth:0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470": [
       "event Drained(address to, address token, uint256 amount)",
       "event ManagerAdded(address indexed manager)",
       "event ManagerRemoved(address indexed manager)",
@@ -896,7 +896,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0x6150343E0F43A17519c0327c41eDd9eBE88D01ef": [
+    "eth:0x6150343E0F43A17519c0327c41eDd9eBE88D01ef": [
       "constructor()",
       "event CircuitDisabled(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
       "event CircuitRegistered(uint8 indexed blockType, uint16 blockSize, uint8 blockVersion)",
@@ -914,7 +914,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyProofs(uint8 blockType, uint16 blockSize, uint8 blockVersion, uint256[] publicInputs, uint256[] proofs) view returns (bool)"
     ],
-    "0x674bdf20A0F284D710BC40872100128e2d66Bd3f": [
+    "eth:0x674bdf20A0F284D710BC40872100128e2d66Bd3f": [
       "event CheckBalance(address indexed token, bool checkBalance)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function claimOwnership()",
@@ -931,7 +931,7 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount, bytes) payable"
     ],
-    "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": [
+    "eth:0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD": [
       "function name() view returns (string)",
       "function approve(address _spender, uint256 _value) returns (bool)",
       "function totalSupply() view returns (uint256)",
@@ -952,10 +952,10 @@
       "event Transfer(address indexed from, address indexed to, uint256 value)",
       "event Burn(address indexed burner, uint256 value)"
     ],
-    "0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": [
+    "eth:0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97": [
       "constructor(address _masterCopy)"
     ],
-    "0xe56D6ccab6551932C0356E4e8d5dAF0630920C71": [
+    "eth:0xe56D6ccab6551932C0356E4e8d5dAF0630920C71": [
       "constructor(address _lrcAddress, address _protocolFeeVault, address _blockVerifierAddress)",
       "event ExchangeStakeBurned(address exchangeAddr, uint256 amount)",
       "event ExchangeStakeDeposited(address exchangeAddr, uint256 amount)",
@@ -984,11 +984,11 @@
       "function updateSettings(address _protocolFeeVault, address _blockVerifierAddress, uint256 _forcedWithdrawalFee)",
       "function withdrawExchangeStake(address recipient, uint256 requestedAmount) returns (uint256 amountLRC)"
     ],
-    "0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31": [
+    "eth:0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31": [
       "event Processed(address exchange, address from, address to, address token, uint96 amount, address provider, bool success)",
       "function executeFastWithdrawals(tuple(address exchange, address from, address to, address token, uint96 amount, uint32 storageID)[] withdrawals) payable"
     ],
-    "0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": [
+    "eth:0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b": [
       "function getUserStaking(address user) view returns (uint256 withdrawalWaitTime, uint256 rewardWaitTime, uint256 balance, uint256 pendingReward)",
       "function total() view returns (uint256 balance, uint64 depositedAt, uint64 claimedAt)",
       "function withdraw(uint256 amount)",

@@ -2,7 +2,7 @@
   "name": "aptos",
   "chain": "ethereum",
   "blockNumber": 22882445,
-  "configHash": "0x34786f5cbb9a2cf6266772e80d1798bbf718c148ef1e701f0f8935a664794f5c",
+  "configHash": "0x7902a788a72a1ff0553044dd35cf8a0de0f5db156c78ce54972f700aac33d003",
   "entries": [
     {
       "name": "LayerZero Proof Library",
@@ -437,7 +437,7 @@
     }
   ],
   "abis": {
-    "0x07245eEa05826F5984c7c3C8F478b04892e4df89": [
+    "eth:0x07245eEa05826F5984c7c3C8F478b04892e4df89": [
       "constructor(address _stargateBridgeAddress, address _stargateTokenAddress)",
       "function getPacket(bytes data, uint256 sizeOfSrcAddress, bytes32 ulnAddress) pure returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload))",
       "function getProofType() view returns (uint8)",
@@ -451,7 +451,7 @@
       "function utilsVersion() view returns (uint8)",
       "function validateProof(bytes32 _packetHash, bytes _transactionProof, uint256 _remoteAddressSize) view returns (tuple(uint16 srcChainId, uint16 dstChainId, uint64 nonce, address dstAddress, bytes srcAddress, bytes32 ulnAddress, bytes payload) packet)"
     ],
-    "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [
+    "eth:0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [
       "constructor(address _ulnv2)",
       "event FeeEnabled(bool feeEnabled)",
       "event NativeBP(uint256 bp)",
@@ -474,7 +474,7 @@
       "function zroEnabled() view returns (bool)",
       "function zroFee() view returns (uint256)"
     ],
-    "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": [
+    "eth:0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": [
       "constructor(address _endpoint, address _nonceContract, uint16 _localChainId)",
       "event AddInboundProofLibraryForChain(uint16 indexed chainId, address lib)",
       "event AppConfigUpdated(address indexed userApplication, uint256 indexed configType, bytes newConfig)",
@@ -538,7 +538,7 @@
       "function withdrawNative(address _to, uint256 _amount)",
       "function withdrawZRO(address _to, uint256 _amount)"
     ],
-    "0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907": [
+    "eth:0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907": [
       "constructor(address _layerZeroEndpoint, uint16 _aptosChainId)",
       "event EnableEmergencyWithdraw(bool enabled, uint256 unlockTime)",
       "event MessageFailed(uint16 _srcChainId, bytes _srcAddress, uint64 _nonce, bytes _payload, bytes _reason)",
@@ -611,7 +611,7 @@
       "function withdrawFee(address _token, address _to, uint256 _amountLD)",
       "function withdrawTVL(address _token, address _to, uint64 _amountSD)"
     ],
-    "0x5a54fe5234E811466D5366846283323c954310B2": [
+    "eth:0x5a54fe5234E811466D5366846283323c954310B2": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -619,16 +619,16 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068": [
+    "eth:0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068": [
       "constructor(address _endpoint)",
       "function endpoint() view returns (address)",
       "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
       "function outboundNonce(uint16, bytes) view returns (uint64)"
     ],
-    "0x65bb797c2B9830d891D87288F029ed8dACc19705": [
+    "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705": [
       "constructor(address _singleton)"
     ],
-    "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": [
+    "eth:0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": [
       "constructor(uint16 _chainId)",
       "event DefaultReceiveVersionSet(uint16 version)",
       "event DefaultSendVersionSet(uint16 version)",
@@ -678,7 +678,7 @@
       "function transferOwnership(address newOwner)",
       "function uaConfigLookup(address) view returns (uint16 sendVersion, uint16 receiveVersion, address receiveLibraryAddress, address sendLibrary)"
     ],
-    "0x902F09715B6303d4173037652FA7377e5b98089E": [
+    "eth:0x902F09715B6303d4173037652FA7377e5b98089E": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
       "event Upgraded(address indexed implementation)",
       "function admin() returns (address)",
@@ -686,7 +686,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": [
+    "eth:0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": [
       "constructor(address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -698,7 +698,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9": [
+    "eth:0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9": [
       "constructor(address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -710,7 +710,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
+    "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
       "constructor(uint64 _oneSigId, address[] _signers, uint256 _threshold, address[] _executors, bool _executorRequired, bytes32 _seed)",
       "error ECDSAInvalidSignature()",
       "error ECDSAInvalidSignatureLength(uint256 length)",
@@ -763,7 +763,7 @@
       "function verifySignatures(bytes32 _digest, bytes _signatures) view",
       "function verifyTransactionProof(bytes32 _merkleRoot, tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction) view"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 22882452,
-  "configHash": "0x934615ce72fd0e5d4628ed1386e2a4d6e32f38900cef2eaca615c1b9cfcee7a4",
+  "configHash": "0xfafd6fd9c21b1decf6cf0a9b603266907867155382f9848fa31d2660f6cfbb46",
   "entries": [
     {
       "address": "eth:0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
@@ -958,7 +958,7 @@
     }
   ],
   "abis": {
-    "0x1041D127b2d4BC700F0F563883bC689502606918": [
+    "eth:0x1041D127b2d4BC700F0F563883bC689502606918": [
       "constructor(address _owner, address _admin)",
       "error Transfer_ApproveFailed()",
       "error Transfer_TransferFailed()",
@@ -978,7 +978,7 @@
       "function transferOwnership(address newOwner)",
       "function withdrawTreasuryFee(address _stargate, uint64 _amountSD)"
     ],
-    "0x173272739Bd7Aa6e4e214714048a9fE699453059": [
+    "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -988,7 +988,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x1a44076050125825900e736c501f859c50fE728c": [
+    "eth:0x1a44076050125825900e736c501f859c50fE728c": [
       "constructor(uint32 _eid, address _owner)",
       "error LZ_AlreadyRegistered()",
       "error LZ_ComposeExists()",
@@ -1093,14 +1093,14 @@
       "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
       "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
     ],
-    "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
+    "eth:0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": [
       "error LZ_NotImplemented()",
       "function isSupportedEid(uint32) pure returns (bool)",
       "function messageLibType() pure returns (uint8)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
-    "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": [
+    "eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -1181,7 +1181,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": [
+    "eth:0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881": [
       "constructor(address _staking)",
       "error MultiRewarderDisconnectedStakingToken(address token)",
       "error MultiRewarderIncorrectNative(uint256 expected, uint256 actual)",
@@ -1221,7 +1221,7 @@
       "function stopReward(address rewardToken, address receiver, bool pullTokens)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x5ebB3f2feaA15271101a927869B3A56837e73056": [
+    "eth:0x5ebB3f2feaA15271101a927869B3A56837e73056": [
       "error LZ_Treasury_LzTokenNotEnabled()",
       "error Transfer_NativeFailed(address _to, uint256 _value)",
       "error Transfer_ToAddressIsZero()",
@@ -1241,10 +1241,10 @@
       "function withdrawNativeFee(address _messageLib, address _to, uint256 _amount)",
       "function withdrawToken(address _token, address _to, uint256 _amount)"
     ],
-    "0x65bb797c2B9830d891D87288F029ed8dACc19705": [
+    "eth:0x65bb797c2B9830d891D87288F029ed8dACc19705": [
       "constructor(address _singleton)"
     ],
-    "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d": [
+    "eth:0x6b8aD17795d89B283e6D0362A87A403f3544bb9d": [
       "constructor(address _endpoint, address _owner)",
       "error CreditMsgCodec_InvalidMessage()",
       "error InvalidDelegate()",
@@ -1302,7 +1302,7 @@
       "function stargateImpls(uint16 assetId) view returns (address stargateImpl)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980": [
+    "eth:0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
       "error BusCodec_InvalidMessage()",
@@ -1399,7 +1399,7 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3": [
+    "eth:0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3": [
       "constructor(address _stargate)",
       "error FeeLib_InvalidFeeConfiguration()",
       "error FeeLib_Paused()",
@@ -1418,7 +1418,7 @@
       "function stargateType() view returns (uint8)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": [
+    "eth:0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
       "error DVN_InvalidDVNIdx()",
       "error DVN_InvalidDVNOptions(uint256 cursor)",
@@ -1483,7 +1483,7 @@
       "function withdrawFee(address _to, uint256 _amount)",
       "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
     ],
-    "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": [
+    "eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -1564,7 +1564,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0x8FafAE7Dd957044088b3d0F67359C327c6200d18": [
+    "eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
       "error DVN_DuplicatedHash(bytes32 executableHash)",
       "error DVN_InstructionExpired()",
@@ -1640,7 +1640,7 @@
       "function withdrawToken(address _token, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
-    "0x933597a323Eb81cAe705C5bC29985172fd5A3973": [
+    "eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -1727,7 +1727,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
+    "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
       "constructor(address[] minters, uint256 maxSupply)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1752,7 +1752,7 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
+    "eth:0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
       "constructor(address initialOwner)",
       "error AdminCallFailed()",
       "error ImplementationCallFailed()",
@@ -1766,7 +1766,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": [
+    "eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
       "error DVN_DuplicatedHash(bytes32 executableHash)",
       "error DVN_InstructionExpired()",
@@ -1842,7 +1842,7 @@
       "function withdrawToken(address _token, address _to, uint256 _amount)",
       "function workerFeeLib() view returns (address)"
     ],
-    "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
+    "eth:0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
       "error DVN_InvalidDVNIdx()",
       "error DVN_InvalidDVNOptions(uint256 cursor)",
@@ -1904,7 +1904,7 @@
       "function withdrawFee(address _to, uint256 _amount)",
       "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
     ],
-    "0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
+    "eth:0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
       "constructor(uint64 _oneSigId, address[] _signers, uint256 _threshold, address[] _executors, bool _executorRequired, bytes32 _seed)",
       "error ECDSAInvalidSignature()",
       "error ECDSAInvalidSignatureLength(uint256 length)",
@@ -1957,7 +1957,7 @@
       "function verifySignatures(bytes32 _digest, bytes _signatures) view",
       "function verifyTransactionProof(bytes32 _merkleRoot, tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction) view"
     ],
-    "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": [
+    "eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -2044,7 +2044,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0xc02Ab410f0734EFa3F14628780e6e695156024C2": [
+    "eth:0xc02Ab410f0734EFa3F14628780e6e695156024C2": [
       "constructor(address _endpoint)",
       "error LZ_MessageLib_OnlyEndpoint()",
       "error LZ_ULN_AtLeastOneDVN()",
@@ -2081,7 +2081,7 @@
       "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
       "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
     ],
-    "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": [
+    "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -2091,7 +2091,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": [
+    "eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -2172,7 +2172,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2221,7 +2221,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xF14EEe033D8b00101aB147F87cB238a2d3E74940": [
+    "eth:0xF14EEe033D8b00101aB147F87cB238a2d3E74940": [
       "constructor(string _name, string _symbol, uint8 _decimals)",
       "error InvalidShortString()",
       "error LPToken_Unauthorized()",
@@ -2257,5 +2257,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

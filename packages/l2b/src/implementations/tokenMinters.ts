@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { type EthereumAddress, formatAsAsciiTable } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  formatAsAsciiTable,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getProvider } from './common/GetProvider'
 
@@ -22,10 +26,13 @@ export async function getTokenMinterEvents(
   const roleRevokedTopic = iface.getEventTopic('RoleRevoked')
 
   logger.info('Fetching role events...')
-  const logs = await provider.getLogs(address, [
-    [roleGrantedTopic, roleRevokedTopic], // Match either event
-    TOKEN_MINTER_ROLE, // Filter for TOKEN_MINTER_ROLE in the first indexed parameter
-  ])
+  const logs = await provider.getLogs(
+    ChainSpecificAddress.fromLong(provider.chain, address),
+    [
+      [roleGrantedTopic, roleRevokedTopic], // Match either event
+      TOKEN_MINTER_ROLE, // Filter for TOKEN_MINTER_ROLE in the first indexed parameter
+    ],
+  )
   logger.info('Done.')
 
   const currentMinters = new Set<string>()

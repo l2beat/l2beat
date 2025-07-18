@@ -1,4 +1,8 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  Bytes,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
@@ -11,15 +15,15 @@ const BEACON_SLOT = Bytes.fromHex(
 
 function getBeacon(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
   return provider.getStorageAsAddress(address, BEACON_SLOT)
 }
 
 async function getImplementation(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress | undefined> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress | undefined> {
   const implementationMethod =
     'function implementation() external view returns (address)'
   const implementation = await provider.callMethod<EthereumAddress>(
@@ -28,28 +32,35 @@ async function getImplementation(
     [],
   )
 
-  return implementation
+  if (implementation === undefined) {
+    return
+  }
+
+  return ChainSpecificAddress.fromLong(provider.chain, implementation)
 }
 
 async function getOwner(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress> {
   const ownerMethod = 'function owner() public view returns (address)'
   const owner = await provider.callMethod<EthereumAddress>(
     address,
     ownerMethod,
     [],
   )
-  return owner ?? EthereumAddress.ZERO
+  return ChainSpecificAddress.fromLong(
+    provider.chain,
+    owner ?? EthereumAddress.ZERO,
+  )
 }
 
 export async function detectBeaconProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const beacon = await getBeacon(provider, address)
-  if (beacon === EthereumAddress.ZERO) {
+  if (beacon === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
 

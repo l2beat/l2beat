@@ -2,8 +2,13 @@
   "name": "zklinknova",
   "chain": "scroll",
   "blockNumber": 13963893,
-  "configHash": "0x0b6eaeea63147e1bed67e897894ba0ccd923a4424fb37372e42eb674c8c885ee",
+  "configHash": "0x23298ca489e904c14879e9e2c7881339da3e243089cd1ee60ea6ee9561f7a89b",
   "entries": [
+    {
+      "address": "scr:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "zkLink",
       "address": "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
@@ -270,7 +275,7 @@
     }
   ],
   "abis": {
-    "0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": [
+    "scr:0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": [
       "constructor(address _zkSync)",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
       "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
@@ -288,7 +293,7 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2": [
+    "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -296,7 +301,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": [
+    "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -307,7 +312,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+    "scr:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -357,7 +362,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xC4673dAbfAf04D2A430e244B63F040D27199102f": [
+    "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -368,7 +373,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": [
+    "scr:0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": [
       "constructor()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -443,7 +448,7 @@
       "function validators(address validatorAddress) view returns (bool isValidator)",
       "function withdrawForwardFee(address _receiver, uint256 _amount)"
     ],
-    "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": [
+    "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -451,7 +456,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe469c1330cEEcC375fE17E7D649eA270186D344F": [
+    "scr:0xe469c1330cEEcC375fE17E7D649eA270186D344F": [
       "constructor(address _zkLink, address _messageService)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -476,7 +481,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": [
+    "scr:0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77": [
       "constructor(address _singleton)"
     ]
   },
@@ -486,5 +491,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
+  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
 }

@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ContractSources } from './SourceCodeService'
 
 export function getLegacyDerivedName(names: string[]): string {
@@ -6,9 +6,9 @@ export function getLegacyDerivedName(names: string[]): string {
 }
 
 export function getImplementationNames(
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   sources: ContractSources,
-): Record<EthereumAddress, string> | undefined {
+): Record<ChainSpecificAddress, string> | undefined {
   const baseEntry = [address.toString(), sources.name]
 
   const perSourceEntries = sources.sources.map((s) => [

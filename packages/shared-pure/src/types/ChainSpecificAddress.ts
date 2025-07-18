@@ -10,8 +10,7 @@ import { validateAddress } from '@mradomski/tinyerc55'
 import { EthereumAddress } from './EthereumAddress'
 
 // NOTE(radomski): This is a little stupid. Ideally we would have a centralized
-// list of all chains with their short names. But currently I don't know how to
-// achieve that.
+// list of all chains with their short names. But currently I don't know how to achieve that.
 const SHORT_TO_LONG_CHAIN_NAMES = {
   eth: 'ethereum',
   arb1: 'arbitrum',
@@ -123,4 +122,10 @@ ChainSpecificAddress.longChain = function longChain(
 ): LONG_CHAIN_NAME {
   const short = ChainSpecificAddress.chain(value)
   return SHORT_TO_LONG_CHAIN_NAMES[short]
+}
+
+ChainSpecificAddress.ZERO = function ZERO(
+  longChainName: string,
+): ChainSpecificAddress {
+  return ChainSpecificAddress.fromLong(longChainName, EthereumAddress.ZERO)
 }

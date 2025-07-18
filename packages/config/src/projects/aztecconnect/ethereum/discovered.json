@@ -2,7 +2,7 @@
   "name": "aztecconnect",
   "chain": "ethereum",
   "blockNumber": 21041827,
-  "configHash": "0x89106ff90d20ae09faa62ddc79f4e3d3bccf649ed6c3fda456bb657eb119e256",
+  "configHash": "0xc4dd622c1486bebc1893aa133166b91d2700338b448104a058a4828aafeb3e94",
   "entries": [
     {
       "address": "eth:0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -266,7 +266,7 @@
     }
   ],
   "abis": {
-    "0x4cf32670a53657596E641DFCC6d40f01e4d64927": [
+    "eth:0x4cf32670a53657596E641DFCC6d40f01e4d64927": [
       "constructor(address _feeClaimer, address _rollupProcessor, address _router)",
       "event Convert(address assetAddress, uint256 inputValue, uint256 outputValue)",
       "event FeeReimbursed(address receiver, uint256 amount)",
@@ -287,7 +287,7 @@
       "function transferOwnership(address newOwner)",
       "function txFeeBalance(address assetAddress) view returns (uint256)"
     ],
-    "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728": [
+    "eth:0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728": [
       "constructor(uint256 _escapeBlockLowerBound, uint256 _escapeBlockUpperBound)",
       "error ARRAY_OVERFLOW()",
       "error BRIDGE_WITH_IDENTICAL_INPUT_ASSETS(uint256 inputAssetId)",
@@ -408,14 +408,14 @@
       "function userPendingDeposits(uint256, address) view returns (uint256)",
       "function verifier() view returns (address)"
     ],
-    "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487": [
+    "eth:0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487": [
       "error ASYNC_NONZERO_OUTPUT_VALUES(uint256 outputValueA, uint256 outputValueB)",
       "error INSUFFICIENT_ETH_PAYMENT()",
       "error OUTPUT_A_EXCEEDS_252_BITS(uint256 outputValue)",
       "error OUTPUT_B_EXCEEDS_252_BITS(uint256 outputValue)",
       "function convert(address bridgeAddress, tuple(uint256 id, address erc20Address, uint8 assetType) inputAssetA, tuple(uint256 id, address erc20Address, uint8 assetType) inputAssetB, tuple(uint256 id, address erc20Address, uint8 assetType) outputAssetA, tuple(uint256 id, address erc20Address, uint8 assetType) outputAssetB, uint256 totalInputValue, uint256 interactionNonce, uint256 auxInputData, uint256 ethPaymentsSlot, address rollupBeneficiary) returns (uint256 outputValueA, uint256 outputValueB, bool isAsync)"
     ],
-    "0xb7baA1420f88b7758E341c93463426A2b7651CFB": [
+    "eth:0xb7baA1420f88b7758E341c93463426A2b7651CFB": [
       "error EC_SCALAR_MUL_FAILURE()",
       "error MOD_EXP_FAILURE()",
       "error PROOF_FAILURE()",
@@ -425,7 +425,7 @@
       "function getVerificationKeyHash() pure returns (bytes32)",
       "function verify(bytes, uint256 public_inputs_hash) view returns (bool)"
     ],
-    "0xC5b735d05c26579B701Be9bED253Bb588503B26B": [
+    "eth:0xC5b735d05c26579B701Be9bED253Bb588503B26B": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -436,7 +436,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -485,10 +485,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xE298a76986336686CC3566469e3520d23D1a8aaD": [
+    "eth:0xE298a76986336686CC3566469e3520d23D1a8aaD": [
       "constructor(address _masterCopy)"
     ],
-    "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455": [
+    "eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

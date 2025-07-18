@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "base",
   "blockNumber": 32674389,
-  "configHash": "0xbbe5e73f641ca5d870a2a2b2bbf4a6309b206b4b2536c607fb6af6c497dc8936",
+  "configHash": "0x593213a3b90a8e6e3148ccfb62b67678dd08c3a79f8db6cc82ab1e51d88056d2",
   "entries": [
     {
       "address": "base:0x052c01a2a88fa6Cba8Fc2DBEf39a442A140a35e3",
@@ -899,7 +899,7 @@
     }
   ],
   "abis": {
-    "0x1682Ae6375C4E4A97e4B583BC394c861A46D8962": [
+    "base:0x1682Ae6375C4E4A97e4B583BC394c861A46D8962": [
       "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
       "event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)",
       "event LocalMinterAdded(address localMinter)",
@@ -930,7 +930,7 @@
       "function transferOwnership(address newOwner)",
       "function updateRescuer(address newRescuer)"
     ],
-    "0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1": [
+    "base:0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1": [
       "constructor(address _minterManager)",
       "event ControllerConfigured(address indexed _controller, address indexed _worker)",
       "event ControllerRemoved(address indexed _controller)",
@@ -952,7 +952,7 @@
       "function setMinterManager(address _newMinterManager)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": [
+    "base:0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -962,7 +962,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+    "base:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address indexed handler)",
@@ -1011,7 +1011,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x2Ce6311ddAE708829bc0784C967b7d77D19FD779": [
+    "base:0x2Ce6311ddAE708829bc0784C967b7d77D19FD779": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event AuthorizationCanceled(address indexed authorizer, bytes32 indexed nonce)",
       "event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce)",
@@ -1085,10 +1085,10 @@
       "function updateRescuer(address newRescuer)",
       "function version() pure returns (string)"
     ],
-    "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971": [
+    "base:0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971": [
       "constructor(address _singleton)"
     ],
-    "0x555E272506C06e7E559d57418563742AFE363ec8": [
+    "base:0x555E272506C06e7E559d57418563742AFE363ec8": [
       "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
       "event Denylisted(address indexed account)",
       "event DenylisterChanged(address indexed oldDenylister, address indexed newDenylister)",
@@ -1133,7 +1133,7 @@
       "function updateDenylister(address newDenylister)",
       "function updateRescuer(address newRescuer)"
     ],
-    "0x7Db629f6Acc20Be49a0A7565c21CC178E9Ac21e3": [
+    "base:0x7Db629f6Acc20Be49a0A7565c21CC178E9Ac21e3": [
       "constructor(uint32 _localDomain, uint32 _version)",
       "event AttesterDisabled(address indexed attester)",
       "event AttesterEnabled(address indexed attester)",
@@ -1181,7 +1181,7 @@
       "function usedNonces(bytes32) view returns (uint256)",
       "function version() view returns (uint32)"
     ],
-    "0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": [
+    "base:0x81D40F21F12A8F0E3252Bccb954D722d4c464B64": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1191,7 +1191,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": [
+    "base:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913": [
       "constructor(address implementationContract)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address implementation)",
@@ -1201,10 +1201,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x92A19381444A001d62cE67BaFF066fA1111d7202": [
+    "base:0x92A19381444A001d62cE67BaFF066fA1111d7202": [
       "constructor(address _singleton)"
     ],
-    "0xAD09780d193884d503182aD4588450C416D6F9D4": [
+    "base:0xAD09780d193884d503182aD4588450C416D6F9D4": [
       "constructor(uint32 _localDomain, address _attester, uint32 _maxMessageBodySize, uint32 _version)",
       "event AttesterDisabled(address indexed attester)",
       "event AttesterEnabled(address indexed attester)",
@@ -1251,7 +1251,7 @@
       "function usedNonces(bytes32) view returns (uint256)",
       "function version() view returns (uint32)"
     ],
-    "0xD8724322f44E5c58D7A815F542036fb17DbbF839": [
+    "base:0xD8724322f44E5c58D7A815F542036fb17DbbF839": [
       "event GovernorshipTransferred(address indexed previousGovernor, address indexed newGovernor)",
       "event PendingGovernorshipTransfer(address indexed previousGovernor, address indexed newGovernor)",
       "event Upgraded(address indexed implementation)",
@@ -1265,7 +1265,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6": [
+    "base:0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6": [
       "constructor(address _tokenController)",
       "event LocalTokenMessengerAdded(address localTokenMessenger)",
       "event LocalTokenMessengerRemoved(address localTokenMessenger)",
@@ -1305,7 +1305,7 @@
       "function updatePauser(address _newPauser)",
       "function updateRescuer(address newRescuer)"
     ],
-    "0xF66886e242e20cAb2496AF1d411eBcFb73440270": [
+    "base:0xF66886e242e20cAb2496AF1d411eBcFb73440270": [
       "constructor()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event GovernorshipTransferred(address indexed previousGovernor, address indexed newGovernor)",
@@ -1345,7 +1345,7 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function transferGovernance(address _newGovernor)"
     ],
-    "0xf817cb3092179083c48c014688D98B72fB61464f": [
+    "base:0xf817cb3092179083c48c014688D98B72fB61464f": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
@@ -1380,7 +1380,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+    "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -1430,7 +1430,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xfd78EE919681417d192449715b2594ab58f5D002": [
+    "base:0xfd78EE919681417d192449715b2594ab58f5D002": [
       "constructor(address _tokenController)",
       "event LocalTokenMessengerAdded(address localTokenMessenger)",
       "event LocalTokenMessengerRemoved(address localTokenMessenger)",

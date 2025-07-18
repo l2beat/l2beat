@@ -2,7 +2,7 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 22824247,
-  "configHash": "0x9f8b46154d89d238dacebf27b853c64d7ffd9c295b2091b1a4c857b9c98b2830",
+  "configHash": "0x11449098ce42833b8be9219119d4e5c6c4c6a4599659d0cec423bbdf6677c3a4",
   "entries": [
     {
       "address": "eth:0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
@@ -645,7 +645,7 @@
     }
   ],
   "abis": {
-    "0x0ac26945032143f6196d4bb5Ae03592BfAf822FD": [
+    "eth:0x0ac26945032143f6196d4bb5Ae03592BfAf822FD": [
       "error ErrBelowMinRequiredGovernors()",
       "error ErrContractTypeNotFound(uint8 contractType)",
       "error ErrCurrentProposalIsNotCompleted()",
@@ -729,14 +729,14 @@
       "function updateManyTargetOption(uint8[] targetOptions, address[] targets)",
       "function vote(uint256, uint256) view returns (uint8 status, bytes32 hash, uint256 againstVoteWeight, uint256 forVoteWeight, uint256 expiryTimestamp)"
     ],
-    "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": [
+    "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB": [
       "constructor(address logic, address admin, bytes data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)",
       "function functionDelegateCall(bytes data) payable"
     ],
-    "0x2DA02aC5f19Ae362a4121718d990e655eB628D96": [
+    "eth:0x2DA02aC5f19Ae362a4121718d990e655eB628D96": [
       "function owners(uint256) view returns (address)",
       "function removeOwner(address owner)",
       "function revokeConfirmation(uint256 transactionId)",
@@ -775,7 +775,7 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
-    "0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69": [
+    "eth:0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69": [
       "constructor()",
       "error ErrContractTypeNotFound(uint8 contractType)",
       "error ErrERC1155MintingFailed()",
@@ -894,10 +894,10 @@
       "function withdrawalLocked(uint256) view returns (bool)",
       "function wrappedNativeToken() view returns (address)"
     ],
-    "0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": [
+    "eth:0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e": [
       "constructor(address _singleton)"
     ],
-    "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": [
+    "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -909,7 +909,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
+    "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
       "function name() view returns (string)",
       "function approve(address guy, uint256 wad) returns (bool)",
       "function totalSupply() view returns (uint256)",
@@ -926,7 +926,7 @@
       "event Deposit(address indexed dst, uint256 wad)",
       "event Withdrawal(address indexed src, uint256 wad)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -975,7 +975,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": [
+    "eth:0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062": [
       "constructor(address target_, address[] admins, address[] sentries)",
       "error ErrNotOnEmergencyPause()",
       "error ErrTargetIsNotOnPaused()",

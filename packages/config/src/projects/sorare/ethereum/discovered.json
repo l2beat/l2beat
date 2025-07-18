@@ -2,7 +2,7 @@
   "name": "sorare",
   "chain": "ethereum",
   "blockNumber": 21981156,
-  "configHash": "0xa4074fa520efb7b3a7025ef48b3067bd3b2821d6b001083bf77b410e08761bdf",
+  "configHash": "0x9d76186d13df14d4de166d62acb8f1b662647701dddbe9d14040f15a6465f762",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -522,7 +522,7 @@
     }
   ],
   "abis": {
-    "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [
+    "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
@@ -604,7 +604,7 @@
       "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)",
       "function withdrawWithTokenId(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
     ],
-    "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
+    "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
       "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
       "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
@@ -615,7 +615,7 @@
       "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "function registerMessage(address to, bytes32 messageHash)"
     ],
-    "0x613ee54C54D5548627064B4D648942bF3648f376": [
+    "eth:0x613ee54C54D5548627064B4D648942bF3648f376": [
       "event LogFrozen()",
       "event LogFullWithdrawalRequest(uint256 ownerKey, uint256 vaultId)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -662,7 +662,7 @@
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": [
+    "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogFrozen()",
       "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
@@ -718,7 +718,7 @@
       "function updateState(uint256[] publicInput, uint256[] applicationData)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0x879cD57975d596004863D30c59d579ef78BBbe32": [
+    "eth:0x879cD57975d596004863D30c59d579ef78BBbe32": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "function hasRegisteredFact() view returns (bool)",
       "function identify() pure returns (string)",
@@ -727,7 +727,7 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
+    "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
       "event LogDepositToVault(address ethKey, uint256 assetType, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -773,7 +773,7 @@
       "function withdrawErc1155FromVault(uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
       "function withdrawFromVault(uint256 assetType, uint256 vaultId, uint256 quantizedAmount)"
     ],
-    "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": [
+    "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": [
       "event ImplementationActivationRescheduled(address indexed implementation, uint256 updatedActivationTime)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -792,7 +792,7 @@
       "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1": [
+    "eth:0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
       "function gpsContract() view returns (address)",
       "function hasRegisteredFact() view returns (bool)",
@@ -800,10 +800,10 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function programHash() view returns (uint256)"
     ],
-    "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B": [
+    "eth:0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -852,13 +852,13 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": [
+    "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": [
       "function VERSION() view returns (string)",
       "function getSubContract(bytes4 selector) view returns (address)",
       "function handlingContractId(bytes4 selector) pure returns (string id)",
       "function initialize(bytes data)"
     ],
-    "0xF5C9F957705bea56a7e806943f98F7777B995826": [
+    "eth:0xF5C9F957705bea56a7e806943f98F7777B995826": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -884,7 +884,7 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
+    "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
       "event LogFrozen()",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",

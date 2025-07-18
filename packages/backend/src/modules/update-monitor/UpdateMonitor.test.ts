@@ -744,13 +744,14 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
+      const chain = 'ethereum'
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         // different config hash
         new ConfigRegistry({
           name: PROJECT_A,
-          chain: 'ethereum',
-          initialAddresses: [EthereumAddress.ZERO],
+          chain,
+          initialAddresses: [ChainSpecificAddress.ZERO(chain)],
         }),
       )
 

@@ -1,13 +1,13 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn } from 'earl'
 import { getDiscoveryPaths } from '../config/getDiscoveryPaths'
 import { type Shape, TemplateService } from './TemplateService'
 
-const CORRECT_SUPERCHAIN_CONFIG_ADDR = EthereumAddress(
-  '0x95703e0982140D16f8ebA6d158FccEde42f04a4C',
+const CORRECT_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
+  'eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C',
 )
-const FAKE_SUPERCHAIN_CONFIG_ADDR = EthereumAddress(
-  '0x26C7bFB430d68Bf74d2d52497836d4336b555dE7',
+const FAKE_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
+  'eth:0x26C7bFB430d68Bf74d2d52497836d4336b555dE7',
 )
 const CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH = Hash256(
   '0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d',

@@ -2,7 +2,7 @@
   "name": "metis",
   "chain": "ethereum",
   "blockNumber": 22774371,
-  "configHash": "0xb8f310867d3e761937e859916b8bb06026326ff4d3b8089b9915247a9ac934d5",
+  "configHash": "0xdd1f1fe2866bd38e9a86575374215cb7f4f5e57f683311fe14e9971cf0821807",
   "entries": [
     {
       "address": "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
@@ -1218,10 +1218,10 @@
     }
   ],
   "abis": {
-    "0x081D1101855bD523bA69A9794e0217F0DB6323ff": [
+    "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff": [
       "constructor(address _libAddressManager, string _implementationName)"
     ],
-    "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC": [
+    "eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC": [
       "event BatchSubmitReward(uint256 _newBatchId)",
       "event ClaimRewards(uint256 indexed sequencerId, address recipient, uint256 indexed amount, uint256 indexed totalAmount)",
       "event Initialized(uint8 version)",
@@ -1263,7 +1263,7 @@
       "function transferOwnership(address newOwner)",
       "function withdrawLocking(uint256 _seqId, address _owner, uint256 _nonce, uint256 _amount, uint256 _locked)"
     ],
-    "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": [
+    "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1274,7 +1274,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": [
+    "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9": [
       "constructor(address _libAddressManager, string _owner)",
       "function DEFAULT_CHAINID() view returns (uint256)",
       "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
@@ -1298,13 +1298,13 @@
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
     ],
-    "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": [
+    "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": [
+    "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
       "event Initialized(uint8 version)",
@@ -1319,13 +1319,13 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
-    "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb": [
+    "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": [
+    "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": [
       "constructor(address _libAddressManager, string _owner)",
       "function DEFAULT_CHAINID() view returns (uint256)",
       "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
@@ -1349,7 +1349,7 @@
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
     ],
-    "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": [
+    "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -1357,7 +1357,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": [
+    "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235": [
       "constructor(uint32 _gameType, bytes32 _absolutePrestate, uint256 _maxGameDepth, uint256 _splitDepth, uint64 _clockExtension, uint64 _maxClockDuration, address _vm, address _wmetis, address _addressManager, uint256 _l2ChainId)",
       "error AlreadyInitialized()",
       "error AnchorRootNotFound()",
@@ -1438,7 +1438,7 @@
       "function vm() view returns (address vm_)",
       "function wmetis() view returns (address wmetis_)"
     ],
-    "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": [
+    "eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E": [
       "constructor()",
       "event Claim(address sender, uint256 amount)",
       "event Finalize(uint256 cIndex, address sender, uint8 result)",
@@ -1486,10 +1486,10 @@
       "function withdraw(uint256 amount)",
       "function withdrawSeqStake(address to)"
     ],
-    "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": [
+    "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": [
       "constructor(address _singleton)"
     ],
-    "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": [
+    "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9": [
       "constructor(address _libAddressManager, uint256 _maxTransactionGasLimit, uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
       "event BatchElementDeleted(address _sender, uint256 _chainId, uint256 _index, bytes27 _globalMetadata)",
       "event BatchPushed(address _sender, uint256 _chainId, bytes32 _object, bytes27 _globalMetadata)",
@@ -1546,17 +1546,17 @@
       "function setGasParams(uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
       "function setQueueByChainId(uint256 _chainId, uint256 _index, tuple(bytes32 transactionHash, uint40 timestamp, uint40 blockNumber) _object)"
     ],
-    "0x595801b85628ec6979C420988b8843A40F850528": [
+    "eth:0x595801b85628ec6979C420988b8843A40F850528": [
       "constructor(address _libAddressManager)",
       "function isCollateralized(address _who) view returns (bool)",
       "function isCollateralizedByChainId(uint256 _chainId, address _who, address _prop) view returns (bool)",
       "function libAddressManager() view returns (address)",
       "function resolve(string _name) view returns (address)"
     ],
-    "0x62478E4eeb4070fE399866aB05e821AB97200947": [
+    "eth:0x62478E4eeb4070fE399866aB05e821AB97200947": [
       "constructor(address _singleton)"
     ],
-    "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": [
+    "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -1564,7 +1564,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0x789a64284e29d2225430606D3D89a9336870BBbC": [
+    "eth:0x789a64284e29d2225430606D3D89a9336870BBbC": [
       "constructor(uint256 _minProposalSize, uint256 _challengePeriod)",
       "error ActiveProposal()",
       "error AlreadyFinalized()",
@@ -1614,7 +1614,7 @@
       "function version() view returns (string)",
       "function zeroHashes(uint256) view returns (bytes32)"
     ],
-    "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": [
+    "eth:0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": [
       "constructor()",
       "event PushConfig(uint256 chainid, bytes configs)",
       "event SwitchSeq(uint256 chainid, address wallet, address manager)",
@@ -1624,7 +1624,7 @@
       "function pushConfig(uint256 _chainId, bytes _configs) payable",
       "function switchSequencer(uint256 _chainId, address wallet, address manager) payable"
     ],
-    "0x7f6B0b7589febc40419a8646EFf9801b87397063": [
+    "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063": [
       "constructor(address _addressManager, uint256 _initialDiscount)",
       "function CONFIG_OWNER_KEY() view returns (string)",
       "function discount() view returns (uint256)",
@@ -1641,7 +1641,7 @@
       "function setWhitelistedXDomainSender(address _sender, bool _isWhitelisted)",
       "function xDomainWL(address) view returns (bool)"
     ],
-    "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": [
+    "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
       "event MessageAllowed(bytes32 indexed _xDomainCalldataHash)",
@@ -1672,7 +1672,7 @@
       "function transferOwnership(address newOwner)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": [
+    "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": [
       "constructor(address initialOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1684,7 +1684,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x918778e825747a892b17C66fe7D24C618262867d": [
+    "eth:0x918778e825747a892b17C66fe7D24C618262867d": [
       "event AddressSet(string indexed _name, address _newAddress, address _oldAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function getAddress(string _name) view returns (address)",
@@ -1693,7 +1693,7 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
+    "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
       "constructor(address[] minters, uint256 maxSupply)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1718,7 +1718,7 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798": [
+    "eth:0xa0cfE8Af2AB5C9232714647702DbACf862EA4798": [
       "constructor()",
       "event ERC20ChainID(uint256 _chainid)",
       "event ERC20DepositInitiated(address indexed _l1Token, address indexed _l2Token, address indexed _from, address _to, uint256 _amount, bytes _data)",
@@ -1747,7 +1747,7 @@
       "function messenger() view returns (address)",
       "function metis() view returns (address)"
     ],
-    "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51": [
+    "eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51": [
       "constructor(uint256 _delay, address _metis)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Deposit(address indexed user, uint256 amount)",
@@ -1781,7 +1781,7 @@
       "function withdraw(address _guy, uint256 _amount)",
       "function withdrawals(address, address) view returns (uint256 amount, uint256 timestamp)"
     ],
-    "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": [
+    "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -1789,7 +1789,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": [
+    "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": [
       "constructor(address _libAddressManager, string _owner)",
       "function DEFAULT_CHAINID() view returns (uint256)",
       "function deleteElementsAfterInclusive(uint256 _index, bytes27 _globalMetadata)",
@@ -1813,13 +1813,13 @@
       "function setGlobalMetadata(bytes27 _globalMetadata)",
       "function setGlobalMetadataByChainId(uint256 _chainId, bytes27 _globalMetadata)"
     ],
-    "0xAFD640204D73B02C3521eA8ea3771182527Ff057": [
+    "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057": [
       "constructor(address _oracle)",
       "function oracle() view returns (address oracle_)",
       "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32)",
       "function version() view returns (string)"
     ],
-    "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": [
+    "eth:0xC878771A4ff7466B7be8b59FB8766719AEa8d562": [
       "constructor()",
       "event AppendBatchElement(uint256 _chainId, uint256 _batchIndex, uint40 _shouldStartAtElement, uint24 _totalElementsToAppend, uint256 _txBatchSize, uint256 _txBatchTime, bytes32 _root)",
       "event SetBatchTxData(address _sender, uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber, uint256 _stakeAmount, bool _verified, bool _sequencer)",
@@ -1860,7 +1860,7 @@
       "function whitelist(address) view returns (bool)",
       "function withdrawStake(uint256 _chainId, uint256 _batchIndex, uint256 _blockNumber)"
     ],
-    "0xD54c868362C2098E0E46F12E7D924C6A332952Dd": [
+    "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1871,7 +1871,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60": [
+    "eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60": [
       "error NoRewardRecipient()",
       "error NoSuchSeq()",
       "error NotSeqOwner()",
@@ -1932,7 +1932,7 @@
       "function withdraw(uint256 _seqId, uint256 _amount)",
       "function withdrawRewards(uint256 _seqId, uint32 _l2Gas) payable"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1981,7 +1981,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4": [
+    "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4": [
       "constructor()",
       "error InvalidGameStatus()",
       "error UnregisteredGame()",
@@ -2016,7 +2016,7 @@
       "function withdraw(uint256 _amount)",
       "function withdrawals(address) view returns (uint256 amount, uint256 timestamp)"
     ],
-    "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": [
+    "eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": [
       "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
       "error ClaimAlreadyResolved()",
       "error UnregisteredGame()",
@@ -2051,7 +2051,7 @@
       "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
       "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
     ],
-    "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": [
+    "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -2059,7 +2059,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45": [
+    "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45": [
       "constructor(address _metis, address _addressManager)",
       "error AlreadyDisputed(bytes32 uuid)",
       "error GameAlreadyExists(bytes32 uuid)",
@@ -2101,7 +2101,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() view returns (string)"
     ],
-    "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": [
+    "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -2109,7 +2109,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0xfA947f70c3509d5b70A606e871aE0C85397D0738": [
+    "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

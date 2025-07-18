@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../api/api'
+import { Title } from '../common/Title'
 import { ErrorState } from '../components/ErrorState'
 import { EditorView } from '../components/editor/EditorView'
 import { LoadingState } from '../components/LoadingState'
@@ -27,23 +28,26 @@ export function CodePage() {
   const files = [
     {
       id: address,
-      name: address,
-      content: getSource(response.data),
+      name: response.data.name,
+      content: getSource(response.data.sources),
       readOnly: true,
       language: 'solidity' as const,
     },
   ]
 
   return (
-    <div className="flex h-full w-full select-none flex-col">
-      <EditorView
-        editorId="code-app"
-        files={files}
-        range={undefined}
-        initialFileIndex={0}
-        disableTabs
-      />
-    </div>
+    <>
+      <Title title={`Code - ${response.data.name} (${address})`} />
+      <div className="flex h-full w-full select-none flex-col">
+        <EditorView
+          editorId="code-app"
+          files={files}
+          range={undefined}
+          initialFileIndex={0}
+          disableTabs
+        />
+      </div>
+    </>
   )
 }
 

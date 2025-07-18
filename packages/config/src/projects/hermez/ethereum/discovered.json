@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21778467,
-  "configHash": "0xdda3348fe5e9926bf644efb8e8fb882c98e8cd0274684b28b6f3fa6153b380c5",
+  "configHash": "0x458eebbf678700cee77247bb66418a7e82b9309e50e7d3e07400827d4937642e",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -384,7 +384,7 @@
     }
   ],
   "abis": {
-    "0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": [
+    "eth:0x07a00a617e1DaB02Aa31887Eb5d521d4529a32E3": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -395,7 +395,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": [
+    "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2": [
       "constructor(address _logic, address _admin, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -405,10 +405,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": [
+    "eth:0x1DC4b451DFcD0e848881eDE8c7A99978F00b1342": [
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
     ],
-    "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
+    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -453,7 +453,7 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x392361427Ef5e17b69cFDd1294F31ab555c86124": [
+    "eth:0x392361427Ef5e17b69cFDd1294F31ab555c86124": [
       "constructor(uint64 _initialWithdrawalDelay, address _initialHermezRollup, address _initialHermezGovernanceAddress, address _initialEmergencyCouncil)",
       "event Deposit(address indexed owner, address indexed token, uint192 amount, uint64 depositTimestamp)",
       "event EmergencyModeEnabled()",
@@ -485,13 +485,13 @@
       "function transferGovernance(address newGovernance)",
       "function withdrawal(address _owner, address _token)"
     ],
-    "0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": [
+    "eth:0x3DAa0B2a994b1BC60dB9e312aD0a8d87a1Bb16D2": [
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
     ],
-    "0x4464A1E499cf5443541da6728871af1D5C4920ca": [
+    "eth:0x4464A1E499cf5443541da6728871af1D5C4920ca": [
       "function verifyProof(uint256[2] a, uint256[2][2] b, uint256[2] c, uint256[1] input) view returns (bool r)"
     ],
-    "0x6D85D79D69b7e190E671C16e8611997152bD3e95": [
+    "eth:0x6D85D79D69b7e190E671C16e8611997152bD3e95": [
       "event AddToken(address indexed tokenAddress, uint32 tokenID)",
       "event ForgeBatch(uint32 indexed batchNum, uint16 l1UserTxsLen)",
       "event InitializeHermezEvent(uint8 forgeL1L2BatchTimeout, uint256 feeAddToken, uint64 withdrawalDelay)",
@@ -557,7 +557,7 @@
       "function withdrawVerifier() view returns (address)",
       "function withdrawalDelay() view returns (uint64)"
     ],
-    "0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": [
+    "eth:0x9D62Cdc389caaB35ada830A7C6Ae847D5E8512C6": [
       "event HEZClaimed(address indexed owner, uint128 amount)",
       "event InitializeHermezAuctionProtocolEvent(address donationAddress, address bootCoordinatorAddress, string bootCoordinatorURL, uint16 outbidding, uint8 slotDeadline, uint16 closedAuctionSlots, uint16 openAuctionSlots, uint16[3] allocationRatio)",
       "event NewAllocationRatio(uint16[3] newAllocationRatio)",
@@ -612,7 +612,7 @@
       "function slots(uint128) view returns (address bidder, bool fulfilled, bool forgerCommitment, uint128 bidAmount, uint128 closedMinBid)",
       "function tokenHEZ() view returns (address)"
     ],
-    "0xA68D85dF56E733A06443306A095646317B5Fa633": [
+    "eth:0xA68D85dF56E733A06443306A095646317B5Fa633": [
       "constructor(address _logic, address _admin, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -622,10 +622,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xe1bbC673E537053c3536310851C6554BcfcF11Cd": [
+    "eth:0xe1bbC673E537053c3536310851C6554BcfcF11Cd": [
       "constructor(address _masterCopy)"
     ],
-    "0xf1B3b124842555782F98bE08d1357ABb8013F11c": [
+    "eth:0xf1B3b124842555782F98bE08d1357ABb8013F11c": [
       "constructor(address communityCouncil)",
       "event ExecFail(bytes returnData)",
       "event ExecOk(bytes returnData)",
@@ -644,7 +644,7 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
     ],
-    "0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": [
+    "eth:0xf7b20368Fe3Da5CD40EA43d61F52B23145544Ec3": [
       "constructor(address admin_, uint256 delay_)",
       "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
       "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",

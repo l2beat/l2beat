@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 32640167,
-  "configHash": "0x8a3a32e5a68db44d13add6ac24fbab5bfdff1ed37b56bb01e9915e7ce50d4925",
+  "configHash": "0x9297dadeee4bf38237e4e3d2399ee72cf549b29435dbe3c9edd81f1036e8f9a5",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -194,7 +194,7 @@
     }
   ],
   "abis": {
-    "0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
+    "base:0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
       "error ContractFrozen()",
       "error OnlyGuardian(address sender)",
       "error OnlyTimelock(address sender)",
@@ -248,16 +248,16 @@
       "function verifier() view returns (address)",
       "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
     ],
-    "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": [
+    "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": [
       "constructor(address _singleton)"
     ],
-    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": [
+    "base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+    "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",

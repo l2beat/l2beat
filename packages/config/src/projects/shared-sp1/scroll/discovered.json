@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "scroll",
   "blockNumber": 17075744,
-  "configHash": "0xa1c4283b903535af1693391067da25ccbfa9c70e15cdf7d0c5cceb6069a38cc9",
+  "configHash": "0x48b739646a9c2f8920634900351744ad3a54d0a57d112e7a5cce579fab7d1490",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -164,7 +164,7 @@
     }
   ],
   "abis": {
-    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+    "scr:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
       "error InvalidProof()",
       "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
       "function VERIFIER_HASH() pure returns (bytes32)",
@@ -173,7 +173,7 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
+    "scr:0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -192,10 +192,10 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+    "scr:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "scr:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

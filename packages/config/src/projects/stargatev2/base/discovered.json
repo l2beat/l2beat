@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "base",
   "blockNumber": 31337375,
-  "configHash": "0x872e8987eafc8dc1942ccc23168982bd25014a283bc7204effeed58b002c8786",
+  "configHash": "0xc555d7ddc35f94a08eaddd1c0e658f82b58e2b688fcd7927c8562b58adcde577",
   "entries": [
     {
       "name": "StargatePoolUSDC",
@@ -161,7 +161,7 @@
     }
   ],
   "abis": {
-    "0x27a16dc786820B16E5c9028b75B99F6f604b5d26": [
+    "base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -248,7 +248,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47": [
+    "base:0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
       "error BusCodec_InvalidMessage()",
@@ -345,7 +345,7 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": [
+    "base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -431,5 +431,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }
