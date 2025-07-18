@@ -35,7 +35,7 @@ export function DataAvailabilityProjectPage({
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
-          <div className="smooth-scroll max-md:bg-surface-primary">
+          <div className="smooth-scroll project-page max-md:bg-surface-primary">
             {!isNavigationEmpty && (
               <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
