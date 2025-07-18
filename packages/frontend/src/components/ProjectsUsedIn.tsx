@@ -8,6 +8,7 @@ import { cn } from '~/utils/cn'
 
 export interface UsedInProjectWithIcon extends UsedInProject {
   icon: string
+  href: string
 }
 
 interface Props {
@@ -77,7 +78,7 @@ export function ProjectsUsedIn({
                 />
               </TooltipTrigger>
             ) : (
-              <a href={`/scaling/projects/${project.slug}`} className="size-5">
+              <a href={project.href} className="size-5">
                 <TooltipTrigger>
                   <img
                     width={20}

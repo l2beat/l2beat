@@ -1,10 +1,10 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/getZkCatalogProjectDetails'
 import { getVerifiers } from '~/server/features/zk-catalog/getVerifiers'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import type { Manifest } from '../../../utils/Manifest'
+import type { Manifest } from '~/utils/Manifest'
+import { getZkCatalogProjectDetails } from './utils/getZkCatalogProjectDetails'
 
 export async function getZkCatalogProjectData(
   manifest: Manifest,

@@ -1,4 +1,5 @@
 import type { Project } from '@l2beat/config'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -6,7 +7,6 @@ import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
 } from '~/pages/data-availability/project/utils/DaProjectSections'
-import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -177,6 +177,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
+          href: `/scaling/projects/${x.slug}`,
         })),
     })),
     header: {
@@ -197,6 +198,7 @@ export async function getDaProjectEntry(
         .map((x) => ({
           ...x,
           icon: getProjectIcon(x.slug),
+          href: `/scaling/projects/${x.slug}`,
         })),
     },
     sections,
@@ -220,6 +222,7 @@ export async function getDaProjectEntry(
       usedIn: layer.daLayer.usedWithoutBridgeIn.map((x) => ({
         ...x,
         icon: getProjectIcon(x.slug),
+        href: `/scaling/projects/${x.slug}`,
       })),
     })
     result.projectVariants?.unshift({
@@ -268,6 +271,7 @@ export async function getEthereumDaProjectEntry(
     .map((x) => ({
       ...x,
       icon: getProjectIcon(x.slug),
+      href: `/scaling/projects/${x.slug}`,
     }))
 
   const latestThroughput = layer.daLayer.throughput

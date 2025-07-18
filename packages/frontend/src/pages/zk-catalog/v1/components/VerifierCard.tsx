@@ -1,8 +1,8 @@
 import { EtherscanLink } from '~/components/EtherscanLink'
+import type { ZkCatalogViewEntry } from '../../types'
 import { LastUsedCell } from '../project/components/LastUsedCell'
 import { SubVerifiersTable } from '../project/components/SubVerifiersTable'
 import { VerifiedCell } from '../project/components/VerifiedCell'
-import type { ZkCatalogViewEntry } from '../types'
 import { DetailsItem } from './DetailsItem'
 
 export function VerifierCard({

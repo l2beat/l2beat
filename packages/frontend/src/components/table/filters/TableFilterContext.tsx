@@ -28,3 +28,13 @@ export function useTableFilterContext() {
   }
   return context
 }
+
+export function useTableFilterReset() {
+  const context = useContext(TableFilterContext)
+
+  const reset = () => {
+    context?.dispatch({ type: 'clear' })
+  }
+
+  return reset
+}
