@@ -15,6 +15,7 @@ import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
+import { ActivityRatioChart } from './ActivityRatioChart'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -63,6 +64,13 @@ export function ProjectActivityChart({
     [chart?.data, metric],
   )
 
+  const ratioData = useMemo(() => {
+    return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
+      timestamp,
+      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+    }))
+  }, [chart?.data])
+
   const chartRange = getChartRange(chartData)
 
   return (
@@ -87,6 +95,7 @@ export function ProjectActivityChart({
         type={type}
         projectName={projectName}
       />
+      <ActivityRatioChart data={ratioData} isLoading={isLoading} />
 
       <div className="flex justify-between gap-4">
         <div className="flex gap-1">
