@@ -1,5 +1,5 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
+import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
@@ -49,6 +49,14 @@ const cmd = command({
 
     const chains = enabledChains.map((c) => ({
       ...c,
+      rpc: new RpcClient({
+        url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
+        sourceName: c.name,
+        http,
+        logger,
+        callsPerMinute: c.callsPerMinute,
+        retryStrategy: 'SCRIPT',
+      }),
       envioClient: new EnvioClient({
         url: c.envio,
         apiToken: envioApiToken,
