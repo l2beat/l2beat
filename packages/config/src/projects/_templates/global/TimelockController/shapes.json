@@ -10,5 +10,11 @@
     "address": "0x45828180bbE489350D621d002968A0585406d487",
     "chain": "ethereum",
     "blockNumber": 22417833
+  },
+  "TimelockController_risczero": {
+    "hash": "0x5b8836fe706f4142d9d19316f7ae849ba43b55173015f72bc3f9216f7a86cf0d",
+    "address": "0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
+    "chain": "ethereum",
+    "blockNumber": 22944504
   }
 }
