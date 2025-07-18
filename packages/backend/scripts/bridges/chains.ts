@@ -1,3 +1,4 @@
+// TODO: custom batching ranges per chain (amount of logs is different per block per chain)
 export interface Chain {
   name: string
   shortName: string
@@ -6,7 +7,9 @@ export interface Chain {
   envio?: string
 }
 // Envio Rate Limiting Information: https://envio.dev/pricing
-// Without API Token: Free unlimited usage with heavy rate limiting (60 requests/minute)
+//  Without API Token: Free unlimited usage with heavy rate limiting (60 requests/minute)
+//  With API Token: No rate limiting applied - full speed access
+//    Generate API Token: https://envio.dev/app/api-tokens
 // Supported networks: https://docs.envio.dev/docs/HyperSync/hypersync-supported-networks
 export const CHAINS: Chain[] = [
   {

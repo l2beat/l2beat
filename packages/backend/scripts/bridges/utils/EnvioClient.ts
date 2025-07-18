@@ -4,6 +4,7 @@ import { v } from '@l2beat/validate'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
+  apiToken: string
 }
 
 const EnvioLogsAndBlocksResponse = v.object({
@@ -37,9 +38,12 @@ export class EnvioClient extends ClientCore {
   }
 
   async getAllLogsAndBlocks(fromBlock: number, toBlock: number) {
+    // https://docs.envio.dev/docs/HyperSync/hypersync-query#response-structure
     const query = {
+      // The block to start the query from
       from_block: fromBlock,
-      to_block: toBlock,
+      // The block to end the query at (exclusive)
+      to_block: toBlock + 1,
       logs: [
         {
           address: [],
@@ -83,7 +87,10 @@ export class EnvioClient extends ClientCore {
   async query(query: json) {
     return await this.fetch(this.$.url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.$.apiToken}`,
+      },
       body: JSON.stringify(query),
       redirect: 'follow',
       timeout: 10_000, // Most RPCs respond in ~2s during regular conditions
