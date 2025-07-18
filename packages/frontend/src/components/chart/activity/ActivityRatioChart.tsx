@@ -17,11 +17,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommo
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
-export type ActivityRatioChartType =
-  | 'Rollups'
-  | 'ValidiumsAndOptimiums'
-  | 'Others'
-
 interface ActivityRatioChartDataPoint {
   timestamp: number
   ratio: number
@@ -30,18 +25,10 @@ interface ActivityRatioChartDataPoint {
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
   isLoading: boolean
-  type: ActivityRatioChartType
-  projectName?: string
   className?: string
 }
 
-export function ActivityRatioChart({
-  data,
-  isLoading,
-  type,
-  projectName,
-  className,
-}: Props) {
+export function ActivityRatioChart({ data, isLoading, className }: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',

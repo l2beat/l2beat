@@ -19,11 +19,11 @@ import { api } from '~/trpc/React'
 import { Checkbox } from '../../core/Checkbox'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
-import { ActivityRatioChart } from '../activity-ratio/ActivityRatioChart'
 import type { ChartScale } from '../types'
 import type { ActivityChartType } from './ActivityChart'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartHeader } from './ActivityChartHeader'
+import { ActivityRatioChart } from './ActivityRatioChart'
 
 interface Props {
   milestones: Milestone[]
@@ -114,7 +114,7 @@ export function ScalingActivityChart({
         metric={metric}
         type={type}
       />
-      <ActivityRatioChart data={ratioData} isLoading={isLoading} type={type} />
+      <ActivityRatioChart data={ratioData} isLoading={isLoading} />
       <Controls
         scale={scale}
         setScale={setScale}
