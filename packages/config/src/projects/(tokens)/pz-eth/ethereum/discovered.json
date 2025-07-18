@@ -1,12 +1,12 @@
 {
   "name": "pz-eth",
   "chain": "ethereum",
-  "blockNumber": 22925382,
-  "configHash": "0x110b0d30dc4fe36bf70efcb8ca0d91262348fe245fd3a3d58e79d4e255533b8d",
+  "blockNumber": 22945156,
+  "configHash": "0x1b79b3e4ed7b58d1b1aa92e4828d6d49ae83a3692463b1ba7e7e534d80a2fd70",
   "entries": [
     {
-      "name": "MultiVault",
-      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+      "name": "Renzo Restaked LST  Token",
+      "address": "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
       "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
@@ -16,34 +16,34 @@
       "sinceTimestamp": 1719403475,
       "sinceBlock": 20175746,
       "values": {
-        "$admin": "0x985E459801d37749C331BBd2673B665b9114fB01",
-        "$implementation": "0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7",
+        "$admin": "eth:0x985E459801d37749C331BBd2673B665b9114fB01",
+        "$implementation": "eth:0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7",
         "$pastUpgrades": [
           [
             "2024-06-26T12:04:35.000Z",
             "0x4b9c6483c1ec3949a6952ce3cb7c4c2694b4bca7e66eedc60ce0b57752db8da9",
-            ["0x39c62c6308BeD7B0832CAfc2BeA0C0eDC7f2060c"]
+            ["eth:0x39c62c6308BeD7B0832CAfc2BeA0C0eDC7f2060c"]
           ],
           [
             "2024-06-26T12:04:59.000Z",
             "0xd7701c51baa604ce41573c802e2aa6de9ac95f34fa73ad23a01b198406e9ebd1",
-            ["0xaf108ae0AD8700ac41346aCb620e828c03BB8848"]
+            ["eth:0xaf108ae0AD8700ac41346aCb620e828c03BB8848"]
           ],
           [
             "2025-01-27T19:37:47.000Z",
             "0xfa57264c7151b93400ee47ccb9d67ac368114e6a3b0e3c4c8495a22262ca7ca2",
-            ["0x09bBa67C316e59840699124a8DC0bBDa6A2A9d59"]
+            ["eth:0x09bBa67C316e59840699124a8DC0bBDa6A2A9d59"]
           ],
           [
             "2025-07-03T17:13:23.000Z",
             "0xb313628e27510e83aab8f781ed684c37fc2267e51653943d73dc466aaf5cefe7",
-            ["0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7"]
+            ["eth:0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7"]
           ]
         ],
         "$tokenData": {
           "name": "Renzo Restaked LST ",
           "coingeckoId": "renzo-restaked-lst",
-          "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
+          "address": "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
           "symbol": "pzETH",
           "decimals": 18,
           "deploymentTimestamp": 1719403475,
@@ -56,22 +56,22 @@
         },
         "$upgradeCount": 4,
         "ADD_SUBVAULT_ROLE": "0xae944fcb809c01a95e89b6931e61939dd0bbb790c044c20197d070090098c3a2",
-        "asset": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "asset": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultCollateral": "0xC329400492c6ff2438472D4651Ad17389fCb843a",
+        "defaultCollateral": "eth:0xC329400492c6ff2438472D4651Ad17389fCb843a",
         "depositPause": false,
-        "depositStrategy": "0x3aA61E6196fb3eb1170E578ad924898624f54ad6",
+        "depositStrategy": "eth:0x3aA61E6196fb3eb1170E578ad924898624f54ad6",
         "depositWhitelist": false,
-        "eigenLayerAdapter": "0x0000000000000000000000000000000000000000",
-        "erc4626Adapter": "0x0000000000000000000000000000000000000000",
+        "eigenLayerAdapter": "eth:0x0000000000000000000000000000000000000000",
+        "erc4626Adapter": "eth:0x0000000000000000000000000000000000000000",
         "farmCount": 0,
         "farmIdAt": [],
         "farmIds": [],
         "limit": "80000000024518790233583",
         "name": "Renzo Restaked LST ",
         "REBALANCE_ROLE": "0x2c09deb013d6a86a9063c95b5e2b10937d1128a3937347eb7e00408ed9fb1a9c",
-        "rebalanceStrategy": "0x3aA61E6196fb3eb1170E578ad924898624f54ad6",
+        "rebalanceStrategy": "eth:0x3aA61E6196fb3eb1170E578ad924898624f54ad6",
         "REMOVE_SUBVAULT_ROLE": "0x5e9c3ed0ef5487d8cda3fc51646c35847fdc0325200c5a21a159b36d8cba882e",
         "SET_ADAPTER_ROLE": "0xf2e7ea90350f51c371470888fa66eef25113ab1613606afc7de17fa5ee9605d2",
         "SET_DEFAULT_COLLATERAL_ROLE": "0x52a2e0e4c67d823979c1b45c7474d67476e3760d4e4797c5ad3a000c3e72a9cf",
@@ -80,26 +80,26 @@
         "subvaultAt": [
           [
             0,
-            "0xa88e91cEF50b792f9449e2D4C699b6B3CcE1D19F",
-            "0x87283edb0F12E7cd0eD3E18baEab20AaF43b5f6e"
+            "eth:0xa88e91cEF50b792f9449e2D4C699b6B3CcE1D19F",
+            "eth:0x87283edb0F12E7cd0eD3E18baEab20AaF43b5f6e"
           ]
         ],
         "subvaultsCount": 1,
-        "symbioticAdapter": "0x99D02C680f33ee693a2fa6bCf77DC8654313ecFe",
+        "symbioticAdapter": "eth:0x99D02C680f33ee693a2fa6bCf77DC8654313ecFe",
         "symbol": "pzETH",
-        "totalAssets": "11085658833894564582623",
-        "totalSupply": "11085658830496977788645",
+        "totalAssets": "11052525752069207151627",
+        "totalSupply": "11052525748681775146169",
         "withdrawalPause": false,
-        "withdrawalStrategy": "0x3aA61E6196fb3eb1170E578ad924898624f54ad6"
+        "withdrawalStrategy": "eth:0x3aA61E6196fb3eb1170E578ad924898624f54ad6"
       },
       "implementationNames": {
-        "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": "TransparentUpgradeableProxy",
-        "0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7": "MultiVault"
+        "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": "TransparentUpgradeableProxy",
+        "eth:0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7": "MultiVault"
       }
     }
   ],
   "abis": {
-    "0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7": [
+    "eth:0x0C5BC4C8406Fe03214D18bbf2962Ae2fa378c6f7": [
       "constructor(bytes32 name_, uint256 version_)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -234,7 +234,7 @@
       "function withdrawalPause() view returns (bool)",
       "function withdrawalStrategy() view returns (address)"
     ],
-    "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": [
+    "eth:0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -247,5 +247,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xced2867e9420d6a59858742d9a812d54da4f325caca5ebacddbfad382d95094e"
+  "permissionsConfigHash": "0x8fe74906d593c4911ea19ee28d0f5efffbe5f9a931ad789212dd625cfba1d1ad"
 }

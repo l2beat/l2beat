@@ -1,12 +1,12 @@
 {
   "name": "usds",
   "chain": "ethereum",
-  "blockNumber": 22925285,
-  "configHash": "0xd0ff174c5ee2b369995667ac26dfcf3a438e53e99de45768e8282c295b41925d",
+  "blockNumber": 22945160,
+  "configHash": "0x1e78e763991c42666c08e9d06721aac85927e0384d6d70e10fd78d6743d1ed16",
   "entries": [
     {
-      "name": "Usds",
-      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+      "name": "USDS Stablecoin Token",
+      "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -16,19 +16,19 @@
       "sinceTimestamp": 1725290327,
       "sinceBlock": 20663730,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
         "$pastUpgrades": [
           [
             "2024-09-02T15:18:47.000Z",
             "0xdf7d4ba4114f654a4ef64f74099be3fc91358610078febe5be68af6cf257b21c",
-            ["0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102"]
+            ["eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102"]
           ]
         ],
         "$tokenData": {
           "name": "USDS Stablecoin",
           "coingeckoId": "usds",
-          "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+          "address": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
           "symbol": "USDS",
           "decimals": 18,
           "deploymentTimestamp": 1725290327,
@@ -42,22 +42,22 @@
         "$upgradeCount": 1,
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x2bc1b7e1bb385a0b6eeb599e6bf1dc875f0933b1a91bea26cf895ebdee2a5b56",
-        "getImplementation": "0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
+        "getImplementation": "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102",
         "name": "USDS Stablecoin",
         "PERMIT_TYPEHASH": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
         "symbol": "USDS",
-        "totalSupply": "3872704016611941557216092289",
+        "totalSupply": "3762989808119323835942780598",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "version": "1"
       },
       "implementationNames": {
-        "0xdC035D45d973E3EC169d2276DDab16f1e407384F": "ERC1967Proxy",
-        "0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": "Usds"
+        "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": "ERC1967Proxy",
+        "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": "Usds"
       }
     }
   ],
   "abis": {
-    "0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": [
+    "eth:0x1923DfeE706A8E78157416C29cBCCFDe7cdF4102": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -99,7 +99,7 @@
       "function version() view returns (string)",
       "function wards(address) view returns (uint256)"
     ],
-    "0xdC035D45d973E3EC169d2276DDab16f1e407384F": [
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -109,5 +109,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xd0fd4f5b1a12c1596a669cedcd698a13ada1a6a11d46317cc582e55392df472c"
+  "permissionsConfigHash": "0x4f93842d6e39c725d5c69d178a0a6ffa728cb594fe3d4d6afdd8caf52bce2796"
 }

@@ -1,4 +1,8 @@
-import { assert, CoingeckoId, type EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  type ChainSpecificAddress,
+  CoingeckoId,
+} from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { chains } from '../../../../config/chains'
 import type { IProvider } from '../../../provider/IProvider'
@@ -24,7 +28,7 @@ export class ERC20DataHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const entry = this.definition.overrides
     const source = getSource(provider.chain, entry)

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x96b136b46cf80aab1a7e26465cede5aac52cb05c
+Generated with discovered.json: 0xac14b1c04f43d9b3d1a653e82fef3d6602526f99
 
-# Diff at Tue, 15 Jul 2025 15:19:37 GMT:
+# Diff at Fri, 18 Jul 2025 09:22:42 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- current block number: 22925285
+- current block number: 22945160
 
 ## Description
 
@@ -13,6 +13,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Usds (0xdC035D45d973E3EC169d2276DDab16f1e407384F)
+    contract USDS Stablecoin Token (0xdC035D45d973E3EC169d2276DDab16f1e407384F)
     +++ description: None
 ```

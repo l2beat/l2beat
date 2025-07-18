@@ -1,12 +1,12 @@
 {
   "name": "ez-eth",
   "chain": "ethereum",
-  "blockNumber": 22932978,
-  "configHash": "0xfc63f7efa6831bb7daf7e3e73f379842efca255175a003d8f20bc7c62713a23e",
+  "blockNumber": 22945156,
+  "configHash": "0x9ddb72a5b8fbffb615c2b26bd377b52fca00663b187a7bf14fee56cce2881f59",
   "entries": [
     {
-      "name": "EzEthToken",
-      "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "name": "Renzo Restaked ETH Token",
+      "address": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
       "type": "Contract",
       "sourceHashes": [
         "0xccb5b222f823953e2082d6174b99d09cb9046c862bb91c6fe6cb57e5289a9738",
@@ -17,34 +17,34 @@
       "sinceBlock": 18722779,
       "values": {
         "_deprecated_paused": false,
-        "$admin": "0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982",
-        "$implementation": "0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C",
+        "$admin": "eth:0x91625601e2BbBEb7171C40c79FadBCFbFf6A1982",
+        "$implementation": "eth:0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C",
         "$pastUpgrades": [
           [
             "2023-12-05T21:19:23.000Z",
             "0xaf05c89f7b29f1dd7eff4bbf87807308ca2a3ad96a64e75011339fbd34c6a207",
-            ["0x67D4E4031Efc2288df1E257CA2d5c596d8Bd86ae"]
+            ["eth:0x67D4E4031Efc2288df1E257CA2d5c596d8Bd86ae"]
           ],
           [
             "2023-12-06T03:06:35.000Z",
             "0x51426833f5f5564d438c83ad262717466fa45c5dad6812cee46773516de98606",
-            ["0x1e756B7bCca7B26FB9D85344B3525F5559bbacb0"]
+            ["eth:0x1e756B7bCca7B26FB9D85344B3525F5559bbacb0"]
           ],
           [
             "2024-06-11T13:39:59.000Z",
             "0xe576365fd7cc2ed36e94225188d9c2a712681dab573a12d791eb22088da46408",
-            ["0x680A7937c59b19E2d38b86Ef47e9C2e415043dED"]
+            ["eth:0x680A7937c59b19E2d38b86Ef47e9C2e415043dED"]
           ],
           [
             "2025-04-11T19:24:11.000Z",
             "0xd2cac9721f19cf36cde7c119b676074bdb9014c6f470ed81275677c2b8f82715",
-            ["0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C"]
+            ["eth:0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C"]
           ]
         ],
         "$tokenData": {
           "name": "Renzo Restaked ETH",
           "coingeckoId": "renzo-restaked-eth",
-          "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+          "address": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
           "symbol": "ezETH",
           "decimals": 18,
           "deploymentTimestamp": 1701811163,
@@ -58,18 +58,18 @@
         "$upgradeCount": 4,
         "decimals": 18,
         "name": "Renzo Restaked ETH",
-        "roleManager": "0x4994EFc62101A9e3F885d872514c2dC7b3235849",
+        "roleManager": "eth:0x4994EFc62101A9e3F885d872514c2dC7b3235849",
         "symbol": "ezETH",
-        "totalSupply": "317920488584878119586156"
+        "totalSupply": "320932226008833630929918"
       },
       "implementationNames": {
-        "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": "TransparentUpgradeableProxy",
-        "0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C": "EzEthToken"
+        "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": "TransparentUpgradeableProxy",
+        "eth:0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C": "EzEthToken"
       }
     }
   ],
   "abis": {
-    "0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C": [
+    "eth:0x9bD289b14Dd6E0782aF82eEb3FCfeed4354CDA2C": [
       "constructor()",
       "error InvalidZeroInput()",
       "error NotEzETHMinterBurner()",
@@ -93,7 +93,7 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
-    "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": [
+    "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -106,5 +106,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xd9a7a0a59176197ecbe38ecffc1fd049e2abf10b73e89b3b9e9fb55ac1e0552f"
+  "permissionsConfigHash": "0xa3ace506d514bff9c3a53dda38fb602399a91705fbb649f3536b9e5ed7eb44d7"
 }

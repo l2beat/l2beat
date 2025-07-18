@@ -1,7 +1,7 @@
 import {
   assert,
+  type ChainSpecificAddress,
   type CoingeckoId,
-  type EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
 import type { IProvider } from '../../../provider/IProvider'
@@ -9,7 +9,7 @@ import { today } from './utils'
 
 export async function getTokenInfo(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   coingeckoId: CoingeckoId,
   deploymentTimestampOverride?: UnixTime,
 ) {
@@ -40,7 +40,7 @@ export async function getTokenInfo(
   }
 }
 
-async function getName(provider: IProvider, address: EthereumAddress) {
+async function getName(provider: IProvider, address: ChainSpecificAddress) {
   const name = await provider.callMethod<string>(
     address,
     'function name() view returns (string)',
@@ -50,7 +50,7 @@ async function getName(provider: IProvider, address: EthereumAddress) {
   return name
 }
 
-async function getSymbol(provider: IProvider, address: EthereumAddress) {
+async function getSymbol(provider: IProvider, address: ChainSpecificAddress) {
   const symbol = await provider.callMethod<string>(
     address,
     'function symbol() view returns (string)',
@@ -60,7 +60,7 @@ async function getSymbol(provider: IProvider, address: EthereumAddress) {
   return symbol
 }
 
-async function getDecimals(provider: IProvider, address: EthereumAddress) {
+async function getDecimals(provider: IProvider, address: ChainSpecificAddress) {
   const decimals = await provider.callMethod<number>(
     address,
     'function decimals() view returns (uint8)',
@@ -82,7 +82,7 @@ function getImageUrl(
 
 async function getDeploymentTimestamp(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   override?: UnixTime,
 ) {
   if (override) {

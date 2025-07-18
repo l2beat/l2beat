@@ -1,12 +1,12 @@
 {
   "name": "rs-eth",
   "chain": "base",
-  "blockNumber": 32976024,
-  "configHash": "0x19e21b2c94308076630c1c9e65068776ba8226cee0958683ea91d14ada850755",
+  "blockNumber": 33020590,
+  "configHash": "0x7645c38e8d704e4519eeda7ccc19c9876added2a8982b68724f1ccee349bae3b",
   "entries": [
     {
-      "name": "RSETH_OFT",
-      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+      "name": "KelpDao Restaked ETH Token",
+      "address": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
       "type": "Contract",
       "sourceHashes": [
         "0x5b88f16117923c7f4563b4e10d6055894e730f41f9293ed95177d66b5aaa436c"
@@ -19,7 +19,7 @@
         "$tokenData": {
           "name": "KelpDao Restaked ETH",
           "coingeckoId": "kelp-dao-restaked-eth",
-          "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+          "address": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
           "symbol": "rsETH",
           "decimals": 18,
           "deploymentTimestamp": 1711342433,
@@ -38,28 +38,28 @@
         "approvalRequired": false,
         "decimalConversionRate": 1000000000000,
         "decimals": 18,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "msgInspector": "0x0000000000000000000000000000000000000000",
+        "endpoint": "base:0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "base:0x0000000000000000000000000000000000000000",
         "name": "KelpDao Restaked ETH",
-        "oApp": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+        "oApp": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
-        "owner": "0x7Da95539762Dd11005889F6B72a6674A4888B56d",
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "owner": "base:0x7Da95539762Dd11005889F6B72a6674A4888B56d",
+        "preCrime": "base:0x0000000000000000000000000000000000000000",
         "SEND": 1,
         "SEND_AND_CALL": 2,
         "sharedDecimals": 6,
         "symbol": "rsETH",
-        "token": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-        "totalSupply": "1702591297000000000000"
+        "token": "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+        "totalSupply": "2452996597000000000000"
       },
       "implementationNames": {
-        "0x1Bc71130A0e39942a7658878169764Bbd8A45993": "RSETH_OFT"
+        "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": "RSETH_OFT"
       }
     }
   ],
   "abis": {
-    "0x1Bc71130A0e39942a7658878169764Bbd8A45993": [
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": [
       "constructor(string _name, string _symbol, address _lzEndpoint, address _delegate)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -139,5 +139,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x21b4bdcff39a14c6d7ece006cca343f7426b64f5eb29d938e367197158b82864"
+  "permissionsConfigHash": "0xd44c8244adaea5e3c089edfac41e7e136dcda1095c4103ca51bc3eadb73be8c6"
 }

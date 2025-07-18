@@ -1,12 +1,12 @@
 {
   "name": "eurs",
   "chain": "ethereum",
-  "blockNumber": 22925376,
-  "configHash": "0xf1f39fc067c31e1c692401a03bde74a19a407ea1a05a42f0efcfb3b2fe5a94d4",
+  "blockNumber": 22945155,
+  "configHash": "0xf0fba9a79b157a5c5390ac27c5e5f97af8190458d03bafacffe65594aaa19e5b",
   "entries": [
     {
-      "name": "EURSToken",
-      "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+      "name": "STASIS EURS Token",
+      "address": "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8",
       "type": "Contract",
       "sourceHashes": [
         "0xf79815a7227d23a793e9e15c9e6f5dcdac105c2c8025ec498f9e54f4bb9ee2f2"
@@ -19,7 +19,7 @@
         "$tokenData": {
           "name": "STASIS EURS Token",
           "coingeckoId": "stasis-eurs",
-          "address": "0xdB25f211AB05b1c97D595516F45794528a807ad8",
+          "address": "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8",
           "symbol": "EURS",
           "decimals": 2,
           "deploymentTimestamp": 1529686012,
@@ -42,12 +42,12 @@
         "totalSupply": 12412594000
       },
       "implementationNames": {
-        "0xdB25f211AB05b1c97D595516F45794528a807ad8": "EURSToken"
+        "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8": "EURSToken"
       }
     }
   ],
   "abis": {
-    "0xdB25f211AB05b1c97D595516F45794528a807ad8": [
+    "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8": [
       "function freezeTransfers() payable",
       "function name() view returns (string)",
       "function approve(address _spender, uint256 _value) payable returns (bool success)",
@@ -81,5 +81,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x24d7ddab0ef792399992e915d0267f6b6cd4de5e8fb5d51d69b524698a0e2759"
+  "permissionsConfigHash": "0xd0945dc661337d675366ac98d880c7805fa71320906389175164c0915ad7a0b6"
 }

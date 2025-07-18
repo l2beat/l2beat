@@ -1,12 +1,12 @@
 {
   "name": "usdy",
   "chain": "arbitrum",
-  "blockNumber": 357988572,
-  "configHash": "0x8fb674b0e7c8a286d725660a064262cd0cfb3911263edfd5eea0420259359c59",
+  "blockNumber": 358948574,
+  "configHash": "0x5b301e75acb6403f04fb4238f16005758c49fb72d0a1f5c5d6a732da40118aaa",
   "entries": [
     {
-      "name": "USDY",
-      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "name": "Ondo U.S. Dollar Yield Token",
+      "address": "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
       "type": "Contract",
       "sourceHashes": [
         "0x9c3f55931bf03c46f6a9bde3a662dc24117676cc7e49c8e0af2365e511b8b92b",
@@ -16,19 +16,19 @@
       "sinceTimestamp": 1723057357,
       "sinceBlock": 240467591,
       "values": {
-        "$admin": "0xB7bCC4Af60Fb5267946DEFF1fe373989995352B2",
-        "$implementation": "0x5692349f8e7081E2ad0bA629E01761b43187304C",
+        "$admin": "arb1:0xB7bCC4Af60Fb5267946DEFF1fe373989995352B2",
+        "$implementation": "arb1:0x5692349f8e7081E2ad0bA629E01761b43187304C",
         "$pastUpgrades": [
           [
             "2024-08-07T19:02:37.000Z",
             "0x028b1b24a7e5ee1d09e3a11ebaab1f9a979d7b50fa3fff3eee12bcceaa2a9ac4",
-            ["0x5692349f8e7081E2ad0bA629E01761b43187304C"]
+            ["arb1:0x5692349f8e7081E2ad0bA629E01761b43187304C"]
           ]
         ],
         "$tokenData": {
           "name": "Ondo U.S. Dollar Yield",
           "coingeckoId": "ondo-us-dollar-yield",
-          "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+          "address": "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
           "symbol": "USDY",
           "decimals": 18,
           "deploymentTimestamp": 1723057357,
@@ -45,7 +45,7 @@
           }
         },
         "$upgradeCount": 1,
-        "blocklist": "0xb9123f09D44e6DF568726835233727A6e0FF16A2",
+        "blocklist": "arb1:0xb9123f09D44e6DF568726835233727A6e0FF16A2",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
         "currentTerms": "",
         "decimals": 18,
@@ -55,18 +55,18 @@
         "name": "Ondo U.S. Dollar Yield",
         "paused": false,
         "PAUSER_ROLE": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
-        "sanctionsList": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+        "sanctionsList": "arb1:0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
         "symbol": "USDY",
-        "totalSupply": "5404212513925110000000000"
+        "totalSupply": "5378803101380110000000000"
       },
       "implementationNames": {
-        "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": "TokenProxy",
-        "0x5692349f8e7081E2ad0bA629E01761b43187304C": "USDY"
+        "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": "TokenProxy",
+        "arb1:0x5692349f8e7081E2ad0bA629E01761b43187304C": "USDY"
       }
     }
   ],
   "abis": {
-    "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": [
+    "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D": [
       "constructor(address _logic, address _admin, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -77,7 +77,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x5692349f8e7081E2ad0bA629E01761b43187304C": [
+    "arb1:0x5692349f8e7081E2ad0bA629E01761b43187304C": [
       "constructor()",
       "error BlockedAccount()",
       "error BlocklistZeroAddress()",
@@ -136,5 +136,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xe3276723b38fa09be1e56c4588a97954b537c88c27b171365eeb1e3689bf5686"
+  "permissionsConfigHash": "0x8041ee8ab273c50e25b7b89ccdc735d7520f41ab2dc1c6425989ef72dc7043e1"
 }

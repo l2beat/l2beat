@@ -61,7 +61,7 @@ describe('resolveImports', () => {
   })
 })
 
-describe('grouping', () => {
+describe('config and discovery resolution', () => {
   afterEach(() => mockFs.restore())
 
   describe('isGroupingFolder', () => {
@@ -381,13 +381,16 @@ describe('grouping', () => {
     it('should read all configured projects including grouped ones', () => {
       mockFs({
         '/base/project1/config.jsonc': JSON.stringify({
-          chains: { ethereum: { maxAddresses: 10 } },
+          name: 'project1',
+          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
         }),
         '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: { maxAddresses: 5 } },
+          name: 'usdc',
+          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
         }),
         '/base/(defi)/uniswap/config.jsonc': JSON.stringify({
-          chains: { ethereum: { maxAddresses: 20 } },
+          name: 'uniswap',
+          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
         }),
       })
 
@@ -435,10 +438,9 @@ describe('grouping', () => {
     it('should read config from grouped project', () => {
       mockFs({
         '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: {
-            all: { maxAddresses: 10, initialAddresses: [] },
-            ethereum: { maxDepth: 5 },
-          },
+          name: 'usdc',
+          maxAddresses: 10,
+          initialAddresses: ['eth:0x1234567890123456789012345678901234567890'],
         }),
       })
 
@@ -448,7 +450,6 @@ describe('grouping', () => {
       expect(config.structure.name).toEqual('usdc')
       expect(config.structure.chain).toEqual('ethereum')
       expect(config.structure.maxAddresses).toEqual(10)
-      expect(config.structure.maxDepth).toEqual(5)
     })
   })
 
@@ -462,7 +463,7 @@ describe('grouping', () => {
 
       mockFs({
         '/base/(tokens)/usdc/config.jsonc': JSON.stringify({
-          chains: { ethereum: { initialAddresses: [] } },
+          initialAddresses: [],
         }),
         '/base/(tokens)/usdc/ethereum/discovered.json':
           JSON.stringify(discoveryData),

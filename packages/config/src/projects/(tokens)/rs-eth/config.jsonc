@@ -1,31 +1,27 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
-  "name": "rsETH",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "rs-eth",
   "import": ["../../globalConfig.jsonc"],
-  "chains": {
-    "base": {
-      "maxAddresses": 0,
-      "initialAddresses": ["0x1Bc71130A0e39942a7658878169764Bbd8A45993"],
-      "overrides": {
-        "0x1Bc71130A0e39942a7658878169764Bbd8A45993": {
-          "fields": {
-            "$tokenData": {
-              "handler": {
-                "type": "ERC20Data",
-                "overrides": {
-                  "source": "external",
-                  "supply": "totalSupply",
-                  "category": "ether",
-                  "coingeckoId": "kelp-dao-restaked-eth",
-                  "bridgedUsing": {
-                    "bridges": [
-                      {
-                        "name": "Layer Zero v2 OFT",
-                        "slug": "layerzerov2oft"
-                      }
-                    ]
+  "maxAddresses": 0,
+  "initialAddresses": ["base:0x1Bc71130A0e39942a7658878169764Bbd8A45993"],
+  "overrides": {
+    "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": {
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": {
+              "source": "external",
+              "supply": "totalSupply",
+              "category": "ether",
+              "coingeckoId": "kelp-dao-restaked-eth",
+              "bridgedUsing": {
+                "bridges": [
+                  {
+                    "name": "Layer Zero v2 OFT",
+                    "slug": "layerzerov2oft"
                   }
-                }
+                ]
               }
             }
           }

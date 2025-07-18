@@ -1,10 +1,10 @@
 import type { CoinListPlatformEntry } from '@l2beat/shared'
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 
 export function getCoingeckoId(
   coinList: CoinListPlatformEntry[],
   platform: string | undefined,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ) {
   assert(
     platform !== undefined,
@@ -14,7 +14,7 @@ export function getCoingeckoId(
   const coin = coinList.find((coin) => {
     return (
       coin.platforms[platform]?.toLowerCase() ===
-      address.toString().toLowerCase()
+      ChainSpecificAddress.address(address).toString().toLowerCase()
     )
   })
 

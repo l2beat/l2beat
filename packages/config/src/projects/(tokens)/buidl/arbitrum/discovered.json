@@ -1,12 +1,12 @@
 {
   "name": "buidl",
   "chain": "arbitrum",
-  "blockNumber": 357992851,
-  "configHash": "0x518883540a2599696b3fa970e6d67c1b073705352a3656a518fb33093203f33f",
+  "blockNumber": 358948247,
+  "configHash": "0xa3fa50229c7fee9e28c904921ddc68b5bba237e23c3161c72a8db9b3d9a0c327",
   "entries": [
     {
-      "name": "DSToken",
-      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "name": "BlackRock USD Institutional Digital Liquidity Fund Token",
+      "address": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
@@ -16,19 +16,19 @@
       "sinceTimestamp": 1730729689,
       "sinceBlock": 270969308,
       "values": {
-        "$admin": "0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
-        "$implementation": "0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
+        "$admin": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "$implementation": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
         "$pastUpgrades": [
           [
             "2024-11-04T14:14:49.000Z",
             "0x0f162f3c6b2c4bf5d92b1b840eed603822e3da1bcb5bbe2b48f131f633b54091",
-            ["0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7"]
+            ["arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7"]
           ]
         ],
         "$tokenData": {
           "name": "BlackRock USD Institutional Digital Liquidity Fund",
           "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
-          "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+          "address": "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
           "symbol": "BUIDL",
           "decimals": 6,
           "deploymentTimestamp": 1730729689,
@@ -45,20 +45,20 @@
         "COMPLIANCE_SERVICE": 8,
         "decimals": 6,
         "DS_TOKEN": 2,
-        "getImplementationAddress": "0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
+        "getImplementationAddress": "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7",
         "getInitializedVersion": 1,
         "getWalletAt": [
-          "0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
-          "0x54FE3425f09854E15081fa5B3276afCB4C46FCa2",
-          "0xC8abbd5bC34C943C908D99581e77D0A91b104515",
-          "0x7f4e4384137b6aF7732e4e0951832b4152082fbB"
+          "arb1:0x1e695A689CF29c8fE0AF6848A957e3f84B61Fe69",
+          "arb1:0x54FE3425f09854E15081fa5B3276afCB4C46FCa2",
+          "arb1:0xC8abbd5bC34C943C908D99581e77D0A91b104515",
+          "arb1:0x7f4e4384137b6aF7732e4e0951832b4152082fbB"
         ],
         "isPaused": false,
         "ISSUER_MULTICALL": 8194,
         "LOCK_MANAGER": 64,
         "name": "BlackRock USD Institutional Digital Liquidity Fund",
         "OMNIBUS_TBE_CONTROLLER": 2048,
-        "owner": "0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
+        "owner": "arb1:0xe01605f6b6dC593b7d2917F4a0940db2A625b09e",
         "PARTITIONS_MANAGER": 128,
         "REGISTRY_SERVICE": 4,
         "ROLE_EXCHANGE": 4,
@@ -72,8 +72,8 @@
         "TA_MULTICALL": 8195,
         "TOKEN_ISSUER": 512,
         "TOKEN_REALLOCATOR": 8192,
-        "totalIssued": 44151011480000,
-        "totalSupply": 30613231400000,
+        "totalIssued": 44160780060000,
+        "totalSupply": 30622999980000,
         "TRANSACTION_RELAYER": 4096,
         "TRUST_SERVICE": 1,
         "UNUSED_1": 16,
@@ -83,13 +83,13 @@
         "walletCount": 4
       },
       "implementationNames": {
-        "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": "ERC1967Proxy",
-        "0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": "DSToken"
+        "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": "ERC1967Proxy",
+        "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": "DSToken"
       }
     }
   ],
   "abis": {
-    "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": [
+    "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -97,7 +97,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": [
+    "arb1:0xdbf6db49066784A69244d3b33Cf44C25Ec86C0F7": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
@@ -203,5 +203,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x0028046b3bbe4453b3dc162e38f41e2c398ce1713b6f6321fe2b2c5df311c12a"
+  "permissionsConfigHash": "0x2a82a405963425c693d9f2dd82d1dbfbf2e3b57fe263aee148af26a1c97ff044"
 }

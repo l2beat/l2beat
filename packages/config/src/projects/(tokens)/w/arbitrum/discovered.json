@@ -1,12 +1,12 @@
 {
   "name": "w",
   "chain": "arbitrum",
-  "blockNumber": 357988693,
-  "configHash": "0xca0d4db5579890024a5972106b3772b4957c77c1eb459c32dc868c5a8ca71947",
+  "blockNumber": 358948606,
+  "configHash": "0x9c71d8da3dfe84061ff5bd10e03249484566dfbc644610e1bec3b2352d9e4f33",
   "entries": [
     {
       "name": "Wormhole Token",
-      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "address": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
       "type": "Contract",
       "sourceHashes": [
         "0x5813b4364023f4b0049743347095f3b700e4229cbf14e0cec0178cf7acb1a8e7",
@@ -16,19 +16,19 @@
       "sinceTimestamp": 1713221460,
       "sinceBlock": 201421053,
       "values": {
-        "$admin": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
-        "$implementation": "0x344518934533ec82b49eA533b196dce5cfA64411",
+        "$admin": "arb1:0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
+        "$implementation": "arb1:0x344518934533ec82b49eA533b196dce5cfA64411",
         "$pastUpgrades": [
           [
             "2024-04-15T22:51:00.000Z",
             "0xbf7ede7c1652eca8aa0bad6c46c39c01b5ea65b758d907a903a05e199fc80e66",
-            ["0x344518934533ec82b49eA533b196dce5cfA64411"]
+            ["arb1:0x344518934533ec82b49eA533b196dce5cfA64411"]
           ]
         ],
         "$tokenData": {
           "name": "Wormhole Token",
           "coingeckoId": "wormhole",
-          "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+          "address": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
           "symbol": "W",
           "decimals": 18,
           "deploymentTimestamp": 1713221460,
@@ -44,11 +44,11 @@
         },
         "$upgradeCount": 1,
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1752591051,
+        "clock": 1752830582,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmin": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
+        "defaultAdmin": "arb1:0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
         "defaultAdminDelay": 0,
         "defaultAdminDelayIncreaseWait": 432000,
         "DOMAIN_SEPARATOR": "0x99c02091f90db79912e762836ae37aa59ed40bd5fe2a4f937d7dceabc62780d6",
@@ -57,7 +57,7 @@
           "name": "Wormhole Token",
           "version": "1",
           "chainId": 42161,
-          "verifyingContract": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+          "verifyingContract": "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
           "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extensions": []
         },
@@ -65,25 +65,25 @@
         "MINTER_AND_BURNER_ADMIN": "0x94fa52329a774c590492dd80ea9dcb867c8e45fcf44ebe594977447db27d90a3",
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wormhole Token",
-        "owner": "0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
+        "owner": "arb1:0x36CF4c88FA548c6Ad9fcDc696e1c27Bb3306163F",
         "pendingDefaultAdmin": {
-          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "newAdmin": "arb1:0x0000000000000000000000000000000000000000",
           "schedule": 0
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
         "SET_DELEGATE_ROLE": "0x7c759a0ecb3ef47a7afbc7c764671240f2e4bf5f46fed3889343f9c0a7e7b541",
         "symbol": "W",
-        "totalSupply": "40422943300773550000000000",
+        "totalSupply": "40392812231103980000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": "ERC1967Proxy",
-        "0x344518934533ec82b49eA533b196dce5cfA64411": "WToken"
+        "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": "ERC1967Proxy",
+        "arb1:0x344518934533ec82b49eA533b196dce5cfA64411": "WToken"
       }
     }
   ],
   "abis": {
-    "0x344518934533ec82b49eA533b196dce5cfA64411": [
+    "arb1:0x344518934533ec82b49eA533b196dce5cfA64411": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlEnforcedDefaultAdminDelay(uint48 schedule)",
@@ -190,7 +190,7 @@
       "function transferFrom(address from, address to, uint256 value) returns (bool)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": [
+    "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -198,5 +198,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x321e32fc6349231323611afd206be2cf93af63c47dc89812de3862458a2f8ef7"
+  "permissionsConfigHash": "0x55a5bcff737d389db22ebcc77c9c1bf20e7a52d85cc50e7e3cfa945606c07db5"
 }
