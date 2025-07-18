@@ -12,7 +12,7 @@ export type EcosystemProjectsCountData = {
 }
 
 export function getEcosystemProjectsChartData(
-  entries: Project<'ecosystemInfo', 'archivedAt'>[],
+  entries: Project<'ecosystemInfo', 'archivedAt' | 'isUpcoming'>[],
   allScalingProjectsCount: number,
 ): EcosystemProjectsCountData {
   const minTimestamp = Math.min(

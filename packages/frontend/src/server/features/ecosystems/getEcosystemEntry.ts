@@ -105,6 +105,7 @@ export async function getEcosystemEntry(
   const [allScalingProjects, projects] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
     ps.getProjects({
       select: [
@@ -144,7 +145,7 @@ export async function getEcosystemEntry(
   )
 
   const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects,
+    ecosystemProjects.filter((p) => !p.archivedAt),
     (p) => p.isUpcoming,
   )
 
@@ -165,14 +166,14 @@ export async function getEcosystemEntry(
       tvs: tvs.total,
       uops: allScalingProjectsUops,
     },
-    tvsByStage: getTvsByStage(ecosystemProjects, tvs),
-    tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
-    projectsByDaLayer: getProjectsByDaLayer(ecosystemProjects),
-    blobsData: await getBlobsData(ecosystemProjects),
-    projectsByRaas: getProjectsByRaas(ecosystemProjects),
-    token: await getEcosystemToken(ecosystem, ecosystemProjects),
+    tvsByStage: getTvsByStage(liveProjects, tvs),
+    tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
+    projectsByDaLayer: getProjectsByDaLayer(liveProjects),
+    blobsData: await getBlobsData(liveProjects),
+    projectsByRaas: getProjectsByRaas(liveProjects),
+    token: await getEcosystemToken(ecosystem, liveProjects),
     projectsChartData: getEcosystemProjectsChartData(
-      ecosystemProjects,
+      liveProjects,
       allScalingProjects.length,
     ),
     liveProjects: liveProjects
