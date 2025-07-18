@@ -4,7 +4,7 @@ export interface Chain {
   shortName: string
   callsPerMinute: number
   getTxUrl: (hash: string) => string
-  envio?: string
+  envio: string
 }
 // Envio Rate Limiting Information: https://envio.dev/pricing
 //  Without API Token: Free unlimited usage with heavy rate limiting (60 requests/minute)
