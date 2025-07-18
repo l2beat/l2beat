@@ -19,6 +19,7 @@ import { api } from '~/trpc/React'
 import { Checkbox } from '../../core/Checkbox'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { ActivityRatioChart } from '../activity-ratio/ActivityRatioChart'
 import type { ChartScale } from '../types'
 import type { ActivityChartType } from './ActivityChart'
 import { ActivityChart } from './ActivityChart'
@@ -83,6 +84,16 @@ export function ScalingActivityChart({
       ),
     [data?.data, metric],
   )
+
+  const ratioData = useMemo(() => {
+    return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => {
+      return {
+        timestamp,
+        ratio: projectsUops / projectsTx,
+      }
+    })
+  }, [data?.data])
+
   const chartRange = getChartRange(chartData)
 
   return (
@@ -103,6 +114,7 @@ export function ScalingActivityChart({
         metric={metric}
         type={type}
       />
+      <ActivityRatioChart data={ratioData} isLoading={isLoading} type={type} />
       <Controls
         scale={scale}
         setScale={setScale}

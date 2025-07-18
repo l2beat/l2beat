@@ -74,6 +74,7 @@ function ChartContainer<T extends { timestamp: number }>({
   milestones,
   loaderClassName,
   logoClassName,
+  size = 'regular',
   ...props
 }: React.ComponentProps<'div'> & {
   meta: ChartMeta
@@ -85,6 +86,7 @@ function ChartContainer<T extends { timestamp: number }>({
   loaderClassName?: string
   logoClassName?: string
   isLoading?: boolean
+  size?: 'regular' | 'small'
 }) {
   const ref = React.useRef<HTMLDivElement>(null)
   const isClient = useIsClient()
@@ -113,7 +115,10 @@ function ChartContainer<T extends { timestamp: number }>({
         ref={ref}
         className={cn(
           chartContainerClassNames,
-          'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]',
+          size === 'regular' &&
+            'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]',
+          size === 'small' &&
+            'h-[114px] min-h-[114px] w-full 2xl:h-[129px] 2xl:min-h-[129px]',
           className,
         )}
         {...props}
@@ -137,7 +142,9 @@ function ChartContainer<T extends { timestamp: number }>({
           <Logo
             animated={false}
             className={cn(
-              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50',
+              size === 'regular' &&
+                'group-has-[.recharts-legend-wrapper]:bottom-14',
               logoClassName,
             )}
           />

@@ -1,6 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingActivityChart } from '~/components/chart/activity/ScalingActivityChart'
+import { ScalingActivityRatioChart } from '~/components/chart/activity-ratio/ScalingActivityRatioChart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
@@ -81,6 +82,7 @@ export function ScalingActivityTabs(props: Props) {
               milestones={props.milestones}
               type="Rollups"
             />
+
             <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
@@ -97,6 +99,10 @@ export function ScalingActivityTabs(props: Props) {
               hideScalingFactor
               type="ValidiumsAndOptimiums"
             />
+            <ScalingActivityRatioChart
+              entries={entries.validiumsAndOptimiums}
+              type="ValidiumsAndOptimiums"
+            />
             <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
@@ -110,6 +116,7 @@ export function ScalingActivityTabs(props: Props) {
               hideScalingFactor
               type="Others"
             />
+            <ScalingActivityRatioChart entries={entries.others} type="Others" />
             <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.others} />
           </DirectoryTabsContent>
