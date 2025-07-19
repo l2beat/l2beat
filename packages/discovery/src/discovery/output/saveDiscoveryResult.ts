@@ -26,6 +26,12 @@ export interface SaveDiscoveryResultOptions {
   metaFilename?: string
   saveSources?: boolean
   templatesFolder: string
+  /**
+   * Explicit path where the project\'s discovery output should be written.
+   * When provided it overrides the default
+   *   `${paths.discovery}/${project}/${chain}`.
+   */
+  projectDiscoveryFolder?: string
 }
 
 export async function saveDiscoveryResult(
@@ -35,11 +41,13 @@ export async function saveDiscoveryResult(
   logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
-  const projectDiscoveryFolder = posix.join(
-    options.paths.discovery,
-    config.structure.name,
-    config.structure.chain,
-  )
+  const projectDiscoveryFolder =
+    options.projectDiscoveryFolder ??
+    posix.join(
+      options.paths.discovery,
+      config.structure.name,
+      config.structure.chain,
+    )
   await mkdirp(projectDiscoveryFolder)
 
   const templateService = new TemplateService(options.paths.discovery)

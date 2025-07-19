@@ -10,7 +10,7 @@ import {
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
-import { join, resolve } from 'path'
+import { join } from 'path'
 
 export interface Project {
   name: string
@@ -212,7 +212,9 @@ async function getFlatSources(
   chain: string,
   paths: DiscoveryPaths,
 ): Promise<HashedFileContent[]> {
-  const path = join(paths.discovery, project, chain, '.flat')
+  const configReader = new ConfigReader(paths.discovery)
+  const basePath = configReader.getProjectChainPath(project, chain)
+  const path = join(basePath, '.flat')
 
   const filePaths = await listFilesRecursively(path)
   const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))
@@ -243,7 +245,7 @@ export async function listFilesRecursively(path: string): Promise<string[]> {
   const entries = await readdir(path, { withFileTypes: true })
   const files = await Promise.all(
     entries.map((entry) => {
-      const resolved = resolve(path, entry.name)
+      const resolved = join(path, entry.name)
       return entry.isDirectory() ? listFilesRecursively(resolved) : resolved
     }),
   )

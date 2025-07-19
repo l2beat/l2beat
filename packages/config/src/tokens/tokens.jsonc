@@ -240,12 +240,6 @@
       "address": "0xb2490e357980ce57bf5745e181e537a64eb367b1"
     },
     {
-      "symbol": "EURS",
-      "category": "stablecoin",
-      "deploymentTimestamp": 1529686012,
-      "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8"
-    },
-    {
       "symbol": "LON",
       "address": "0x0000000000095413afc295d19edeb1ad7b71c952"
     },
@@ -339,11 +333,6 @@
       "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
     },
     {
-      "symbol": "USDS",
-      "category": "stablecoin",
-      "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F"
-    },
-    {
       "symbol": "OPN",
       "address": "0xc28eb2250d1AE32c7E74CFb6d6b86afC9BEb6509"
     },
@@ -392,11 +381,6 @@
     {
       "symbol": "stAVAIL",
       "address": "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a"
-    },
-    {
-      "symbol": "stAZUR",
-      "coingeckoId": "azuro-protocol", // the staked version is not on CG
-      "address": "0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"
     },
     {
       "symbol": "stAethir",
@@ -999,18 +983,6 @@
     {
       "symbol": "eXRD",
       "address": "0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414"
-    },
-    {
-      "symbol": "ezETH",
-      "category": "ether",
-      "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
-      "coingeckoId": "renzo-restaked-eth"
-    },
-    {
-      "symbol": "pzETH",
-      "category": "ether",
-      "address": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
-      "coingeckoId": "renzo-restaked-lst"
     },
     {
       "symbol": "FEG",
@@ -2300,34 +2272,6 @@
       "supply": "totalSupply" // minted by EOA on different chains
     },
     {
-      "symbol": "W",
-      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Wormhole",
-            "slug": "portal"
-          }
-        ]
-      }
-    },
-    {
-      "symbol": "USDY",
-      "address": "0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
-          }
-        ]
-      }
-    },
-    {
       "symbol": "CAKE",
       "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
       "source": "external",
@@ -2368,12 +2312,6 @@
           }
         ]
       }
-    },
-    {
-      "symbol": "BUIDL",
-      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
-      "source": "native",
-      "supply": "totalSupply" // minted by operators on each chain
     },
     {
       "symbol": "KIMA",
@@ -3773,20 +3711,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "W",
-      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Wormhole",
-            "slug": "portal"
-          }
-        ]
-      }
-    },
-    {
       "symbol": "CAKE",
       "address": "0x3055913c90Fcc1A6CE9a358911721eEb942013A1",
       "source": "external",
@@ -4124,22 +4048,6 @@
           {
             "name": "Layer Zero",
             "slug": "omnichain"
-          }
-        ]
-      }
-    },
-    {
-      "symbol": "rsETH",
-      "category": "ether",
-      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-      "source": "external",
-      "supply": "totalSupply",
-      "coingeckoId": "kelp-dao-restaked-eth",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
           }
         ]
       }
