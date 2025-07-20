@@ -11,7 +11,7 @@
         "length": 5
       }
     },
-    "game1337":{
+    "game1337": {
       "handler": {
         "type": "call",
         "method": "gameImpls",

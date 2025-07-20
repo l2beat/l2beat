@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x905ec12336d111b15f53946bdd849c5f0b8166a2
+Generated with discovered.json: 0xd0298ace8684565f11f62275cf7743d6587741c5
 
-# Diff at Fri, 18 Jul 2025 08:43:23 GMT:
+# Diff at Sun, 20 Jul 2025 16:47:49 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@884d7518e03144e7bfd231a5ed3eb75f9e3b531c block: 22665980
-- current block number: 22944504
+- comparing to: main@b5fe7ac6e74ccc6e4e6d67ecb3f67a0783bb471d block: 22665980
+- current block number: 22961594
 
 ## Description
 
-Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html) respected dispute game in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
+Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html)  as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
 
 summary:
 - standard op stack contracts
@@ -16,19 +16,22 @@ summary:
 - state validation: hybrid optimistic + zk proven proposal tree:
   - a proposal must include a bond and a blob with intermediate state roots (3600)
   - any new proposal under the same parent state root implicitly challenges its siblings
-    - but to eliminate siblings, such a new proposer needs to actively prove something after making his proposal (since the older siblings would win by their challenge window expiring)
+    - but to eliminate siblings, such a new proposer needs to actively prove something after making their proposal (since the older siblings would win by their challenge window expiring first)
   - how to compete against siblings:
-    1. MAX_CLOCK_DURATION on a node (KailuaGame) expires without a fault proof or sibling validity proof = node optimistically wins against all siblings
+    1. MAX_CLOCK_DURATION on a node (KailuaGame) expires without a fault proof or sibling's validity proof = node optimistically wins against all siblings
     2. a validity proof over the entire range (3600*6 blocks) of a proposal can be zk-proven at any stage, immediately winning the game (**eliminating all siblings**)
-    3. a 'fault proof' **eliminates a single sibling**: proof that a single intermediary state transition (6 blocks) in their proposal results in a different state root than they claimed
+    3. a 'fault proof' **eliminates a single sibling**: proves that a single intermediary state transition (6 blocks) in an opponents proposal results in a different (proven) state root than they commited to
   - vanguard mode:
     - first child proposal (to progress the state) can only be made by the vanguard address for `vanguardAdvantage` period (30d)
-      - `proveOutputFault()` and `proveValidity()` are always permissionless during that time (a vanguard's proposal can be (in)validated)
-      - siblings can be created as soon as the vanguard has proposed the first, meaning the vanguard only has the optimistic advantage
+      - `proveOutputFault()` and `proveValidity()` are always permissionless during that time (a vanguard's proposal can be (in)validated))
+      - siblings can be created as soon as the vanguard has proposed the first, meaning the vanguard only has the 'optimistic' advantage, giving the 'burden of proof' to other actors
   - DISPUTE_GAME_FINALITY_DELAY_SECONDS (execution delay) = 3.5d
-    - for everyone incl vanguard this delays finalization of a winning state root (for example to have time to blacklist the dispute game by the guardian)
+    - for everyone incl vanguard this delays finalization of a winning state root (for example to have time to blacklist the winning dispute game by the guardian)
+
+some code:
 - diff PermissionedDisputeGame/KailuaGame: https://disco.l2beat.com/diff/eth:0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743/eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb
-- moved TimelockController of the RiscZeroVerifierRouter to standard template ([diff](https://disco.l2beat.com/diff/eth:0x45828180bbE489350D621d002968A0585406d487/eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)): EOA-controlled
+- moved TimelockController of the RiscZeroVerifierRouter to standard template ([diff](https://disco.l2beat.com/diff/eth:0x45828180bbE489350D621d002968A0585406d487/eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)): 3d delay, EOA-controlled
+- superchainconfigFake: added v1.2.0 template (same code as opstack superchainconf): https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7
 
 ## Watched changes
 
@@ -242,8 +245,15 @@ summary:
 ```diff
     contract Bob Multisig 1 (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
     +++ description: None
-      receivedPermissions.0:
--        {"permission":"challenge","from":"eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1","role":".CHALLENGER"}
+      receivedPermissions.0.role:
+-        ".CHALLENGER"
++        ".guardian"
+      receivedPermissions.0.from:
+-        "eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
++        "eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46"
+      receivedPermissions.0.permission:
+-        "challenge"
++        "guard"
       receivedPermissions.1.description:
 +        "can pull funds from the contract in case of emergency."
       receivedPermissions.1.role:
@@ -255,19 +265,19 @@ summary:
       receivedPermissions.1.permission:
 -        "guard"
 +        "interact"
-      receivedPermissions.3:
+      receivedPermissions.4:
 +        {"permission":"upgrade","from":"eth:0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
-      receivedPermissions.5:
-+        {"permission":"upgrade","from":"eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
       receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
+      receivedPermissions.7:
 +        {"permission":"upgrade","from":"eth:0x5fF93263D5181b2A826f8c51d54BC0da2d20D50a","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
-      receivedPermissions.8:
+      receivedPermissions.9:
 +        {"permission":"upgrade","from":"eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
       receivedPermissions.7:
 -        {"permission":"upgrade","from":"eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
-      receivedPermissions.11:
-+        {"permission":"upgrade","from":"eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46","role":"admin","via":[{"address":"eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c"}]}
       receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xE925205ad05D8d612Ac205C4941CCd61Fc965C46","role":"admin","via":[{"address":"eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c"}]}
+      receivedPermissions.13:
 +        {"permission":"upgrade","from":"eth:0xeBA14d52F1b19cA65455E5ECaB72D2FfD9e43fEF","role":"admin","via":[{"address":"eth:0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"}]}
       directlyReceivedPermissions.1:
 +        {"permission":"act","from":"eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c","role":".owner"}
@@ -342,20 +352,8 @@ summary:
 
 ```diff
 +   Status: CREATED
-    contract KailuaGame (0x112898035176fF00adA0F39a9384a53Dc5c4ca31)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract PreimageOracle (0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
     +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
-```
-
-```diff
-+   Status: CREATED
-    contract KailuaTreasury (0x2c1fea684a661b68506d3c6B25C70252Fdf770D5)
-    +++ description: None
 ```
 
 ```diff
@@ -409,7 +407,7 @@ summary:
 ```diff
 +   Status: CREATED
     contract SuperchainConfig (0xE925205ad05D8d612Ac205C4941CCd61Fc965C46)
-    +++ description: None
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff
@@ -433,10 +431,8 @@ summary:
  .../bob/ethereum/.flat/DelayedWETH/Proxy.p.sol     |  200 +
  .../DisputeGameFactory/DisputeGameFactory.sol      | 1482 +++++++
  .../ethereum/.flat/DisputeGameFactory/Proxy.p.sol  |  200 +
- ...:0x112898035176fF00adA0F39a9384a53Dc5c4ca31.sol | 1414 +++++++
- ...:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb.sol | 1414 +++++++
- ...:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746.sol | 1568 ++++++++
- ...:0x2c1fea684a661b68506d3c6B25C70252Fdf770D5.sol | 1568 ++++++++
+ .../src/projects/bob/ethereum/.flat/KailuaGame.sol | 1414 +++++++
+ .../projects/bob/ethereum/.flat/KailuaTreasury.sol | 1568 ++++++++
  .../L1CrossDomainMessenger.sol                     | 2108 +++++-----
  .../.flat/L1ERC721Bridge/L1ERC721Bridge.sol        |  791 ++++
  .../L1ERC721Bridge}/Proxy.p.sol                    |    0
@@ -456,7 +452,7 @@ summary:
  .../.flat/SuperchainConfig/SuperchainConfig.sol    |  477 +++
  .../SystemConfig/SystemConfig.sol                  |  715 ++--
  .../bob/ethereum/.flat/TimelockController.sol      | 1000 +++++
- 29 files changed, 24385 insertions(+), 3793 deletions(-)
+ 27 files changed, 21403 insertions(+), 3793 deletions(-)
 ```
 
 Generated with discovered.json: 0x8b55c0d14f76f0f19015fe74f09c905cbdbc2c45
