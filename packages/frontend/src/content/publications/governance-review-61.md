@@ -1,6 +1,6 @@
 ---
 title: "Governance Review #61"
-description: "AAlthough activity has dropped in some ecosystems, new proposals continue to emerge to keep the beat."
+description: "Although activity has dropped in some ecosystems, new proposals continue to emerge to keep the beat."
 publishedOn: "2025-07-21"
 authorId: manuel-gonzalez
 ---
@@ -10,17 +10,17 @@ authorId: manuel-gonzalez
 
 ### **Budget Board Advisory Proposal for Token House Missions: Seasons 8**
 
-MSilb7 [has floated](https://gov.optimism.io/t/draft-budget-board-advisory-proposal-for-token-house-missions-seasons-8/10103) a draft Season 8 budget that trims Governance-Fund spend to 7.28M OP, about 31% below the Season 4-7 average. The split is 6.33M OP for the Grants Council and 950k OP for the Developer Advisory Board, both scored “above baseline” because they underpin Superchain-interop launch work. At that cadence, plus the standing 4.4M OP/year DAO operating line—the fund would still have roughly 6.6 years of runway left.
+MSilb7 [has floated](https://gov.optimism.io/t/draft-budget-board-advisory-proposal-for-token-house-missions-seasons-8/10103) a draft Season 8 budget that trims Governance-Fund spend to 7.28M OP, about 31% below the Season 4-7 average. The split is 6.33M OP for the Grants Council and 950k OP for the Developer Advisory Board, both scored “above baseline” because they underpin Superchain-interop launch work. At that cadence, plus the standing 4.4M OP/year DAO operating line, the fund would still have roughly 6.6 years of runway left.
 
 
 ### **S8 Retro Funding Missions**
 
-The Optimism Foundation [has created](https://gov.optimism.io/t/s8-retro-funding-missions/10003) a post explaining that the Retro Funding will keep its two Season-7 tracks—On-chain Builders and Dev Tooling—and add a third, OP Stack Dependencies, for Season 8. Each of the first two buckets receives 8M OP to reward monthly impact (starting August) measured by OpenSource Observer’s data-driven algorithm: builders earn for TVL, transactions, gas, MAUs and, once live, interop usage, while tool authors are paid for real-world adoption of compilers, libraries, debuggers and soon block-explorer code. The new dependencies track sets aside 4M OP (payouts begin October) to fund Ethereum-core and other upstream components that the OP Stack relies on. The aim is to keep the Superchain’s critical infrastructure healthy, tighten developer alignment and replace one-off grants with steady, results-based rewards.
+The Optimism Foundation [has created](https://gov.optimism.io/t/s8-retro-funding-missions/10003) a post explaining that the Retro Funding will keep its two Season-7 tracks—On-chain Builders and Dev Tooling—and add a third, OP Stack Dependencies, for Season 8. Each of the first two buckets receives 8M OP to reward monthly impact (starting August) measured by OpenSource Observer’s data-driven algorithm: builders earn for TVL, transactions, gas, MAUs, and, once live, interop usage, while tool authors are paid for real-world adoption of compilers, libraries, debuggers, and soon block-explorer code. The new dependencies track sets aside 4M OP (payouts begin October) to fund Ethereum-core and other upstream components that the OP Stack relies on. The aim is to keep the Superchain’s critical infrastructure healthy, tighten developer alignment, and replace one-off grants with steady, results-based rewards.
 
 
 ### **RetroPGF/RF Evolution & Numbers**
 
-ARDev097 [has assembled](https://gov.optimism.io/t/retropgf-rf-evolution-numbers/10128?u=manugotsuka) a one-stop data set tracing RetroPGF’s journey from a $1M pilot to today’s 16M OP dual-track engine. The roundup covers budget creep (up to 30M OP at the 2023 peak), voter expansion from 24 to 178 participants, the shift from quadratic to metric-based algorithms, and the program’s rotating focus—from early infra to governance, tooling, and on-chain builders. Perennial beneficiaries like Protocol Guild and go-ethereum show how long-term public-goods work keeps getting rewarded, while newer growth plays such as Uniswap and Aerodrome capture impact-based grants.
+ARDev097 [has assembled](https://gov.optimism.io/t/retropgf-rf-evolution-numbers/10128?u=manugotsuka) a one-stop data set tracing RetroPGF’s journey from a $1M pilot to today’s 16M OP dual-track engine. The roundup covers budget creep (up to 30M OP at the 2023 peak), voter expansion from 24 to 178 participants, the shift from quadratic to metric-based algorithms, and the program’s rotating focus—from early infra to governance, tooling, and on-chain builders. Perennial beneficiaries like Protocol Guild and go-ethereum show how long-term public goods work keep getting rewarded, while newer growth plays such as Uniswap and Aerodrome capture impact-based grants.
 
 
 ### **Security Council Operating Budget Seasons 8 & 9**
@@ -63,12 +63,12 @@ Entropy [created a proposal](https://forum.arbitrum.foundation/t/consolidate-idl
 
 ### **Proposal: Launch Arbitrum App Store & Builder Communities Hub on Common Ground**
 
-Florian [has created](https://forum.arbitrum.foundation/t/proposal-launch-arbitrum-app-store-builder-communities-hub-on-common-ground/29621) a proposal that is pitching Arbitrum on moving its Discord/Telegram activity to a new Web3-native chat platform that doubles as a community-curated “mini-app” store. The rollout would start with trial spaces, then incentivized migration, culminating in a full ecosystem hub where users can discover and run Arbitrum dApps—DEXes, games, governance tools—without leaving the chat. The team asks for roughly $160k in ARB-denominated USDC for a one-year platform subscription, small builder grants, and migration rewards, with the DAO receiving an equal value of $CG governance tokens in return.
+Florian [has created](https://forum.arbitrum.foundation/t/proposal-launch-arbitrum-app-store-builder-communities-hub-on-common-ground/29621) a proposal that pitches Arbitrum on moving its Discord/Telegram activity to a new Web3-native chat platform that doubles as a community-curated “mini-app” store. The rollout would start with trial spaces, followed by incentivized migration, culminating in a full ecosystem hub where users can discover and run Arbitrum dApps—such as DEXes, games, and governance tools—without leaving the chat. The team requests approximately $160,000 in ARB-denominated USDC for a one-year platform subscription, small builder grants, and migration rewards, with the DAO receiving an equal value of $CG governance tokens in return.
 
 
 ### **OpCo July 2025 Update**
 
-OpCo’s [July update](https://forum.arbitrum.foundation/t/opco-july-2025-update/29636) says the oversight-and-transparency committee (OAT) is still staffing up. Interviews are underway for a “Chief Chaos Coordinator” to run the new OpCo foundation, and a few strong candidates could join in other roles even before that hire is final. Weekly OAT meetings continue; bylaws are nearly ready to publish. On the DAO side, OAT has begun reviewing Entropy’s treasury-management allocations and will serve as Entropy’s counter-party once the Year 2-3 advisory contract and its 10M ARB incentive pool are approved.
+OpCo’s [July update](https://forum.arbitrum.foundation/t/opco-july-2025-update/29636) says the oversight-and-transparency committee (OAT) is still staffing up. Interviews are underway for a “Chief Chaos Coordinator” to run the new OpCo foundation, and a few strong candidates could join in other roles even before that hire is final. Weekly OAT meetings continue; bylaws are nearly ready to publish. On the DAO side, OAT has begun reviewing Entropy’s treasury-management allocations and will serve as Entropy’s counterparty once the Year 2-3 advisory contract and its 10M ARB incentive pool are approved.
 
 **Discuss with L2BEAT**
 
@@ -119,7 +119,7 @@ You can find us to discuss everything related to Polygon’s governance, from cu
 
 ### **Proposal for the Monetary Committee: Adjusting the Inflation Coefficient (c) to Support Sustainable Staking Participation**
 
-Manor [has created](https://community.starknet.io/t/proposal-for-the-monetary-committee-adjusting-the-inflation-coefficient-c-to-support-sustainable-staking-participation/115775) a proposal that asks Starknet’s Monetary Committee to bump the network’s inflation-coefficient “c” from 1.6 to roughly 3. Manor argue staking is only ~4 % of supply—well below the 10 % they view as a safe floor—and yields will drop too fast as participation rises. Raising “c” would keep STRK staking returns near 10-15 % (and future BTC-staking yields around 2-6 %) while holding annual inflation to 0.4-1.5 %. They hope to finalize feedback and send a formal request to the committee by late July.
+Manor [has created](https://community.starknet.io/t/proposal-for-the-monetary-committee-adjusting-the-inflation-coefficient-c-to-support-sustainable-staking-participation/115775) a proposal that asks Starknet’s Monetary Committee to bump the network’s inflation-coefficient “c” from 1.6 to roughly 3. Manor argues staking is only ~4 % of supply—well below the 10 % they view as a safe floor—and yields will drop too fast as participation rises. Raising “c” would keep STRK staking returns near 10-15 % (and future BTC-staking yields around 2-6 %) while holding annual inflation to 0.4-1.5 %. They hope to finalize feedback and send a formal request to the committee by late July.
 
 **Discuss with L2BEAT**
 
@@ -180,17 +180,17 @@ You can find us to discuss everything related to ZkSync’s governance, from cur
 
 ### **Announcing the Ecosystem Growth Council (EGC)**
 
-The Scroll Foundation [has unveiled](https://forum.scroll.io/t/announcing-the-ecosystem-growth-council-egc/962) the inaugural Ecosystem Growth Council: internal seats go to Eugene and Mark, while the three external spots are shared by JuanRah & 0xDonPepe, Natalie Tillack & Jashar Seyfi, and Sov. Delegates have three business days to lodge any veto; barring objections, the council will hold its first meeting between 18-22 July and spend the next six months designing, launching and transparently tracking Scroll DAO’s first growth-funding program before drafting a renewal charter.
+The Scroll Foundation [has unveiled](https://forum.scroll.io/t/announcing-the-ecosystem-growth-council-egc/962) the inaugural Ecosystem Growth Council: internal seats go to Eugene and Mark, while the three external spots are shared by JuanRah & 0xDonPepe, Natalie Tillack & Jashar Seyfi, and Sov. Delegates have three business days to lodge any veto; barring objections, the council will hold its first meeting between 18-22 July and spend the next six months designing, launching, and transparently tracking Scroll DAO’s first growth-funding program before drafting a renewal charter.
 
 
 ### **Announcing the Governance Contribution Reward Working Group**
 
-The Scroll Foundation [has set up](https://forum.scroll.io/t/announcing-the-governance-contribution-reward-working-group/963/1) a three-member Governance Contribution Recognition working group to design the DAO’s next six-month incentive scheme. Seats go to Bitblondy, Proxy (sharing one seat) and Seiryu, chosen for their blend of delegate-incentive, economics and active-governance experience. Delegates have three business days to lodge any veto; if none arrives, the trio will begin work on a fresh GCR proposal slated for the 1 September voting cycle.
+The Scroll Foundation [has set up](https://forum.scroll.io/t/announcing-the-governance-contribution-reward-working-group/963/1) a three-member Governance Contribution Recognition working group to design the DAO’s next six-month incentive scheme. Seats go to Bitblondy, Proxy (sharing one seat), and Seiryu, chosen for their blend of delegate-incentive, economics, and active-governance experience. Delegates have three business days to lodge any veto; if none arrive, the trio will begin work on a fresh GCR proposal slated for the 1 September voting cycle.
 
 
 ### **Grant Progress Tracking Platform for Scroll**
 
-BuildUnion [has created](https://forum.scroll.io/t/grant-progress-tracking-platform-for-scroll/975?u=manugotsuka) a proposal that seeks a one-off $5000 grant to ship and run for a year a public “Grant Progress Tracker” that pulls every Scroll-funded project into a single dashboard. The tool would show live milestone percentages, funding streams, and ML-flagged risk scores, trigger email/app alerts for delays or scope drift, and give grant stewards admin controls to intervene—ultimately giving the community real-time, portfolio-wide transparency instead of scattered forum and Discord updates.
+BuildUnion [has created](https://forum.scroll.io/t/grant-progress-tracking-platform-for-scroll/975?u=manugotsuka) a proposal that seeks a one-off $5000 grant to ship and run for a year a public “Grant Progress Tracker” that pulls every Scroll-funded project into a single dashboard. The tool would show live milestone percentages, funding streams, and ML-flagged risk scores, trigger email/app alerts for delays or scope drift, and give grant stewards admin controls to intervene, ultimately giving the community real-time, portfolio-wide transparency instead of scattered forum and Discord updates.
 
 **Discuss with L2BEAT**
 
