@@ -69,24 +69,29 @@ export function ProjectScalingSummary({ project }: Props) {
                 Tokens breakdown
               </p>
               <Tooltip>
-                <TooltipTrigger className="flex w-full items-center gap-1">
-                  <TokenBreakdown
-                    total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                    associated={
-                      project.header.tvs?.tokens.breakdown?.associated ?? 0
-                    }
-                    ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                    stablecoin={
-                      project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                    }
-                    className="h-1.5 w-full"
-                  />
-                  {hasTokenWarnings && (
-                    <RoundedWarningIcon
-                      sentiment={warningSentiment}
-                      className="size-[22px]"
+                <TooltipTrigger asChild>
+                  <a
+                    className="flex w-full items-center gap-1"
+                    href={`/scaling/projects/${project.slug}/tvs-breakdown`}
+                  >
+                    <TokenBreakdown
+                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                      associated={
+                        project.header.tvs?.tokens.breakdown?.associated ?? 0
+                      }
+                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                      stablecoin={
+                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                      }
+                      className="h-1.5 w-full"
                     />
-                  )}
+                    {hasTokenWarnings && (
+                      <RoundedWarningIcon
+                        sentiment={warningSentiment}
+                        className="size-[22px]"
+                      />
+                    )}
+                  </a>
                 </TooltipTrigger>
                 <TooltipContent>
                   <TokenBreakdownTooltipContent
@@ -103,6 +108,9 @@ export function ProjectScalingSummary({ project }: Props) {
                     }
                     tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
                   />
+                  <p className="mt-2 text-label-value-13 text-secondary">
+                    Click to view TVS breakdown
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -111,13 +119,18 @@ export function ProjectScalingSummary({ project }: Props) {
                 Value secured breakdown
               </p>
               <Tooltip>
-                <TooltipTrigger className="block w-full">
-                  <ValueSecuredBreakdown
-                    canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                    external={project.header.tvs?.breakdown?.external ?? 0}
-                    native={project.header.tvs?.breakdown?.native ?? 0}
-                    className="h-1.5 w-full"
-                  />
+                <TooltipTrigger asChild>
+                  <a
+                    className="block w-full"
+                    href={`/scaling/projects/${project.slug}/tvs-breakdown`}
+                  >
+                    <ValueSecuredBreakdown
+                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                      external={project.header.tvs?.breakdown?.external ?? 0}
+                      native={project.header.tvs?.breakdown?.native ?? 0}
+                      className="h-1.5 w-full"
+                    />
+                  </a>
                 </TooltipTrigger>
                 <TooltipContent>
                   <ValueSecuredBreakdownTooltipContent
@@ -127,6 +140,9 @@ export function ProjectScalingSummary({ project }: Props) {
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
                     tvsWarnings={[]}
                   />
+                  <p className="mt-2 text-label-value-13 text-secondary">
+                    Click to view TVS breakdown
+                  </p>
                 </TooltipContent>
               </Tooltip>
               <CustomLink
