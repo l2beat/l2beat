@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22731106,
+  "blockNumber": 22966983,
   "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
   "entries": [
     {
@@ -552,7 +552,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -881,11 +881,11 @@
         "$upgradeCount": 2,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1750240463,
+        "getFirstUnfinalizedMessageEnqueueTime": 1753086143,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 956170,
-        "nextUnfinalizedQueueIndex": 956167,
+        "nextCrossDomainMessageIndex": 958283,
+        "nextUnfinalizedQueueIndex": 958272,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1628,8 +1628,8 @@
         "getSigner": "eth:0xD83C4892BB5aA241B63d8C4C134920111E142A20",
         "messageQueueParameters": {
           "maxGasLimit": 10000000,
-          "baseFeeOverhead": 4790000,
-          "baseFeeScalar": 388000000000000
+          "baseFeeOverhead": 120000,
+          "baseFeeScalar": 9700000000000
         },
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
@@ -1755,7 +1755,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 43,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1929,15 +1929,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 361220,
+        "lastFinalizedBatchIndex": 362792,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 361220,
-          "lastFinalizedBatchIndex": 361220,
-          "lastFinalizeTimestamp": 1750244495,
+          "lastCommittedBatchIndex": 362798,
+          "lastFinalizedBatchIndex": 362792,
+          "lastFinalizeTimestamp": 1753090091,
           "flags": 1,
           "reserved": 0
         },
@@ -2605,7 +2605,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 24,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2650,7 +2650,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 25484073985275,
+        "totalBridgedUSDC": 22474151594201,
         "withdrawPaused": false
       },
       "implementationNames": {
