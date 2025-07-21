@@ -1,14 +1,19 @@
 import type { ZkCatalogTag } from '../types'
 
+export type ZkCatalogTagType =
+  (typeof ZkCatalogTagType)[keyof typeof ZkCatalogTagType]
+
 export const ZkCatalogTagType = {
-  STARK: 'STARK',
-  ISA: 'ISA',
-  SNARK: 'SNARK',
-  Curve: 'Curve',
-  Field: 'Field',
-  PCS: 'PCS',
   Arithmetization: 'Arithmetization',
+  curve: 'curve',
+  Fflonk: 'Fflonk',
+  Field: 'Field',
+  Groth16: 'Groth16',
+  ISA: 'ISA',
   Other: 'Other',
+  PCS: 'PCS',
+  Plonk: 'Plonk',
+  STARK: 'STARK',
 } as const
 
 export const zkCatalogTags = [
@@ -93,88 +98,90 @@ export const zkCatalogTags = [
     name: 'OpenVM',
     description: 'Instruction language for zkVM developed by Scroll.',
   },
-  // SNARK
+  // Plonk
   {
-    id: 'PlonkBellman',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Plonk: bellman',
+    id: 'Bellman',
+    type: ZkCatalogTagType.Plonk,
+    name: 'bellman',
     description:
       'Bellman Rust library for Plonk proving system, originally developed for ZCash.',
   },
   {
-    id: 'FflonkZksync',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Fflonk: zksync',
-    description:
-      'Matter Labs Rust implementation of Fflonk improvement over standard Plonk proving system.',
-  },
-  {
-    id: 'PlonkGnark',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Plonk: gnark',
+    id: 'Gnark',
+    type: ZkCatalogTagType.Plonk,
+    name: 'gnark',
     description:
       'Consensys implementation of Plonk proving system written in Go.',
   },
   {
-    id: 'Groth16Gnark',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Groth16: gnark',
-    description:
-      'Consensys implementation of Groth16 proving system written in Go.',
-  },
-  {
-    id: 'FflonkSnarkjs',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Fflonk: snarkjs',
-    description:
-      'Circom / iden3 implementation of Fflonk improvement over standard Plonk proving system written in JS.',
-  },
-  {
-    id: 'Groth16Snarkjs',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Groth16: snarkjs',
-    description:
-      'Circom / iden3 implementation of Groth16 proving system written in JS.',
-  },
-  {
-    id: 'PlonkHalo2',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Plonk: halo2',
+    id: 'Halo2',
+    type: ZkCatalogTagType.Plonk,
+    name: 'halo2',
     description:
       'Rust implementation of Halo2 SNARK proving system, originally developed for ZCash.',
   },
   {
-    id: 'Groth16EthSnarks',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Groth16: EthSnarks',
-    description:
-      'EthSnarks implementation of Groth16 proving system written in C++.',
-  },
-  {
-    id: 'PlonkZksync',
-    type: ZkCatalogTagType.SNARK,
-    name: 'Plonk: zksync',
+    id: 'Zksync',
+    type: ZkCatalogTagType.Plonk,
+    name: 'zksync',
     description:
       'Matter Labs Rust implementation of Plonk proving system, originally developed for ZKsync Lite (old ZKsync).',
+  },
+  // Fflonk
+  {
+    id: 'Zksync',
+    type: ZkCatalogTagType.Fflonk,
+    name: 'zksync',
+    description:
+      'Matter Labs Rust implementation of Fflonk improvement over standard Plonk proving system.',
+  },
+  {
+    id: 'Snarkjs',
+    type: ZkCatalogTagType.Fflonk,
+    name: 'snarkjs',
+    description:
+      'Circom / iden3 implementation of Fflonk improvement over standard Plonk proving system written in JS.',
+  },
+  // Groth16
+  {
+    id: 'Gnark',
+    type: ZkCatalogTagType.Groth16,
+    name: 'gnark',
+    description:
+      'Consensys implementation of Groth16 proving system written in Go.',
+  },
+  {
+    id: 'Snarkjs',
+    type: ZkCatalogTagType.Groth16,
+    name: 'snarkjs',
+    description:
+      'Circom / iden3 implementation of Groth16 proving system written in JS.',
+  },
+  {
+    id: 'EthSnarks',
+    type: ZkCatalogTagType.Groth16,
+    name: 'EthSnarks',
+    description:
+      'EthSnarks implementation of Groth16 proving system written in C++.',
   },
   // Curve
   {
     id: 'BN254',
-    type: ZkCatalogTagType.Curve,
+    type: ZkCatalogTagType.curve,
     name: 'BN254',
     description:
       'BN254, aka BN256, aka alt_bn128 pairing-friendly 254-bit prime field Weierstrass elliptic curve.',
   },
   {
     id: 'BW6-761',
-    type: ZkCatalogTagType.Curve,
+    type: ZkCatalogTagType.curve,
     name: 'BW6-761',
     description:
       'Pairing-friendly 761-bit prime field elliptic curve introduced by Housni and Guillevic.',
   },
   {
     id: 'BLS12-377',
-    type: ZkCatalogTagType.Curve,
+    type: ZkCatalogTagType.curve,
     name: 'BLS12-377',
     description:
       'Pairing-friendly 377-bit prime field Weierstrass elliptic curve.',
