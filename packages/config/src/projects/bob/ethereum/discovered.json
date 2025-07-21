@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22961594,
+  "blockNumber": 22965692,
   "configHash": "0x070a8d093cd8e1be69ddd869558d2576b776f0452ba7f23f109f32c8da349183",
   "entries": [
     {
@@ -579,8 +579,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 21000,
-          "prevBlockNum": 22961266
+          "prevBoughtGas": 313808,
+          "prevBlockNum": 22965541
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -664,7 +664,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb",
-        "gameCount": 7,
+        "gameCount": 8,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -1240,7 +1240,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660470",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660474",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
