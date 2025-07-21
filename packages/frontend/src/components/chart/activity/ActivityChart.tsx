@@ -98,12 +98,7 @@ export function ActivityChart({
       isLoading={isLoading}
       milestones={milestones}
     >
-      <AreaChart
-        accessibilityLayer
-        data={data}
-        margin={{ top: 20 }}
-        syncId="activity"
-      >
+      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: compact([
