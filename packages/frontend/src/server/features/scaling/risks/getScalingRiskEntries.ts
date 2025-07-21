@@ -8,29 +8,26 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
 import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 
 export async function getScalingRiskEntries() {
-  const [tvs, projectsChangeReport, projects, projectsOngoingAnomalies] =
-    await Promise.all([
-      getProjectsLatestTvsUsd(),
-      getProjectsChangeReport(),
-      ps.getProjects({
-        select: [
-          'statuses',
-          'scalingInfo',
-          'scalingRisks',
-          'display',
-          'scalingTechnology',
-        ],
-        optional: ['customDa', 'scalingDa'],
-        where: ['isScaling'],
-        whereNot: ['isUpcoming', 'archivedAt'],
-      }),
-      getApprovedOngoingAnomalies(),
-    ])
+  const [tvs, projectsChangeReport, projects] = await Promise.all([
+    getProjectsLatestTvsUsd(),
+    getProjectsChangeReport(),
+    ps.getProjects({
+      select: [
+        'statuses',
+        'scalingInfo',
+        'scalingRisks',
+        'display',
+        'scalingTechnology',
+      ],
+      optional: ['customDa', 'scalingDa'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+  ])
 
   const entries = projects
     .map((project) =>
@@ -38,7 +35,6 @@ export async function getScalingRiskEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
-        !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .sort(compareStageAndTvs)
@@ -67,10 +63,9 @@ function getScalingRiskEntry(
   >,
   changes: ProjectChanges,
   tvs: number | undefined,
-  ongoingAnomaly: boolean,
 ): ScalingRiskEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, ongoingAnomaly }),
+    ...getCommonScalingEntry({ project, changes }),
     risks: project.scalingRisks.stacked ?? project.scalingRisks.self,
     tvsOrder: tvs ?? -1,
     hasStateValidationSection: !!project.scalingTechnology?.stateValidation,

@@ -13,7 +13,6 @@ export interface CommonScalingEntry
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
-  ongoingAnomaly: boolean
 }
 
 export function getCommonScalingEntry({
@@ -24,8 +23,8 @@ export function getCommonScalingEntry({
 }: {
   project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
-  ongoingAnomaly: boolean
   syncWarning?: string
+  ongoingAnomaly?: boolean
 }): CommonScalingEntry {
   return {
     id: project.id,
@@ -54,7 +53,6 @@ export function getCommonScalingEntry({
     },
     tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),
-    ongoingAnomaly: !!ongoingAnomaly,
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
       ...(project.scalingInfo.stacks ?? ['No stack']).map((stack) => ({

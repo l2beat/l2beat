@@ -10,22 +10,19 @@ import {
   type CommonScalingEntry,
   getCommonScalingEntry,
 } from '../getCommonScalingEntry'
-import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import type { CostsTableData } from './getCostsTableData'
 import { compareStageAndCost } from './utils/compareStageAndCost'
 
 export async function getScalingCostsEntries(helpers: SsrHelpers) {
-  const [projectsChangeReport, projects, costs, projectsOngoingAnomalies] =
-    await Promise.all([
-      getProjectsChangeReport(),
-      ps.getProjects({
-        select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
-        where: ['isScaling'],
-        whereNot: ['isUpcoming', 'archivedAt'],
-      }),
-      helpers.costs.table.fetch({ range: '30d' }),
-      getApprovedOngoingAnomalies(),
-    ])
+  const [projectsChangeReport, projects, costs] = await Promise.all([
+    getProjectsChangeReport(),
+    ps.getProjects({
+      select: ['statuses', 'scalingInfo', 'costsInfo', 'display'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+    helpers.costs.table.fetch({ range: '30d' }),
+  ])
 
   const entries = projects
     .map((project) =>
@@ -33,7 +30,6 @@ export async function getScalingCostsEntries(helpers: SsrHelpers) {
         project,
         projectsChangeReport.getChanges(project.id),
         costs[project.id],
-        !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .sort(compareStageAndCost)
@@ -49,7 +45,6 @@ function getScalingCostEntry(
   project: Project<'statuses' | 'scalingInfo' | 'costsInfo' | 'display'>,
   changes: ProjectChanges,
   costs: CostsTableData[string] | undefined,
-  ongoingAnomaly: boolean,
 ): ScalingCostsEntry {
   const costPerUop =
     costs?.uopsCount && costs.usd.total
@@ -57,7 +52,7 @@ function getScalingCostEntry(
       : Number.POSITIVE_INFINITY
 
   return {
-    ...getCommonScalingEntry({ project, changes, ongoingAnomaly }),
+    ...getCommonScalingEntry({ project, changes }),
     costsWarning: project.costsInfo.warning,
     costOrder: costPerUop,
   }

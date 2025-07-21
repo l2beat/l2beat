@@ -24,7 +24,6 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import { getProjectsLatestTvsUsd } from '../tvs/getLatestTvsUsd'
 import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 
@@ -36,7 +35,6 @@ export async function getScalingDaEntries() {
     daLayers,
     daBridges,
     projectsEconomicSecurity,
-    projectsOngoingAnomalies,
   ] = await Promise.all([
     getProjectsLatestTvsUsd(),
     getProjectsChangeReport(),
@@ -53,7 +51,6 @@ export async function getScalingDaEntries() {
       select: ['daBridge'],
     }),
     getDaProjectsEconomicSecurity(),
-    getApprovedOngoingAnomalies(),
   ])
 
   const dacs = projects.filter((p) => !!p.customDa) as Project<'customDa'>[]
@@ -77,7 +74,6 @@ export async function getScalingDaEntries() {
         daLayers,
         projectsChangeReport.getChanges(project.id),
         tvs[project.id],
-        !!projectsOngoingAnomalies[project.id.toString()],
       )
     })
     .filter((entry) => entry !== undefined)
@@ -109,10 +105,9 @@ function getScalingDaEntry(
   daLayers: Project<'daLayer'>[],
   changes: ProjectChanges,
   tvs: number | undefined,
-  ongoingAnomaly: boolean,
 ): ScalingDaEntry {
   return {
-    ...getCommonScalingEntry({ project, changes, ongoingAnomaly }),
+    ...getCommonScalingEntry({ project, changes }),
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
     daHref: getDaHref(project, daLayers),
