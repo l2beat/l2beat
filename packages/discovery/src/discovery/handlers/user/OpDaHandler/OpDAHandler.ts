@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { IProvider } from '../../../provider/IProvider'
 import type { Handler, HandlerResult } from '../../Handler'
@@ -40,7 +40,7 @@ export class OpStackDAHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    currentContractAddress: EthereumAddress,
+    currentContractAddress: ChainSpecificAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const referenceInput = generateReferenceInput(

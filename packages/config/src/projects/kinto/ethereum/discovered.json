@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 22593509,
-  "configHash": "0xadc14559178a700516f1dcfad8926c02ceb0454d215306a079279993d27468be",
+  "configHash": "0x80c69257217a93514e84ec85fd25d47d63e23408592b9c0a77346cc49cc1474b",
   "entries": [
     {
       "name": "Hypernative",
@@ -1323,13 +1323,13 @@
     }
   ],
   "abis": {
-    "0x0f1b7bd7762662B23486320AA91F30312184f70C": [
+    "eth:0x0f1b7bd7762662B23486320AA91F30312184f70C": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": [
+    "eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494": [
       "constructor()",
       "error AlreadyInit()",
       "error HadZeroInit()",
@@ -1343,10 +1343,10 @@
       "function rollupInitialized(uint256 chainId, string chainConfig)",
       "function updateRollupAddress()"
     ],
-    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": [
+    "eth:0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": [
       "constructor(address _singleton)"
     ],
-    "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": [
+    "eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
       "error InvalidOutboxSet(address outbox)",
       "error NotContract(address addr)",
@@ -1384,7 +1384,7 @@
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
       "function updateRollupAddress(address _rollup)"
     ],
-    "0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB": [
+    "eth:0x27Bb05e547CfC9b874f18b0F6F3FB62A58Be9CdB": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event NodeConfirmed(uint64 indexed nodeNum, bytes32 blockHash, bytes32 sendRoot)",
@@ -1473,7 +1473,7 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
-    "0x296339ED40ec80746b239b04dE943bb8619784b7": [
+    "eth:0x296339ED40ec80746b239b04dE943bb8619784b7": [
       "constructor(uint256 _maxDataSize)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
       "error GasLimitTooLarge()",
@@ -1527,7 +1527,7 @@
       "function unpause()",
       "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, bytes data) payable returns (uint256)"
     ],
-    "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
+    "eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
       "error BadPostUpgradeInit()",
@@ -1564,7 +1564,7 @@
       "function updateRollupAddress()",
       "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
     ],
-    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": [
+    "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
       "function checkDecidableNextNode(address rollup) view returns (uint8)",
       "function findNodeConflict(address rollup, uint64 node1, uint64 node2, uint256 maxDepth) view returns (tuple(uint8 ty, uint64 node1, uint64 node2))",
@@ -1577,17 +1577,17 @@
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
     ],
-    "0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59": [
+    "eth:0x2C1e1A31d2bC26f7BE3CAB5Cb0806641847B3C59": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": [
+    "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
     ],
-    "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F": [
+    "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1598,10 +1598,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x551E2501074D80E22c5FfB69b5fd8ba2939593b7": [
+    "eth:0x551E2501074D80E22c5FfB69b5fd8ba2939593b7": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": [
+    "eth:0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1612,7 +1612,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": [
+    "eth:0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1623,7 +1623,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": [
+    "eth:0x6525137BfF366fbc0A89E3e5A4d244B5A0090a6D": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
       "event GatewaySet(address indexed l1Token, address indexed gateway)",
       "event TransferRouted(address indexed token, address indexed _userFrom, address indexed _userTo, address gateway)",
@@ -1652,7 +1652,7 @@
       "function updateWhitelistSource(address newSource)",
       "function whitelist() view returns (address)"
     ],
-    "0x655761AD5FC251F414D6993A73184B0669F278c8": [
+    "eth:0x655761AD5FC251F414D6993A73184B0669F278c8": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1663,7 +1663,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x6c21303F5986180B1394d2C89f3e883890E2867b": [
+    "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": [
       "constructor()",
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -1684,7 +1684,7 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x74C717C01425eb475A5fC55d2A4a9045fC9800df": [
+    "eth:0x74C717C01425eb475A5fC55d2A4a9045fC9800df": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1695,16 +1695,16 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x778ca912Bd8b35dDA84852B47BA8624e08f640A6": [
+    "eth:0x778ca912Bd8b35dDA84852B47BA8624e08f640A6": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x7870D5398DB488c669B406fBE57b8d05b6A35e42": [
+    "eth:0x7870D5398DB488c669B406fBE57b8d05b6A35e42": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": [
+    "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1715,7 +1715,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xa5E09FfA33dd011F5B68aAA55F513D6773579f78": [
+    "eth:0xa5E09FfA33dd011F5B68aAA55F513D6773579f78": [
       "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
       "error AlreadyInit()",
       "error AlreadyValidDASKeyset(bytes32)",
@@ -1787,7 +1787,7 @@
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
     ],
-    "0xa6f528c65569d903C20e7D2639ad343128B4FD27": [
+    "eth:0xa6f528c65569d903C20e7D2639ad343128B4FD27": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event NodeConfirmed(uint64 indexed nodeNum, bytes32 blockHash, bytes32 sendRoot)",
@@ -1873,10 +1873,10 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
-    "0xacED35d61f71A804E7627b5622c267C8Ac31d38e": [
+    "eth:0xacED35d61f71A804E7627b5622c267C8Ac31d38e": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6": [
+    "eth:0xae2F80339Bdd9bd384502A62aEe956eAbF3796e6": [
       "constructor(address exchange, address usdc, address weth, address dai, address usde, address sUsde, address wstEth)",
       "error BalanceTooLow(uint256 amount, uint256 balance)",
       "error DepositBySigResult(uint256 amountOut)",
@@ -1938,7 +1938,7 @@
       "function wUSDM() view returns (address)",
       "function wstETH() view returns (address)"
     ],
-    "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": [
+    "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1949,7 +1949,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xd14D9d4c8985763B5037A4f253977e059385660c": [
+    "eth:0xd14D9d4c8985763B5037A4f253977e059385660c": [
       "error NotOwner(address sender, address owner)",
       "event Bisected(uint64 indexed challengeIndex, bytes32 indexed challengeRoot, uint256 challengedSegmentStart, uint256 challengedSegmentLength, bytes32[] chainHashes)",
       "event ChallengeEnded(uint64 indexed challengeIndex, uint8 kind)",
@@ -1976,16 +1976,16 @@
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
     ],
-    "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": [
+    "eth:0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": [
+    "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2034,7 +2034,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xEd696D87C351C2ef687c1c484c3e297B276a40d1": [
+    "eth:0xEd696D87C351C2ef687c1c484c3e297B276a40d1": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
       "function getEndMachineHash(uint8 status, bytes32 globalStateHash) pure returns (bytes32)",
       "function getStartMachineHash(bytes32 globalStateHash, bytes32 wasmModuleRoot) pure returns (bytes32)",
@@ -2044,10 +2044,10 @@
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
     ],
-    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": [
+    "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": [
       "constructor(address _singleton)"
     ],
-    "0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02": [
+    "eth:0xf43bce5D32742FFC862eA182b0b5544CbDBB0F02": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
       "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
       "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
@@ -2071,7 +2071,7 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
-    "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": [
+    "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 61100811,
-  "configHash": "0xff35e3160d6a7978d70bf2bf236d114dc7bb70580ec822338892e3670fee8ff5",
+  "configHash": "0x15a8f52bcee55126ce6f8cfcfd20620eefcb0e4d2d27a1aabdaa4edd5a891082",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -1107,7 +1107,7 @@
     }
   ],
   "abis": {
-    "0x01a6715d3560241E09E865a46122bf347A576c09": [
+    "zksync:0x01a6715d3560241E09E865a46122bf347A576c09": [
       "error DelegateSignatureExpired(uint256 expiry)",
       "error DelegateSignatureIsInvalid()",
       "error ERC6372InconsistentClock()",
@@ -1163,7 +1163,7 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
-    "0x085b8B6407f150D62adB1EF926F7f304600ec714": [
+    "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1202,7 +1202,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": [
+    "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": [
       "constructor(tuple(string name, address token, address timelock, uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold, uint224 initialQuorum, uint64 initialVoteExtension, address vetoGuardian, address proposeGuardian, bool isProposeGuarded) params)",
       "error Empty()",
       "error InvalidShortString()",
@@ -1276,7 +1276,7 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": [
+    "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1315,7 +1315,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": [
+    "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1354,7 +1354,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": [
+    "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": [
       "constructor(tuple(string name, address token, address timelock, uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold, uint224 initialQuorum, uint64 initialVoteExtension, address vetoGuardian) _params)",
       "error Empty()",
       "error InvalidShortString()",
@@ -1424,13 +1424,13 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": [
+    "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x76705327e682F2d96943280D99464Ab61219e34f": [
+    "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": [
       "constructor(string _name, address _token, address _timelock, uint48 _initialVotingDelay, uint32 _initialVotingPeriod, uint256 _initialProposalThreshold, uint224 _initialQuorum, uint64 _initialVoteExtension)",
       "error Empty()",
       "error InvalidShortString()",
@@ -1497,7 +1497,7 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0xb83FF6501214ddF40C91C9565d095400f3F45746": [
+    "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746": [
       "constructor(tuple(string name, address token, address timelock, uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold, uint224 initialQuorum, uint64 initialVoteExtension, address vetoGuardian, address proposeGuardian, bool isProposeGuarded) params)",
       "error Empty()",
       "error InvalidShortString()",
@@ -1571,7 +1571,7 @@
       "function votingDelay() view returns (uint256)",
       "function votingPeriod() view returns (uint256)"
     ],
-    "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": [
+    "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1610,7 +1610,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0xC9E442574958f96C026DeF9a50C3236cab17428a": [
+    "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1649,7 +1649,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": [
+    "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1660,7 +1660,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": [
+    "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallSalt(bytes32 indexed id, bytes32 salt)",
@@ -1699,7 +1699,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": [
+    "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160": [
       "constructor(tuple(string name, address token, address timelock, uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold, uint224 initialQuorum, uint64 initialVoteExtension, address vetoGuardian) _params)",
       "error Empty()",
       "error InvalidShortString()",

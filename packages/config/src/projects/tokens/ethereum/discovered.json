@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22889418,
-  "configHash": "0x68fb6b439c2d7c6a9c62e208afe47188679e9a144df84ae26c6b6f5afb14151e",
+  "configHash": "0x6747f3dd9c2f562234b45787469abea1ac04b017d037d0eaff12ae3de215e868",
   "entries": [
     {
       "address": "eth:0x0000000000000000000000000000000000000001",
@@ -2673,7 +2673,7 @@
     }
   ],
   "abis": {
-    "0x00000000219ab540356cBB839Cbe05303d7705Fa": [
+    "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": [
       "constructor()",
       "event DepositEvent(bytes pubkey, bytes withdrawal_credentials, bytes amount, bytes signature, bytes index)",
       "function deposit(bytes pubkey, bytes withdrawal_credentials, bytes signature, bytes32 deposit_data_root) payable",
@@ -2681,7 +2681,7 @@
       "function get_deposit_root() view returns (bytes32)",
       "function supportsInterface(bytes4 interfaceId) pure returns (bool)"
     ],
-    "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33": [
+    "eth:0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33": [
       "function threshold() view returns (uint256)",
       "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
       "function ownersArr(uint256) view returns (address)",
@@ -2690,7 +2690,7 @@
       "function setOwners(uint256 threshold_, address[] owners_)",
       "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
     ],
-    "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e": [
+    "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error NotAdmin()",
       "error ProxyIsOssified()",
@@ -2706,7 +2706,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
-    "0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7": [
+    "eth:0x0e65898527E77210fB0133D00dd4C0E86Dc29bC7": [
       "constructor(address lidoLocator, address lido, address legacyOracle, uint256 secondsPerSlot, uint256 genesisTime)",
       "error AddressCannotBeSame()",
       "error AddressCannotBeZero()",
@@ -2796,7 +2796,7 @@
       "function submitReportExtraDataList(bytes data)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713": [
+    "eth:0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713": [
       "function threshold() view returns (uint256)",
       "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
       "function ownersArr(uint256) view returns (address)",
@@ -2805,7 +2805,7 @@
       "function setOwners(uint256 threshold_, address[] owners_)",
       "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
     ],
-    "0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb": [
+    "eth:0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb": [
       "function resume()",
       "function name() pure returns (string)",
       "function stop()",
@@ -2899,7 +2899,7 @@
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event ContractVersionSet(uint256 version)"
     ],
-    "0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135": [
+    "eth:0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135": [
       "function hasInitialized() view returns (bool)",
       "function updateTargetValidatorsLimits(uint256 _nodeOperatorId, uint256 _targetLimitMode, uint256 _targetLimit)",
       "function addSigningKeys(uint256 _nodeOperatorId, uint256 _keysCount, bytes _publicKeys, bytes _signatures)",
@@ -2993,7 +2993,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0": [
+    "eth:0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0": [
       "constructor(address stETH, address accounting, address oracle)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -3055,7 +3055,7 @@
       "function treeCid() view returns (string)",
       "function treeRoot() view returns (bytes32)"
     ],
-    "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425": [
+    "eth:0x2b33CF282f867A7FF693A66e11B0FcC5552e4425": [
       "function hasInitialized() view returns (bool)",
       "function KERNEL_APP_ID() pure returns (bytes32)",
       "function APP_ADDR_NAMESPACE() pure returns (bytes32)",
@@ -3089,7 +3089,7 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
-    "0x38699d04656fF537ef8671b6b595402ebDBdf6f4": [
+    "eth:0x38699d04656fF537ef8671b6b595402ebDBdf6f4": [
       "function threshold() view returns (uint256)",
       "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
       "function ownersArr(uint256) view returns (address)",
@@ -3098,7 +3098,7 @@
       "function setOwners(uint256 threshold_, address[] owners_)",
       "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
     ],
-    "0x388C818CA8B9251b393131C08a736A67ccB19297": [
+    "eth:0x388C818CA8B9251b393131C08a736A67ccB19297": [
       "constructor(address _lido, address _treasury)",
       "event ERC20Recovered(address indexed requestedBy, address indexed token, uint256 amount)",
       "event ERC721Recovered(address indexed requestedBy, address indexed token, uint256 tokenId)",
@@ -3109,7 +3109,7 @@
       "function recoverERC721(address _token, uint256 _tokenId)",
       "function withdrawRewards(uint256 _maxAmount) returns (uint256 amount)"
     ],
-    "0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37": [
+    "eth:0x3A93C17FC82CC33420d1809dDA9Fb715cc89dd37": [
       "function ADD_PROTECTED_TOKEN_ROLE() view returns (bytes32)",
       "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
       "function hasInitialized() view returns (bool)",
@@ -3167,7 +3167,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0x3ABc4764f0237923d52056CFba7E9AEBf87113D3": [
+    "eth:0x3ABc4764f0237923d52056CFba7E9AEBf87113D3": [
       "constructor(tuple(address accountingOracle, address depositSecurityModule, address elRewardsVault, address legacyOracle, address lido, address oracleReportSanityChecker, address postTokenRebaseReceiver, address burner, address stakingRouter, address treasury, address validatorsExitBusOracle, address withdrawalQueue, address withdrawalVault, address oracleDaemonConfig) _config)",
       "error ZeroAddress()",
       "function accountingOracle() view returns (address)",
@@ -3187,7 +3187,7 @@
       "function withdrawalQueue() view returns (address)",
       "function withdrawalVault() view returns (address)"
     ],
-    "0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E": [
+    "eth:0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E": [
       "constructor(bytes32 treeRoot, uint256 curveId, address module)",
       "error AlreadyConsumed()",
       "error InvalidCurveId()",
@@ -3204,7 +3204,7 @@
       "function isConsumed(address member) view returns (bool)",
       "function verifyProof(address member, bytes32[] proof) view returns (bool)"
     ],
-    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": [
+    "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -3213,7 +3213,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -3261,7 +3261,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x442af784A788A5bd6F42A01Ebe9F287a871243fb": [
+    "eth:0x442af784A788A5bd6F42A01Ebe9F287a871243fb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -3270,7 +3270,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x45804880De22913dAFE09f4980848ECE6EcbAf78": [
+    "eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78": [
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function implementation() view returns (address)",
@@ -3280,7 +3280,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address implementation)"
     ],
-    "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": [
+    "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -3300,7 +3300,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_)"
     ],
-    "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da": [
+    "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -3320,7 +3320,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_)"
     ],
-    "0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": [
+    "eth:0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -3329,7 +3329,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x6232397ebac4f5772e53285B26c47914E9461E75": [
+    "eth:0x6232397ebac4f5772e53285B26c47914E9461E75": [
       "constructor(address _lidoLocator, address _admin, tuple(uint256 exitedValidatorsPerDayLimit, uint256 appearedValidatorsPerDayLimit, uint256 annualBalanceIncreaseBPLimit, uint256 simulatedShareRateDeviationBPLimit, uint256 maxValidatorExitRequestsPerReport, uint256 maxItemsPerExtraDataTransaction, uint256 maxNodeOperatorsPerExtraDataItem, uint256 requestTimestampMargin, uint256 maxPositiveTokenRebase, uint256 initialSlashingAmountPWei, uint256 inactivityPenaltiesAmountPWei, uint256 clBalanceOraclesErrorUpperBPLimit) _limitsList)",
       "error ActualShareRateIsZero()",
       "error AdminCannotBeZero()",
@@ -3420,7 +3420,7 @@
       "function smoothenTokenRebase(uint256 _preTotalPooledEther, uint256 _preTotalShares, uint256 _preCLBalance, uint256 _postCLBalance, uint256 _withdrawalVaultBalance, uint256 _elRewardsVaultBalance, uint256 _sharesRequestedToBurn, uint256 _etherToLockForWithdrawals, uint256 _newSharesToBurnForWithdrawals) view returns (uint256 withdrawals, uint256 elRewards, uint256 simulatedSharesToBurn, uint256 sharesToBurn)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4": [
+    "eth:0x71093efF8D8599b5fA340D665Ad60fA7C80688e4": [
       "constructor(uint256 slotsPerEpoch, uint256 secondsPerSlot, uint256 genesisTime, uint256 epochsPerFrame, uint256 fastLaneLengthSlots, address admin, address reportProcessor)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -3498,7 +3498,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateInitialEpoch(uint256 initialEpoch)"
     ],
-    "0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758": [
+    "eth:0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758": [
       "constructor(address lidoLocator, address communityStakingModule, uint256 maxCurveLength, uint256 minBondLockRetentionPeriod, uint256 maxBondLockRetentionPeriod)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -3635,7 +3635,7 @@
       "function totalBondShares() view returns (uint256)",
       "function updateBondCurve(uint256 curveId, uint256[] bondCurve)"
     ],
-    "0x74271F2282eD7eE35c166122A60c9830354be42a": [
+    "eth:0x74271F2282eD7eE35c166122A60c9830354be42a": [
       "function disregardProposeOwner()",
       "function name() view returns (string)",
       "function reclaimPAXG()",
@@ -3708,7 +3708,7 @@
       "event FeeControllerSet(address indexed oldFeeController, address indexed newFeeController)",
       "event FeeRecipientSet(address indexed oldFeeRecipient, address indexed newFeeRecipient)"
     ],
-    "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": [
+    "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": [
       "constructor(address _stETH)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
@@ -3734,7 +3734,7 @@
       "function unwrap(uint256 _wstETHAmount) returns (uint256)",
       "function wrap(uint256 _stETHAmount) returns (uint256)"
     ],
-    "0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a": [
+    "eth:0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a": [
       "constructor(uint256 slotsPerEpoch, uint256 secondsPerSlot, uint256 genesisTime, uint256 epochsPerFrame, uint256 fastLaneLengthSlots, address admin, address reportProcessor)",
       "error AddressCannotBeZero()",
       "error AdminCannotBeZero()",
@@ -3806,7 +3806,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateInitialEpoch(uint256 initialEpoch)"
     ],
-    "0x852deD011285fe67063a08005c71a85690503Cee": [
+    "eth:0x852deD011285fe67063a08005c71a85690503Cee": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error NotAdmin()",
       "error ProxyIsOssified()",
@@ -3822,7 +3822,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
-    "0x853cc0D5917f49B57B8e9F89e491F5E18919093A": [
+    "eth:0x853cc0D5917f49B57B8e9F89e491F5E18919093A": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -3831,7 +3831,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": [
+    "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error NotAdmin()",
       "error ProxyIsOssified()",
@@ -3847,7 +3847,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
-    "0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA": [
+    "eth:0x89eDa99C0551d4320b56F82DDE8dF2f8D2eF81aA": [
       "constructor(address _depositContract)",
       "error AppAuthLidoFailed()",
       "error ArraysLengthMismatch(uint256 firstArrayLength, uint256 secondArrayLength)",
@@ -3963,7 +3963,7 @@
       "function updateStakingModule(uint256 _stakingModuleId, uint256 _stakeShareLimit, uint256 _priorityExitShareThreshold, uint256 _stakingModuleFee, uint256 _treasuryFee, uint256 _maxDepositsPerBlock, uint256 _minDepositBlockDistance)",
       "function updateTargetValidatorsLimits(uint256 _stakingModuleId, uint256 _nodeOperatorId, uint256 _targetLimitMode, uint256 _targetLimit)"
     ],
-    "0x8daEa53b17a629918CDFAB785C5c74077c1D895B": [
+    "eth:0x8daEa53b17a629918CDFAB785C5c74077c1D895B": [
       "constructor(bytes32 moduleType, uint256 minSlashingPenaltyQuotient, uint256 elRewardsStealingFine, uint256 maxKeysPerOperatorEA, uint256 maxKeyRemovalCharge, address lidoLocator)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -4137,17 +4137,17 @@
       "function updateStuckValidatorsCount(bytes nodeOperatorIds, bytes stuckValidatorsCounts)",
       "function updateTargetValidatorsLimits(uint256 nodeOperatorId, uint256 targetLimitMode, uint256 targetLimit)"
     ],
-    "0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7": [
+    "eth:0x8F73e4C2A6D852bb4ab2A45E6a9CF5715b3228B7": [
       "constructor(address _stETH)",
       "error ZeroStETHAddress()",
       "function domainSeparatorV4(address _stETH) view returns (bytes32)",
       "function eip712Domain(address _stETH) view returns (string name, string version, uint256 chainId, address verifyingContract)",
       "function hashTypedDataV4(address _stETH, bytes32 _structHash) view returns (bytes32)"
     ],
-    "0x909d0CB383Ecc77e44daE5d0146cF476f611f62b": [
+    "eth:0x909d0CB383Ecc77e44daE5d0146cF476f611f62b": [
       "constructor(address _singleton)"
     ],
-    "0x919ac5C6c62B6ef7B05cF05070080525a7B0381E": [
+    "eth:0x919ac5C6c62B6ef7B05cF05070080525a7B0381E": [
       "constructor(uint256 secondsPerSlot, uint256 genesisTime)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -4249,7 +4249,7 @@
       "function submitReportData(tuple(uint256 consensusVersion, uint256 refSlot, bytes32 treeRoot, string treeCid, string logCid, uint256 distributed) data, uint256 contractVersion)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": [
+    "eth:0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -4258,7 +4258,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0x9f3b9198911054B122fDb865f8A5Ac516201c339": [
+    "eth:0x9f3b9198911054B122fDb865f8A5Ac516201c339": [
       "function hasInitialized() view returns (bool)",
       "function createBurnedPermission(address _app, bytes32 _role)",
       "function burnPermissionManager(address _app, bytes32 _role)",
@@ -4296,7 +4296,7 @@
       "event ChangePermissionManager(address indexed app, bytes32 indexed role, address indexed manager)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)"
     ],
-    "0xa29b819654cE6224A222bb5f586920105E2D7E0E": [
+    "eth:0xa29b819654cE6224A222bb5f586920105E2D7E0E": [
       "function hasInitialized() view returns (bool)",
       "function getVersion() view returns (uint256)",
       "function getEVMScriptExecutor(bytes _script) view returns (address)",
@@ -4327,7 +4327,7 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event ContractVersionSet(uint256 version)"
     ],
-    "0xa4D28d9fFF539d6E1972Ce3Cf9c4577856eD7F20": [
+    "eth:0xa4D28d9fFF539d6E1972Ce3Cf9c4577856eD7F20": [
       "event MintProcessed(address token, address account, uint256 amount)",
       "event MintingAllowanceSet(address token, address account, uint256 newAllowance)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -4370,7 +4370,7 @@
       "function revokeUpgradeGovernor(address account)",
       "function setMintingAllowance(address token, address account, uint256 amount)"
     ],
-    "0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c": [
+    "eth:0xA89Ea51FddE660f67d1850e03C9c9862d33Bc42c": [
       "constructor(uint256 secondsPerSlot, uint256 genesisTime, address lidoLocator)",
       "error AddressCannotBeSame()",
       "error AddressCannotBeZero()",
@@ -4456,7 +4456,7 @@
       "function submitReportData(tuple(uint256 consensusVersion, uint256 refSlot, uint256 requestsCount, uint256 dataFormat, bytes data) data, uint256 contractVersion)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": [
+    "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -4465,7 +4465,7 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": [
+    "eth:0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function isDepositable() view returns (bool)",
       "function implementation() view returns (address)",
@@ -4474,10 +4474,10 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
-    "0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4": [
+    "eth:0xB18BB767638Bca324d158B7C7189e1a28aeB9EB4": [
       "constructor(address _singleton)"
     ],
-    "0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc": [
+    "eth:0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
       "function apps(bytes32, bytes32) view returns (address)",
       "function isDepositable() view returns (bool)",
@@ -4487,7 +4487,7 @@
       "event ProxyDeposit(address sender, uint256 value)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
-    "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f": [
+    "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f": [
       "constructor()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -4497,7 +4497,7 @@
       "function proxy_getIsOssified() view returns (bool)",
       "function proxy_upgradeTo(address newImplementation, bytes setupCalldata)"
     ],
-    "0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09": [
+    "eth:0xbf05A929c3D7885a6aeAd833a992dA6E5ac23b09": [
       "constructor(address _admin, address[] _configManagers)",
       "error EmptyValue(string key)",
       "error ValueDoesntExist(string key)",
@@ -4526,7 +4526,7 @@
       "function unset(string _key)",
       "function update(string _key, bytes _value)"
     ],
-    "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb": [
+    "eth:0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb": [
       "function getScriptExecutor(bytes _script) view returns (address)",
       "function hasInitialized() view returns (bool)",
       "function REGISTRY_ADD_EXECUTOR_ROLE() view returns (bytes32)",
@@ -4551,7 +4551,7 @@
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
     ],
-    "0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb": [
+    "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error NotAdmin()",
       "error ProxyIsOssified()",
@@ -4567,7 +4567,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
-    "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766": [
+    "eth:0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766": [
       "constructor()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)",
@@ -4608,7 +4608,7 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
-    "0xCa14076A3cec95448BaD179cc19B351A4204B88B": [
+    "eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -4647,7 +4647,7 @@
       "function revokeUpgradeGovernor(address account)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd": [
+    "eth:0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd": [
       "constructor(address _lido, address _treasury)",
       "error InvalidContractVersionIncrement()",
       "error LidoZeroAddress()",
@@ -4668,7 +4668,7 @@
       "function recoverERC721(address _token, uint256 _tokenId)",
       "function withdrawWithdrawals(uint256 _amount)"
     ],
-    "0xD15a672319Cf0352560eE76d9e89eAB0889046D3": [
+    "eth:0xD15a672319Cf0352560eE76d9e89eAB0889046D3": [
       "constructor(address _admin, address _treasury, address _stETH, uint256 _totalCoverSharesBurnt, uint256 _totalNonCoverSharesBurnt)",
       "error AppAuthLidoFailed()",
       "error BurnAmountExceedsActual(uint256 requestedAmount, uint256 actualAmount)",
@@ -4711,7 +4711,7 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": [
+    "eth:0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": [
       "constructor(address messenger_, address wstETH_, address accountingOracle_, address tokenRateOracle_, uint32 l2GasLimitForPushingTokenRate_)",
       "error ErrorUnauthorizedMessenger()",
       "error ErrorWrongCrossDomainSender()",
@@ -4730,7 +4730,7 @@
       "function pushTokenRate()",
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
     ],
-    "0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288": [
+    "eth:0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288": [
       "constructor(uint256 slotsPerEpoch, uint256 secondsPerSlot, uint256 genesisTime, uint256 epochsPerFrame, uint256 fastLaneLengthSlots, address admin, address reportProcessor)",
       "error AddressCannotBeZero()",
       "error AdminCannotBeZero()",
@@ -4802,7 +4802,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateInitialEpoch(uint256 initialEpoch)"
     ],
-    "0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": [
+    "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -4822,7 +4822,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -4871,7 +4871,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": [
+    "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -4891,7 +4891,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_)"
     ],
-    "0xE42C659Dc09109566720EA8b2De186c2Be7D94D9": [
+    "eth:0xE42C659Dc09109566720EA8b2De186c2Be7D94D9": [
       "constructor(address _wstETH, string _name, string _symbol)",
       "error AdminZeroAddress()",
       "error ApprovalToOwner()",
@@ -5021,7 +5021,7 @@
       "function unfinalizedRequestNumber() view returns (uint256)",
       "function unfinalizedStETH() view returns (uint256)"
     ],
-    "0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823": [
+    "eth:0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823": [
       "constructor(address initialOwner_, address lido_)",
       "error ErrorAddExistedObserver()",
       "error ErrorBadObserverInterface()",
@@ -5049,7 +5049,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0xFdDf38947aFB03C621C71b06C9C70bce73f12999": [
+    "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error NotAdmin()",
       "error ProxyIsOssified()",
@@ -5065,7 +5065,7 @@
       "function proxy__upgradeTo(address newImplementation_)",
       "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
     ],
-    "0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": [
+    "eth:0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD": [
       "constructor(address _lido, address _depositContract, address _stakingRouter, uint256 _pauseIntentValidityPeriodBlocks, uint256 _maxOperatorsPerUnvetting)",
       "error DepositInactiveModule()",
       "error DepositNoQuorum()",

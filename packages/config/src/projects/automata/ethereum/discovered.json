@@ -2,7 +2,7 @@
   "name": "automata",
   "chain": "ethereum",
   "blockNumber": 22208279,
-  "configHash": "0x4835f67953b40bb2d30622cb638342a8411cfc87f32afe9a790fbab523004b9a",
+  "configHash": "0xb8155e2037746878979ad340c4a37fd5a5e829847090531ad1be2b4e9dc24d85",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -827,7 +827,7 @@
     }
   ],
   "abis": {
-    "0x00bd00c5C7F60e222D9CB8040270Ba929241A280": [
+    "eth:0x00bd00c5C7F60e222D9CB8040270Ba929241A280": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -837,10 +837,10 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x03eC1C43434E2f910A2fb984906cd2470fdb39c8": [
+    "eth:0x03eC1C43434E2f910A2fb984906cd2470fdb39c8": [
       "constructor(address _singleton)"
     ],
-    "0x06Be6cB1bDaFa97662F629383B32E75aD46b312A": [
+    "eth:0x06Be6cB1bDaFa97662F629383B32E75aD46b312A": [
       "constructor()",
       "event Initialized(uint8 version)",
       "event OptimismMintableERC20Created(address indexed localToken, address indexed remoteToken, address deployer)",
@@ -853,7 +853,7 @@
       "function initialize(address _bridge)",
       "function version() view returns (string)"
     ],
-    "0x08c5DCDD5e46d31CC1591ee15b084663507597f3": [
+    "eth:0x08c5DCDD5e46d31CC1591ee15b084663507597f3": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -863,7 +863,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2": [
+    "eth:0x24574dbF51a36b8ffaAf07B3B44eC0a261731fB2": [
       "constructor()",
       "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
       "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
@@ -881,7 +881,7 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x2705B4628552F8F9E5f39DBb5a3Ec47B20cf6EA3": [
+    "eth:0x2705B4628552F8F9E5f39DBb5a3Ec47B20cf6EA3": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
       "event Initialized(uint8 version)",
@@ -929,7 +929,7 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() pure returns (string)"
     ],
-    "0x387422038358EE160aC57Dcd7aF73F9CC9401749": [
+    "eth:0x387422038358EE160aC57Dcd7aF73F9CC9401749": [
       "constructor()",
       "error BadTarget()",
       "error CallPaused()",
@@ -973,7 +973,7 @@
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1021,7 +1021,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3": [
+    "eth:0x5206FAA5f1686697188FAe8e6347eAc5575Ed6e3": [
       "constructor()",
       "error BondTooLow(uint256 balance, uint256 required)",
       "error ChallengeExists()",
@@ -1063,7 +1063,7 @@
       "function version() view returns (string)",
       "function withdraw()"
     ],
-    "0x5Bf18b3c88b0B04BDC2C8F0c55362D14aCFB2168": [
+    "eth:0x5Bf18b3c88b0B04BDC2C8F0c55362D14aCFB2168": [
       "constructor()",
       "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
       "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
@@ -1098,10 +1098,10 @@
       "function systemConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x5E2FC552288857cfE709C398Ecac448314dE1320": [
+    "eth:0x5E2FC552288857cfE709C398Ecac448314dE1320": [
       "constructor(address _singleton)"
     ],
-    "0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00": [
+    "eth:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1111,7 +1111,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x7617f4a55d62b9EE49578D9C90593e58E607415F": [
+    "eth:0x7617f4a55d62b9EE49578D9C90593e58E607415F": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addressManager() view returns (address)",
@@ -1132,10 +1132,10 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "0x825C858149F1E775a0f4Aeb172037B970bE7B736": [
+    "eth:0x825C858149F1E775a0f4Aeb172037B970bE7B736": [
       "constructor(address _addressManager, string _implementationName)"
     ],
-    "0x8486fB8acCE33702EAd543D234e904eDfB35E220": [
+    "eth:0x8486fB8acCE33702EAd543D234e904eDfB35E220": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
       "event Initialized(uint8 version)",
@@ -1150,7 +1150,7 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
-    "0xa74b7baF04867E62B7824268e96144E503A23666": [
+    "eth:0xa74b7baF04867E62B7824268e96144E503A23666": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1160,7 +1160,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xD52ba64CBE1e3B44167f810622fBef36bE24d95c": [
+    "eth:0xD52ba64CBE1e3B44167f810622fBef36bE24d95c": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1170,7 +1170,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1219,7 +1219,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdbf381984c4515Fe3285D3C55fDfb3054C52c261": [
+    "eth:0xdbf381984c4515Fe3285D3C55fDfb3054C52c261": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1229,7 +1229,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xDf87154Ed6cF332931b70014bA3d9dF423074FfF": [
+    "eth:0xDf87154Ed6cF332931b70014bA3d9dF423074FfF": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1239,7 +1239,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5": [
+    "eth:0xE639919b92AB6DD238aEACc6F2A8d6e355D17bd5": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -1247,7 +1247,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2": [
+    "eth:0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2": [
       "constructor()",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
       "event Initialized(uint8 version)",
@@ -1279,7 +1279,7 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6": [
+    "eth:0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6": [
       "event AddressSet(string indexed name, address newAddress, address oldAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function getAddress(string _name) view returns (address)",
@@ -1288,7 +1288,7 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xf31575705C047eC4D3Eb05F0917B9aA404179e3A": [
+    "eth:0xf31575705C047eC4D3Eb05F0917B9aA404179e3A": [
       "constructor()",
       "event Initialized(uint8 version)",
       "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",

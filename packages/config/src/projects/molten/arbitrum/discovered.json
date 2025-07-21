@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 355930087,
-  "configHash": "0x541049d8dc723e0542d850757b8a11078d540dd8ea9339772662ecc67172bbd0",
+  "configHash": "0x134add4c53b3931ed14197a3f07acc2a55e7281aea1ef287961b4158c1c813b6",
   "entries": [
     {
       "address": "arb1:0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",
@@ -1322,7 +1322,7 @@
     }
   ],
   "abis": {
-    "0x0686dc9F334F8C0f0a9646f48775aa002757AFFE": [
+    "arb1:0x0686dc9F334F8C0f0a9646f48775aa002757AFFE": [
       "error NotOwner(address sender, address owner)",
       "event Bisected(uint64 indexed challengeIndex, bytes32 indexed challengeRoot, uint256 challengedSegmentStart, uint256 challengedSegmentLength, bytes32[] chainHashes)",
       "event ChallengeEnded(uint64 indexed challengeIndex, uint8 kind)",
@@ -1349,14 +1349,14 @@
       "function timeout(uint64 challengeIndex)",
       "function totalChallengesCreated() view returns (uint64)"
     ],
-    "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0": [
+    "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
     ],
-    "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2": [
+    "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1367,7 +1367,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x1A484E3f74984d29EBC39909535D45896502a3E7": [
+    "arb1:0x1A484E3f74984d29EBC39909535D45896502a3E7": [
       "constructor()",
       "event CertVerified(bytes32 indexed certHash)",
       "function BASIC_CONSTRAINTS_OID() view returns (bytes32)",
@@ -1384,7 +1384,7 @@
       "function verifyCACert(bytes cert, bytes32 parentCertHash) returns (bytes32)",
       "function verifyClientCert(bytes cert, bytes32 parentCertHash) returns (tuple(bool ca, uint64 notAfter, int64 maxPathLen, bytes32 subjectHash, bytes pubKey))"
     ],
-    "0x20C6be2A0429A82a7bF113905a29d36CF6753B10": [
+    "arb1:0x20C6be2A0429A82a7bF113905a29d36CF6753B10": [
       "constructor()",
       "event Initialized(uint8 version)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -1405,7 +1405,7 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x235000876bd58336C802B3546Fc0250f285fCc79": [
+    "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1416,7 +1416,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f": [
+    "arb1:0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
       "function getEndMachineHash(uint8 status, bytes32 globalStateHash) pure returns (bytes32)",
       "function getStartMachineHash(bytes32 globalStateHash, bytes32 wasmModuleRoot) pure returns (bytes32)",
@@ -1426,7 +1426,7 @@
       "function proverMath() view returns (address)",
       "function proverMem() view returns (address)"
     ],
-    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+    "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -1476,7 +1476,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x481863c96f949F5E13932ec2F65470C0CF83808d": [
+    "arb1:0x481863c96f949F5E13932ec2F65470C0CF83808d": [
       "constructor(uint256 _maxDataSize, address reader4844_, bool _isUsingFeeToken)",
       "error AlreadyInit()",
       "error AlreadyValidDASKeyset(bytes32)",
@@ -1559,7 +1559,7 @@
       "function totalDelayedMessagesRead() view returns (uint256)",
       "function updateRollupAddress()"
     ],
-    "0x4f82B5de97Ad3690ee319878083503178Fd8E0B9": [
+    "arb1:0x4f82B5de97Ad3690ee319878083503178Fd8E0B9": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event NodeConfirmed(uint64 indexed nodeNum, bytes32 blockHash, bytes32 sendRoot)",
@@ -1648,16 +1648,16 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
-    "0x59CDE86f1a538a7a2329269d3704CA302DF23736": [
+    "arb1:0x59CDE86f1a538a7a2329269d3704CA302DF23736": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80": [
+    "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc": [
+    "arb1:0x652F65f950b71d7aD04AffB1725F43786ed5f6Cc": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
       "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
       "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
@@ -1681,7 +1681,7 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
-    "0x69523d25E25e5c78d828Df90459b75F189D40Cf7": [
+    "arb1:0x69523d25E25e5c78d828Df90459b75F189D40Cf7": [
       "constructor(address _ecdsaVerifier, address _router)",
       "function P256_VERIFIER() view returns (address)",
       "function pccsRouter() view returns (address)",
@@ -1689,10 +1689,10 @@
       "function verifyQuote(tuple(uint16 version, bytes2 attestationKeyType, bytes4 teeType, bytes2 qeSvn, bytes2 pceSvn, bytes16 qeVendorId, bytes20 userData) header, bytes rawQuote) view returns (bool success, bytes output)",
       "function verifyZkOutput(bytes outputBytes) view returns (bool success, bytes output)"
     ],
-    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
+    "arb1:0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
       "constructor(address _singleton)"
     ],
-    "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3": [
+    "arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3": [
       "constructor(address _espressoSGXTEEVerifier, address _espressoNitroTEEVerifier)",
       "error InvalidSignature()",
       "error UnsupportedTeeType()",
@@ -1712,7 +1712,7 @@
       "function transferOwnership(address newOwner)",
       "function verify(bytes signature, bytes32 userDataHash, uint8 teeType) view returns (bool)"
     ],
-    "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1": [
+    "arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1723,12 +1723,12 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8": [
+    "arb1:0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8": [
       "function BLOBSTREAM() view returns (address)",
       "function CELESTIA_MESSAGE_HEADER_FLAG() view returns (bytes1)",
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x7DD439Ec22c91b0703EE7d80175fd8d5319906A1": [
+    "arb1:0x7DD439Ec22c91b0703EE7d80175fd8d5319906A1": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
       "error CallNotAllowed()",
       "error CallTargetNotAllowed(address target)",
@@ -1774,10 +1774,10 @@
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
       "function updateRollupAddress(address _rollup)"
     ],
-    "0x7E67B50d510929610f840fb09707feA01b8E457B": [
+    "arb1:0x7E67B50d510929610f840fb09707feA01b8E457B": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0x8522769aEF1A87bE45530E0C84834BCce38CA9Bd": [
+    "arb1:0x8522769aEF1A87bE45530E0C84834BCce38CA9Bd": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event NodeConfirmed(uint64 indexed nodeNum, bytes32 blockHash, bytes32 sendRoot)",
@@ -1863,7 +1863,7 @@
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
     ],
-    "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238": [
+    "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -1874,7 +1874,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x922db00d292477AD99Ef8A0c41101a664Ee79D2b": [
+    "arb1:0x922db00d292477AD99Ef8A0c41101a664Ee79D2b": [
       "event DefaultGatewayUpdated(address newDefaultGateway)",
       "event GatewaySet(address indexed l1Token, address indexed gateway)",
       "event TransferRouted(address indexed token, address indexed _userFrom, address indexed _userTo, address gateway)",
@@ -1907,7 +1907,7 @@
       "function updateWhitelistSource(address newSource)",
       "function whitelist() view returns (address)"
     ],
-    "0x92ff91308F5f1036435f23c2F4F136Bb7475425d": [
+    "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1918,7 +1918,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9676D55Ccd46ce72235b16bA645008D1D3350B14": [
+    "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1929,7 +1929,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9e83136d4B3AD04C766591EA51712F9aEa3194C0": [
+    "arb1:0x9e83136d4B3AD04C766591EA51712F9aEa3194C0": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
       "function checkDecidableNextNode(address rollup) view returns (uint8)",
       "function findNodeConflict(address rollup, uint64 node1, uint64 node2, uint256 maxDepth) view returns (tuple(uint8 ty, uint64 node1, uint64 node2))",
@@ -1942,13 +1942,13 @@
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
     ],
-    "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF": [
+    "arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B": [
+    "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1959,7 +1959,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xbFfd05964F6d7AE4B55eB8A7086d88EEEcbF5f76": [
+    "arb1:0xbFfd05964F6d7AE4B55eB8A7086d88EEEcbF5f76": [
       "constructor(uint256 _maxDataSize)",
       "error AmountTooLarge(uint256 amount)",
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -1998,7 +1998,7 @@
       "function unpause()",
       "function unsafeCreateRetryableTicket(address to, uint256 l2CallValue, uint256 maxSubmissionCost, address excessFeeRefundAddress, address callValueRefundAddress, uint256 gasLimit, uint256 maxFeePerGas, uint256 tokenTotalFeeAmount, bytes data) returns (uint256)"
     ],
-    "0xCa2F31F3C6553c2FD9897f7AA464406a431959A9": [
+    "arb1:0xCa2F31F3C6553c2FD9897f7AA464406a431959A9": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
       "error BadPostUpgradeInit()",
@@ -2036,7 +2036,7 @@
       "function updateRollupAddress()",
       "function updateSendRoot(bytes32 root, bytes32 l2BlockHash)"
     ],
-    "0xE1d32C985825562edAa906fAC39295370Db72195": [
+    "arb1:0xE1d32C985825562edAa906fAC39295370Db72195": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -2047,10 +2047,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xe3b13e7b160aE4b799A7B3F9877316e717706291": [
+    "arb1:0xe3b13e7b160aE4b799A7B3F9877316e717706291": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
-    "0xEA25045bC30ceE23A280c51020F0bBb78781A297": [
+    "arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297": [
       "constructor(bytes32 enclaveHash, address _quoteVerifier)",
       "error FailedToParseEnclaveReport()",
       "error InvalidDataLength()",
@@ -2081,7 +2081,7 @@
       "function transferOwnership(address newOwner)",
       "function verify(bytes rawQuote, bytes32 reportDataHash) view returns (tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData))"
     ],
-    "0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421": [
+    "arb1:0xf2bCB26dbb571EBC82CFAe6453AeF0DE90d93421": [
       "constructor()",
       "error AlreadyInit()",
       "error HadZeroInit()",
@@ -2095,7 +2095,7 @@
       "function rollupInitialized(uint256 chainId, string chainConfig)",
       "function updateRollupAddress()"
     ],
-    "0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5": [
+    "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5": [
       "constructor(bytes32 enclaveHash, address certManager)",
       "error InvalidAWSEnclaveHash()",
       "event AWSEnclaveHashSet(bytes32 enclaveHash, bool valid)",

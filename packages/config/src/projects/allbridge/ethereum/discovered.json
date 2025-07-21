@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 22593366,
-  "configHash": "0x41f335bdaa71d6f9c40b014907267119ab9db3efc17656f6ba5a06ab41883aea",
+  "configHash": "0x765b7ef32df88ff59e7f03948fd9e99bc43636003691cc3fcc7251155fb7a80f",
   "entries": [
     {
       "address": "eth:0x01a494079DCB715f622340301463cE50cd69A4D0",
@@ -379,7 +379,7 @@
     }
   ],
   "abis": {
-    "0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": [
+    "eth:0x0BdF6139F2841A7856Ca154D851182C52F5b96e0": [
       "constructor(uint256 chainId_, uint256 chainPrecision)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function chainData(uint256 chainId) view returns (uint128 price, uint128 gasPrice)",
@@ -395,7 +395,7 @@
       "function setPrice(uint256 chainId_, uint128 price_)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": [
+    "eth:0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA": [
       "constructor(uint256 chainId_, bytes32 otherChainIds_, address gasOracle_, address primaryValidator_, address[] validators)",
       "event MessageReceived(bytes32 indexed message)",
       "event MessageSent(bytes32 indexed message)",
@@ -420,7 +420,7 @@
       "function transferOwnership(address newOwner)",
       "function withdrawGasTokens(uint256 amount)"
     ],
-    "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": [
+    "eth:0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": [
       "constructor(uint256 chainId_, uint256 chainPrecision_, address allbridgeMessenger_, address wormholeMessenger_, address gasOracle_)",
       "event BridgingFeeFromTokens(uint256 gas)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -465,7 +465,7 @@
       "function withdrawBridgingFeeInTokens(address token)",
       "function withdrawGasTokens(uint256 amount)"
     ],
-    "0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D": [
+    "eth:0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D": [
       "constructor(address router_, uint256 a_, address token_, uint16 feeShareBP_, uint256 balanceRatioMinBP_, string lpName, string lpSymbol)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Deposit(address indexed user, uint256 amount)",
@@ -524,7 +524,7 @@
       "function vUsdBalance() view returns (uint256)",
       "function withdraw(uint256 amountLp)"
     ],
-    "0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": [
+    "eth:0x7f02294f065A605C8D21D9812b8d1De7E5E1da74": [
       "constructor(uint256 chainId_, bytes32 otherChainIds_, address wormhole_, uint8 commitmentLevel_, address gasOracle_)",
       "event MessageReceived(bytes32 indexed message, uint64 sequence)",
       "event MessageSent(bytes32 indexed message, uint64 sequence)",
@@ -548,7 +548,7 @@
       "function transferOwnership(address newOwner)",
       "function withdrawGasTokens(uint256 amount)"
     ],
-    "0xA314330482f325D38A83B492EF6B006224a3bea9": [
+    "eth:0xA314330482f325D38A83B492EF6B006224a3bea9": [
       "constructor(uint8 _chainId, address _allbridgeMessenger, address _wormholeMessenger, address _gasOracle)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Received(address, uint256)",
@@ -583,7 +583,7 @@
       "function withdrawGasTokens(uint256 amount)",
       "function wormholeMessenger() view returns (address)"
     ],
-    "0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d": [
+    "eth:0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d": [
       "constructor(address router_, uint256 a_, address token_, uint16 feeShareBP_, uint256 balanceRatioMinBP_, string lpName, string lpSymbol)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Deposit(address indexed user, uint256 amount)",
@@ -642,7 +642,7 @@
       "function vUsdBalance() view returns (uint256)",
       "function withdraw(uint256 amountLp)"
     ],
-    "0xBBbD1BbB4f9b936C3604906D7592A644071dE884": [
+    "eth:0xBBbD1BbB4f9b936C3604906D7592A644071dE884": [
       "constructor(address feeCollector_, address admin_, address validator_, address feeOracle_, address unlockSigner_)",
       "event Received(address indexed recipient, address token, uint256 amount, uint128 indexed lockId, bytes4 source)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
@@ -678,7 +678,7 @@
       "function unlockSigner() view returns (address)",
       "function validator() view returns (address)"
     ],
-    "0xC51397b75B783E31469bFaADE79913F3f82210d6": [
+    "eth:0xC51397b75B783E31469bFaADE79913F3f82210d6": [
       "constructor(uint256 chainId_, uint256 chainPrecision_, address tokenAddress, address cctpMessenger_, address cctpTransmitter_, address gasOracle_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event ReceivedExtraGas(address recipient, uint256 amount)",

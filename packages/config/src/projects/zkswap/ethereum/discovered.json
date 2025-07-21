@@ -2,7 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 22865800,
-  "configHash": "0x07f8e818a264dba84f317cb8621ecbb42fd341ae2688bca3fa3032010a9b020f",
+  "configHash": "0xeaa7a7cea5067e18818444a3f5c346a08427db6d98dbc8ebe04a3720b961648c",
   "entries": [
     {
       "name": "Governance",
@@ -255,7 +255,7 @@
     }
   ],
   "abis": {
-    "0x02ecef526f806f06357659fFD14834fe82Ef4B04": [
+    "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
       "function getNoticePeriod() returns (uint256)",
@@ -270,7 +270,7 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
-    "0x27C229937745d697d28FC7853d1bFEA7331Edf56": [
+    "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
       "function getNoticePeriod() returns (uint256)",
@@ -285,7 +285,7 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
-    "0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": [
+    "eth:0x2c543eBd91DAB7Be40eDB671D48CeDF35A75e157": [
       "event BlockCommit(uint32 indexed blockNumber)",
       "event BlockVerification(uint32 indexed blockNumber)",
       "event BlocksRevert(uint32 indexed totalBlocksVerified, uint32 indexed totalBlocksCommitted)",
@@ -335,7 +335,7 @@
       "function zkSyncCommitBlockAddress() view returns (address)",
       "function zkSyncExitAddress() view returns (address)"
     ],
-    "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": [
+    "eth:0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f": [
       "event BlockCommit(uint32 indexed blockNumber)",
       "event BlockVerification(uint32 indexed blockNumber)",
       "event BlocksRevert(uint32 indexed totalBlocksVerified, uint32 indexed totalBlocksCommitted)",
@@ -397,7 +397,7 @@
       "function zkSyncCommitBlockAddress() view returns (address)",
       "function zkSyncExitAddress() view returns (address)"
     ],
-    "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": [
+    "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
       "function getNoticePeriod() returns (uint256)",
@@ -412,7 +412,7 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
-    "0x714B2D10210f2A3a7AA614F949259C87613689aB": [
+    "eth:0x714B2D10210f2A3a7AA614F949259C87613689aB": [
       "constructor(address _mainContract)",
       "event NewUpgradable(uint256 indexed versionId, address indexed upgradeable)",
       "event NoticePeriodStart(uint256 indexed versionId, address[] newTargets, uint256 noticePeriod)",
@@ -433,7 +433,7 @@
       "function upgradeStatus() view returns (uint8)",
       "function versionId() view returns (uint256)"
     ],
-    "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": [
+    "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
       "function getNoticePeriod() returns (uint256)",
@@ -448,7 +448,7 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
-    "0x961369d347EF7A6896BDD39cBE2B89e3911f521f": [
+    "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f": [
       "constructor(address target, bytes targetInitializationParameters)",
       "function getMaster() view returns (address master)",
       "function getNoticePeriod() returns (uint256)",
@@ -463,7 +463,7 @@
       "function upgradePreparationStarted()",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
-    "0x9d3fdf9b4782753d12f6262bf22B6322608962b8": [
+    "eth:0x9d3fdf9b4782753d12f6262bf22B6322608962b8": [
       "constructor()",
       "event NewGovernor(address newGovernor)",
       "event NewToken(address indexed token, uint16 indexed tokenId)",

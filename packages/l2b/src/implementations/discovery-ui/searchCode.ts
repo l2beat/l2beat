@@ -1,5 +1,5 @@
 import type { ConfigReader, DiscoveryPaths } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { getAllCode, getCode } from './getCode'
 import type { ApiCodeSearchResponse } from './types'
 
@@ -8,7 +8,7 @@ export function searchCode(
   configReader: ConfigReader,
   project: string,
   searchTerm: string,
-  address?: string,
+  address?: ChainSpecificAddress,
 ): ApiCodeSearchResponse {
   const code =
     address === undefined

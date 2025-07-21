@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 22187530,
-  "configHash": "0x8a2c0635d6acc1cc56443173ada1d9d96fd7250f1f5d10831a4c4152cecadfc2",
+  "configHash": "0x6a0d19487d139f81a239bf907239f74fd17863576d730203323edb945eb21d36",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -244,10 +244,10 @@
     }
   ],
   "abis": {
-    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
+    "eth:0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -366,7 +366,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78": [
+    "eth:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -377,13 +377,13 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5": [
+    "eth:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x78253E2E6120164bd826668A4C96Db20f78A94c9": [
+    "eth:0x78253E2E6120164bd826668A4C96Db20f78A94c9": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -393,7 +393,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xAce9269EaC3419937093154dea0AD44C36Df6963": [
+    "eth:0xAce9269EaC3419937093154dea0AD44C36Df6963": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
       "error EmptyURLNotAllowed()",

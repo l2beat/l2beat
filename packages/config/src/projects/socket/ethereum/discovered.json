@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 22844606,
-  "configHash": "0xa8ce6905b4af1a677b0b54d5f092769cb6c48f7c38b9523f3c92b7ff8a06971d",
+  "configHash": "0xd38e9c53b1775bb619aefecfa164c450b440ce77e1acd2928e28d4bfea9f134b",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
@@ -2017,7 +2017,7 @@
     }
   ],
   "abis": {
-    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": [
+    "eth:0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2060,7 +2060,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x053407DFA30267f6332f3c94a9e9F704A55e62CD": [
+    "eth:0x053407DFA30267f6332f3c94a9e9F704A55e62CD": [
       "constructor(uint32 chainSlug_, address checkpointManager_, address fxRoot_, address owner_, address socket_, address signatureVerifier_)",
       "error AlreadyInitialized()",
       "error FeesNotEnough()",
@@ -2127,7 +2127,7 @@
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": [
+    "eth:0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": [
       "constructor(uint32 chainSlug_, uint256 receiveGasLimit_, address owner_, address socket_, address crossDomainMessenger_, address signatureVerifier_)",
       "error AlreadyInitialized()",
       "error FeesNotEnough()",
@@ -2190,7 +2190,7 @@
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a": [
+    "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a": [
       "constructor(address owner_, uint256 maxAllowedPacketLength_)",
       "error InvalidCapacitorType()",
       "error InvalidTokenAddress()",
@@ -2215,7 +2215,7 @@
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
     ],
-    "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": [
+    "eth:0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2258,7 +2258,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": [
+    "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": [
       "constructor(uint32 chainSlug_, uint256 receiveGasLimit_, address owner_, address socket_, address crossDomainMessenger_, address signatureVerifier_)",
       "error AlreadyInitialized()",
       "error FeesNotEnough()",
@@ -2321,7 +2321,7 @@
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB": [
+    "eth:0x1417f50f864ba75D5c6cb4CD14479c48Ce5166fB": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2364,7 +2364,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97": [
+    "eth:0x1Ca284BaA0023b6bB0950C93ee6d1f2068de2D97": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2407,7 +2407,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x1D18263107a138C7fb0De65b4a78d193ff9664c1": [
+    "eth:0x1D18263107a138C7fb0De65b4a78d193ff9664c1": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2450,7 +2450,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": [
+    "eth:0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2493,10 +2493,10 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": [
+    "eth:0x246d38588b16Dd877c558b245e6D5a711C649fCF": [
       "constructor(address _masterCopy)"
     ],
-    "0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5": [
+    "eth:0x25d35C8796c9dcD3857abE90D802FC17b1FB55A5": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2539,7 +2539,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2": [
+    "eth:0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2582,7 +2582,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A": [
+    "eth:0x26Cf1Dc84694E04277F2Fe4C13E43597c6010C2A": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2625,7 +2625,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd": [
+    "eth:0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2668,7 +2668,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x35d4D9bc79B0a543934b1769304B90d752691caD": [
+    "eth:0x35d4D9bc79B0a543934b1769304B90d752691caD": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2711,7 +2711,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x383a4EdB30E896b8d2d044Be87079D45c0EA7065": [
+    "eth:0x383a4EdB30E896b8d2d044Be87079D45c0EA7065": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2754,7 +2754,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": [
+    "eth:0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": [
       "constructor(address token_)",
       "error AmountOutsideLimit()",
       "error ConnectorUnavailable()",
@@ -2788,7 +2788,7 @@
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
-    "0x412Ac6044401cDf1e9833B7056c14C74AA593D37": [
+    "eth:0x412Ac6044401cDf1e9833B7056c14C74AA593D37": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2831,7 +2831,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x43b718Aa5e678b08615CA984cbe25f690B085b32": [
+    "eth:0x43b718Aa5e678b08615CA984cbe25f690B085b32": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2874,7 +2874,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x4421461239aE746127C13a19177656124433dC60": [
+    "eth:0x4421461239aE746127C13a19177656124433dC60": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2917,7 +2917,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": [
+    "eth:0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -2960,7 +2960,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x4F18853BE8C01d375889c02D61A77B476d3E59dd": [
+    "eth:0x4F18853BE8C01d375889c02D61A77B476d3E59dd": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3003,7 +3003,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x54e60fef7c7f2f747900452D4151aF976EaeAb76": [
+    "eth:0x54e60fef7c7f2f747900452D4151aF976EaeAb76": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3046,7 +3046,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x58CDCf55f2c8660674F17561334F6370cbaDeEF8": [
+    "eth:0x58CDCf55f2c8660674F17561334F6370cbaDeEF8": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3089,7 +3089,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85": [
+    "eth:0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3132,7 +3132,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x5C71beE4a6b0D617D8c3d107D331292741789E27": [
+    "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27": [
       "constructor(address owner_)",
       "error InvalidTokenAddress()",
       "error NoPermit(bytes32 role)",
@@ -3153,7 +3153,7 @@
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
     ],
-    "0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C": [
+    "eth:0x5cC25cc25bE29d18472E76b2a19975aA1a37Bd5C": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3196,7 +3196,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": [
+    "eth:0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": [
       "constructor(address token_)",
       "error AmountOutsideLimit()",
       "error ConnectorUnavailable()",
@@ -3230,7 +3230,7 @@
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
-    "0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50": [
+    "eth:0x5F18C54e4E10287414A47925a24Ea3A8Cf4A9F50": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3273,7 +3273,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142": [
+    "eth:0x613e87BE1cd75dEBC5e6e56a2AF2fED84162C142": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3316,7 +3316,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc": [
+    "eth:0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3360,7 +3360,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x64dF894688c5052BeAdC35371cF69151Ebc5D658": [
+    "eth:0x64dF894688c5052BeAdC35371cF69151Ebc5D658": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3403,7 +3403,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": [
+    "eth:0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": [
       "constructor(address token_)",
       "error AmountOutsideLimit()",
       "error ConnectorUnavailable()",
@@ -3436,7 +3436,7 @@
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
-    "0x755cD5d147036E11c76F1EeffDd94794fC265f0d": [
+    "eth:0x755cD5d147036E11c76F1EeffDd94794fC265f0d": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3479,7 +3479,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x76624ff43D610F64177Bb9c194A2503642e9B803": [
+    "eth:0x76624ff43D610F64177Bb9c194A2503642e9B803": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3522,7 +3522,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": [
+    "eth:0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": [
       "constructor(address token_)",
       "error AmountOutsideLimit()",
       "error ConnectorUnavailable()",
@@ -3556,7 +3556,7 @@
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
-    "0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91": [
+    "eth:0x7E1d17b580dD4F89037DB331430eAEe8B8e50c91": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3599,7 +3599,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x8180EcCC825b692ef65FF099a0A387743788bf78": [
+    "eth:0x8180EcCC825b692ef65FF099a0A387743788bf78": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3642,7 +3642,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9": [
+    "eth:0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3685,7 +3685,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x943AC2775928318653e91d350574436A1b9b16f9": [
+    "eth:0x943AC2775928318653e91d350574436A1b9b16f9": [
       "constructor(uint32 chainSlug_, address hasher_, address capacitorFactory_, address owner_, string version_)",
       "error ErrInSourceValidation()",
       "error InvalidCapacitorAddress()",
@@ -3763,7 +3763,7 @@
       "function useSiblingSwitchboard(uint32 siblingChainSlug_, address siblingSwitchboard_)",
       "function version() view returns (bytes32)"
     ],
-    "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": [
+    "eth:0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3806,7 +3806,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C": [
+    "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C": [
       "constructor(address owner_, uint32 chainSlug_, address socket_, address signatureVerifier_)",
       "error FeesTooHigh()",
       "error InsufficientFees()",
@@ -3873,7 +3873,7 @@
       "function withdrawSwitchboardFees(uint32 siblingChainSlug_, address switchboard_, uint128 amount_)",
       "function withdrawTransmissionFees(uint32 siblingChainSlug_, uint128 amount_)"
     ],
-    "0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8": [
+    "eth:0xA2bc0DaA9BF98820632bCa0663a9616f6bC180f8": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3916,7 +3916,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013": [
+    "eth:0xA6Ae29Ce5c38DFE0Dd95B716748ac747f31E4013": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -3959,7 +3959,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xa83B4006c16DAeAb2718294696c0122519195137": [
+    "eth:0xa83B4006c16DAeAb2718294696c0122519195137": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4002,7 +4002,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35": [
+    "eth:0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4045,7 +4045,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856": [
+    "eth:0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4088,7 +4088,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": [
+    "eth:0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4131,7 +4131,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xC6cfb996A7CFEB89813A68CD13942CD75553032b": [
+    "eth:0xC6cfb996A7CFEB89813A68CD13942CD75553032b": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4175,10 +4175,10 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13": [
+    "eth:0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13": [
       "constructor(address _singleton)"
     ],
-    "0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD": [
+    "eth:0xCa1AaCB6E16E7d50c6442f9eD6faEe5dDa638DaD": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4221,7 +4221,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF": [
+    "eth:0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4264,7 +4264,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8": [
+    "eth:0xd1228C6CB94a670F30D5ACb1340a9d96aC30e6A8": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4307,7 +4307,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36": [
+    "eth:0xd4964E8A405D396d94825f4d0f5dEDD8741C1d36": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4350,7 +4350,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": [
+    "eth:0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": [
       "constructor(address token_)",
       "error AmountOutsideLimit()",
       "error ConnectorUnavailable()",
@@ -4384,7 +4384,7 @@
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
-    "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": [
+    "eth:0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": [
       "constructor(address owner_, address socket_, uint32 chainSlug_, uint256 timeoutInSeconds_, address signatureVerifier_)",
       "error AlreadyAttested()",
       "error InvalidNonce()",
@@ -4453,7 +4453,7 @@
       "function updateSibling(uint32 siblingChainSlug_, address siblingSwitchboard_)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -4502,7 +4502,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdb161cdc9c11892922F7121a409b196f3b00e640": [
+    "eth:0xdb161cdc9c11892922F7121a409b196f3b00e640": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4545,7 +4545,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xDE1617Ddb7C8A250A409D986930001985cfad76F": [
+    "eth:0xDE1617Ddb7C8A250A409D986930001985cfad76F": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4589,7 +4589,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e": [
+    "eth:0xdf34E61B6e7B9e348713d528fEB019d504d38c1e": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4632,7 +4632,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": [
+    "eth:0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": [
       "constructor(uint32 chainSlug_, address inbox_, address owner_, address socket_, address bridge_, address outbox_, address signatureVerifier_)",
       "error AlreadyInitialized()",
       "error FeesNotEnough()",
@@ -4700,7 +4700,7 @@
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0xDf9Fa2b420689384E8DD55a706262DC0ED37020F": [
+    "eth:0xDf9Fa2b420689384E8DD55a706262DC0ED37020F": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4745,7 +4745,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": [
+    "eth:0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4788,7 +4788,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xE3E96892D30E0ee1a8131BAf87c891201F7137bf": [
+    "eth:0xE3E96892D30E0ee1a8131BAf87c891201F7137bf": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4831,7 +4831,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF": [
+    "eth:0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4874,7 +4874,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": [
+    "eth:0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",
@@ -4917,7 +4917,7 @@
       "function updateHook(address hook_, bool approve_)",
       "function validConnectors(address) view returns (bool)"
     ],
-    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": [
+    "eth:0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": [
       "constructor(address token_)",
       "error AmountOutsideLimit()",
       "error ConnectorUnavailable()",
@@ -4951,7 +4951,7 @@
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
-    "0xeD037aFBffC65a94E9CC592947E851FB2f730341": [
+    "eth:0xeD037aFBffC65a94E9CC592947E851FB2f730341": [
       "constructor(address owner_, uint32 chainSlug_, address socket_, address signatureVerifier_)",
       "error InvalidNonce()",
       "error InvalidTokenAddress()",
@@ -4990,10 +4990,10 @@
       "function socket__() view returns (address)",
       "function withdrawFees(address withdrawTo_)"
     ],
-    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": [
+    "eth:0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": [
       "constructor(address _singleton)"
     ],
-    "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98": [
+    "eth:0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98": [
       "constructor(address owner_)",
       "error InvalidSigLength()",
       "error InvalidTokenAddress()",
@@ -5015,7 +5015,7 @@
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function revokeRole(bytes32 role_, address revokee_)"
     ],
-    "0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9": [
+    "eth:0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9": [
       "constructor(address token_)",
       "error CannotTransferOrExecuteOnBridgeContracts()",
       "error InsufficientMsgValue()",

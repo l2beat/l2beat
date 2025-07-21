@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "ethereum",
   "blockNumber": 22895905,
-  "configHash": "0xf2d7369cea2cddf868fdbb8cc4616b4cbd3c372d444147823ddc072d72f72ba0",
+  "configHash": "0x42c1375ef4adc20f46ca456718adc1138e9a8956fe62509b9aab261c71dcf404",
   "entries": [
     {
       "name": "Permit2",
@@ -271,7 +271,7 @@
     }
   ],
   "abis": {
-    "0x000000000022D473030F116dDEE9F6B43aC78BA3": [
+    "eth:0x000000000022D473030F116dDEE9F6B43aC78BA3": [
       "error AllowanceExpired(uint256 deadline)",
       "error ExcessiveInvalidation()",
       "error InsufficientAllowance(uint256 amount)",
@@ -304,7 +304,7 @@
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
     ],
-    "0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75": [
+    "eth:0x15a7cA97D1ed168fB34a4055CEFa2E2f9Bdb6C75": [
       "constructor(address _spoke, address _feeRecipient, address _feeSigner, address _xerc20Module, address _owner)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -344,10 +344,10 @@
       "function updateFeeSigner(address _feeSigner)",
       "function xerc20Module() view returns (address)"
     ],
-    "0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": [
+    "eth:0xa02a88F0bbD47045001Bd460Ad186C30F9a974d6": [
       "constructor(address _singleton)"
     ],
-    "0xd18C19169e7C87e7d84f27AD412a56C5D743D560": [
+    "eth:0xd18C19169e7C87e7d84f27AD412a56C5D743D560": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -466,7 +466,7 @@
       "function watchtower() view returns (address)",
       "function withdraw(address _asset, uint256 _amount)"
     ],
-    "0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4": [
+    "eth:0xD1daF260951B8d350a4AeD5C80d74Fd7298C93F4": [
       "constructor(address _spoke)",
       "error XERC20Module_HandleBurnStrategy_InsufficientBurningLimit(address _asset, uint256 _limit, uint256 _amount)",
       "error XERC20Module_HandleStrategy_OnlySpoke()",
@@ -479,7 +479,7 @@
       "function mintable(address _user, address _asset) view returns (uint256 _amount)",
       "function spoke() view returns (address)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

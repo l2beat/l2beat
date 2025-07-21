@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 
@@ -12,18 +12,18 @@ describe(gatherReachableAddresses.name, () => {
     // 5 -> 6 -> 7
     //      + -> 8 -> 9
     // 10 -> 11 -> 12
-    const address1 = EthereumAddress.from('0x1')
-    const address2 = EthereumAddress.from('0x2')
-    const address3 = EthereumAddress.from('0x3')
-    const address4 = EthereumAddress.from('0x4')
-    const address5 = EthereumAddress.from('0x5')
-    const address6 = EthereumAddress.from('0x6')
-    const address7 = EthereumAddress.from('0x7')
-    const address8 = EthereumAddress.from('0x8')
-    const address9 = EthereumAddress.from('0x9')
-    const address10 = EthereumAddress.from('0xa')
-    const address11 = EthereumAddress.from('0xb')
-    const address12 = EthereumAddress.from('0xc')
+    const address1 = ChainSpecificAddress.random()
+    const address2 = ChainSpecificAddress.random()
+    const address3 = ChainSpecificAddress.random()
+    const address4 = ChainSpecificAddress.random()
+    const address5 = ChainSpecificAddress.random()
+    const address6 = ChainSpecificAddress.random()
+    const address7 = ChainSpecificAddress.random()
+    const address8 = ChainSpecificAddress.random()
+    const address9 = ChainSpecificAddress.random()
+    const address10 = ChainSpecificAddress.random()
+    const address11 = ChainSpecificAddress.random()
+    const address12 = ChainSpecificAddress.random()
     const addressRelatives = {
       [address1.toString()]: [address2],
       [address2.toString()]: [],

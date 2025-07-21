@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "blockNumber": 4745686,
-  "configHash": "0x31f7f43b2f6d8f61b798272cb98cec43ae574ad138c45ec01020f660d933532e",
+  "configHash": "0x01130c806553efa3aa5adf297c386ad60dd38352573855ea3723bb8ddab375fa",
   "entries": [
     {
       "name": "MantaProxyAdmin",
@@ -296,7 +296,7 @@
     }
   ],
   "abis": {
-    "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": [
+    "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -307,7 +307,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x44a65dc12865A1e5249b45b4868f32b0E37168FF": [
+    "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -318,7 +318,7 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x50efC7f1290479cb879473512D89fDC80B726211": [
+    "manta:0x50efC7f1290479cb879473512D89fDC80B726211": [
       "constructor(address _zkLink)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -341,7 +341,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c": [
+    "manta:0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c": [
       "constructor(address _zkSync)",
       "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
       "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
@@ -359,7 +359,7 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": [
+    "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -367,7 +367,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": [
+    "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -375,7 +375,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585": [
+    "manta:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585": [
       "constructor(bool _isEthGasToken)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -457,5 +457,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
+  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
 }

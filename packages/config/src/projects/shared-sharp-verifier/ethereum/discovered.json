@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 22472206,
-  "configHash": "0xa076c513791e6a2424478d9ed2dc3237d48b51c79d293548f575e43923999578",
+  "configHash": "0xb1a123234a45d77f212a3fbd08adf12ca823cc2d4a2efc73c8ac4a512d6caf50",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",
@@ -1895,16 +1895,16 @@
     }
   ],
   "abis": {
-    "0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": [
+    "eth:0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x032e5cDb729Ce94638ACA9e82A22688109B43046": [
+    "eth:0x032e5cDb729Ce94638ACA9e82A22688109B43046": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": [
+    "eth:0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": [
+    "eth:0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -1921,10 +1921,10 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": [
+    "eth:0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": [
+    "eth:0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -1941,13 +1941,13 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": [
+    "eth:0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
+    "eth:0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": [
       "constructor(address _singleton)"
     ],
-    "0x243682b9A01455ac671c97D8dE686EBd4EE25791": [
+    "eth:0x243682b9A01455ac671c97D8dE686EBd4EE25791": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -1964,18 +1964,18 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": [
+    "eth:0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400": [
       "event LogGas(string name, uint256 val)",
       "function hasRegisteredFact() view returns (bool)",
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyFRI(uint256[] proof, uint256[] friQueue, uint256 evaluationPoint, uint256 friStepSize, uint256 expectedRoot)"
     ],
-    "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": [
+    "eth:0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd": [
       "function hasRegisteredFact() view returns (bool)",
       "function isValid(bytes32 fact) view returns (bool)",
       "function verifyMerkle(uint256[] merkleView, uint256[] initialMerkleQueue, uint256 height, uint256 expectedRoot)"
     ],
-    "0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": [
+    "eth:0x3d57526c1C8D63fa2A8704487Df65e9000166c8E": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -1992,7 +1992,7 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x42AF9498647Be47A256C9cc8278eE94473Cb7771": [
+    "eth:0x42AF9498647Be47A256C9cc8278eE94473Cb7771": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -2009,7 +2009,7 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": [
+    "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -2035,16 +2035,16 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": [
+    "eth:0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x53daC4aB94955f35657463252a7b25F343A14451": [
+    "eth:0x53daC4aB94955f35657463252a7b25F343A14451": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": [
+    "eth:0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515": [
       "function getCompiledProgram() pure returns (uint256[794])"
     ],
-    "0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1": [
+    "eth:0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -2061,10 +2061,10 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": [
+    "eth:0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": [
+    "eth:0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": [
       "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 simpleBootloaderProgramHash, uint256 applicativeBootloaderProgramHash, uint256 hashedSupportedCairoVerifiers, address referenceVerifier, uint256 referralDurationSeconds)",
       "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
       "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
@@ -2081,7 +2081,7 @@
       "function referralExpirationTime() view returns (uint256)",
       "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
-    "0xAaAe0edF6536de72E7163D293518c40011179f8a": [
+    "eth:0xAaAe0edF6536de72E7163D293518c40011179f8a": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -2098,13 +2098,13 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": [
+    "eth:0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": [
+    "eth:0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458": [
+    "eth:0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458": [
       "function CALL_PROXY_VERSION() view returns (string)",
       "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
       "function callProxyImplementation() view returns (address _implementation)",
@@ -2112,7 +2112,7 @@
       "function isFrozen() pure returns (bool)",
       "function isValid(bytes32 fact) view returns (bool)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -2161,10 +2161,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": [
+    "eth:0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xe155154845950573EC5F518fC0D4950AB71303ff": [
+    "eth:0xe155154845950573EC5F518fC0D4950AB71303ff": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
       "event LogBool(bool val)",
       "event LogDebug(uint256 val)",
@@ -2181,10 +2181,10 @@
       "function getLayoutInfo() pure returns (uint256 publicMemoryOffset, uint256 selectedBuiltins)",
       "function verifyProofExternal(uint256[] proofParams, uint256[] proof, uint256[] publicInput)"
     ],
-    "0xE3929Ea107238Ce59d64A3cE497f12b57846B716": [
+    "eth:0xE3929Ea107238Ce59d64A3cE497f12b57846B716": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": [
+    "eth:0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460": [
       "event LogMemoryPageFactContinuous(bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "event LogMemoryPageFactRegular(bytes32 factHash, uint256 memoryHash, uint256 prod)",
       "function hasRegisteredFact() view returns (bool)",
@@ -2193,10 +2193,10 @@
       "function registerContinuousPageBatch(tuple(uint256 startAddr, uint256[] values, uint256 z, uint256 alpha, uint256 prime)[] memoryPageEntries)",
       "function registerRegularMemoryPage(uint256[] memoryPairs, uint256 z, uint256 alpha, uint256 prime) returns (bytes32 factHash, uint256 memoryHash, uint256 prod)"
     ],
-    "0xedFfEA8296945aA91FC035Aefc8c33D737dBc573": [
+    "eth:0xedFfEA8296945aA91FC035Aefc8c33D737dBc573": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ],
-    "0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc": [
+    "eth:0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc": [
       "function compute(uint256 x) pure returns (uint256 result)"
     ]
   },

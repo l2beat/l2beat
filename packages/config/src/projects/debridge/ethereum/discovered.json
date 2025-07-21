@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "blockNumber": 19531527,
-  "configHash": "0x2e8ed10ec6ed936c3c7e46272f74f2eff84a2c0a2f6534a95365dce8634aca0c",
+  "configHash": "0xe251156abc78df2f9ac8459c95dcb41b505c4bd9c2866225d24414a8191ae626",
   "entries": [
     {
       "address": "eth:0x1c0720B124e7251e881a0fbCfe259d085C59f205",
@@ -520,7 +520,7 @@
     }
   ],
   "abis": {
-    "0x37a52ddb753c924f8C914de65ef00b5210Caa83C": [
+    "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C": [
       "error AdminBadRole()",
       "error EmptyTreasuryAddress()",
       "error EthTransferFailed()",
@@ -551,7 +551,7 @@
       "function withdrawFee(address _tokenAddress)",
       "function withdrawNativeFee()"
     ],
-    "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": [
+    "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -562,7 +562,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491": [
+    "eth:0x4c7CA8fcFFE77281A8B81D4580CFf8257d785491": [
       "error AdminBadRole()",
       "error DeBridgeGateBadRole()",
       "error DeployedAlready()",
@@ -592,10 +592,10 @@
       "function tokenImplementation() view returns (address)",
       "function version() pure returns (uint256)"
     ],
-    "0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": [
+    "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5": [
       "constructor(address _singleton)"
     ],
-    "0x797161BCC625155D2302251404ccB93c2632658e": [
+    "eth:0x797161BCC625155D2302251404ccB93c2632658e": [
       "constructor()",
       "error AdminBadRole()",
       "error AssetAlreadyExist()",
@@ -705,7 +705,7 @@
       "function wethGate() view returns (address)",
       "function withdrawFee(bytes32 _debridgeId)"
     ],
-    "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": [
+    "eth:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -716,7 +716,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824": [
+    "eth:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -727,7 +727,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": [
+    "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -738,10 +738,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xa0D6062Be29710c666aE850395Ac1A2AeCd14885": [
+    "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885": [
       "constructor(address _singleton)"
     ],
-    "0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": [
+    "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": [
       "error CallFailed()",
       "error CallProxyBadRole()",
       "error DeBridgeGateBadRole()",
@@ -767,7 +767,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function version() pure returns (uint256)"
     ],
-    "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636": [
+    "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -778,7 +778,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B": [
+    "eth:0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B": [
       "error AdminBadRole()",
       "error MinterBadRole()",
       "error PauserBadRole()",
@@ -822,7 +822,7 @@
       "function unpause()",
       "function updateName(string _newName, string _newSymbol)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -871,7 +871,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xE4427af3555CD9303D728C491364FAdFDD7494Fe": [
+    "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -882,7 +882,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": [
+    "eth:0xfE7De3c1e1BD252C67667B56347cABFC6df08dF4": [
       "error AdminBadRole()",
       "error DeBridgeGateBadRole()",
       "error DuplicateSignatures()",

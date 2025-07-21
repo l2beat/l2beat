@@ -22,7 +22,7 @@ import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../components/BasicDaTable'
-import { publicSystemsColumns } from './Columns'
+import { publicSystemsColumns } from './columns'
 
 export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
   const table = useTable({

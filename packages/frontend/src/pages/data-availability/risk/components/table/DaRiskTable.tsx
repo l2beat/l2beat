@@ -9,7 +9,7 @@ import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../components/BasicDaTable'
-import { customColumns, publicColumns } from './Columns'
+import { customColumns, publicColumns } from './columns'
 
 export function DaRiskTable({
   items,

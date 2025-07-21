@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xa61151c563a84c2439891fb6bcc5a5f7c73aa0fe
+
+# Diff at Wed, 16 Jul 2025 15:01:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99f4c3c49844de20b37b0c4c9c35d616989eef7d block: 22765709
+- current block number: 22765709
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22765709 (main branch discovery), not current.
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof.
+      values.version:
+-        "c3131379c4bf618f2135c29547049b46923f7dca"
++        "eth:0xc3131379C4bf618f2135c29547049B46923F7Dca"
+    }
+```
+
 Generated with discovered.json: 0x56ae3c75274c24bb879e367b74714528ca27eee1
 
 # Diff at Mon, 14 Jul 2025 12:47:15 GMT:

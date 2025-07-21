@@ -2,7 +2,7 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
-  "configHash": "0x971aee5b6889fc947470ebe35ab66294d5afb228ecc5900ff3b286d2879f3c17",
+  "configHash": "0x2a6c34014eb5118e3b502cae1270fb3801fbc1d3f5ec15738334e49400d0fb3c",
   "entries": [
     {
       "address": "eth:0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
@@ -355,7 +355,7 @@
     }
   ],
   "abis": {
-    "0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": [
+    "eth:0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8": [
       "event AddLiquidity(address indexed provider, uint256[] tokenAmounts, uint256[] fees, uint256 invariant, uint256 lpTokenSupply)",
       "event FlashLoan(address indexed receiver, uint8 tokenIndex, uint256 amount, uint256 amountFee, uint256 protocolFee)",
       "event NewAdminFee(uint256 newAdminFee)",
@@ -404,7 +404,7 @@
       "function unpause()",
       "function withdrawAdminFees()"
     ],
-    "0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F": [
+    "eth:0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
@@ -427,7 +427,7 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x2796317b0fF8538F253012862c06787Adfb8cEb6": [
+    "eth:0x2796317b0fF8538F253012862c06787Adfb8cEb6": [
       "constructor(address initialLogic, address initialAdmin, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -437,7 +437,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x31fe393815822edacBd81C2262467402199EFD0D": [
+    "eth:0x31fe393815822edacBd81C2262467402199EFD0D": [
       "event Paused(address account)",
       "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
       "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
@@ -488,7 +488,7 @@
       "function withdrawAndRemove(address to, address token, uint256 amount, uint256 fee, address pool, uint8 swapTokenIndex, uint256 swapMinAmount, uint256 swapDeadline, bytes32 kappa)",
       "function withdrawFees(address token, address to)"
     ],
-    "0x5A5fFf6F753d7C11A56A52FE47a177a87e431655": [
+    "eth:0x5A5fFf6F753d7C11A56A52FE47a177a87e431655": [
       "event AddLiquidity(address indexed provider, uint256[] tokenAmounts, uint256[] fees, uint256 invariant, uint256 lpTokenSupply)",
       "event FlashLoan(address indexed receiver, uint8 tokenIndex, uint256 amount, uint256 amountFee, uint256 protocolFee)",
       "event NewAdminFee(uint256 newAdminFee)",
@@ -537,7 +537,7 @@
       "function unpause()",
       "function withdrawAdminFees()"
     ],
-    "0x647489df0673E17dB3163c47d5233EBB6F5cAc70": [
+    "eth:0x647489df0673E17dB3163c47d5233EBB6F5cAc70": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
@@ -571,7 +571,7 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
     ],
-    "0x6571d6be3d8460CF5F7d6711Cd9961860029D85F": [
+    "eth:0x6571d6be3d8460CF5F7d6711Cd9961860029D85F": [
       "constructor(address _wethAddress, address _baseSwap, address _synapseBridge)",
       "function WETH_ADDRESS() view returns (address)",
       "function baseTokens(uint256) view returns (address)",
@@ -585,10 +585,10 @@
       "function zapAndDeposit(address to, uint256 chainId, address token, uint256[] liquidityAmounts, uint256 minToMint, uint256 deadline)",
       "function zapAndDepositAndSwap(address to, uint256 chainId, address token, uint256[] liquidityAmounts, uint256 minToMint, uint256 liqDeadline, uint8 tokenIndexFrom, uint8 tokenIndexTo, uint256 minDy, uint256 swapDeadline)"
     ],
-    "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": [
+    "eth:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55": [
       "constructor(address _masterCopy)"
     ],
-    "0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3": [
+    "eth:0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Transfer(address indexed from, address indexed to, uint256 value)",
@@ -611,7 +611,7 @@
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2": [
+    "eth:0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2": [
       "constructor(address owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -623,7 +623,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
+    "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
       "event AddDelegate(address indexed safe, address delegate)",
       "event DeleteAllowance(address indexed safe, address delegate, address token)",
       "event ExecuteAllowanceTransfer(address indexed safe, address delegate, address token, address to, uint96 value, uint16 nonce)",
@@ -651,7 +651,7 @@
       "function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)",
       "function tokens(address, address, uint256) view returns (address)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

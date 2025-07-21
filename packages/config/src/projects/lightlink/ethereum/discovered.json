@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 22208513,
-  "configHash": "0x39c5d6ceab76c1ce1a7e34739c142eac1f5311436cd87254ac80959eb6cf536d",
+  "configHash": "0x2033f8a75dc71ddb50adba75ab282061b8a1ba59381493dbe69232c64de152c3",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -632,7 +632,7 @@
     }
   ],
   "abis": {
-    "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [
+    "eth:0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [
       "constructor(address _logic, bytes _data)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -640,7 +640,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": [
+    "eth:0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04": [
       "constructor(address _logic, bytes _data)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -648,7 +648,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": [
+    "eth:0x3345702FeA1669Efa1e085610A62F89d159Bc0c8": [
       "constructor()",
       "event ConfirmTransaction(uint256 indexed txIndex, address indexed owner)",
       "event ExecuteTransaction(uint256 indexed txIndex, address indexed owner)",
@@ -671,7 +671,7 @@
       "function submitTransaction(address _target, uint256 _value, bytes _data)",
       "function transactions(uint256) view returns (bool executed, address target, bytes data, uint256 value, uint256 numConfirmations)"
     ],
-    "0x38104856c02f83f4048c0FBA3D7613042FEAc988": [
+    "eth:0x38104856c02f83f4048c0FBA3D7613042FEAc988": [
       "constructor()",
       "error InvalidInitialization()",
       "error NotInitializing()",
@@ -703,7 +703,7 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD": [
+    "eth:0x3B1ADfe78B9B4107c47267AE97e2a91b1D8811fD": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -759,7 +759,7 @@
       "function unpause()",
       "function version() pure returns (string)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -807,7 +807,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B": [
+    "eth:0x4Fc6a6A2e3864709ae6AdCf29280dA01c95Aa10B": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
@@ -871,19 +871,19 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x624631881655a310adcF0d1336658Cc977609b72": [
+    "eth:0x624631881655a310adcF0d1336658Cc977609b72": [
       "constructor(address _logic, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9": [
+    "eth:0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9": [
       "constructor(address _logic, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": [
+    "eth:0x65E325A22c0F519041db69F5693EbAc3b4AE71bE": [
       "constructor(address _logic, bytes _data)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -891,7 +891,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x670E1C42A7A5962348138110E3ede3F422c10e2f": [
+    "eth:0x670E1C42A7A5962348138110E3ede3F422c10e2f": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -901,7 +901,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x79B3E839333a74137e78b0DaF84FC12512a8c704": [
+    "eth:0x79B3E839333a74137e78b0DaF84FC12512a8c704": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
@@ -943,10 +943,10 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": [
+    "eth:0x8D43A0d17F9883ED0b2Ddf89761d3cc74a5fC6C7": [
       "constructor(address _singleton)"
     ],
-    "0x9EC8231132d6722D463077a7cCe1432c3766d9A2": [
+    "eth:0x9EC8231132d6722D463077a7cCe1432c3766d9A2": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
@@ -972,7 +972,7 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": [
+    "eth:0xA30eAe91b9184Bb5e14b86Dd10d463F67c699C38": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -982,7 +982,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
+    "eth:0xa8372d6FF00d48A25BaA1AF16d6a86C936708f4E": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event DepositToken(bytes message)",
@@ -1011,7 +1011,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE": [
+    "eth:0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1021,7 +1021,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E": [
+    "eth:0xC48F0e7C3c4E385ae84B4f678A0482E00208cf3E": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event ConsensusPowerThresholdModified(uint256 _amount)",
@@ -1049,7 +1049,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function validValidator(address _validator) view returns (bool)"
     ],
-    "0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": [
+    "eth:0xc7a7199bb5F0aA7B54eca90fC793Ec83E5683b0c": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -1059,7 +1059,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48": [
+    "eth:0xCE7Ab4b8471A3119aabB63101b7C7B999464Fc48": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -1098,12 +1098,12 @@
       "function paused() view returns (bool)",
       "function version() view returns (string)"
     ],
-    "0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2": [
+    "eth:0xEe055Dddc462e35521005e1b00FcEFd78E1fc9E2": [
       "function toBlockHeader(bytes rlpHeader) pure returns (bytes32 parentHash, bytes32 sha3Uncles, address coinbase, bytes32 stateRoot, bytes32 transactionsRoot, bytes32 receiptsRoot, uint256 difficulty, uint256 number, uint256 gasLimit, uint256 gasUsed, uint256 timestamp, uint256 nonce)",
       "function toDepositTx(bytes rlpTx) pure returns (uint256 chainId, uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)",
       "function toLegacyTx(bytes rlpTx) pure returns (uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)"
     ],
-    "0xeFE38Bd58ADDf23eFab1FFa16312030384929289": [
+    "eth:0xeFE38Bd58ADDf23eFab1FFa16312030384929289": [
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",

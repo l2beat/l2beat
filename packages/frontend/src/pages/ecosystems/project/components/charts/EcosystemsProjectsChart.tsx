@@ -35,7 +35,7 @@ export function EcosystemsProjectsChart({
     return {
       projectCount: {
         color: 'var(--ecosystem-primary)',
-        label: 'Project count',
+        label: 'Live project count',
         indicatorType: {
           shape: 'line',
         },
@@ -106,7 +106,7 @@ function Header({
   return (
     <div className="mb-3 flex items-start justify-between">
       <div>
-        <div className="font-bold text-xl">Projects count</div>
+        <div className="font-bold text-xl">Live projects count</div>
         <EcosystemChartTimeRange range={range} />
       </div>
       <div className="text-right">
@@ -140,7 +140,7 @@ export function CustomTooltip({
             return (
               <div
                 key={entry.name}
-                className="flex items-center justify-between gap-x-1"
+                className="flex items-center justify-between gap-x-3"
               >
                 <span className="flex items-center gap-1">
                   <ChartDataIndicator
@@ -151,7 +151,7 @@ export function CustomTooltip({
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="whitespace-nowrap font-medium leading-none">
                   {entry.value}
                 </span>
               </div>

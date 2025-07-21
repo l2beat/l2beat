@@ -2,8 +2,13 @@
   "name": "worldcoin",
   "chain": "optimism",
   "blockNumber": 133912814,
-  "configHash": "0xd1343007b6961eba0ebcddb3cae53a965153440cafec4bf1a077bce6a02b3890",
+  "configHash": "0x87d1fa66681ea90788ba2615f4d480417e301c1385f6a2645371856ccd149ada",
   "entries": [
+    {
+      "address": "oeth:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "GnosisSafe",
       "address": "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
@@ -671,10 +676,10 @@
     }
   ],
   "abis": {
-    "0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [
+    "oeth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [
       "constructor(address _singleton)"
     ],
-    "0x11cA3127182f7583EfC416a8771BD4d11Fae4334": [
+    "oeth:0x11cA3127182f7583EfC416a8771BD4d11Fae4334": [
       "constructor()",
       "error CannotRenounceOwnership()",
       "error ExpiredRoot()",
@@ -708,20 +713,20 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(uint256 root, uint256 groupId, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof)"
     ],
-    "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
+    "oeth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
       "constructor(address _singleton)"
     ],
-    "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": [
+    "oeth:0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": [
       "error ProofInvalid()",
       "error PublicInputNotInField()",
       "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[4] input) view",
       "function verifyProof(uint256[8] proof, uint256[4] input) view"
     ],
-    "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": [
+    "oeth:0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": [
       "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
     ],
-    "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": [
+    "oeth:0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": [
       "constructor(uint8 _treeDepth)",
       "error CannotOverwriteRoot()",
       "error ExpiredRoot()",
@@ -745,22 +750,22 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
     ],
-    "0x57f928158C3EE7CDad1e4D8642503c4D0201f611": [
+    "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x59a0f98345f54bAB245A043488ECE7FCecD7B596": [
+    "oeth:0x59a0f98345f54bAB245A043488ECE7FCecD7B596": [
       "constructor(address _singleton)"
     ],
-    "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB": [
+    "oeth:0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB": [
       "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
     ],
-    "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
+    "oeth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
       "constructor(address _singleton)"
     ],
-    "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674": [
+    "oeth:0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674": [
       "error InvalidConfiguration()",
       "error InvalidGrant()",
       "function calculateId(uint256 timestamp) pure returns (uint256)",
@@ -769,7 +774,7 @@
       "function getAmount(uint256 grantId) pure returns (uint256)",
       "function getCurrentId() view returns (uint256)"
     ],
-    "0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": [
+    "oeth:0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d": [
       "constructor(address _worldIdRouter, uint256 _groupId, address _token, address _holder, address _grant)",
       "error AddressEmptyCode(address target)",
       "error AddressInsufficientBalance(address account)",
@@ -821,16 +826,16 @@
       "function transferOwnership(address newOwner)",
       "function worldIdRouter() view returns (address)"
     ],
-    "0x7f26A7572E8B877654eeDcBc4E573657619FA3CE": [
+    "oeth:0x7f26A7572E8B877654eeDcBc4E573657619FA3CE": [
       "constructor(address _singleton)"
     ],
-    "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a": [
+    "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xa3d93B74214B80760288091675688E1EaD7838F2": [
+    "oeth:0xa3d93B74214B80760288091675688E1EaD7838F2": [
       "error CannotRenounceOwnership()",
       "error ExpiredRoot()",
       "error ImplementationNotInitialized()",
@@ -892,14 +897,14 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
     ],
-    "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F": [
+    "oeth:0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F": [
       "error ProofInvalid()",
       "error PublicInputNotInField()",
       "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
     ],
-    "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb": [
+    "oeth:0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb": [
       "constructor()",
       "error CannotRenounceOwnership()",
       "error NoSuchVerifier()",
@@ -919,7 +924,7 @@
       "function transferOwnership(address newOwner)",
       "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
     ],
-    "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": [
+    "oeth:0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": [
       "constructor(uint8 _treeDepth)",
       "error CannotOverwriteRoot()",
       "error ExpiredRoot()",
@@ -943,13 +948,13 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
     ],
-    "0xb67ac19693fB89880Ca5873f6a890E865b259c26": [
+    "oeth:0xb67ac19693fB89880Ca5873f6a890E865b259c26": [
       "constructor(address _singleton)"
     ],
-    "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": [
+    "oeth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "oeth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -998,7 +1003,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1": [
+    "oeth:0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1": [
       "constructor(address _bridge, address _remoteToken, string _name, string _symbol)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Burn(address indexed account, uint256 amount)",
@@ -1026,13 +1031,13 @@
       "function transferFrom(address from, address to, uint256 amount) returns (bool)",
       "function version() view returns (string)"
     ],
-    "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": [
+    "oeth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c": [
       "constructor(address _singleton)"
     ],
-    "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": [
+    "oeth:0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A": [
       "constructor(address _singleton)"
     ],
-    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+    "oeth:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -1082,7 +1087,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86": [
+    "oeth:0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86": [
       "constructor()",
       "error CannotRenounceOwnership()",
       "error NoSuchVerifier()",
@@ -1106,5 +1111,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xfe73dfac4ef1ce302db2326de6bbf77a99941a428072319c3375841493b27d8e"
+  "permissionsConfigHash": "0x65d23ab8366ecc75855efe8f0d98cb0fe7bb5e76af655d612a546a0c79c3a197"
 }

@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "PC",
+      "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272"
+    },
+    {
       "symbol": "RDO",
       "address": "0x57240C3E140f98abe315CA8E0213c7a77F34A334"
     },

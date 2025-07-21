@@ -2,7 +2,7 @@
   "name": "hop",
   "chain": "ethereum",
   "blockNumber": 19531595,
-  "configHash": "0x8f8fb81cd5c974a48eda3b0ecd1fd152a97eb8d05934d6f84436632f5b814033",
+  "configHash": "0xca72e1d9dba4fd93d568355fd67908ae86a6e525a8b6ad4855c4b9e9de2b7686",
   "entries": [
     {
       "name": "Hop Multisig",
@@ -349,10 +349,10 @@
     }
   ],
   "abis": {
-    "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": [
+    "eth:0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": [
       "constructor(address _masterCopy)"
     ],
-    "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2": [
+    "eth:0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -415,7 +415,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7": [
+    "eth:0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7": [
       "constructor(address admin_, uint256 delay_)",
       "event CancelTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
       "event ExecuteTransaction(bytes32 indexed txHash, address indexed target, uint256 value, string signature, bytes data, uint256 eta)",
@@ -437,7 +437,7 @@
       "function setDelay(uint256 delay_)",
       "function setPendingAdmin(address pendingAdmin_)"
     ],
-    "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
+    "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -482,7 +482,7 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a": [
+    "eth:0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -545,7 +545,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1": [
+    "eth:0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -608,7 +608,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6": [
+    "eth:0x3E4a3a4796d16c0Cd582C382691998f7c06420B6": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -671,7 +671,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0x893246FACF345c99e4235E5A7bbEE7404c988b96": [
+    "eth:0x893246FACF345c99e4235E5A7bbEE7404c988b96": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -734,7 +734,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0x914f986a44AcB623A277d6Bd17368171FCbe4273": [
+    "eth:0x914f986a44AcB623A277d6Bd17368171FCbe4273": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance, address _migrator)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -800,7 +800,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0xb8901acB165ed027E32754E0FFe830802919727f": [
+    "eth:0xb8901acB165ed027E32754E0FFe830802919727f": [
       "constructor(address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -862,7 +862,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849": [
+    "eth:0xb98454270065A31D71Bf635F6F7Ee6A518dFb849": [
       "constructor(address _l1CanonicalToken, address[] bonders, address _governance)",
       "event BonderAdded(address indexed newBonder)",
       "event BonderRemoved(address indexed previousBonder)",
@@ -925,7 +925,7 @@
       "function unstake(uint256 amount)",
       "function withdraw(address recipient, uint256 amount, bytes32 transferNonce, uint256 bonderFee, uint256 amountOutMin, uint256 deadline, bytes32 rootHash, uint256 transferRootTotalAmount, uint256 transferIdTreeIndex, bytes32[] siblings, uint256 totalLeaves)"
     ],
-    "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48": [
+    "eth:0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48": [
       "constructor(address _token, address _timelock)",
       "event ProposalCanceled(uint256 proposalId)",
       "event ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 startBlock, uint256 endBlock, string description)",
@@ -965,7 +965,7 @@
       "function votingDelay() pure returns (uint256)",
       "function votingPeriod() pure returns (uint256)"
     ],
-    "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a": [
+    "eth:0xeeA8422a08258e73c139Fc32a25e10410c14bd7a": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors)",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
       "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",

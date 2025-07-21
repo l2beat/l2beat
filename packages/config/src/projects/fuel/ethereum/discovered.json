@@ -2,7 +2,7 @@
   "name": "fuel",
   "chain": "ethereum",
   "blockNumber": 21630407,
-  "configHash": "0xabfdea4584a777a7c77010c90ba20d534144e2f0d51194d740f7523800e1d411",
+  "configHash": "0x95b68e6fde20dde4ddb8fd8b2c485733a021261d94ad1b51e206b62e1ff623e2",
   "entries": [
     {
       "name": "Fuel Security Council",
@@ -409,7 +409,7 @@
     }
   ],
   "abis": {
-    "0x2C4df10a82CF077122eD99573acA6daCd76F2E67": [
+    "eth:0x2C4df10a82CF077122eD99573acA6daCd76F2E67": [
       "constructor(uint256 _depositLimitGlobal, uint256 _rateLimitDuration)",
       "error AlreadyRelayed()",
       "error AmountPrecisionIncompatibility()",
@@ -486,10 +486,10 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdrawalsPaused() view returns (bool)"
     ],
-    "0x32da601374b38154f05904B16F44A1911Aa6f314": [
+    "eth:0x32da601374b38154f05904B16F44A1911Aa6f314": [
       "constructor(address _singleton)"
     ],
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -537,10 +537,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc": [
+    "eth:0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc": [
       "constructor(address _singleton)"
     ],
-    "0x725B2b1a15D818E1f25c68be77816802e6036559": [
+    "eth:0x725B2b1a15D818E1f25c68be77816802e6036559": [
       "constructor(uint256 timeToFinalize, uint256 blocksPerCommitInterval, uint32 commitCooldown)",
       "error CannotRecommit()",
       "error CommitCooldownTooLarge()",
@@ -581,7 +581,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67": [
+    "eth:0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -589,7 +589,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf": [
+    "eth:0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -597,7 +597,7 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -646,7 +646,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab": [
+    "eth:0xdE2D792ca3C4d02DE3CE1cD1456d8D0990cC3fab": [
       "constructor()",
       "error BridgeFull()",
       "error CallerIsNotPortal()",
@@ -709,7 +709,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function whitelistRequired() view returns (bool)"
     ],
-    "0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130": [
+    "eth:0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",

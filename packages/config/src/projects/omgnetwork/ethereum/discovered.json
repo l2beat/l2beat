@@ -2,7 +2,7 @@
   "name": "omgnetwork",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0xb1f1e588e8c89344e307b23caca330f88e2bc8c5d0f1f82562bee86b69541bbb",
+  "configHash": "0x5c6e3612d6fbbc2d391da134d17aa994b9d19270909742215e73869ef18f8e43",
   "entries": [
     {
       "name": "Erc20Vault",
@@ -143,7 +143,7 @@
     }
   ],
   "abis": {
-    "0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": [
+    "eth:0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B": [
       "function depositVerifiers(uint256) view returns (address)",
       "function setDepositVerifier(address _verifier)",
       "function getEffectiveDepositVerifier() view returns (address)",
@@ -155,7 +155,7 @@
       "event DepositCreated(address indexed depositor, uint256 indexed blknum, address indexed token, uint256 amount)",
       "event SetDepositVerifierCalled(address nextDepositVerifier)"
     ],
-    "0x0D4C1222f5e839a911e2053860e45F18921D72ac": [
+    "eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac": [
       "function getVersion() view returns (string)",
       "function isChildChainActivated() view returns (bool)",
       "function getNextExit(uint256 vaultId, address token) view returns (uint256)",
@@ -204,7 +204,7 @@
       "event ExitGameRegistered(uint256 txType, address exitGameAddress, uint8 protocol)",
       "event VaultRegistered(uint256 vaultId, address vaultAddress)"
     ],
-    "0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": [
+    "eth:0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0": [
       "function depositVerifiers(uint256) view returns (address)",
       "function setDepositVerifier(address _verifier)",
       "function getEffectiveDepositVerifier() view returns (address)",
@@ -218,7 +218,7 @@
       "event DepositCreated(address indexed depositor, uint256 indexed blknum, address indexed token, uint256 amount)",
       "event SetDepositVerifierCalled(address nextDepositVerifier)"
     ],
-    "0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": [
+    "eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3": [
       "function standardExits(uint160[] exitIds) view returns (tuple(bool exitable, uint256 utxoPos, bytes32 outputId, address exitTarget, uint256 amount, uint256 bondSize)[])",
       "function updateStartStandardExitBondSize(uint128 newBondSize)",
       "function challengeInFlightExitOutputSpent(tuple(bytes inFlightTx, bytes inFlightTxInclusionProof, uint256 outputUtxoPos, bytes challengingTx, uint16 challengingTxInputIndex, bytes challengingTxWitness, bytes32 senderData) args)",

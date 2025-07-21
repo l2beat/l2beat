@@ -2,8 +2,13 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 40494132,
-  "configHash": "0x731c6787867e7590a41cd8a07a3e341f5c578faaa849743ed9966e50ec70521a",
+  "configHash": "0x371d8b32076639b4b43e89defc75544fd9ca4e42d870063c710aa6a309609e9b",
   "entries": [
+    {
+      "address": "gno:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "gno:0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
       "type": "EOA",
@@ -1003,7 +1008,7 @@
     }
   ],
   "abis": {
-    "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": [
+    "gno:0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": [
       "constructor(address hashi, address yaho_, uint256 sourceChainId)",
       "error CallFailed()",
       "error InvalidToChainId(uint256 chainId, uint256 expectedChainId)",
@@ -1018,7 +1023,7 @@
       "function executeMessages(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) returns (bytes[])",
       "function executed(uint256) view returns (bool)"
     ],
-    "0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": [
+    "gno:0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4": [
       "function mintingFinished() view returns (bool)",
       "function name() view returns (string)",
       "function approve(address _to, uint256 _value) returns (bool result)",
@@ -1066,7 +1071,7 @@
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Transfer(address indexed from, address indexed to, uint256 value)"
     ],
-    "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+    "gno:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address indexed handler)",
@@ -1115,7 +1120,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": [
+    "gno:0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92": [
       "constructor(string _suffix)",
       "event DailyLimitChanged(address indexed token, uint256 newLimit)",
       "event ExecutionDailyLimitChanged(address indexed token, uint256 newLimit)",
@@ -1187,7 +1192,7 @@
       "function withinExecutionLimit(address _token, uint256 _amount) view returns (bool)",
       "function withinLimit(address _token, uint256 _amount) view returns (bool)"
     ],
-    "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+    "gno:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address handler)",
@@ -1237,10 +1242,10 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x507A7777E6DbF4680951E63fB3753a20F2c37706": [
+    "gno:0x507A7777E6DbF4680951E63fB3753a20F2c37706": [
       "constructor(address _singleton)"
     ],
-    "0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": [
+    "gno:0x5dbC897aEf6B18394D845A922BF107FA98E3AC55": [
       "constructor(address _mediator, address _owner, address[] _rewardAddresses, uint256[2] _fees)",
       "event FeeUpdated(bytes32 feeType, address indexed token, uint256 fee)",
       "function FOREIGN_TO_HOME_FEE() view returns (bytes32)",
@@ -1259,7 +1264,7 @@
       "function setFee(bytes32 _feeType, address _token, uint256 _fee)",
       "function transferOwnership(address _newOwner)"
     ],
-    "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": [
+    "gno:0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED": [
       "constructor(address _bridge, address _owner, uint256 _gasLimit)",
       "function bridge() view returns (address)",
       "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
@@ -1276,7 +1281,7 @@
       "function setRequestGasLimit(uint256 _gasLimit)",
       "function transferOwnership(address _newOwner)"
     ],
-    "0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": [
+    "gno:0x694bEeB84f912d0951e88cFCf76900B7C728B5B5": [
       "function setExpectedThreshold(uint256 expectedThreshold_)",
       "function setYaho(address yaho_)",
       "function targetChainId() view returns (uint256)",
@@ -1300,7 +1305,7 @@
       "function setTargetAddress(address targetAddress_)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
-    "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": [
+    "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
       "function implementation() view returns (address)",
@@ -1310,7 +1315,7 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
-    "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": [
+    "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
       "function implementation() view returns (address)",
@@ -1320,13 +1325,13 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
-    "0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": [
+    "gno:0x77bcb57ba7037e39063f1567ce734452bbD7a5F0": [
       "constructor(address _singleton)"
     ],
-    "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": [
+    "gno:0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd": [
       "constructor(address _masterCopy)"
     ],
-    "0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8": [
+    "gno:0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8": [
       "constructor(tuple(bytes32 executionStateRoot, uint256 genesisTime, bytes32 genesisValidatorsRoot, address guardian, uint256 head, bytes32 header, bytes32 heliosProgramVkey, uint256 secondsPerSlot, uint256 slotsPerEpoch, uint256 slotsPerPeriod, uint256 sourceChainId, bytes32 syncCommitteeHash, address verifier) params)",
       "error HeaderRootAlreadySet(uint256 slot)",
       "error NextSyncCommitteeMismatch(bytes32 given, bytes32 expected)",
@@ -1359,7 +1364,7 @@
       "function verifier() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x9C63010F056E4692A44A510F2F5E8A44B94960Bf": [
+    "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf": [
       "constructor(address sp1HeliosAddress, uint256 sourceChainId, address sourceYaho)",
       "error ConflictingBlockHeader(uint256 blockNumber, bytes32 blockHash, bytes32 storedBlockHash)",
       "error ErrorParseReceipt()",
@@ -1381,7 +1386,7 @@
       "function storeBlockHeader(uint256 slot, uint256 blockNumber, bytes32[] blockNumberProof, bytes32 blockHash, bytes32[] blockHashProof)",
       "function verifyAndStoreDispatchedMessage(uint64 headerSlot, uint64 txSlot, bytes32[] receiptsRootProof, bytes32 receiptsRoot, bytes[] receiptProof, bytes txIndexRLPEncoded, uint256 logIndex)"
     ],
-    "0xA033535983d1aBcc2648af730EDCb198909903D7": [
+    "gno:0xA033535983d1aBcc2648af730EDCb198909903D7": [
       "function transactionHash() view returns (bytes32)",
       "function numMessagesSigned(bytes32 _message) view returns (uint256)",
       "function confirmInformation(bytes32 _messageId, bool _status, bytes _result)",
@@ -1447,7 +1452,7 @@
       "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
-    "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": [
+    "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
       "function implementation() view returns (address)",
@@ -1457,7 +1462,7 @@
       "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(uint256 version, address indexed implementation)"
     ],
-    "0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd": [
+    "gno:0xa5E60dbBAc6A65B654E5A14A5E357da3Fcf139dd": [
       "error InvalidProof()",
       "error ProofInvalid()",
       "error PublicInputNotInField()",
@@ -1470,7 +1475,7 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
-    "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
+    "gno:0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": [
       "error AdaptersDisagree(address adapterOne, address adapterTwo)",
       "error HashNotAvailableInAdapter(address adapter)",
       "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
@@ -1480,7 +1485,7 @@
       "function getHashFromAdapter(uint256 domain, uint256 id, address adapter) view returns (bytes32)",
       "function getHashesFromAdapters(uint256 domain, uint256 id, address[] adapters) view returns (bytes32[])"
     ],
-    "0xb056BFEdc397D427697a75E3ff115a0954de4791": [
+    "gno:0xb056BFEdc397D427697a75E3ff115a0954de4791": [
       "function validatorCount() view returns (uint256)",
       "function getBridgeValidatorsInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
       "function isInitialized() view returns (bool)",
@@ -1502,10 +1507,10 @@
       "event RequiredSignaturesChanged(uint256 requiredSignatures)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ],
-    "0xb1F43dc8B57562e7FA48157D73102a8e4a94975A": [
+    "gno:0xb1F43dc8B57562e7FA48157D73102a8e4a94975A": [
       "constructor(address _singleton)"
     ],
-    "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": [
+    "gno:0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": [
       "error InvalidMessage(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters) message)",
       "error InvalidThreshold(uint256 threshold, uint256 maxThreshold)",
       "error MessageHashNotFound(uint256 messageId)",
@@ -1524,7 +1529,7 @@
       "function getPendingMessageHash(uint256 messageId) view returns (bytes32)",
       "function relayMessagesToAdapters(tuple(uint256 nonce, uint256 targetChainId, uint256 threshold, address sender, address receiver, bytes data, address[] reporters, address[] adapters)[] messages) payable returns (bytes32[])"
     ],
-    "0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": [
+    "gno:0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286": [
       "constructor(address _owner)",
       "event ForwardingRuleUpdated(address token, address sender, address receiver, int256 lane)",
       "function destinationLane(address _token, address _sender, address _receiver) view returns (int256)",
@@ -1538,7 +1543,7 @@
       "function setTokenForwardingRule(address _token, bool _enable)",
       "function transferOwnership(address _newOwner)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "gno:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1587,7 +1592,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": [
+    "gno:0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2": [
       "constructor(address _owner, address _tokenImage)",
       "function deploy(string _name, string _symbol, uint8 _decimals, uint256 _chainId) returns (address)",
       "function getModuleInterfacesVersion() pure returns (uint64 major, uint64 minor, uint64 patch)",
@@ -1596,10 +1601,10 @@
       "function tokenImage() view returns (address)",
       "function transferOwnership(address _newOwner)"
     ],
-    "0xEF138856d0581641A57245Ee5CFfc9ceaA059623": [
+    "gno:0xEF138856d0581641A57245Ee5CFfc9ceaA059623": [
       "constructor(address _singleton)"
     ],
-    "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": [
+    "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": [
       "function upgradeTo(uint256 version, address implementation)",
       "function version() view returns (uint256)",
       "function implementation() view returns (address)",
@@ -1617,5 +1622,5 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x58dff7012d65eaf1326dc491b7dbf3bbec64413624723a3f2471674d82466c92"
+  "permissionsConfigHash": "0x052d6352604ac6ec6fb5a8a880a86ca59f07a26158fc68cb68187136537e8d03"
 }

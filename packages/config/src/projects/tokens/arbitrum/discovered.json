@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "arbitrum",
   "blockNumber": 356266883,
-  "configHash": "0xcce4c6266d1cfa53e60c8b650967943d9eccfa9f20127146da80f009917fb58b",
+  "configHash": "0xa6186a6135c321188e4eb4b573b6a66afcd380bb58ff72a8a9537845c4c6090e",
   "entries": [
     {
       "address": "arb1:0x4896F23FF83242D8D4EB5fA1dEdF8c57e9145949",
@@ -144,7 +144,7 @@
     }
   ],
   "abis": {
-    "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+    "arb1:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address indexed handler)",
@@ -193,7 +193,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x344278aff344d6fb960705dc18a4912221608472": [
+    "arb1:0x344278aff344d6fb960705dc18a4912221608472": [
       "constructor()",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -228,10 +228,10 @@
       "function setRequirements(address target, bytes4[] selectors, uint8[] groups)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e": [
+    "arb1:0x7843225BA488cf780A4Fe2c842B5dc2aBCf8A03e": [
       "constructor(address _singleton)"
     ],
-    "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": [
+    "arb1:0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": [
       "constructor(address _authority, address _trustedForwarder)",
       "error AddressEmptyCode(address target)",
       "error ECDSAInvalidSignature()",
@@ -306,13 +306,13 @@
       "function unpause()",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xa925C217e4c1C82Ee721eBD496d3863D5C2d829A": [
+    "arb1:0xa925C217e4c1C82Ee721eBD496d3863D5C2d829A": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xCBeb19549054CC0a6257A77736FC78C367216cE7": [
+    "arb1:0xCBeb19549054CC0a6257A77736FC78C367216cE7": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",

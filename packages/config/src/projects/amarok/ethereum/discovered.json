@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 22823809,
-  "configHash": "0x809b7c5a3b9e60e10e8676a6b09ab804d506822208a05d12af8fe6ffc1dd07bc",
+  "configHash": "0x03aeeefe5b09cde0800c4bd5fbdc0745aa4ba02a219065edb04fa1814f0c27c6",
   "entries": [
     {
       "address": "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -3125,7 +3125,7 @@
     }
   ],
   "abis": {
-    "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc": [
+    "eth:0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc": [
       "constructor(tuple(uint32 domain, uint32 mirrorDomain, address amb, address rootManager, address mirrorConnector, uint256 processGas, uint256 reserveGas, uint256 delayBlocks, address merkle, address watcherManager, uint256 minDisputeBlocks, uint256 disputeBlocks) _baseSpokeParams)",
       "error Connector__processMessage_notUsed()",
       "error MainnetSpokeConnector_finalize__DeprecatedInHubDomain()",
@@ -3254,7 +3254,7 @@
       "function watcherManager() view returns (address)",
       "function withdrawFunds(address _to)"
     ],
-    "0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d": [
+    "eth:0x086B5A16D7Bd6B2955fCC7d5F9AA2a1544b67e0d": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
       "error BaseConnextFacet__nonReentrant_reentrantCall()",
@@ -3308,7 +3308,7 @@
       "function routerAllowlistTimestamp() view returns (uint256)",
       "function unpause()"
     ],
-    "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": [
+    "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": [
       "constructor(address _finder, address _owner, address _collateral, uint256 _bondAmount, string _rules, bytes32 _identifier, uint64 _liveness)",
       "error NotIERC165Compliant(address guard_)",
       "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
@@ -3365,7 +3365,7 @@
       "function target() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": [
+    "eth:0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _optimismPortal, uint256 _gasCap)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -3407,7 +3407,7 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x279fDA9AdDB854541f0bb86733d924e28c24c625": [
+    "eth:0x279fDA9AdDB854541f0bb86733d924e28c24c625": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint32 _mirrorNetworkId)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -3444,10 +3444,10 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
+    "eth:0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
-    "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+    "eth:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
       "event ChangedFallbackHandler(address indexed handler)",
@@ -3496,7 +3496,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b": [
+    "eth:0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b": [
       "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
       "event DiamondCutProposed(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata, uint256 deadline)",
       "event DiamondCutRescinded(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
@@ -3505,7 +3505,7 @@
       "function proposeDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
       "function rescindDiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)"
     ],
-    "0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2": [
+    "eth:0x3606b0D9c84224892C7407d4e8DCfd7E9E2126A2": [
       "error AssetLogic__getConfig_notRegistered()",
       "error AssetLogic__getTokenIndexFromStableSwapPool_notExist()",
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
@@ -3584,14 +3584,14 @@
       "function xcallIntoLocal(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData, uint256 _relayerFee) returns (bytes32)",
       "function xcallIntoLocal(uint32 _destination, address _to, address _asset, address _delegate, uint256 _amount, uint256 _slippage, bytes _callData) payable returns (bytes32)"
     ],
-    "0x3Bcf4185443A339517aD4e580067f178d1B68E1D": [
+    "eth:0x3Bcf4185443A339517aD4e580067f178d1B68E1D": [
       "function facetAddress(bytes4 _functionSelector) view returns (address facetAddress_)",
       "function facetAddresses() view returns (address[] facetAddresses_)",
       "function facetFunctionSelectors(address _facet) view returns (bytes4[] facetFunctionSelectors_)",
       "function facets() view returns (tuple(address facetAddress, bytes4[] functionSelectors)[] facets_)",
       "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
     ],
-    "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE": [
+    "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE": [
       "constructor()",
       "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
       "event NewContractRegistered(address indexed contractAddress, address indexed creator, address[] parties)",
@@ -3615,7 +3615,7 @@
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
     ],
-    "0x40f941E48A552bF496B154Af6bf55725f18D77c3": [
+    "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3": [
       "event InterfaceImplementationChanged(bytes32 indexed interfaceName, address indexed newImplementationAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeImplementationAddress(bytes32 interfaceName, address implementationAddress)",
@@ -3626,7 +3626,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9": [
+    "eth:0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9": [
       "constructor(address _gelato)",
       "function ETH() view returns (address)",
       "function exec(address _dest, bytes _data, uint256 _desiredFee, address _token)",
@@ -3634,7 +3634,7 @@
       "function paymentToken() view returns (address)",
       "function sufficientFee(address _dest, bytes _data, uint256 _desiredFee, address _token) returns (bool canExec, uint256 receivedFee, uint256 desiredFeee)"
     ],
-    "0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4": [
+    "eth:0x44e799f47A5599f5c9158d1F2457E30A6D77aDb4": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
       "error BaseConnextFacet__nonReentrant_reentrantCall()",
@@ -3649,10 +3649,10 @@
       "error DiamondInit__init_domainsDontMatch()",
       "function init(uint32 _domain, address _xAppConnectionManager, uint256 _acceptanceDelay, address _lpTokenTargetAddress)"
     ],
-    "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": [
+    "eth:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": [
       "constructor(address _singleton)"
     ],
-    "0x50efaC9619225d7fB4703C5872da978849B6E7cC": [
+    "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC": [
       "constructor(address _token, uint256 _bond, address _governor, address _finder)",
       "event BondSet(uint256 bond)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -3671,7 +3671,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": [
+    "eth:0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": [
       "constructor(uint256 _delayBlocks, address _merkle, address _watcherManager, uint256 _minDisputeBlocks, uint256 _disputeBlocks)",
       "error ProposedOwnable__onlyOwner_notOwner()",
       "error ProposedOwnable__onlyProposed_notProposedOwner()",
@@ -3782,7 +3782,7 @@
       "function validateDomains(uint32[] _domains, address[] _connectors) view",
       "function watcherManager() view returns (address)"
     ],
-    "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF": [
+    "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF": [
       "constructor(tuple(uint256 rawValue) _fixedOracleFeePerSecondPerPfc, tuple(uint256 rawValue) _weeklyDelayFeePerSecondPerPfc, address _timerAddress)",
       "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
       "event NewFinalFee(tuple(uint256 rawValue) newFinalFee)",
@@ -3813,7 +3813,7 @@
       "function withdraw(uint256 amount)",
       "function withdrawErc20(address erc20Address, uint256 amount)"
     ],
-    "0x56Ab287e5c33Ee70158c951f34818bd095446255": [
+    "eth:0x56Ab287e5c33Ee70158c951f34818bd095446255": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -3850,7 +3850,7 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": [
+    "eth:0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _stateCommitmentChain, uint256 _gasCap)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -3892,7 +3892,7 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A": [
+    "eth:0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _optimismPortal, uint256 _gasCap)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -3934,7 +3934,7 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295": [
+    "eth:0x5Ccd25372A41eeB3D4E5353879Bb28213dF5a295": [
       "error AssetLogic__getConfig_notRegistered()",
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
@@ -3959,7 +3959,7 @@
       "event Reconciled(bytes32 indexed transferId, uint32 indexed originDomain, address indexed local, address[] routers, uint256 amount, address caller)",
       "function handle(uint32 _origin, uint32 _nonce, bytes32 _sender, bytes _message)"
     ],
-    "0x6369F971fd1f1f230B8584151Ed7747FF710Cc68": [
+    "eth:0x6369F971fd1f1f230B8584151Ed7747FF710Cc68": [
       "error AssetLogic__handleOutgoingAsset_notNative()",
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
@@ -4008,7 +4008,7 @@
       "function updateLpTokenTarget(address newAddress)",
       "function withdrawSwapAdminFees(bytes32 key)"
     ],
-    "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99": [
+    "eth:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99": [
       "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event ProxyImplementationUpdated(address indexed previousImplementation, address indexed newImplementation)",
@@ -4018,7 +4018,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": [
+    "eth:0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": [
       "constructor(address _connext, address _spokeConnector, address _gelatoRelayer, address _feeCollector, address _rootManager)",
       "error ProposedOwnable__onlyOwner_notOwner()",
       "error ProposedOwnable__onlyProposed_notProposedOwner()",
@@ -4065,7 +4065,7 @@
       "function spokeConnector() view returns (address)",
       "function withdraw()"
     ],
-    "0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352": [
+    "eth:0x7993Bb17D8D8A0676Cc1527f8b4CE52A2B490352": [
       "error AssetLogic__getConfig_notRegistered()",
       "error AssetLogic__getTokenIndexFromStableSwapPool_notExist()",
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
@@ -4097,7 +4097,7 @@
       "function setAavePool(address _aavePool)",
       "function setAavePortalFee(uint256 _aavePortalFeeNumerator)"
     ],
-    "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d": [
+    "eth:0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d": [
       "constructor()",
       "error ProposedOwnable__onlyOwner_notOwner()",
       "error ProposedOwnable__onlyProposed_notProposedOwner()",
@@ -4122,7 +4122,7 @@
       "function renounceOwnership()",
       "function renounced() view returns (bool)"
     ],
-    "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": [
+    "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8": [
       "constructor(address _finderAddress, uint256 _startingId)",
       "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
       "event EmergencyExecution(address indexed to, uint256 value, bytes data)",
@@ -4146,7 +4146,7 @@
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
     ],
-    "0x7b2bE683266909A6a4068e743083dd40621d663E": [
+    "eth:0x7b2bE683266909A6a4068e743083dd40621d663E": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _optimismPortal, uint256 _gasCap)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -4188,13 +4188,13 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": [
+    "eth:0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": [
       "constructor(address _singleton)"
     ],
-    "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694": [
+    "eth:0x7D2596D7E44b0990611d390Fbb0Bd24e64845694": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
-    "0x7ed49D0a13255802A281C08688563bd8D5f726b1": [
+    "eth:0x7ed49D0a13255802A281C08688563bd8D5f726b1": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint32 _mirrorNetworkId)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -4231,10 +4231,10 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": [
+    "eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": [
       "constructor(address _masterCopy)"
     ],
-    "0x83096c7455f24E593aaC9A7c73f849d36d3EEb82": [
+    "eth:0x83096c7455f24E593aaC9A7c73f849d36d3EEb82": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _outbox, uint256 _maxSubmissionCostCap, uint256 _maxGasCap, uint256 _gasPriceCap)",
       "error Connector__processMessage_notUsed()",
       "error NotCrossChainCall()",
@@ -4287,10 +4287,10 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": [
+    "eth:0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6": [
       "constructor(address _contractOwner, tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, tuple(address initContract, bytes initData)[] _initializations) payable"
     ],
-    "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": [
+    "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": [
       "constructor(address _token, uint256 _quorum, address _governor, address _executor, uint64 _minimumWaitTime)",
       "event EmergencyProposalExecuted(uint256 indexed id, address indexed sender, address indexed caller, uint64 expiryTime, uint256 lockedTokens, tuple(address to, uint256 value, bytes data)[] transactions)",
       "event EmergencyProposalRemoved(uint256 indexed id, address indexed sender, address indexed caller, uint64 expiryTime, uint256 lockedTokens, tuple(address to, uint256 value, bytes data)[] transactions)",
@@ -4319,7 +4319,7 @@
       "function token() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686": [
+    "eth:0x9AB5F562Dc2aCcCd1b80d6564B770786e38f0686": [
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
       "error AssetLogic__handleIncomingAsset_nativeAssetNotSupported()",
       "error AssetLogic__handleOutgoingAsset_notNative()",
@@ -4365,7 +4365,7 @@
       "function swapExact(bytes32 key, uint256 amountIn, address assetIn, address assetOut, uint256 minAmountOut, uint256 deadline) returns (uint256)",
       "function swapExactOut(bytes32 key, uint256 amountOut, address assetIn, address assetOut, uint256 maxAmountIn, uint256 deadline) returns (uint256)"
     ],
-    "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007": [
+    "eth:0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007": [
       "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event ProxyImplementationUpdated(address indexed previousImplementation, address indexed newImplementation)",
@@ -4375,7 +4375,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": [
+    "eth:0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _stateCommitmentChain, uint256 _gasCap)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -4417,7 +4417,7 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": [
+    "eth:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": [
       "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event ProxyImplementationUpdated(address indexed previousImplementation, address indexed newImplementation)",
@@ -4427,7 +4427,7 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA": [
+    "eth:0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint16 _mirrorWormholeChainId)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -4473,7 +4473,7 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0xB4F8D176466f5F544bAd53737bffAaeA17185c05": [
+    "eth:0xB4F8D176466f5F544bAd53737bffAaeA17185c05": [
       "constructor(tuple(address connext, address spokeConnector, address gelatoRelayer, address feeCollector, address keep3r, address rootManager, address autonolas, uint256 propagateCooldown, uint256 finalizeCooldown, uint256 proposeAggregateRootCooldown, address[] hubConnectors, uint32[] hubConnectorChains) _params)",
       "error ProposedOwnable__onlyOwner_notOwner()",
       "error ProposedOwnable__onlyProposed_notProposedOwner()",
@@ -4572,16 +4572,16 @@
       "function spokeConnector() view returns (address)",
       "function withdraw(address _token)"
     ],
-    "0xb82e63585e53C47Ee83104f22c21ab1FE76F2EAE": [
+    "eth:0xb82e63585e53C47Ee83104f22c21ab1FE76F2EAE": [
       "constructor(address _gelato)",
       "event LogUseGelato1Balance(address indexed sponsor, address indexed target, address indexed feeToken, uint256 oneBalanceChainId, uint256 nativeToFeeTokenXRateNumerator, uint256 nativeToFeeTokenXRateDenominator, bytes32 correlationId)",
       "function gelato() view returns (address)",
       "function sponsoredCall(tuple(uint256 chainId, address target, bytes data) _call, address _sponsor, address _feeToken, uint256 _oneBalanceChainId, uint256 _nativeToFeeTokenXRateNumerator, uint256 _nativeToFeeTokenXRateDenominator, bytes32 _correlationId)"
     ],
-    "0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1": [
+    "eth:0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1": [
       "constructor(address _singleton)"
     ],
-    "0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D": [
+    "eth:0xBe8D8Ac9a44fBa6cb7A7E02c1E6576E06C7da72D": [
       "error AssetLogic__handleIncomingAsset_feeOnTransferNotSupported()",
       "error AssetLogic__handleIncomingAsset_nativeAssetNotSupported()",
       "error AssetLogic__handleOutgoingAsset_notNative()",
@@ -4658,7 +4658,7 @@
       "function unapproveRouter(address _router)",
       "function unapproveRouterForPortal(address _router)"
     ],
-    "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769": [
+    "eth:0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
       "error BaseConnextFacet__nonReentrant_reentrantCall()",
@@ -4681,7 +4681,7 @@
       "function removeRelayer(address _relayer)",
       "function setRelayerFeeVault(address _relayerFeeVault)"
     ],
-    "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28": [
+    "eth:0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28": [
       "constructor(address _connext, address _spokeConnector, address _gelatoRelayer, address _feeCollector, address _rootManager, address _keep3r, address _autonolas, uint8 _autonolasPriority, uint256 _propagateCooldown, address[] _hubConnectors, uint32[] _hubConnectorChains)",
       "error ProposedOwnable__onlyOwner_notOwner()",
       "error ProposedOwnable__onlyProposed_notProposedOwner()",
@@ -4758,7 +4758,7 @@
       "function spokeConnector() view returns (address)",
       "function withdraw()"
     ],
-    "0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570": [
+    "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event SupportedIdentifierAdded(bytes32 indexed identifier)",
       "event SupportedIdentifierRemoved(bytes32 indexed identifier)",
@@ -4769,7 +4769,7 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
     ],
-    "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
+    "eth:0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
       "event AddDelegate(address indexed safe, address delegate)",
       "event DeleteAllowance(address indexed safe, address delegate, address token)",
       "event ExecuteAllowanceTransfer(address indexed safe, address delegate, address token, address to, uint96 value, uint16 nonce)",
@@ -4797,13 +4797,13 @@
       "function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)",
       "function tokens(address, address, uint256) view returns (address)"
     ],
-    "0xd91C07a7e8FCb1039fE326e6dE274fD0F3307350": [
+    "eth:0xd91C07a7e8FCb1039fE326e6dE274fD0F3307350": [
       "constructor(address _gelato)",
       "event LogCallWithSyncFeeV2(address indexed target, bytes32 indexed correlationId)",
       "function callWithSyncFeeV2(address _target, bytes _data, bool _isRelayContext, bytes32 _correlationId)",
       "function gelato() view returns (address)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -4852,7 +4852,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdBF90434dF0B98219f87d112F37d74B1D90758c7": [
+    "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7": [
       "event AddedToWhitelist(address indexed addedAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event RemovedFromWhitelist(address indexed removedAddress)",
@@ -4866,7 +4866,7 @@
       "function whitelist(address) view returns (uint8)",
       "function whitelistIndices(uint256) view returns (address)"
     ],
-    "0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81": [
+    "eth:0xe37d4F73ef1C85dEf2174A394f17Ac65DD3cBB81": [
       "error AssetLogic__getConfig_notRegistered()",
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
       "error BaseConnextFacet__getApprovedCanonicalId_notAllowlisted()",
@@ -4919,13 +4919,13 @@
       "function updateDetails(tuple(uint32 domain, bytes32 id) _canonical, string _name, string _symbol)",
       "function updateLiquidityCap(tuple(uint32 domain, bytes32 id) _canonical, uint256 _updated)"
     ],
-    "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": [
+    "eth:0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": [
       "constructor(address _gelato)",
       "event LogExecSuccess(bytes32 indexed _taskId)",
       "function execTransit(address _dest, bytes _data, uint256 _minFee, address _token, bytes32 _taskId)",
       "function gelato() view returns (address)"
     ],
-    "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": [
+    "eth:0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, address _checkPointManager)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -4968,10 +4968,10 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b": [
+    "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b": [
       "constructor(address _masterCopy)"
     ],
-    "0xeE3Afe347D5C74317041E2618C49534dAf887c24": [
+    "eth:0xeE3Afe347D5C74317041E2618C49534dAf887c24": [
       "constructor(uint256 _liveness, address _finderAddress, address _timerAddress)",
       "event DisputePrice(address indexed requester, bytes32 indexed identifier, uint32 timestamp, bytes ancillaryData, tuple(address proposer, address disputer, address currency, bool settled, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness) request)",
       "event ProposePrice(address indexed requester, bytes32 indexed identifier, uint32 timestamp, bytes ancillaryData, tuple(address proposer, address disputer, address currency, bool settled, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness) request)",
@@ -4995,7 +4995,7 @@
       "function stampAncillaryData(bytes ancillaryData, address requester) pure returns (bytes)",
       "function timerAddress() view returns (address)"
     ],
-    "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": [
+    "eth:0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint256 _mirrorChainId)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -5039,10 +5039,10 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": [
+    "eth:0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": [
       "constructor(address _singleton)"
     ],
-    "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": [
+    "eth:0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint16 _mirrorWormholeChainId)",
       "error Connector__processMessage_notUsed()",
       "error ProposedOwnable__onlyOwner_notOwner()",
@@ -5088,11 +5088,11 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0": [
+    "eth:0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0": [
       "event LogUseGelato1BalanceV2()",
       "function sponsoredCallV2(address _target, bytes _data, bytes32 _correlationId, bytes32 _r, bytes32 _vs)"
     ],
-    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": [
+    "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": [
       "constructor(address _finder, address _defaultCurrency, uint64 _defaultLiveness)",
       "event AdminPropertiesSet(address defaultCurrency, uint64 defaultLiveness, uint256 burnedBondPercentage)",
       "event AssertionDisputed(bytes32 indexed assertionId, address indexed caller, address indexed disputer)",

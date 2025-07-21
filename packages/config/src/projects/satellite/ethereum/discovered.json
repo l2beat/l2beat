@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0xfb4b7da34c18a5be1f2156d3c9e0b19d8211858ea1848aa555c33721093a5df4",
+  "configHash": "0x625006f22e8f6fcbabc36e9ef01c0b99fecdf93585937b2ef881003e66dee129",
   "entries": [
     {
       "address": "eth:0x027c1882B975E2cd771AE068b0389FA38B9dda73",
@@ -267,7 +267,7 @@
     }
   ],
   "abis": {
-    "0x2d5d7d31F671F86C782533cc367F14109a082712": [
+    "eth:0x2d5d7d31F671F86C782533cc367F14109a082712": [
       "error AlreadyInitialized()",
       "error EtherNotAccepted()",
       "error InvalidImplementation()",
@@ -277,7 +277,7 @@
       "function init(address implementationAddress, address newOwner, bytes params)",
       "function setup(bytes data)"
     ],
-    "0x4F4495243837681061C4743b74B3eEdf548D56A5": [
+    "eth:0x4F4495243837681061C4743b74B3eEdf548D56A5": [
       "constructor(bytes params)",
       "function getAddress(bytes32 key) view returns (address)",
       "function getBool(bytes32 key) view returns (bool)",
@@ -287,7 +287,7 @@
       "function getUint(bytes32 key) view returns (uint256)",
       "function setup(bytes params)"
     ],
-    "0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": [
+    "eth:0x7DdB2d76b80B0AA19bDEa48EB1301182F4CeefbC": [
       "constructor(address initialOwner)",
       "error ExecutionFailed()",
       "error InvalidOperator()",
@@ -312,7 +312,7 @@
       "function removeOperator(address operator)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x99B5FA03a5ea4315725c43346e55a6A6fbd94098": [
+    "eth:0x99B5FA03a5ea4315725c43346e55a6A6fbd94098": [
       "constructor(address authModule_, address tokenDeployer_)",
       "error BurnFailed(string symbol)",
       "error ExceedMintLimit(string symbol)",
@@ -388,10 +388,10 @@
       "function validateContractCall(bytes32 commandId, string sourceChain, string sourceAddress, bytes32 payloadHash) returns (bool valid)",
       "function validateContractCallAndMint(bytes32 commandId, string sourceChain, string sourceAddress, bytes32 payloadHash, string symbol, uint256 amount) returns (bool valid)"
     ],
-    "0xb28478319B64f8D47e19A120209A211D902F8b8f": [
+    "eth:0xb28478319B64f8D47e19A120209A211D902F8b8f": [
       "function deployToken(string name, string symbol, uint8 decimals, uint256 cap, bytes32 salt) returns (address tokenAddress)"
     ],
-    "0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": [
+    "eth:0xcb5C784DCf8FF342625DbC53B356ed0Cbb0EBB9b": [
       "constructor(address gasCollector_)",
       "error InsufficientGasPayment(uint256 required, uint256 provided)",
       "error InvalidAddress()",
@@ -456,7 +456,7 @@
       "function updateGasInfo(string[] chains, tuple(uint64 gasEstimationType, uint64 l1FeeScalar, uint128 axelarBaseFee, uint128 relativeGasPrice, uint128 relativeBlobBaseFee, uint128 expressFee)[] gasUpdates)",
       "function upgrade(address newImplementation, bytes32 newImplementationCodeHash, bytes params)"
     ],
-    "0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68": [
+    "eth:0xCC940AE49C78F20E3F13F3cF37e996b98Ac3EC68": [
       "constructor(address[] accounts, uint256 threshold)",
       "error AlreadyVoted()",
       "error DuplicateSigner(address account)",
@@ -482,7 +482,7 @@
       "function votingPerTopic(uint256, bytes32) view returns (uint256 voteCount)",
       "function withdraw(address recipient, uint256 amount)"
     ],
-    "0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0": [
+    "eth:0xE3B83f79Fbf01B25659f8A814945aB82186A8AD0": [
       "constructor(bytes[] recentOperators)",
       "error DuplicateOperators()",
       "error InvalidOperators()",
@@ -511,7 +511,7 @@
       "function transferOwnership(address newOwner)",
       "function validateProof(bytes32 messageHash, bytes proof) view returns (bool)"
     ],
-    "0xfDF36A30070ea0241d69052ea85ff44Ad0476a66": [
+    "eth:0xfDF36A30070ea0241d69052ea85ff44Ad0476a66": [
       "constructor(address gateway_, string governanceChain_, string governanceAddress_, uint256 minimumTimeDelay)",
       "error ExecutionFailed()",
       "error InsufficientBalance()",

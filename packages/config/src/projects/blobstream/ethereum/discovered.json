@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 22882089,
-  "configHash": "0xb76768c7ec77523b31f3467567efd3d48515b33b673ae547b71c007f2cb4e6d4",
+  "configHash": "0xbca68a810f3d03277b83dccc6fb721d0e892bfb0378c2dbd461c186ae72ddafd",
   "sharedModules": ["shared-sp1"],
   "entries": [
     {
@@ -189,7 +189,7 @@
     }
   ],
   "abis": {
-    "0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
+    "eth:0x46EbfC399d3913BB9b99E73675722417F9c5d416": [
       "error ContractFrozen()",
       "error OnlyGuardian(address sender)",
       "error OnlyTimelock(address sender)",
@@ -243,16 +243,16 @@
       "function verifier() view returns (address)",
       "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
     ],
-    "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": [
+    "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": [
+    "eth:0x8bF34D8df1eF0A8A7f27fC587202848E528018E6": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",

@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -7,9 +7,13 @@ import { SimpleMethodHandler } from './SimpleMethodHandler'
 
 describe(SimpleMethodHandler.name, () => {
   it('can correctly call balanceOf', async () => {
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const provider = mockObject<IProvider>({
-      async callMethod<T>(a: EthereumAddress, _abi: string, _data: unknown[]) {
+      async callMethod<T>(
+        a: ChainSpecificAddress,
+        _abi: string,
+        _data: unknown[],
+      ) {
         expect(a).toEqual(address)
         return 291 as T
       },
@@ -38,7 +42,7 @@ describe(SimpleMethodHandler.name, () => {
         throw new Error('Execution reverted')
       },
     })
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toEqual({
       field: 'balanceOf',
@@ -57,7 +61,7 @@ describe(SimpleMethodHandler.name, () => {
         throw new Error('foo bar')
       },
     })
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toEqual({
       field: 'balanceOf',
@@ -76,7 +80,7 @@ describe(SimpleMethodHandler.name, () => {
         return 1 as T
       },
     })
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toEqual({
       field: '_$foo',

@@ -1,4 +1,4 @@
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber, ethers, type providers } from 'ethers'
 
@@ -24,7 +24,7 @@ describe(ConstructorArgsHandler.name, () => {
         sampleAbi,
       )
 
-      const contractAddress = EthereumAddress.random()
+      const contractAddress = ChainSpecificAddress.random()
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
@@ -56,7 +56,7 @@ describe(ConstructorArgsHandler.name, () => {
         sampleAbi,
       )
 
-      const contractAddress = EthereumAddress.random()
+      const contractAddress = ChainSpecificAddress.random()
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
@@ -110,7 +110,7 @@ describe(ConstructorArgsHandler.name, () => {
         sampleAbi,
       )
 
-      const contractAddress = EthereumAddress.random()
+      const contractAddress = ChainSpecificAddress.random()
 
       const provider = mockObject<IProvider>({
         getDeployment: mockFn().rejectsWith('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
@@ -216,7 +216,7 @@ function fakeEthersTransaction(
     chainId: 1,
     confirmations: 1,
     data: '0x',
-    from: EthereumAddress.random().toString(),
+    from: ChainSpecificAddress.random().toString(),
     gasLimit: BigNumber.from(100000),
     hash: Hash256.random().toString(),
     nonce: 1,
