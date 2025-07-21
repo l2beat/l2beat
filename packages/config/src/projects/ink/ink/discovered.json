@@ -1,7 +1,7 @@
 {
   "name": "ink",
   "chain": "ink",
-  "blockNumber": 13539010,
+  "blockNumber": 19600718,
   "configHash": "0xfdc50e0778d45fc82c11edae6753f8ef8050be79a7b1a1eb6b85d20682c4aa95",
   "entries": [
     {
@@ -25,7 +25,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "ink:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620869",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620900",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -69,16 +69,16 @@
         ],
         "$upgradeCount": 1,
         "baseFee": 0,
-        "baseFeeScalar": 1368,
+        "baseFeeScalar": 4424,
         "blobBaseFee": 1,
-        "blobBaseFeeScalar": 810949,
+        "blobBaseFeeScalar": 810831,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 5657903600,
+        "l1BaseFee": 2031603192,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -265,11 +265,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 5657903600,
-        "baseFeeScalar": 1368,
+        "basefee": 2031603192,
+        "baseFeeScalar": 4424,
         "batcherHash": "0x000000000000000000000000500d7ea63cf2e501dadaa5feec1fc19fe2aa72ac",
         "blobBaseFee": 1,
-        "blobBaseFeeScalar": 810949,
+        "blobBaseFeeScalar": 810831,
         "DEPOSITOR_ACCOUNT": "ink:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
         "gasPayingToken": {
           "addr_": "ink:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -277,15 +277,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xafcd93d17a61dcdaa1ef390c4792d2702bac8b199f93c545f19f12da67b7df7f",
+        "hash": "0x2aa5df07cf475d7a6a581b91e32f6805872678eba90bf832b1dc3cb3da620053",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22465926,
+        "number": 22967415,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 5,
-        "timestamp": 1747037351,
+        "sequenceNumber": 10,
+        "timestamp": 1753099055,
         "version": "1.6.0"
       },
       "implementationNames": {

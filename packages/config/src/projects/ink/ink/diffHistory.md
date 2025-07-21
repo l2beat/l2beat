@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xde0211a932747814f2e42158494ec6a1fc13e529
+
+# Diff at Mon, 21 Jul 2025 11:59:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c89d5207a278197d1d4bfd60ac8e37852accba7c block: 13539010
+- current block number: 19600718
+
+## Description
+
+fee increase.
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: Provides the current gas price for L2 transactions.
+      values.baseFeeScalar:
+-        1368
++        4424
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.
+      values.baseFeeScalar:
+-        1368
++        4424
+    }
+```
+
 Generated with discovered.json: 0x754eadb1b6ea6ca6edb848d7ea6f5dae0a9f336a
 
 # Diff at Mon, 14 Jul 2025 12:46:55 GMT:
