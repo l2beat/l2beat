@@ -127,6 +127,13 @@ export const zkCatalogTags = [
     description:
       'Matter Labs Rust implementation of Plonk proving system, originally developed for ZKsync Lite (old ZKsync).',
   },
+  {
+    id: 'linea',
+    type: ZkCatalogTagType.Plonk,
+    name: 'linea',
+    description:
+      'Prover system of Linea written in Go, includes Vortex polynomial commitment and Arcane compiler.',
+  },
   // Fflonk
   {
     id: 'Zksync',
