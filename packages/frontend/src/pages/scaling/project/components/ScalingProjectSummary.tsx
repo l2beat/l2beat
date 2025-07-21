@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
+import { CustomLink } from '~/components/link/CustomLink'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -128,6 +129,12 @@ export function ProjectScalingSummary({ project }: Props) {
                   />
                 </TooltipContent>
               </Tooltip>
+              <CustomLink
+                href={`/scaling/projects/${project.slug}/tvs-breakdown`}
+                className="mt-2 font-medium text-label-value-13 md:hidden"
+              >
+                View TVS breakdown
+              </CustomLink>
             </div>
           </div>
         </div>
