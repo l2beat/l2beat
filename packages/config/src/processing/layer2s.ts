@@ -2,7 +2,6 @@ import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
 import { aevo } from '../projects/aevo/aevo'
-import { aiechain } from '../projects/aiechain/aiechain'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
@@ -230,7 +229,6 @@ import { zora } from '../projects/zora/zora'
 export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
-  aiechain,
   airas,
   alephzero,
   alienx,
