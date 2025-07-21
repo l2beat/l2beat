@@ -10,6 +10,7 @@ export const hyphen: Bridge = {
   type: 'bridge',
   id: ProjectId('hyphen'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  archivedAt: UnixTime(1753083581),
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
