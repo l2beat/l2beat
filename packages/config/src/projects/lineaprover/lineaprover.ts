@@ -29,30 +29,34 @@ export const lineaprover: BaseProject = {
     creator: 'Consensys',
     techStack: {
       finalWrap: [
-        ZK_CATALOG_TAGS.SNARK.SnarkLinea,
-        ZK_CATALOG_TAGS.SNARK.PlonkGnark,
+        ZK_CATALOG_TAGS.Plonk.linea,
+        ZK_CATALOG_TAGS.Plonk.Gnark,
         ZK_CATALOG_TAGS.ISA.EVM,
-        ZK_CATALOG_TAGS.Curve['BLS12-377'],
-        ZK_CATALOG_TAGS.Curve.BN254,
-        ZK_CATALOG_TAGS.Curve['BW6-761'],
+        ZK_CATALOG_TAGS.curve['BLS12-377'],
+        ZK_CATALOG_TAGS.curve.BN254,
+        ZK_CATALOG_TAGS.curve['BW6-761'],
         ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: '',
-    trustedSetups: {
-      SnarkLinea: [
-        TRUSTED_SETUPS.Aleo,
-        TRUSTED_SETUPS.CeloPlumo,
-        TRUSTED_SETUPS.AztecIgnition,
-      ],
-      PlonkGnark: [TRUSTED_SETUPS.AztecIgnition],
-    },
+    trustedSetups: [
+      {
+        proofSystem: ZK_CATALOG_TAGS.Plonk.linea,
+        ...TRUSTED_SETUPS.Aleo,
+        ...TRUSTED_SETUPS.CeloPlumo,
+        ...TRUSTED_SETUPS.AztecIgnition,
+      },
+      {
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
+        ...TRUSTED_SETUPS.AztecIgnition,
+      },
+    ],
     verifierHashes: [
       {
         // Custom verifier ID: SHA256 hash of all VK_... values from the smart contract
         // abi packed in the same order they are defined
         hash: '0xcfdff368eb0a9961712338df56f966f0f28899dcd1892b9898fce4928ca0d582',
-        proofSystem: 'PlonkGnark',
+        proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           'https://etherscan.io/address/0x41a4d93d09f4718fe899d12a4ad2c8a09104bdc7',
         ],

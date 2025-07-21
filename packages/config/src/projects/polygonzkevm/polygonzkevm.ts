@@ -34,7 +34,10 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
       bridges: ['https://portal.polygon.technology/bridge'],
       documentation: ['https://docs.polygon.technology/zkEVM/'],
       explorers: ['https://zkevm.polygonscan.com/'],
-      repositories: ['https://github.com/0xPolygonHermez'],
+      repositories: [
+        'https://github.com/0xPolygon/zkevm-node',
+        'https://github.com/0xPolygon/',
+      ],
       socialMedia: [
         'https://x.com/0xPolygon',
         'https://t.me/polygonofficial',
