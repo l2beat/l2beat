@@ -143,6 +143,16 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     },
   )
 
+  describe(
+    RealTimeAnomaliesRepository.prototype.getApprovedOngoingAnomalies.name,
+    () => {
+      it('should return all approved and ongoing anomalies', async () => {
+        const results = await repository.getApprovedOngoingAnomalies()
+        expect(results).toEqualUnsorted([DATA[2]!, DATA[3]!])
+      })
+    },
+  )
+
   describe(RealTimeAnomaliesRepository.prototype.getProjectIds.name, () => {
     it('should return all projectIds', async () => {
       const results = await repository.getProjectIds()

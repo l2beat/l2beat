@@ -16,6 +16,7 @@ import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
 import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
+import { getApprovedOngoingAnomalies } from '../scaling/liveness/getApprovedOngoingAnomalies'
 import {
   getScalingSummaryEntry,
   type ScalingSummaryEntry,
@@ -129,10 +130,16 @@ export async function getEcosystemEntry(
     }),
   ])
 
-  const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
+  const [
+    projectsChangeReport,
+    tvs,
+    projectsActivity,
+    projectsOngoingAnomalies,
+  ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     getActivityLatestUops(allScalingProjects),
+    getApprovedOngoingAnomalies(),
   ])
 
   const ecosystemProjects = projects.filter(
@@ -184,6 +191,7 @@ export async function getEcosystemEntry(
           projectsChangeReport.getChanges(project.id),
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
+          !!projectsOngoingAnomalies[project.id.toString()],
         )
         return {
           ...entry,

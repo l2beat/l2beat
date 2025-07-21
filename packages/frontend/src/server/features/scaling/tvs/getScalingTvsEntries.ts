@@ -5,20 +5,23 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
+import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 import type { ProjectSevenDayTvsBreakdown } from './get7dTvsBreakdown'
 import { get7dTvsBreakdown } from './get7dTvsBreakdown'
 
 export async function getScalingTvsEntries() {
-  const [projectsChangeReport, tvs, projects] = await Promise.all([
-    getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
-    }),
-  ])
+  const [projectsChangeReport, tvs, projects, projectsOngoingAnomalies] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      get7dTvsBreakdown({ type: 'layer2' }),
+      ps.getProjects({
+        select: ['statuses', 'scalingInfo', 'tvsInfo', 'display'],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'archivedAt'],
+      }),
+      getApprovedOngoingAnomalies(),
+    ])
 
   const entries = projects
     .map((project) =>
@@ -26,6 +29,7 @@ export async function getScalingTvsEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id.toString()],
+        !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .filter((entry) => entry !== undefined)
@@ -47,9 +51,10 @@ function getScalingTvsEntry(
   project: Project<'scalingInfo' | 'statuses' | 'tvsInfo' | 'display'>,
   changes: ProjectChanges,
   data: ProjectSevenDayTvsBreakdown | undefined,
+  ongoingAnomaly: boolean,
 ): ScalingTvsEntry | undefined {
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, ongoingAnomaly }),
     tvs: {
       data,
       associatedTokens: project.tvsInfo.associatedTokens,

@@ -11,25 +11,29 @@ import type { ProjectChanges } from '../../projects-change-report/getProjectsCha
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
+import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { compareTvs } from '../tvs/utils/compareTvs'
 
 export async function getScalingArchivedEntries() {
-  const [projectsChangeReport, tvs, projects] = await Promise.all([
-    getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    ps.getProjects({
-      select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
-      where: ['isScaling', 'archivedAt'],
-    }),
-  ])
+  const [projectsChangeReport, tvs, projects, projectsOngoingAnomalies] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      get7dTvsBreakdown({ type: 'layer2' }),
+      ps.getProjects({
+        select: ['statuses', 'scalingInfo', 'scalingRisks', 'display'],
+        where: ['isScaling', 'archivedAt'],
+      }),
+      getApprovedOngoingAnomalies(),
+    ])
 
   const entries = projects.map((project) =>
     getScalingArchivedEntry(
       project,
       projectsChangeReport.getChanges(project.id),
       tvs.projects[project.id.toString()],
+      !!projectsOngoingAnomalies[project.id.toString()],
     ),
   )
 
@@ -49,9 +53,10 @@ function getScalingArchivedEntry(
   project: Project<'scalingInfo' | 'statuses' | 'scalingRisks' | 'display'>,
   changes: ProjectChanges,
   latestTvs: ProjectSevenDayTvsBreakdown | undefined,
+  ongoingAnomaly: boolean,
 ): ScalingArchivedEntry {
   return {
-    ...getCommonScalingEntry({ project, changes }),
+    ...getCommonScalingEntry({ project, changes, ongoingAnomaly }),
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     stacks: project.scalingInfo.stacks,

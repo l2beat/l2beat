@@ -8,6 +8,7 @@ import { getProjectsChangeReport } from '../../projects-change-report/getProject
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
+import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import type { ActivityProjectTableData } from './getActivityTableData'
 import { getActivityTable } from './getActivityTableData'
 import { compareActivityEntry } from './utils/compareActivityEntry'
@@ -22,10 +23,12 @@ export async function getScalingActivityEntries() {
   const projects = unfilteredProjects.filter(
     (p) => !env.EXCLUDED_ACTIVITY_PROJECTS?.includes(p.id.toString()),
   )
-  const [projectsChangeReport, activityData] = await Promise.all([
-    getProjectsChangeReport(),
-    getActivityTable(projects),
-  ])
+  const [projectsChangeReport, activityData, projectsOngoingAnomalies] =
+    await Promise.all([
+      getProjectsChangeReport(),
+      getActivityTable(projects),
+      getApprovedOngoingAnomalies(),
+    ])
 
   const ethereumData = activityData[ProjectId.ETHEREUM]
   assert(ethereumData !== undefined, 'Ethereum data not found')
@@ -36,6 +39,7 @@ export async function getScalingActivityEntries() {
         project,
         projectsChangeReport.getChanges(project.id),
         activityData[project.id],
+        !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .concat([
@@ -74,12 +78,13 @@ function getScalingProjectActivityEntry(
   project: Project<'statuses' | 'scalingInfo' | 'display'>,
   changes: ProjectChanges,
   data: ActivityProjectTableData | undefined,
+  ongoingAnomaly: boolean,
 ): ScalingActivityEntry {
   const syncWarning = data
     ? getActivitySyncWarning(data.syncedUntil)
     : undefined
   return {
-    ...getCommonScalingEntry({ project, changes, syncWarning }),
+    ...getCommonScalingEntry({ project, changes, syncWarning, ongoingAnomaly }),
     data: data
       ? {
           tps: data.tps,
@@ -105,6 +110,7 @@ function getEthereumEntry(
     icon: getProjectIcon('ethereum'),
     slug: 'ethereum',
     tab,
+    ongoingAnomaly: false,
     // Ethereum is always at the top so it is always stageOrder 3
     stageOrder: 3,
     filterable: undefined,
