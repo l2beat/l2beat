@@ -210,3 +210,76 @@ export function createV1PacketId(
 
   return '0x' + hash
 }
+
+export interface DecodedV1PacketHeader {
+  version: number
+  nonce: bigint
+  srcEid: number // For SendUln301 events
+  sender: string // bytes32 sender
+  dstEid: number
+  receiver: string // bytes32 receiver
+}
+
+export interface DecodedV1SendUln301Packet {
+  header: DecodedV1PacketHeader
+  payload: string
+}
+
+export function decodeV1SendUln301Packet(
+  encodedPayload: string,
+): DecodedV1SendUln301Packet | null {
+  try {
+    const hex = encodedPayload.startsWith('0x')
+      ? encodedPayload.slice(2)
+      : encodedPayload
+
+    // Validate minimum length for header (1 + 8 + 4 + 32 + 4 + 32 = 81 bytes)
+    if (hex.length < 162) {
+      // 81 * 2 = 162 hex chars
+      return null
+    }
+    let offset = 0
+
+    // Parse version (1 byte)
+    const version = Number.parseInt(hex.slice(offset, offset + 2), 16)
+    offset += 2
+
+    // Parse nonce (8 bytes, big endian)
+    const nonce = BigInt('0x' + hex.slice(offset, offset + 16))
+    offset += 16
+
+    // Parse srcEid (4 bytes, big endian)
+    const srcEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
+    offset += 8
+
+    // Parse sender (32 bytes)
+    const sender = '0x' + hex.slice(offset, offset + 64)
+    offset += 64
+
+    // Parse dstEid (4 bytes, big endian)
+    const dstEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
+    offset += 8
+
+    // Parse receiver (32 bytes)
+    const receiver = '0x' + hex.slice(offset, offset + 64)
+    offset += 64
+
+    // Parse payload (remaining bytes)
+    const payload = hex.length > offset ? '0x' + hex.slice(offset) : '0x'
+
+    return {
+      header: {
+        version,
+        nonce,
+        srcEid,
+        sender,
+        dstEid,
+        receiver,
+      },
+      payload,
+    }
+  } catch (error) {
+    console.error('Failed to decode v1 SendUln301 packet:', error)
+    return null
+  }
+}

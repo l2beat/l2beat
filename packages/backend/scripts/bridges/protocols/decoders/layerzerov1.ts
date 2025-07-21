@@ -3,7 +3,12 @@ import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
-import { createV1PacketId, decodeV1Packet } from '../../utils/layerzero'
+import {
+  createLayerZeroGuid,
+  createV1PacketId,
+  decodeV1Packet,
+  decodeV1SendUln301Packet,
+} from '../../utils/layerzero'
 
 export const LAYERZEROV1 = {
   name: 'layerzerov1',
@@ -46,7 +51,7 @@ function decoder(
       )
 
       const destination = CONTRACTS.find(
-        (b) => b.chainId === decodedPacket.dstChainId,
+        (b) => b.eid === decodedPacket.dstChainId,
       )?.chainShortName
 
       return {
@@ -101,6 +106,89 @@ function decoder(
         matchingId: packetId,
       }
     }
+
+    if (
+      EthereumAddress(log.address) === contracts.sendUln &&
+      log.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'PacketSent',
+      })
+
+      const decodedPacket = decodeV1SendUln301Packet(data.args.encodedPayload)
+      if (!decodedPacket) {
+        console.error(`Failed to decode packet (tx ${transaction.hash})`)
+        continue
+      }
+
+      const guid = createLayerZeroGuid(
+        decodedPacket.header.nonce,
+        decodedPacket.header.srcEid,
+        decodedPacket.header.sender,
+        decodedPacket.header.dstEid,
+        decodedPacket.header.receiver,
+      )
+
+      const destination = CONTRACTS.find(
+        (b) => b.eid === decodedPacket.header.dstEid,
+      )?.chainShortName
+
+      return {
+        direction: 'outbound',
+        protocol: LAYERZEROV1.name,
+        origin: chain.shortName,
+        destination: destination ?? decodedPacket.header.dstEid.toString(),
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
+        type: 'PacketSent',
+        matchingId: guid,
+      }
+    }
+
+    if (
+      EthereumAddress(log.address) === contracts.receiveUln &&
+      log.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'PacketDelivered',
+      })
+
+      const dstChainId = contracts.eid
+      assert(dstChainId)
+
+      const packetId = createLayerZeroGuid(
+        BigInt(data.args.origin.srcEid),
+        Number(data.args.origin.sender),
+        data.args.origin.nonce.toString(),
+        dstChainId,
+        data.args.receiver,
+      )
+
+      const origin = CONTRACTS.find(
+        (c) => c.eid === data.args.origin.srcEid,
+      )?.chainShortName
+
+      return {
+        direction: 'inbound',
+        protocol: LAYERZEROV1.name,
+        origin: origin ?? data.args.origin.srcEid.toString(),
+        destination: chain.shortName,
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
+        type: 'PacketDelivered',
+        matchingId: packetId,
+      }
+    }
   }
 
   return undefined
@@ -113,7 +201,7 @@ const ABI = parseAbi([
   // SendUln301
   'event PacketSent(bytes encodedPayload, bytes options, uint256 nativeFee, uint256 lzTokenFee)',
   // ReceiveUln301
-  'event PacketDelivered((uint32,bytes32,uint64) origin, address receiver)',
+  'event PacketDelivered((uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)',
 ])
 
 const CONTRACTS = [
