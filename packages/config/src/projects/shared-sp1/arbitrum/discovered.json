@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "arbitrum",
   "blockNumber": 355918538,
-  "configHash": "0xed37901f9ee4f1e27b8c26b9322697133f28e3eb8c9e8b701a32100ff430683f",
+  "configHash": "0x2d8dfb596960352a3b79835bc9561bc5dbe3628683fe436631c68f6fb18e96fb",
   "entries": [
     {
       "name": "SP1Verifier",

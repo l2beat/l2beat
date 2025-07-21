@@ -2,7 +2,7 @@
   "name": "appchain",
   "chain": "ethereum",
   "blockNumber": 22779991,
-  "configHash": "0x6b799bc44afba595622c9c07b943060625a576ce3b08f3e5031f933b698ed822",
+  "configHash": "0xd1eb0c0a2b75d03bff765bd453c80cefe9b84ddc8ffb3ab9008106a72754e761",
   "entries": [
     {
       "name": "Inbox",

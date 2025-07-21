@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Message } from '../../types/Message'
-import type { TransactionWithViemLogs } from '../../types/TransactionWithViemLogs'
+import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
 export const ACROSS = {
   name: 'across',
@@ -11,7 +11,7 @@ export const ACROSS = {
 
 function decoder(
   chain: Chain,
-  transaction: TransactionWithViemLogs,
+  transaction: TransactionWithLogs,
 ): Message | undefined {
   for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
@@ -19,8 +19,9 @@ function decoder(
     if (!bridge || EthereumAddress(log.address) !== bridge.address) continue
 
     if (
+      EthereumAddress(log.address) === bridge.address &&
       log.topics[0] ===
-      encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
+        encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
     ) {
       const data = decodeEventLog({
         abi: ABI,
@@ -47,8 +48,9 @@ function decoder(
     }
 
     if (
+      EthereumAddress(log.address) === bridge.address &&
       log.topics[0] ===
-      encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
+        encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
     ) {
       const data = decodeEventLog({
         abi: ABI,

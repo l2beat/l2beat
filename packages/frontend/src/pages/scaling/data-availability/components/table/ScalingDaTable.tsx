@@ -4,7 +4,7 @@ import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
-import { getScalingDataAvailabilityColumns } from './Columns'
+import { getScalingDataAvailabilityColumns } from './columns'
 
 export interface Props {
   entries: ScalingDaEntry[]

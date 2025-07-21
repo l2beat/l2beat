@@ -2,12 +2,8 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "game7",
   "import": ["../globalConfig.jsonc"],
-  "chains": {
-    "arbitrum": {
-      "initialAddresses": [
-        "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
-        "0x404922a9B29b4a5205a6074AbA31A7392BD28944"
-      ]
-    }
-  }
+  "initialAddresses": [
+    "arb1:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
+    "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944"
+  ]
 }

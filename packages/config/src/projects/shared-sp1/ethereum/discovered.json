@@ -2,7 +2,7 @@
   "name": "shared-sp1",
   "chain": "ethereum",
   "blockNumber": 22882427,
-  "configHash": "0x486f4a698daf2b8a98f371d8bcdd34ef060a70ea54f86e10fd01ca000f55bcc8",
+  "configHash": "0x02b549225201f0f9f6f2f5ebcacd2330e573b866b32d449f73b8ae0c433d03d0",
   "entries": [
     {
       "name": "SP1Verifier",

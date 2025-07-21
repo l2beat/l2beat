@@ -2,8 +2,13 @@
   "name": "stargatev2",
   "chain": "linea",
   "blockNumber": 19822366,
-  "configHash": "0x2510e6f462c2423dade29c844b02a409d058b644d86e1215645b6399a3032886",
+  "configHash": "0x96d1b4c545555531fdb0bd244fc1e09ac1c1965e704e07ebe92b782c3af59968",
   "entries": [
+    {
+      "address": "linea:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "TokenMessaging",
       "address": "linea:0x5f688F563Dc16590e570f97b542FA87931AF2feD",
@@ -291,5 +296,5 @@
   "usedTemplates": {
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

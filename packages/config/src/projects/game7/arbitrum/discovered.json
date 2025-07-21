@@ -2,7 +2,7 @@
   "name": "game7",
   "chain": "arbitrum",
   "blockNumber": 357933310,
-  "configHash": "0x2e41df62484b45907d6e62d9d48945c9d4d390bd34c7f4448298893e5246b411",
+  "configHash": "0x7443156a4582c9abd1764d474cd071666254f20366f00604ee5fa89bc80bc682",
   "entries": [
     {
       "address": "arb1:0x026919DbCFab70a2A45775088C933331A7B25Ac6",

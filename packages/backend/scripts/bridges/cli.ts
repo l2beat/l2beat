@@ -5,7 +5,7 @@ import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
 import type { Message } from './types/Message'
-import { logToViemLog } from './utils/viem'
+import { EnvioClient } from './utils/EnvioClient'
 
 const args = {
   start: option({
@@ -41,6 +41,7 @@ const cmd = command({
     const http = new HttpClient()
     const logger = Logger.INFO
     const env = getEnv()
+    const envioApiToken = env.string('ENVIO_API_TOKEN')
 
     const enabledChains = args.chains
       ? CHAINS.filter((c) => args.chains?.split(',').includes(c.name))
@@ -56,8 +57,17 @@ const cmd = command({
         callsPerMinute: c.callsPerMinute,
         retryStrategy: 'SCRIPT',
       }),
+      envioClient: new EnvioClient({
+        url: c.envio,
+        apiToken: envioApiToken,
+        sourceName: c.name,
+        http,
+        logger,
+        callsPerMinute: c.callsPerMinute,
+        retryStrategy: 'SCRIPT',
+      }),
       start: args.start ?? -1, // will be filled later
-      range: args.range ?? 10,
+      range: args.range ?? 1_000,
     }))
 
     const enabledProtocols = args.protocols
@@ -65,12 +75,6 @@ const cmd = command({
       : PROTOCOLS
 
     const decoders = enabledProtocols.map((p) => p.decoder)
-
-    const transfers: Message[] = []
-    const matching: Record<
-      string,
-      Record<string, { send: Message[]; receive: Message[] }>
-    > = {}
 
     logger.info('Running script', {
       protocols: enabledProtocols.map((p) => p.name),
@@ -86,37 +90,47 @@ const cmd = command({
         })
       }
     }
-    logger.info('Fetching block numbers... (this may take a while)')
+
+    const messages: Message[] = []
+    logger.info('Fetching block numbers...')
     await Promise.all(blockPromises.map((fn) => fn()))
 
+    const BATCH_SIZE = 100
     const promises: (() => Promise<void>)[] = []
     for (const r of chains) {
-      for (let i = r.start; i < r.start + r.range; i++) {
-        promises.push(async () => {
-          const block = await r.rpc.getBlock(i, true)
-          const logs = await r.rpc.getLogs(i, i)
-          const logsByTx = groupBy(logs.map(logToViemLog), 'transactionHash')
+      const totalRange = r.range
+      const numBatches = Math.ceil(totalRange / BATCH_SIZE)
 
-          for (const t of block.transactions) {
+      for (let batchIndex = 0; batchIndex < numBatches; batchIndex++) {
+        promises.push(async () => {
+          const batchStart = r.start + batchIndex * BATCH_SIZE
+          const batchEnd = Math.min(batchStart + BATCH_SIZE, r.start + r.range)
+
+          const transactions = await r.envioClient.getTransactionsWithLogs(
+            batchStart,
+            batchEnd,
+          )
+
+          for (const t of transactions) {
             for (const decoder of decoders) {
-              const d = decoder(r, {
-                ...t,
-                logs: logsByTx[t.hash] ?? [],
-                blockNumber: block.number,
-                blockTimestamp: block.timestamp,
-              })
+              const d = decoder(r, t)
               if (d) {
-                transfers.push(d)
+                messages.push(d)
               }
             }
           }
         })
       }
     }
+
     logger.info('Fetching data... (this may take a while)')
     await Promise.all(promises.map((fn) => fn()))
 
-    for (const transfer of transfers) {
+    const matching: Record<
+      string,
+      Record<string, { send: Message[]; receive: Message[] }>
+    > = {}
+    for (const transfer of messages) {
       if (!matching[transfer.protocol]) {
         matching[transfer.protocol] = {}
       }
@@ -149,19 +163,19 @@ const cmd = command({
       }
     }
 
-    for (const t of transfers) {
+    for (const t of messages) {
       logger.info(`${t.direction} via ${t.protocol}`, {
         ...t,
       })
     }
 
     for (const [protocol, m] of Array.from(Object.entries(matching))) {
-      const send = transfers.filter(
-        (t) => t.protocol === protocol && t.direction === 'inbound',
+      const send = messages.filter(
+        (t) => t.protocol === protocol && t.direction === 'outbound',
       )
 
-      const receive = transfers.filter(
-        (t) => t.protocol === protocol && t.direction === 'outbound',
+      const receive = messages.filter(
+        (t) => t.protocol === protocol && t.direction === 'inbound',
       )
       const matchedBreakdown: Record<string, number> = {}
       Object.entries(m).forEach(([id, match]) => {

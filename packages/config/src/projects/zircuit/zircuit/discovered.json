@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "zircuit",
   "blockNumber": 15364203,
-  "configHash": "0xe815373714954ed6565ff8cbeb51d8d41c76c6bb8c7a0dc5322a7d5b7449c6e6",
+  "configHash": "0x127004c822d62f183c8278cd5ab897a2d75c2988addb86ca14e4ffd3e27762c9",
   "entries": [
     {
       "address": "zircuit:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",

@@ -36,6 +36,7 @@ export async function getScalingProjectData(
       'trackedTxsConfig',
       'tvsConfig',
       'colors',
+      'discoveryInfo',
     ],
   })
   if (!project) return undefined

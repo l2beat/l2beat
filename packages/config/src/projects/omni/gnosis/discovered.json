@@ -2,8 +2,13 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 40494132,
-  "configHash": "0x74d0b78dad3ce8294125d45cbc6c272692b6d4569f290023db15dbfc8928f760",
+  "configHash": "0x371d8b32076639b4b43e89defc75544fd9ca4e42d870063c710aa6a309609e9b",
   "entries": [
+    {
+      "address": "gno:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "gno:0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
       "type": "EOA",
@@ -1617,5 +1622,5 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x58dff7012d65eaf1326dc491b7dbf3bbec64413624723a3f2471674d82466c92"
+  "permissionsConfigHash": "0x052d6352604ac6ec6fb5a8a880a86ca59f07a26158fc68cb68187136537e8d03"
 }

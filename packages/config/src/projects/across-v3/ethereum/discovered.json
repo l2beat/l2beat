@@ -2,7 +2,7 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 22867011,
-  "configHash": "0x136068a2f191d062e53f2686fa7d175df70550d99ff372f3b5621311f9319c00",
+  "configHash": "0x49282a0e36b2ed47220313311018bfc4bbffd7c2bd90465ef3f81f692c81f2e2",
   "entries": [
     {
       "name": "VotingV2",

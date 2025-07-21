@@ -2,7 +2,7 @@
   "name": "opcm16",
   "chain": "ethereum",
   "blockNumber": 22896167,
-  "configHash": "0xeef410add1d86276579ba14f9a0d5ac47dc83efdebe491e367029335717ac437",
+  "configHash": "0x43f9e3b6b8f5d2d40599c5d64baf0c176983181dc028c26497d4273576816e83",
   "entries": [
     {
       "name": "OPContractsManagerInteropMigrator",

@@ -1,10 +1,13 @@
 import { getDiscoveryPaths, readJsonc } from '@l2beat/discovery'
 import {
+  ChainSpecificAddress,
   type EthereumAddress,
   formatJson,
+  unique,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import mergeWith from 'lodash/mergeWith'
 import path from 'path'
 
 interface ConfigSkeleton {
@@ -31,8 +34,7 @@ export function initDiscovery(
   const config = createEmptyConfig(
     existingConfig,
     project,
-    chain,
-    initalAddresses,
+    initalAddresses.map((a) => ChainSpecificAddress.fromLong(chain, a)),
   )
 
   const content = formatJson(config)
@@ -42,21 +44,24 @@ export function initDiscovery(
 function createEmptyConfig(
   existingConfig: ConfigSkeleton,
   project: string,
-  chain: string,
-  initialAddresses: EthereumAddress[],
+  initialAddresses: ChainSpecificAddress[],
 ) {
-  const chains = {
-    ...(existingConfig.chains ?? {}),
-    [chain]: { initialAddresses },
-  }
-
-  const config = {
+  const newConfig = {
     $schema: '../../../../discovery/schemas/config.v2.schema.json',
     name: project,
-    import: existingConfig.import ?? ['../globalConfig.jsonc'],
+    import:
+      existingConfig.import === undefined
+        ? ['../globalConfig.jsonc']
+        : undefined,
     archived: existingConfig.archived ?? undefined,
-    chains,
+    initialAddresses,
   }
 
-  return withoutUndefinedKeys(config)
+  return withoutUndefinedKeys(
+    mergeWith({}, existingConfig, newConfig, (a, b) => {
+      if (Array.isArray(a) && Array.isArray(b)) {
+        return unique(a.concat(b), (a) => JSON.stringify(a))
+      }
+    }),
+  )
 }

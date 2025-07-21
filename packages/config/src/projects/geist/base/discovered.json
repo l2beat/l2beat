@@ -2,7 +2,7 @@
   "name": "geist",
   "chain": "base",
   "blockNumber": 31729291,
-  "configHash": "0x284c9d103108a4b41f6b829d53397de366523b57f1f680bbfcef48c8280fafae",
+  "configHash": "0xed30382f2feda08b9a374d7665f5743adab4e524ee125c416ce5327197945fc3",
   "entries": [
     {
       "address": "base:0x001271c57AeC639952B5201D052767c316755512",

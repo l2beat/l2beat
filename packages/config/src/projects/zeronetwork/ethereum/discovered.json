@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 22593198,
-  "configHash": "0x74f7e085475880e3e7c5780357664469f7471c0b4267663546b205841bf9da40",
+  "configHash": "0x6a617015db67e6d11e8f206d2f32a5dbabd59052905c71f78b3ad7203e4a79a1",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

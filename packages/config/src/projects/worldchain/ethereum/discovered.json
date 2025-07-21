@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 22731118,
-  "configHash": "0x560f6b5603f60988b6a250e1a32c34b9e557dd53b58940046d75ceb96222f6be",
+  "configHash": "0x2d0ecd1924b8861c720f371a00f25df90a1a85a2aff5c10554a12da2375c88fa",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",

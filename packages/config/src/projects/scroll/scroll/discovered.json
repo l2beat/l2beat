@@ -2,8 +2,13 @@
   "name": "scroll",
   "chain": "scroll",
   "blockNumber": 17024223,
-  "configHash": "0xc4591136daf25519c3290007c6fd6ef8bf7e4fa10c9520df19187ddfa10e3ea1",
+  "configHash": "0xa12f1f1e79c0de5d9f5176e9543d52e93842debbdd7f17315a6c3d1e9c2c1b23",
   "entries": [
+    {
+      "address": "scr:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "address": "scr:0x0000000000000000000000000000000000000001",
       "type": "EOA",
@@ -2936,5 +2941,5 @@
     "scroll/ScrollOwnerL2": "0x7e77245231051fbc6f335852afd5305e4b1c493b1005a7826e24aa54340b2ad4",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x2d3a09d9e9d746c6d3b8c34e41a112823e9a06b25260d04b74b65f7c9a54dc24"
+  "permissionsConfigHash": "0xc84f9f9508ee08bcf352d35aa1cf9d6915f5519d4fcce4779b91091ec8a617e8"
 }

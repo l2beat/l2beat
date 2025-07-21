@@ -2,8 +2,13 @@
   "name": "zklinknova",
   "chain": "scroll",
   "blockNumber": 13963893,
-  "configHash": "0x6011306fe9b59b8c934b9159a988808152f26aa657ac074f6b20a87128994608",
+  "configHash": "0x23298ca489e904c14879e9e2c7881339da3e243089cd1ee60ea6ee9561f7a89b",
   "entries": [
+    {
+      "address": "scr:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "zkLink",
       "address": "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
@@ -486,5 +491,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
+  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
 }

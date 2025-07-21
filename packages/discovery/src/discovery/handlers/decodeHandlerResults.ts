@@ -1,12 +1,13 @@
-import { ChainSpecificAddress, getErrorMessage } from '@l2beat/shared-pure'
+import { getErrorMessage } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,
   StructureContract,
 } from '../config/StructureConfig'
-import type { ContractValue, EntryParameters } from '../output/types'
+import type { EntryParameters } from '../output/types'
 import { applyReturnFragment } from '../type-casters/applyReturnFragment'
+import { prefixAddresses } from '../utils/prefixAddresses'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
 
@@ -70,33 +71,4 @@ export function decodeHandlerResults(
     errors,
     usedTypes: runtime.usedTypes,
   }
-}
-
-// TODO(radomski): We need to test this
-function prefixAddresses(
-  longChain: string,
-  value: ContractValue,
-): ContractValue {
-  if (Array.isArray(value)) {
-    return value.map((v) => prefixAddresses(longChain, v))
-  }
-
-  if (typeof value === 'object') {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, value]) => [
-        prefixAddresses(longChain, key),
-        prefixAddresses(longChain, value as ContractValue),
-      ]),
-    )
-  }
-
-  if (typeof value === 'string') {
-    try {
-      return ChainSpecificAddress.fromLong(longChain, value).toString()
-    } catch {
-      return value
-    }
-  }
-
-  return value
 }

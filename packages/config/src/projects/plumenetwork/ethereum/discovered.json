@@ -2,7 +2,7 @@
   "name": "plumenetwork",
   "chain": "ethereum",
   "blockNumber": 22895948,
-  "configHash": "0x069ff433e93436c406f61326a87a244b17a25125a647d4c0d45312b6ad444cdb",
+  "configHash": "0xcc6ecd8604c9d93abe4ea2cd30599edd0494f4fb1f3155d122f52e09b794a85e",
   "entries": [
     {
       "address": "eth:0x006F5B7E2D58fb4E53DEdaB8802FCdf2a5441DC7",

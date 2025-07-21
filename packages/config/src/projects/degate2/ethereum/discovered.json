@@ -2,7 +2,7 @@
   "name": "degate2",
   "chain": "ethereum",
   "blockNumber": 18554408,
-  "configHash": "0x7ae4f103bb9e478c6c24fe7bfb64f32ce37cb79e4dfdb8a2e19f7c8fc8e9d989",
+  "configHash": "0xf0f914440e4259740b3a897878243f074f59b0e327f3c18c17a33b25d05b6eec",
   "entries": [
     {
       "name": "LoopringIOExchangeOwner",

@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0xb53e6c38f0dcf7bf5dcc51a5fc75c15c0428cb30ff6745eab0e4d77a6f578d02",
+  "configHash": "0xa93d4a3b7cf8ea51658b551209b1edfccd475e3581bf2451cd5fd65258b77fe1",
   "entries": [
     {
       "address": "zksync:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -279,5 +279,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
+  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
 }

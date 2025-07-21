@@ -3,13 +3,9 @@
   "name": "gmnetwork",
   "import": ["../globalConfig.jsonc"],
   "archived": true,
-  "chains": {
-    "ethereum": {
-      "initialAddresses": [
-        "0xd2726bde3D07645faf5aD7cCF15C94817B3556D6",
-        "0xd1fe2eeb5637b0f78bfced9186ebe716ac73deb6"
-      ],
-      "names": { "0xf040a7A04e914E1b4383C04359D03Ab5F12E7828": "GmMultisig" }
-    }
-  }
+  "initialAddresses": [
+    "eth:0xd2726bde3D07645faf5aD7cCF15C94817B3556D6",
+    "eth:0xd1fe2EEb5637b0F78BfcEd9186ebE716aC73DEb6"
+  ],
+  "names": { "eth:0xf040a7A04e914E1b4383C04359D03Ab5F12E7828": "GmMultisig" }
 }

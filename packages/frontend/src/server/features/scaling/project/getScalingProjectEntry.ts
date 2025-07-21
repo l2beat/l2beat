@@ -126,6 +126,7 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
     | 'colors'
+    | 'discoveryInfo'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
@@ -240,10 +241,9 @@ export async function getScalingProjectEntry(
       project.scalingInfo.type === 'Other'
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
-    discoUiHref:
-      project.statuses.reviewStatus === 'initialReview'
-        ? undefined
-        : `https://disco.l2beat.com/ui/p/${project.id}`,
+    discoUiHref: project.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
   }
 
   const sections: ProjectDetailsSection[] = []
