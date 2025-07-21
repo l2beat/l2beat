@@ -1,0 +1,150 @@
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
+import type { Chain } from '../../chains'
+import type { Message } from '../../types/Message'
+import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
+import { createV1PacketId, decodeV1Packet } from '../../utils/layerzero'
+
+export const LAYERZEROV1 = {
+  name: 'layerzerov1',
+  decoder: decoder,
+}
+
+function decoder(
+  chain: Chain,
+  transaction: TransactionWithLogs,
+): Message | undefined {
+  for (const log of transaction.logs) {
+    const contracts = CONTRACTS.find(
+      (b) => b.chainShortName === chain.shortName,
+    )
+    if (!contracts) continue
+
+    if (
+      EthereumAddress(log.address) === contracts.ultraLightNode &&
+      log.topics[0] === encodeEventTopics({ abi: ABI, eventName: 'Packet' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'Packet',
+      })
+
+      const decodedPacket = decodeV1Packet(data.args.payload)
+      if (!decodedPacket) {
+        console.error(`Failed to decode packet (tx ${transaction.hash})`)
+        continue
+      }
+
+      const packetId = createV1PacketId(
+        decodedPacket.nonce,
+        decodedPacket.localChainId,
+        decodedPacket.ua,
+        decodedPacket.dstChainId,
+        decodedPacket.dstAddress,
+      )
+
+      const destination = CONTRACTS.find(
+        (b) => b.chainId === decodedPacket.dstChainId,
+      )?.chainShortName
+
+      return {
+        direction: 'outbound',
+        protocol: LAYERZEROV1.name,
+        origin: chain.shortName,
+        destination: destination ?? decodedPacket.dstChainId.toString(),
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
+        type: 'Packet',
+        matchingId: packetId,
+      }
+    }
+
+    if (
+      EthereumAddress(log.address) === contracts.ultraLightNode &&
+      log.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'PacketReceived' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'PacketReceived',
+      })
+
+      const dstChainId = contracts.eid
+      assert(dstChainId)
+
+      const packetId = createV1PacketId(
+        data.args.nonce,
+        data.args.srcChainId,
+        data.args.dstAddress, // This is actually the UA (User Application)
+        dstChainId,
+        data.args.dstAddress,
+      )
+
+      const origin = CONTRACTS.find(
+        (c) => c.eid === data.args.srcChainId,
+      )?.chainShortName
+
+      return {
+        direction: 'inbound',
+        protocol: LAYERZEROV1.name,
+        origin: origin ?? data.args.srcChainId.toString(),
+        destination: chain.shortName,
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
+        type: 'PacketReceived',
+        matchingId: packetId,
+      }
+    }
+  }
+
+  return undefined
+}
+
+const ABI = parseAbi([
+  // UltraLightNodeV2
+  'event Packet(bytes payload)',
+  'event PacketReceived(uint16 indexed srcChainId, bytes srcAddress, address indexed dstAddress, uint64 nonce, bytes32 payloadHash)',
+  // SendUln301
+  'event PacketSent(bytes encodedPayload, bytes options, uint256 nativeFee, uint256 lzTokenFee)',
+  // ReceiveUln301
+  'event PacketDelivered((uint32,bytes32,uint64) origin, address receiver)',
+])
+
+const CONTRACTS = [
+  {
+    chainId: 1,
+    eid: 30101,
+    chainShortName: 'eth',
+    ultraLightNode: EthereumAddress(
+      '0x1a44076050125825900e736c501f859c50fE728c',
+    ),
+    sendUln: EthereumAddress('0xD231084BfB234C107D3eE2b22F97F3346fDAF705'),
+    receiveUln: EthereumAddress('0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC'),
+  },
+  {
+    chainId: 42161,
+    eid: 30110,
+    chainShortName: 'arb1',
+    ultraLightNode: EthereumAddress(
+      '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2',
+    ),
+    sendUln: EthereumAddress('0x5cDc927876031B4Ef910735225c425A7Fc8efed9'),
+    receiveUln: EthereumAddress('0xe4DD168822767C4342e54e6241f0b91DE0d3c241'),
+  },
+  {
+    chainId: 8453,
+    eid: 30184,
+    chainShortName: 'base',
+    ultraLightNode: EthereumAddress(
+      '0x38dE71124f7a447a01D67945a51eDcE9FF491251',
+    ),
+    sendUln: EthereumAddress('0x9DB3714048B5499Ec65F807787897D3b3Aa70072'),
+    receiveUln: EthereumAddress('0x58D53a2d6a08B72a15137F3381d21b90638bd753'),
+  },
+]
