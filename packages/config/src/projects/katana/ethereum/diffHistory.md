@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xcc3793504351cb584ce330874f8995ff7b6bac5e
+
+# Diff at Mon, 21 Jul 2025 10:08:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c89d5207a278197d1d4bfd60ac8e37852accba7c block: 22895938
+- current block number: 22966867
+
+## Description
+
+MS two members added.
+
+## Watched changes
+
+```diff
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
+    +++ description: None
+      values.$members.0:
++        "eth:0x34d23C4fb6542B467cA8724bAD30AC811399b184"
+      values.$members.1:
++        "eth:0x09f5F2592791208219A1F51e3855Be9419fF6bE4"
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 7 (29%)"
+    }
+```
+
 Generated with discovered.json: 0xdd6f8c72b7d5f1d1507f9d3bf9b72685cface25c
 
 # Diff at Mon, 14 Jul 2025 12:45:14 GMT:
