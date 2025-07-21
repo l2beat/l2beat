@@ -6,8 +6,8 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { ArrowIcon } from '~/icons/Arrow'
-import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { ProjectByRaas } from '~/server/features/ecosystems/getProjectsByRaas'
 import { cn } from '~/utils/cn'
 import { EcosystemWidget, EcosystemWidgetTitle } from './EcosystemWidget'
