@@ -2,9 +2,19 @@
 export interface Chain {
   name: string
   shortName: string
-  callsPerMinute: number
+  blockProviderConfig:
+    | {
+        type: 'rpc'
+        callsPerMinute: number
+      }
+    | {
+        type: 'etherscan'
+        chainId: number
+      }
   getTxUrl: (hash: string) => string
-  envio: string
+  envioUrl: string
+  envioCallsPerMinute: number
+  envioBatchSize: number
 }
 // Envio Rate Limiting Information: https://envio.dev/pricing
 //  Without API Token: Free unlimited usage with heavy rate limiting (60 requests/minute)
@@ -15,64 +25,109 @@ export const CHAINS: Chain[] = [
   {
     name: 'ethereum',
     shortName: 'eth',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 1,
+    },
     getTxUrl: (hash: string) => `https://etherscan.io/tx/${hash}`,
-    envio: 'https://eth.hypersync.xyz/query', //🏅
+    envioUrl: 'https://eth.hypersync.xyz/query', //🏅
+    envioCallsPerMinute: 120,
+    envioBatchSize: 100,
   },
   {
     name: 'arbitrum',
     shortName: 'arb1',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 42161,
+    },
     getTxUrl: (hash: string) => `https://arbiscan.io/tx/${hash}`,
-    envio: 'https://arbitrum.hypersync.xyz/query', //🥈
+    envioUrl: 'https://arbitrum.hypersync.xyz/query', //🥈
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'optimism',
     shortName: 'oeth',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 10,
+    },
     getTxUrl: (hash: string) => `https://arbiscan.io/tx/${hash}`,
-    envio: 'https://optimism.hypersync.xyz/query', //🏅
+    envioUrl: 'https://optimism.hypersync.xyz/query', //🏅
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'base',
     shortName: 'base',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 8453,
+    },
     getTxUrl: (hash: string) => `https://basescan.org/tx/${hash}`,
-    envio: 'https://base.hypersync.xyz/query', //🏅
+    envioUrl: 'https://base.hypersync.xyz/query', //🏅
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'zksync',
     shortName: 'zksync',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 324,
+    },
     getTxUrl: (hash: string) => `https://era.zksync.network/${hash}`,
-    envio: 'https://zksync.hypersync.xyz/query', //🥉
+    envioUrl: 'https://zksync.hypersync.xyz/query', //🥉
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'linea',
     shortName: 'linea',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 59144,
+    },
     getTxUrl: (hash: string) => `https://lineascan.build/tx/${hash}`,
-    envio: 'https://linea.hypersync.xyz/query', //🥉
+    envioUrl: 'https://linea.hypersync.xyz/query', //🥉
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'scroll',
     shortName: 'scr',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 534352,
+    },
     getTxUrl: (hash: string) => `hhttps://scrollscan.com/tx/${hash}`,
-    envio: 'https://scroll.hypersync.xyz/query', //🥉
+    envioUrl: 'https://scroll.hypersync.xyz/query', //🥉
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'unichain',
     shortName: 'unichain',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'etherscan',
+      chainId: 130,
+    },
     getTxUrl: (hash: string) => `https://uniscan.xyz/tx/${hash}`,
-    envio: 'https://unichain.hypersync.xyz/query', // 🪨
+    envioUrl: 'https://unichain.hypersync.xyz/query', // 🪨
+    envioCallsPerMinute: 120,
+    envioBatchSize: 2000,
   },
   {
     name: 'ink',
     shortName: 'ink',
-    callsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'rpc',
+      callsPerMinute: 120,
+    },
     getTxUrl: (hash: string) => `https://explorer.inkonchain.com/tx/${hash}`,
-    envio: 'https://ink.hypersync.xyz/query', //🪨
+    envioUrl: 'https://ink.hypersync.xyz/query', //🪨
+    envioCallsPerMinute: 120,
+    envioBatchSize: 100,
   },
 ]
