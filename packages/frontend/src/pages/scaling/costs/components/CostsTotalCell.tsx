@@ -16,7 +16,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatCostValue } from '../utils/formatCostValue'
 import { useCostsMetricContext } from './CostsMetricContext'
 import { useCostsUnitContext } from './CostsUnitContext'
-import type { CostsData } from './table/Columns'
+import type { CostsData } from './table/columns'
 
 interface CellProps {
   data: CostsData
