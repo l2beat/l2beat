@@ -1,3 +1,4 @@
+import type { RealTimeAnomalyRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
@@ -6,12 +7,14 @@ import { getDb } from '~/server/database'
 
 const cache = new InMemoryCache()
 
-export function getApprovedOngoingAnomalies() {
+type GroupedAnomalies = Record<string, RealTimeAnomalyRecord[]>
+
+export async function getApprovedOngoingAnomalies(): Promise<GroupedAnomalies> {
   if (env.MOCK) {
     return getMockedApprovedOngoingAnomalies()
   }
 
-  return cache.get(
+  const data = await cache.get(
     {
       key: ['approved-ongoing-anomalies'],
       ttl: 3 * UnixTime.MINUTE,
@@ -24,9 +27,10 @@ export function getApprovedOngoingAnomalies() {
       return groupBy(anomalies, (anomaly) => anomaly.projectId)
     },
   )
+  return data
 }
 
-function getMockedApprovedOngoingAnomalies() {
+function getMockedApprovedOngoingAnomalies(): GroupedAnomalies {
   return {
     kinto: [],
   }
