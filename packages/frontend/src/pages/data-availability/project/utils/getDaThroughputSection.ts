@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { getDaThroughputTable } from '~/server/features/data-availability/throughput/getDaThroughputTable'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
@@ -17,21 +16,16 @@ export async function getDaThroughputSection(
   )
     return undefined
 
-  const [throughputChart, throughputData, projectsWithColors] =
-    await Promise.all([
-      helpers.da.projectChart.fetch({
-        range: { type: '1y' },
-        projectId: project.id,
-      }),
-      getDaThroughputTable([project.id]),
-      ps.getProjects({ select: ['colors'] }),
-    ])
+  const [throughputChart, projectsWithColors] = await Promise.all([
+    helpers.da.projectChart.fetch({
+      range: { type: '1y' },
+      projectId: project.id,
+      includeScalingOnly: true,
+    }),
+    ps.getProjects({ select: ['colors'] }),
+  ])
 
   if (!throughputChart || throughputChart.chart.length === 0) return undefined
-
-  const projectData = throughputData.data[project.id]
-
-  if (!projectData) return undefined
 
   const notSyncedStatus = getThroughputSyncWarning(
     throughputChart.syncedUntil,
@@ -43,12 +37,6 @@ export async function getDaThroughputSection(
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
-    pastDayAvgCapacityUtilization:
-      projectData.pastDayData?.avgCapacityUtilization,
-    pastDayAvgThroughputPerSecond:
-      projectData.pastDayData?.avgThroughputPerSecond,
-    largestPoster: projectData.pastDayData?.largestPoster,
-    totalPosted: projectData.pastDayData?.totalPosted,
     syncStatus: {
       warning: notSyncedStatus,
       isSynced: !notSyncedStatus,

@@ -32,6 +32,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     getProjectDaThroughputChart({
       range: { type: params.range },
       projectId: params.projectId,
+      includeScalingOnly: false,
     }),
     getActivityForProjectAndRange(params.projectId, params.range),
   ])
