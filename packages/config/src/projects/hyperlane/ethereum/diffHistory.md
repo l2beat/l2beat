@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5a5d7831c72672549ada01a3b82b778e9d8bd0bf
+Generated with discovered.json: 0x7217b194b42b046d2834bf9baa5b2d6a5e3a34e8
 
-# Diff at Mon, 21 Jul 2025 10:20:27 GMT:
+# Diff at Mon, 21 Jul 2025 10:25:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@c89d5207a278197d1d4bfd60ac8e37852accba7c block: 22923900
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x5a5d7831c72672549ada01a3b82b778e9d8bd0bf
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+[PausableIsm](https://disco.l2beat.com/diff/eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33/eth:0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728) and default [StaticAggregationIsm](https://disco.l2beat.com/diff/eth:0x69d39cd0B60d47460F30f0bD5200f9C46E924Ce1/eth:0x427Af5b61CdEbf660123C1c3fA9CAa83756E1B70) upgraded with a single line change (PACKAGE_VERSION bumped).
 
 ## Watched changes
 
@@ -37,8 +37,9 @@ Provide description of changes. This section will be preserved.
 ```diff
     EOA  (0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33","description":"pause and unpause the ISM.","role":".owner"}]
+      receivedPermissions.0.from:
+-        "eth:0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33"
++        "eth:0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728"
     }
 ```
 
@@ -67,7 +68,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract PausableIsm (0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728)
-    +++ description: None
+    +++ description: Simple ISM that implements `verify()` and returns true if not paused, false otherwise. This allows its owner (eth:0xa7ECcdb9Be08178f896c26b7BbD8C3D4E844d9Ba) to pause any system for which this ISMs verification is needed.
 ```
 
 ```diff
