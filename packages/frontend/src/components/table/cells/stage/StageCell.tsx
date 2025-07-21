@@ -54,7 +54,9 @@ export function StageCell({
           isAppchain={isAppchain}
           emergencyWarning={emergencyWarning}
         />
-        <p className="mt-3 text-label-value-13">Click to view details</p>
+        <p className="mt-3 text-label-value-13 text-secondary">
+          Click to view details
+        </p>
       </TooltipContent>
     </Tooltip>
   )
