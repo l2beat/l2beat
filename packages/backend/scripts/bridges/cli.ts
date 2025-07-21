@@ -1,6 +1,12 @@
-import { getEnv, Logger } from '@l2beat/backend-tools'
-import { HttpClient, RpcClient } from '@l2beat/shared'
-import { command, number, option, optional, run, string } from 'cmd-ts'
+import { getEnv, Logger, RateLimiter } from '@l2beat/backend-tools'
+import {
+  BlockIndexerClient,
+  BlockProvider,
+  HttpClient,
+  RpcClient,
+} from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
+import { command, option, optional, run, string } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
@@ -8,18 +14,6 @@ import type { Message } from './types/Message'
 import { EnvioClient } from './utils/EnvioClient'
 
 const args = {
-  start: option({
-    type: optional(number),
-    long: 'start',
-    description:
-      'Starting block. If not passed will use "latest - range". Currently there is no support for per-chain starting blocks, you can only see latest for multiple chains.',
-  }),
-  range: option({
-    type: optional(number),
-    long: 'range',
-    description:
-      'Specify how many blocks to fetch (starting from starting block). Defaults to 100.',
-  }),
   chains: option({
     type: optional(string),
     long: 'chains',
@@ -49,25 +43,40 @@ const cmd = command({
 
     const chains = enabledChains.map((c) => ({
       ...c,
-      rpc: new RpcClient({
-        url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
-        sourceName: c.name,
-        http,
-        logger,
-        callsPerMinute: c.callsPerMinute,
-        retryStrategy: 'SCRIPT',
-      }),
+      blockTimestampClient:
+        c.blockProviderConfig.type === 'etherscan'
+          ? new BlockIndexerClient(
+              http,
+              new RateLimiter({ callsPerMinute: 10 }),
+              {
+                type: 'etherscan',
+                url: env.string('ETHERSCAN_API_URL'),
+                apiKey: env.string('ETHERSCAN_API_KEY'),
+                chain: c.name,
+                chainId: c.blockProviderConfig.chainId,
+              },
+            )
+          : new BlockProvider(c.name, [
+              new RpcClient({
+                url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
+                sourceName: c.name,
+                http,
+                logger,
+                callsPerMinute: c.blockProviderConfig.callsPerMinute,
+                retryStrategy: 'SCRIPT',
+              }),
+            ]),
       envioClient: new EnvioClient({
-        url: c.envio,
+        url: c.envioUrl,
         apiToken: envioApiToken,
-        sourceName: c.name,
+        sourceName: `${c.name} (Envio)`,
         http,
         logger,
-        callsPerMinute: c.callsPerMinute,
+        callsPerMinute: c.envioCallsPerMinute,
         retryStrategy: 'SCRIPT',
       }),
-      start: args.start ?? -1, // will be filled later
-      range: args.range ?? 1_000,
+      start: -1, // will be filled later
+      end: -1, // will be filled later,
     }))
 
     const enabledProtocols = args.protocols
@@ -76,35 +85,35 @@ const cmd = command({
 
     const decoders = enabledProtocols.map((p) => p.decoder)
 
-    logger.info('Running script', {
+    logger.info('Running script for last day', {
       protocols: enabledProtocols.map((p) => p.name),
       chains: enabledChains.map((c) => c.name),
     })
 
     const blockPromises: (() => Promise<void>)[] = []
     for (const r of chains) {
-      if (r.start === -1) {
-        blockPromises.push(async () => {
-          const latest = await r.rpc.getLatestBlockNumber()
-          r.start = latest - r.range
-        })
-      }
+      blockPromises.push(async () => {
+        r.start = await r.blockTimestampClient.getBlockNumberAtOrBefore(
+          UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.DAY,
+        )
+        r.end = await r.blockTimestampClient.getBlockNumberAtOrBefore(
+          UnixTime.toStartOf(UnixTime.now(), 'day'),
+        )
+      })
     }
-
-    const messages: Message[] = []
     logger.info('Fetching block numbers...')
     await Promise.all(blockPromises.map((fn) => fn()))
 
-    const BATCH_SIZE = 100
+    const messages: Message[] = []
     const promises: (() => Promise<void>)[] = []
     for (const r of chains) {
-      const totalRange = r.range
-      const numBatches = Math.ceil(totalRange / BATCH_SIZE)
+      const totalRange = r.end - r.start
+      const numBatches = Math.ceil(totalRange / r.envioBatchSize)
 
       for (let batchIndex = 0; batchIndex < numBatches; batchIndex++) {
         promises.push(async () => {
-          const batchStart = r.start + batchIndex * BATCH_SIZE
-          const batchEnd = Math.min(batchStart + BATCH_SIZE, r.start + r.range)
+          const batchStart = r.start + batchIndex * r.envioBatchSize
+          const batchEnd = Math.min(batchStart + r.envioBatchSize, r.end)
 
           const transactions = await r.envioClient.getTransactionsWithLogs(
             batchStart,
