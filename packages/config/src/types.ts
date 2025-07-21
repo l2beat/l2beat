@@ -427,6 +427,7 @@ export interface StageConfigured {
   missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
+  stage1PrincipleDescription?: string
   additionalConsiderations?: {
     short: string
     long: string
