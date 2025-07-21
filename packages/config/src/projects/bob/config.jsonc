@@ -7,6 +7,74 @@
     "eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72"
   ],
   "overrides": {
-    "eth:0x778870B55576Bdb2B5368A3CB225fBcED2B8D0Ff": { "category": "spam" }
+    "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
+      "fields": {
+        "verifier0Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0x310fe598"]
+          }
+        },
+        "verifier1Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0x50bd1769"]
+          }
+        },
+        "verifier2Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0xc101b42b"]
+          }
+        },
+        "verifier3Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0x9f39696c"]
+          }
+        },
+        "verifier4Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0xf536085a"]
+          }
+        },
+        "verifier5Manual": {
+          "handler": {
+            "type": "call",
+            "method": "getVerifier",
+            "args": ["0xbb001d44"]
+          }
+        }
+      }
+    },
+    "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
+      "fields": {
+        "callsScheduled": {
+          "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "CallScheduled"
+            }
+          }
+        },
+        "callsExecuted": {
+          "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "event",
+            "add": {
+              "event": "CallExecuted"
+            }
+          }
+        }
+      }
+    }
   }
 }

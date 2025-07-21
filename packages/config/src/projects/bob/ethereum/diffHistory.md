@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf65330f3e8b5cc0b9b714335d54a5b0f3da9d215
+Generated with discovered.json: 0x36ab83c8daa4fd79246eb031764aab3b10509c08
 
-# Diff at Mon, 21 Jul 2025 06:11:32 GMT:
+# Diff at Mon, 21 Jul 2025 09:44:48 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b5fe7ac6e74ccc6e4e6d67ecb3f67a0783bb471d block: 22665980
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xf65330f3e8b5cc0b9b714335d54a5b0f3da9d215
 
 ## Description
 
-Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html)  as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
+Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
 
 summary:
 - standard op stack contracts
@@ -26,12 +26,12 @@ summary:
       - `proveOutputFault()` and `proveValidity()` are always permissionless during that time (a vanguard's proposal can be (in)validated))
       - siblings can be created as soon as the vanguard has proposed the first, meaning the vanguard only has the 'optimistic' advantage, giving the 'burden of proof' to other actors
   - DISPUTE_GAME_FINALITY_DELAY_SECONDS (execution delay) = 3.5d
-    - for everyone incl vanguard this delays finalization of a winning state root (for example to have time to blacklist the winning dispute game by the guardian)
+    - for everyone incl vanguard this delays finalization of a winning (resolved) state root (for example to have time to blacklist the winning dispute game by the guardian)
 
 some code:
 - diff PermissionedDisputeGame/KailuaGame: https://disco.l2beat.com/diff/eth:0xF27d54dB0587442b01d6036C0F7f67CDaaBa1743/eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb
 - moved TimelockController of the RiscZeroVerifierRouter to standard template ([diff](https://disco.l2beat.com/diff/eth:0x45828180bbE489350D621d002968A0585406d487/eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)): 3d delay, EOA-controlled
-- superchainconfigFake: added v1.2.0 template (same code as opstack superchainconf): https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7
+- superchainconfigFake: added v1.2.0 template (same code as opstack superchainconf, different gov addresses): https://disco.l2beat.com/diff/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7/eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7
 
 ## Watched changes
 
@@ -340,6 +340,18 @@ some code:
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x08AeD6C108E500540a9544beF7a8B8a05E056e87)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract TimelockController (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)
     +++ description: A timelock with access control. The current minimum delay is 3d.
 ```
@@ -352,14 +364,38 @@ some code:
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x1efDd13f831ceeEa14940806705A53D3211CD698)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract PreimageOracle (0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3)
     +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
 ```
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract DelayedWETH (0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13)
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF)
+    +++ description: None
 ```
 
 ```diff
@@ -376,7 +412,19 @@ some code:
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0x68dC2cB4e61774873971c499D9b239ec5Ac540E3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract RiscZeroVerifierRouter (0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x94A4684d6F7085C19138Bd4f9F3295fa9943C622)
     +++ description: None
 ```
 
@@ -394,7 +442,25 @@ some code:
 
 ```diff
 +   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xAC292cF957Dd5BA174cdA13b05C16aFC71700327)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract KailuaGame (0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroVerifierEmergencyStop (0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1)
     +++ description: None
 ```
 
@@ -422,6 +488,12 @@ some code:
     +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
 ```
 
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C)
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
@@ -447,12 +519,24 @@ some code:
  .../projects/bob/ethereum/.flat/PreimageOracle.sol | 1311 +++++++
  ...0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0.sol} |    0
  ...:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c.sol |  298 ++
+ ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1689 ++++++++
+ ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1698 ++++++++
+ ...:0x94A4684d6F7085C19138Bd4f9F3295fa9943C622.sol | 1676 ++++++++
+ ...:0xAC292cF957Dd5BA174cdA13b05C16aFC71700327.sol | 1691 ++++++++
+ ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1699 ++++++++
+ ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1683 ++++++++
+ ...:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805.sol |  315 ++
+ ...:0x08AeD6C108E500540a9544beF7a8B8a05E056e87.sol |  315 ++
+ ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  315 ++
+ ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  315 ++
+ ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  315 ++
+ ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  315 ++
  .../bob/ethereum/.flat/RiscZeroVerifierRouter.sol  |  240 ++
  .../ethereum/.flat/SuperchainConfig/Proxy.p.sol    |  200 +
  .../.flat/SuperchainConfig/SuperchainConfig.sol    |  477 +++
  .../SystemConfig/SystemConfig.sol                  |  715 ++--
  .../bob/ethereum/.flat/TimelockController.sol      | 1000 +++++
- 27 files changed, 21403 insertions(+), 3793 deletions(-)
+ 39 files changed, 33429 insertions(+), 3793 deletions(-)
 ```
 
 Generated with discovered.json: 0x8b55c0d14f76f0f19015fe74f09c905cbdbc2c45
