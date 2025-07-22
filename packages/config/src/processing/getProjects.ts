@@ -53,9 +53,9 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     addedAt: p.addedAt,
 
     // data
-    colors:
-      p.colors,
-    ecosystemColors: ecosystems.find((e) => e.id === p.ecosystemInfo?.id)?.colors,
+    colors: p.colors,
+    ecosystemColors: ecosystems.find((e) => e.id === p.ecosystemInfo?.id)
+      ?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
