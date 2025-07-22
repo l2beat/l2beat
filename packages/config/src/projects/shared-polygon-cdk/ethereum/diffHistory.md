@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x52d99349bd40d59269f905d1a317477b42afa292
+
+# Diff at Tue, 22 Jul 2025 13:43:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7cd20806e60337bd7514921d95610ad265cb6ec1 block: 22924125
+- current block number: 22924125
+
+## Description
+
+Event handler fix
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22924125 (main branch discovery), not current.
+
+```diff
+    contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x00040001.0.1:
+-        "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
+      values.aggchainVKeys.0x00040001.0.0:
+-        "0x00040001"
+      values.routes.0x00000004.0.2:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.routes.0x00000004.0.1:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.routes.0x00000004.0.0:
+-        "0x00000004"
+    }
+```
+
 Generated with discovered.json: 0x1106a4bc16487320b6098c10b595e5e2f8f7d4a9
 
 # Diff at Tue, 15 Jul 2025 10:57:28 GMT:
