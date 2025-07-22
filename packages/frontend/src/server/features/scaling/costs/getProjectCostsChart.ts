@@ -73,7 +73,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   })
 
   const perL2Uop =
-    costsUopsCount !== undefined && resolution === 'daily'
+    costsUopsCount !== undefined && resolution !== 'hourly'
       ? mapToPerL2UopsCost(total, {
           costs: costsUopsCount,
           throughput: throughputUopsCount,
