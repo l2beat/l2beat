@@ -523,6 +523,18 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
   }
 }
 
+export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+  delay: number,
+): TableReadyValue {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `The primary whitelisted proposer has an optimistic advantage, which is dropped after ${delayString} of inactivity, making them win by default over conflicting unproven proposals by others. But anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal at any time.`,
+    sentiment: 'good',
+    orderHint: delay,
+  }
+}
+
 export const PROPOSER_SELF_PROPOSE_ZK: TableReadyValue = {
   value: 'Self propose',
   description:
@@ -750,6 +762,7 @@ export const RISK_VIEW = {
   PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
   PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+  PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   PROPOSER_POS,

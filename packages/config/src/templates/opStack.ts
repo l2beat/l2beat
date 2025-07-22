@@ -625,6 +625,106 @@ function getStateValidation(
         isPermissionless: true,
       })
     }
+    case 'Kailua': {
+      const kailuaBond = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'participationBond',
+      )
+      const proposalOutputCount =
+        templateVars.discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'PROPOSAL_OUTPUT_COUNT',
+        )
+      const outputBlockSpan = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'OUTPUT_BLOCK_SPAN',
+      )
+      const vanguardAdvantage = templateVars.discovery.getContractValue<number>(
+        'KailuaTreasury',
+        'vanguardAdvantage',
+      )
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          'OptimismPortal2',
+          'disputeGameFinalityDelaySeconds',
+        )
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      )
+      return {
+        categories: [
+          {
+            title: 'State root proposals',
+            description: `Proposers submit state roots as children of the latest resolved state root (called anchor state), by calling the \`propose()\` function in the KailuaTreasury. A parent state root can have multiple conflicting children, composing a tournament. Each proposer requires to lock a bond, currently set to ${formatEther(
+              kailuaBond,
+            )} ETH, that can be slashed if any proposal made by this proposer is proven incorrect via a fault proof or a conflicting validity proof. A bond can be withdrawn only after a given tournament (read: generation of child state roots) has been resolved.
+
+Proposals consist of a state root and a reference to their parent. A proposal asserts that the proposed state root constitutes a valid state transition from the referenced parent's state root. For efficient zk fault proofs to be possible, each proposal also includes ${proposalOutputCount} intermediate state commitments that each span ${outputBlockSpan} L2 blocks. Proving any of them faulty eliminates the proposer and all their unresolved proposals, forfeits their bond, and disallows future proposals by the same address.
+
+The **Vanguard** is a privileged actor who can always make the first child proposal on a new parent state root. This gives them an advantage in the optimistic resolving mode. In the case that nobody proves the validity of another or the fault of the Vanguard proposal, the Vanguard always wins the tournament. This privilege is valid for ${formatSeconds(vanguardAdvantage)}, after which anyone can make a proposal. Sibling proposals made after the Vanguard's are permissionless.`,
+            references: [
+              {
+                title: "'Sequencing' - Kailua Docs",
+                url: 'https://risc0.github.io/kailua/design.html#sequencing',
+              },
+              {
+                title: 'Vanguard - Kailua Docs',
+                url: 'https://risc0.github.io/kailua/parameters.html#vanguard-advantage',
+              },
+            ],
+          },
+          {
+            title: 'Challenges',
+            description: `
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other and the system only allows for one child to be resolved in the end. A state root can be resolved if it is **the only remaining proposal** after any of the following elimination methods or their combination: 
+1. the challenge period of ${formatSeconds(maxClockDuration)} has passed and it is not countered
+2. it is proven correct with a validity proof
+3. conflicting sibling proposals are proven faulty.
+A single remaining child can be 'resolved' and will be finalized and usable for withdrawals after an execution delay (time for the Guardian to manually blacklist malicious state roots) of ${formatSeconds(disputeGameFinalityDelaySeconds)}.`,
+            references: [
+              {
+                url: 'https://risc0.github.io/kailua/design.html#disputes',
+                title: 'Disputes - Kailua Docs',
+              },
+            ],
+          },
+          {
+            title: 'Validity proofs',
+            description: `Validity proofs and fault proofs both must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.
+The Kailua state validation system is primarily optimistically resolved, so no validity proofs are required in the happy case. But two different zk proofs on unresolved state roots are possible and permissionless: The proveValidity() function proves a state root proposal's full validity, automatically invalidating all conflicting sibling proposals. proveOutputFault() allows any actor to eliminate a state root proposal for which it can prove that any of the ${proposalOutputCount} intermediate state transitions in the proposal are not correct. Both are zk proofs of validity, although one is used as an efficient fault proof to invalidate a single conflicting state transition.`,
+            references: [
+              {
+                url: 'https://risc0.github.io/kailua/introduction.html',
+                title: 'Risc0 Kailua Docs',
+              },
+              {
+                url: 'https://github.com/risc0/risc0-ethereum/blob/main/contracts/version-management-design.md',
+                title: 'Verifier upgrade and deprecation - Kailua Docs',
+              },
+            ],
+            risks: [
+              {
+                category: 'Funds can be stolen if',
+                text: 'the validity proof cryptography is broken or implemented incorrectly.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'no challenger checks the published state or is not able to provide zk proof.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
+              },
+              {
+                category: 'Funds can be stolen if',
+                text: 'a verifier needed for a given proof is paused by its permissioned owner.',
+              },
+            ],
+          },
+        ],
+      }
+    }
   }
 }
 
@@ -764,6 +864,12 @@ function getRiskViewStateValidation(
         secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
+    case 'Kailua': {
+      return {
+        ...RISK_VIEW.STATE_FP_1R_ZK,
+        secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
+      }
+    }
   }
 }
 
@@ -794,6 +900,13 @@ function getRiskViewProposerFailure(
       return RISK_VIEW.PROPOSER_CANNOT_WITHDRAW
     case 'Permissionless':
       return RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS
+    case 'Kailua':
+      return RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+        templateVars.discovery.getContractValue<number>(
+          'KailuaTreasury',
+          'vanguardAdvantage',
+        ),
+      )
   }
 }
 
@@ -810,6 +923,7 @@ function computedStage(
     None: null,
     Permissioned: false,
     Permissionless: true,
+    Kailua: true,
   }
 
   return getStage(
@@ -950,6 +1064,7 @@ function getTechnologyOperator(
     }
     case 'Permissioned':
     case 'Permissionless':
+    case 'Kailua':
       return OPERATOR.CENTRALIZED_OPERATOR
   }
 }
@@ -1017,6 +1132,53 @@ function getTechnologyExitMechanism(
       const maxClockDuration = templateVars.discovery.getContractValue<number>(
         disputeGameName,
         'maxClockDuration',
+      )
+
+      result.push({
+        name: 'Regular exits',
+        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When a state root containing such transaction is settled, the funds become available for withdrawal on L1 after ${formatSeconds(
+          disputeGameFinalityDelaySeconds,
+        )}. Withdrawal inclusion can be proven before state root settlement, but a ${formatSeconds(
+          proofMaturityDelaySeconds,
+        )} period has to pass before it becomes actionable. The process of state root settlement takes a challenge period of at least ${formatSeconds(
+          maxClockDuration,
+        )} to complete. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        risks: [],
+        references: [
+          {
+            title: `${portal.name}.sol - Etherscan source code, proveWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+          {
+            title: `${portal.name}.sol - Etherscan source code, finalizeWithdrawalTransaction function`,
+            url: `https://etherscan.io/address/${safeGetImplementation(
+              portal,
+            )}#code`,
+          },
+        ],
+      })
+      break
+    }
+    case 'Kailua': {
+      const disputeGameFinalityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'disputeGameFinalityDelaySeconds',
+        )
+
+      const proofMaturityDelaySeconds =
+        templateVars.discovery.getContractValue<number>(
+          portal.name ?? portal.address,
+          'proofMaturityDelaySeconds',
+        )
+
+      const disputeGameName = 'KailuaGame'
+
+      const maxClockDuration = templateVars.discovery.getContractValue<number>(
+        disputeGameName,
+        'MAX_CLOCK_DURATION',
       )
 
       result.push({
@@ -1207,7 +1369,8 @@ function getTrackedTxs(
       ]
     }
     case 'Permissioned':
-    case 'Permissionless': {
+    case 'Permissionless':
+    case 'Kailua': {
       const disputeGameFactory =
         templateVars.disputeGameFactory ??
         templateVars.discovery.getContract('DisputeGameFactory')
@@ -1294,7 +1457,8 @@ function getFinalizationPeriod(templateVars: OpStackConfigCommon): number {
       )
     }
     case 'Permissioned':
-    case 'Permissionless': {
+    case 'Permissionless':
+    case 'Kailua': {
       return templateVars.discovery.getContractValue<number>(
         'OptimismPortal2',
         'proofMaturityDelaySeconds',
@@ -1329,10 +1493,16 @@ function getChallengePeriod(templateVars: OpStackConfigCommon): number {
         'maxClockDuration',
       )
     }
+    case 'Kailua': {
+      return templateVars.discovery.getContractValue<number>(
+        'KailuaGame',
+        'MAX_CLOCK_DURATION',
+      )
+    }
   }
 }
 
-type FraudProofType = 'None' | 'Permissioned' | 'Permissionless'
+type FraudProofType = 'None' | 'Permissioned' | 'Permissionless' | 'Kailua'
 
 function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   const portal = getOptimismPortal(templateVars)
@@ -1350,6 +1520,9 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
   }
   if (respectedGameType === 1) {
     return 'Permissioned'
+  }
+  if (respectedGameType === 1337) {
+    return 'Kailua'
   }
   throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
