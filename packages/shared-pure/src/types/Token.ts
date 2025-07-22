@@ -17,7 +17,7 @@ export interface LegacyToken {
     | 'ether'
     | 'stablecoin'
     | 'btc'
-    | 'rwaPrivate'
+    | 'rwaRestricted'
     | 'rwaPublic'
     | 'other'
   iconUrl?: string

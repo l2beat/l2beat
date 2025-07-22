@@ -13,7 +13,7 @@ export interface ProjectValueRecord {
   ether: number
   stablecoin: number
   btc: number
-  rwaPrivate: number
+  rwaRestricted: number
   rwaPublic: number
   other: number
   associated: number

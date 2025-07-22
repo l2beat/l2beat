@@ -103,7 +103,7 @@ export class ProjectValueIndexer extends ManagedMultiIndexer<ProjectValueConfig>
       ether: 0,
       stablecoin: 0,
       btc: 0,
-      rwaPrivate: 0,
+      rwaRestricted: 0,
       rwaPublic: 0,
       other: 0,
       associated: 0,

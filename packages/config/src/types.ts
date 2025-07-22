@@ -1214,7 +1214,7 @@ export const TvsTokenSchema = v.object({
     'ether',
     'stablecoin',
     'btc',
-    'rwaPrivate',
+    'rwaRestricted',
     'rwaPublic',
     'other',
   ]),

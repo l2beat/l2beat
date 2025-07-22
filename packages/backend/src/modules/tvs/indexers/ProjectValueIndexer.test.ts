@@ -14,7 +14,7 @@ describe(ProjectValueIndexer.name, () => {
     ['token2', tokenConfig('token2', 'external', 'stablecoin', true)],
     ['token3', tokenConfig('token3', 'native', 'other', false)],
     ['token4', tokenConfig('token4', 'native', 'btc', false)],
-    ['token5', tokenConfig('token5', 'native', 'rwaPrivate', false)],
+    ['token5', tokenConfig('token5', 'native', 'rwaRestricted', false)],
     ['token6', tokenConfig('token6', 'native', 'rwaPublic', true)],
   ])
 
@@ -141,7 +141,7 @@ describe(ProjectValueIndexer.name, () => {
       expect(summaryRecord?.other).toEqual(300)
       expect(summaryRecord?.associated).toEqual(800) // only token2 and token6 are associated
       expect(summaryRecord?.btc).toEqual(400)
-      expect(summaryRecord?.rwaPrivate).toEqual(500)
+      expect(summaryRecord?.rwaRestricted).toEqual(500)
       expect(summaryRecord?.rwaPublic).toEqual(600)
 
       // Check PROJECT record
@@ -155,7 +155,7 @@ describe(ProjectValueIndexer.name, () => {
       expect(projectRecord?.other).toEqual(300)
       expect(projectRecord?.associated).toEqual(800) // only token2 and token6 are associated
       expect(projectRecord?.btc).toEqual(400)
-      expect(projectRecord?.rwaPrivate).toEqual(500)
+      expect(projectRecord?.rwaRestricted).toEqual(500)
       expect(projectRecord?.rwaPublic).toEqual(600)
 
       // Check SUMMARY_WA record (without associated)

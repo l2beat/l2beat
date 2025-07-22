@@ -238,7 +238,7 @@ function calculateBreakdown(
       other: 0,
       btc: 0,
       rwaPublic: 0,
-      rwaPrivate: 0,
+      rwaRestricted: 0,
       associated: 0,
     },
   }
@@ -298,8 +298,8 @@ function calculateBreakdown(
       case 'rwaPublic':
         tvsBreakdown.category.rwaPublic += token.valueForProject
         break
-      case 'rwaPrivate':
-        tvsBreakdown.category.rwaPrivate += token.valueForProject
+      case 'rwaRestricted':
+        tvsBreakdown.category.rwaRestricted += token.valueForProject
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
@@ -328,15 +328,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                  valueForProject:
-                    '$' + formatNumberWithCommas(t.valueForProject),
-                }
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                  valueForSummary:
-                    '$' + formatNumberWithCommas(t.valueForSummary),
-                }
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
                 : {}),
             }
           }),
@@ -354,15 +354,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                  valueForProject:
-                    '$' + formatNumberWithCommas(t.valueForProject),
-                }
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                  valueForSummary:
-                    '$' + formatNumberWithCommas(t.valueForSummary),
-                }
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
                 : {}),
             }
           }),
@@ -380,15 +380,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                  valueForProject:
-                    '$' + formatNumberWithCommas(t.valueForProject),
-                }
+                    valueForProject:
+                      '$' + formatNumberWithCommas(t.valueForProject),
+                  }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                  valueForSummary:
-                    '$' + formatNumberWithCommas(t.valueForSummary),
-                }
+                    valueForSummary:
+                      '$' + formatNumberWithCommas(t.valueForSummary),
+                  }
                 : {}),
             }
           }),
@@ -428,11 +428,13 @@ function calculateBreakdown(
             2,
           ) + '%',
       },
-      rwaPrivate: {
-        value: toDollarString(tvsBreakdown.category.rwaPrivate),
+      rwaRestricted: {
+        value: toDollarString(tvsBreakdown.category.rwaRestricted),
         percentage:
-          ((tvsBreakdown.category.rwaPrivate / tvsBreakdown.tvs) * 100).toFixed(2) +
-          '%',
+          (
+            (tvsBreakdown.category.rwaRestricted / tvsBreakdown.tvs) *
+            100
+          ).toFixed(2) + '%',
       },
       other: {
         value: toDollarString(tvsBreakdown.category.other),

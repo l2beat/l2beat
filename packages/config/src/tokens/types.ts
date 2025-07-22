@@ -22,7 +22,7 @@ export const GeneratedToken = z.object({
     'ether',
     'stablecoin',
     'btc',
-    'rwaPrivate',
+    'rwaRestricted',
     'rwaPublic',
     'other',
   ]),
@@ -51,7 +51,7 @@ export const SourceEntry = z.object({
   address: z.string().transform(EthereumAddress).optional(),
   coingeckoId: z.string().transform(CoingeckoId).optional(),
   category: z
-    .enum(['ether', 'stablecoin', 'btc', 'rwaPrivate', 'rwaPublic', 'other'])
+    .enum(['ether', 'stablecoin', 'btc', 'rwaRestricted', 'rwaPublic', 'other'])
     .optional(),
   source: z.enum(['canonical', 'external', 'native']).optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),

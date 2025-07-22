@@ -95,7 +95,7 @@ export interface TvsBreakdown {
     stablecoin: number
     btc: number
     rwaPublic: number
-    rwaPrivate: number
+    rwaRestricted: number
     other: number
     associated: number
   }

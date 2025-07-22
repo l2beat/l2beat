@@ -74,7 +74,7 @@ describeDatabase(ProjectValueRepository.name, (db) => {
           other: 25,
           associated: 25,
           btc: 10,
-          rwaPrivate: 20,
+          rwaRestricted: 20,
           rwaPublic: 30,
         },
       )
@@ -366,7 +366,7 @@ function projectValue(
     other: 0,
     associated: 0,
     btc: 0,
-    rwaPrivate: 0,
+    rwaRestricted: 0,
     rwaPublic: 0,
   },
 ) {

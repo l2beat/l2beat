@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "ProjectValue" ADD COLUMN     "btc" REAL NOT NULL DEFAULT 0,
-ADD COLUMN     "rwaPrivate" REAL NOT NULL DEFAULT 0,
-ADD COLUMN     "rwaPublic" REAL NOT NULL DEFAULT 0;
