@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x9df4ab115c0cfbe65455e51d47f725429a8e5a92
+Generated with discovered.json: 0x8d6b176e3fd2d24e455e097ca440cfc7e4a1f2fa
 
-# Diff at Tue, 22 Jul 2025 14:07:32 GMT:
+# Diff at Tue, 22 Jul 2025 15:40:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 351073243
@@ -18,9 +18,11 @@ discovery. Values are for block 351073243 (main branch discovery), not current.
 
 ```diff
     contract RiscZeroVerifierRouter (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
-    +++ description: None
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15).
       template:
 +        "risc0/RiscZeroVerifierRouter"
+      description:
++        "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15)."
     }
 ```
 
