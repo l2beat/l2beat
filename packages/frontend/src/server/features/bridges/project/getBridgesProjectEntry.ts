@@ -1,6 +1,7 @@
 import type {
   Project,
   ProjectBridgeInfo,
+  ProjectCustomColors,
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
@@ -35,6 +36,7 @@ export interface BridgesProjectEntry {
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   underReviewStatus: UnderReviewStatus
+  colors: ProjectCustomColors | undefined
   header: {
     description?: string
     warning?: string
@@ -82,6 +84,7 @@ export async function getBridgesProjectEntry(
     | 'contracts'
     | 'permissions'
     | 'discoveryInfo'
+    | 'colors'
   >,
 ): Promise<BridgesProjectEntry> {
   const [projectsChangeReport, tvsStats, tvsChartData, tokens, contractUtils] =
@@ -110,6 +113,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
     }),
+    colors: project.colors,
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     header: {
