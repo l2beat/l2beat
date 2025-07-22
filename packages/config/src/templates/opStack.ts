@@ -241,6 +241,9 @@ function opStackCommon(
   if (fraudProofType === 'Permissionless') {
     architectureImage.push('permissionless')
   }
+  if (fraudProofType === 'Kailua') {
+    architectureImage.push('kailua')
+  }
 
   const nativeContractRisks: ProjectRisk[] = [
     templateVars.nonTemplateContractRisks ??
