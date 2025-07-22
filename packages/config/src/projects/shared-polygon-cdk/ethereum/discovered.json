@@ -79,8 +79,6 @@
         "aggchainVKeys": {
           "0x00040001": [
             {
-              "0": "0x00040001",
-              "1": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f",
               "selector": "0x00040001",
               "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
             }
@@ -92,9 +90,6 @@
         "routes": {
           "0x00000004": [
             {
-              "0": "0x00000004",
-              "1": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-              "2": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30",
               "selector": "0x00000004",
               "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
