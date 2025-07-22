@@ -236,9 +236,9 @@ function calculateBreakdown(
       ether: 0,
       stablecoin: 0,
       other: 0,
+      btc: 0,
       rwaPublic: 0,
       rwaPrivate: 0,
-      btc: 0,
       associated: 0,
     },
   }
@@ -292,6 +292,9 @@ function calculateBreakdown(
       case 'other':
         tvsBreakdown.category.other += token.valueForProject
         break
+      case 'btc':
+        tvsBreakdown.category.btc += token.valueForProject
+        break
       case 'rwaPublic':
         tvsBreakdown.category.rwaPublic += token.valueForProject
         break
@@ -325,15 +328,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                    valueForProject:
-                      '$' + formatNumberWithCommas(t.valueForProject),
-                  }
+                  valueForProject:
+                    '$' + formatNumberWithCommas(t.valueForProject),
+                }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                    valueForSummary:
-                      '$' + formatNumberWithCommas(t.valueForSummary),
-                  }
+                  valueForSummary:
+                    '$' + formatNumberWithCommas(t.valueForSummary),
+                }
                 : {}),
             }
           }),
@@ -351,15 +354,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                    valueForProject:
-                      '$' + formatNumberWithCommas(t.valueForProject),
-                  }
+                  valueForProject:
+                    '$' + formatNumberWithCommas(t.valueForProject),
+                }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                    valueForSummary:
-                      '$' + formatNumberWithCommas(t.valueForSummary),
-                  }
+                  valueForSummary:
+                    '$' + formatNumberWithCommas(t.valueForSummary),
+                }
                 : {}),
             }
           }),
@@ -377,15 +380,15 @@ function calculateBreakdown(
               value: '$' + formatNumberWithCommas(t.value),
               ...(t.valueForProject !== t.value
                 ? {
-                    valueForProject:
-                      '$' + formatNumberWithCommas(t.valueForProject),
-                  }
+                  valueForProject:
+                    '$' + formatNumberWithCommas(t.valueForProject),
+                }
                 : {}),
               ...(t.valueForSummary !== t.valueForProject
                 ? {
-                    valueForSummary:
-                      '$' + formatNumberWithCommas(t.valueForSummary),
-                  }
+                  valueForSummary:
+                    '$' + formatNumberWithCommas(t.valueForSummary),
+                }
                 : {}),
             }
           }),
@@ -411,6 +414,25 @@ function calculateBreakdown(
           ((tvsBreakdown.category.stablecoin / tvsBreakdown.tvs) * 100).toFixed(
             2,
           ) + '%',
+      },
+      btc: {
+        value: toDollarString(tvsBreakdown.category.btc),
+        percentage:
+          ((tvsBreakdown.category.btc / tvsBreakdown.tvs) * 100).toFixed(2) +
+          '%',
+      },
+      rwaPublic: {
+        value: toDollarString(tvsBreakdown.category.rwaPublic),
+        percentage:
+          ((tvsBreakdown.category.rwaPublic / tvsBreakdown.tvs) * 100).toFixed(
+            2,
+          ) + '%',
+      },
+      rwaPrivate: {
+        value: toDollarString(tvsBreakdown.category.rwaPrivate),
+        percentage:
+          ((tvsBreakdown.category.rwaPrivate / tvsBreakdown.tvs) * 100).toFixed(2) +
+          '%',
       },
       other: {
         value: toDollarString(tvsBreakdown.category.other),
