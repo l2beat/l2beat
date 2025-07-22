@@ -7,9 +7,9 @@ import type {
 } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
-import { TokenCombobox } from '../../TokenCombobox'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
+import { TokenCombobox } from '../../TokenCombobox'
 import type { ChartUnit } from '../types'
 import { ProjectTokenChart } from './ProjectTokenChart'
 import type { TvsChartDataPoint } from './TvsChart'
@@ -21,13 +21,19 @@ interface Props {
   projectId: string
   milestones: Milestone[]
   tokens: ProjectTokens | undefined
+  defaultRange: TvsChartRange
 }
 
-export function ProjectTvsChart({ projectId, milestones, tokens }: Props) {
+export function ProjectTvsChart({
+  projectId,
+  milestones,
+  tokens,
+  defaultRange,
+}: Props) {
   const [token, setToken] = useState<ProjectToken>()
   const [unit, setUnit] = useState<ChartUnit>('usd')
 
-  const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
+  const [timeRange, setTimeRange] = useState<TvsChartRange>(defaultRange)
 
   if (tokens && token) {
     return (

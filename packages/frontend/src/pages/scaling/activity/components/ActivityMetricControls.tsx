@@ -31,7 +31,10 @@ export function ActivityMetricControls<T extends string>({
 function MetricSwitchElement({
   metric,
   projectChart,
-}: { metric: 'uops' | 'tps'; projectChart?: boolean }) {
+}: {
+  metric: 'uops' | 'tps'
+  projectChart?: boolean
+}) {
   return (
     <RadioGroupItem
       value={metric}

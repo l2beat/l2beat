@@ -1,9 +1,8 @@
-import { existsSync } from 'fs'
 import {
+  createTrackedTxId,
   type TrackedTxConfigEntry,
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
-  createTrackedTxId,
 } from '@l2beat/shared'
 import {
   assert,
@@ -12,6 +11,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { existsSync } from 'fs'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
 import type { BaseProject } from '../types'
@@ -594,6 +594,20 @@ describe('getProjects', () => {
           }
         }
       })
+    }
+  })
+
+  describe('associated tokens can only have category other', () => {
+    for (const project of projects) {
+      if (!project.tvsConfig) {
+        continue
+      }
+      const associated = project.tvsConfig?.filter((t) => t.isAssociated)
+      for (const a of associated) {
+        it(`${project.name}: ${a.id}`, () => {
+          expect(a.category).toEqual('other')
+        })
+      }
     }
   })
 })

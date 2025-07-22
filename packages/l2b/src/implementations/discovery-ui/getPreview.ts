@@ -1,9 +1,9 @@
 import type { ProjectContract, ProjectPermissions } from '@l2beat/config'
 import { ProjectDiscovery } from '@l2beat/config/build/discovery/ProjectDiscovery'
 import type { ConfigReader } from '@l2beat/discovery'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { getAllProjectDiscoveries } from './getDiscoveries'
 import { type ContractsMeta, getMeta } from './getMeta'
-import { toAddress } from './toAddress'
 import type {
   AddressFieldValue,
   ApiPreviewContract,
@@ -65,23 +65,19 @@ function getPermissionsPreview(
     chain,
     permissions: {
       roles: (permissions.roles ?? []).map((p) => ({
-        addresses: p.accounts.map((a) =>
-          toAddressFieldValue(a.address, chain, meta),
-        ),
+        addresses: p.accounts.map((a) => toAddressFieldValue(a.address, meta)),
         name: p.name,
         description: p.description,
         multisigParticipants: p.participants?.map((x) =>
-          toAddressFieldValue(x.address, chain, meta),
+          toAddressFieldValue(x.address, meta),
         ),
       })),
       actors: (permissions.actors ?? []).map((p) => ({
-        addresses: p.accounts.map((a) =>
-          toAddressFieldValue(a.address, chain, meta),
-        ),
+        addresses: p.accounts.map((a) => toAddressFieldValue(a.address, meta)),
         name: p.name,
         description: p.description,
         multisigParticipants: p.participants?.map((x) =>
-          toAddressFieldValue(x.address, chain, meta),
+          toAddressFieldValue(x.address, meta),
         ),
       })),
     },
@@ -96,7 +92,7 @@ function getContractsPreview(
     chain,
     contracts: contracts.map((c) => {
       return {
-        addresses: [toAddressFieldValue(c.address, chain, meta)],
+        addresses: [toAddressFieldValue(c.address, meta)],
         name: c.name,
         description: c.description ?? '',
         upgradableBy: c.upgradableBy,
@@ -106,11 +102,9 @@ function getContractsPreview(
 }
 
 function toAddressFieldValue(
-  rawAddress: string,
-  chain: string,
+  address: ChainSpecificAddress,
   meta: ContractsMeta,
 ): AddressFieldValue {
-  const address = toAddress(chain, rawAddress)
   return {
     type: 'address',
     name: meta[address].name,

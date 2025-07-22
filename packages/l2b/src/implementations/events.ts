@@ -1,12 +1,16 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { type IProvider, ProxyDetector } from '@l2beat/discovery'
-import { get$Implementations } from '@l2beat/discovery'
+import {
+  get$Implementations,
+  type IProvider,
+  ProxyDetector,
+} from '@l2beat/discovery'
 import {
   assert,
+  ChainSpecificAddress,
   type EthereumAddress,
+  formatAsAsciiTable,
   Hash256,
   UnixTime,
-  formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { utils } from 'ethers'
@@ -29,6 +33,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
 
   const explorer = getExplorerConfig(args)
   const provider = await getProvider(rpcUrl, explorer)
+  const fullAddress = ChainSpecificAddress.fromLong(provider.chain, address)
 
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
   const topics = []
@@ -38,9 +43,9 @@ export async function getEvents(logger: Logger, args: EventArgs) {
     )
 
     const proxyDetector = new ProxyDetector()
-    const result = await proxyDetector.detectProxy(provider, address)
+    const result = await proxyDetector.detectProxy(provider, fullAddress)
 
-    const addresses = [address]
+    const addresses = [fullAddress]
     if (result !== undefined) {
       addresses.push(...get$Implementations(result.values))
     }
@@ -70,7 +75,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
             `"${topic}"`,
           )} does not exist in the ABI.`,
         )
-        throw new Error(`Unable to decode event name.`)
+        throw new Error('Unable to decode event name.')
       }
     }
     logger.info('Done')
@@ -80,7 +85,7 @@ export async function getEvents(logger: Logger, args: EventArgs) {
 
   logger.info('Fetching logs...')
   const logs = await provider.getLogs(
-    address,
+    fullAddress,
     topics.map((t) => t),
   )
   logger.info('Done.')

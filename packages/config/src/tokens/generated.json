@@ -1585,6 +1585,20 @@
       "supply": "zero"
     },
     {
+      "name": "DIAToken",
+      "coingeckoId": "dia-data",
+      "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
+      "symbol": "DIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1574868479,
+      "coingeckoListingTimestamp": 1596412800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "digitalbits",
       "coingeckoId": "digitalbits",
       "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27",
@@ -4147,6 +4161,20 @@
       "supply": "zero"
     },
     {
+      "name": "PentagonChain",
+      "coingeckoId": "pentagon-chain",
+      "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
+      "symbol": "PC",
+      "decimals": 18,
+      "deploymentTimestamp": 1740594359,
+      "coingeckoListingTimestamp": 1750032000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66638/large/pentagon-chain-token-fcp.png?1750094674",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Pepe",
       "coingeckoId": "pepe",
       "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
@@ -4162,14 +4190,14 @@
     },
     {
       "name": "Pepe Unchained",
-      "coingeckoId": "pepe-unchained",
-      "address": "0xadd39272E83895E7d3f244f696B7a25635F34234",
+      "coingeckoId": "pepe-unchained-2",
+      "address": "0x93aA0ccD1e5628d3A841C4DbdF602D9eb04085d6",
       "symbol": "PEPU",
       "decimals": 18,
-      "deploymentTimestamp": 1717589039,
-      "coingeckoListingTimestamp": 1733961600,
+      "deploymentTimestamp": 1748237519,
+      "coingeckoListingTimestamp": 1750291200,
       "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/52681/large/wn6wNj1C_400x400.jpg?1734021973",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66717/large/pepu.jpg?1750303081",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4646,6 +4674,20 @@
       "coingeckoListingTimestamp": 1612396800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13797/large/icon.png?1696513545",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "RDO Token",
+      "coingeckoId": "reddio",
+      "address": "0x57240C3E140f98abe315CA8E0213c7a77F34A334",
+      "symbol": "RDO",
+      "decimals": 18,
+      "deploymentTimestamp": 1748013347,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55332/large/reddio.png?1745470527",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -9483,6 +9525,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "ABSTER",
+      "coingeckoId": "abster",
+      "address": "0xc325b7e2736A5202bd860F5974D0AA375E57EdE5",
+      "symbol": "ABSTER",
+      "decimals": 18,
+      "deploymentTimestamp": 1738040822,
+      "coingeckoListingTimestamp": 1740614400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54607/large/AbsterCoingecko.png?1740646344",
+      "chainId": 2741,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Bridged USDC (Stargate)",
       "coingeckoId": "usd-coin",
       "address": "0x84A71ccD554Cc1b02749b35d22F684CC8ec987e1",
@@ -9500,6 +9556,56 @@
           {
             "name": "Stargate v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Noot Noot",
+      "coingeckoId": "noot-noot",
+      "address": "0x85Ca16Fd0e81659e0b8Be337294149E722528731",
+      "symbol": "NOOT",
+      "decimals": 18,
+      "deploymentTimestamp": 1738021846,
+      "coingeckoListingTimestamp": 1739145600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54308/large/Screenshot_2025-01-28_132602-remove-background.com_%282%29.png?1739189556",
+      "chainId": 2741,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Pengus Wife",
+      "coingeckoId": "pengus-wife",
+      "address": "0x987CF44F3F5d854eC0703123d7fD003a8b56eBb4",
+      "symbol": "Polly",
+      "decimals": 18,
+      "deploymentTimestamp": 1743142309,
+      "coingeckoListingTimestamp": 1747699200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55914/large/Polly_Official_PFP.jpg?1747708551",
+      "chainId": 2741,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Pudgy Penguins",
+      "coingeckoId": "pudgy-penguins",
+      "address": "0x9eBe3A824Ca958e4b3Da772D2065518F009CBa62",
+      "symbol": "PENGU",
+      "decimals": 18,
+      "deploymentTimestamp": 1737458169,
+      "coingeckoListingTimestamp": 1734393600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52622/large/PUDGY_PENGUINS_PENGU_PFP.png?1733809110",
+      "chainId": 2741,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -12961,6 +13067,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "WrappedM by M^0",
+      "coingeckoId": "wrappedm-by-m0",
+      "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
+      "symbol": "wM",
+      "decimals": 6,
+      "deploymentTimestamp": 1739985583,
+      "coingeckoListingTimestamp": 1743552000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55070/large/wm.jpg?1743589588",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Xai",

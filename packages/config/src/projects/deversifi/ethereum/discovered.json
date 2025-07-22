@@ -2,17 +2,17 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 21981331,
-  "configHash": "0xc795535f54108ffa2217aac9a59e392c133c823b858a2143e9891420f51d3381",
+  "configHash": "0xc7e0eb4432face1af153c845c6fa965781f309396268f25612c2d625294bdda2",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
-      "address": "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
+      "address": "eth:0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "DACommittee",
-      "address": "0x28780349A33eEE56bb92241bAAB8095449e24306",
+      "address": "eth:0x28780349A33eEE56bb92241bAAB8095449e24306",
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
@@ -26,13 +26,13 @@
         "$immutable": true,
         "constructorArgs": [
           [
-            "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
-            "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
-            "0xf872Cf881873029B8955b582c29b66347f3f1326",
-            "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
-            "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-            "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
-            "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9"
+            "eth:0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
+            "eth:0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
+            "eth:0xf872Cf881873029B8955b582c29b66347f3f1326",
+            "eth:0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
+            "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+            "eth:0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
+            "eth:0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9"
           ],
           "4"
         ],
@@ -46,37 +46,37 @@
         }
       },
       "implementationNames": {
-        "0x28780349A33eEE56bb92241bAAB8095449e24306": "Committee"
+        "eth:0x28780349A33eEE56bb92241bAAB8095449e24306": "Committee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
+      "address": "eth:0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "GpsFactRegistryAdapter",
-      "address": "0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73",
+      "address": "eth:0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73",
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`3174901404014912024702042974619036870715605532092680335571201877913899936957`).",
       "sinceTimestamp": 1691481095,
       "sinceBlock": 17868827,
       "values": {
         "$immutable": true,
-        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+        "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "3174901404014912024702042974619036870715605532092680335571201877913899936957",
         "programHashMapped": "StarkEx Spot v4.0 (RhinoFi, Sorare)"
       },
       "implementationNames": {
-        "0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73": "GpsFactRegistryAdapter"
+        "eth:0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73": "GpsFactRegistryAdapter"
       },
       "usedTypes": [
         {
@@ -109,23 +109,23 @@
       ]
     },
     {
-      "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
+      "address": "eth:0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
+      "address": "eth:0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x478615F37FcCB0DF69C191a8674233f6899D092e",
+      "address": "eth:0x478615F37FcCB0DF69C191a8674233f6899D092e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OrderRegistry",
-      "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+      "address": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
       "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
@@ -141,17 +141,17 @@
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
       "implementationNames": {
-        "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
+        "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": "OrderRegistry"
       }
     },
     {
-      "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
+      "address": "eth:0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "StarkExchange",
-      "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
+      "address": "eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
       "type": "Contract",
       "template": "starkex/StarkExchangeOld",
       "sourceHashes": [
@@ -171,220 +171,220 @@
       "sinceTimestamp": 1590491810,
       "sinceBlock": 10141009,
       "values": {
-        "$admin": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
+        "$admin": "eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
         "$immutable": false,
         "$implementation": [
-          "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
-          "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-          "0x5524cB52490e01CBa4EB64F230CC661780cB6298",
-          "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-          "0x613ee54C54D5548627064B4D648942bF3648f376",
-          "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-          "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+          "eth:0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
+          "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+          "eth:0x5524cB52490e01CBa4EB64F230CC661780cB6298",
+          "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+          "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+          "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+          "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
         ],
         "$pastUpgrades": [
           [
             "2020-05-26T11:16:50.000Z",
             "0x717f978da7127c0340327351275f626c281515e116e0e9d8d62236cf651f4653",
-            ["0xab4cB335Bc7eE587Ebc07c2445Dc2807bEBE973e"]
+            ["eth:0xab4cB335Bc7eE587Ebc07c2445Dc2807bEBE973e"]
           ],
           [
             "2020-12-02T07:18:47.000Z",
             "0xaa2d2b00a0c72056946b6c0e7e656602ded829fda99e4506c78bb6569ac55eba",
             [
-              "0x63A995cfB3Badabe007263917024369529BaF26f",
-              "0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
-              "0x2Bb72fc643c1AbaC80392b19D12c68027a944470",
-              "0xb2B3c885C6E2D72E0bc28e944Ff3f67c236c7e69"
+              "eth:0x63A995cfB3Badabe007263917024369529BaF26f",
+              "eth:0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
+              "eth:0x2Bb72fc643c1AbaC80392b19D12c68027a944470",
+              "eth:0xb2B3c885C6E2D72E0bc28e944Ff3f67c236c7e69"
             ]
           ],
           [
             "2021-01-04T07:16:37.000Z",
             "0x28e50d1e59f0a7dfa9fe177195bdc47eed90db11773d2ce4c34beaf277db8c5f",
             [
-              "0x18a5452117714ccE0d8FaECeFDFdB4783140AF74",
-              "0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
-              "0xFD64579fbf48702B3Dbd4e5bb451ab29FDd588dD",
-              "0xb2B3c885C6E2D72E0bc28e944Ff3f67c236c7e69"
+              "eth:0x18a5452117714ccE0d8FaECeFDFdB4783140AF74",
+              "eth:0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
+              "eth:0xFD64579fbf48702B3Dbd4e5bb451ab29FDd588dD",
+              "eth:0xb2B3c885C6E2D72E0bc28e944Ff3f67c236c7e69"
             ]
           ],
           [
             "2021-01-21T07:40:38.000Z",
             "0xdf3ea6ba0901e47d804e717046e1b1b9861e6082930c682aa0e300293c71b571",
             [
-              "0x7D2375a873CF858f02F97F40CbBBc03293f9A055",
-              "0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
-              "0xf677a1E6261e55C1f3C33D6C9FCf20b476D57713",
-              "0xb2B3c885C6E2D72E0bc28e944Ff3f67c236c7e69"
+              "eth:0x7D2375a873CF858f02F97F40CbBBc03293f9A055",
+              "eth:0x3Ba4D737e64b50d26dd594a7c5BcC0131E4C5d11",
+              "eth:0xf677a1E6261e55C1f3C33D6C9FCf20b476D57713",
+              "eth:0xb2B3c885C6E2D72E0bc28e944Ff3f67c236c7e69"
             ]
           ],
           [
             "2021-08-18T07:47:40.000Z",
             "0xd7add75484f4ae4c369be403c7c94a1b9589266fd3f44ecfa5f4522dd41dc727",
             [
-              "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
+              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
+              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
+              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
+              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
+              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
+              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
             ]
           ],
           [
             "2021-09-09T13:16:44.000Z",
             "0x0512cdb0c725a846ab22ecc1a19a023b62444816a860ecdcbd26afed1421dadd",
             [
-              "0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
-              "0xF65C115efd24102315Af53f84aD65aD240bc9D57",
-              "0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
-              "0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
-              "0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
-              "0x2D542881E93491e765E5110c1e373FC2968E720A",
-              "0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
+              "eth:0xB8563AD5aF1F79dd04937BE8B572318c8e6f43AC",
+              "eth:0xF65C115efd24102315Af53f84aD65aD240bc9D57",
+              "eth:0x97AA9658cfE27D6382b71FF9E72d773615Bd529E",
+              "eth:0x86d8f977C9cEC503ad4E6805802cEf62Cde13773",
+              "eth:0x0D7c8d7A16c7832869d8FeEf02730238CdFe083A",
+              "eth:0x2D542881E93491e765E5110c1e373FC2968E720A",
+              "eth:0x970d1Fa79c64b256ef68bBFEab34137786811C7F"
             ]
           ],
           [
             "2021-12-15T08:08:11.000Z",
             "0x679e92bfb784e59895fd71b8803906ed7adb74cec288d66d41050ef4c0aaa3c4",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ],
           [
             "2022-01-04T12:03:18.000Z",
             "0x4e66dd5619e7acc4e878c68ab25350d41c38d4d2339a34a19dbdb5a40377dff8",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ],
           [
             "2022-02-02T15:39:33.000Z",
             "0x575752cbf39cd864a43bb8496414cf52cf265670d0de8af26b8b6d0470a8afec",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ],
           [
             "2023-07-26T15:11:11.000Z",
             "0x044173077b541f16085d2e55e145bdf4a0a7159ded50ae346d931c380e79e64d",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ],
           [
             "2023-08-08T08:32:11.000Z",
             "0x35440a57c7d3ff276dddadfb339dd5cf14353c95f8a68203e4fc128a09b8773d",
             [
-              "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-              "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-              "0x8536850750956c2FEebeCAB786d82271a5467687",
-              "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-              "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-              "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-              "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+              "eth:0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+              "eth:0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+              "eth:0x8536850750956c2FEebeCAB786d82271a5467687",
+              "eth:0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+              "eth:0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+              "eth:0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+              "eth:0xB3788a88F063B217227E27ae16Ba550db3132bE6"
             ]
           ],
           [
             "2023-08-08T08:32:11.000Z",
             "0x35440a57c7d3ff276dddadfb339dd5cf14353c95f8a68203e4fc128a09b8773d",
             [
-              "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ],
           [
             "2023-08-10T07:28:59.000Z",
             "0x202f69895d6438cdc5d2816418e9e57291a5d45446b54304bfcda28464e60887",
             [
-              "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ],
           [
             "2023-08-13T15:01:59.000Z",
             "0x2581316c7e3de05782eb37313851dd4d61395c832bf4a4e24f3298c6161047d3",
             [
-              "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ],
           [
             "2024-03-25T15:35:47.000Z",
             "0x7c39229a92109c6dea7b9d16b8e0128d4316cede0fca1d7300cf5e49a508043d",
             [
-              "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ],
           [
             "2024-03-28T20:37:47.000Z",
             "0x7a7d7077267911d53481a49e72985aac941d7f1fde534926da902666729ce24d",
             [
-              "0xc392DD8edAd534266cbf2817ee01dC68193DE23d",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x654cEF88e1EDD4B5a6d10815439768c60ca109a1",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xc392DD8edAd534266cbf2817ee01dC68193DE23d",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x654cEF88e1EDD4B5a6d10815439768c60ca109a1",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ],
           [
             "2024-08-26T15:52:35.000Z",
             "0x4ed46e53b7228bbd7a377396a6dbb032beeb1296affd055462911dd323afa3f8",
             [
-              "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x5524cB52490e01CBa4EB64F230CC661780cB6298",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x5524cB52490e01CBa4EB64F230CC661780cB6298",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ]
         ],
@@ -397,31 +397,31 @@
         "getOrderRoot": "3309552268978170776772221564804201665107641742839231234298104839572394229836",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
-          "0x28780349A33eEE56bb92241bAAB8095449e24306"
+          "eth:0x28780349A33eEE56bb92241bAAB8095449e24306"
         ],
         "getRegisteredVerifiers": [
-          "0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73"
+          "eth:0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73"
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
         "getSequenceNumber": 8536,
         "getValidiumTreeHeight": 31,
         "getValidiumVaultRoot": "1009047868236151282040797280996690986610213916141656238716572588879139716847",
-        "implementation": "0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
+        "implementation": "eth:0x29Db022dbc824b78A0dA699a77E3d177f08A1191",
         "isFrozen": false,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "operators": ["0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"],
-        "orderRegistryAddress": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
+        "operators": ["eth:0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"],
+        "orderRegistryAddress": "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
         "StarkWareDiamond_upgradeDelay": 259200,
         "tokenAdmins": [
-          "0x8fDEC5EE435501571034A78a7F3AA167185969b3",
-          "0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4"
+          "eth:0x8fDEC5EE435501571034A78a7F3AA167185969b3",
+          "eth:0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4"
         ],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_ACTIVATION_DELAY": 2419200,
@@ -442,44 +442,44 @@
         }
       },
       "implementationNames": {
-        "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": "Proxy",
-        "0x29Db022dbc824b78A0dA699a77E3d177f08A1191": "StarkExchange",
-        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
-        "0x5524cB52490e01CBa4EB64F230CC661780cB6298": "TokensAndRamping",
-        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
-        "0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
-        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
-        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": "ProxyUtils"
+        "eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": "Proxy",
+        "eth:0x29Db022dbc824b78A0dA699a77E3d177f08A1191": "StarkExchange",
+        "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
+        "eth:0x5524cB52490e01CBa4EB64F230CC661780cB6298": "TokensAndRamping",
+        "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
+        "eth:0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
+        "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
+        "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": "ProxyUtils"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35",
+      "address": "eth:0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
+      "address": "eth:0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x6Db55792263D558d9c98B740f8cB5E8a2e02Ec05",
+      "address": "eth:0x6Db55792263D558d9c98B740f8cB5E8a2e02Ec05",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
+      "address": "eth:0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x8501cFEE1715F5BC771cC65997F2A655f234e9Ef",
+      "address": "eth:0x8501cFEE1715F5BC771cC65997F2A655f234e9Ef",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5",
+      "address": "eth:0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -491,7 +491,7 @@
       ]
     },
     {
-      "address": "0x8fDEC5EE435501571034A78a7F3AA167185969b3",
+      "address": "eth:0x8fDEC5EE435501571034A78a7F3AA167185969b3",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -504,7 +504,7 @@
       ]
     },
     {
-      "address": "0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4",
+      "address": "eth:0xb49e8CeD039CD6eC5881Beb29C4993031A6CcAC4",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -518,7 +518,7 @@
     },
     {
       "name": "RhinofiAdminMultisig",
-      "address": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
+      "address": "eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -550,14 +550,14 @@
       "sinceBlock": 17188210,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x6Db55792263D558d9c98B740f8cB5E8a2e02Ec05",
-          "0x478615F37FcCB0DF69C191a8674233f6899D092e",
-          "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
-          "0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35",
-          "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
-          "0x8501cFEE1715F5BC771cC65997F2A655f234e9Ef"
+          "eth:0x6Db55792263D558d9c98B740f8cB5E8a2e02Ec05",
+          "eth:0x478615F37FcCB0DF69C191a8674233f6899D092e",
+          "eth:0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
+          "eth:0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35",
+          "eth:0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
+          "eth:0x8501cFEE1715F5BC771cC65997F2A655f234e9Ef"
         ],
         "$threshold": 4,
         "domainSeparator": "0x00e7276e9f285a9b73208ee52227fedeba51adac2fc7b3bb3b5c2a78ea7234df",
@@ -568,23 +568,23 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0xf872Cf881873029B8955b582c29b66347f3f1326",
+      "address": "eth:0xf872Cf881873029B8955b582c29b66347f3f1326",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9",
+      "address": "eth:0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x28780349A33eEE56bb92241bAAB8095449e24306": [
+    "eth:0x28780349A33eEE56bb92241bAAB8095449e24306": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "function hasRegisteredFact() view returns (bool)",
       "function identify() pure returns (string)",
@@ -593,13 +593,13 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0x29Db022dbc824b78A0dA699a77E3d177f08A1191": [
+    "eth:0x29Db022dbc824b78A0dA699a77E3d177f08A1191": [
       "function VERSION() view returns (string)",
       "function getSubContract(bytes4 selector) view returns (address)",
       "function handlingContractId(bytes4 selector) pure returns (string id)",
       "function initialize(bytes data)"
     ],
-    "0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73": [
+    "eth:0x3b1298395290Bb7924F0Fcc176DECF3B4879FE73": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
       "function gpsContract() view returns (address)",
       "function hasRegisteredFact() view returns (bool)",
@@ -607,7 +607,7 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function programHash() view returns (uint256)"
     ],
-    "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
+    "eth:0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8": [
       "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
       "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
@@ -618,7 +618,7 @@
       "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "function registerMessage(address to, bytes32 messageHash)"
     ],
-    "0x5524cB52490e01CBa4EB64F230CC661780cB6298": [
+    "eth:0x5524cB52490e01CBa4EB64F230CC661780cB6298": [
       "event AdminForcedWithdrawal(uint256 indexed ownerKey, address indexed destination)",
       "event BlockPlaced(uint256 indexed ownerKey)",
       "event BlockReleased(uint256 indexed ownerKey)",
@@ -710,7 +710,7 @@
       "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)",
       "function withdrawWithTokenId(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
     ],
-    "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": [
+    "eth:0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b": [
       "constructor()",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -734,7 +734,7 @@
       "function removeImplementation(address newImplementation)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0x613ee54C54D5548627064B4D648942bF3648f376": [
+    "eth:0x613ee54C54D5548627064B4D648942bF3648f376": [
       "event LogFrozen()",
       "event LogFullWithdrawalRequest(uint256 ownerKey, uint256 vaultId)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -781,7 +781,7 @@
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": [
+    "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogFrozen()",
       "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
@@ -837,7 +837,7 @@
       "function updateState(uint256[] publicInput, uint256[] applicationData)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
+    "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
       "event LogDepositToVault(address ethKey, uint256 assetType, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -883,7 +883,7 @@
       "function withdrawErc1155FromVault(uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
       "function withdrawFromVault(uint256 assetType, uint256 vaultId, uint256 quantizedAmount)"
     ],
-    "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": [
+    "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": [
       "event ImplementationActivationRescheduled(address indexed implementation, uint256 updatedActivationTime)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -902,10 +902,10 @@
       "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": [
+    "eth:0xCCa5De1e10c05c50C51ac551D9182cd31aca1889": [
       "constructor(address _singleton)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -954,7 +954,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
+    "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
       "event LogFrozen()",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -1001,5 +1001,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchangeOld": "0x1349c13ead4263acc9bf71f1282c62684eebc9e54c3c2e0c9e4ce04e120b146e"
   },
-  "permissionsConfigHash": "0xc78876b051f46b78b04daf4b7f2ae031753909744c9c8d78f5bca31e8c93f80f"
+  "permissionsConfigHash": "0xd6b18fe52d7ce4acc4ebd64b220aaaa3618e8ea500cd55ae64785aa588060af8"
 }

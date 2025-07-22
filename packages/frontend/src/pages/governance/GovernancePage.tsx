@@ -1,10 +1,10 @@
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { CustomLink } from '~/components/link/CustomLink'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { CollectionEntry } from '~/content/getCollection'
 import { CustomLinkIcon } from '~/icons/Outlink'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { GovernanceEventEntry } from '~/pages/governance/utils/getGovernanceEventEntries'
 import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
@@ -56,7 +56,9 @@ export interface DelegatedProjectWithIcon
 
 function Header({
   delegatedProjects,
-}: { delegatedProjects: DelegatedProjectWithIcon[] }) {
+}: {
+  delegatedProjects: DelegatedProjectWithIcon[]
+}) {
   return (
     <PrimaryCard className="md:p-8">
       <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>

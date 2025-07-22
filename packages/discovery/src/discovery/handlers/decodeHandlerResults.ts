@@ -7,10 +7,12 @@ import type {
 } from '../config/StructureConfig'
 import type { EntryParameters } from '../output/types'
 import { applyReturnFragment } from '../type-casters/applyReturnFragment'
+import { prefixAddresses } from '../utils/prefixAddresses'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
 
 export function decodeHandlerResults(
+  longChain: string,
   results: HandlerResult[],
   fieldOverrides: StructureContract['fields'],
   types: Record<string, DiscoveryCustomType>,
@@ -25,7 +27,10 @@ export function decodeHandlerResults(
   for (const { value, field, fragment, error } of results) {
     if (value !== undefined) {
       try {
-        values[field] = applyReturnFragment(value, fragment)
+        values[field] = applyReturnFragment(
+          prefixAddresses(longChain, value),
+          fragment,
+        )
       } catch (e) {
         errors[field] = getErrorMessage(e)
       }

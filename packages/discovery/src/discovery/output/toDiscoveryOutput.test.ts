@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -27,20 +27,20 @@ describe(processAnalysis.name, () => {
     ...EMPTY_ANALYZED_EOA,
   }
 
-  const ADDRESS_A = EthereumAddress(
-    '0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
+  const ADDRESS_A = ChainSpecificAddress(
+    'eth:0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa',
   )
-  const ADDRESS_B = EthereumAddress(
-    '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+  const ADDRESS_B = ChainSpecificAddress(
+    'eth:0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
   )
-  const ADDRESS_C = EthereumAddress(
-    '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  const ADDRESS_C = ChainSpecificAddress(
+    'eth:0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
   )
-  const ADDRESS_D = EthereumAddress(
-    '0xDDdDddDdDdddDDddDDddDDDDdDdDDdDDdDDDDDDd',
+  const ADDRESS_D = ChainSpecificAddress(
+    'eth:0xDDdDddDdDdddDDddDDddDDDDdDdDDdDDdDDDDDDd',
   )
-  const ADDRESS_E = EthereumAddress(
-    '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
+  const ADDRESS_E = ChainSpecificAddress(
+    'eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
   )
 
   const CONTRACT_A: AnalyzedContract = {
@@ -71,8 +71,8 @@ describe(processAnalysis.name, () => {
     name: 'C',
     proxyType: 'EIP1967 proxy',
     values: {
-      $admin: ADDRESS_D.toString(),
-      $implementation: ADDRESS_E.toString(),
+      $admin: ADDRESS_D,
+      $implementation: ADDRESS_E,
       foo: 'foo',
       bar: 'bar',
     },
@@ -158,7 +158,10 @@ describe(processAnalysis.name, () => {
           sinceTimestamp: baseContract.deploymentTimestamp,
           values: CONTRACT_C.values,
         },
-        { ...emptyOutputMeta, address: ADDRESS_D },
+        {
+          ...emptyOutputMeta,
+          address: ADDRESS_D,
+        },
       ],
       abis: CONTRACT_C.abis,
     })
@@ -206,7 +209,10 @@ describe(processAnalysis.name, () => {
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
         },
-        { ...emptyOutputMeta, address: ADDRESS_D },
+        {
+          ...emptyOutputMeta,
+          address: ADDRESS_D,
+        },
       ],
       abis: {
         ...CONTRACT_A.abis,

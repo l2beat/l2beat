@@ -26,7 +26,8 @@ export const vector: BaseProject = {
     unverifiedContracts: [],
   },
   display: {
-    description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
+    description:
+      'Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.',
     links: {
       documentation: ['https://docs.succinct.xyz/'],
       repositories: ['https://github.com/succinctlabs/sp1-vector'],

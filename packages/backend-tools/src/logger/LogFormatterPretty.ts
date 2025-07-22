@@ -1,5 +1,5 @@
-import { inspect } from 'util'
 import chalk from 'chalk'
+import { inspect } from 'util'
 
 import type { LogLevel } from './LogLevel'
 import type { LogEntry, LogFormatter } from './types'

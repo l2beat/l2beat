@@ -1,3 +1,442 @@
+Generated with discovered.json: 0x93fcbb5c9788f5e079833f0ae333b90d762e47ae
+
+# Diff at Mon, 14 Jul 2025 12:45:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    EOA  (0x099198353446A9E3a20672eDC1Bd461E978842c3) {
+    +++ description: None
+      address:
+-        "0x099198353446A9E3a20672eDC1Bd461E978842c3"
++        "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3"
+    }
+```
+
+```diff
+    EOA  (0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800) {
+    +++ description: None
+      address:
+-        "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
++        "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
+    }
+```
+
+```diff
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98) {
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      address:
+-        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
++        "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+      values.$admin:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.$implementation:
+-        "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"
++        "eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"
+      values.$pastUpgrades.0.2.0:
+-        "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"
++        "eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"
+      values.beneficiary:
+-        "0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9"
++        "eth:0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9"
+      values.dai:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.defaultAdmin:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.destAddress:
+-        "0x744C5860ba161b5316F7E80D9Ec415e2727e5bD5"
++        "eth:0x744C5860ba161b5316F7E80D9Ec415e2727e5bD5"
+      values.owner:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.sdai:
+-        "0x83F20F44975D03b1b09e64809B757c47f942BEeA"
++        "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA"
+      values.zkEvmBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      implementationNames.0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98:
+-        "UUPSProxy"
+      implementationNames.0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b:
+-        "L1Escrow"
+      implementationNames.eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98:
++        "UUPSProxy"
+      implementationNames.eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b:
++        "L1Escrow"
+    }
+```
+
+```diff
+    EOA  (0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed) {
+    +++ description: None
+      address:
+-        "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed"
++        "eth:0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed"
+    }
+```
+
+```diff
+    EOA  (0x4E83124eD15b13265240B61EC9627797CCE1032E) {
+    +++ description: None
+      address:
+-        "0x4E83124eD15b13265240B61EC9627797CCE1032E"
++        "eth:0x4E83124eD15b13265240B61EC9627797CCE1032E"
+    }
+```
+
+```diff
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+      address:
+-        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
++        "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.$admin:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.$implementation:
+-        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
++        "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.$pastUpgrades.0.2.0:
+-        "0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"
++        "eth:0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"
+      values.$pastUpgrades.1.2.0:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.$pastUpgrades.2.2.0:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.$pastUpgrades.3.2.0:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.$pastUpgrades.4.2.0:
+-        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
++        "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.admin:
+-        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
++        "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+      values.bridgeAddress:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++++ description: If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.
++++ severity: HIGH
+      values.forceBatchAddress:
+-        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
++        "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+      values.gasTokenAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.GLOBAL_EXIT_ROOT_MANAGER_L2:
+-        "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
++        "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+      values.globalExitRootManager:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.pendingAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.pol:
+-        "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
++        "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6"
+      values.rollupManager:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.trustedSequencer:
+-        "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
++        "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
+      implementationNames.0x519E42c24163192Dca44CD3fBDCEBF6be9130987:
+-        "PolygonTransparentProxy"
+      implementationNames.0x7253F329302b1b5E774Ac641EA3743E9E3244f2E:
+-        "PolygonZkEVMEtrog"
+      implementationNames.eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987:
++        "PolygonTransparentProxy"
+      implementationNames.eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E:
++        "PolygonZkEVMEtrog"
+    }
+```
+
+```diff
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB) {
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      address:
+-        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
++        "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      values.$admin:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.$implementation:
+-        "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"
++        "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"
+      values.$pastUpgrades.0.2.0:
+-        "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"
++        "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"
+      values.bridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.l1USDC:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.owner:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.zkMinterBurner:
+-        "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189"
++        "eth:0xBDa0B27f93B2FD3f076725b89cf02e48609bC189"
+      implementationNames.0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB:
+-        "L1EscrowProxy"
+      implementationNames.0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6:
+-        "L1Escrow"
+      implementationNames.eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB:
++        "L1EscrowProxy"
+      implementationNames.eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6:
++        "L1Escrow"
+    }
+```
+
+```diff
+    EOA  (0xb771380f912E4b5F6beDdf81314C383c13F16ab5) {
+    +++ description: None
+      address:
+-        "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
++        "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+    }
+```
+
+```diff
+    EOA  (0xBDa0B27f93B2FD3f076725b89cf02e48609bC189) {
+    +++ description: None
+      address:
+-        "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189"
++        "eth:0xBDa0B27f93B2FD3f076725b89cf02e48609bC189"
+    }
+```
+
+```diff
+    EOA  (0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D) {
+    +++ description: None
+      address:
+-        "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D"
++        "eth:0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D"
+    }
+```
+
+```diff
+    contract Verifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883) {
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+      address:
+-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++        "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+      implementationNames.0xc521580cd8586Cc688A7430F9DcE0f6A803F2883:
+-        "FflonkVerifier_11"
+      implementationNames.eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883:
++        "FflonkVerifier_11"
+    }
+```
+
+```diff
+    EOA  (0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4) {
+    +++ description: None
+      address:
+-        "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4"
++        "eth:0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4"
+    }
+```
+
+```diff
+    EOA  (0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224) {
+    +++ description: None
+      address:
+-        "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224"
++        "eth:0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224"
+    }
+```
+
+```diff
+    EOA  (0xDB5D9c10FD2a92692DB51853e06058EE0436d69B) {
+    +++ description: None
+      address:
+-        "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B"
++        "eth:0xDB5D9c10FD2a92692DB51853e06058EE0436d69B"
+    }
+```
+
+```diff
+    EOA  (0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a) {
+    +++ description: None
+      address:
+-        "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a"
++        "eth:0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a"
+    }
+```
+
+```diff
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01) {
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+      address:
+-        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
++        "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+      values.$admin:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.$implementation:
+-        "0x18FED1E19dC564DC917D203be9d40790472D22e9"
++        "eth:0x18FED1E19dC564DC917D203be9d40790472D22e9"
+      values.$pastUpgrades.0.2.0:
+-        "0x18FED1E19dC564DC917D203be9d40790472D22e9"
++        "eth:0x18FED1E19dC564DC917D203be9d40790472D22e9"
+      values.counterpartContract:
+-        "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B"
++        "eth:0xDB5D9c10FD2a92692DB51853e06058EE0436d69B"
+      values.defaultAdmin:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.originTokenAddress:
+-        "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
++        "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+      values.owner:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.polygonZkEVMBridge:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      values.wrappedTokenAddress:
+-        "0xbf6De60Ccd9D22a5820A658fbE9fc87975EA204f"
++        "eth:0xbf6De60Ccd9D22a5820A658fbE9fc87975EA204f"
+      implementationNames.0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01:
+-        "UUPSProxy"
+      implementationNames.0x18FED1E19dC564DC917D203be9d40790472D22e9:
+-        "WstETHBridgeL1"
+      implementationNames.eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01:
++        "UUPSProxy"
+      implementationNames.eth:0x18FED1E19dC564DC917D203be9d40790472D22e9:
++        "WstETHBridgeL1"
+    }
+```
+
+```diff
+    EOA  (0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F) {
+    +++ description: None
+      address:
+-        "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F"
++        "eth:0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F"
+    }
+```
+
+```diff
+    EOA  (0xf56AE6520776934127AB68438d1b4652BCe07F8f) {
+    +++ description: None
+      address:
+-        "0xf56AE6520776934127AB68438d1b4652BCe07F8f"
++        "eth:0xf56AE6520776934127AB68438d1b4652BCe07F8f"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      address:
+-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
++        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x099198353446A9E3a20672eDC1Bd461E978842c3"
++        "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3"
+      values.$members.1:
+-        "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
++        "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+      values.$members.2:
+-        "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4"
++        "eth:0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4"
+      values.$members.3:
+-        "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D"
++        "eth:0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D"
+      values.$members.4:
+-        "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a"
++        "eth:0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a"
+      values.$members.5:
+-        "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224"
++        "eth:0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224"
+      values.$members.6:
+-        "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F"
++        "eth:0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F"
+      values.$members.7:
+-        "0xf56AE6520776934127AB68438d1b4652BCe07F8f"
++        "eth:0xf56AE6520776934127AB68438d1b4652BCe07F8f"
+      values.$members.8:
+-        "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed"
++        "eth:0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed"
+      values.$members.9:
+-        "0x4E83124eD15b13265240B61EC9627797CCE1032E"
++        "eth:0x4E83124eD15b13265240B61EC9627797CCE1032E"
+      implementationNames.0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98)
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987)
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB)
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01)
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0cde38f825e07fa5f7d4dbc20740139b49444fc1
 
 # Diff at Fri, 04 Jul 2025 12:19:15 GMT:

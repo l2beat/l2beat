@@ -36,14 +36,14 @@ export function Header<T extends { id: string }>({
         {/* Mobile gradient */}
         <div
           className={cn(
-            '-bottom-4 absolute inset-x-0 h-4 w-full bg-gradient-to-b from-background to-background/5 md:top-20 md:hidden md:h-10 md:w-[calc(100%-278px)] md:via-40% md:via-background',
+            '-bottom-4 absolute inset-x-0 h-4 w-full bg-linear-to-b from-background to-background/5 md:top-20 md:hidden md:h-10 md:w-[calc(100%-278px)] md:via-40% md:via-background',
           )}
         />
       </PrimaryCard>
       {/* Gradient */}
       <div
         className={cn(
-          'sticky top-16 hidden h-4 w-full bg-gradient-to-b from-background to-background/5 md:top-20 md:block md:h-10 md:w-full md:via-40% md:via-background lg:w-[calc(100%-278px)]',
+          'sticky top-16 hidden h-4 w-full bg-linear-to-b from-background to-background/5 md:top-20 md:block md:h-10 md:w-full md:via-40% md:via-background lg:w-[calc(100%-278px)]',
         )}
       />
     </>

@@ -1,13 +1,17 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
-
-import { CONTRACTS, DA_MODES } from '../../common'
-import { DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  CONTRACTS,
+  DA_LAYERS,
+  DA_MODES,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -129,7 +133,9 @@ export const polygonpos: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: discovery.getContract('RootChain').address,
+          address: ChainSpecificAddress.address(
+            discovery.getContract('RootChain').address,
+          ),
           selector: '0x4e43e495',
           functionSignature:
             'function submitCheckpoint(bytes data, uint256[3][] sigs)',

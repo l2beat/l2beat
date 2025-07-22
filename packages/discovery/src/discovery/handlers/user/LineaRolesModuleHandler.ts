@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type BigNumber, type providers, utils } from 'ethers'
 import isEmpty from 'lodash/isEmpty'
@@ -77,7 +77,7 @@ export class LineaRolesModuleHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const logs = await provider.getLogs(address, [
       [
@@ -95,7 +95,7 @@ export class LineaRolesModuleHandler implements Handler {
         abi.getEventTopic('SetDefaultRole'),
       ],
     ])
-    const events = logs.map(parseRoleLog)
+    const events = logs.map((l) => parseRoleLog(provider.chain, l))
     const roles: Record<number, Role> = {}
     const defaultRoles: Record<string, number> = {}
 
@@ -105,9 +105,8 @@ export class LineaRolesModuleHandler implements Handler {
           .map((e) => {
             if ('targetAddress' in e) {
               return e.targetAddress
-            } else {
-              return undefined
             }
+            return undefined
           })
           .filter(notUndefined),
       ),
@@ -395,26 +394,26 @@ function decodeComparisonType(value: number): ComparisonType {
 interface AllowTargetLog {
   readonly type: 'AllowTarget'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly execOption: TargetAddress['options']
 }
 
 interface RevokeTargetLog {
   readonly type: 'RevokeTarget'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
 }
 
 interface ScopeTargetLog {
   readonly type: 'ScopeTarget'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
 }
 
 interface ScopeAllowFunctionLog {
   readonly type: 'ScopeAllowFunction'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly options: number
   readonly resultingScopeConfig: string
@@ -423,7 +422,7 @@ interface ScopeAllowFunctionLog {
 interface ScopeRevokeFunctionLog {
   readonly type: 'ScopeRevokeFunction'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly resultingScopeConfig: string
 }
@@ -431,7 +430,7 @@ interface ScopeRevokeFunctionLog {
 interface ScopeFunctionLog {
   readonly type: 'ScopeFunction'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly isParamScoped: boolean[]
   readonly paramType: number[]
@@ -444,7 +443,7 @@ interface ScopeFunctionLog {
 interface ScopeFunctionExecutionOptionsLog {
   readonly type: 'ScopeFunctionExecutionOptions'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly options: number
   readonly resultingScopeConfig: string
@@ -453,7 +452,7 @@ interface ScopeFunctionExecutionOptionsLog {
 interface ScopeParameterLog {
   readonly type: 'ScopeParameter'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly index: number
   readonly paramType: number
@@ -465,7 +464,7 @@ interface ScopeParameterLog {
 interface ScopeParameterAsOneOfLog {
   readonly type: 'ScopeParameterAsOneOf'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly index: number
   readonly paramType: number
@@ -476,7 +475,7 @@ interface ScopeParameterAsOneOfLog {
 interface UnscopeParameterLog {
   readonly type: 'UnscopeParameter'
   readonly role: number
-  readonly targetAddress: EthereumAddress
+  readonly targetAddress: ChainSpecificAddress
   readonly functionSig: string
   readonly index: number
   readonly resultingScopeConfig: string
@@ -484,18 +483,19 @@ interface UnscopeParameterLog {
 
 interface AssignRolesLog {
   readonly type: 'AssignRoles'
-  readonly module: EthereumAddress
+  readonly module: ChainSpecificAddress
   readonly roles: number[]
   readonly memberOf: boolean[]
 }
 
 interface SetDefaultRoleLog {
   readonly type: 'SetDefaultRole'
-  readonly module: EthereumAddress
+  readonly module: ChainSpecificAddress
   readonly defaultRole: number
 }
 
 function parseRoleLog(
+  longChain: string,
   log: providers.Log,
 ):
   | AllowTargetLog
@@ -515,41 +515,60 @@ function parseRoleLog(
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       execOption: decodeExecOptions(event.args.options as number),
     } as const
-  } else if (event.name === 'RevokeTarget' || event.name === 'ScopeTarget') {
+  }
+  if (event.name === 'RevokeTarget' || event.name === 'ScopeTarget') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
     } as const
-  } else if (event.name === 'ScopeAllowFunction') {
+  }
+  if (event.name === 'ScopeAllowFunction') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.selector as string,
       options: event.args.options as number,
       resultingScopeConfig: (
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'ScopeRevokeFunction') {
+  }
+  if (event.name === 'ScopeRevokeFunction') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.selector as string,
       resultingScopeConfig: (
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'ScopeFunction') {
+  }
+  if (event.name === 'ScopeFunction') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.functionSig as string,
       isParamScoped: event.args.isParamScoped as boolean[],
       paramType: event.args.paramType as number[],
@@ -560,22 +579,30 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'ScopeFunctionExecutionOptions') {
+  }
+  if (event.name === 'ScopeFunctionExecutionOptions') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.functionSig as string,
       options: event.args.options as number,
       resultingScopeConfig: (
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'ScopeParameter') {
+  }
+  if (event.name === 'ScopeParameter') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.functionSig as string,
       index: event.args.index as number,
       paramType: event.args.paramType as number,
@@ -585,11 +612,15 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'ScopeParameterAsOneOf') {
+  }
+  if (event.name === 'ScopeParameterAsOneOf') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.functionSig as string,
       index: event.args.index as number,
       paramType: event.args.paramType as number,
@@ -598,28 +629,40 @@ function parseRoleLog(
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'UnscopeParameter') {
+  }
+  if (event.name === 'UnscopeParameter') {
     return {
       type: event.name,
       role: event.args.role as number,
-      targetAddress: EthereumAddress(event.args.targetAddress as string),
+      targetAddress: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.targetAddress as string,
+      ),
       functionSig: event.args.functionSig as string,
       index: event.args.index as number,
       resultingScopeConfig: (
         event.args.resultingScopeConfig as BigNumber
       ).toString(),
     } as const
-  } else if (event.name === 'AssignRoles') {
+  }
+  if (event.name === 'AssignRoles') {
     return {
       type: event.name,
-      module: EthereumAddress(event.args.module as string),
+      module: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.module as string,
+      ),
       roles: event.args.roles as number[],
       memberOf: event.args.memberOf as boolean[],
     } as const
-  } else if (event.name === 'SetDefaultRole') {
+  }
+  if (event.name === 'SetDefaultRole') {
     return {
       type: event.name,
-      module: EthereumAddress(event.args.module as string),
+      module: ChainSpecificAddress.fromLong(
+        longChain,
+        event.args.module as string,
+      ),
       defaultRole: event.args.defaultRole as number,
     } as const
   }

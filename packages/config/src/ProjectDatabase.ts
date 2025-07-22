@@ -1,7 +1,7 @@
 import {
   type AssetId,
-  type LegacyToken,
   assertUnreachable,
+  type LegacyToken,
 } from '@l2beat/shared-pure'
 import sqlite3 from 'sqlite3'
 import type { BaseProject } from './types'
@@ -48,7 +48,7 @@ const schema = {
   customDa: 'TEXT',
 
   proofVerification: 'TEXT',
-  proofSystem: 'TEXT',
+  zkCatalogInfo: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
@@ -88,7 +88,7 @@ export class ProjectDatabase {
       CREATE TABLE IF NOT EXISTS projects (
         ${entries}
       )`)
-    await this.query(`CREATE INDEX projects_slug ON projects(slug)`)
+    await this.query('CREATE INDEX projects_slug ON projects(slug)')
     await this.query(`
       CREATE TABLE IF NOT EXISTS tokens (
         id TEXT PRIMARY KEY,
@@ -172,14 +172,14 @@ export class ProjectDatabase {
   }
 
   async saveToken(token: LegacyToken) {
-    await this.query(`INSERT INTO tokens(id, data) VALUES(?, ?)`, [
+    await this.query('INSERT INTO tokens(id, data) VALUES(?, ?)', [
       token.id,
       JSON.stringify(token),
     ])
   }
 
   async getToken(id: AssetId): Promise<LegacyToken | undefined> {
-    const rows = await this.query(`SELECT data FROM tokens WHERE id = ?`, [id])
+    const rows = await this.query('SELECT data FROM tokens WHERE id = ?', [id])
     const row = rows[0]
     if (row) {
       return JSON.parse((row as { data: string }).data) as LegacyToken
@@ -187,7 +187,7 @@ export class ProjectDatabase {
   }
 
   async getTokens(): Promise<LegacyToken[]> {
-    const rows = await this.query(`SELECT data FROM tokens`)
+    const rows = await this.query('SELECT data FROM tokens')
     return rows.map(
       (row): LegacyToken => JSON.parse((row as { data: string }).data),
     )

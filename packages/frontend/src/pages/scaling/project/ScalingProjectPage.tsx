@@ -1,17 +1,22 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ContentWrapper } from '~/components/ContentWrapper'
-import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
-import { ProjectDetails } from '~/components/projects/ProjectDetails'
+import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
-import { TopNavLayout } from '~/layouts/TopNavLayout'
+import { ProjectDetails } from '~/components/projects/ProjectDetails'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
+import { ProjectSummaryBars } from '~/components/projects/ProjectSummaryBars'
+import { AboutSection } from '~/components/projects/sections/AboutSection'
+import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 
@@ -32,23 +37,83 @@ export function ScalingProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <TopNavLayout>
-          <div className="smooth-scroll">
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
+          <div
+            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            style={
+              projectEntry.colors
+                ? ({
+                    '--project-primary': projectEntry.colors.primary,
+                    '--project-secondary': projectEntry.colors.secondary,
+                  } as React.CSSProperties)
+                : undefined
+            }
+            data-has-colors={!!projectEntry.colors}
+          >
+            <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-(--project-primary) via-(--project-secondary) via-25% to-transparent max-md:hidden" />
+
             {!isNavigationEmpty && (
-              <div className="sticky top-0 z-100 md:hidden">
+              <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <ProjectScalingSummary project={projectEntry} />
-            <ContentWrapper mobileFull>
-              {isNavigationEmpty ? (
-                <ProjectDetails items={projectEntry.sections} />
-              ) : (
-                <div className="gap-x-12 md:flex">
-                  <div className="mt-10 hidden w-[242px] shrink-0 md:block">
+            <div className="relative z-0 max-md:bg-surface-primary">
+              <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-(--project-primary)/75 to-surface-primary md:hidden" />
+              <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[22px]">
+                <ProjectHeader
+                  project={projectEntry}
+                  ongoingAnomaly={projectEntry.header.ongoingAnomaly}
+                />
+                <ProjectSummaryBars project={projectEntry} />
+                {projectEntry.header.badges && (
+                  <BadgesSection
+                    badges={projectEntry.header.badges}
+                    className="mb-4 md:hidden"
+                  />
+                )}
+                {projectEntry.header.description && (
+                  <AboutSection
+                    description={projectEntry.header.description}
+                    className="md:hidden"
+                  />
+                )}
+                <HorizontalSeparator className="my-4 md:hidden" />
+                <div className="mb-3 max-md:hidden">
+                  <DesktopProjectLinks
+                    projectLinks={projectEntry.header.links}
+                    discoUiHref={projectEntry.discoUiHref}
+                  />
+                </div>
+              </div>
+              <div className="grid-cols-[1fr_172px] gap-x-6 lg:grid">
+                <div>
+                  <ProjectScalingSummary project={projectEntry} />
+
+                  {projectEntry.header.category === 'Other' &&
+                    projectEntry.reasonsForBeingOther &&
+                    projectEntry.reasonsForBeingOther.length > 0 && (
+                      <WhyAmIHereNotice
+                        reasons={projectEntry.reasonsForBeingOther}
+                      />
+                    )}
+                  {projectEntry.stageConfig.stage !== 'NotApplicable' &&
+                    projectEntry.stageConfig.stage !== 'UnderReview' &&
+                    projectEntry.stageConfig.downgradePending && (
+                      <StageOneRequirementsChangeNotice
+                        downgradePending={
+                          projectEntry.stageConfig.downgradePending
+                        }
+                      />
+                    )}
+                  <HighlightableLinkContextProvider>
+                    <ProjectDetails items={projectEntry.sections} />
+                  </HighlightableLinkContextProvider>
+                </div>
+                {!isNavigationEmpty && (
+                  <div className="mt-2 hidden shrink-0 lg:block">
                     <DesktopProjectNavigation
                       project={{
-                        title: projectEntry.name,
+                        title: projectEntry.shortName ?? projectEntry.name,
                         slug: projectEntry.slug,
                         isUnderReview: !!projectEntry.underReviewStatus,
                         icon: projectEntry.icon,
@@ -56,33 +121,12 @@ export function ScalingProjectPage({
                       sections={navigationSections}
                     />
                   </div>
-                  <div className="w-full">
-                    {projectEntry.header.category === 'Other' &&
-                      projectEntry.reasonsForBeingOther &&
-                      projectEntry.reasonsForBeingOther.length > 0 && (
-                        <WhyAmIHereNotice
-                          reasons={projectEntry.reasonsForBeingOther}
-                        />
-                      )}
-                    {projectEntry.stageConfig.stage !== 'NotApplicable' &&
-                      projectEntry.stageConfig.stage !== 'UnderReview' &&
-                      projectEntry.stageConfig.downgradePending && (
-                        <StageOneRequirementsChangeNotice
-                          downgradePending={
-                            projectEntry.stageConfig.downgradePending
-                          }
-                        />
-                      )}
-                    <HighlightableLinkContextProvider>
-                      <ProjectDetails items={projectEntry.sections} />
-                    </HighlightableLinkContextProvider>
-                  </div>
-                </div>
-              )}
-            </ContentWrapper>
-            <ScrollToTopButton />
+                )}
+              </div>
+              <ScrollToTopButton />
+            </div>
           </div>
-        </TopNavLayout>
+        </SideNavLayout>
       </HydrationBoundary>
     </AppLayout>
   )

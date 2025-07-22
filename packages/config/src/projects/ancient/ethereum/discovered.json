@@ -1,17 +1,17 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 22615662,
-  "configHash": "0xaa12d2556b437804c9a9d8e84515e1dbbef47c94fbc4d09d5ee896ca20fdea64",
+  "blockNumber": 22895933,
+  "configHash": "0xb9023ec3d49afc2217ca5ff37ab8233d6e2ec27ca17106715ee67c03f1c50d04",
   "entries": [
     {
-      "address": "0x000000000000000000000000000000000000dEaD",
+      "address": "eth:0x000000000000000000000000000000000000dEaD",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "L1CrossDomainMessenger",
-      "address": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+      "address": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
       "type": "Contract",
       "template": "opstack/L1CrossDomainMessenger",
       "sourceHashes": [
@@ -24,51 +24,51 @@
       "sinceTimestamp": 1706027447,
       "sinceBlock": 19070571,
       "values": {
-        "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+        "$admin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
         "$immutable": false,
-        "$implementation": "0x09A25EB69b0d2858800A769Da90934371C7174A9",
+        "$implementation": "eth:0x09A25EB69b0d2858800A769Da90934371C7174A9",
         "$pastUpgrades": [
           [
             "2024-01-23T16:30:47.000Z",
             "0x185c0814ce1d86690eb60ee5c74354ea592d408a2622c7fb89e23a298c7b7b39",
-            ["0x012c341506ee1939e56084F43Ae5dbCe224Ce2af"]
+            ["eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af"]
           ],
           [
             "2024-01-23T16:30:59.000Z",
             "0x1b66f25b410f8283ab6936b8843d2dce0ce8bfb64022af3cb0cdac4c693fafbf",
-            ["0x09A25EB69b0d2858800A769Da90934371C7174A9"]
+            ["eth:0x09A25EB69b0d2858800A769Da90934371C7174A9"]
           ]
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620738",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620742",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x4200000000000000000000000000000000000007",
-        "PORTAL": "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
+        "OTHER_MESSENGER": "eth:0x4200000000000000000000000000000000000007",
+        "PORTAL": "eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
         "RELAY_CALL_OVERHEAD": 40000,
         "RELAY_CONSTANT_OVERHEAD": 200000,
         "RELAY_GAS_CHECK_BUFFER": 5000,
         "RELAY_RESERVED_GAS": 40000,
-        "ResolvedDelegateProxy_addressManager": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
+        "ResolvedDelegateProxy_addressManager": "eth:0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
         "ResolvedDelegateProxy_implementationName": "OVM_L1CrossDomainMessenger",
         "version": "1.4.1"
       },
       "implementationNames": {
-        "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af": "ResolvedDelegateProxy",
-        "0x09A25EB69b0d2858800A769Da90934371C7174A9": "L1CrossDomainMessenger"
+        "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af": "ResolvedDelegateProxy",
+        "eth:0x09A25EB69b0d2858800A769Da90934371C7174A9": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "0x05F0c4e31e2ab24f5CF20b1B9d2FCe2c3d48BB9C",
+      "address": "eth:0x05F0c4e31e2ab24f5CF20b1B9d2FCe2c3d48BB9C",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "SystemConfig",
-      "address": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
+      "address": "eth:0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
       "type": "Contract",
       "template": "opstack/SystemConfig",
       "sourceHashes": [
@@ -81,17 +81,17 @@
       "sinceTimestamp": 1706027447,
       "sinceBlock": 19070571,
       "values": {
-        "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
-        "$implementation": "0x188370729584052260214A6e0847B9810e3a120d",
+        "$admin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+        "$implementation": "eth:0x188370729584052260214A6e0847B9810e3a120d",
         "$pastUpgrades": [
           [
             "2024-01-23T16:30:59.000Z",
             "0x29cca6431f8855382846890f2d96b022bc575e35d5b599d370343a9d6bfd6563",
-            ["0x188370729584052260214A6e0847B9810e3a120d"]
+            ["eth:0x188370729584052260214A6e0847B9810e3a120d"]
           ]
         ],
         "$upgradeCount": 1,
-        "batcherHash": "0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
+        "batcherHash": "eth:0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
@@ -100,7 +100,7 @@
           "isUsingEigenDA": false
         },
         "overhead": 188,
-        "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+        "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -110,9 +110,9 @@
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
         "scalar": 68400,
-        "sequencerInbox": "0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
+        "sequencerInbox": "eth:0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
-        "unsafeBlockSigner": "0x132F4CbD6aE20b264620602fd4faa7a10B084f8c",
+        "unsafeBlockSigner": "eth:0x132F4CbD6aE20b264620602fd4faa7a10B084f8c",
         "version": "1.3.1",
         "VERSION": 0
       },
@@ -126,14 +126,14 @@
         }
       },
       "implementationNames": {
-        "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec": "Proxy",
-        "0x188370729584052260214A6e0847B9810e3a120d": "SystemConfig"
+        "eth:0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec": "Proxy",
+        "eth:0x188370729584052260214A6e0847B9810e3a120d": "SystemConfig"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "L1StandardBridge",
-      "address": "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80",
+      "address": "eth:0x12d4E64E1B46d27A00fe392653A894C1dd36fb80",
       "type": "Contract",
       "template": "opstack/L1StandardBridge",
       "sourceHashes": [
@@ -145,25 +145,25 @@
       "sinceTimestamp": 1706027447,
       "sinceBlock": 19070571,
       "values": {
-        "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
-        "$implementation": "0x2362ff553A9E66bf378E971b2AAa631A4570b53d",
+        "$admin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+        "$implementation": "eth:0x2362ff553A9E66bf378E971b2AAa631A4570b53d",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
-        "l2TokenBridge": "0x4200000000000000000000000000000000000010",
-        "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
-        "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000010",
+        "l2TokenBridge": "eth:0x4200000000000000000000000000000000000010",
+        "messenger": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "MESSENGER": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.1"
       },
       "implementationNames": {
-        "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80": "L1ChugSplashProxy",
-        "0x2362ff553A9E66bf378E971b2AAa631A4570b53d": "L1StandardBridge"
+        "eth:0x12d4E64E1B46d27A00fe392653A894C1dd36fb80": "L1ChugSplashProxy",
+        "eth:0x2362ff553A9E66bf378E971b2AAa631A4570b53d": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "L1ERC721Bridge",
-      "address": "0x132b3456300332d488f946B818eB9512931eBCAa",
+      "address": "eth:0x132b3456300332d488f946B818eB9512931eBCAa",
       "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
@@ -175,25 +175,25 @@
       "sinceBlock": 19070571,
       "values": {
         "$immutable": true,
-        "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
-        "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
-        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "messenger": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "MESSENGER": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
+        "otherBridge": "eth:0x4200000000000000000000000000000000000014",
         "version": "1.1.2"
       },
       "implementationNames": {
-        "0x132b3456300332d488f946B818eB9512931eBCAa": "L1ERC721Bridge"
+        "eth:0x132b3456300332d488f946B818eB9512931eBCAa": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "0x132F4CbD6aE20b264620602fd4faa7a10B084f8c",
+      "address": "eth:0x132F4CbD6aE20b264620602fd4faa7a10B084f8c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "AddressManager",
-      "address": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
+      "address": "eth:0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
       "type": "Contract",
       "template": "opstack/AddressManager",
       "sourceHashes": [
@@ -205,16 +205,16 @@
       "sinceBlock": 19070571,
       "values": {
         "$immutable": true,
-        "owner": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492"
+        "owner": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492"
       },
       "implementationNames": {
-        "0x15A52Fed1c448028A240b603dD93f2697E12Dc82": "AddressManager"
+        "eth:0x15A52Fed1c448028A240b603dD93f2697E12Dc82": "AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Ancient8GuardianMultisig",
-      "address": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
+      "address": "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -239,14 +239,14 @@
       "sinceBlock": 19070482,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-          "0x05F0c4e31e2ab24f5CF20b1B9d2FCe2c3d48BB9C",
-          "0xcdD7FE91F5e2dCf8a0B30C4127c8D54e3F2a469c",
-          "0xE3a87D0eE19c66d0d22F2AEf50c78d4C4FEeA5FB"
+          "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+          "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+          "eth:0x05F0c4e31e2ab24f5CF20b1B9d2FCe2c3d48BB9C",
+          "eth:0xcdD7FE91F5e2dCf8a0B30C4127c8D54e3F2a469c",
+          "eth:0xE3a87D0eE19c66d0d22F2AEf50c78d4C4FEeA5FB"
         ],
         "$threshold": 4,
         "domainSeparator": "0x98911f87c3c82a2197656e1df3e5214c19f185fa11e6e507a64b70d576ddcfb6",
@@ -257,18 +257,18 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+      "address": "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Conduit Multisig 1",
-      "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
+      "address": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -354,45 +354,45 @@
       "sinceBlock": 16990669,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
-          "0x860e06Fe384D1A3340111e7D142E02642178c053",
-          "0x50930d652266EF4127FA3A1906B7Cb9951076628",
-          "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
-          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-          "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-          "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-          "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+          "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+          "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
+          "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
+          "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
+          "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+          "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+          "eth:0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
+          "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+          "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+          "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "$threshold": 4,
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 111,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
-      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
+      "address": "eth:0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628",
+      "address": "eth:0x50930d652266EF4127FA3A1906B7Cb9951076628",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
+      "address": "eth:0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -405,7 +405,7 @@
     },
     {
       "name": "OptimismPortal",
-      "address": "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
+      "address": "eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
       "type": "Contract",
       "template": "opstack/OptimismPortal",
       "sourceHashes": [
@@ -418,37 +418,37 @@
       "sinceTimestamp": 1706027447,
       "sinceBlock": 19070571,
       "values": {
-        "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
-        "$implementation": "0x9FC6A608B45c6F129650c26a34bbe5d26959E75e",
+        "$admin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+        "$implementation": "eth:0x9FC6A608B45c6F129650c26a34bbe5d26959E75e",
         "$pastUpgrades": [
           [
             "2024-01-23T16:30:59.000Z",
             "0x0fcde8d306862af703a65ee04c4a237e4b60bd7d07b05eea7fe86250d28674d8",
-            ["0x9FC6A608B45c6F129650c26a34bbe5d26959E75e"]
+            ["eth:0x9FC6A608B45c6F129650c26a34bbe5d26959E75e"]
           ]
         ],
         "$upgradeCount": 1,
-        "GUARDIAN": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
-        "L2_ORACLE": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
-        "l2Sender": "0x000000000000000000000000000000000000dEaD",
+        "GUARDIAN": "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
+        "L2_ORACLE": "eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
+        "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 22590843
+          "prevBoughtGas": 796584,
+          "prevBlockNum": 22890976
         },
         "paused": false,
-        "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
+        "SYSTEM_CONFIG": "eth:0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
         "version": "1.7.2"
       },
       "implementationNames": {
-        "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68": "Proxy",
-        "0x9FC6A608B45c6F129650c26a34bbe5d26959E75e": "OptimismPortal"
+        "eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68": "Proxy",
+        "eth:0x9FC6A608B45c6F129650c26a34bbe5d26959E75e": "OptimismPortal"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+      "address": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -498,41 +498,41 @@
       "sinceBlock": 19070571,
       "values": {
         "$immutable": true,
-        "addressManager": "0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
+        "addressManager": "eth:0x15A52Fed1c448028A240b603dD93f2697E12Dc82",
         "isUpgrading": false,
-        "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+        "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
       },
       "implementationNames": {
-        "0x75a223Fb459461B9Fa61dd25109EA05522b4b492": "ProxyAdmin"
+        "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492": "ProxyAdmin"
       }
     },
     {
-      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "address": "eth:0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
+      "address": "eth:0x860e06Fe384D1A3340111e7D142E02642178c053",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
+      "address": "eth:0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
+      "address": "eth:0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+      "address": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xAF24199C29D5cc3fd298356137913A42847eA690",
+      "address": "eth:0xAF24199C29D5cc3fd298356137913A42847eA690",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -545,7 +545,7 @@
     },
     {
       "name": "L2OutputOracle",
-      "address": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
+      "address": "eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
       "type": "Contract",
       "template": "opstack/L2OutputOracle",
       "sourceHashes": [
@@ -563,25 +563,25 @@
       "sinceTimestamp": 1706027447,
       "sinceBlock": 19070571,
       "values": {
-        "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
-        "$implementation": "0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6",
+        "$admin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+        "$implementation": "eth:0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6",
         "$pastUpgrades": [
           [
             "2024-01-23T16:30:59.000Z",
             "0x085b93df4b2466060df8a5b0b9d89e228e45993a2887e0d038416a61d816660c",
-            ["0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6"]
+            ["eth:0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6"]
           ]
         ],
         "$upgradeCount": 1,
-        "CHALLENGER": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
+        "CHALLENGER": "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 21409200,
-        "latestOutputIndex": 11893,
-        "nextBlockNumber": 21411000,
-        "nextOutputIndex": 11894,
-        "PROPOSER": "0xAF24199C29D5cc3fd298356137913A42847eA690",
+        "latestBlockNumber": 23101200,
+        "latestOutputIndex": 12833,
+        "nextBlockNumber": 23103000,
+        "nextOutputIndex": 12834,
+        "PROPOSER": "eth:0xAF24199C29D5cc3fd298356137913A42847eA690",
         "startingBlockNumber": 0,
         "startingTimestamp": 1706027387,
         "SUBMISSION_INTERVAL": 1800,
@@ -596,24 +596,24 @@
         "deletedOutputs": { "severity": "HIGH" }
       },
       "implementationNames": {
-        "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996": "Proxy",
-        "0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6": "L2OutputOracle"
+        "eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996": "Proxy",
+        "eth:0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6": "L2OutputOracle"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xcdD7FE91F5e2dCf8a0B30C4127c8D54e3F2a469c",
+      "address": "eth:0xcdD7FE91F5e2dCf8a0B30C4127c8D54e3F2a469c",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
+      "address": "eth:0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "L1ERC721Bridge",
-      "address": "0xd5e3eDf5b68135D559D572E26bF863FBC1950033",
+      "address": "eth:0xd5e3eDf5b68135D559D572E26bF863FBC1950033",
       "type": "Contract",
       "template": "opstack/L1ERC721Bridge",
       "sourceHashes": [
@@ -625,54 +625,54 @@
       "sinceTimestamp": 1706027447,
       "sinceBlock": 19070571,
       "values": {
-        "$admin": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
-        "$implementation": "0x132b3456300332d488f946B818eB9512931eBCAa",
+        "$admin": "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
+        "$implementation": "eth:0x132b3456300332d488f946B818eB9512931eBCAa",
         "$pastUpgrades": [
           [
             "2024-01-23T16:30:59.000Z",
             "0xb3faea51544a91e99f889a9eceb7a0396d9c8eb4b559e5970dee5e699b3bc369",
-            ["0x132b3456300332d488f946B818eB9512931eBCAa"]
+            ["eth:0x132b3456300332d488f946B818eB9512931eBCAa"]
           ]
         ],
         "$upgradeCount": 1,
-        "messenger": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
-        "MESSENGER": "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
-        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
-        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "messenger": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "MESSENGER": "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af",
+        "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000014",
+        "otherBridge": "eth:0x4200000000000000000000000000000000000014",
         "version": "1.1.2"
       },
       "implementationNames": {
-        "0xd5e3eDf5b68135D559D572E26bF863FBC1950033": "Proxy",
-        "0x132b3456300332d488f946B818eB9512931eBCAa": "L1ERC721Bridge"
+        "eth:0xd5e3eDf5b68135D559D572E26bF863FBC1950033": "Proxy",
+        "eth:0x132b3456300332d488f946B818eB9512931eBCAa": "L1ERC721Bridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "address": "0xE3a87D0eE19c66d0d22F2AEf50c78d4C4FEeA5FB",
+      "address": "eth:0xE3a87D0eE19c66d0d22F2AEf50c78d4C4FEeA5FB",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+      "address": "eth:0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+      "address": "eth:0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+      "address": "eth:0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x012c341506ee1939e56084F43Ae5dbCe224Ce2af": [
+    "eth:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af": [
       "constructor(address _addressManager, string _implementationName)"
     ],
-    "0x09A25EB69b0d2858800A769Da90934371C7174A9": [
+    "eth:0x09A25EB69b0d2858800A769Da90934371C7174A9": [
       "constructor(address _portal)",
       "event FailedRelayedMessage(bytes32 indexed msgHash)",
       "event Initialized(uint8 version)",
@@ -699,7 +699,7 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec": [
+    "eth:0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -709,7 +709,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80": [
+    "eth:0x12d4E64E1B46d27A00fe392653A894C1dd36fb80": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -717,7 +717,7 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "0x132b3456300332d488f946B818eB9512931eBCAa": [
+    "eth:0x132b3456300332d488f946B818eB9512931eBCAa": [
       "constructor(address _messenger, address _otherBridge)",
       "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
       "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
@@ -731,7 +731,7 @@
       "function otherBridge() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x15A52Fed1c448028A240b603dD93f2697E12Dc82": [
+    "eth:0x15A52Fed1c448028A240b603dD93f2697E12Dc82": [
       "event AddressSet(string indexed name, address newAddress, address oldAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function getAddress(string _name) view returns (address)",
@@ -740,7 +740,7 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x188370729584052260214A6e0847B9810e3a120d": [
+    "eth:0x188370729584052260214A6e0847B9810e3a120d": [
       "constructor(address _owner, uint256 _overhead, uint256 _scalar, bytes32 _batcherHash, uint64 _gasLimit, address _unsafeBlockSigner, tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee) _config)",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
       "event Initialized(uint8 version)",
@@ -765,10 +765,10 @@
       "function unsafeBlockSigner() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": [
+    "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": [
       "constructor(address _singleton)"
     ],
-    "0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6": [
+    "eth:0x1F61619E8c228fb67204cD157A3e50Aa6690FbF6": [
       "constructor(uint256 _submissionInterval, uint256 _l2BlockTime, uint256 _startingBlockNumber, uint256 _startingTimestamp, address _proposer, address _challenger, uint256 _finalizationPeriodSeconds)",
       "event Initialized(uint8 version)",
       "event OutputProposed(bytes32 indexed outputRoot, uint256 indexed l2OutputIndex, uint256 indexed l2BlockNumber, uint256 l1Timestamp)",
@@ -793,7 +793,7 @@
       "function startingTimestamp() view returns (uint256)",
       "function version() view returns (string)"
     ],
-    "0x2362ff553A9E66bf378E971b2AAa631A4570b53d": [
+    "eth:0x2362ff553A9E66bf378E971b2AAa631A4570b53d": [
       "constructor(address _messenger)",
       "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
       "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
@@ -822,10 +822,10 @@
       "function messenger() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
+    "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
       "constructor(address _singleton)"
     ],
-    "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68": [
+    "eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -835,7 +835,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0x75a223Fb459461B9Fa61dd25109EA05522b4b492": [
+    "eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addressManager() view returns (address)",
@@ -856,7 +856,7 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
-    "0x9FC6A608B45c6F129650c26a34bbe5d26959E75e": [
+    "eth:0x9FC6A608B45c6F129650c26a34bbe5d26959E75e": [
       "constructor(address _l2Oracle, address _guardian, bool _paused, address _config)",
       "event Initialized(uint8 version)",
       "event Paused(address account)",
@@ -883,7 +883,7 @@
       "function unpause()",
       "function version() view returns (string)"
     ],
-    "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996": [
+    "eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -893,7 +893,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xd5e3eDf5b68135D559D572E26bF863FBC1950033": [
+    "eth:0xd5e3eDf5b68135D559D572E26bF863FBC1950033": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -903,7 +903,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -964,5 +964,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x9f96192e7df3a7a8ad9387fde4c9389f05eeedceedbea4ee97f0dae2029e38dc"
+  "permissionsConfigHash": "0xa751c2996ae96fa1786acf31c1a76b3952d436310e723233941a1714c9878e5e"
 }

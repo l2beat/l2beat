@@ -3,10 +3,10 @@ import {
   type ConfigReader,
   type DiscoveryModuleConfig,
   type DiscoveryPaths,
-  type TemplateService,
   discover,
   getChainConfigs,
   modelPermissionsCommand,
+  type TemplateService,
 } from '@l2beat/discovery'
 import { updateDiffHistory } from './updateDiffHistory'
 

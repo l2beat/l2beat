@@ -2,11 +2,11 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0xd0e4126c8f04e3344633cf33e742f0775bd166ffd3009db420b6987c65ac7090",
+  "configHash": "0xc0bb35c5230440f3eb2df2dabf46966e8f245b7484e438d41d16ff7f8a37670d",
   "entries": [
     {
       "name": "History",
-      "address": "0x04395d494624D2B6e30C0dfDB74498a2839f805d",
+      "address": "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d",
       "type": "Contract",
       "sourceHashes": [
         "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
@@ -16,15 +16,15 @@
       "sinceBlock": 121950726,
       "values": {
         "$immutable": true,
-        "owner": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
+        "owner": "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35"
       },
       "implementationNames": {
-        "0x04395d494624D2B6e30C0dfDB74498a2839f805d": "History"
+        "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d": "History"
       }
     },
     {
       "name": "BugBuster",
-      "address": "0x3FF5C7383F614256053c3F6B86A47bA974937299",
+      "address": "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299",
       "type": "Contract",
       "sourceHashes": [
         "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
@@ -34,17 +34,17 @@
       "sinceBlock": 125600141,
       "values": {
         "$immutable": true,
-        "getConsensus": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
+        "getConsensus": "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
         "getTemplateHash": "0x8fa989ac6c95375f2f07c8fa900a87bce79ae243a5a5f90c9531ccc9e1fceafc",
-        "owner": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
+        "owner": "oeth:0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3"
       },
       "implementationNames": {
-        "0x3FF5C7383F614256053c3F6B86A47bA974937299": "CartesiDApp"
+        "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299": "CartesiDApp"
       }
     },
     {
       "name": "Authority",
-      "address": "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
+      "address": "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35",
       "type": "Contract",
       "sourceHashes": [
         "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
@@ -54,16 +54,16 @@
       "sinceBlock": 121950726,
       "values": {
         "$immutable": true,
-        "getHistory": "0x04395d494624D2B6e30C0dfDB74498a2839f805d",
-        "owner": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
+        "getHistory": "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d",
+        "owner": "oeth:0xD330C12e8DBD00570616D9406614106e2B3A1cf5"
       },
       "implementationNames": {
-        "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": "Authority"
+        "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": "Authority"
       }
     },
     {
       "name": "InputBox",
-      "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "address": "oeth:0x59b22D57D4f067708AB0c00552767405926dc768",
       "type": "Contract",
       "sourceHashes": [
         "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
@@ -73,17 +73,17 @@
       "sinceBlock": 107432991,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox"
+        "oeth:0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox"
       }
     },
     {
-      "address": "0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3",
+      "address": "oeth:0x7f9e54fEa7F266bcE775DbC3E34061D9407b1ed3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ERC20Portal",
-      "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "address": "oeth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
       "type": "Contract",
       "sourceHashes": [
         "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
@@ -93,20 +93,20 @@
       "sinceBlock": 107432999,
       "values": {
         "$immutable": true,
-        "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
+        "getInputBox": "oeth:0x59b22D57D4f067708AB0c00552767405926dc768"
       },
       "implementationNames": {
-        "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal"
+        "oeth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal"
       }
     },
     {
-      "address": "0xD330C12e8DBD00570616D9406614106e2B3A1cf5",
+      "address": "oeth:0xD330C12e8DBD00570616D9406614106e2B3A1cf5",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x04395d494624D2B6e30C0dfDB74498a2839f805d": [
+    "oeth:0x04395d494624D2B6e30C0dfDB74498a2839f805d": [
       "constructor(address _owner)",
       "error InvalidClaimIndex()",
       "error InvalidInputIndices()",
@@ -120,7 +120,7 @@
       "function submitClaim(bytes _claimData)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x3FF5C7383F614256053c3F6B86A47bA974937299": [
+    "oeth:0x3FF5C7383F614256053c3F6B86A47bA974937299": [
       "constructor(address _consensus, address _owner, bytes32 _templateHash)",
       "error EtherTransferFailed()",
       "error IncorrectEpochHash()",
@@ -147,7 +147,7 @@
       "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
       "function withdrawEther(address _receiver, uint256 _value)"
     ],
-    "0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": [
+    "oeth:0x4246F5b1E52Fef1C52c96a9b1B679AE818d4fb35": [
       "constructor(address _owner)",
       "error AuthorityWithdrawalFailed()",
       "event ApplicationJoined(address application)",
@@ -164,19 +164,19 @@
       "function transferOwnership(address newOwner)",
       "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
     ],
-    "0x59b22D57D4f067708AB0c00552767405926dc768": [
+    "oeth:0x59b22D57D4f067708AB0c00552767405926dc768": [
       "error InputSizeExceedsLimit()",
       "event InputAdded(address indexed dapp, uint256 indexed inputIndex, address sender, bytes input)",
       "function addInput(address _dapp, bytes _input) returns (bytes32)",
       "function getInputHash(address _dapp, uint256 _index) view returns (bytes32)",
       "function getNumberOfInputs(address _dapp) view returns (uint256)"
     ],
-    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
+    "oeth:0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
       "constructor(address _inputBox)",
       "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
       "function getInputBox() view returns (address)"
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xa8a6e08c8dc4545a33bf0166cab4b561a73c68d20dfa0e28595fb790a32e1b8c"
+  "permissionsConfigHash": "0x41d0ab9148f634eb8d9281c1d31dacff8a28921a7e693c68fc0ede56a0ea6be3"
 }

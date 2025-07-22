@@ -1,4 +1,3 @@
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -6,7 +5,8 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import {

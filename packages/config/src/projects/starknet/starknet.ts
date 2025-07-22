@@ -1,16 +1,17 @@
 import {
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
+  formatLargeNumber,
   ProjectId,
   UnixTime,
-  formatLargeNumber,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -18,7 +19,6 @@ import {
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
@@ -44,20 +44,21 @@ const delayedExecutorDelaySeconds = discovery.getContractValue<number>(
   'executionDelay',
 )
 
-const ESCROW_ETH_ADDRESS = '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
-const ESCROW_WBTC_ADDRESS = '0x283751A21eafBFcD52297820D27C1f1963D9b5b4'
-const ESCROW_USDC_ADDRESS = '0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
-const ESCROW_USDT_ADDRESS = '0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
-const ESCROW_WSTETH_ADDRESS = '0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B'
-const ESCROW_RETH_ADDRESS = '0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2'
-const ESCROW_UNI_ADDRESS = '0xf76e6bF9e2df09D0f854F045A3B724074dA1236B'
-const ESCROW_FRAX_ADDRESS = '0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb'
-const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
-const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
-const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
-const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
-const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
-const ESCROW_MULTIBRIDGE_ADDRESS = '0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
+const ESCROW_ETH_ADDRESS = 'eth:0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
+const ESCROW_WBTC_ADDRESS = 'eth:0x283751A21eafBFcD52297820D27C1f1963D9b5b4'
+const ESCROW_USDC_ADDRESS = 'eth:0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816'
+const ESCROW_USDT_ADDRESS = 'eth:0xbb3400F107804DFB482565FF1Ec8D8aE66747605'
+const ESCROW_WSTETH_ADDRESS = 'eth:0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B'
+const ESCROW_RETH_ADDRESS = 'eth:0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2'
+const ESCROW_UNI_ADDRESS = 'eth:0xf76e6bF9e2df09D0f854F045A3B724074dA1236B'
+const ESCROW_FRAX_ADDRESS = 'eth:0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb'
+const ESCROW_FXS_ADDRESS = 'eth:0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
+const ESCROW_SFRXETH_ADDRESS = 'eth:0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
+const ESCROW_LUSD_ADDRESS = 'eth:0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
+const ESCROW_LORDS_ADDRESS = 'eth:0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
+const ESCROW_STRK_ADDRESS = 'eth:0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
+const ESCROW_MULTIBRIDGE_ADDRESS =
+  'eth:0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
 
 const escrowETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_ETH_ADDRESS,
@@ -90,11 +91,10 @@ function formatMaxTotalBalanceString(
     '115792089237316195423570985008687907853269984665640564039457584007913129639935'
   ) {
     return 'There is no bridge cap.'
-  } else {
-    return `The current bridge cap is ${formatLargeNumber(
-      maxTotalBalance / 10 ** decimals,
-    )} ${ticker}.`
   }
+  return `The current bridge cap is ${formatLargeNumber(
+    maxTotalBalance / 10 ** decimals,
+  )} ${ticker}.`
 }
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
@@ -441,7 +441,9 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
     associatedTokens: ['STRK'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_ETH_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_ETH_ADDRESS),
+        ),
         sinceTimestamp: UnixTime(1647857148),
         tokens: ['ETH'],
         description:
@@ -458,28 +460,36 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           escrowDAIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_WBTC_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_WBTC_ADDRESS),
+        ),
         sinceTimestamp: UnixTime(1657137600),
         tokens: ['WBTC'],
         description:
           'StarkGate bridge for WBTC.' + ' ' + escrowWBTCMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_USDC_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_USDC_ADDRESS),
+        ),
         sinceTimestamp: UnixTime(1657137639),
         tokens: ['USDC'],
         description:
           'StarkGate bridge for USDC.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_USDT_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_USDT_ADDRESS),
+        ),
         sinceTimestamp: UnixTime(1657137615),
         tokens: ['USDT'],
         description:
           'StarkGate bridge for USDT.' + ' ' + escrowUSDTMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_WSTETH_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_WSTETH_ADDRESS),
+        ),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['wstETH'],
         description:
@@ -489,32 +499,42 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ...ESCROW.CANONICAL_EXTERNAL,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_RETH_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_RETH_ADDRESS),
+        ),
         sinceTimestamp: UnixTime(1657137623),
         tokens: ['rETH'],
         description:
           'StarkGate bridge for rETH.' + ' ' + escrowRETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_UNI_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_UNI_ADDRESS),
+        ),
         tokens: ['UNI'],
         description:
           'StarkGate bridge for UNI.' + ' ' + escrowUNIMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_FRAX_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_FRAX_ADDRESS),
+        ),
         tokens: ['FRAX.legacy'],
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_FXS_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_FXS_ADDRESS),
+        ),
         tokens: ['FRAX'],
         description:
           'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_SFRXETH_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_SFRXETH_ADDRESS),
+        ),
         tokens: ['sfrxETH'],
         description:
           'StarkGate bridge for sfrxETH.' +
@@ -522,24 +542,32 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
           escrowSFRXETHMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_LUSD_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_LUSD_ADDRESS),
+        ),
         tokens: ['LUSD'],
         description:
           'StarkGate bridge for LUSD.' + ' ' + escrowLUSDMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_LORDS_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_LORDS_ADDRESS),
+        ),
         tokens: ['LORDS'],
         description: 'StarkGate bridge for LORDS.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_STRK_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_STRK_ADDRESS),
+        ),
         tokens: ['STRK'],
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_MULTIBRIDGE_ADDRESS),
+        address: ChainSpecificAddress.address(
+          ChainSpecificAddress(ESCROW_MULTIBRIDGE_ADDRESS),
+        ),
         tokens: ['EKUBO', 'ZEND', 'NSTR'],
         description:
           'StarkGate bridge for EKUBO, ZEND, NSTR (and potentially other tokens listed via StarkgateManager).',
@@ -553,10 +581,10 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+        inbox: EthereumAddress('0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4'),
         sequencers: [
-          '0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591',
-          '0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7',
+          EthereumAddress('0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591'),
+          EthereumAddress('0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7'),
         ],
       },
     ],

@@ -1,20 +1,22 @@
+import { assert, Hash256 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { assert, Hash256 } from '@l2beat/shared-pure'
 import { getChainShortName } from '../../config/config.discovery'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
-import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { DiscoveryPaths } from '../config/getDiscoveryPaths'
+import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { DiscoveryOutput, PermissionsOutput } from '../output/types'
-import { KnowledgeBase } from './KnowledgeBase'
-import { ModelIdRegistry } from './ModelIdRegistry'
 import { buildAddressToNameMap } from './buildAddressToNameMap'
 import { type ClingoFact, parseClingoFact } from './clingoparser'
-import { generateClingoFromModelLp } from './generateClingo'
-import { generateClingoFromPermissionsConfig } from './generateClingo'
+import {
+  generateClingoFromModelLp,
+  generateClingoFromPermissionsConfig,
+} from './generateClingo'
+import { KnowledgeBase } from './KnowledgeBase'
+import { ModelIdRegistry } from './ModelIdRegistry'
 import {
   parseEoaWithMajorityUpgradePermissionsFacts,
   parseUltimatePermissionFact,
@@ -69,11 +71,7 @@ export class DiscoveryRegistry {
     return result
   }
 
-  getBlockNumbers(
-    options: {
-      skip?: { project: string; chain: string }
-    } = {},
-  ) {
+  getBlockNumbers(options: { skip?: { project: string; chain: string } } = {}) {
     const result: DiscoveryBlockNumbers = {}
     const skip = options.skip
 
@@ -253,7 +251,7 @@ export function generateClingoForProjectOnChain(
   const generatedClingo: string[] = []
 
   const shortChain = getChainShortName(discovery.chain)
-  const addressToNameMap = buildAddressToNameMap(shortChain, discovery.entries)
+  const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   discovery.entries
     .sort((a, b) => a.address.localeCompare(b.address))

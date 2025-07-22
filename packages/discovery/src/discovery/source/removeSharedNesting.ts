@@ -1,6 +1,5 @@
-import path from 'path'
-
 import { assert } from '@l2beat/shared-pure'
+import path from 'path'
 import { sanitizePath } from './sanitizePath'
 
 /**

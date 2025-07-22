@@ -4,9 +4,9 @@ import { getProjects } from '../processing/getProjects'
 import {
   type AmountFormula,
   type Formula,
-  ProjectTvsConfigSchema,
   isAmountFormula,
   isOnchainAmountFormula,
+  ProjectTvsConfigSchema,
 } from '../types'
 
 type FormulaTest = (formula: Formula) => void
@@ -19,7 +19,7 @@ describe('tvs', () => {
       .map((c) => c.chainConfig!.name),
   )
 
-  it(`throws when token config has wrong schema`, () => {
+  it('throws when token config has wrong schema', () => {
     const mockTvsConfig = {
       projectId: ProjectId('project'),
       tokens: [
@@ -179,7 +179,7 @@ function testRecursive(
 }
 
 function getFormulaSinceTimestamp(formula: Formula): number {
-  let sinceTimestamp = Infinity
+  let sinceTimestamp = Number.POSITIVE_INFINITY
 
   const getFormulaSinceTimestampRecursive = (formula: Formula) => {
     if (isAmountFormula(formula)) {

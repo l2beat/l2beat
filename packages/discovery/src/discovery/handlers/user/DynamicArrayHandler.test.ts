@@ -1,4 +1,4 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -7,7 +7,7 @@ import { DynamicArrayHandler } from './DynamicArrayHandler'
 describe(DynamicArrayHandler.name, () => {
   describe('integration', () => {
     it('can return non-empty address array', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
@@ -59,7 +59,7 @@ describe(DynamicArrayHandler.name, () => {
     })
 
     it('does nothing on empty address array', async () => {
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const provider = mockObject<IProvider>({
         blockNumber: 123,
         chain: 'foo',
@@ -118,7 +118,7 @@ describe(DynamicArrayHandler.name, () => {
         throw new Error('foo bar')
       },
     })
-    const address = EthereumAddress.random()
+    const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
     expect(result).toEqual({
       field: 'someName',

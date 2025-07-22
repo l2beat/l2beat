@@ -2,9 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import { PercentChange } from '~/components/PercentChange'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -27,8 +24,11 @@ import {
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
+import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -39,21 +39,21 @@ import type { ChartUnit } from '../types'
 const chartMeta = {
   rollups: {
     label: 'Rollups',
-    color: 'hsl(var(--chart-pink))',
+    color: 'var(--chart-pink)',
     indicatorType: {
       shape: 'line',
     },
   },
   validiumsAndOptimiums: {
     label: 'Validiums & Optimiums',
-    color: 'hsl(var(--chart-cyan))',
+    color: 'var(--chart-cyan)',
     indicatorType: {
       shape: 'line',
     },
   },
   others: {
     label: 'Others',
-    color: 'hsl(var(--chart-yellow))',
+    color: 'var(--chart-yellow)',
     indicatorType: {
       shape: 'line',
     },
@@ -63,7 +63,10 @@ const chartMeta = {
 export function ScalingSummaryTvsChart({
   unit,
   timeRange,
-}: { unit: ChartUnit; timeRange: TvsChartRange }) {
+}: {
+  unit: ChartUnit
+  timeRange: TvsChartRange
+}) {
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },
@@ -147,7 +150,7 @@ function CustomTooltip({
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <div className={tooltipContentVariants()}>
-      <div className="!w-[158px] [@media(min-width:600px)]:!w-60 flex flex-col">
+      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })

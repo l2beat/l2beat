@@ -70,5 +70,11 @@
     "address": "0x480214c3B0707a1e083A3Ae97209FCb671471109",
     "chain": "ethereum",
     "blockNumber": 22622481
+  },
+  "ERC20Bridge_customGas_Pepu": {
+    "hash": "0xed8d9d55e8e0eb2bf48be3c3db0297f972f5f7b8062cacd31007ec5301db39c5",
+    "address": "0x4c62131fFb67348A95B4d2665A8298A1f93A1E65",
+    "chain": "ethereum",
+    "blockNumber": 22924735
   }
 }

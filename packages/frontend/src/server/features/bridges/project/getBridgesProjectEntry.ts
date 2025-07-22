@@ -11,8 +11,8 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -29,6 +29,7 @@ import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
   name: string
+  shortName: string | undefined
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
@@ -60,7 +61,7 @@ export interface BridgesProjectEntry {
     validatedBy: TableReadyValue | undefined
   }
   sections: ProjectDetailsSection[]
-  discoUiHref: string
+  discoUiHref: string | undefined
 }
 
 export async function getBridgesProjectEntry(
@@ -80,6 +81,7 @@ export async function getBridgesProjectEntry(
     | 'milestones'
     | 'contracts'
     | 'permissions'
+    | 'discoveryInfo'
   >,
 ): Promise<BridgesProjectEntry> {
   const [projectsChangeReport, tvsStats, tvsChartData, tokens, contractUtils] =
@@ -101,6 +103,7 @@ export async function getBridgesProjectEntry(
 
   const common: Omit<BridgesProjectEntry, 'sections'> = {
     name: project.name,
+    shortName: project.shortName,
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
@@ -140,7 +143,9 @@ export async function getBridgesProjectEntry(
       category: project.bridgeInfo.category,
       validatedBy: project.bridgeRisks.validatedBy,
     },
-    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
+    discoUiHref: project.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
   }
 
   const sections: ProjectDetailsSection[] = []
@@ -154,6 +159,7 @@ export async function getBridgesProjectEntry(
         projectId: project.id,
         tokens: tokens,
         milestones: project.milestones ?? [],
+        defaultRange: project.archivedAt ? 'max' : '1y',
       },
     })
   }
@@ -236,7 +242,6 @@ export async function getBridgesProjectEntry(
           'upgrades-and-governance',
           project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
-        mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })

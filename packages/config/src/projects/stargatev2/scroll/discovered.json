@@ -2,11 +2,16 @@
   "name": "stargatev2",
   "chain": "scroll",
   "blockNumber": 16325944,
-  "configHash": "0xa720eba4d29ce762a8eb314cc09dccbe438c73137939306f7b8e00d7fb045d93",
+  "configHash": "0xedb12b9eac272860df81f99f9e3a9320c19cc3b21a70c7cfdc8d9e27ee67074e",
   "entries": [
     {
+      "address": "scr:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "StargatePoolUSDC",
-      "address": "0x3Fc69CC4A842838bCDC9499178740226062b14E4",
+      "address": "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4",
       "type": "Contract",
       "template": "stargate/StargatePoolUSDC",
       "sourceHashes": [
@@ -26,39 +31,39 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "burnAdmin": "0x0000000000000000000000000000000000000000",
+        "burnAdmin": "scr:0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "scr:0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
-          "feeLib": "0x503C5cFEa3477E0A576C8Cf5354023854b7A06Ff",
-          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "treasurer": "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
-          "tokenMessaging": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
-          "creditMessaging": "0x4694900bDbA99Edf07A2E46C4093f88F9106a90D",
-          "lzToken": "0x0000000000000000000000000000000000000000"
+          "feeLib": "scr:0x503C5cFEa3477E0A576C8Cf5354023854b7A06Ff",
+          "planner": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "scr:0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
+          "tokenMessaging": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+          "creditMessaging": "scr:0x4694900bDbA99Edf07A2E46C4093f88F9106a90D",
+          "lzToken": "scr:0x0000000000000000000000000000000000000000"
         },
         "getTransferGasLimit": 2300,
         "localEid": 30214,
-        "lpToken": "0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
+        "lpToken": "scr:0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
+        "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
         "plannerFee": "938955949518439120",
         "poolBalance": 1911617722472,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
-        "token": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+        "token": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
         "treasuryFee": 29289070266,
         "tvl": 104874720875
       },
       "implementationNames": {
-        "0x3Fc69CC4A842838bCDC9499178740226062b14E4": "StargatePoolUSDC"
+        "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4": "StargatePoolUSDC"
       }
     },
     {
       "name": "TokenMessaging",
-      "address": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+      "address": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
       "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
@@ -68,31 +73,31 @@
       "sinceBlock": 6044870,
       "values": {
         "$immutable": true,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "scr:0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 13,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
-        "oApp": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+        "oApp": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+        "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
+        "planner": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
-          "0x3Fc69CC4A842838bCDC9499178740226062b14E4",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0xC2b638Cb5042c1B3c5d5C969361fB50569840583"
+          "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0x0000000000000000000000000000000000000000",
+          "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583"
         ],
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "preCrime": "scr:0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
       },
       "fieldMeta": {
@@ -101,12 +106,12 @@
         }
       },
       "implementationNames": {
-        "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": "TokenMessaging"
+        "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": "TokenMessaging"
       }
     },
     {
       "name": "StargatePoolNative",
-      "address": "0xC2b638Cb5042c1B3c5d5C969361fB50569840583",
+      "address": "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583",
       "type": "Contract",
       "template": "stargate/StargatePoolNative",
       "sourceHashes": [
@@ -127,41 +132,41 @@
         "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "scr:0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
-          "feeLib": "0x2A6c43e0DBDCde23d40c82F45682BC6D8A6dB219",
-          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "treasurer": "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
-          "tokenMessaging": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
-          "creditMessaging": "0x4694900bDbA99Edf07A2E46C4093f88F9106a90D",
-          "lzToken": "0x0000000000000000000000000000000000000000"
+          "feeLib": "scr:0x2A6c43e0DBDCde23d40c82F45682BC6D8A6dB219",
+          "planner": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "scr:0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
+          "tokenMessaging": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
+          "creditMessaging": "scr:0x4694900bDbA99Edf07A2E46C4093f88F9106a90D",
+          "lzToken": "scr:0x0000000000000000000000000000000000000000"
         },
         "getTransferGasLimit": 15000,
         "localEid": 30214,
-        "lpToken": "0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
+        "lpToken": "scr:0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
+        "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
         "plannerFee": "69508232134648544",
         "poolBalance": "726038844000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
-        "token": "0x0000000000000000000000000000000000000000",
+        "token": "scr:0x0000000000000000000000000000000000000000",
         "treasuryFee": 29185668,
         "tvl": "91079969000000000000"
       },
       "implementationNames": {
-        "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
+        "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
       }
     },
     {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "address": "scr:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x3Fc69CC4A842838bCDC9499178740226062b14E4": [
+    "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, address _token, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -248,7 +253,7 @@
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ],
-    "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": [
+    "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038": [
       "constructor(address _endpoint, address _owner, uint16 _queueCapacity)",
       "error BusCodec_InvalidBusBytesLength()",
       "error BusCodec_InvalidMessage()",
@@ -345,7 +350,7 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": [
+    "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": [
       "constructor(string _lpTokenName, string _lpTokenSymbol, uint8 _tokenDecimals, uint8 _sharedDecimals, address _endpoint, address _owner)",
       "error InvalidLocalDecimals()",
       "error Path_AlreadyHasCredit()",
@@ -431,5 +436,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x263764165f1a35168ec6d501e1b1578bc8decbb983705c69e5d9fce1b7df3f0c"
+  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

@@ -47,6 +47,8 @@ export interface ScalingProject {
   id: ProjectId
   /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
+  /** Does the project have a testnet? */
+  hasTestnet?: boolean
   /** Is the project universal or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
@@ -244,6 +246,7 @@ export interface Bridge {
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
   display: BridgeDisplay
+  colors?: ProjectColors
   config: BridgeConfig
   chainConfig?: ChainConfig
   riskView: ProjectBridgeRisks

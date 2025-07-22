@@ -1,80 +1,79 @@
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { type Log, decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
-import type { Receive } from '../../types/Receive'
-import type { Send } from '../../types/Send'
-import { extractAddressFromPadded } from '../../utils/viem'
+import type { Message } from '../../types/Message'
+import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
 export const ACROSS = {
   name: 'across',
   decoder: decoder,
 }
 
-function decoder(chain: Chain, log: Log): Send | Receive | undefined {
-  const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+function decoder(
+  chain: Chain,
+  transaction: TransactionWithLogs,
+): Message | undefined {
+  for (const log of transaction.logs) {
+    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
-  if (!bridge || EthereumAddress(log.address) !== bridge.address)
-    return undefined
+    if (!bridge || EthereumAddress(log.address) !== bridge.address) continue
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'FundsDeposited',
-    })
+    if (
+      EthereumAddress(log.address) === bridge.address &&
+      log.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'FundsDeposited',
+      })
 
-    const destination = BRIDGES.find(
-      (b) => b.chainId === +data.args.destinationChainId.toString(),
-    )
+      const destination = BRIDGES.find(
+        (b) => b.chainId === +data.args.destinationChainId.toString(),
+      )?.chainShortName
 
-    return {
-      direction: 'send',
-      protocol: ACROSS.name,
-      token: ChainSpecificAddress(
-        `${chain.shortName}:${extractAddressFromPadded(data.args.inputToken)}`,
-      ),
-      amount: data.args.inputAmount,
-      destination: destination
-        ? destination.chainShortName
-        : data.args.destinationChainId.toString(),
-      txHash: log.transactionHash ?? undefined,
-      type: 'FundsDeposited',
-      matchingId: data.args.depositId.toString(),
+      return {
+        direction: 'outbound',
+        protocol: ACROSS.name,
+        origin: chain.shortName,
+        destination: destination ?? data.args.destinationChainId.toString(),
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
+        type: 'FundsDeposited',
+        matchingId: data.args.depositId.toString(),
+      }
     }
-  }
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'FilledRelay',
-    })
+    if (
+      EthereumAddress(log.address) === bridge.address &&
+      log.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
+    ) {
+      const data = decodeEventLog({
+        abi: ABI,
+        data: log.data,
+        topics: log.topics,
+        eventName: 'FilledRelay',
+      })
 
-    const origin = BRIDGES.find(
-      (c) => c.chainId === +data.args.originChainId.toString(),
-    )
+      const origin = BRIDGES.find(
+        (c) => c.chainId === +data.args.originChainId.toString(),
+      )?.chainShortName
 
-    return {
-      direction: 'receive',
-      protocol: ACROSS.name,
-      token: ChainSpecificAddress(
-        `${chain.shortName}:${extractAddressFromPadded(data.args.outputToken)}`,
-      ),
-      amount: data.args.inputAmount,
-      origin: origin
-        ? origin.chainShortName
-        : data.args.originChainId.toString(),
-      txHash: log.transactionHash ?? undefined,
-      type: 'FilledRelay',
-      matchingId: data.args.depositId.toString(),
+      return {
+        direction: 'inbound',
+        protocol: ACROSS.name,
+        origin: origin ?? data.args.originChainId.toString(),
+        destination: chain.shortName,
+        blockTimestamp: transaction.blockTimestamp,
+        blockNumber: transaction.blockNumber,
+        txHash: transaction.hash,
+        type: 'FilledRelay',
+        matchingId: data.args.depositId.toString(),
+      }
     }
   }
 
@@ -112,7 +111,6 @@ const BRIDGES = [
     chainShortName: 'base',
     address: EthereumAddress('0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64'),
   },
-
   {
     chainId: 57073,
     chainShortName: 'ink',

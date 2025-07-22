@@ -1,3 +1,256 @@
+Generated with discovered.json: 0x8c12564cf19762ee5e69655419cb1a03d286146d
+
+# Diff at Mon, 14 Jul 2025 12:47:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 345508178
+- current block number: 345508178
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 345508178 (main branch discovery), not current.
+
+```diff
+    contract TokenMessaging (0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      address:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "arb1:0x1a44076050125825900e736c501f859c50fE728c"
+      values.oApp:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.owner:
+-        "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
+      values.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.pools.0:
+-        "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
++        "arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
+      values.pools.1:
+-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
++        "arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
+      values.pools.2:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.3:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.4:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.5:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.6:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.7:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.8:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.9:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.10:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.11:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.pools.12:
+-        "0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F"
++        "arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F"
+      values.preCrime:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      implementationNames.0x19cFCE47eD54a88614648DC3f19A5980097007dD:
+-        "TokenMessaging"
+      implementationNames.arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD:
++        "TokenMessaging"
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F) {
+    +++ description: None
+      address:
+-        "0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F"
++        "arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "arb1:0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig.feeLib:
+-        "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
++        "arb1:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5"
+      values.getAddressConfig.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.getAddressConfig.treasurer:
+-        "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
++        "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+      values.getAddressConfig.tokenMessaging:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.getAddressConfig.creditMessaging:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "arb1:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.getAddressConfig.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.lpToken:
+-        "0x993614e1c8c9C5AbE49462Ce5702431978Fd767F"
++        "arb1:0x993614e1c8c9C5AbE49462Ce5702431978Fd767F"
+      values.owner:
+-        "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
+      values.token:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      implementationNames.0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F:
+-        "StargatePoolNative"
+      implementationNames.arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F:
++        "StargatePoolNative"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0) {
+    +++ description: None
+      address:
+-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
++        "arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0"
+      values.burnAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "arb1:0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig.feeLib:
+-        "0x1F605162282570dFa6255D27895587f4117F52FA"
++        "arb1:0x1F605162282570dFa6255D27895587f4117F52FA"
+      values.getAddressConfig.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.getAddressConfig.treasurer:
+-        "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
++        "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+      values.getAddressConfig.tokenMessaging:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.getAddressConfig.creditMessaging:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "arb1:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.getAddressConfig.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.lpToken:
+-        "0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8"
++        "arb1:0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8"
+      values.owner:
+-        "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
+      values.token:
+-        "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
++        "arb1:0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+      implementationNames.0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0:
+-        "StargatePoolMigratable"
+      implementationNames.arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0:
++        "StargatePoolMigratable"
+    }
+```
+
+```diff
+    EOA  (0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5) {
+    +++ description: None
+      address:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      address:
+-        "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
++        "arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
+      values.burnAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.endpoint:
+-        "0x1a44076050125825900e736c501f859c50fE728c"
++        "arb1:0x1a44076050125825900e736c501f859c50fE728c"
+      values.getAddressConfig.feeLib:
+-        "0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161"
++        "arb1:0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161"
+      values.getAddressConfig.planner:
+-        "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
++        "arb1:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+      values.getAddressConfig.treasurer:
+-        "0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
++        "arb1:0x146c8e409C113ED87C6183f4d25c50251DFfbb3a"
+      values.getAddressConfig.tokenMessaging:
+-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD"
++        "arb1:0x19cFCE47eD54a88614648DC3f19A5980097007dD"
+      values.getAddressConfig.creditMessaging:
+-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
++        "arb1:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6"
+      values.getAddressConfig.lzToken:
+-        "0x0000000000000000000000000000000000000000"
++        "arb1:0x0000000000000000000000000000000000000000"
+      values.lpToken:
+-        "0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225"
++        "arb1:0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225"
+      values.owner:
+-        "0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
++        "arb1:0x9CD50907aeb5D16F29Bddf7e1aBb10018Ee8717d"
+      values.token:
+-        "0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
++        "arb1:0xaf88d065e77c8cC2239327C5EDb3A432268e5831"
+      implementationNames.0xe8CDF27AcD73a434D661C84887215F7598e7d0d3:
+-        "StargatePoolUSDC"
+      implementationNames.arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3:
++        "StargatePoolUSDC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessaging (0x19cFCE47eD54a88614648DC3f19A5980097007dD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolNative (0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolMigratable (0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StargatePoolUSDC (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x05aeb7f7383b9693135b988309959a781f5ce242
 
 # Diff at Mon, 09 Jun 2025 10:36:19 GMT:

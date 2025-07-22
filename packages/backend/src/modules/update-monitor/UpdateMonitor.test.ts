@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import {
   type ConfigReader,
   ConfigRegistry,
@@ -10,13 +11,12 @@ import {
 import {
   ChainConverter,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-
-import type { Database, UpdateMonitorRecord } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
 import { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import type { DiscoveryRunner } from './DiscoveryRunner'
@@ -744,13 +744,14 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
+      const chain = 'ethereum'
       const result = await updateMonitor.getPreviousDiscovery(
         discoveryRunner,
         // different config hash
         new ConfigRegistry({
           name: PROJECT_A,
-          chain: 'ethereum',
-          initialAddresses: [EthereumAddress.ZERO],
+          chain,
+          initialAddresses: [ChainSpecificAddress.ZERO(chain)],
         }),
       )
 
@@ -1070,7 +1071,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address,
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

@@ -1,7 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -146,21 +149,27 @@ export const aptos: Bridge = {
         discovery.getPermissionDetails(
           'LayerZero Relayer',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x902F09715B6303d4173037652FA7377e5b98089E'),
+            ChainSpecificAddress(
+              'eth:0x902F09715B6303d4173037652FA7377e5b98089E',
+            ),
           ]),
           'Contract authorized to relay messages and - as a result - withdraw funds from the bridge.',
         ),
         discovery.getPermissionDetails(
           'LayerZero Relayer Admin owner',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5'),
+            ChainSpecificAddress(
+              'eth:0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5',
+            ),
           ]),
           'Can upgrade LayerZero relayer contract with no delay.',
         ),
         discovery.getPermissionDetails(
           'LayerZero Oracle Admin owner',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8'),
+            ChainSpecificAddress(
+              'eth:0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8',
+            ),
           ]),
           'Can upgrade LayerZero oracle contract with no delay.',
         ),

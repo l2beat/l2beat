@@ -1,7 +1,7 @@
 import {
   assert,
   Bytes,
-  type EthereumAddress,
+  ChainSpecificAddress,
   Hash256,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
@@ -55,7 +55,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const lastEvent = await this.getLastEventWithTxInput(
       provider,
@@ -144,28 +144,31 @@ export class ArbitrumSequencerVersionHandler implements Handler {
   decodeCalldata(calldata: string): utils.Result {
     if (calldata.startsWith(addSequencerBatchV1SigHash)) {
       return abi.decodeFunctionData(addSequencerBatchV1, calldata)
-    } else if (calldata.startsWith(addSequencerBatchV2SigHash)) {
-      return abi.decodeFunctionData(addSequencerBatchV2, calldata)
-    } else if (calldata.startsWith(addSequencerBatchV3SigHash)) {
-      return abi.decodeFunctionData(addSequencerBatchV3, calldata)
-    } else if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
-      return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
-    } else {
-      throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
     }
+    if (calldata.startsWith(addSequencerBatchV2SigHash)) {
+      return abi.decodeFunctionData(addSequencerBatchV2, calldata)
+    }
+    if (calldata.startsWith(addSequencerBatchV3SigHash)) {
+      return abi.decodeFunctionData(addSequencerBatchV3, calldata)
+    }
+    if (calldata.startsWith(addSequencerBatchEspressoSigHash)) {
+      return abi.decodeFunctionData(addSequencerBatchEspresso, calldata)
+    }
+    throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
   }
 
   async getLastEventWithTxInput(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     blockNumber: number,
   ): Promise<providers.Log | undefined> {
+    const rawAddress = ChainSpecificAddress.address(address)
     let currentBlockNumber = blockNumber
     const blockStep = 1000
     let multiplier = 1
     while (currentBlockNumber > 0) {
       const events = await provider.raw(
-        `arbitrum_sequencer_batches.${address}.${Math.max(
+        `arbitrum_sequencer_batches.${rawAddress}.${Math.max(
           0,
           currentBlockNumber - blockStep * multiplier,
         )}.${currentBlockNumber}`,
@@ -177,14 +180,14 @@ export class ArbitrumSequencerVersionHandler implements Handler {
           return await rpcWithRetries(
             async () => {
               return await eventProvider.getLogs({
-                address: address.toString(),
+                address: rawAddress.toString(),
                 topics: [abi.getEventTopic('SequencerBatchDelivered')],
                 fromBlock,
                 toBlock: currentBlockNumber,
               })
             },
             logger,
-            `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
+            `getLogs ${rawAddress.toString()} ${fromBlock} - ${currentBlockNumber}`,
           )
         },
       )

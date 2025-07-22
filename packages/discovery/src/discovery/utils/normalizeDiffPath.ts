@@ -19,8 +19,8 @@ export function removeArraySuffix(path: string): string {
   if (path.includes('.')) {
     const [name, ...rest] = path.split('.')
 
-    assert(rest.length >= 1, `Unreachable code`)
-    assert(name !== undefined, `Unexpected undefined value`)
+    assert(rest.length >= 1, 'Unreachable code')
+    assert(name !== undefined, 'Unexpected undefined value')
 
     if (!rest.every((p) => p.length > 0 && isIntNumeric(p))) {
       return path

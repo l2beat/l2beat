@@ -1,10 +1,9 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-
 import { Logger } from '@l2beat/backend-tools'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
 import type { IProvider } from '../provider/IProvider'
-import type { Handler, HandlerResult } from './Handler'
 import { executeHandlers } from './executeHandlers'
+import type { Handler, HandlerResult } from './Handler'
 import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { ArrayHandler, getArrayFragment } from './user/ArrayHandler'
 import { StorageHandler } from './user/StorageHandler'
@@ -42,7 +41,7 @@ describe(executeHandlers.name, () => {
           returnType: 'number',
         }),
       ],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
@@ -81,7 +80,7 @@ describe(executeHandlers.name, () => {
           returnType: 'number',
         }),
       ],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
@@ -138,7 +137,7 @@ describe(executeHandlers.name, () => {
           returnType: 'number',
         }),
       ],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     expect<unknown[]>(values).toEqual([
       { field: 'a', value: 100, ignoreRelative: undefined },
@@ -155,7 +154,7 @@ describe(executeHandlers.name, () => {
     const promise = executeHandlers(
       provider,
       [new StorageHandler('a', { type: 'storage', slot: '{{ a }}' })],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
@@ -165,7 +164,7 @@ describe(executeHandlers.name, () => {
     const promise = executeHandlers(
       provider,
       [new StorageHandler('a', { type: 'storage', slot: '{{ foo }}' })],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
@@ -178,7 +177,7 @@ describe(executeHandlers.name, () => {
         new StorageHandler('a', { type: 'storage', slot: '{{ b }}' }),
         new StorageHandler('b', { type: 'storage', slot: '{{ a }}' }),
       ],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     await expect(promise).toBeRejectedWith('Impossible to resolve dependencies')
   })
@@ -197,13 +196,13 @@ describe(executeHandlers.name, () => {
     const values = await executeHandlers(
       provider,
       [new FunkyHandler()],
-      EthereumAddress.random(),
+      ChainSpecificAddress.random(),
     )
     expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
   })
 
   it('handles multicallable handlers', async () => {
-    const ADDRESS = EthereumAddress.random()
+    const ADDRESS = ChainSpecificAddress.random()
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const provider = mockObject<IProvider>({
@@ -232,7 +231,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('handles multicallable handlers with dependencies', async () => {
-    const ADDRESS = EthereumAddress.random()
+    const ADDRESS = ChainSpecificAddress.random()
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
     const provider = mockObject<IProvider>({

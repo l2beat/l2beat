@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
@@ -25,7 +25,7 @@ const discovery = new ProjectDiscovery('aztec')
 function getRollupProviders() {
   // not getting this from the discovery, because it's the deployer
   // https://etherscan.io/address/0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba#code#F1#L88
-  const deployer = '0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895'
+  const deployer = 'eth:0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895'
   const removedProviders = discovery.getContractValue<string[]>(
     'RollupProcessor',
     'removedRollupProviders',
@@ -229,7 +229,8 @@ export const aztec: ScalingProject = {
     operator: {
       name: 'No regular operators',
       risks: [],
-      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operations. Since EOL, these operators are not regularly processing the rollup anymore.`,
+      description:
+        'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operations. Since EOL, these operators are not regularly processing the rollup anymore.',
       references: [
         {
           title: 'RollupProcessor.sol#L97 - Etherscan source code',
@@ -276,7 +277,8 @@ export const aztec: ScalingProject = {
       },
       {
         name: 'EOL: Manual withdrawal using Aztec v2 Ejector',
-        description: `EOL: Ownership of the rollup contract is irrevocably renounced and operators are not processing the rollup. Assets in the escrow can be manually withdrawn with the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/).`,
+        description:
+          'EOL: Ownership of the rollup contract is irrevocably renounced and operators are not processing the rollup. Assets in the escrow can be manually withdrawn with the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/).',
         risks: [],
         references: [
           {

@@ -1,3 +1,199 @@
+Generated with discovered.json: 0x0b9ae7b74af65f2efc51d9ccc60c7c16875b5bed
+
+# Diff at Mon, 14 Jul 2025 13:11:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 32640167
+- current block number: 32640167
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 32640167 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0449689f2ce80fE45B32092e0d878ad87F0156a9) {
+    +++ description: None
+      address:
+-        "0x0449689f2ce80fE45B32092e0d878ad87F0156a9"
++        "base:0x0449689f2ce80fE45B32092e0d878ad87F0156a9"
+    }
+```
+
+```diff
+    EOA  (0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf) {
+    +++ description: None
+      address:
+-        "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
++        "base:0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
+    }
+```
+
+```diff
+    EOA  (0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D) {
+    +++ description: None
+      address:
+-        "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
++        "base:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+    }
+```
+
+```diff
+    EOA  (0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0) {
+    +++ description: None
+      address:
+-        "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0"
++        "base:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0"
+    }
+```
+
+```diff
+    EOA  (0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d) {
+    +++ description: None
+      address:
+-        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "base:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      address:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.$implementation:
+-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
++        "base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"
+      values.$members.0:
+-        "0x0449689f2ce80fE45B32092e0d878ad87F0156a9"
++        "base:0x0449689f2ce80fE45B32092e0d878ad87F0156a9"
+      values.$members.1:
+-        "0x793979789Ec179183E396e76c1e241bE0c9eE899"
++        "base:0x793979789Ec179183E396e76c1e241bE0c9eE899"
+      values.$members.2:
+-        "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
++        "base:0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
+      values.$members.3:
+-        "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0"
++        "base:0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0"
+      values.$members.4:
+-        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "base:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+      values.$members.5:
+-        "0x91D456f83f4a117B07866fdEdC29306f7E974e15"
++        "base:0x91D456f83f4a117B07866fdEdC29306f7E974e15"
+      implementationNames.0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6:
+-        "GnosisSafeProxy"
+      implementationNames.0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        "GnosisSafeL2"
+      implementationNames.base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6:
++        "GnosisSafeProxy"
+      implementationNames.base:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0x793979789Ec179183E396e76c1e241bE0c9eE899) {
+    +++ description: None
+      address:
+-        "0x793979789Ec179183E396e76c1e241bE0c9eE899"
++        "base:0x793979789Ec179183E396e76c1e241bE0c9eE899"
+    }
+```
+
+```diff
+    EOA  (0x91D456f83f4a117B07866fdEdC29306f7E974e15) {
+    +++ description: None
+      address:
+-        "0x91D456f83f4a117B07866fdEdC29306f7E974e15"
++        "base:0x91D456f83f4a117B07866fdEdC29306f7E974e15"
+    }
+```
+
+```diff
+    EOA  (0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC) {
+    +++ description: None
+      address:
+-        "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
++        "base:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      address:
+-        "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
++        "base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+      values.$admin.0:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.$implementation:
+-        "0x46EbfC399d3913BB9b99E73675722417F9c5d416"
++        "base:0x46EbfC399d3913BB9b99E73675722417F9c5d416"
+      values.$pastUpgrades.0.2.0:
+-        "0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"
++        "base:0x7C3A9b466FF5c02582fa32d4aD1b2Cb431fB7c9b"
+      values.$pastUpgrades.1.2.0:
+-        "0xfb19439fBa9f16aA720be6bE0e53465a9733C964"
++        "base:0xfb19439fBa9f16aA720be6bE0e53465a9733C964"
+      values.$pastUpgrades.2.2.0:
+-        "0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
++        "base:0x47fd660D5252Bd6F9D2c71507E46aa1d6e957c23"
+      values.$pastUpgrades.3.2.0:
+-        "0x46EbfC399d3913BB9b99E73675722417F9c5d416"
++        "base:0x46EbfC399d3913BB9b99E73675722417F9c5d416"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.accessControl.TIMELOCK_ROLE.members.0:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.accessControl.GUARDIAN_ROLE.members.0:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.guardians.0:
+-        "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
++        "base:0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"
+      values.relayers.0:
+-        "0x3243552f3bcbce720db6f5ad0c1b7cd15458392d"
++        "base:0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+      values.relayers.1:
+-        "0x9c0b0dbbae8a976ceea8c2a96f6d00c53839afdc"
++        "base:0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC"
+      values.verifier:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      implementationNames.0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794:
+-        "ERC1967Proxy"
+      implementationNames.0x46EbfC399d3913BB9b99E73675722417F9c5d416:
+-        "SP1Blobstream"
+      implementationNames.base:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794:
++        "ERC1967Proxy"
+      implementationNames.base:0x46EbfC399d3913BB9b99E73675722417F9c5d416:
++        "SP1Blobstream"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BlobstreamMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794)
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+```
+
 Generated with discovered.json: 0x6f436f97d7d078850e7e8e1550d9a94cbab13314
 
 # Diff at Wed, 09 Jul 2025 15:10:14 GMT:

@@ -29,9 +29,9 @@ import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
 import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
-import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
-import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
+import { ZkCatalogProjectPage } from './zk-catalog/v1/project/ZkCatalogProjectPage'
 import { ZkCatalogPageV1 } from './zk-catalog/v1/ZkCatalogPageV1'
+import { ZkCatalogPage } from './zk-catalog/v2/ZkCatalogPage'
 export type Pages = typeof pages
 
 export type SsrData = {

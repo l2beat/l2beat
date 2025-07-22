@@ -1,7 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { DA_BRIDGES, DA_LAYERS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DA_BRIDGES, DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'

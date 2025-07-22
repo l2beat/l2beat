@@ -2,8 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
-import { RpcClient } from './RpcClient'
 import { MulticallV3Client } from './multicall/MulticallV3Client'
+import { RpcClient } from './RpcClient'
+
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
@@ -746,20 +747,20 @@ const mockResponse = (blockNumber: number) => ({
 })
 
 const mockRawTx = (to: string | undefined) => ({
-  hash: `0x1`,
+  hash: '0x1',
   from: '0xf',
   to,
-  input: `0x1`,
+  input: '0x1',
   type: '0x2',
   blockNumber: '0x64',
   blobVersionedHashes: ['0x1', '0x2'],
 })
 
 const mockTx = (to: string | undefined) => ({
-  hash: `0x1`,
+  hash: '0x1',
   from: '0xf',
   to,
-  data: `0x1`,
+  data: '0x1',
   type: '2',
   blockNumber: 100,
   blobVersionedHashes: ['0x1', '0x2'],

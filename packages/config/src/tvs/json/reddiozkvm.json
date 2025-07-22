@@ -1,0 +1,63 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "reddiozkvm",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "reddiozkvm-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0xCc0a76eE23BBc536b0A72C965C1b76289A48D7D4",
+        "decimals": 18,
+        "sinceTimestamp": 1749456131
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "reddiozkvm-RDO",
+      "priceId": "reddio",
+      "symbol": "RDO",
+      "name": "RDO Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55332/large/reddio.png?1745470527",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x57240C3E140f98abe315CA8E0213c7a77F34A334",
+        "chain": "ethereum",
+        "escrowAddress": "0xCc0a76eE23BBc536b0A72C965C1b76289A48D7D4",
+        "decimals": 18,
+        "sinceTimestamp": 1749456131
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "reddiozkvm-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "chain": "ethereum",
+        "escrowAddress": "0xCc0a76eE23BBc536b0A72C965C1b76289A48D7D4",
+        "decimals": 6,
+        "sinceTimestamp": 1749456131
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

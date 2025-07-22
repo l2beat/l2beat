@@ -1,7 +1,6 @@
 import type { DiscoveryOutput } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { getContractType } from './getContractType'
-import { toAddress } from './toAddress'
 import type { ApiAddressType } from './types'
 
 export type ContractsMeta = Record<
@@ -13,7 +12,7 @@ export function getMeta(discoveries: DiscoveryOutput[]): ContractsMeta {
   const meta: Record<string, { name?: string; type: ApiAddressType }> = {}
   for (const discovery of discoveries) {
     for (const entry of discovery.entries) {
-      const address = toAddress(discovery.chain, entry.address)
+      const address = entry.address
       if (entry.type === 'EOA') {
         meta[address] = { name: entry.name || undefined, type: 'EOA' }
       } else {
@@ -23,7 +22,7 @@ export function getMeta(discoveries: DiscoveryOutput[]): ContractsMeta {
         }
       }
     }
-    const zero = toAddress(discovery.chain, EthereumAddress.ZERO)
+    const zero = ChainSpecificAddress.ZERO(discovery.chain)
     meta[zero] = { name: 'ZERO', type: 'Unknown' }
   }
   return meta

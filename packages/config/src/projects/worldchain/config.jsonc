@@ -2,23 +2,19 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "worldchain",
   "import": ["../globalConfig.jsonc"],
-  "chains": {
-    "ethereum": {
-      "initialAddresses": [
-        "0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C",
-        "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB"
-      ],
-      "names": { "0x2ba529D229FDc1DA08e67F536588aE45932d030A": "Burn Caller" },
-      "overrides": {
-        "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": {
-          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
-        },
-        "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9": {
-          "fields": {
-            "proposer": { "permissions": [{ "type": "propose" }] },
-            "challenger": { "permissions": [{ "type": "challenge" }] }
-          }
-        }
+  "initialAddresses": [
+    "eth:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C",
+    "eth:0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB"
+  ],
+  "names": { "eth:0x2ba529D229FDc1DA08e67F536588aE45932d030A": "Burn Caller" },
+  "overrides": {
+    "eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
       }
     }
   }

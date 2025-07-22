@@ -1,23 +1,22 @@
 import {
   type ConfigReader,
   type ConfigRegistry,
+  type ContractConfig,
   type DiscoveryOutput,
   type EntryParameters,
-  type TemplateService,
-  getChainShortName,
+  get$Implementations,
   getShapeFromOutputEntry,
   makeEntryColorConfig,
   makeEntryStructureConfig,
+  type TemplateService,
 } from '@l2beat/discovery'
-import { type ContractConfig, get$Implementations } from '@l2beat/discovery'
 import type { ColorContract } from '@l2beat/discovery/dist/discovery/config/ColorConfig'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { getContractName } from './getContractName'
 import { getContractType } from './getContractType'
 import { getMeta } from './getMeta'
 import { parseFieldValue } from './parseFieldValue'
-import { toAddress } from './toAddress'
 import type {
   ApiAbiEntry,
   ApiAddressEntry,
@@ -102,10 +101,7 @@ export function getProject(
         )
       })
       .sort(orderAddressEntries)
-    const initialAddresses = config.structure.initialAddresses.map(
-      (address) => `${getChainShortName(chain)}:${address}`,
-    )
-
+    const initialAddresses = config.structure.initialAddresses
     const chainInfo = {
       project: config.name,
       chain: chain,
@@ -117,7 +113,10 @@ export function getProject(
       ),
       eoas: discovery.entries
         .filter((e) => e.type === 'EOA')
-        .filter((x) => x.address !== EthereumAddress.ZERO)
+        .filter(
+          (x) =>
+            ChainSpecificAddress.address(x.address) !== EthereumAddress.ZERO,
+        )
         .map((x): ApiAddressEntry => {
           const roles = getRoles(x)
           return {
@@ -126,7 +125,7 @@ export function getProject(
             roles: roles,
             description: x.description,
             referencedBy: [],
-            address: toAddress(chain, x.address),
+            address: x.address,
           }
         })
         .sort(orderAddressEntries),
@@ -232,10 +231,10 @@ function contractFromDiscovery(
     proxyType: contract.proxyType,
     description: contract.description,
     referencedBy: [],
-    address: toAddress(chain, contract.address),
+    address: contract.address,
     fields,
     abis: [contract.address, ...implementations].map((address) => ({
-      address: toAddress(chain, address),
+      address: address,
       entries: (abis[address] ?? []).map((e) => abiEntry(e)),
     })),
     implementationNames: contract.implementationNames,

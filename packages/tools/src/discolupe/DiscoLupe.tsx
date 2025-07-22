@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { ErrorState } from '../common/ErrorState'
 import { LoadingState } from '../common/LoadingState'
-import { Table } from './Table'
 import { fetchData } from './src/fetchData'
 import type { DiscoLupeProject } from './src/model'
+import { Table } from './Table'
 
 export interface Props {
   projects: DiscoLupeProject[]

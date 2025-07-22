@@ -170,7 +170,11 @@ function getDates(startDate: string | undefined, endDate: string | undefined) {
 
 function getDateFromString(date: string) {
   const [day, month, year] = date.split('-')
-  const utcDate = Date.UTC(parseInt(year), parseInt(month) - 1, parseInt(day))
+  const utcDate = Date.UTC(
+    Number.parseInt(year),
+    Number.parseInt(month) - 1,
+    Number.parseInt(day),
+  )
   return new Date(utcDate)
 }
 

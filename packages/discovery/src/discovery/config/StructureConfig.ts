@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 import type { BlipSexp } from '../../blip/type'
@@ -71,15 +71,17 @@ export const StructureContract = v.object(_StructureContract)
 
 export type StructureConfig = v.infer<typeof StructureConfig>
 export const _StructureConfig = {
-  initialAddresses: v.array(v.string().transform(EthereumAddress)),
+  initialAddresses: v.array(
+    v.string().transform((v) => ChainSpecificAddress(v)),
+  ),
   maxAddresses: v
     .number()
     .check((x) => x >= 0)
     .default(100),
-  maxDepth: v.number().default(Infinity),
+  maxDepth: v.number().default(Number.POSITIVE_INFINITY),
   overrides: v
     .record(
-      v.string().transform((v) => EthereumAddress(v).toString()),
+      v.string().transform((v) => ChainSpecificAddress(v).toString()),
       StructureContract,
     )
     .optional(),

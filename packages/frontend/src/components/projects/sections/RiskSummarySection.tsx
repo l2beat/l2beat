@@ -47,7 +47,7 @@ export function RiskSummarySection({
           text="This project includes unverified contracts."
           color="red"
           isCritical={true}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={UnverifiedIcon}
         />
       )}
@@ -55,7 +55,7 @@ export function RiskSummarySection({
         <WarningBar
           text={redWarning}
           color="red"
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
           icon={ShieldIcon}
         />
       )}
@@ -64,7 +64,7 @@ export function RiskSummarySection({
           text={warning}
           color="yellow"
           isCritical={false}
-          className="mt-4"
+          className="mt-4 text-paragraph-15 md:text-paragraph-16"
         />
       )}
       <div className="mt-4 md:mt-6">
@@ -76,12 +76,15 @@ export function RiskSummarySection({
 
 export function EnumeratedRisks({ risks }: { risks: RiskGroup[] }) {
   return risks.map((group, i) => (
-    <div className={cn(i > 0 && 'mt-4 md:mt-6')} key={i}>
-      <h3 className="font-bold text-red-300 md:text-lg">{group.name}</h3>
-      <ol
-        className="list-inside list-decimal p-1.5 text-gray-850 dark:text-gray-400"
-        start={group.start}
-      >
+    <div
+      className={cn(
+        'text-paragraph-15 md:text-paragraph-16',
+        i !== 0 && 'mt-4',
+      )}
+      key={i}
+    >
+      <h3 className="font-bold text-red-300">{group.name}</h3>
+      <ol className="list-inside list-decimal px-1.5" start={group.start}>
         {group.items.map((item, i) => (
           <li key={i}>
             <a href={`#${item.referencedId}`} className="underline">

@@ -1,4 +1,3 @@
-import { LiveIndicator } from '~/components/LiveIndicator'
 import { Button } from '~/components/core/Button'
 import {
   Collapsible,
@@ -6,6 +5,7 @@ import {
   CollapsibleTrigger,
 } from '~/components/core/Collapsible'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
@@ -128,12 +128,7 @@ function AnomalyCollapsible({
             )
           })}
         </div>
-        <Button
-          variant="outline"
-          size="sm"
-          className="mb-3 w-full py-1"
-          asChild
-        >
+        <Button variant="outline" size="sm" className="w-full py-1" asChild>
           <a href={`/scaling/projects/${projectWithAnomalies.slug}#liveness`}>
             See more details
           </a>

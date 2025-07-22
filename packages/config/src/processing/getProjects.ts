@@ -1,11 +1,11 @@
-import { existsSync, readFileSync } from 'fs'
-import { join } from 'path'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
+import { existsSync, readFileSync } from 'fs'
+import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
 import {
@@ -33,22 +33,18 @@ import { getRaas } from './utils/getRaas'
 import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 
+const daBridges = refactored.filter((p) => p.daBridge)
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
 
-  const daBridges = refactored.filter((p) => p.daBridge)
   return refactored
-    .concat(layer2s.map((p) => layer2Or3ToProject(p, [], daBridges)))
-    .concat(layer3s.map((p) => layer2Or3ToProject(p, layer2s, daBridges)))
-    .concat(bridges.map((p) => bridgeToProject(p)))
+    .concat(layer2s.map(layer2Or3ToProject))
+    .concat(layer3s.map(layer2Or3ToProject))
+    .concat(bridges.map(bridgeToProject))
     .concat(ecosystems)
 }
 
-function layer2Or3ToProject(
-  p: ScalingProject,
-  layer2s: ScalingProject[],
-  daBridges: BaseProject[],
-): BaseProject {
+function layer2Or3ToProject(p: ScalingProject): BaseProject {
   return {
     id: p.id,
     name: p.display.name,
@@ -57,7 +53,8 @@ function layer2Or3ToProject(
     addedAt: p.addedAt,
 
     // data
-    colors: p.colors,
+    colors:
+      p.colors ?? ecosystems.find((e) => e.id === p.ecosystemInfo?.id)?.colors,
     statuses: {
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
@@ -173,6 +170,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p),
     },
+    colors: p.colors,
     display: {
       description: p.display.description,
       links: p.display.links,
@@ -289,6 +287,11 @@ export function adjustDiscoveryInfo(
     permissionsDiscoDriven,
     isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
     blockNumberPerChain: project.discoveryInfo.blockNumberPerChain,
+    // This is implicit assumption that if there are block numbers per chain,
+    // then the project has disco ui. It's cause if there are some keys it means
+    // that the project has discovered.json file.
+    hasDiscoUi:
+      Object.keys(project.discoveryInfo.blockNumberPerChain).length > 0,
   }
 }
 

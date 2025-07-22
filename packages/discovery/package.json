@@ -17,7 +17,7 @@
     "lint": "biome check --formatter-enabled=false .",
     "test": "mocha",
     "typecheck": "tsc --noEmit",
-    "generate-schemas": "node -r esbuild-register schemas/generate.ts"
+    "generate-schemas": "node -r esbuild-register src/cli.ts generate-schemas"
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
@@ -36,7 +36,6 @@
     "mkdirp": "^3.0.0",
     "node-fetch": "^2.6.7",
     "ohm-js": "^17.1.0",
-    "prettier": "^3.0.3",
     "rimraf": "^5.0.0",
     "sqlite3": "5.1.7"
   },

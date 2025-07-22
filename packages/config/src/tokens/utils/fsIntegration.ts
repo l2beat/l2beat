@@ -1,10 +1,9 @@
+import { getDiscoveryPaths } from '@l2beat/discovery'
+import { type ChainConverter, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { readFileSync, writeFileSync } from 'fs'
 import { type ParseError, parse } from 'jsonc-parser'
-
-import path from 'path'
-import { getDiscoveryPaths } from '@l2beat/discovery'
-import type { ChainConverter } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
+import path from 'path'
 import { type GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import type { ScriptLogger } from './ScriptLogger'
 
@@ -52,7 +51,7 @@ export function saveTokenNames(
   tokens: GeneratedToken[],
   chainConverter: ChainConverter,
 ) {
-  const chains: Record<string, { names: Record<string, string> }> = {}
+  const names: Record<string, string> = {}
   const byChain = groupBy(tokens, (token) =>
     chainConverter.toName(token.chainId),
   )
@@ -69,8 +68,6 @@ export function saveTokenNames(
 
     const counters: Record<string, number> = {}
     for (const token of chainTokens) {
-      chains[chainName] ??= { names: {} }
-
       // biome-ignore lint/style/noNonNullAssertion: We know it's there
       const total = occurrences[token.name]!
       let finalName = token.name
@@ -84,14 +81,17 @@ export function saveTokenNames(
         finalName += ' Token'
       }
 
-      // biome-ignore lint/style/noNonNullAssertion: address checked above
-      chains[chainName].names[token.address!] = finalName
+      try {
+        // biome-ignore lint/style/noNonNullAssertion: address checked above
+        const address = ChainSpecificAddress.fromLong(chainName, token.address!)
+        names[address.toString()] = finalName
+      } catch {}
     }
   }
 
   const paths = getDiscoveryPaths()
   writeFileSync(
     path.join(paths.discovery, 'globalTokens.jsonc'),
-    JSON.stringify({ chains }, null, 2),
+    JSON.stringify({ names }, null, 2),
   )
 }

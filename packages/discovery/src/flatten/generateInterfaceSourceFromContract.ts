@@ -241,7 +241,7 @@ function formatTypeName(typeName: AST.TypeName): string {
       return `${baseType}[${formatExpression(typeName.length)}]`
     }
     case 'FunctionTypeName': {
-      let declaration = `function(`
+      let declaration = 'function('
       const params = []
       for (const param of typeName.parameterTypes) {
         assert(param.typeName !== null, 'Function parameter must have a type')

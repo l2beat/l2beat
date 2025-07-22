@@ -7,10 +7,18 @@ export function StackLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
   const layout = useStore((state) => state.layout)
-  const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
+  const selected = useStore((state) => state.selected)
+  const considerAllNodes = selected.length === 0
+  const visibleNodes = nodes.filter(
+    (node) =>
+      !hiddenNodes.includes(node.id) &&
+      (considerAllNodes || selected.includes(node.id)),
+  )
 
   return (
-    <ControlButton onClick={() => layout(stackAutoLayout(visibleNodes))}>
+    <ControlButton
+      onClick={() => layout(stackAutoLayout(visibleNodes, considerAllNodes))}
+    >
       Stack layout
     </ControlButton>
   )
@@ -36,27 +44,31 @@ interface LayoutNode {
   force: number
 }
 
-export function stackAutoLayout(baseNodes: readonly Node[]) {
+export function stackAutoLayout(
+  baseNodes: readonly Node[],
+  freshLayout = true,
+) {
   const nodes = toLayoutNodes(baseNodes)
   const clusters = clusterNodes(nodes)
 
-  let top = 0
+  let { top, left } = getAnchorPoints(baseNodes, freshLayout)
   for (const nodes of clusters) {
     removeSoleParentConnection(nodes)
     markTrees(nodes)
     assignLevels(nodes)
     const columns = groupByLevel(nodes)
-    const maxHeight = layoutColumns(columns, 0, top)
+    const maxHeight = layoutColumns(columns, left, top)
     top += maxHeight + Y_SPACING_CLUSTER
   }
 
   for (let i = 0; i < SIMULATION_STEPS; i++) {
-    let top = 0
+    let top = Math.min(...clusters.flat().map((x) => x.y))
     for (const nodes of clusters) {
       const maxY = physicsStep(nodes, top, i)
       top = maxY + Y_SPACING_CLUSTER
     }
   }
+
   const nodeLocations: NodeLocations = {}
   for (const node of nodes) {
     nodeLocations[node.id] = { x: node.x, y: node.y }
@@ -312,8 +324,12 @@ function layoutColumns(columns: LayoutNode[][], x = 0, y = 0) {
 
   for (const column of columns) {
     let maxColumnHeight = 0
+    const minY = column.reduce(
+      (a, b) => Math.min(a, b.y),
+      Number.POSITIVE_INFINITY,
+    )
     for (const node of column) {
-      maxColumnHeight = Math.max(maxColumnHeight, node.y + node.height)
+      maxColumnHeight = Math.max(maxColumnHeight, node.y + node.height - minY)
     }
 
     for (const node of column) {
@@ -369,7 +385,7 @@ function physicsStep(nodes: LayoutNode[], top: number, step: number) {
     }
   }
 
-  let minY = Infinity
+  let minY = Number.POSITIVE_INFINITY
   for (const node of nodes) {
     minY = Math.min(node.y, minY)
   }
@@ -393,4 +409,22 @@ function equalMembers<T>(a: T[], b: T[]) {
     }
   }
   return true
+}
+
+function getAnchorPoints(
+  nodes: readonly Node[],
+  freshLayout: boolean,
+): { top: number; left: number } {
+  if (freshLayout) {
+    return { top: 0, left: 0 }
+  }
+
+  const top = nodes
+    .map((node) => node.box.y)
+    .reduce((a, b) => Math.min(a, b), Number.POSITIVE_INFINITY)
+  const left = nodes
+    .map((node) => node.box.x)
+    .reduce((a, b) => Math.min(a, b), Number.POSITIVE_INFINITY)
+
+  return { top, left }
 }

@@ -1,9 +1,10 @@
-import type { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
+import type { CoingeckoId, json, UnixTime } from '@l2beat/shared-pure'
 import {
   ClientCore,
   type ClientCoreDependencies,
 } from '../../clients/ClientCore'
 import {
+  CoingeckoError,
   type CoinListEntry,
   type CoinListPlatformEntry,
   CoinListPlatformResult,
@@ -11,7 +12,6 @@ import {
   type CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
   CoinMetadata,
-  CoingeckoError,
   CoinsMarketResultData,
 } from './types'
 
@@ -70,9 +70,8 @@ export class CoingeckoClient extends ClientCore {
     })
     if (!options.includePlatform) {
       return CoinListResult.parse(data)
-    } else {
-      return CoinListPlatformResult.parse(data)
     }
+    return CoinListPlatformResult.parse(data)
   }
 
   async getImageUrl(id: CoingeckoId): Promise<string> {
@@ -122,7 +121,7 @@ export class CoingeckoClient extends ClientCore {
     const parsedError = CoingeckoError.safeParse(response)
 
     if (parsedError.success) {
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         error: parsedError.data.error,
       })
       return { success: false, message: parsedError.data.error }

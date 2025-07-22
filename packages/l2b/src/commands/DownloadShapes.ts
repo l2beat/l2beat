@@ -1,17 +1,17 @@
-import { mkdirSync, writeFileSync } from 'fs'
-import { join } from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import {
-  TemplateService,
   combineImplementationHashes,
-  flattenStartingFrom,
   flatteningHash,
+  flattenStartingFrom,
   getChainConfig,
   getDiscoveryPaths,
   getExplorerClient,
+  TemplateService,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
+import { mkdirSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
 
@@ -136,7 +136,7 @@ function createShapeDownloader(
 
       // Make sure the hash matches shape.hash
       if (matchingHash !== shape.hash) {
-        logger.info(`Error: hash mismatch!`)
+        logger.info('Error: hash mismatch!')
         return
       }
 

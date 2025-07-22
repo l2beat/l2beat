@@ -175,11 +175,13 @@ function getNodeFields(
         bannedValues,
       ),
     )
-  } else if (value.type === 'array') {
+  }
+  if (value.type === 'array') {
     return value.values.flatMap((value, i) =>
       getNodeFields(`${path}[${i}]`, value, bannedKeys, bannedValues),
     )
-  } else if (value.type === 'address') {
+  }
+  if (value.type === 'address') {
     if (bannedValues.includes(value.address)) {
       return []
     }
@@ -194,9 +196,8 @@ function getNodeFields(
         },
       },
     ]
-  } else {
-    return []
   }
+  return []
 }
 
 function extractFieldValue(value: FieldValue): string {
@@ -213,9 +214,11 @@ function extractFieldValue(value: FieldValue): string {
 function getAddresses(value: FieldValue | undefined): string[] {
   if (value?.type === 'array') {
     return value.values.flatMap((v) => getAddresses(v))
-  } else if (value?.type === 'object') {
+  }
+  if (value?.type === 'object') {
     return Object.values(value).flatMap((v) => getAddresses(v))
-  } else if (value?.type === 'address') {
+  }
+  if (value?.type === 'address') {
     return [value.address]
   }
   return []

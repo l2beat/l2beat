@@ -1,3 +1,782 @@
+Generated with discovered.json: 0xdb782e3c3d06982001c1cc4709377f02812e04d3
+
+# Diff at Mon, 14 Jul 2025 12:47:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22022360
+- current block number: 22022360
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022360 (main branch discovery), not current.
+
+```diff
+    contract Arbitrator (0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002) {
+    +++ description: None
+      address:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34"
++        "eth:0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34"
+      values.$pastUpgrades.0.2.0:
+-        "0xD2b679671354087ead3C683F48da4b738f0fC675"
++        "eth:0xD2b679671354087ead3C683F48da4b738f0fC675"
+      values.$pastUpgrades.1.2.0:
+-        "0xb3EE39F57d96C3F2A5ab3886572dDc4EA34B529a"
++        "eth:0xb3EE39F57d96C3F2A5ab3886572dDc4EA34B529a"
+      values.$pastUpgrades.2.2.0:
+-        "0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34"
++        "eth:0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.primaryChainGateway:
+-        "0x803460416C2682Ac54FccF03eF77b10A12f2809b"
++        "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b"
+      implementationNames.0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002:
+-        "ERC1967Proxy"
+      implementationNames.0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34:
+-        "Arbitrator"
+      implementationNames.eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002:
++        "ERC1967Proxy"
+      implementationNames.eth:0x7a0Bb4805EcB7fD3C8DAbbE4AFa0E91cB1761E34:
++        "Arbitrator"
+    }
+```
+
+```diff
+    EOA  (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9) {
+    +++ description: None
+      address:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "eth:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    }
+```
+
+```diff
+    contract ArbitrumL1Gateway (0x273D59aed2d793167c162E64b9162154B07583C0) {
+    +++ description: None
+      address:
+-        "0x273D59aed2d793167c162E64b9162154B07583C0"
++        "eth:0x273D59aed2d793167c162E64b9162154B07583C0"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0xF69302b6fF21116F9266bFA2fbE4ee23f6292875"
++        "eth:0xF69302b6fF21116F9266bFA2fbE4ee23f6292875"
+      values.$pastUpgrades.0.2.0:
+-        "0xa005091c98e6793b90E1340Bbd36C5d6De36fB60"
++        "eth:0xa005091c98e6793b90E1340Bbd36C5d6De36fB60"
+      values.$pastUpgrades.1.2.0:
+-        "0xF69302b6fF21116F9266bFA2fbE4ee23f6292875"
++        "eth:0xF69302b6fF21116F9266bFA2fbE4ee23f6292875"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
++        "eth:0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+      values.INBOX:
+-        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
++        "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x273D59aed2d793167c162E64b9162154B07583C0:
+-        "ERC1967Proxy"
+      implementationNames.0xF69302b6fF21116F9266bFA2fbE4ee23f6292875:
+-        "ArbitrumL1Gateway"
+      implementationNames.eth:0x273D59aed2d793167c162E64b9162154B07583C0:
++        "ERC1967Proxy"
+      implementationNames.eth:0xF69302b6fF21116F9266bFA2fbE4ee23f6292875:
++        "ArbitrumL1Gateway"
+    }
+```
+
+```diff
+    contract EthereumProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2) {
+    +++ description: None
+      address:
+-        "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
++        "eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2:
+-        "ProxyAdmin"
+      implementationNames.eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      address:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+    }
+```
+
+```diff
+    contract BlastL1Gateway (0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158) {
+    +++ description: None
+      address:
+-        "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
++        "eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0x01334Df58feE28db184ae9D11467F38F7437FD80"
++        "eth:0x01334Df58feE28db184ae9D11467F38F7437FD80"
+      values.$pastUpgrades.0.2.0:
+-        "0x1DFF9a84A7Df94084995cAE2feac4a31fBCf4c9E"
++        "eth:0x1DFF9a84A7Df94084995cAE2feac4a31fBCf4c9E"
+      values.$pastUpgrades.1.2.0:
+-        "0x01334Df58feE28db184ae9D11467F38F7437FD80"
++        "eth:0x01334Df58feE28db184ae9D11467F38F7437FD80"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "eth:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      values.MESSAGE_SERVICE:
+-        "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"
++        "eth:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158:
+-        "ERC1967Proxy"
+      implementationNames.0x01334Df58feE28db184ae9D11467F38F7437FD80:
+-        "OptimismL1Gateway"
+      implementationNames.eth:0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158:
++        "ERC1967Proxy"
+      implementationNames.eth:0x01334Df58feE28db184ae9D11467F38F7437FD80:
++        "OptimismL1Gateway"
+    }
+```
+
+```diff
+    EOA  (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5) {
+    +++ description: None
+      address:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    }
+```
+
+```diff
+    contract BaseL1Gateway (0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E) {
+    +++ description: None
+      address:
+-        "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
++        "eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E"
+      values.$admin:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      values.$implementation:
+-        "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"
++        "eth:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"
+      values.$pastUpgrades.0.2.0:
+-        "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"
++        "eth:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
++        "eth:0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"
+      values.MESSAGE_SERVICE:
+-        "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
++        "eth:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      values.owner:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      implementationNames.0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E:
+-        "ERC1967Proxy"
+      implementationNames.0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518:
+-        "OptimismL1Gateway"
+      implementationNames.eth:0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E:
++        "ERC1967Proxy"
+      implementationNames.eth:0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518:
++        "OptimismL1Gateway"
+    }
+```
+
+```diff
+    contract zkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      address:
+-        "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
++        "eth:0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7"
++        "eth:0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7"
+      values.$pastUpgrades.0.2.0:
+-        "0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"
++        "eth:0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"
+      values.$pastUpgrades.1.2.0:
+-        "0xCC8256b3eBF21e27f04E360eED012f5752c1F5DD"
++        "eth:0xCC8256b3eBF21e27f04E360eED012f5752c1F5DD"
+      values.$pastUpgrades.2.2.0:
+-        "0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7"
++        "eth:0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7"
+      values.forwardFeeAllocator:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.gateway:
+-        "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
++        "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+      values.getGateway:
+-        "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
++        "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+      values.getGovernor:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x5fD9F73286b7E8683Bab45019C94553b93e015Cf:
+-        "ERC1967Proxy"
+      implementationNames.0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7:
+-        "ZkLink"
+      implementationNames.eth:0x5fD9F73286b7E8683Bab45019C94553b93e015Cf:
++        "ERC1967Proxy"
+      implementationNames.eth:0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7:
++        "ZkLink"
+    }
+```
+
+```diff
+    contract MantaL1Gateway (0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D) {
+    +++ description: None
+      address:
+-        "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
++        "eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962"
++        "eth:0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962"
+      values.$pastUpgrades.0.2.0:
+-        "0x161f4BAAb4052f20F5f4347eC4422556aA0477f0"
++        "eth:0x161f4BAAb4052f20F5f4347eC4422556aA0477f0"
+      values.$pastUpgrades.1.2.0:
+-        "0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962"
++        "eth:0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "eth:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+      values.MESSAGE_SERVICE:
+-        "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310"
++        "eth:0x635ba609680c55C3bDd0B3627b4c5dB21b13c310"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D:
+-        "ERC1967Proxy"
+      implementationNames.0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962:
+-        "OptimismL1Gateway"
+      implementationNames.eth:0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D:
++        "ERC1967Proxy"
+      implementationNames.eth:0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962:
++        "OptimismL1Gateway"
+    }
+```
+
+```diff
+    contract OptimismL1Gateway (0x668e8F67adB8219e1816C2E5bBEa055A78AF3026) {
+    +++ description: None
+      address:
+-        "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
++        "eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
+      values.$admin:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      values.$implementation:
+-        "0x2e8AD1434663b209EE59eF1a6612114239F4a190"
++        "eth:0x2e8AD1434663b209EE59eF1a6612114239F4a190"
+      values.$pastUpgrades.0.2.0:
+-        "0x2e8AD1434663b209EE59eF1a6612114239F4a190"
++        "eth:0x2e8AD1434663b209EE59eF1a6612114239F4a190"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "eth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+      values.MESSAGE_SERVICE:
+-        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
++        "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+      values.owner:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "eth:0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      implementationNames.0x668e8F67adB8219e1816C2E5bBEa055A78AF3026:
+-        "ERC1967Proxy"
+      implementationNames.0x2e8AD1434663b209EE59eF1a6612114239F4a190:
+-        "OptimismL1Gateway"
+      implementationNames.eth:0x668e8F67adB8219e1816C2E5bBEa055A78AF3026:
++        "ERC1967Proxy"
+      implementationNames.eth:0x2e8AD1434663b209EE59eF1a6612114239F4a190:
++        "OptimismL1Gateway"
+    }
+```
+
+```diff
+    EOA  (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10) {
+    +++ description: None
+      address:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "eth:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    }
+```
+
+```diff
+    contract LineaL1Gateway (0x803460416C2682Ac54FccF03eF77b10A12f2809b) {
+    +++ description: None
+      address:
+-        "0x803460416C2682Ac54FccF03eF77b10A12f2809b"
++        "eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0xD2ED3FA35be899fe850075946Fc7320bB4c18C29"
++        "eth:0xD2ED3FA35be899fe850075946Fc7320bB4c18C29"
+      values.$pastUpgrades.0.2.0:
+-        "0x67EBB0b6273A2e5728410Af81609226A96ACcb3e"
++        "eth:0x67EBB0b6273A2e5728410Af81609226A96ACcb3e"
+      values.$pastUpgrades.1.2.0:
+-        "0xD2ED3FA35be899fe850075946Fc7320bB4c18C29"
++        "eth:0xD2ED3FA35be899fe850075946Fc7320bB4c18C29"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
++        "eth:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+      values.MESSAGE_SERVICE:
+-        "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x803460416C2682Ac54FccF03eF77b10A12f2809b:
+-        "ERC1967Proxy"
+      implementationNames.0xD2ED3FA35be899fe850075946Fc7320bB4c18C29:
+-        "LineaL1Gateway"
+      implementationNames.eth:0x803460416C2682Ac54FccF03eF77b10A12f2809b:
++        "ERC1967Proxy"
+      implementationNames.eth:0xD2ED3FA35be899fe850075946Fc7320bB4c18C29:
++        "LineaL1Gateway"
+    }
+```
+
+```diff
+    contract EthereumL1Gateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c) {
+    +++ description: None
+      address:
+-        "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
++        "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0x65c7B3E1B877131986247B49474834b0347eF332"
++        "eth:0x65c7B3E1B877131986247B49474834b0347eF332"
+      values.$pastUpgrades.0.2.0:
+-        "0x87743f9CccA4a6DFbFfB2856dC6839b1919a43FB"
++        "eth:0x87743f9CccA4a6DFbFfB2856dC6839b1919a43FB"
+      values.$pastUpgrades.1.2.0:
+-        "0x240cfBdb89eBc09b678b24ba5d640A27B7D3051b"
++        "eth:0x240cfBdb89eBc09b678b24ba5d640A27B7D3051b"
+      values.$pastUpgrades.2.2.0:
+-        "0x65c7B3E1B877131986247B49474834b0347eF332"
++        "eth:0x65c7B3E1B877131986247B49474834b0347eF332"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
++        "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.ZKLINK:
+-        "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
++        "eth:0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
+      implementationNames.0x83Bc7394738A7A084081aF22EEC0051908c0055c:
+-        "ERC1967Proxy"
+      implementationNames.0x65c7B3E1B877131986247B49474834b0347eF332:
+-        "EthereumGateway"
+      implementationNames.eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c:
++        "ERC1967Proxy"
+      implementationNames.eth:0x65c7B3E1B877131986247B49474834b0347eF332:
++        "EthereumGateway"
+    }
+```
+
+```diff
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      address:
+-        "0x986c905087a663db3C81ad319b94c1E9dd388e92"
++        "eth:0x986c905087a663db3C81ad319b94c1E9dd388e92"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB"
++        "eth:0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB"
+      values.$pastUpgrades.0.2.0:
+-        "0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB"
++        "eth:0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
++        "eth:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
+      values.MESSAGE_SERVICE:
+-        "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
++        "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0x986c905087a663db3C81ad319b94c1E9dd388e92:
+-        "ERC1967Proxy"
+      implementationNames.0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB:
+-        "ScrollL1Gateway"
+      implementationNames.eth:0x986c905087a663db3C81ad319b94c1E9dd388e92:
++        "ERC1967Proxy"
+      implementationNames.eth:0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB:
++        "ScrollL1Gateway"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      address:
+-        "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
++        "eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
+      values.$admin:
+-        "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
++        "eth:0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
+      values.$implementation:
+-        "0x3203E813930bD710043c1d899fE38dD359307352"
++        "eth:0x3203E813930bD710043c1d899fE38dD359307352"
+      values.$pastUpgrades.0.2.0:
+-        "0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"
++        "eth:0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"
+      values.$pastUpgrades.1.2.0:
+-        "0x3203E813930bD710043c1d899fE38dD359307352"
++        "eth:0x3203E813930bD710043c1d899fE38dD359307352"
+      values.l2Bridge:
+-        "0x36CaABbAbfB9C09B722d9C3697C3Cb4A93650ea7"
++        "eth:0x36CaABbAbfB9C09B722d9C3697C3Cb4A93650ea7"
+      values.l2TokenBeacon:
+-        "0x3b9dCbfD8Dab466A700B4d247e30D56C37d8D08d"
++        "eth:0x3b9dCbfD8Dab466A700B4d247e30D56C37d8D08d"
+      implementationNames.0xAd16eDCF7DEB7e90096A259c81269d811544B6B6:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x3203E813930bD710043c1d899fE38dD359307352:
+-        "L1ERC20Bridge"
+      implementationNames.eth:0xAd16eDCF7DEB7e90096A259c81269d811544B6B6:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x3203E813930bD710043c1d899fE38dD359307352:
++        "L1ERC20Bridge"
+    }
+```
+
+```diff
+    EOA  (0xC75EFCffEE930706daec5CaCA012551f6a1845D7) {
+    +++ description: None
+      address:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "eth:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+    }
+```
+
+```diff
+    EOA  (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5) {
+    +++ description: None
+      address:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    EOA  (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5) {
+    +++ description: None
+      address:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "eth:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    EOA  (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92) {
+    +++ description: None
+      address:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "eth:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      address:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "eth:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.$members.1:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "eth:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.2:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "eth:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.3:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "eth:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.4:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "eth:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+      values.$members.5:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "eth:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.6:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "eth:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.7:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "eth:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      implementationNames.0xdb4D755E3b8735314147b9bB146327C269701E2D:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xdb4D755E3b8735314147b9bB146327C269701E2D:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract MantleL1Gateway (0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269) {
+    +++ description: None
+      address:
+-        "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
++        "eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0xe98EDDAd1f49abc7586eE516d019D834FBDc2951"
++        "eth:0xe98EDDAd1f49abc7586eE516d019D834FBDc2951"
+      values.$pastUpgrades.0.2.0:
+-        "0xa86ef37098C0507196A5f411AfFbf8f51FCe9637"
++        "eth:0xa86ef37098C0507196A5f411AfFbf8f51FCe9637"
+      values.$pastUpgrades.1.2.0:
+-        "0xe98EDDAd1f49abc7586eE516d019D834FBDc2951"
++        "eth:0xe98EDDAd1f49abc7586eE516d019D834FBDc2951"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "eth:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+      values.MESSAGE_SERVICE:
+-        "0x676A795fe6E43C17c668de16730c3F690FEB7120"
++        "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269:
+-        "ERC1967Proxy"
+      implementationNames.0xe98EDDAd1f49abc7586eE516d019D834FBDc2951:
+-        "OptimismL1Gateway"
+      implementationNames.eth:0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269:
++        "ERC1967Proxy"
+      implementationNames.eth:0xe98EDDAd1f49abc7586eE516d019D834FBDc2951:
++        "OptimismL1Gateway"
+    }
+```
+
+```diff
+    contract EraL1Gateway (0xeCD189e0f390826E137496a4e4a23ACf76c942Ab) {
+    +++ description: None
+      address:
+-        "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
++        "eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+      values.$admin:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.$implementation:
+-        "0x59Ad3580c9e0992D474954327f5879AF5B3e4a22"
++        "eth:0x59Ad3580c9e0992D474954327f5879AF5B3e4a22"
+      values.$pastUpgrades.0.2.0:
+-        "0xFF2568C81453a0741b1b97f3Fe598B07a927d79E"
++        "eth:0xFF2568C81453a0741b1b97f3Fe598B07a927d79E"
+      values.$pastUpgrades.1.2.0:
+-        "0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716"
++        "eth:0x04bF7cf48a68dfC744fc22662B90e2ecaf14D716"
+      values.$pastUpgrades.2.2.0:
+-        "0x8915B1750f337342F2b6A2eF1BF12e279e3b497E"
++        "eth:0x8915B1750f337342F2b6A2eF1BF12e279e3b497E"
+      values.$pastUpgrades.3.2.0:
+-        "0x59Ad3580c9e0992D474954327f5879AF5B3e4a22"
++        "eth:0x59Ad3580c9e0992D474954327f5879AF5B3e4a22"
+      values.ARBITRATOR:
+-        "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
++        "eth:0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002"
+      values.getRemoteGateway:
+-        "0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
++        "eth:0xC203a2DF4DDFF9eDE2200F1F02054fD721182535"
+      values.MESSAGE_SERVICE:
+-        "0x32400084C286CF3E17e7B677ea9583e60a000324"
++        "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
+      values.owner:
+-        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
++        "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      implementationNames.0xeCD189e0f390826E137496a4e4a23ACf76c942Ab:
+-        "ERC1967Proxy"
+      implementationNames.0x59Ad3580c9e0992D474954327f5879AF5B3e4a22:
+-        "ZkSyncL1Gateway"
+      implementationNames.eth:0xeCD189e0f390826E137496a4e4a23ACf76c942Ab:
++        "ERC1967Proxy"
+      implementationNames.eth:0x59Ad3580c9e0992D474954327f5879AF5B3e4a22:
++        "ZkSyncL1Gateway"
+    }
+```
+
+```diff
+    EOA  (0xF801886AE2e127A269B0F11892edb54F692d02dF) {
+    +++ description: None
+      address:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "eth:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Arbitrator (0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL1Gateway (0x273D59aed2d793167c162E64b9162154B07583C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastL1Gateway (0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseL1Gateway (0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantaL1Gateway (0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL1Gateway (0x668e8F67adB8219e1816C2E5bBEa055A78AF3026)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaL1Gateway (0x803460416C2682Ac54FccF03eF77b10A12f2809b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumL1Gateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0xAd16eDCF7DEB7e90096A259c81269d811544B6B6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleL1Gateway (0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraL1Gateway (0xeCD189e0f390826E137496a4e4a23ACf76c942Ab)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc4cf712cfdb569b346537f373b43afc63aab2fe2
 
 # Diff at Fri, 04 Jul 2025 12:19:31 GMT:

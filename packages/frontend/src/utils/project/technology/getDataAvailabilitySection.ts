@@ -87,8 +87,7 @@ function getCustomDaSection(
       title: 'Technology',
       diagram: getDiagramParams('da-layer-technology', project.slug),
       content: project.customDa.technology.description,
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: (project.customDa.technology.risks ?? []).map(toTechnologyRisk),
       references: project.customDa.technology.references,
     },

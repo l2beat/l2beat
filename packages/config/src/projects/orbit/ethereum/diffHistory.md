@@ -1,3 +1,421 @@
+Generated with discovered.json: 0x90a564da4c0f06737dabf2b19fe473d7bd86b139
+
+# Diff at Mon, 14 Jul 2025 12:45:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20792032
+- current block number: 20792032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20792032 (main branch discovery), not current.
+
+```diff
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8) {
+    +++ description: None
+      address:
+-        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
++        "eth:0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
+      values.$admin:
+-        "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
++        "eth:0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
+      values.$implementation:
+-        "0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"
++        "eth:0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"
+      values.$pastUpgrades.0.2.0:
+-        "0x88022f07eB8F5c6FfECCd50152A6c7CAf69Bfc62"
++        "eth:0x88022f07eB8F5c6FfECCd50152A6c7CAf69Bfc62"
+      values.$pastUpgrades.1.2.0:
+-        "0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"
++        "eth:0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"
+      values.$pastUpgrades.2.2.0:
+-        "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"
++        "eth:0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"
+      values.$pastUpgrades.3.2.0:
+-        "0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"
++        "eth:0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af"
+      implementationNames.0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8:
+-        ""
+      implementationNames.0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af:
+-        ""
+      implementationNames.eth:0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8:
++        ""
+      implementationNames.eth:0x59fF8Eb9B384a6e1146194D7b2e754694957c5Af:
++        ""
+    }
+```
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      address:
+-        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
++        "eth:0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      values.$implementation:
+-        "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
++        "eth:0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
+      values.dai:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.daiFarm:
+-        "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
++        "eth:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+      values.edai:
+-        "0xC355fe6E4e99C0B93577F08c4e9a599714435912"
++        "eth:0xC355fe6E4e99C0B93577F08c4e9a599714435912"
+      values.feeGovernance:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getOwners.0:
+-        "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba"
++        "eth:0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba"
+      values.getOwners.1:
+-        "0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0"
++        "eth:0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0"
+      values.getOwners.2:
+-        "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2"
++        "eth:0x86cec292d5d5DB6bA16722F0B01291426C4b61E2"
+      values.getOwners.3:
+-        "0x501A0F1436555E124c14ad9c1E48742F734B5179"
++        "eth:0x501A0F1436555E124c14ad9c1E48742F734B5179"
+      values.getOwners.4:
+-        "0x8257E89eaBAFb01589351e431EB328E0dDc51fcD"
++        "eth:0x8257E89eaBAFb01589351e431EB328E0dDc51fcD"
+      values.getOwners.5:
+-        "0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214"
++        "eth:0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214"
+      values.getOwners.6:
+-        "0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930"
++        "eth:0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930"
+      values.getOwners.7:
+-        "0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704"
++        "eth:0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704"
+      values.getOwners.8:
+-        "0x1e3B165817b0f2935E1599eD5449a28f67D399EC"
++        "eth:0x1e3B165817b0f2935E1599eD5449a28f67D399EC"
+      values.implementation:
+-        "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
++        "eth:0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454"
++++ description: Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.
++++ severity: HIGH
+      values.policyAdmin:
+-        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
++        "eth:0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
+      values.taxReceiver:
+-        "0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E"
++        "eth:0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E"
+      values.tetherAddress:
+-        "0xdAC17F958D2ee523a2206206994597C13D831ec7"
++        "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7"
+      values.usdcFarm:
+-        "0x830433dE03ABedE062660CC629e1A2c714272474"
++        "eth:0x830433dE03ABedE062660CC629e1A2c714272474"
+      values.usdtFarm:
+-        "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
++        "eth:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+      values.wbtcFarm:
+-        "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
++        "eth:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+      implementationNames.0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a:
+-        "EthVault"
+      implementationNames.0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454:
+-        "EthVaultImpl"
+      implementationNames.eth:0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a:
++        "EthVault"
+      implementationNames.eth:0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454:
++        "EthVaultImpl"
+    }
+```
+
+```diff
+    EOA  (0x1e3B165817b0f2935E1599eD5449a28f67D399EC) {
+    +++ description: None
+      address:
+-        "0x1e3B165817b0f2935E1599eD5449a28f67D399EC"
++        "eth:0x1e3B165817b0f2935E1599eD5449a28f67D399EC"
+    }
+```
+
+```diff
+    EOA  (0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba) {
+    +++ description: None
+      address:
+-        "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba"
++        "eth:0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba"
+    }
+```
+
+```diff
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9) {
+    +++ description: None
+      address:
+-        "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
++        "eth:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+      values.$admin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.$implementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      values.getAdmin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.getImplementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      implementationNames.0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9:
+-        "OrbitFarmProxy"
+      implementationNames.0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
+-        ""
+      implementationNames.eth:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9:
++        "OrbitFarmProxy"
+      implementationNames.eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
++        ""
+    }
+```
+
+```diff
+    EOA  (0x501A0F1436555E124c14ad9c1E48742F734B5179) {
+    +++ description: None
+      address:
+-        "0x501A0F1436555E124c14ad9c1E48742F734B5179"
++        "eth:0x501A0F1436555E124c14ad9c1E48742F734B5179"
+    }
+```
+
+```diff
+    EOA  (0x8257E89eaBAFb01589351e431EB328E0dDc51fcD) {
+    +++ description: None
+      address:
+-        "0x8257E89eaBAFb01589351e431EB328E0dDc51fcD"
++        "eth:0x8257E89eaBAFb01589351e431EB328E0dDc51fcD"
+    }
+```
+
+```diff
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474) {
+    +++ description: None
+      address:
+-        "0x830433dE03ABedE062660CC629e1A2c714272474"
++        "eth:0x830433dE03ABedE062660CC629e1A2c714272474"
+      values.$admin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.$implementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      values.getAdmin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.getImplementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      implementationNames.0x830433dE03ABedE062660CC629e1A2c714272474:
+-        "OrbitFarmProxy"
+      implementationNames.0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
+-        ""
+      implementationNames.eth:0x830433dE03ABedE062660CC629e1A2c714272474:
++        "OrbitFarmProxy"
+      implementationNames.eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
++        ""
+    }
+```
+
+```diff
+    EOA  (0x86cec292d5d5DB6bA16722F0B01291426C4b61E2) {
+    +++ description: None
+      address:
+-        "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2"
++        "eth:0x86cec292d5d5DB6bA16722F0B01291426C4b61E2"
+    }
+```
+
+```diff
+    EOA  (0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214) {
+    +++ description: None
+      address:
+-        "0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214"
++        "eth:0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214"
+    }
+```
+
+```diff
+    EOA  (0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0) {
+    +++ description: None
+      address:
+-        "0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0"
++        "eth:0x98A86EB9Ff3B473E61B7b7a82Dd2c328323A66D0"
+    }
+```
+
+```diff
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0) {
+    +++ description: None
+      address:
+-        "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
++        "eth:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0"
+      values.$admin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.$implementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      values.getAdmin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.getImplementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      implementationNames.0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0:
+-        "OrbitFarmProxy"
+      implementationNames.0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
+-        ""
+      implementationNames.eth:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0:
++        "OrbitFarmProxy"
+      implementationNames.eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
++        ""
+    }
+```
+
+```diff
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70) {
+    +++ description: None
+      address:
+-        "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
++        "eth:0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
+      implementationNames.0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70:
+-        ""
+      implementationNames.eth:0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70:
++        ""
+    }
+```
+
+```diff
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da) {
+    +++ description: None
+      address:
+-        "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
++        "eth:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+      values.$admin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.$implementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      values.getAdmin:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.getImplementation:
+-        "0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
++        "eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55"
+      implementationNames.0xd910f6F23889919fAd9C8cE3171dd557cE0308Da:
+-        "OrbitFarmProxy"
+      implementationNames.0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
+-        ""
+      implementationNames.eth:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da:
++        "OrbitFarmProxy"
+      implementationNames.eth:0xdbF3C7e0a1493B81B295547ae3D0711417481A55:
++        ""
+    }
+```
+
+```diff
+    EOA  (0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930) {
+    +++ description: None
+      address:
+-        "0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930"
++        "eth:0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930"
+    }
+```
+
+```diff
+    EOA  (0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704) {
+    +++ description: None
+      address:
+-        "0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704"
++        "eth:0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704"
+    }
+```
+
+```diff
+    EOA  (0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E) {
+    +++ description: None
+      address:
+-        "0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E"
++        "eth:0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18) {
+    +++ description: None
+      address:
+-        "0xFb504CD4eD46024B83c4337044995CF112205f18"
++        "eth:0xFb504CD4eD46024B83c4337044995CF112205f18"
+      values.owner:
+-        "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
++        "eth:0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a"
+      implementationNames.0xFb504CD4eD46024B83c4337044995CF112205f18:
+-        "ProxyAdmin"
+      implementationNames.eth:0xFb504CD4eD46024B83c4337044995CF112205f18:
++        "ProxyAdmin"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT Farm (0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Farm (0x830433dE03ABedE062660CC629e1A2c714272474)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAI Farm (0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTC Farm (0xd910f6F23889919fAd9C8cE3171dd557cE0308Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xFb504CD4eD46024B83c4337044995CF112205f18)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa5d5f8af35bebb1a3e0fac78ae98563f4b7506fd
 
 # Diff at Fri, 04 Jul 2025 12:19:13 GMT:

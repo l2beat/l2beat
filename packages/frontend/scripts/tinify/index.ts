@@ -1,6 +1,6 @@
+import dotenv from 'dotenv'
 import { readFileSync } from 'fs'
 import path from 'path'
-import dotenv from 'dotenv'
 import tinify from 'tinify'
 import { getImageDimensions } from '~/utils/project/getImageParams'
 import { getAllStaticPngs } from './utils/getAllStaticPngs'

@@ -16,6 +16,7 @@ import { getDiscoveryInfo } from './getDiscoveryInfo'
 interface UnderReviewConfigCommon {
   id: string
   addedAt: UnixTime
+  hasTestnet?: boolean
   capability: ProjectScalingCapability
   ecosystemInfo?: ProjectEcosystemInfo
   activityConfig?: ProjectActivityConfig
@@ -45,6 +46,7 @@ export function underReviewL2(
     type: 'layer2',
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
+    hasTestnet: templateVars.hasTestnet,
     capability: templateVars.capability,
     archivedAt: templateVars.archivedAt ?? undefined,
     display: templateVars.display,
@@ -88,6 +90,7 @@ export function underReviewL3(
     capability: templateVars.capability,
     archivedAt: templateVars.archivedAt ?? undefined,
     hostChain: templateVars.hostChain,
+    hasTestnet: templateVars.hasTestnet,
     display: {
       ...templateVars.display,
     },

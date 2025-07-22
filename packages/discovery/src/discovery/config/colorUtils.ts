@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { type ColorConfig, ColorContract } from './ColorConfig'
 
@@ -8,7 +8,7 @@ export type ColorContractOverrides = ColorContract & {
 
 export function makeEntryColorConfig(
   config: ColorConfig,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   template: ColorContract,
 ): ColorContractOverrides {
   const name = (config.names ?? {})[address.toString()]

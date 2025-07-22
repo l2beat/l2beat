@@ -2,11 +2,11 @@
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
   "blockNumber": 19531448,
-  "configHash": "0x3e5d4551828ec1b9b0c3664dc3ad971811a79b9bb0a90b84ad9266b4aa5b431d",
+  "configHash": "0xe592f702bb286a1f059457783d2fc1dfc1ba5e48a92c13eac115f1fb5021b3b2",
   "entries": [
     {
       "name": "EthereumL1Messenger",
-      "address": "0x12B8489913E2afBCed131d52c345C380BBB65baf",
+      "address": "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf",
       "type": "Contract",
       "sourceHashes": [
         "0x53a70d11cd7796a36186bc6faf5761365984bd862be2a0a8e30f96d0510e40bc"
@@ -16,15 +16,15 @@
       "sinceBlock": 16946577,
       "values": {
         "$immutable": true,
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
       "implementationNames": {
-        "0x12B8489913E2afBCed131d52c345C380BBB65baf": "EthereumL1Messenger"
+        "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf": "EthereumL1Messenger"
       }
     },
     {
       "name": "EthereumL2Messenger",
-      "address": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
+      "address": "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
       "type": "Contract",
       "sourceHashes": [
         "0x8ce69cb7eef1745342d1a5730155558e6a15cf3530e4d28816fb4d7c7301cea9"
@@ -34,21 +34,21 @@
       "sinceBlock": 16946578,
       "values": {
         "$immutable": true,
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
-        "resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD"
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+        "resolver": "eth:0xCb60516819a28431233195A8b7E0227C288B61AD"
       },
       "implementationNames": {
-        "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": "EthereumL2Messenger"
+        "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": "EthereumL2Messenger"
       }
     },
     {
-      "address": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+      "address": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "OptimismL1Messenger",
-      "address": "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
+      "address": "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34",
       "type": "Contract",
       "sourceHashes": [
         "0x4b9b7280455da961659b45ac59c98334d9cef746991718d2ec48b8e9a90a69d3"
@@ -58,16 +58,16 @@
       "sinceBlock": 16946597,
       "values": {
         "$immutable": true,
-        "nativeMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+        "nativeMessenger": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
       "implementationNames": {
-        "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": "OptimismL1Messenger"
+        "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": "OptimismL1Messenger"
       }
     },
     {
       "name": "ArbitrumL1Messenger",
-      "address": "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
+      "address": "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3",
       "type": "Contract",
       "sourceHashes": [
         "0x95eb429107814a5f14a897acd61975d017790ae60ad9314ae5e35524a3ec1a5c"
@@ -77,17 +77,17 @@
       "sinceBlock": 16946592,
       "values": {
         "$immutable": true,
-        "bridge": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-        "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+        "bridge": "eth:0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+        "inbox": "eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
       "implementationNames": {
-        "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": "ArbitrumL1Messenger"
+        "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": "ArbitrumL1Messenger"
       }
     },
     {
       "name": "EthereumRequestManager",
-      "address": "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
+      "address": "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50",
       "type": "Contract",
       "sourceHashes": [
         "0xa82fa8fc1e5ff96f0cfb766de691af0d8f797facacd18dd6b472ac890c1f9ab9"
@@ -135,17 +135,17 @@
         "MAX_VALIDITY_PERIOD": 172800,
         "MIN_VALIDITY_PERIOD": 1800,
         "minFeePPM": 100000,
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70",
         "paused": true,
         "protocolFeePPM": 0
       },
       "implementationNames": {
-        "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": "RequestManager"
+        "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": "RequestManager"
       }
     },
     {
       "name": "Resolver",
-      "address": "0xCb60516819a28431233195A8b7E0227C288B61AD",
+      "address": "eth:0xCb60516819a28431233195A8b7E0227C288B61AD",
       "type": "Contract",
       "sourceHashes": [
         "0x6f0996aaa83416e4ef529a91847760e8b44f88c827adfeb579723ed0b708cbf3"
@@ -155,15 +155,15 @@
       "sinceBlock": 16946576,
       "values": {
         "$immutable": true,
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
       "implementationNames": {
-        "0xCb60516819a28431233195A8b7E0227C288B61AD": "Resolver"
+        "eth:0xCb60516819a28431233195A8b7E0227C288B61AD": "Resolver"
       }
     },
     {
       "name": "EthereumFillManager",
-      "address": "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
+      "address": "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29",
       "type": "Contract",
       "sourceHashes": [
         "0xb8bd718248dbf8a521e10a055b52eb5ddcf6ddedf62a4259dbdf50574289ea5b"
@@ -173,23 +173,25 @@
       "sinceBlock": 16946583,
       "values": {
         "$immutable": true,
-        "l1Resolver": "0xCb60516819a28431233195A8b7E0227C288B61AD",
-        "liquidityProviders": ["0xdC256EC77E97448d29D88118e55C82067150b768"],
-        "messenger": "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
-        "owner": "0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
+        "l1Resolver": "eth:0xCb60516819a28431233195A8b7E0227C288B61AD",
+        "liquidityProviders": [
+          "eth:0xdC256EC77E97448d29D88118e55C82067150b768"
+        ],
+        "messenger": "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da",
+        "owner": "eth:0x42405d66fdA09dbDaC90Ff25fC5a4C2353f43E70"
       },
       "implementationNames": {
-        "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": "FillManager"
+        "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": "FillManager"
       }
     },
     {
-      "address": "0xdC256EC77E97448d29D88118e55C82067150b768",
+      "address": "eth:0xdC256EC77E97448d29D88118e55C82067150b768",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x12B8489913E2afBCed131d52c345C380BBB65baf": [
+    "eth:0x12B8489913E2afBCed131d52c345C380BBB65baf": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
       "function addCaller(address caller)",
@@ -200,7 +202,7 @@
       "function sendMessage(address target, bytes message)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": [
+    "eth:0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da": [
       "constructor(address resolver_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -215,7 +217,7 @@
       "function sendMessage(address, bytes message)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": [
+    "eth:0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34": [
       "constructor(address messenger_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -228,7 +230,7 @@
       "function sendMessage(address target, bytes message)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": [
+    "eth:0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3": [
       "constructor(address bridge_, address inbox_)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -245,7 +247,7 @@
       "function transferOwnership(address newOwner)",
       "function withdraw()"
     ],
-    "0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": [
+    "eth:0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50": [
       "constructor(uint96 _claimStake, uint256 _claimRequestExtension, uint256 _claimPeriod, uint256 _challengePeriodExtension)",
       "event ChainUpdated(uint256 indexed chainId, uint256 finalityPeriod, uint256 transferCost, uint256 targetWeightPPM)",
       "event ClaimMade(bytes32 indexed requestId, uint96 claimId, address claimer, uint96 claimerStake, address lastChallenger, uint96 challengerStakeTotal, uint256 termination, bytes32 fillId)",
@@ -309,7 +311,7 @@
       "function withdrawExpiredRequest(bytes32 requestId)",
       "function withdrawProtocolFees(address tokenAddress, address recipient)"
     ],
-    "0xCb60516819a28431233195A8b7E0227C288B61AD": [
+    "eth:0xCb60516819a28431233195A8b7E0227C288B61AD": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Resolution(uint256 sourceChainId, uint256 fillChainId, bytes32 requestId, address filler, bytes32 fillId)",
       "function addCaller(uint256 callerChainId, address caller, address messenger)",
@@ -322,7 +324,7 @@
       "function sourceChainInfos(uint256 sourceChainId) view returns (address requestManager, address messenger)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": [
+    "eth:0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29": [
       "constructor(address _messenger)",
       "event FillInvalidated(bytes32 indexed requestId, bytes32 indexed fillId)",
       "event LpAdded(address lp)",
@@ -344,5 +346,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xffb4a1ad57243f061e40c8d852ce3a7f61aceba720f5b1f834e214465c2f9724"
+  "permissionsConfigHash": "0x6723a8fad6a445100b211694b8bd07d2322544283fa287388a5ac9ff15534d5d"
 }

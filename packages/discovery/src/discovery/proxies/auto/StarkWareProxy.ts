@@ -1,18 +1,16 @@
 import {
   assert,
   Bytes,
-  EthereumAddress,
+  ChainSpecificAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, type providers, utils } from 'ethers'
+import { parseSemver, type Semver } from '../../../utils/semver'
 import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
-import { type Semver, parseSemver } from '../../../utils/semver'
 import type { IProvider } from '../../provider/IProvider'
-
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
 // keccak256("StarkWare2019.implementation-slot")
@@ -27,14 +25,14 @@ const CALL_IMPLEMENTATION_SLOT = Bytes.fromHex(
 
 async function getCallImplementation(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress | undefined> {
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress | undefined> {
   const callImplementation = await provider.getStorageAsAddress(
     address,
     CALL_IMPLEMENTATION_SLOT,
   )
 
-  if (callImplementation === EthereumAddress.ZERO) return
+  if (callImplementation === ChainSpecificAddress.ZERO(provider.chain)) return
 
   return callImplementation
 }
@@ -46,7 +44,7 @@ const UPGRADE_DELAY_SLOT = Bytes.fromHex(
 
 async function getUpgradeDelay(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<number> {
   const value = await provider.getStorage(address, UPGRADE_DELAY_SLOT)
   return BigNumber.from(value.toString()).toNumber()
@@ -59,7 +57,7 @@ const FINALIZED_STATE_SLOT = Bytes.fromHex(
 
 async function getFinalizedState(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<boolean> {
   const stored = await provider.getStorage(address, FINALIZED_STATE_SLOT)
   return !BigNumber.from(stored.toString()).eq(0)
@@ -67,7 +65,7 @@ async function getFinalizedState(
 
 async function getProxyVersion(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<Semver | undefined> {
   const versionString = await provider.callMethod<string>(
     address,
@@ -99,7 +97,7 @@ const abi = new utils.Interface([
 
 async function getPastProxyUpgrades(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<DateAddresses[]> {
   const logs = await provider.getLogs(address, [
     [
@@ -120,7 +118,10 @@ async function getPastProxyUpgrades(
   )
 
   return logs.map((l) => {
-    const implementation = abi.parseLog(l).args.implementation
+    const implementation = ChainSpecificAddress.fromLong(
+      provider.chain,
+      abi.parseLog(l).args.implementation,
+    )
     return [
       dateMap[l.blockNumber] ?? 'ERROR',
       Hash256(l.transactionHash),
@@ -131,13 +132,13 @@ async function getPastProxyUpgrades(
 
 export async function detectStarkWareProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const implementation = await provider.getStorageAsAddress(
     address,
     IMPLEMENTATION_SLOT,
   )
-  if (implementation === EthereumAddress.ZERO) {
+  if (implementation === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
 
@@ -187,7 +188,7 @@ export async function detectStarkWareProxy(
 
 async function getPastDiamondUpgrades(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<DateAddresses[]> {
   const logs = await provider.getLogs(address, [
     [
@@ -209,7 +210,10 @@ async function getPastDiamondUpgrades(
 
   return await Promise.all(
     logs.map(async (l) => {
-      const implementation = abi.parseLog(l).args.implementation
+      const implementation = ChainSpecificAddress.fromLong(
+        provider.chain,
+        abi.parseLog(l).args.implementation,
+      )
       const facets = await getStarkWareDiamondFacets(provider, address, l)
       assert(facets !== false)
 
@@ -224,7 +228,7 @@ async function getPastDiamondUpgrades(
 
 async function getStarkWareDiamondFacets(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   lastUpgrade: providers.Log,
 ) {
   let data: string | undefined
@@ -278,13 +282,16 @@ async function getStarkWareDiamondFacets(
   // we subtract 2 for '0x' and 1 for an external initializer contract
   const maxAddresses = Math.floor((data.length - 2) / 64) - 1
 
-  const facets: Record<string, EthereumAddress> = {}
+  const facets: Record<string, ChainSpecificAddress> = {}
   for (let i = 0; i < maxAddresses; i++) {
     const bytes32 = data.slice(2 + 64 * i, 2 + 64 * (i + 1))
     if (!bytes32.startsWith('0'.repeat(24))) {
       break
     }
-    const facet = EthereumAddress('0x' + bytes32.slice(24))
+    const facet = ChainSpecificAddress.fromLong(
+      provider.chain,
+      '0x' + bytes32.slice(24),
+    )
     const name = await provider.callMethod<string>(
       facet,
       'function identify() view returns (string)',
@@ -302,11 +309,11 @@ async function getStarkWareDiamondFacets(
 // if returns false, it means that the proxy is not a StarkWare diamond
 async function getStarkWareDiamond(
   provider: IProvider,
-  address: EthereumAddress,
-  implementation: EthereumAddress,
+  address: ChainSpecificAddress,
+  implementation: ChainSpecificAddress,
   upgradeDelay: number,
   isFinal: boolean,
-  proxyGovernance: EthereumAddress[],
+  proxyGovernance: ChainSpecificAddress[],
 ): Promise<ProxyDetails | false> {
   // TODO: (sz-piotr) new provider Promise.all
   const upgrades = await provider.getLogs(address, [

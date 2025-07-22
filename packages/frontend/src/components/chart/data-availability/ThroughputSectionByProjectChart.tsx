@@ -2,11 +2,11 @@
 import type { Milestone } from '@l2beat/config'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
-import { ProjectCombobox } from '~/components/ProjectCombobox'
-import { Skeleton } from '~/components/core/Skeleton'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { Skeleton } from '~/components/core/Skeleton'
+import { ProjectCombobox } from '~/components/ProjectCombobox'
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,

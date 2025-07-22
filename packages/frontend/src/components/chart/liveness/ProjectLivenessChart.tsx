@@ -9,9 +9,9 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
+import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
 import { LivenessChartStats } from './LivenessChartStats'
-import { getDefaultSubtype } from './getDefaultSubtype'
 
 interface Props {
   projectId: string
@@ -19,6 +19,8 @@ interface Props {
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
   milestones: Milestone[]
+  defaultRange: LivenessChartTimeRange
+  isArchived: boolean
 }
 
 export function ProjectLivenessChart({
@@ -27,8 +29,11 @@ export function ProjectLivenessChart({
   anomalies,
   hasTrackedContractsChanged,
   milestones,
+  isArchived,
+  defaultRange,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<LivenessChartTimeRange>('30d')
+  const [timeRange, setTimeRange] =
+    useState<LivenessChartTimeRange>(defaultRange)
   const [subtype, setSubtype] = useState<TrackedTxsConfigSubtype>(
     getDefaultSubtype(configuredSubtypes),
   )
@@ -92,6 +97,7 @@ export function ProjectLivenessChart({
         anomalies={anomalies}
         configuredSubtypes={configuredSubtypes}
         hasTrackedContractsChanged={hasTrackedContractsChanged}
+        isArchived={isArchived}
       />
     </section>
   )

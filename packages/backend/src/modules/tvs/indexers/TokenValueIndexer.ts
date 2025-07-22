@@ -11,13 +11,13 @@ import type {
 } from '../../../tools/uif/multi/types'
 import type { ValueService } from '../services/ValueService'
 import type { DBStorage } from '../tools/DBStorage'
-import type { SyncOptimizer } from '../tools/SyncOptimizer'
 import {
   createAmountConfig,
   createPriceConfigId,
   extractPricesAndAmounts,
   generateConfigurationId,
 } from '../tools/extractPricesAndAmounts'
+import type { SyncOptimizer } from '../tools/SyncOptimizer'
 
 interface TokenValueIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<TvsToken>, 'name'> {

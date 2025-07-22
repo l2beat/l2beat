@@ -26,15 +26,17 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
     })
   })
 
-  describe(CurrentPriceRepository.prototype.getByCoingeckoIds
-    .name, async () => {
-    it('deletes all currentPrices', async () => {
-      await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
+  describe(
+    CurrentPriceRepository.prototype.getByCoingeckoIds.name,
+    async () => {
+      it('deletes all currentPrices', async () => {
+        await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
 
-      const currentPrices = await repository.getByCoingeckoIds(['A', 'B'])
-      expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])
-    })
-  })
+        const currentPrices = await repository.getByCoingeckoIds(['A', 'B'])
+        expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])
+      })
+    },
+  )
 })
 
 function mock(

@@ -13,7 +13,7 @@
     "pausers": {
       "handler": {
         "type": "hardcoded", // hack, but checked in .ts
-        "value": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+        "value": "eth:0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
       },
       "permissions": [
         {

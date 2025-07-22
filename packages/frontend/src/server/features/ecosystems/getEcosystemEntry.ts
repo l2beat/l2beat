@@ -6,8 +6,8 @@ import type {
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
-import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectLink } from '~/components/projects/links/types'
+import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
 import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/EcosystemGovernanceLinks'
 import { ps } from '~/server/projects'
@@ -16,14 +16,15 @@ import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
 import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
+import { getApprovedOngoingAnomalies } from '../scaling/liveness/getApprovedOngoingAnomalies'
 import {
-  type ScalingSummaryEntry,
   getScalingSummaryEntry,
+  type ScalingSummaryEntry,
 } from '../scaling/summary/getScalingSummaryEntries'
 import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 import {
-  type ScalingUpcomingEntry,
   getScalingUpcomingEntry,
+  type ScalingUpcomingEntry,
 } from '../scaling/upcoming/getScalingUpcomingEntries'
 import { compareStageAndTvs } from '../scaling/utils/compareStageAndTvs'
 import { getStaticAsset } from '../utils/getProjectIcon'
@@ -34,12 +35,12 @@ import { getEcosystemProjectsChartData } from './getEcosystemProjectsChartData'
 import type { EcosystemToken } from './getEcosystemToken'
 import { getEcosystemToken } from './getEcosystemToken'
 import {
-  type ProjectsByDaLayer,
   getProjectsByDaLayer,
+  type ProjectsByDaLayer,
 } from './getProjectsByDaLayer'
 import type { ProjectByRaas } from './getProjectsByRaas'
 import { getProjectsByRaas } from './getProjectsByRaas'
-import { type TvsByStage, getTvsByStage } from './getTvsByStage'
+import { getTvsByStage, type TvsByStage } from './getTvsByStage'
 import type { TvsByTokenType } from './getTvsByTokenType'
 import { getTvsByTokenType } from './getTvsByTokenType'
 
@@ -105,6 +106,7 @@ export async function getEcosystemEntry(
   const [allScalingProjects, projects] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
     ps.getProjects({
       select: [
@@ -128,10 +130,16 @@ export async function getEcosystemEntry(
     }),
   ])
 
-  const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
+  const [
+    projectsChangeReport,
+    tvs,
+    projectsActivity,
+    projectsOngoingAnomalies,
+  ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     getActivityLatestUops(allScalingProjects),
+    getApprovedOngoingAnomalies(),
   ])
 
   const ecosystemProjects = projects.filter(
@@ -144,7 +152,7 @@ export async function getEcosystemEntry(
   )
 
   const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects,
+    ecosystemProjects.filter((p) => !p.archivedAt),
     (p) => p.isUpcoming,
   )
 
@@ -165,14 +173,14 @@ export async function getEcosystemEntry(
       tvs: tvs.total,
       uops: allScalingProjectsUops,
     },
-    tvsByStage: getTvsByStage(ecosystemProjects, tvs),
-    tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
-    projectsByDaLayer: getProjectsByDaLayer(ecosystemProjects),
-    blobsData: await getBlobsData(ecosystemProjects),
-    projectsByRaas: getProjectsByRaas(ecosystemProjects),
-    token: await getEcosystemToken(ecosystem, ecosystemProjects),
+    tvsByStage: getTvsByStage(liveProjects, tvs),
+    tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
+    projectsByDaLayer: getProjectsByDaLayer(liveProjects),
+    blobsData: await getBlobsData(liveProjects),
+    projectsByRaas: getProjectsByRaas(liveProjects),
+    token: await getEcosystemToken(ecosystem, liveProjects),
     projectsChartData: getEcosystemProjectsChartData(
-      ecosystemProjects,
+      liveProjects,
       allScalingProjects.length,
     ),
     liveProjects: liveProjects
@@ -183,6 +191,7 @@ export async function getEcosystemEntry(
           projectsChangeReport.getChanges(project.id),
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
+          !!projectsOngoingAnomalies[project.id.toString()],
         )
         return {
           ...entry,
@@ -200,7 +209,7 @@ export async function getEcosystemEntry(
     images: {
       buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
       delegateToL2BEAT: getStaticAsset(
-        `/partners/governance-delegate-to-l2beat.png`,
+        '/partners/governance-delegate-to-l2beat.png',
       ),
     },
   }

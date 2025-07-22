@@ -44,7 +44,7 @@ describe(getTransferQuery.name, () => {
       AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${range(2)
-          .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
+          .map(() => '(traces.from_address = ? AND traces.to_address = ?)')
           .join(' OR ')}
       )
     WHERE

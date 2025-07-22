@@ -1,6 +1,6 @@
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { TabbedBridgeEntries } from '~/pages/bridges/utils/groupByBridgeTabs'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/getBridgesArchivedEntries'

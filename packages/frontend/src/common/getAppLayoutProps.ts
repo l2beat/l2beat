@@ -1,6 +1,6 @@
 import { getSearchBarProjects } from '~/components/search-bar/searchBarProjects'
 import { getCollection } from '~/content/getCollection'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
 
 export async function getAppLayoutProps(): Promise<AppLayoutProps> {
   const searchBarProjects = await getSearchBarProjects()

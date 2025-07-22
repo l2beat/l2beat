@@ -24,9 +24,10 @@ export function MobileProjectNavigation({ sections }: Props) {
   )
 
   useEffect(() => {
-    if (!selectedItem.current || !overflowContainer.current) return
+    if (!selectedItem.current || !overflowContainer.current || !currentSection)
+      return
     scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [scrollToItem])
+  }, [scrollToItem, currentSection])
 
   if (sections.length === 0) return null
 
@@ -48,7 +49,6 @@ export function MobileProjectNavigation({ sections }: Props) {
           const selected =
             section.id === currentSection?.id ||
             section.subsections?.some((s) => s.id === currentSection?.id)
-
           return (
             <Item
               key={section.id}
@@ -82,7 +82,8 @@ function Item({
       href={href}
       className={cn(
         'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors',
-        selected && 'border-current border-b text-brand',
+        selected &&
+          'border-current border-b text-brand group-data-[has-colors=true]/section-wrapper:text-(--project-primary)',
       )}
     >
       {children}

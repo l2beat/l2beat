@@ -1,18 +1,18 @@
-import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
-  DiscoveryRegistry,
-  TemplateService,
   colorize,
   combineStructureAndColor,
+  DiscoveryRegistry,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   makeEntryStructureConfig,
+  TemplateService,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
@@ -148,7 +148,7 @@ describe('discovery config.jsonc', () => {
         for (const key of Object.keys(c.structure.overrides ?? {})) {
           it(`${c.name} on ${c.chain} with the override ${key}`, () => {
             expect(() =>
-              makeEntryStructureConfig(c.structure, EthereumAddress(key)),
+              makeEntryStructureConfig(c.structure, ChainSpecificAddress(key)),
             ).not.toThrow()
           })
         }
@@ -192,7 +192,9 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  it('every name in config.jsonc is unique', () => {
+  // TODO(radomski): We have to skip this test because we have to duplicate
+  // names for different chains, we don't have a catch-all chain
+  it.skip('every name in config.jsonc is unique', () => {
     for (const c of chainConfigs ?? []) {
       if (c.color.names === undefined) {
         continue
@@ -265,7 +267,7 @@ describe('discovery config.jsonc', () => {
           '',
           `Permissions model of "${c.name}" is not up to date.`,
           `Run \`l2b model-permissions ${c.name}\`.`,
-          `or to refresh all projects: \`l2b model-permissions all\`.`,
+          'or to refresh all projects: \`l2b model-permissions all\`.',
           '',
         ].join('\n\n'),
       )

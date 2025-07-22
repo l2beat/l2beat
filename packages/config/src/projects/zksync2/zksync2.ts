@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -107,7 +108,7 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       description:
         'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',

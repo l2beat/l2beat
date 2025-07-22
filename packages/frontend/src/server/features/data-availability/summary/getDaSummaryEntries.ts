@@ -5,25 +5,25 @@ import type {
   UsedInProject,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { RosetteValue } from '~/components/rosette/types'
-import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
+import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
+import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
-import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
-import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
 import {
-  type ProjectsChangeReport,
   getProjectsChangeReport,
+  type ProjectsChangeReport,
 } from '../../projects-change-report/getProjectsChangeReport'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
   type CommonDaEntry,
-  getCommonDaEntry,
   getCommonDacDaEntry,
+  getCommonDaEntry,
 } from '../getCommonDaEntry'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
@@ -140,6 +140,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
+          href: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     }),
@@ -160,6 +161,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
+          href: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     })
@@ -222,6 +224,7 @@ function getDacEntry(
     usedIn: usedIn.map((project) => ({
       ...project,
       icon: getProjectIcon(project.slug),
+      href: `/scaling/projects/${project.slug}`,
     })),
   }
 
@@ -273,6 +276,7 @@ function getEthereumEntry(
           .map((project) => ({
             ...project,
             icon: getProjectIcon(project.slug),
+            href: `/scaling/projects/${project.slug}`,
           })),
       },
     ],

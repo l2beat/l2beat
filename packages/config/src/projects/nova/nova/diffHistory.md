@@ -1,4 +1,700 @@
-Generated with discovered.json: 0x3b7ba7ee34a4fc483164cd3e1fcfd325cc7f9544
+Generated with discovered.json: 0xa3f9a8fac9f5e71ecd2b60c41d172de5dd0965cc
+
+# Diff at Mon, 14 Jul 2025 13:11:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 83594372
+- current block number: 83594372
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83594372 (main branch discovery), not current.
+
+```diff
+    EOA bartek.eth-L2BEAT (0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae) {
+    +++ description: None
+      address:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb-nova:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+    }
+```
+
+```diff
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8) {
+    +++ description: Router managing token <–> gateway mapping on L2.
+      address:
+-        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      values.$admin:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      values.$implementation:
+-        "0x8f377770289863DF73Fe665B74460579F82321fb"
++        "arb-nova:0x8f377770289863DF73Fe665B74460579F82321fb"
+      values.$pastUpgrades.0.2.0:
+-        "0x09854610F48462a7029fF192FA0AfB7F00133F54"
++        "arb-nova:0x09854610F48462a7029fF192FA0AfB7F00133F54"
+      values.$pastUpgrades.1.2.0:
+-        "0x8f377770289863DF73Fe665B74460579F82321fb"
++        "arb-nova:0x8f377770289863DF73Fe665B74460579F82321fb"
+      values.counterpartGateway:
+-        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
++        "arb-nova:0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
+      values.defaultGateway:
+-        "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
++        "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
+      values.router:
+-        "0x0000000000000000000000000000000000000000"
++        "arb-nova:0x0000000000000000000000000000000000000000"
+      implementationNames.0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x8f377770289863DF73Fe665B74460579F82321fb:
+-        "L2GatewayRouter"
+      implementationNames.arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb-nova:0x8f377770289863DF73Fe665B74460579F82321fb:
++        "L2GatewayRouter"
+    }
+```
+
+```diff
+    EOA EmilianoBonassi-Conduit (0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93) {
+    +++ description: None
+      address:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb-nova:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+    }
+```
+
+```diff
+    EOA yoav.eth-EF (0x475816ca2a31D601B4e336f5c2418A67978aBf09) {
+    +++ description: None
+      address:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb-nova:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+    }
+```
+
+```diff
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      address:
+-        "0x509386DbF5C0BE6fd68Df97A05fdB375136c32De"
++        "arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De"
+      values.owner:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      values.recipientsData.0.recipients.0:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      values.recipientsData.1.recipients.0:
+-        "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d"
++        "arb-nova:0x36D0170D92F66e8949eB276C3AC4FEA64f83704d"
+      implementationNames.0x509386DbF5C0BE6fd68Df97A05fdB375136c32De:
+-        "RewardDistributor"
+      implementationNames.arb-nova:0x509386DbF5C0BE6fd68Df97A05fdB375136c32De:
++        "RewardDistributor"
+    }
+```
+
+```diff
+    contract StandardArbERC20 (0x53923A0d1f4805463584c91b2E55d6c600A94E91) {
+    +++ description: None
+      address:
+-        "0x53923A0d1f4805463584c91b2E55d6c600A94E91"
++        "arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91"
+      values.l1Address:
+-        "0x0000000000000000000000000000000000000000"
++        "arb-nova:0x0000000000000000000000000000000000000000"
+      values.l2Gateway:
+-        "0x0000000000000000000000000000000000000000"
++        "arb-nova:0x0000000000000000000000000000000000000000"
+      implementationNames.0x53923A0d1f4805463584c91b2E55d6c600A94E91:
+-        "StandardArbERC20"
+      implementationNames.arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91:
++        "StandardArbERC20"
+    }
+```
+
+```diff
+    EOA DennisonBertram-Tally (0x59c8535419BbCb8AdFFDB3C835435E907e3B183B) {
+    +++ description: None
+      address:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb-nova:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+    }
+```
+
+```diff
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD) {
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+      address:
+-        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
++        "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
+      values.$admin:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      values.$implementation:
+-        "0xbe04Ab2728c924D678f9FC833E379688c6eFA317"
++        "arb-nova:0xbe04Ab2728c924D678f9FC833E379688c6eFA317"
+      values.$pastUpgrades.0.2.0:
+-        "0x3525f734fcE1a26a6CEffFca43538290DC239771"
++        "arb-nova:0x3525f734fcE1a26a6CEffFca43538290DC239771"
+      values.$pastUpgrades.1.2.0:
+-        "0x190C993Db842097df8b8d71c910f1802df0724C3"
++        "arb-nova:0x190C993Db842097df8b8d71c910f1802df0724C3"
+      values.$pastUpgrades.2.2.0:
+-        "0x190C993Db842097df8b8d71c910f1802df0724C3"
++        "arb-nova:0x190C993Db842097df8b8d71c910f1802df0724C3"
+      values.$pastUpgrades.3.2.0:
+-        "0xbe04Ab2728c924D678f9FC833E379688c6eFA317"
++        "arb-nova:0xbe04Ab2728c924D678f9FC833E379688c6eFA317"
+      values.counterpartGateway:
+-        "0xE4E2121b479017955Be0b175305B35f312330BaE"
++        "arb-nova:0xE4E2121b479017955Be0b175305B35f312330BaE"
+      values.l1Weth:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "arb-nova:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.l2Weth:
+-        "0x722E8BdD2ce80A4422E880164f2079488e115365"
++        "arb-nova:0x722E8BdD2ce80A4422E880164f2079488e115365"
+      values.router:
+-        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      implementationNames.0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xbe04Ab2728c924D678f9FC833E379688c6eFA317:
+-        "L2WethGateway"
+      implementationNames.arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb-nova:0xbe04Ab2728c924D678f9FC833E379688c6eFA317:
++        "L2WethGateway"
+    }
+```
+
+```diff
+    EOA JohnMorrow-Gauntlet (0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67) {
+    +++ description: None
+      address:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      address:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      values.$admin:
+-        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      values.$implementation:
+-        "0x3096EAEdcb3A3B665552660F4d921E565D0073cB"
++        "arb-nova:0x3096EAEdcb3A3B665552660F4d921E565D0073cB"
+      values.$pastUpgrades.0.2.0:
+-        "0x3096EAEdcb3A3B665552660F4d921E565D0073cB"
++        "arb-nova:0x3096EAEdcb3A3B665552660F4d921E565D0073cB"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+      values.executors.0:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      values.executors.1:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+      implementationNames.0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x3096EAEdcb3A3B665552660F4d921E565D0073cB:
+-        "UpgradeExecutor"
+      implementationNames.arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb-nova:0x3096EAEdcb3A3B665552660F4d921E565D0073cB:
++        "UpgradeExecutor"
+    }
+```
+
+```diff
+    EOA GriffGreen-Giveth (0x882c6FCb3D358b9d70B97c6999159cea64168B6F) {
+    +++ description: None
+      address:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb-nova:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+    }
+```
+
+```diff
+    EOA StevenThornton-OpenZeppelin (0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC) {
+    +++ description: None
+      address:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+    }
+```
+
+```diff
+    EOA GoncaloMagalhaes-Immunefi (0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8) {
+    +++ description: None
+      address:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb-nova:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+    }
+```
+
+```diff
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f) {
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+      address:
+-        "0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f"
++        "arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f"
+      values.owner:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      values.recipientsData.0.recipients.6:
+-        "0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"
++        "arb-nova:0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"
+      values.recipientsData.0.recipients.5:
+-        "0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641"
++        "arb-nova:0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641"
+      values.recipientsData.0.recipients.4:
+-        "0xA221f29236996BDEfA5C585acdD407Ec84D78447"
++        "arb-nova:0xA221f29236996BDEfA5C585acdD407Ec84D78447"
+      values.recipientsData.0.recipients.3:
+-        "0x02C2599aa929e2509741b44F3a13029745aB1AB2"
++        "arb-nova:0x02C2599aa929e2509741b44F3a13029745aB1AB2"
+      values.recipientsData.0.recipients.2:
+-        "0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd"
++        "arb-nova:0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd"
+      values.recipientsData.0.recipients.1:
+-        "0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895"
++        "arb-nova:0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895"
+      values.recipientsData.0.recipients.0:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+      values.recipientsData.1.recipients.6:
+-        "0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"
++        "arb-nova:0xb814441ed86e98e8B83d31eEC095e4a5A36Fc3c2"
+      values.recipientsData.1.recipients.5:
+-        "0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641"
++        "arb-nova:0x0fB1f1a31429F1A90a19Ab5486a6DFb384179641"
+      values.recipientsData.1.recipients.4:
+-        "0xA221f29236996BDEfA5C585acdD407Ec84D78447"
++        "arb-nova:0xA221f29236996BDEfA5C585acdD407Ec84D78447"
+      values.recipientsData.1.recipients.3:
+-        "0x02C2599aa929e2509741b44F3a13029745aB1AB2"
++        "arb-nova:0x02C2599aa929e2509741b44F3a13029745aB1AB2"
+      values.recipientsData.1.recipients.2:
+-        "0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd"
++        "arb-nova:0x41C327d5fc9e29680CcD45e5E52446E0DB3DAdFd"
+      values.recipientsData.1.recipients.1:
+-        "0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895"
++        "arb-nova:0xD0749b3e537Ed52DE4e6a3Ae1eB6fc26059d0895"
+      values.recipientsData.1.recipients.0:
+-        "0x36D0170D92F66e8949eB276C3AC4FEA64f83704d"
++        "arb-nova:0x36D0170D92F66e8949eB276C3AC4FEA64f83704d"
+      implementationNames.0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f:
+-        "RewardDistributor"
+      implementationNames.arb-nova:0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f:
++        "RewardDistributor"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      address:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      values.owner:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      implementationNames.0xada790b026097BfB36a5ed696859b97a96CEd92C:
+-        "ProxyAdmin"
+      implementationNames.arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1) {
+    +++ description: None
+      address:
+-        "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
++        "arb-nova:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+    }
+```
+
+```diff
+    EOA Michael Lewellen - blockaid (0xBBD2E01eFB88ce00F8f5b6B9a696966070089392) {
+    +++ description: None
+      address:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb-nova:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+    }
+```
+
+```diff
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4) {
+    +++ description: None
+      address:
+-        "0xbf544970E6BD77b21C6492C281AB60d0770451F4"
++        "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
+      values.$admin:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      values.$implementation:
+-        "0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"
++        "arb-nova:0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"
+      values.$pastUpgrades.0.2.0:
+-        "0xb1d943d67b793D61F08b5F536AC591a057306fe5"
++        "arb-nova:0xb1d943d67b793D61F08b5F536AC591a057306fe5"
+      values.$pastUpgrades.1.2.0:
+-        "0x6e04b9dd87CF2cD3b7D81C50D2DF72d24BC0Cc4C"
++        "arb-nova:0x6e04b9dd87CF2cD3b7D81C50D2DF72d24BC0Cc4C"
+      values.$pastUpgrades.2.2.0:
+-        "0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"
++        "arb-nova:0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f"
+      values.counterpartGateway:
+-        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
++        "arb-nova:0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+      values.router:
+-        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      implementationNames.0xbf544970E6BD77b21C6492C281AB60d0770451F4:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f:
+-        "L2CustomGateway"
+      implementationNames.arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb-nova:0x554e12DBAa0fBeB8A35583a6Fd9D04BaA4ff597f:
++        "L2CustomGateway"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      address:
+-        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
++        "arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
+      values.$implementation:
+-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
++        "arb-nova:0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$members.0:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.1:
+-        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
++        "arb-nova:0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.$members.2:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb-nova:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.$members.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "arb-nova:0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+      values.$members.4:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "arb-nova:0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.5:
+-        "0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
++        "arb-nova:0x9A301de96b15Db3aB778E2969Bf6cAa909cA56E8"
+      values.$members.6:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb-nova:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+      values.$members.7:
+-        "0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
++        "arb-nova:0x33ddb82e68940f0e4C1050885BcE8faF5Ddd1b93"
+      values.$members.8:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "arb-nova:0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.9:
+-        "0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
++        "arb-nova:0x9316ca66f5f936E3239e4fD2AAAEA5C7b6f3C4cC"
+      values.$members.10:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "arb-nova:0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.$members.11:
+-        "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
++        "arb-nova:0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+      values.GnosisSafe_modules.0:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      implementationNames.0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3:
+-        "SafeProxy"
+      implementationNames.0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
+-        "GnosisSafeL2"
+      implementationNames.arb-nova:0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3:
++        "SafeProxy"
+      implementationNames.arb-nova:0x3E5c63644E683549055b9Be8653de26E0B4CD36E:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257) {
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+      address:
+-        "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
++        "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
+      values.$admin:
+-        "0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      values.$implementation:
+-        "0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"
++        "arb-nova:0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"
+      values.$pastUpgrades.0.2.0:
+-        "0xEa2562667c98Bfe329995616454BeA9ea3290D1C"
++        "arb-nova:0xEa2562667c98Bfe329995616454BeA9ea3290D1C"
+      values.$pastUpgrades.1.2.0:
+-        "0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"
++        "arb-nova:0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8"
+      values.beaconProxyFactory:
+-        "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3"
++        "arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3"
+      values.counterpartGateway:
+-        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
++        "arb-nova:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
+      values.router:
+-        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      implementationNames.0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8:
+-        "L2ERC20Gateway"
+      implementationNames.arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb-nova:0x466155FD6d8BbF1c0d5ca32818814cB28b6884d8:
++        "L2ERC20Gateway"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639) {
+    +++ description: None
+      address:
+-        "0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639"
++        "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639"
+      values.implementation:
+-        "0x53923A0d1f4805463584c91b2E55d6c600A94E91"
++        "arb-nova:0x53923A0d1f4805463584c91b2E55d6c600A94E91"
+      values.owner:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      implementationNames.0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639:
+-        "UpgradeableBeacon"
+      implementationNames.arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639:
++        "UpgradeableBeacon"
+    }
+```
+
+```diff
+    EOA fred - Arbitrum 2 (0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E) {
+    +++ description: None
+      address:
+-        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
++        "arb-nova:0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+    }
+```
+
+```diff
+    contract BeaconProxyFactory (0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3) {
+    +++ description: None
+      address:
+-        "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3"
++        "arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3"
+      values.beacon:
+-        "0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639"
++        "arb-nova:0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639"
+      implementationNames.0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3:
+-        "BeaconProxyFactory"
+      implementationNames.arb-nova:0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3:
++        "BeaconProxyFactory"
+    }
+```
+
+```diff
+    EOA gzeon-OffchainLabs (0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33) {
+    +++ description: None
+      address:
+-        "0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
++        "arb-nova:0xe2e9d5B97d8C0457B1cf80BC93802bce4DF03e33"
+    }
+```
+
+```diff
+    EOA  (0xE4E2121b479017955Be0b175305B35f312330BaE) {
+    +++ description: None
+      address:
+-        "0xE4E2121b479017955Be0b175305B35f312330BaE"
++        "arb-nova:0xE4E2121b479017955Be0b175305B35f312330BaE"
+    }
+```
+
+```diff
+    EOA Certora 2 (0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D) {
+    +++ description: None
+      address:
+-        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
++        "arb-nova:0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      address:
+-        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      values.owner:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      implementationNames.0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9:
+-        "ProxyAdmin"
+      implementationNames.arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      address:
+-        "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
++        "arb-nova:0xf7951D92B0C345144506576eC13Ecf5103aC905a"
+    }
+```
+
+```diff
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD) {
+    +++ description: None
+      address:
+-        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
++        "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
+      values.$admin:
+-        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      values.$implementation:
+-        "0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"
++        "arb-nova:0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"
+      values.$pastUpgrades.0.2.0:
+-        "0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"
++        "arb-nova:0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d"
+      values.l1Address:
+-        "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
++        "arb-nova:0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
+      values.l2Gateway:
+-        "0xbf544970E6BD77b21C6492C281AB60d0770451F4"
++        "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
+      implementationNames.0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d:
+-        "L2CustomGatewayToken"
+      implementationNames.arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD:
++        "TransparentUpgradeableProxy"
+      implementationNames.arb-nova:0x099bC495EA4Fd828FEe7C636F0Ab84d0f501B96d:
++        "L2CustomGatewayToken"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8)
+    +++ description: Router managing token <–> gateway mapping on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract StandardArbERC20 (0x53923A0d1f4805463584c91b2E55d6c600A94E91)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD)
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257)
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxyFactory (0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x61b29027365f4dd3a84401cac8be4513164769bd
 
 # Diff at Fri, 04 Jul 2025 12:19:11 GMT:
 

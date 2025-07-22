@@ -6,7 +6,7 @@ import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { toTableRows } from '../../utils/toTableRows'
-import { scalingSummaryNotReviewedColumns } from './Columns'
+import { scalingSummaryNotReviewedColumns } from './columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]

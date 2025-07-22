@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -24,19 +29,19 @@ export const sygma: Bridge = {
         'https://buildwithsygma.com/',
         'https://blog.buildwithsygma.com',
       ],
-      documentation: [`https://docs.buildwithsygma.com`],
+      documentation: ['https://docs.buildwithsygma.com'],
       explorers: [
-        `https://scan.buildwithsygma.com`,
-        `https://scan.test.buildwithsygma.com`,
+        'https://scan.buildwithsygma.com',
+        'https://scan.test.buildwithsygma.com',
       ],
       repositories: ['https://github.com/sygmaprotocol'],
       socialMedia: [
         'https://discord.gg/Qdf6GyNB5J',
         'https://twitter.com/buildwithsygma',
-        `https://t.me/buildwithsygma`,
+        'https://t.me/buildwithsygma',
       ],
       bridges: [
-        `https://subbridge.io`,
+        'https://subbridge.io',
         'https://docs.buildwithsygma.com/resources/environments/testnet/#testnet-faucet',
         'https://sygma-react-widget.pages.dev/',
         'https://validator.faucet.chainsafe.dev/upload',
@@ -64,7 +69,8 @@ export const sygma: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. From the PoV of Ethereum transfers are authorized by a single EOA address.`,
+      description:
+        'Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. From the PoV of Ethereum transfers are authorized by a single EOA address.',
       references: [],
       risks: [],
     },
@@ -159,7 +165,9 @@ export const sygma: Bridge = {
         discovery.getPermissionDetails(
           'Pauser/Unpauser',
           discovery.formatPermissionedAccounts([
-            EthereumAddress('0x695bd50CB07ffBd4098b272CE8b52B3c256ca049'),
+            ChainSpecificAddress(
+              'eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049',
+            ),
           ]),
           'EOA address with the permission to pause/unpause the bridge.',
         ),

@@ -2,16 +2,16 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0xe9b17598abde9b294eb702dcf4ffcb18de5012813bddd09845a0a41f8776e058",
+  "configHash": "0xbf5e9d74f98e6fc40e655b980475b53b6ec0494a9329f899599b5968c56e6909",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
-      "address": "0x099198353446A9E3a20672eDC1Bd461E978842c3",
+      "address": "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+      "address": "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -24,7 +24,7 @@
     },
     {
       "name": "daiBridge",
-      "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+      "address": "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
       "type": "Contract",
       "sourceHashes": [
         "0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa",
@@ -36,54 +36,54 @@
       "sinceTimestamp": 1695199499,
       "sinceBlock": 18175991,
       "values": {
-        "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-        "$implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
+        "$admin": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "$implementation": "eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
         "$pastUpgrades": [
           [
             "2023-09-20T08:44:59.000Z",
             "0x2c7c12aeaf738701352017fc49f5268db9632b84bdc6f76474e6776371f53b7e",
-            ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
+            ["eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"]
           ]
         ],
         "$upgradeCount": 1,
-        "beneficiary": "0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9",
-        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "beneficiary": "eth:0xF29Ff96aaEa6C9A1fBa851f74737f3c069d4f1a9",
+        "dai": "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "defaultAdmin": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "defaultAdminDelay": 259200,
         "defaultAdminDelayIncreaseWait": 432000,
-        "destAddress": "0x744C5860ba161b5316F7E80D9Ec415e2727e5bD5",
+        "destAddress": "eth:0x744C5860ba161b5316F7E80D9Ec415e2727e5bD5",
         "destId": 1,
         "MAKER_ROLE": "0x70d8f6b4dfca278d41482e0778a0bf123d87b86b23b71cc0ef42c2f082e8053a",
-        "owner": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "owner": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "pendingDefaultAdmin": {
-          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "newAdmin": "eth:0x0000000000000000000000000000000000000000",
           "schedule": 0
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
-        "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
+        "sdai": "eth:0x83F20F44975D03b1b09e64809B757c47f942BEeA",
         "totalBridgedDAI": "2831847350171131353750",
         "totalProtocolDAI": "1000000000000000000",
-        "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+        "zkEvmBridge": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
       "implementationNames": {
-        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": "UUPSProxy",
-        "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b": "L1Escrow"
+        "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": "UUPSProxy",
+        "eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b": "L1Escrow"
       }
     },
     {
-      "address": "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
+      "address": "eth:0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E",
+      "address": "eth:0x4E83124eD15b13265240B61EC9627797CCE1032E",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "PolygonZkEVM",
-      "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+      "address": "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
       "type": "Contract",
       "template": "polygon-cdk/PolygonZkEVM",
       "sourceHashes": [
@@ -96,45 +96,45 @@
       "sinceTimestamp": 1706364971,
       "sinceBlock": 19098451,
       "values": {
-        "$admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "$implementation": "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
+        "$admin": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "$implementation": "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E",
         "$pastUpgrades": [
           [
             "2024-01-27T14:16:11.000Z",
             "0x4e3fc80071c2d0852584cb59bfcd784519bfb3582aa3334098a4b32b5f6aaef4",
-            ["0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]
+            ["eth:0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"]
           ],
           [
             "2024-03-14T12:25:35.000Z",
             "0xeba0bc3b2674c961c5a998f22f789ea610a7c3e57e622a4dd951cca2702b8be3",
-            ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+            ["eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
           ],
           [
             "2024-03-24T23:36:47.000Z",
             "0x67e892c44b9d14709693e74dd5e17fb40d98c8c2cc1c5330265e758e8958a01b",
-            ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+            ["eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
           ],
           [
             "2024-10-01T14:22:59.000Z",
             "0x069690e412d29d96bc94d6bf5c816e43bb401cbf948f3e3cad261e073e2d2afe",
-            ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
+            ["eth:0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"]
           ],
           [
             "2025-01-15T12:16:11.000Z",
             "0x9328cfd3d2833dca2d0ea16fbb34f8fc096c26ca8334476c5bf7107f32436029",
-            ["0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"]
+            ["eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"]
           ]
         ],
         "$upgradeCount": 5,
-        "admin": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "admin": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+        "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "calculatePolPerForceBatch": 0,
-        "forceBatchAddress": "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
+        "forceBatchAddress": "eth:0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
         "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0x0000000000000000000000000000000000000000",
+        "gasTokenAddress": "eth:0x0000000000000000000000000000000000000000",
         "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+        "GLOBAL_EXIT_ROOT_MANAGER_L2": "eth:0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
+        "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
         "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
         "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
@@ -147,14 +147,14 @@
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
-        "pendingAdmin": "0x0000000000000000000000000000000000000000",
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+        "pendingAdmin": "eth:0x0000000000000000000000000000000000000000",
+        "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+        "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
         "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
         "SIGNATURE_INITIALIZE_TX_V": 27,
         "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
+        "trustedSequencer": "eth:0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
         "trustedSequencerURL": "https://zkevm-rpc.com/"
       },
       "fieldMeta": {
@@ -164,14 +164,14 @@
         }
       },
       "implementationNames": {
-        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonTransparentProxy",
-        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": "PolygonZkEVMEtrog"
+        "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonTransparentProxy",
+        "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": "PolygonZkEVMEtrog"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "usdcBridge",
-      "address": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+      "address": "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
       "type": "Contract",
       "sourceHashes": [
         "0x74f36c1c292d2992d00c72ffd2ff8a4b8648a1c9058e63210c2742186a9daf50",
@@ -182,46 +182,46 @@
       "sinceTimestamp": 1700125979,
       "sinceBlock": 18583475,
       "values": {
-        "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-        "$implementation": "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6",
+        "$admin": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "$implementation": "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6",
         "$pastUpgrades": [
           [
             "2023-11-16T09:12:59.000Z",
             "0x6402dc60bb9c4f704f126f4b11e40b33c287b4ac7f73ea60c50d7452d52ce735",
-            ["0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
+            ["eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6"]
           ]
         ],
         "$upgradeCount": 1,
-        "bridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "l1USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "owner": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "bridge": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "l1USDC": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "owner": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "paused": false,
-        "zkMinterBurner": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
+        "zkMinterBurner": "eth:0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
         "zkNetworkId": 1
       },
       "implementationNames": {
-        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": "L1EscrowProxy",
-        "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": "L1Escrow"
+        "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": "L1EscrowProxy",
+        "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": "L1Escrow"
       }
     },
     {
-      "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
+      "address": "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
+      "address": "eth:0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
+      "address": "eth:0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Verifier",
-      "address": "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
+      "address": "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883",
       "type": "Contract",
       "template": "polygon-cdk/Verifier",
       "sourceHashes": [
@@ -233,33 +233,33 @@
       "sinceBlock": 20790618,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": "FflonkVerifier_11"
+        "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": "FflonkVerifier_11"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
+      "address": "eth:0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
+      "address": "eth:0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
+      "address": "eth:0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
+      "address": "eth:0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "wstETHBridge",
-      "address": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+      "address": "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
       "type": "Contract",
       "sourceHashes": [
         "0x612fcbfe67b3a142750d4b383ec80c3df15e053a88579b6d54660253f4c19baa",
@@ -270,53 +270,53 @@
       "sinceTimestamp": 1703945135,
       "sinceBlock": 18898811,
       "values": {
-        "$admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
-        "$implementation": "0x18FED1E19dC564DC917D203be9d40790472D22e9",
+        "$admin": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "$implementation": "eth:0x18FED1E19dC564DC917D203be9d40790472D22e9",
         "$pastUpgrades": [
           [
             "2023-12-30T14:05:35.000Z",
             "0x12c54f4243dc8e3b41be87984b78248eecbf98b92e30ff10b487be2599d7e3a1",
-            ["0x18FED1E19dC564DC917D203be9d40790472D22e9"]
+            ["eth:0x18FED1E19dC564DC917D203be9d40790472D22e9"]
           ]
         ],
         "$upgradeCount": 1,
-        "counterpartContract": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
+        "counterpartContract": "eth:0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
         "counterpartNetwork": 1,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultAdmin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "defaultAdmin": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "defaultAdminDelay": 259200,
         "defaultAdminDelayIncreaseWait": 432000,
         "EMERGENCY_ROLE": "0xbf233dd2aafeb4d50879c4aa5c81e96d92f6e6945c906a58f9f2d1c1631b4b26",
-        "originTokenAddress": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "originTokenAddress": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "originTokenNetwork": 0,
-        "owner": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+        "owner": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
         "paused": false,
         "pendingDefaultAdmin": {
-          "newAdmin": "0x0000000000000000000000000000000000000000",
+          "newAdmin": "eth:0x0000000000000000000000000000000000000000",
           "schedule": 0
         },
         "pendingDefaultAdminDelay": { "newDelay": 0, "schedule": 0 },
-        "polygonZkEVMBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "wrappedTokenAddress": "0xbf6De60Ccd9D22a5820A658fbE9fc87975EA204f"
+        "polygonZkEVMBridge": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "wrappedTokenAddress": "eth:0xbf6De60Ccd9D22a5820A658fbE9fc87975EA204f"
       },
       "implementationNames": {
-        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": "UUPSProxy",
-        "0x18FED1E19dC564DC917D203be9d40790472D22e9": "WstETHBridgeL1"
+        "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": "UUPSProxy",
+        "eth:0x18FED1E19dC564DC917D203be9d40790472D22e9": "WstETHBridgeL1"
       }
     },
     {
-      "address": "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
+      "address": "eth:0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f",
+      "address": "eth:0xf56AE6520776934127AB68438d1b4652BCe07F8f",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "Polygon zkEVM Multisig",
-      "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
+      "address": "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -346,18 +346,18 @@
       "sinceBlock": 18142537,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0x099198353446A9E3a20672eDC1Bd461E978842c3",
-          "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-          "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
-          "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
-          "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
-          "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
-          "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
-          "0xf56AE6520776934127AB68438d1b4652BCe07F8f",
-          "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
-          "0x4E83124eD15b13265240B61EC9627797CCE1032E"
+          "eth:0x099198353446A9E3a20672eDC1Bd461E978842c3",
+          "eth:0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
+          "eth:0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
+          "eth:0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
+          "eth:0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
+          "eth:0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
+          "eth:0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
+          "eth:0xf56AE6520776934127AB68438d1b4652BCe07F8f",
+          "eth:0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
+          "eth:0x4E83124eD15b13265240B61EC9627797CCE1032E"
         ],
         "$threshold": 5,
         "domainSeparator": "0x8a124b80a35ff530b08dee85e5c8febf58bd7c0faed74b60fa781f8695708242",
@@ -368,13 +368,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "GnosisSafeProxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     }
   ],
   "abis": {
-    "0x18FED1E19dC564DC917D203be9d40790472D22e9": [
+    "eth:0x18FED1E19dC564DC917D203be9d40790472D22e9": [
       "constructor()",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -426,13 +426,13 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function wrappedTokenAddress() view returns (address)"
     ],
-    "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": [
+    "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": [
+    "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987": [
       "constructor(address _logic, address admin, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidAdmin(address admin)",
@@ -442,13 +442,13 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
+    "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
       "constructor(address impl_, bytes data_) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": [
+    "eth:0x7253F329302b1b5E774Ac641EA3743E9E3244f2E": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
       "error BatchAlreadyVerified()",
       "error BatchNotSequencedOrNotSequenceEnd()",
@@ -561,7 +561,7 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
+    "eth:0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
       "constructor()",
       "error NotValidAmount()",
       "error NotValidOwner()",
@@ -594,10 +594,10 @@
       "function zkMinterBurner() view returns (address)",
       "function zkNetworkId() view returns (uint32)"
     ],
-    "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": [
+    "eth:0xc521580cd8586Cc688A7430F9DcE0f6A803F2883": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+    "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -646,13 +646,13 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": [
+    "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01": [
       "constructor(address _implementation, bytes _data)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b": [
+    "eth:0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b": [
       "constructor()",
       "error BeneficiaryInvalid(address newBeneficiary)",
       "error BridgeAmountInvalid()",
@@ -712,7 +712,7 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function zkEvmBridge() view returns (address)"
     ],
-    "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": [
+    "eth:0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": [
       "constructor(address _singleton)"
     ]
   },
@@ -721,5 +721,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xb8d57992673eb774e9909b0e62da915a5fd74ab67651849245e3890f02c998e6"
+  "permissionsConfigHash": "0x43ebaa97cd3c8b7e7dd5ce7c52bdbee85d584a8ec0b3bb2c05bf12888973978c"
 }

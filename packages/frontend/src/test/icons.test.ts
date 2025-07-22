@@ -1,7 +1,7 @@
-import { readFileSync, readdirSync } from 'fs'
-import path from 'path'
 import { ProjectService } from '@l2beat/config'
 import { expect } from 'earl'
+import { readdirSync, readFileSync } from 'fs'
+import path from 'path'
 import { getImageDimensions } from '~/utils/project/getImageParams'
 
 describe('icons', () => {

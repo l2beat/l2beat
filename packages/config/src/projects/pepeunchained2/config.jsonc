@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "pepeunchained2",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": ["eth:0xd3643255ea784c75a5325CC5a4A549C7CD62E499"]
+}

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from './api/api'
+import { Title } from './common/Title'
 import { isReadOnly } from './config'
 import { MultiView } from './multi-view/MultiView'
 import type { PanelId } from './multi-view/store'
@@ -31,7 +32,12 @@ export function ProjectPage() {
     }
   }, [response.data, select])
 
-  return <MultiView project={project} panelBodyElement={Panel} />
+  return (
+    <>
+      <Title title={`DiscoUI - ${project}`} />
+      <MultiView project={project} panelBodyElement={Panel} />
+    </>
+  )
 }
 
 const PANELS: Record<PanelId, () => JSX.Element> = {

@@ -4,7 +4,6 @@ import {
   sentimentToTextColor,
   sentimentToTransparentBgColor,
 } from '~/utils/sentiment'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
 import {
   Tooltip,
   TooltipContent,
@@ -13,10 +12,11 @@ import {
 import { Markdown } from '../markdown/Markdown'
 import { GrissiniStick } from '../rosette/grissini/GrissiniStick'
 import type { RosetteValue } from '../rosette/types'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 
 interface RiskBannerProps extends RosetteValue {
   className?: string
-  size?: 'small' | 'regular'
+  size?: 'large' | 'regular'
   descriptionAsTooltip?: boolean
   info?: 'compact' | 'full'
 }
@@ -38,8 +38,8 @@ export function RiskBanner({
       <div
         className={cn(
           'flex flex-row items-stretch rounded-lg',
-          size === 'small' && 'h-12',
-          size === 'regular' && 'h-12 md:h-[5.125rem]',
+          size === 'regular' && 'h-16',
+          size === 'large' && 'h-20.5',
           sentimentToTransparentBgColor(adjSentiment),
           warning && 'rounded-b-none',
           className,
@@ -54,12 +54,21 @@ export function RiskBanner({
           )}
         />
         <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
-          <div className="font-semibold text-3xs uppercase md:text-2xs">
+          <div
+            className={cn(
+              'text-left uppercase',
+              size === 'regular' && 'text-subtitle-10',
+              size === 'large' &&
+                'font-semibold text-3xs uppercase md:text-2xs',
+            )}
+          >
             {name}
           </div>
           <div
             className={cn(
-              '!leading-none font-bold text-sm md:text-lg',
+              'text-left',
+              size === 'regular' && 'font-bold text-label-value-14',
+              size === 'large' && 'font-bold text-sm leading-none! md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >
@@ -96,7 +105,7 @@ export function RiskBanner({
         </div>
       )}
       {description && info === 'full' && (
-        <Markdown className="mt-2 font-normal text-black/80 leading-snug md:text-lg dark:text-white/80">
+        <Markdown className="mt-2 font-normal text-paragraph-15 md:text-paragraph-16">
           {description}
         </Markdown>
       )}

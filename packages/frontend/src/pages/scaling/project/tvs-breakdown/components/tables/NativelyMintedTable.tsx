@@ -2,10 +2,10 @@ import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { TokenTable } from '~/components/table/TokenBreakdownTable'
 import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/getTvsBreakdownForProject'
-import { renderFormulaSubComponent } from './FormulaSubRow'
-import { TableSum } from './TableSum'
 import { nativelyMintedColumns } from './columns/NativelyMintedColumns'
+import { renderFormulaSubComponent } from './FormulaSubRow'
 import { sumTokensValue } from './sumTokensValue'
+import { TableSum } from './TableSum'
 
 export type NativelyMintedTokenEntry = ProjectTvsBreakdown['native'][number]
 

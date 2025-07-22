@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type EthereumAddress,
+  Hash256,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
@@ -28,7 +33,7 @@ describe(getEverclearProxy.name, () => {
 
   const getLogsStub = (events: providers.Log[]) => {
     return (
-      _: EthereumAddress,
+      _: ChainSpecificAddress,
       topics: (string | string[] | null)[],
     ): Promise<providers.Log[]> => {
       const topic0 = typeof topics[0] === 'string' ? [topics[0]] : topics[0]
@@ -45,57 +50,73 @@ describe(getEverclearProxy.name, () => {
     }
   }
 
-  const MAIN_IMPLEMENTATION = EthereumAddress.random()
-  const MODULE_IMPLEMENTATIONS = modules.map((_) => EthereumAddress.random())
-  const ADDRESS = EthereumAddress.random()
-  const ADMIN = EthereumAddress.random()
+  const ADDRESS = ChainSpecificAddress.random()
+  const MAIN_IMPLEMENTATION = ChainSpecificAddress.random()
+  const MODULE_IMPLEMENTATIONS = modules.map((_) =>
+    ChainSpecificAddress.random(),
+  )
+  const ADMIN = ChainSpecificAddress.random()
+  const MAIN_IMPLEMENTATION_R =
+    ChainSpecificAddress.address(MAIN_IMPLEMENTATION)
+  const MODULE_IMPLEMENTATIONS_R = MODULE_IMPLEMENTATIONS.map((_) =>
+    ChainSpecificAddress.address(_),
+  )
+  const ADMIN_R = ChainSpecificAddress.address(ADMIN)
 
   it('fetches all modules, with past upgrades', async () => {
     const callMethodMock = mockFn()
       .given(ADDRESS, 'function owner() view returns (address)', [])
-      .resolvesToOnce(ADMIN)
+      .resolvesToOnce(ADMIN_R)
 
     // Set up responses for each module
     modules.forEach((module, index) => {
       callMethodMock
         .given(
           ADDRESS,
-          `function modules(bytes32 _moduleType) external view returns (address _module)`,
+          'function modules(bytes32 _moduleType) external view returns (address _module)',
           [module.toString()],
         )
-        .resolvesToOnce(MODULE_IMPLEMENTATIONS[index])
+        .resolvesToOnce(MODULE_IMPLEMENTATIONS_R[index])
     })
 
-    const EMI0 = EthereumAddress.random()
-    const M0I0 = EthereumAddress.random()
-    const M0I1 = EthereumAddress.random()
-    const M2I0 = EthereumAddress.random()
-    const M3I0 = EthereumAddress.random()
-    const M3I1 = EthereumAddress.random()
+    const EMI0 = ChainSpecificAddress.random()
+    const M0I0 = ChainSpecificAddress.random()
+    const M0I1 = ChainSpecificAddress.random()
+    const M2I0 = ChainSpecificAddress.random()
+    const M3I0 = ChainSpecificAddress.random()
+    const M3I1 = ChainSpecificAddress.random()
+
+    const EMI0_R = ChainSpecificAddress.address(EMI0)
+    const M0I0_R = ChainSpecificAddress.address(M0I0)
+    const M0I1_R = ChainSpecificAddress.address(M0I1)
+    const M2I0_R = ChainSpecificAddress.address(M2I0)
+    const M3I0_R = ChainSpecificAddress.address(M3I0)
+    const M3I1_R = ChainSpecificAddress.address(M3I1)
 
     const logs = [
-      Upgraded(EMI0),
-      ModuleAddressUpdated(modules[0]?.toString()!, M0I0, M0I1),
-      ModuleAddressUpdated(modules[3]?.toString()!, M3I0, M3I1),
-      Upgraded(MAIN_IMPLEMENTATION),
+      Upgraded(EMI0_R),
+      ModuleAddressUpdated(modules[0]?.toString()!, M0I0_R, M0I1_R),
+      ModuleAddressUpdated(modules[3]?.toString()!, M3I0_R, M3I1_R),
+      Upgraded(MAIN_IMPLEMENTATION_R),
       ModuleAddressUpdated(
         modules[2]?.toString()!,
-        M2I0,
-        MODULE_IMPLEMENTATIONS[2]!,
+        M2I0_R,
+        MODULE_IMPLEMENTATIONS_R[2]!,
       ),
       ModuleAddressUpdated(
         modules[0]?.toString()!,
-        M0I1,
-        MODULE_IMPLEMENTATIONS[0]!,
+        M0I1_R,
+        MODULE_IMPLEMENTATIONS_R[0]!,
       ),
       ModuleAddressUpdated(
         modules[3]?.toString()!,
-        M3I1,
-        MODULE_IMPLEMENTATIONS[3]!,
+        M3I1_R,
+        MODULE_IMPLEMENTATIONS_R[3]!,
       ),
     ]
 
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       callMethod: callMethodMock,
       getBlock: mockFn().resolvesTo({
         timestamp: 987234,
@@ -203,20 +224,21 @@ describe(getEverclearProxy.name, () => {
   it('fetches all modules, no past upgrades', async () => {
     const callMethodMock = mockFn()
       .given(ADDRESS, 'function owner() view returns (address)', [])
-      .resolvesToOnce(ADMIN)
+      .resolvesToOnce(ADMIN_R)
 
     // Set up responses for each module
     modules.forEach((module, index) => {
       callMethodMock
         .given(
           ADDRESS,
-          `function modules(bytes32 _moduleType) external view returns (address _module)`,
+          'function modules(bytes32 _moduleType) external view returns (address _module)',
           [module.toString()],
         )
-        .resolvesToOnce(MODULE_IMPLEMENTATIONS[index])
+        .resolvesToOnce(MODULE_IMPLEMENTATIONS_R[index])
     })
 
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       callMethod: callMethodMock,
       getStorageAsAddress: mockFn()
         .given(ADDRESS, IMPLEMENTATION_SLOT)

@@ -1,17 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
-import type { ReactNode } from 'react'
 import { Fragment } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/components/core/tooltip/Tooltip'
-import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
-import type { RosetteValue } from '~/components/rosette/types'
+  ProjectSummaryStat,
+  type ProjectSummaryStatProps,
+} from '~/components/projects/ProjectSummaryStat'
 import { EM_DASH } from '~/consts/characters'
-import { InfoIcon } from '~/icons/Info'
 import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,
@@ -21,23 +16,23 @@ import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
-  stats: ProjectStat[]
-  daLayerGrissiniValues: RosetteValue[] | undefined
+  stats: (ProjectSummaryStatProps & { key: string })[]
+  className?: string
 }
+const GROUPS = 4
 
-export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
-  const GROUPS = 4
-  const partitionedByThree = chunkArray(stats, GROUPS)
+export function DaProjectStats({ stats, className }: Props) {
+  const chunked = chunkArray(stats, GROUPS)
 
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5">
-      {partitionedByThree.map((statGroup, i) => {
-        const isLastGroup = i === partitionedByThree.length - 1
+    <div className={cn('grid grid-cols-1 gap-3 md:grid-cols-4', className)}>
+      {chunked.map((statGroup, i) => {
+        const isLastGroup = i === chunked.length - 1
 
         return (
           <Fragment key={i}>
-            {statGroup.map((stat) => (
-              <ProjectStat key={stat.title} {...stat} />
+            {statGroup.map(({ key, ...stat }) => (
+              <ProjectSummaryStat key={key} {...stat} />
             ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
@@ -45,55 +40,7 @@ export function DaProjectStats({ stats, daLayerGrissiniValues }: Props) {
           </Fragment>
         )
       })}
-      {daLayerGrissiniValues && (
-        <ProjectStat
-          className="md:gap-1.5 lg:hidden"
-          title="Risks"
-          value={
-            <GrissiniCell
-              values={daLayerGrissiniValues}
-              iconClassName="w-max"
-            />
-          }
-        />
-      )}
     </div>
-  )
-}
-
-export interface ProjectStat {
-  title: string
-  value: ReactNode
-  tooltip?: string
-  className?: string
-}
-
-function ProjectStat(props: ProjectStat) {
-  return (
-    <li
-      className={cn(
-        'flex items-center justify-between gap-3 md:flex-col md:items-start md:justify-start',
-        props.className,
-      )}
-    >
-      <div className="flex flex-row items-center gap-1.5">
-        <span className="whitespace-pre text-secondary text-xs">
-          {props.title}
-        </span>
-        {props.tooltip && (
-          <Tooltip>
-            <TooltipTrigger>
-              <InfoIcon className="md:size-3.5" variant="gray" />
-            </TooltipTrigger>
-            <TooltipContent>{props.tooltip}</TooltipContent>
-          </Tooltip>
-        )}
-      </div>
-
-      <span className="!leading-none font-medium text-lg md:font-bold md:text-xl">
-        {props.value}
-      </span>
-    </li>
   )
 }
 
@@ -109,17 +56,19 @@ function chunkArray<T>(array: T[], divider: number): T[][] {
 export function getCommonDaProjectStats(
   project: DaProjectPageEntry | EthereumDaProjectPageEntry,
 ) {
-  const stats: ProjectStat[] = []
+  const stats: (ProjectSummaryStatProps & { key: string })[] = []
 
   // Type
   stats.push({
+    key: 'type',
     title: 'Type',
     value: project.type,
   })
 
   // TVS
   stats.push({
-    title: 'TVS',
+    key: 'tvs',
+    title: 'Total Value Secured',
     value: formatCurrency(project.header.tvs, 'usd'),
     tooltip:
       'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
@@ -127,6 +76,7 @@ export function getCommonDaProjectStats(
 
   // Economic security
   stats.push({
+    key: 'economic-security',
     title: 'Economic security',
     value: // EC not set
       project.header.economicSecurity
@@ -154,12 +104,14 @@ export function getCommonDaProjectStats(
         }
 
   stats.push({
+    key: 'duration-of-storage',
     title: 'Duration of storage',
     ...durationOfStorage,
   })
 
   if (project.header.maxThroughputPerSecond) {
     stats.push({
+      key: 'max-throughput',
       title: 'Max throughput',
       value: formatBpsToMbps(project.header.maxThroughputPerSecond),
     })

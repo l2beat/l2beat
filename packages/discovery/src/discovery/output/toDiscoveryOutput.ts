@@ -1,10 +1,3 @@
-import type {
-  ColorOutput,
-  DiscoveryOutput,
-  EntryParameters,
-  StructureOutput,
-} from './types'
-
 import { withoutUndefinedKeys } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import type { Analysis } from '../analysis/AddressAnalyzer'
@@ -13,6 +6,12 @@ import { colorize } from '../colorize/colorize'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
 import { neuterErrors } from './errors'
 import { getStructureOutput } from './structureOutput'
+import type {
+  ColorOutput,
+  DiscoveryOutput,
+  EntryParameters,
+  StructureOutput,
+} from './types'
 
 export function toDiscoveryOutput(
   templateService: TemplateService,

@@ -1,13 +1,12 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../../provider/IProvider'
 import { get$Implementations } from '../../utils/extractors'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
+import type { ProxyDetails } from '../types'
 
 export async function getNewArbitrumProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const detection = await detectEip1967Proxy(provider, address)
   if (!detection || detection.type !== 'EIP1967 proxy') {
@@ -34,7 +33,10 @@ export async function getNewArbitrumProxy(
     values: {
       $admin: detection.values.$admin,
       $implementation: get$Implementations(detection.values)
-        .concat(adminFacet, userFacet)
+        .concat(
+          ChainSpecificAddress.fromLong(provider.chain, adminFacet),
+          ChainSpecificAddress.fromLong(provider.chain, userFacet),
+        )
         .map((i) => i.toString()),
     },
   }

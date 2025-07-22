@@ -1,3 +1,1623 @@
+Generated with discovered.json: 0xecc7070563ad2e7821e4a51a16d310f7ef95065f
+
+# Diff at Mon, 14 Jul 2025 12:46:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22567898
+- current block number: 22567898
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567898 (main branch discovery), not current.
+
+```diff
+    EOA  (0x00000000000000000000000000000000000E16E4) {
+    +++ description: None
+      address:
+-        "0x00000000000000000000000000000000000E16E4"
++        "eth:0x00000000000000000000000000000000000E16E4"
+    }
+```
+
+```diff
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa) {
+    +++ description: Ethereum Beacon Chain deposit contract.
+      address:
+-        "0x00000000219ab540356cBB839Cbe05303d7705Fa"
++        "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
+      implementationNames.0x00000000219ab540356cBB839Cbe05303d7705Fa:
+-        "DepositContract"
+      implementationNames.eth:0x00000000219ab540356cBB839Cbe05303d7705Fa:
++        "DepositContract"
+    }
+```
+
+```diff
+    contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456) {
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+      address:
+-        "0x0EC17ef9c00F360DB28CA8008684a4796b11E456"
++        "eth:0x0EC17ef9c00F360DB28CA8008684a4796b11E456"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.strategyManager:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      values.underlyingToken:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x0EC17ef9c00F360DB28CA8008684a4796b11E456:
+-        "StrategyBase"
+      implementationNames.eth:0x0EC17ef9c00F360DB28CA8008684a4796b11E456:
++        "StrategyBase"
+    }
+```
+
+```diff
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      address:
+-        "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9"
++        "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9"
+      values.implementation:
+-        "0x0EC17ef9c00F360DB28CA8008684a4796b11E456"
++        "eth:0x0EC17ef9c00F360DB28CA8008684a4796b11E456"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9:
+-        "UpgradeableBeacon"
+      implementationNames.eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9:
++        "UpgradeableBeacon"
+    }
+```
+
+```diff
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563) {
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+      address:
+-        "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"
++        "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"
+      values.getHopperConfiguration.token:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      values.getHopperConfiguration.actionGenerator:
+-        "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE"
++        "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE"
+      values.owner:
+-        "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
++        "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
+      implementationNames.0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563:
+-        "TokenHopper"
+      implementationNames.eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563:
++        "TokenHopper"
+    }
+```
+
+```diff
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF) {
+    +++ description: None
+      address:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"
++        "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"
+      values.$pastUpgrades.0.2.0:
+-        "0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"
++        "eth:0xdAbdB3Cd346B7D5F5779b0B614EdE1CC9DcBA5b7"
+      values.$pastUpgrades.1.2.0:
+-        "0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"
++        "eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2"
+      values.delegation:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      implementationNames.0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xA396D855D70e1A1ec1A0199ADB9845096683B6A2:
+-        "AVSDirectory"
+      implementationNames.eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xA396D855D70e1A1ec1A0199ADB9845096683B6A2:
++        "AVSDirectory"
+    }
+```
+
+```diff
+    EOA  (0x17919FAC7024d5b770322E5Cb81607D247654116) {
+    +++ description: None
+      address:
+-        "0x17919FAC7024d5b770322E5Cb81607D247654116"
++        "eth:0x17919FAC7024d5b770322E5Cb81607D247654116"
+    }
+```
+
+```diff
+    EOA  (0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F) {
+    +++ description: None
+      address:
+-        "0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
++        "eth:0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
+    }
+```
+
+```diff
+    contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5) {
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+      address:
+-        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
++        "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"
++        "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"
+      values.$pastUpgrades.0.2.0:
+-        "0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"
++        "eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1"
+      implementationNames.0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1:
+-        "PermissionController"
+      implementationNames.eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xe7f3705c9Addf2DE14e03C345fA982CAb2c1C6B1:
++        "PermissionController"
+    }
+```
+
+```diff
+    EOA  (0x27ff193A6A1574A611E21c39FDA636fA1d61ba30) {
+    +++ description: None
+      address:
+-        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
++        "eth:0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
+    }
+```
+
+```diff
+    EOA  (0x2E158da11961426E2A1Cc9e79f40244486b6845C) {
+    +++ description: None
+      address:
+-        "0x2E158da11961426E2A1Cc9e79f40244486b6845C"
++        "eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C"
+    }
+```
+
+```diff
+    EOA  (0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a) {
+    +++ description: None
+      address:
+-        "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a"
++        "eth:0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a"
+    }
+```
+
+```diff
+    EOA  (0x33E816008E7bc7798A73d0eaa640CC24f34d1626) {
+    +++ description: None
+      address:
+-        "0x33E816008E7bc7798A73d0eaa640CC24f34d1626"
++        "eth:0x33E816008E7bc7798A73d0eaa640CC24f34d1626"
+    }
+```
+
+```diff
+    EOA  (0x347660a632B0Aac5B70dCd5e6C3444a7C933a137) {
+    +++ description: None
+      address:
+-        "0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
++        "eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
+    }
+```
+
+```diff
+    EOA  (0x34C37613e1680efD9e203C979658e1d058b4B2BC) {
+    +++ description: None
+      address:
+-        "0x34C37613e1680efD9e203C979658e1d058b4B2BC"
++        "eth:0x34C37613e1680efD9e203C979658e1d058b4B2BC"
+    }
+```
+
+```diff
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      address:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      values.$members.1:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
++        "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+      implementationNames.0x369e6F597e22EaB55fFb173C6d9cD234BD699111:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A) {
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+      address:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
++        "eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0xf97E97649Da958d290e84E6D571c32F4b7F475e4"
++        "eth:0xf97E97649Da958d290e84E6D571c32F4b7F475e4"
+      values.$pastUpgrades.2.2.0:
+-        "0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"
++        "eth:0x1784BE6401339Fc0Fedf7E9379409f5c1BfE9dda"
+      values.$pastUpgrades.3.2.0:
+-        "0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
++        "eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73"
+      values.allocationManager:
+-        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
++        "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
+      values.beaconChainETHStrategy:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++        "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.eigenPodManager:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.permissionController:
+-        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
++        "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      values.strategyManager:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      implementationNames.0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xA75112d1df37FA53a431525CD47A7d7faCEA7E73:
+-        "DelegationManager"
+      implementationNames.eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xA75112d1df37FA53a431525CD47A7d7faCEA7E73:
++        "DelegationManager"
+    }
+```
+
+```diff
+    EOA  (0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE) {
+    +++ description: None
+      address:
+-        "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
++        "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9) {
+    +++ description: None
+      address:
+-        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
++        "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
+      values.owner:
+-        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
++        "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
+      implementationNames.0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9:
+-        "ProxyAdmin"
+      implementationNames.eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x45dcD05251F3327EcCd4766a9264DBDAab3A4065) {
+    +++ description: None
+      address:
+-        "0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
++        "eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F) {
+    +++ description: None
+      address:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3"
++        "eth:0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3"
+      values.$members.1:
+-        "0x9229C290F60F303884073F28EB8E81F9B82506d5"
++        "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5"
+      values.$members.2:
+-        "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927"
++        "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927"
+      values.$members.3:
+-        "0xc5280E368648b0e192b355c7d8330593bA7af700"
++        "eth:0xc5280E368648b0e192b355c7d8330593bA7af700"
+      values.$members.4:
+-        "0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
++        "eth:0x3e89Ef7435d4A3e0b52b70B1176f849b351953eE"
+      implementationNames.0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x4a3CD82B73821d075799680AcDff3e884B726777) {
+    +++ description: None
+      address:
+-        "0x4a3CD82B73821d075799680AcDff3e884B726777"
++        "eth:0x4a3CD82B73821d075799680AcDff3e884B726777"
+    }
+```
+
+```diff
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      address:
+-        "0x5050389572f2d220ad927CcbeA0D406831012390"
++        "eth:0x5050389572f2d220ad927CcbeA0D406831012390"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x7474E1D80E844e6EdB430841DeEF702a6B747863"
++        "eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863"
+      values.$members.1:
+-        "0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
++        "eth:0x45dcD05251F3327EcCd4766a9264DBDAab3A4065"
+      values.$members.2:
+-        "0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
++        "eth:0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
+      values.$members.3:
+-        "0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
++        "eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
+      values.$members.4:
+-        "0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
++        "eth:0x347660a632B0Aac5B70dCd5e6C3444a7C933a137"
+      values.$members.5:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "eth:0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.$members.6:
+-        "0x2E158da11961426E2A1Cc9e79f40244486b6845C"
++        "eth:0x2E158da11961426E2A1Cc9e79f40244486b6845C"
+      values.$members.7:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
++        "eth:0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.8:
+-        "0x4a3CD82B73821d075799680AcDff3e884B726777"
++        "eth:0x4a3CD82B73821d075799680AcDff3e884B726777"
+      values.$members.9:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      implementationNames.0x5050389572f2d220ad927CcbeA0D406831012390:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x5050389572f2d220ad927CcbeA0D406831012390:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x57af860e3a1C16641CDDDa92898266D2df7Dfa71) {
+    +++ description: None
+      address:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "eth:0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073) {
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+      address:
+-        "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073"
++        "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073"
+      values.implementation:
+-        "0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3"
++        "eth:0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0x5a2a4F2F3C18f09179B6703e63D9eDD165909073:
+-        "UpgradeableBeacon"
+      implementationNames.eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073:
++        "UpgradeableBeacon"
+    }
+```
+
+```diff
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647) {
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+      address:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
++        "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
+      values.$pastUpgrades.0.2.0:
+-        "0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"
++        "eth:0x3e07cc2D34C8E0965f5BA45Ac1E960e535155c74"
+      values.$pastUpgrades.1.2.0:
+-        "0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
++        "eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66"
+      values.owner:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.strategyBeacon:
+-        "0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9"
++        "eth:0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9"
+      values.strategyManager:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      implementationNames.0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66:
+-        "StrategyFactory"
+      implementationNames.eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x1b97d8F963179C0e17E5F3d85cdfd9a31A49bc66:
++        "StrategyFactory"
+    }
+```
+
+```diff
+    EOA  (0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5) {
+    +++ description: None
+      address:
+-        "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"
++        "eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"
+    }
+```
+
+```diff
+    EOA  (0x65C4799061c0D1e3E87ADdB65b02E92a558F842F) {
+    +++ description: None
+      address:
+-        "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F"
++        "eth:0x65C4799061c0D1e3E87ADdB65b02E92a558F842F"
+    }
+```
+
+```diff
+    EOA  (0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f) {
+    +++ description: None
+      address:
+-        "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f"
++        "eth:0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f"
+    }
+```
+
+```diff
+    EOA  (0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc) {
+    +++ description: None
+      address:
+-        "0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc"
++        "eth:0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc"
+    }
+```
+
+```diff
+    EOA  (0x72Ff26D9517324eEFA89A48B75c5df41132c4f54) {
+    +++ description: None
+      address:
+-        "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
++        "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
+    }
+```
+
+```diff
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      address:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
++        "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.accessControl.PROPOSER_ROLE.members.1:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.cancellers.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.executors.0:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.proposers.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.proposers.1:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      implementationNames.0x738130BC8eADe1Bc65A9c056DEa636835896bc53:
+-        "TimelockController"
+      implementationNames.eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53:
++        "TimelockController"
+    }
+```
+
+```diff
+    EOA  (0x7474E1D80E844e6EdB430841DeEF702a6B747863) {
+    +++ description: None
+      address:
+-        "0x7474E1D80E844e6EdB430841DeEF702a6B747863"
++        "eth:0x7474E1D80E844e6EdB430841DeEF702a6B747863"
+    }
+```
+
+```diff
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda) {
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+      address:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
++        "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0xa505c0116aD65071F0130061F94745b7853220aB"
++        "eth:0xa505c0116aD65071F0130061F94745b7853220aB"
+      values.$pastUpgrades.0.2.0:
+-        "0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"
++        "eth:0x5bf7c13D5FAdba224ECB3D5C0a67A231D1628785"
+      values.$pastUpgrades.1.2.0:
+-        "0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"
++        "eth:0xb6738A8E7793D44c5895B6A6F2a62F6bF86Ba8d2"
+      values.$pastUpgrades.2.2.0:
+-        "0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"
++        "eth:0x29A954e9e7F12936Db89b183ECdf879fBBB99F14"
+      values.$pastUpgrades.3.2.0:
+-        "0xa505c0116aD65071F0130061F94745b7853220aB"
++        "eth:0xa505c0116aD65071F0130061F94745b7853220aB"
+      values.allocationManager:
+-        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
++        "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
+      values.beaconChainETHStrategy:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++        "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.delegationManager:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.owner:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.permissionController:
+-        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
++        "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      values.rewardsUpdater:
+-        "0x8f94F55fD8c9E090296283137C303fE97d32A9e2"
++        "eth:0x8f94F55fD8c9E090296283137C303fE97d32A9e2"
+      values.strategyManager:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      implementationNames.0x7750d328b314EfFa365A0402CcfD489B80B0adda:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xa505c0116aD65071F0130061F94745b7853220aB:
+-        "RewardsCoordinator"
+      implementationNames.eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xa505c0116aD65071F0130061F94745b7853220aB:
++        "RewardsCoordinator"
+    }
+```
+
+```diff
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1) {
+    +++ description: None
+      address:
+-        "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1"
++        "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"
++        "eth:0x5e6a3ba74AF86211893e5dAf0EfdC92fdc52d3B5"
+      implementationNames.0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75) {
+    +++ description: None
+      address:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      values.$admin:
+-        "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
++        "eth:0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9"
+      values.$implementation:
+-        "0xF2b225815F70c9b327DC9db758A36c92A4279b17"
++        "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17"
+      values.$pastUpgrades.0.2.0:
+-        "0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"
++        "eth:0xB91c69Af3eE022bd0a59Da082945914BFDcEFFE3"
+      values.$pastUpgrades.1.2.0:
+-        "0xF2b225815F70c9b327DC9db758A36c92A4279b17"
++        "eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17"
+      values.EIGEN:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      values.eip712Domain.verifyingContract:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      values.Minters.0:
+-        "0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"
++        "eth:0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0x83E9115d334D248Ce39a6f36144aEaB5b3456e75:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xF2b225815F70c9b327DC9db758A36c92A4279b17:
+-        "BackingEigen"
+      implementationNames.eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xF2b225815F70c9b327DC9db758A36c92A4279b17:
++        "BackingEigen"
+    }
+```
+
+```diff
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A) {
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+      address:
+-        "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
++        "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0xba4b2b8A076851A3044882493C2e36503d50b925"
++        "eth:0xba4b2b8A076851A3044882493C2e36503d50b925"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"
++        "eth:0x5d25EEf8CfEdaA47d31fE2346726dE1c21e342Fb"
+      values.$pastUpgrades.2.2.0:
+-        "0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"
++        "eth:0x70f44C13944d49a236E3cD7a94f48f5daB6C619b"
+      values.$pastUpgrades.3.2.0:
+-        "0xba4b2b8A076851A3044882493C2e36503d50b925"
++        "eth:0xba4b2b8A076851A3044882493C2e36503d50b925"
+      values.DEFAULT_BURN_ADDRESS:
+-        "0x00000000000000000000000000000000000E16E4"
++        "eth:0x00000000000000000000000000000000000E16E4"
+      values.delegation:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.strategyWhitelister:
+-        "0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
++        "eth:0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647"
+      implementationNames.0x858646372CC42E1A627fcE94aa7A7033e7CF075A:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xba4b2b8A076851A3044882493C2e36503d50b925:
+-        "StrategyManager"
+      implementationNames.eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xba4b2b8A076851A3044882493C2e36503d50b925:
++        "StrategyManager"
+    }
+```
+
+```diff
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444) {
+    +++ description: None
+      address:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444:
+-        "ProxyAdmin"
+      implementationNames.eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x8f94F55fD8c9E090296283137C303fE97d32A9e2) {
+    +++ description: None
+      address:
+-        "0x8f94F55fD8c9E090296283137C303fE97d32A9e2"
++        "eth:0x8f94F55fD8c9E090296283137C303fE97d32A9e2"
+    }
+```
+
+```diff
+    EOA  (0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95) {
+    +++ description: None
+      address:
+-        "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95"
++        "eth:0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95"
+    }
+```
+
+```diff
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338) {
+    +++ description: None
+      address:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"
++        "eth:0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"
++        "eth:0xEB86a5c40FdE917E6feC440aBbCDc80E3862e111"
+      values.$pastUpgrades.2.2.0:
+-        "0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"
++        "eth:0xe4297e3DaDBc7D99e26a2954820f514CB50C5762"
+      values.$pastUpgrades.3.2.0:
+-        "0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"
++        "eth:0x731A0aD160e407393Ff662231Add6Dd145AD3FEa"
+      values.$pastUpgrades.4.2.0:
+-        "0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"
++        "eth:0x9801266CbBbe1E94bB9dAf7de8D61528f49CeC77"
+      values.$pastUpgrades.5.2.0:
+-        "0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"
++        "eth:0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9"
+      values.beaconChainETHStrategy:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++        "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.delegationManager:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.eigenPodBeacon:
+-        "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073"
++        "eth:0x5a2a4F2F3C18f09179B6703e63D9eDD165909073"
+      values.ethPOS:
+-        "0x00000000219ab540356cBB839Cbe05303d7705Fa"
++        "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.proofTimestampSetter:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      implementationNames.0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9:
+-        "EigenPodManager"
+      implementationNames.eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x8dB49233e3b7691D68745A31e4A0Cd9Cf924B7E9:
++        "EigenPodManager"
+    }
+```
+
+```diff
+    EOA  (0x9229C290F60F303884073F28EB8E81F9B82506d5) {
+    +++ description: None
+      address:
+-        "0x9229C290F60F303884073F28EB8E81F9B82506d5"
++        "eth:0x9229C290F60F303884073F28EB8E81F9B82506d5"
+    }
+```
+
+```diff
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d) {
+    +++ description: None
+      address:
+-        "0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
++        "eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
++        "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+      values.$members.1:
+-        "0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
++        "eth:0x738130BC8eADe1Bc65A9c056DEa636835896bc53"
+      implementationNames.0x942eaF324971440384e4cA0ffA39fC3bb369D67d:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x942eaF324971440384e4cA0ffA39fC3bb369D67d:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39) {
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+      address:
+-        "0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
++        "eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0x740058839A1668Af5700e5d7B062007275e77D25"
++        "eth:0x740058839A1668Af5700e5d7B062007275e77D25"
+      values.$pastUpgrades.0.2.0:
+-        "0x740058839A1668Af5700e5d7B062007275e77D25"
++        "eth:0x740058839A1668Af5700e5d7B062007275e77D25"
+      values.delegation:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.pauserRegistry:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.permissionController:
+-        "0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
++        "eth:0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5"
+      implementationNames.0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x740058839A1668Af5700e5d7B062007275e77D25:
+-        "AllocationManager"
+      implementationNames.eth:0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x740058839A1668Af5700e5d7B062007275e77D25:
++        "AllocationManager"
+    }
+```
+
+```diff
+    EOA  (0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815) {
+    +++ description: None
+      address:
+-        "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815"
++        "eth:0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815"
+    }
+```
+
+```diff
+    EOA  (0x985145F0f4dACe1387b856191C3574381B9DE524) {
+    +++ description: None
+      address:
+-        "0x985145F0f4dACe1387b856191C3574381B9DE524"
++        "eth:0x985145F0f4dACe1387b856191C3574381B9DE524"
+    }
+```
+
+```diff
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE) {
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+      address:
+-        "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE"
++        "eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE"
+      values.bEIGEN:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      values.EIGEN:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      values.rewardsCoordinator:
+-        "0x7750d328b314EfFa365A0402CcfD489B80B0adda"
++        "eth:0x7750d328b314EfFa365A0402CcfD489B80B0adda"
+      implementationNames.0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE:
+-        "RewardAllStakersActionGenerator"
+      implementationNames.eth:0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE:
++        "RewardAllStakersActionGenerator"
+    }
+```
+
+```diff
+    EOA  (0x9b2C61521AF4AB9f4BE25297838F72a56462B578) {
+    +++ description: None
+      address:
+-        "0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
++        "eth:0x9b2C61521AF4AB9f4BE25297838F72a56462B578"
+    }
+```
+
+```diff
+    EOA  (0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4) {
+    +++ description: None
+      address:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
++        "eth:0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+    }
+```
+
+```diff
+    EOA  (0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3) {
+    +++ description: None
+      address:
+-        "0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3"
++        "eth:0xAe4ABA6838d4622aF1AD024EB351eA4D4FDE22B3"
+    }
+```
+
+```diff
+    EOA  (0xAF4D94Cd299211de542530399290877E2c85F061) {
+    +++ description: None
+      address:
+-        "0xAF4D94Cd299211de542530399290877E2c85F061"
++        "eth:0xAF4D94Cd299211de542530399290877E2c85F061"
+    }
+```
+
+```diff
+    EOA  (0xb7Ae34BB33da55f12797e793E01e63a17B11d108) {
+    +++ description: None
+      address:
+-        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++        "eth:0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
+    }
+```
+
+```diff
+    contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+      address:
+-        "0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
++        "eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806"
+      values.pausers.0:
+-        "0x5050389572f2d220ad927CcbeA0D406831012390"
++        "eth:0x5050389572f2d220ad927CcbeA0D406831012390"
+      values.pausers.1:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.pausers.2:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.unpauser:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0xB8765ed72235d279c3Fb53936E4606db0Ef12806:
+-        "PauserRegistry"
+      implementationNames.eth:0xB8765ed72235d279c3Fb53936E4606db0Ef12806:
++        "PauserRegistry"
+    }
+```
+
+```diff
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2) {
+    +++ description: None
+      address:
+-        "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
++        "eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
++        "eth:0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
+      values.$members.1:
+-        "0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc"
++        "eth:0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc"
+      values.$members.2:
+-        "0x985145F0f4dACe1387b856191C3574381B9DE524"
++        "eth:0x985145F0f4dACe1387b856191C3574381B9DE524"
+      values.$members.3:
+-        "0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E"
++        "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E"
+      values.$members.4:
+-        "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a"
++        "eth:0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a"
+      values.$members.5:
+-        "0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
++        "eth:0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
+      implementationNames.0xbb00DDa2832850a43840A3A86515E3Fe226865F2:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xbb00DDa2832850a43840A3A86515E3Fe226865F2:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      address:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
++        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+      values.$members.1:
+-        "0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
++        "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
+      values.$members.2:
+-        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++        "eth:0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
+      values.$members.3:
+-        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
++        "eth:0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
+      values.$members.4:
+-        "0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
++        "eth:0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
+      values.$members.5:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "eth:0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+      implementationNames.0xBE1685C81aA44FF9FB319dD389addd9374383e90:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0) {
+    +++ description: None
+      address:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++        "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+    }
+```
+
+```diff
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d) {
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+      address:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.0:
+-        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
++        "eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d"
+      values.accessControl.TIMELOCK_ADMIN_ROLE.members.1:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
++        "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.accessControl.PROPOSER_ROLE.members.1:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.cancellers.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.executors.0:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      values.proposers.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.proposers.1:
+-        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
++        "eth:0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F"
+      implementationNames.0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d:
+-        "TimelockController"
+      implementationNames.eth:0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d:
++        "TimelockController"
+    }
+```
+
+```diff
+    EOA  (0xc13Ce61C12C0eF93b4165400491A719918Af1c6c) {
+    +++ description: None
+      address:
+-        "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
++        "eth:0xc13Ce61C12C0eF93b4165400491A719918Af1c6c"
+    }
+```
+
+```diff
+    EOA  (0xc5280E368648b0e192b355c7d8330593bA7af700) {
+    +++ description: None
+      address:
+-        "0xc5280E368648b0e192b355c7d8330593bA7af700"
++        "eth:0xc5280E368648b0e192b355c7d8330593bA7af700"
+    }
+```
+
+```diff
+    EOA  (0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927) {
+    +++ description: None
+      address:
+-        "0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927"
++        "eth:0xC6F9BDEEdEf78c2Cd146cdA31C82F76ca14A2927"
+    }
+```
+
+```diff
+    EOA  (0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E) {
+    +++ description: None
+      address:
+-        "0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E"
++        "eth:0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E"
+    }
+```
+
+```diff
+    EOA  (0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF) {
+    +++ description: None
+      address:
+-        "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
++        "eth:0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF"
+    }
+```
+
+```diff
+    contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3) {
+    +++ description: None
+      address:
+-        "0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3"
++        "eth:0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3"
+      values.eigenPodManager:
+-        "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
++        "eth:0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338"
+      values.ethPOS:
+-        "0x00000000219ab540356cBB839Cbe05303d7705Fa"
++        "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa"
+      values.podOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.proofSubmitter:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3:
+-        "EigenPod"
+      implementationNames.eth:0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3:
++        "EigenPod"
+    }
+```
+
+```diff
+    EOA  (0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830) {
+    +++ description: None
+      address:
+-        "0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
++        "eth:0xE31ad7cFD94bD74C40b53160aA0E8A0b6D340830"
+    }
+```
+
+```diff
+    EOA  (0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89) {
+    +++ description: None
+      address:
+-        "0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
++        "eth:0xE34e8Cab673cA3fC60AD8bf8e503f4CA4Afb2D89"
+    }
+```
+
+```diff
+    EOA  (0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60) {
+    +++ description: None
+      address:
+-        "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60"
++        "eth:0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60"
+    }
+```
+
+```diff
+    EOA  (0xe7fFd467F7526abf9c8796EDeE0AD30110419127) {
+    +++ description: None
+      address:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "eth:0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+    }
+```
+
+```diff
+    EOA  (0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e) {
+    +++ description: None
+      address:
+-        "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e"
++        "eth:0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e"
+    }
+```
+
+```diff
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83) {
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+      address:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      values.$admin:
+-        "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
++        "eth:0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444"
+      values.$implementation:
+-        "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"
++        "eth:0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"
+      values.$pastUpgrades.0.2.0:
+-        "0xB0e9a10f09ED4304df238624d014205B0786572F"
++        "eth:0xB0e9a10f09ED4304df238624d014205B0786572F"
+      values.$pastUpgrades.1.2.0:
+-        "0xfe288960BEb8b189303f49B070CB0bA52e44cF32"
++        "eth:0xfe288960BEb8b189303f49B070CB0bA52e44cF32"
+      values.$pastUpgrades.2.2.0:
+-        "0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"
++        "eth:0x7EC354C84680112d3cfF1544ec1Eb19ca583700b"
+      values.$pastUpgrades.3.2.0:
+-        "0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"
++        "eth:0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0"
+      values.bEIGEN:
+-        "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
++        "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"
+      values.eip712Domain.verifyingContract:
+-        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
++        "eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      values.owner:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0:
+-        "Eigen"
+      implementationNames.eth:0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x17f56E911C279bad67eDC08acbC9cf3DC4eF26A0:
++        "Eigen"
+    }
+```
+
+```diff
+    EOA  (0xED732DEb32034e603bEEEdA84605dAbb8933594b) {
+    +++ description: None
+      address:
+-        "0xED732DEb32034e603bEEEdA84605dAbb8933594b"
++        "eth:0xED732DEb32034e603bEEEdA84605dAbb8933594b"
+    }
+```
+
+```diff
+    EOA  (0xEFca484E497a9de170Da32abfa11650957dD2a95) {
+    +++ description: None
+      address:
+-        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
++        "eth:0xEFca484E497a9de170Da32abfa11650957dD2a95"
+    }
+```
+
+```diff
+    EOA  (0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0) {
+    +++ description: None
+      address:
+-        "0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
++        "eth:0xFBB1A3C8C8A99A2A4797250dF87E307Dc3f01Fe0"
+    }
+```
+
+```diff
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      address:
+-        "0xFEA47018D632A77bA579846c840d5706705Dc598"
++        "eth:0xFEA47018D632A77bA579846c840d5706705Dc598"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x17919FAC7024d5b770322E5Cb81607D247654116"
++        "eth:0x17919FAC7024d5b770322E5Cb81607D247654116"
+      values.$members.1:
+-        "0x34C37613e1680efD9e203C979658e1d058b4B2BC"
++        "eth:0x34C37613e1680efD9e203C979658e1d058b4B2BC"
+      values.$members.2:
+-        "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
++        "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
+      values.$members.3:
+-        "0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1"
++        "eth:0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1"
+      values.$members.4:
+-        "0xED732DEb32034e603bEEEdA84605dAbb8933594b"
++        "eth:0xED732DEb32034e603bEEEdA84605dAbb8933594b"
+      values.$members.5:
+-        "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815"
++        "eth:0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815"
+      values.$members.6:
+-        "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F"
++        "eth:0x65C4799061c0D1e3E87ADdB65b02E92a558F842F"
+      values.$members.7:
+-        "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60"
++        "eth:0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60"
+      values.$members.8:
+-        "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95"
++        "eth:0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95"
+      values.$members.9:
+-        "0xAF4D94Cd299211de542530399290877E2c85F061"
++        "eth:0xAF4D94Cd299211de542530399290877E2c85F061"
+      values.$members.10:
+-        "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e"
++        "eth:0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e"
+      values.$members.11:
+-        "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f"
++        "eth:0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f"
+      values.$members.12:
+-        "0x33E816008E7bc7798A73d0eaa640CC24f34d1626"
++        "eth:0x33E816008E7bc7798A73d0eaa640CC24f34d1626"
+      implementationNames.0xFEA47018D632A77bA579846c840d5706705Dc598:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xFEA47018D632A77bA579846c840d5706705Dc598:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DepositContract (0x00000000219ab540356cBB839Cbe05303d7705Fa)
+    +++ description: Ethereum Beacon Chain deposit contract.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyBase (0x0EC17ef9c00F360DB28CA8008684a4796b11E456)
+    +++ description: A strategy implementation allowing to deposit a specific token as a restakable asset.
+```
+
+```diff
++   Status: CREATED
+    contract StrategiesBeacon (0x0ed6703C298d28aE0878d1b28e88cA87F9662fE9)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
++   Status: CREATED
+    contract TokenHopper (0x0ffC6AC10515EE0F83fEE71FCaf5Ea5805256563)
+    +++ description: Minter of the bEIGEN (and thus EIGEN) token. Can execute a predefined payload in predefined intervals (configured by the Owner).
+```
+
+```diff
++   Status: CREATED
+    contract AVSDirectory (0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionController (0x25E5F8B1E7aDf44518d35D5B2271f114e081f0E5)
+    +++ description: Contract that enables AVSs and operators to delegate the ability to call certain core contract functions to other addresses.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOwningMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DelegationManager (0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A)
+    +++ description: The DelegationManager contract is responsible for registering EigenLayer operators and managing the EigenLayer strategies delegations. The EigenDA StakeRegistry contract reads from the DelegationManager to track the total stake of each EigenDA operator.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOperationsMultisig2 (0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerPauserMultisig (0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0x5a2a4F2F3C18f09179B6703e63D9eDD165909073)
+    +++ description: UpgradeableBeacon managing the single implementation for all strategies deployed via StrategyFactory.
+```
+
+```diff
++   Status: CREATED
+    contract StrategyFactory (0x5e4C39Ad7A3E881585e383dB9827EB4811f6F647)
+    +++ description: Factory contract for permissionless strategy creation via beacon proxies.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockControllerBeigen (0x738130BC8eADe1Bc65A9c056DEa636835896bc53)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
++   Status: CREATED
+    contract RewardsCoordinator (0x7750d328b314EfFa365A0402CcfD489B80B0adda)
+    +++ description: Manages the distribution of rewards (arbitrary tokens, EIGEN) to restakers and commission to operators.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x7F68e9C17D22005688b8E6968fCe31e32B4B03d1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract bEIGEN token (0x83E9115d334D248Ce39a6f36144aEaB5b3456e75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StrategyManager (0x858646372CC42E1A627fcE94aa7A7033e7CF075A)
+    +++ description: The StrategyManager contract is responsible for managing the EigenLayer token strategies. Each EigenDA quorum has at least one strategy that defines the operators quorum stake.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerProxyAdmin (0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenPodManager (0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerBeigenOwningMultisig (0x942eaF324971440384e4cA0ffA39fC3bb369D67d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllocationManager (0x948a420b8CC1d6BFd0B6087C2E7c344a2CD0bc39)
+    +++ description: Contract used to create Operator Sets, and used by Operators to register to them. The Allocation Manager tracks allocation of stake to a Operator Set, and enables AVSs to slash that stake.
+```
+
+```diff
++   Status: CREATED
+    contract RewardAllStakersActionGenerator (0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE)
+    +++ description: Generates calldata for the TokenHopper to mint EIGEN and send it to the RewardsCoordinator for distribution to all stakers.
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (0xB8765ed72235d279c3Fb53936E4606db0Ef12806)
+    +++ description: Defines and stores pauser and unpauser roles for EigenLayer contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerTokenMultisig (0xbb00DDa2832850a43840A3A86515E3Fe226865F2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerOperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockControllerOwning (0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d)
+    +++ description: A timelock that allows scheduling calls and executing or cancelling them with a delay.
+```
+
+```diff
++   Status: CREATED
+    contract EigenPod (0xe2E2dB234b0FFB9AFe41e52dB7d3c2B8585646c3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EIGEN token (0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83)
+    +++ description: The EIGEN token can be socially forked to slash operators for data withholding attacks (and other intersubjectively attributable faults). EIGEN is a wrapper over a second token, bEIGEN, which will be used solely for intersubjective staking. Forking EIGEN means changing the canonical implementation of the bEIGEN token in the EIGEN token contract.
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerCommunityMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc38bd0b2a400475991ce3f7823b9f85d347ac108
 
 # Diff at Fri, 04 Jul 2025 12:19:19 GMT:

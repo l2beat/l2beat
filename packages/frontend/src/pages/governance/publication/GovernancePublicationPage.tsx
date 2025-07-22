@@ -1,9 +1,9 @@
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import { Article } from '~/components/markdown/Article'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
-import { AppLayout } from '~/layouts/AppLayout.tsx'
+import type { AppLayoutProps } from '~/layouts/AppLayout'
+import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
 
@@ -40,7 +40,9 @@ export function GovernancePublicationPage({ publication, ...props }: Props) {
 
 function PublicationHeader({
   publication,
-}: { publication: GovernancePublicationEntry }) {
+}: {
+  publication: GovernancePublicationEntry
+}) {
   return (
     <div>
       <p className="text-brand text-subtitle-12 uppercase">

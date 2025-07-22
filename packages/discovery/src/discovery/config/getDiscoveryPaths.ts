@@ -1,6 +1,6 @@
+import { v } from '@l2beat/validate'
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join, resolve } from 'path'
-import { v } from '@l2beat/validate'
 
 const CONFIG_FILENAME = '.discovery.json'
 

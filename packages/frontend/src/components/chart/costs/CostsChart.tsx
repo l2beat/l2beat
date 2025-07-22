@@ -1,7 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -12,6 +11,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
@@ -27,32 +27,32 @@ import { formatNumber } from '~/utils/number-format/formatNumber'
 const chartMeta = {
   calldata: {
     label: 'Calldata',
-    color: 'hsl(var(--chart-stacked-blue))',
+    color: 'var(--chart-stacked-blue)',
     indicatorType: { shape: 'square' },
   },
   blobs: {
     label: 'Blobs',
-    color: 'hsl(var(--chart-stacked-yellow))',
+    color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
   compute: {
     label: 'Compute',
-    color: 'hsl(var(--chart-stacked-pink))',
+    color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   overhead: {
     label: 'Overhead',
-    color: 'hsl(var(--chart-stacked-purple))',
+    color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   posted: {
     label: 'Data posted',
-    color: 'hsl(var(--chart-emerald))',
+    color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line' },
   },
   notSyncedPosted: {
     label: 'Data posted (not synced)',
-    color: 'hsl(var(--chart-emerald))',
+    color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line', strokeDasharray: '3 3' },
   },
 } satisfies ChartMeta

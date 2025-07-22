@@ -1,7 +1,7 @@
-import type { Server } from 'http'
 import type { Logger } from '@l2beat/backend-tools'
 import cors from 'cors'
 import express from 'express'
+import type { Server } from 'http'
 import type { Config } from '../config/types'
 import type { ApplicationModule } from './ApplicationModule'
 

@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -10,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
+import type { ZkCatalogTagType } from './common/zkCatalogTags'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -62,11 +64,6 @@ export type ProjectRiskCategory =
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
-export interface ProjectUnverifiedContract {
-  chain: string
-  address: EthereumAddress
-}
-
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -103,9 +100,6 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
-  // zk catalog v2 data
-  proofSystem?: ProjectProofSystem
-
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -117,6 +111,7 @@ export interface BaseProject {
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
+  zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -144,7 +139,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  unverifiedContracts: ProjectUnverifiedContract[]
+  unverifiedContracts: ChainSpecificAddress[]
 }
 
 export interface ProjectDisplay {
@@ -210,13 +205,6 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
-
-export interface ZkCatalogTag {
-  id: string
-  type: string
-  name: string
-  description: string
-}
 
 export interface Milestone {
   title: string
@@ -439,6 +427,7 @@ export interface StageConfigured {
   missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
+  stage1PrincipleDescription?: string
   additionalConsiderations?: {
     short: string
     long: string
@@ -746,26 +735,39 @@ export interface RequiredTool {
 // #endregion
 
 // #region zk catalog v2 data
-export interface ProjectProofSystem {
+export interface ProjectZkCatalogInfo {
   creator?: string
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetup: {
-    risk: 'green' | 'yellow' | 'red'
-    shortDescription: string
-    longDescription: string
-  }
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
   verifierHashes: {
     hash: string
-    explorerLink: string
+    proofSystem: ZkCatalogTag
+    knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
   }[]
+}
+
+export interface ZkCatalogTag {
+  id: string
+  type: ZkCatalogTagType
+  name: string
+  description: string
+}
+
+export interface TrustedSetup {
+  id: string
+  risk: 'green' | 'yellow' | 'red' | 'N/A'
+  shortDescription: string
+  longDescription: string
 }
 
 // #endregion
@@ -953,7 +955,7 @@ export interface ProjectPermission {
 export interface ProjectPermissionedAccount {
   name: string
   url: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
 }
@@ -968,7 +970,7 @@ export interface ProjectContracts {
 
 export interface ProjectContract {
   /** Address of the contract */
-  address: EthereumAddress
+  address: ChainSpecificAddress
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
@@ -1001,8 +1003,8 @@ export interface ProjectContract {
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
+  admins: ChainSpecificAddress[]
+  implementations: ChainSpecificAddress[]
 }
 
 export interface ProjectUpgradeableActor {
@@ -1054,6 +1056,7 @@ export interface ProjectDiscoveryInfo {
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
   blockNumberPerChain: Record<string, number>
+  hasDiscoUi: boolean
 }
 // #endregion
 

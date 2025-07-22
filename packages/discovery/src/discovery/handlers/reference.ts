@@ -1,7 +1,6 @@
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { ContractValue } from '../output/types'
-
-import type { EthereumAddress } from '@l2beat/shared-pure'
 import type { IProvider } from '../provider/IProvider'
 import type { HandlerResult } from './Handler'
 
@@ -18,7 +17,7 @@ export type ReferenceInput = Record<string, ContractValue>
 export function generateReferenceInput(
   _previousResults: Record<string, HandlerResult | undefined>,
   provider: IProvider,
-  currentContractAddress: EthereumAddress,
+  currentContractAddress: ChainSpecificAddress,
 ): ReferenceInput {
   const contractValues = Object.fromEntries(
     Object.keys(_previousResults).map((k) => [k, _previousResults[k]?.value]),
