@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd852e9bf7f12c05cc7837d08fbb0834f00902077
+Generated with discovered.json: 0xbe8e9fa7719c5484273a980ff755daa70144cd6d
 
-# Diff at Tue, 15 Jul 2025 09:34:06 GMT:
+# Diff at Tue, 22 Jul 2025 10:02:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 17230449
+- current block number: 17474807
 
 ## Description
 
@@ -13,12 +13,48 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x16f4BFeb925e748ef4Af8ce96E48d4B78Ec9da47)
+    contract WithdrawalPlonkVerifier (0x1858C9e118DbBc70b15Be40BE3fc1EbB062f5734)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Rollup (0x1c88459D014e571c332BF9199aD2D35C93219A2e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Claim (0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Contribution (0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Withdrawal (0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract GnosisSafeL2 (0xA3C2a579af4cF3853172058e5c76d273DC1542DD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ClaimPlonkVerifier (0xaBA5fD516B665C12d7577Db36831474ac16aEe0a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockBuilderReward (0xF65e73aAc9182e353600a916a6c7681F810f79C3)
     +++ description: None
 ```
