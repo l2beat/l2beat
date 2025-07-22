@@ -73,6 +73,9 @@ describeDatabase(ProjectValueRepository.name, (db) => {
           stablecoin: 50,
           other: 25,
           associated: 25,
+          btc: 10,
+          rwaPrivate: 20,
+          rwaPublic: 30,
         },
       )
 
@@ -362,6 +365,9 @@ function projectValue(
     stablecoin: 0,
     other: 0,
     associated: 0,
+    btc: 0,
+    rwaPrivate: 0,
+    rwaPublic: 0,
   },
 ) {
   return {

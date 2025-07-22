@@ -12,6 +12,9 @@ export interface ProjectValueRecord {
   native: number
   ether: number
   stablecoin: number
+  btc: number
+  rwaPrivate: number
+  rwaPublic: number
   other: number
   associated: number
 }

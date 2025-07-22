@@ -90,9 +90,12 @@ export interface TvsBreakdown {
       tokens: TokenValue[]
     }
   }
-  category: {
+  key: {
     ether: number
     stablecoin: number
+    btc: number
+    rwaPublic: number
+    rwaPrivate: number
     other: number
     associated: number
   }

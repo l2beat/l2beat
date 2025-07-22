@@ -708,7 +708,7 @@
             ]
           },
           "category": {
-            "enum": ["ether", "stablecoin", "other"]
+            "enum": ["ether", "stablecoin", "btc", "rwa", "other"]
           },
           "source": {
             "enum": ["canonical", "external", "native"]

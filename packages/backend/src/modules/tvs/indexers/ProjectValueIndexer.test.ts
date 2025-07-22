@@ -13,6 +13,9 @@ describe(ProjectValueIndexer.name, () => {
     ['token1', tokenConfig('token1', 'canonical', 'ether', false)],
     ['token2', tokenConfig('token2', 'external', 'stablecoin', true)],
     ['token3', tokenConfig('token3', 'native', 'other', false)],
+    ['token4', tokenConfig('token4', 'native', 'btc', false)],
+    ['token5', tokenConfig('token5', 'native', 'rwaPrivate', false)],
+    ['token6', tokenConfig('token6', 'native', 'rwaPublic', true)],
   ])
 
   describe(ProjectValueIndexer.prototype.multiUpdate.name, () => {
@@ -23,6 +26,9 @@ describe(ProjectValueIndexer.name, () => {
         tokenRecord('token1', timestamps[0], 100),
         tokenRecord('token2', timestamps[0], 200),
         tokenRecord('token3', timestamps[0], 300),
+        tokenRecord('token4', timestamps[0], 400),
+        tokenRecord('token5', timestamps[0], 500),
+        tokenRecord('token6', timestamps[0], 600),
       ]
 
       const tokenRepository = mockObject<Database['tvsTokenValue']>({
@@ -111,6 +117,9 @@ describe(ProjectValueIndexer.name, () => {
         tokenRecord('token1', timestamp, 100),
         tokenRecord('token2', timestamp, 200),
         tokenRecord('token3', timestamp, 300),
+        tokenRecord('token4', timestamp, 400),
+        tokenRecord('token5', timestamp, 500),
+        tokenRecord('token6', timestamp, 600),
       ]
 
       const result = indexer.aggregateForTimestamp(
@@ -123,33 +132,39 @@ describe(ProjectValueIndexer.name, () => {
 
       // Check SUMMARY record
       const summaryRecord = result.find((r) => r.type === 'SUMMARY')
-      expect(summaryRecord?.value).toEqual(600) // 100 + 200 + 300
+      expect(summaryRecord?.value).toEqual(2100) // sum of all token values
       expect(summaryRecord?.canonical).toEqual(100)
       expect(summaryRecord?.external).toEqual(200)
-      expect(summaryRecord?.native).toEqual(300)
+      expect(summaryRecord?.native).toEqual(1800)
       expect(summaryRecord?.ether).toEqual(100)
       expect(summaryRecord?.stablecoin).toEqual(200)
       expect(summaryRecord?.other).toEqual(300)
-      expect(summaryRecord?.associated).toEqual(200) // only token2 is associated
+      expect(summaryRecord?.associated).toEqual(800) // only token2 and token6 are associated
+      expect(summaryRecord?.btc).toEqual(400)
+      expect(summaryRecord?.rwaPrivate).toEqual(500)
+      expect(summaryRecord?.rwaPublic).toEqual(600)
 
       // Check PROJECT record
       const projectRecord = result.find((r) => r.type === 'PROJECT')
-      expect(projectRecord?.value).toEqual(600) // 100 + 200 + 300
+      expect(projectRecord?.value).toEqual(2100) // sum of all token values
       expect(projectRecord?.canonical).toEqual(100)
       expect(projectRecord?.external).toEqual(200)
-      expect(projectRecord?.native).toEqual(300)
+      expect(projectRecord?.native).toEqual(1800)
       expect(projectRecord?.ether).toEqual(100)
       expect(projectRecord?.stablecoin).toEqual(200)
       expect(projectRecord?.other).toEqual(300)
-      expect(projectRecord?.associated).toEqual(200) // only token2 is associated
+      expect(projectRecord?.associated).toEqual(800) // only token2 and token6 are associated
+      expect(projectRecord?.btc).toEqual(400)
+      expect(projectRecord?.rwaPrivate).toEqual(500)
+      expect(projectRecord?.rwaPublic).toEqual(600)
 
       // Check SUMMARY_WA record (without associated)
       const summaryWaRecord = result.find((r) => r.type === 'SUMMARY_WA')
-      expect(summaryWaRecord?.value).toEqual(400) // 100 + 300 - 0 (token2 is associated)
+      expect(summaryWaRecord?.value).toEqual(1300) // 2100 - 800 (token2 and token6 are associated)
 
       // Check PROJECT_WA record (without associated)
       const projectWaRecord = result.find((r) => r.type === 'PROJECT_WA')
-      expect(projectWaRecord?.value).toEqual(400) // 100 + 300 - 0 (token2 is associated)
+      expect(projectWaRecord?.value).toEqual(1300) // 2100 - 800 (token2 and token6 are associated)
     })
   })
 

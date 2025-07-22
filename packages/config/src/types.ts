@@ -1210,7 +1210,14 @@ export const TvsTokenSchema = v.object({
   valueForSummary: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  category: v.enum(['ether', 'stablecoin', 'other']),
+  category: v.enum([
+    'ether',
+    'stablecoin',
+    'btc',
+    'rwaPrivate',
+    'rwaPublic',
+    'other',
+  ]),
   source: v.enum(['canonical', 'external', 'native']),
   isAssociated: v.boolean(),
   bridgedUsing: v

@@ -13,7 +13,13 @@ export interface LegacyToken {
   decimals: number
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
-  category: 'ether' | 'stablecoin' | 'other'
+  category:
+    | 'ether'
+    | 'stablecoin'
+    | 'btc'
+    | 'rwaPrivate'
+    | 'rwaPublic'
+    | 'other'
   iconUrl?: string
   chainId: ChainId
   chainName: string

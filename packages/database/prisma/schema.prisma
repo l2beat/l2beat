@@ -282,6 +282,9 @@ model ProjectValue {
   stablecoin Float    @db.Real
   other      Float    @db.Real
   associated Float    @db.Real
+  btc        Float    @default(0) @db.Real
+  rwaPrivate Float    @default(0) @db.Real
+  rwaPublic  Float    @default(0) @db.Real
 
   @@id([timestamp, project, type])
   @@index([type, project, timestamp])
