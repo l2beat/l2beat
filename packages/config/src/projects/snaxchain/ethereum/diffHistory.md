@@ -1,3 +1,183 @@
+Generated with discovered.json: 0xf00d093d04e15b76d99eb23d1c4691fc713ef8f5
+
+# Diff at Tue, 22 Jul 2025 15:56:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83bf55f537ce86d3d1dac9f1a98f31f9169b801f block: 22895949
+- current block number: 22975748
+
+## Description
+
+Conduit: Upgrade to known OP stack contracts. (no OptiPortal2 yet).
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x2A4fC0E3B365052d71B9853Efd0123985559f62E) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0x6bee26e08bb3e482693649b598e8c0423de9025ebebdc773e9a2f9aa6f362478"
++        "0x1cc8a3b7de3d2c54c4706bb3f3015714d3b56647fc9fbfd6f8b068f5f63c1c25"
+      values.$implementation:
+-        "eth:0x6FA678A10e4FE9C6B7678948100D9B59CCF6B84a"
++        "eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      values.$pastUpgrades.1:
++        ["2025-07-21T15:15:47.000Z","0xc14fc7e04d919c5d83b4fff381a1a8643f9d93654866daff6e03d9136dd8ea44",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.2:
++        ["2025-07-21T15:15:47.000Z","0xc14fc7e04d919c5d83b4fff381a1a8643f9d93654866daff6e03d9136dd8ea44",["eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.superchainConfig:
+-        "eth:0x7439cCf2f0c7569a9B69c86fcE0B58EC771cf1a6"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.systemConfig:
+-        "eth:0x9c9B78f798F821C2f6398f603825fd175e2427f9"
+      values.version:
+-        "2.4.0"
++        "2.3.0"
+      implementationNames.eth:0x6FA678A10e4FE9C6B7678948100D9B59CCF6B84a:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x45561F85e43Ac0d2258c0F0C16540ce128EA1634) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.$implementation:
+-        "eth:0x1b0F7Dd06F9c9EDdE9d5e4E86aC6Ea20aC1bBe42"
++        "eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+      values.$pastUpgrades.1:
++        ["2025-07-21T15:15:47.000Z","0xc14fc7e04d919c5d83b4fff381a1a8643f9d93654866daff6e03d9136dd8ea44",["eth:0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.2:
++        ["2025-07-21T15:15:47.000Z","0xc14fc7e04d919c5d83b4fff381a1a8643f9d93654866daff6e03d9136dd8ea44",["eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.superchainConfig:
+-        "eth:0x7439cCf2f0c7569a9B69c86fcE0B58EC771cf1a6"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      implementationNames.eth:0x1b0F7Dd06F9c9EDdE9d5e4E86aC6Ea20aC1bBe42:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"guard","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","role":".guardian"}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","role":"admin","via":[{"address":"eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"}]}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5","role":".owner"}
+    }
+```
+
+```diff
+    contract SystemConfig (0x9c9B78f798F821C2f6398f603825fd175e2427f9) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.1:
+-        "0x958268b83f73163b36af36fa55f5c0905421c07369bff2791652da02fa692a42"
++        "0xc7135dbd2a53312d36df3f3ee91ce0a5a459ab8fc7725880a3a9c55a5fa0ed6c"
+      values.$implementation:
+-        "eth:0xd5FE2D6Fce4f30336E7738B99D3A2aAE23DE3827"
++        "eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
+      values.$pastUpgrades.1:
++        ["2025-07-21T15:15:47.000Z","0xc14fc7e04d919c5d83b4fff381a1a8643f9d93654866daff6e03d9136dd8ea44",["eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.version:
+-        "2.2.0"
++        "2.3.0"
+      values.basefeeScalar:
++        0
+      values.blobbasefeeScalar:
++        0
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
++        0
+      values.eip1559Elasticity:
++        0
+      implementationNames.eth:0xd5FE2D6Fce4f30336E7738B99D3A2aAE23DE3827:
+-        "SystemConfig"
+      implementationNames.eth:0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xA5fb68C24b02852e8B514E98A1014faf12547Fa5) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      sourceHashes.1:
+-        "0x0c1c0a5eff46fa1b105a2cabe6ce2b7a7fbac2f58af57392b196f8fe5768bd2a"
++        "0x1010ff7f40ab4d53e6d9996aefa04423dabe9d0e22fac2d02b330ed3aa2c5740"
+      values.$implementation:
+-        "eth:0x6534Bdb6b5c060d3e6aa833433333135eFE8E0aA"
++        "eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
+      values.superchainConfig:
+-        "eth:0x7439cCf2f0c7569a9B69c86fcE0B58EC771cf1a6"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.systemConfig:
+-        "eth:0x9c9B78f798F821C2f6398f603825fd175e2427f9"
+      values.version:
+-        "2.2.0"
++        "2.1.0"
+      implementationNames.eth:0x6534Bdb6b5c060d3e6aa833433333135eFE8E0aA:
+-        "L1StandardBridge"
+      implementationNames.eth:0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xeEC78bcEA0EfBbA6e1BE7aFc58C93b70f97d3A6A) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.$implementation:
+-        "eth:0xc8cBf9124a4dF9B0776CAf1BA5604E6AAD15F42F"
++        "eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"
+      values.$pastUpgrades.1:
++        ["2025-07-21T15:15:47.000Z","0xc14fc7e04d919c5d83b4fff381a1a8643f9d93654866daff6e03d9136dd8ea44",["eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0xc8cBf9124a4dF9B0776CAf1BA5604E6AAD15F42F:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1CrossDomainMessenger.sol                     | 269 ++++--------
+ .../L1StandardBridge/L1StandardBridge.sol          | 276 ++++--------
+ ...0x672B75103c0CbFdCC4A40737a80724f87a8A25D7.sol} |   0
+ ...:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5.sol | 298 +++++++++++++
+ .../Proxy.p.sol                                    | 200 +++++++++
+ .../SuperchainConfig.sol                           | 477 +++++++++++++++++++++
+ .../SystemConfig/SystemConfig.sol                  | 104 ++++-
+ 7 files changed, 1213 insertions(+), 411 deletions(-)
+```
+
 Generated with discovered.json: 0x80706797f152f37cfb8b9be51a4e5437f8404437
 
 # Diff at Mon, 14 Jul 2025 12:46:17 GMT:

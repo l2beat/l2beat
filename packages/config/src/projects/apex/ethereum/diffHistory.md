@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x55a8e560dfca25a4de95d92d294be080e53e2a45
+
+# Diff at Tue, 22 Jul 2025 16:06:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83bf55f537ce86d3d1dac9f1a98f31f9169b801f block: 22880718
+- current block number: 22975778
+
+## Description
+
+project is archived.
+
+## Watched changes
+
+```diff
+    contract StarkPerpetualUSDC (0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.isFrozen:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xad900fe6b36d067bdd254668951c8b666a61d6fa
 
 # Diff at Mon, 14 Jul 2025 12:44:44 GMT:
