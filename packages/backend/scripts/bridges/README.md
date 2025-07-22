@@ -17,5 +17,5 @@ pnpm bridges:cli layerzerov1 ethereum 22970814 arbitrum 360189207
 pnpm bridges:cli layerzerov1 ethereum 22969147 arbitrum 360108534
 ```
 ```
-p bridges:cli layerzerov1 ethereum 22956392 arbitrum 359491994
+pnpm bridges:cli layerzerov1 ethereum 22956392 arbitrum 359491994
 ```
