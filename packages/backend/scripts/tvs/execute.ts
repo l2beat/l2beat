@@ -232,7 +232,7 @@ function calculateBreakdown(
         tokens: [],
       },
     },
-    key: {
+    category: {
       ether: 0,
       stablecoin: 0,
       other: 0,
@@ -284,26 +284,26 @@ function calculateBreakdown(
 
     switch (tokenConfig.category) {
       case 'ether':
-        tvsBreakdown.key.ether += token.valueForProject
+        tvsBreakdown.category.ether += token.valueForProject
         break
       case 'stablecoin':
-        tvsBreakdown.key.stablecoin += token.valueForProject
+        tvsBreakdown.category.stablecoin += token.valueForProject
         break
       case 'other':
-        tvsBreakdown.key.other += token.valueForProject
+        tvsBreakdown.category.other += token.valueForProject
         break
       case 'rwaPublic':
-        tvsBreakdown.key.rwaPublic += token.valueForProject
+        tvsBreakdown.category.rwaPublic += token.valueForProject
         break
       case 'rwaPrivate':
-        tvsBreakdown.key.rwaPrivate += token.valueForProject
+        tvsBreakdown.category.rwaPrivate += token.valueForProject
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
     }
 
     if (tokenConfig.isAssociated) {
-      tvsBreakdown.key.associated += token.valueForProject
+      tvsBreakdown.category.associated += token.valueForProject
     }
   }
 
@@ -393,26 +393,30 @@ function calculateBreakdown(
     },
     category: {
       associated: {
-        value: toDollarString(tvsBreakdown.key.associated),
+        value: toDollarString(tvsBreakdown.category.associated),
         percentage:
-          ((tvsBreakdown.key.associated / tvsBreakdown.tvs) * 100).toFixed(2) +
-          '%',
+          ((tvsBreakdown.category.associated / tvsBreakdown.tvs) * 100).toFixed(
+            2,
+          ) + '%',
       },
       ether: {
-        value: toDollarString(tvsBreakdown.key.ether),
+        value: toDollarString(tvsBreakdown.category.ether),
         percentage:
-          ((tvsBreakdown.key.ether / tvsBreakdown.tvs) * 100).toFixed(2) + '%',
-      },
-      stablecoin: {
-        value: toDollarString(tvsBreakdown.key.stablecoin),
-        percentage:
-          ((tvsBreakdown.key.stablecoin / tvsBreakdown.tvs) * 100).toFixed(2) +
+          ((tvsBreakdown.category.ether / tvsBreakdown.tvs) * 100).toFixed(2) +
           '%',
       },
-      other: {
-        value: toDollarString(tvsBreakdown.key.other),
+      stablecoin: {
+        value: toDollarString(tvsBreakdown.category.stablecoin),
         percentage:
-          ((tvsBreakdown.key.other / tvsBreakdown.tvs) * 100).toFixed(2) + '%',
+          ((tvsBreakdown.category.stablecoin / tvsBreakdown.tvs) * 100).toFixed(
+            2,
+          ) + '%',
+      },
+      other: {
+        value: toDollarString(tvsBreakdown.category.other),
+        percentage:
+          ((tvsBreakdown.category.other / tvsBreakdown.tvs) * 100).toFixed(2) +
+          '%',
       },
     },
   }
