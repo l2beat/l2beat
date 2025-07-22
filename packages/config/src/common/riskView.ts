@@ -529,7 +529,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
   const delayString = formatSeconds(delay)
   return {
     value: 'Self propose',
-    description: `The primary whitelisted proposer has an optimistic advantage, which is dropped after ${delayString} of inactivity, making them win by default over conflicting unproven proposals by others. But anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal at any time.`,
+    description: `The primary whitelisted proposer has an optimistic advantage, letting them win by default over conflicting unproven proposals by others. This privilege is dropped after ${delayString} of inactivity, and anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal to win against the privileged proposer at any time.`,
     sentiment: 'good',
     orderHint: delay,
   }

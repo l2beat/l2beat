@@ -12,7 +12,6 @@ export const bob: ScalingProject = opStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'BOB',
     slug: 'bob',
