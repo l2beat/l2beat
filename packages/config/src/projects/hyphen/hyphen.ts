@@ -14,6 +14,8 @@ export const hyphen: Bridge = {
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
+    warning:
+      'Hyphen has been decommissioned as of December 31, 2024. See the announcement [here](https://hyphen.biconomy.io).',
     category: 'Liquidity Network',
     links: {
       websites: ['https://hyphen.biconomy.io/'],
