@@ -4,14 +4,18 @@
 1. Make sure you have envs configured. See list of chains in `./chains.ts`, variables should follow a pattern `<UPPER_CASE_NAME>_RPC_URL`. In most cases if you have previously run L2BEAT backend you would have them configured.
 2. Run pnpm script from `backend` folder
 ```
-pnpm bridges:cli
+pnpm bridges:cli <protocol> <chain> <block> <chain> <block>
 ```
-3. Script parameters (with examples)
-- chains - Comma-separated list of chains, runs script only for them. If not provided will run for all chains. See chains.ts for possible values.
+
+## Examples
+
+### LayerZero V1
 ```
-pnpm bridges:cli --chain=ethereum,arbitrum
+pnpm bridges:cli layerzerov1 ethereum 22970814 arbitrum 360189207
 ```
-- protocols - Comma-separated list of protocols, runs script only for them. If not provided will run for all protocols with decoders configured. See protocols.ts for possible values.
 ```
-pnpm bridges:cli --protocols=across,gnosis
+pnpm bridges:cli layerzerov1 ethereum 22969147 arbitrum 360108534
+```
+```
+p bridges:cli layerzerov1 ethereum 22956392 arbitrum 359491994
 ```

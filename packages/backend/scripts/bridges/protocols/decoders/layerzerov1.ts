@@ -10,6 +10,16 @@ import {
   decodeV1SendUln301Packet,
 } from '../../utils/layerzero'
 
+const ABI = parseAbi([
+  // UltraLightNodeV2
+  'event Packet(bytes payload)',
+  'event PacketReceived(uint16 indexed srcChainId, bytes srcAddress, address indexed dstAddress, uint64 nonce, bytes32 payloadHash)',
+  // SendUln301
+  'event PacketSent(bytes encodedPayload, bytes options, uint256 nativeFee, uint256 lzTokenFee)',
+  // ReceiveUln301
+  'event PacketDelivered((uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)',
+])
+
 export const LAYERZEROV1 = {
   name: 'layerzerov1',
   decoder: decoder,
@@ -194,30 +204,20 @@ function decoder(
   return undefined
 }
 
-const ABI = parseAbi([
-  // UltraLightNodeV2
-  'event Packet(bytes payload)',
-  'event PacketReceived(uint16 indexed srcChainId, bytes srcAddress, address indexed dstAddress, uint64 nonce, bytes32 payloadHash)',
-  // SendUln301
-  'event PacketSent(bytes encodedPayload, bytes options, uint256 nativeFee, uint256 lzTokenFee)',
-  // ReceiveUln301
-  'event PacketDelivered((uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)',
-])
-
 const CONTRACTS = [
   {
     chainId: 1,
-    eid: 30101,
+    eid: 101,
     chainShortName: 'eth',
     ultraLightNode: EthereumAddress(
-      '0x1a44076050125825900e736c501f859c50fE728c',
+      '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2',
     ),
     sendUln: EthereumAddress('0xD231084BfB234C107D3eE2b22F97F3346fDAF705'),
     receiveUln: EthereumAddress('0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC'),
   },
   {
     chainId: 42161,
-    eid: 30110,
+    eid: 110,
     chainShortName: 'arb1',
     ultraLightNode: EthereumAddress(
       '0x4D73AdB72bC3DD368966edD0f0b2148401A178E2',
@@ -227,7 +227,7 @@ const CONTRACTS = [
   },
   {
     chainId: 8453,
-    eid: 30184,
+    eid: 184,
     chainShortName: 'base',
     ultraLightNode: EthereumAddress(
       '0x38dE71124f7a447a01D67945a51eDcE9FF491251',
