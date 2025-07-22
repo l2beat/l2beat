@@ -1,7 +1,9 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "taiko",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "initialAddresses": [
     "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
     "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
@@ -9,7 +11,8 @@
     "eth:0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd", // SC: emrgMultisig
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
     "eth:0x989E348275b659d36f8751ea1c10D146211650BE", // OptimisticTokenVotingPlugin
-    "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9" // TaikoLabs Prover
+    "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover
+    "taiko:0x1670000000000000000000000000000000000001"
   ],
   "names": {},
   "overrides": {
@@ -21,7 +24,9 @@
       "proxyType": "TaikoFork proxy"
     },
     "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": [
+        "proxiableUUID"
+      ]
     },
     // SC members below
     "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": {

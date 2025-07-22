@@ -1,0 +1,16 @@
+{
+  "name": "taiko",
+  "chain": "taiko",
+  "blockNumber": 2382118,
+  "configHash": "0x2eca3ac0cdb89b8d29437009a22209634ddd682894f95748d744a5b878161399",
+  "entries": [
+    {
+      "address": "taiko:0x1670000000000000000000000000000000000001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    }
+  ],
+  "abis": {},
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x226d548f94ff069df10051b1b48410291658db8f014cc413e76d01b0ca30432c"
+}

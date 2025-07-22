@@ -318,4 +318,14 @@ export const chains: ChainConfig[] = [
       url: 'https://explorer.katanarpc.com/api',
     },
   },
+  {
+    name: 'taiko',
+    chainId: 167000,
+    shortName: 'taiko',
+    multicall: undefined,
+    explorer: {
+      type: 'etherscan',
+      url: 'https://api.taikoscan.io/api',
+    },
+  },
 ] as const satisfies ChainConfig[]
