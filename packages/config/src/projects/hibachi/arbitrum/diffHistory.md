@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x9df4ab115c0cfbe65455e51d47f725429a8e5a92
+
+# Diff at Tue, 22 Jul 2025 14:07:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 351073243
+- current block number: 351073243
+
+## Description
+
+Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 351073243 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroVerifierRouter (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: None
+      template:
++        "risc0/RiscZeroVerifierRouter"
+    }
+```
+
+```diff
+    contract TimelockController (0xDC986a09728F76110FF666eE7b20d99086501d15) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]},"PROPOSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"CANCELLER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]}}
+      values.Canceller:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      values.defaultAdminAC:
++        ["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]
+      values.Executor:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      values.getMinDelayFormatted:
++        "3d"
+      values.Proposer:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      template:
++        "global/TimelockController"
+      description:
++        "A timelock with access control. The current minimum delay is 3d."
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner"},{"permission":"interact","from":"arb1:0xDC986a09728F76110FF666eE7b20d99086501d15","description":"manage all access control roles.","role":".defaultAdminAC"}]
+    }
+```
+
 Generated with discovered.json: 0x4293bcdecdaca79f526667dcef172eb6d8d7bbb5
 
 # Diff at Mon, 14 Jul 2025 12:44:17 GMT:
