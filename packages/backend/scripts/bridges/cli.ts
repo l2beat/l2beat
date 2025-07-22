@@ -35,36 +35,10 @@ const cmd = command({
   name: 'bridges:cli',
   args,
   handler: async (args) => {
-    const http = new HttpClient()
     const logger = Logger.INFO
-    const env = getEnv()
-
+    const chains = setupChains(args, logger)
     const protocol = PROTOCOLS.find((p) => p.name === args.protocol)
     assert(protocol, `${args.protocol}: Protocol not found`)
-
-    const chain1 = CHAINS.find((c) => c.name === args.chain1)
-    assert(chain1, `${args.chain1}: Chain not found`)
-
-    const chain2 = CHAINS.find((c) => c.name === args.chain2)
-    assert(chain2, `${args.chain2}: Chain not found`)
-
-    const chains = (
-      [
-        [chain1, args.block1],
-        [chain2, args.block2],
-      ] as [Chain, number][]
-    ).map(([chain, block]) => ({
-      ...chain,
-      block,
-      rpc: new RpcClient({
-        url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
-        sourceName: chain.name,
-        http,
-        logger,
-        callsPerMinute: chain.rpcCallsPerMinute,
-        retryStrategy: 'SCRIPT',
-      }),
-    }))
 
     const messages: Message[] = []
 
@@ -112,5 +86,44 @@ const cmd = command({
     })
   },
 })
+
+function setupChains(
+  args: {
+    protocol: string
+    chain1: string
+    block1: number
+    chain2: string
+    block2: number
+  },
+  logger: Logger,
+) {
+  const http = new HttpClient()
+  const env = getEnv()
+
+  const chain1 = CHAINS.find((c) => c.name === args.chain1)
+  assert(chain1, `${args.chain1}: Chain not found`)
+
+  const chain2 = CHAINS.find((c) => c.name === args.chain2)
+  assert(chain2, `${args.chain2}: Chain not found`)
+
+  const chains = (
+    [
+      [chain1, args.block1],
+      [chain2, args.block2],
+    ] as [Chain, number][]
+  ).map(([chain, block]) => ({
+    ...chain,
+    block,
+    rpc: new RpcClient({
+      url: env.string(`${chain.name.toUpperCase()}_RPC_URL`),
+      sourceName: chain.name,
+      http,
+      logger,
+      callsPerMinute: chain.rpcCallsPerMinute,
+      retryStrategy: 'SCRIPT',
+    }),
+  }))
+  return chains
+}
 
 run(cmd, process.argv.slice(2))
