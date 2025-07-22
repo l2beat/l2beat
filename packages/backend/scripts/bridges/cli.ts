@@ -3,8 +3,8 @@ import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, formatSeconds } from '@l2beat/shared-pure'
 import { command, number, positional, run, string } from 'cmd-ts'
 import { CHAINS, type Chain } from './chains'
+import { Decoder } from './Decoder'
 import { PROTOCOLS } from './protocols/protocols'
-import { runDecoders } from './runDecoders'
 import type { Message } from './types/Message'
 
 const args = {
@@ -36,10 +36,18 @@ const cmd = command({
   handler: async (args) => {
     const logger = Logger.INFO
     const chains = setupChains(args, logger)
-    const protocol = PROTOCOLS.find((p) => p.name === args.protocol)
-    assert(protocol, `${args.protocol}: Protocol not found`)
+    const decoder = new Decoder(PROTOCOLS, chains, logger)
 
-    const messages: Message[] = await runDecoders(chains, logger, protocol)
+    const messages: Message[] = await decoder.execute(args.protocol, [
+      {
+        chain: args.chain1,
+        block: args.block1,
+      },
+      {
+        chain: args.chain2,
+        block: args.block2,
+      },
+    ])
 
     for (const message of messages) {
       logger.info(`${message.direction} (${message.type})`, message)
