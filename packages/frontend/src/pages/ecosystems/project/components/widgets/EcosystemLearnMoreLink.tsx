@@ -14,7 +14,7 @@ export function EcosystemLearnMoreLink({ name, href, className }: Props) {
       underline={false}
       href={href}
       className={cn(
-        'group relative min-h-[100px] select-none overflow-hidden rounded-lg bg-linear-to-r from-(--ecosystem-primary) via-(--ecosystem-secondary) to-pure-white p-2',
+        'group relative min-h-[100px] select-none overflow-hidden rounded-lg bg-linear-to-r from-branding-primary via-branding-secondary to-pure-white p-2',
         className,
       )}
     >

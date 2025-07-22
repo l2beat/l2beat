@@ -57,7 +57,7 @@ export function EcosystemTierCard({
       className="group hover:-translate-y-1 transform transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
     >
       <a href={`/ecosystems/${partner.slug}`} className="block">
-        <div className="relative h-40 cursor-pointer overflow-hidden rounded bg-radial-[closest-side] from-(--ecosystem-secondary) to-(--ecosystem-primary) shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
+        <div className="relative h-40 cursor-pointer overflow-hidden rounded bg-radial-[closest-side] from-branding-secondary to-branding-primary shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
           {/* Background pattern/texture overlay */}
           <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
 
