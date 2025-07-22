@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner ({{owner}}).",
   "fields": {
     "owner": {
       "permissions": [

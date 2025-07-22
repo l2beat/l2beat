@@ -9,41 +9,42 @@
   "overrides": {
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
       "fields": {
-        "verifier0Manual": {
-          "handler": {
-            "type": "call",
-            "method": "getVerifier",
-            "args": ["0x310fe598"]
-          }
-        },
-        "verifier1Manual": {
-          "handler": {
-            "type": "call",
-            "method": "getVerifier",
-            "args": ["0x50bd1769"]
-          }
-        },
-        "verifier2Manual": {
-          "handler": {
-            "type": "call",
-            "method": "getVerifier",
-            "args": ["0xc101b42b"]
-          }
-        },
-        "verifier3Manual": {
-          "handler": {
-            "type": "call",
-            "method": "getVerifier",
-            "args": ["0x9f39696c"]
-          }
-        },
-        "verifier4Manual": {
-          "handler": {
-            "type": "call",
-            "method": "getVerifier",
-            "args": ["0xf536085a"]
-          }
-        },
+        // "verifier0Manual": {
+        //   "handler": {
+        //     "type": "call",
+        //     "method": "getVerifier",
+        //     "args": ["0x310fe598"]
+        //   }
+        // },
+        // "verifier1Manual": {
+        //   "handler": {
+        //     "type": "call",
+        //     "method": "getVerifier",
+        //     "args": ["0x50bd1769"]
+        //   }
+        // },
+        // "verifier2Manual": {
+        //   "handler": {
+        //     "type": "call",
+        //     "method": "getVerifier",
+        //     "args": ["0xc101b42b"]
+        //   }
+        // },
+        // "verifier3Manual": {
+        //   "handler": {
+        //     "type": "call",
+        //     "method": "getVerifier",
+        //     "args": ["0x9f39696c"]
+        //   }
+        // },
+        // "verifier4Manual": {
+        //   "handler": {
+        //     "type": "call",
+        //     "method": "getVerifier",
+        //     "args": ["0xf536085a"]
+        //   }
+        // },
+        // above verifiers seem to be unused by BOB, below is v2.2.0
         "verifier5Manual": {
           "handler": {
             "type": "call",

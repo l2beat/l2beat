@@ -1,69 +1,13 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22965692,
-  "configHash": "0xfbbcdf343f11600a2ff36c50791e379357457cfcc5f16225fe2308604384219f",
+  "blockNumber": 22975539,
+  "configHash": "0x8783151623484da48be1f986ab9d83b4d14444d4dfb527f2e4e37f6663edc3b3",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "RiscZeroVerifierEmergencyStop",
-      "address": "eth:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805",
-      "type": "Contract",
-      "template": "risc0/RiscZeroVerifierEmergencyStop",
-      "sourceHashes": [
-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1733260415,
-      "sinceBlock": 21324589,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0xAC292cF957Dd5BA174cdA13b05C16aFC71700327"
-      },
-      "fieldMeta": {
-        "paused": {
-          "severity": "HIGH",
-          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
-        }
-      },
-      "implementationNames": {
-        "eth:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805": "RiscZeroVerifierEmergencyStop"
-      }
-    },
-    {
-      "name": "RiscZeroVerifierEmergencyStop",
-      "address": "eth:0x08AeD6C108E500540a9544beF7a8B8a05E056e87",
-      "type": "Contract",
-      "template": "risc0/RiscZeroVerifierEmergencyStop",
-      "sourceHashes": [
-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1724963327,
-      "sinceBlock": 20636628,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0x94A4684d6F7085C19138Bd4f9F3295fa9943C622"
-      },
-      "fieldMeta": {
-        "paused": {
-          "severity": "HIGH",
-          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
-        }
-      },
-      "implementationNames": {
-        "eth:0x08AeD6C108E500540a9544beF7a8B8a05E056e87": "RiscZeroVerifierEmergencyStop"
-      }
     },
     {
       "address": "eth:0x08F9F14fF43E112B18c96f0986F28Cb1878f1D11",
@@ -170,11 +114,6 @@
         },
         "callsExecuted": [
           {
-            "0": "0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7",
             "id": "0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -182,11 +121,6 @@
             "data": "0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7"
           },
           {
-            "0": "0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda",
-            "1": 0,
-            "2": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-            "3": 0,
-            "4": "0x64d623530000000000000000000000000000000000000000000000000000000000093a80",
             "id": "0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda",
             "index": 0,
             "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
@@ -194,11 +128,6 @@
             "data": "0x64d623530000000000000000000000000000000000000000000000000000000000093a80"
           },
           {
-            "0": "0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87",
             "id": "0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -206,11 +135,6 @@
             "data": "0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87"
           },
           {
-            "0": "0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805",
             "id": "0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -218,11 +142,6 @@
             "data": "0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805"
           },
           {
-            "0": "0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3",
             "id": "0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -230,11 +149,6 @@
             "data": "0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3"
           },
           {
-            "0": "0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1",
             "id": "0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -242,11 +156,6 @@
             "data": "0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1"
           },
           {
-            "0": "0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7",
-            "1": 0,
-            "2": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-            "3": 0,
-            "4": "0x64d62353000000000000000000000000000000000000000000000000000000000003f480",
             "id": "0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7",
             "index": 0,
             "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
@@ -254,11 +163,6 @@
             "data": "0x64d62353000000000000000000000000000000000000000000000000000000000003f480"
           },
           {
-            "0": "0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698",
             "id": "0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -268,13 +172,6 @@
         ],
         "callsScheduled": [
           {
-            "0": "0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30310fe5980000000000000000000000000000000000000000000000000000000000000000000000000000000044c220f0598345195ce99ad6a57adffcb9ea33e7",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 1,
             "id": "0x7a84c572dc62f88115a1ee5163b983a332e1214113fb2d000d9d1bcaef2e9c10",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -284,13 +181,6 @@
             "delay": 1
           },
           {
-            "0": "0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda",
-            "1": 0,
-            "2": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-            "3": 0,
-            "4": "0x64d623530000000000000000000000000000000000000000000000000000000000093a80",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 1,
             "id": "0xadb3b737a6a6bdcb4c8dccde80cd44ac4e4d3db3a89374a7b4acdd4b64f72dda",
             "index": 0,
             "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
@@ -300,13 +190,6 @@
             "delay": 1
           },
           {
-            "0": "0xca7c32c7743c15b77a35c4f9067ba7b6a70ba735d9223900eda94ce2c9b30b84",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af304c630d8700000000000000000000000000000000000000000000000000000000000000000000000000000000b839ea7bba8e6bb2893ca5252f3f3c13323d74f7",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0xca7c32c7743c15b77a35c4f9067ba7b6a70ba735d9223900eda94ce2c9b30b84",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -316,13 +199,6 @@
             "delay": 604800
           },
           {
-            "0": "0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af3050bd17690000000000000000000000000000000000000000000000000000000000000000000000000000000008aed6c108e500540a9544bef7a8b8a05e056e87",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0x3f19aefd1b1ceef8c24d069d4199d2fa93837840c710fe02fa8caa57257b29f1",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -332,13 +208,6 @@
             "delay": 604800
           },
           {
-            "0": "0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30c101b42b0000000000000000000000000000000000000000000000000000000000000000000000000000000003b66cedab014ca7e970bfb83c1951d10dd2a805",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0x8c69e0a7787b08054748643b2f24e534391080bd0c61e3a0267ce6b152664d0d",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -348,13 +217,6 @@
             "delay": 604800
           },
           {
-            "0": "0x7bd40c500f2b3900d572471750afc6fb8ff842feac61ce3b28457400df977bdd",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30922fe23d000000000000000000000000000000000000000000000000000000000000000000000000000000001e785018a65d9a9c8ee52955da0dd9644353a22f",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0x7bd40c500f2b3900d572471750afc6fb8ff842feac61ce3b28457400df977bdd",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -364,13 +226,6 @@
             "delay": 604800
           },
           {
-            "0": "0xffe2b1acdec15653f2ec46c307b748d6ada029fe63e7308d24b980d503ab7ea3",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af3014da014b00000000000000000000000000000000000000000000000000000000000000000000000000000000268436d69f9434018657b278d838546e7dbc2d7f",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0xffe2b1acdec15653f2ec46c307b748d6ada029fe63e7308d24b980d503ab7ea3",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -380,13 +235,6 @@
             "delay": 604800
           },
           {
-            "0": "0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af309f39696c0000000000000000000000000000000000000000000000000000000000000000000000000000000068dc2cb4e61774873971c499d9b239ec5ac540e3",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0x960674420bb13639f49c3e4680c859d460652b079912a2e19d48070e1839717e",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -396,13 +244,6 @@
             "delay": 604800
           },
           {
-            "0": "0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30f536085a00000000000000000000000000000000000000000000000000000000000000000000000000000000da8f3de6fbbdb261ac771b813a578a7abda6b2b1",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0x3d85619c066effeda2dfdaa6533cf4ab13dc517fa095d3ff1ed03ba753e04d43",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -412,13 +253,6 @@
             "delay": 604800
           },
           {
-            "0": "0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7",
-            "1": 0,
-            "2": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-            "3": 0,
-            "4": "0x64d62353000000000000000000000000000000000000000000000000000000000003f480",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 604800,
             "id": "0xd0791ae7ead2e43dd04e036894376e9f800038dcd77ca25aee9c25b10c2152c7",
             "index": 0,
             "target": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
@@ -428,13 +262,6 @@
             "delay": 604800
           },
           {
-            "0": "0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b",
-            "1": 0,
-            "2": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
-            "3": 0,
-            "4": "0xd0a6af30bb001d44000000000000000000000000000000000000000000000000000000000000000000000000000000001efdd13f831ceeea14940806705a53d3211cd698",
-            "5": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "6": 259200,
             "id": "0xfb7623c10d952a912314a537418c1ea4f95ceeee7628d8564f7e1c814d09da5b",
             "index": 0,
             "target": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
@@ -552,6 +379,7 @@
         "0x114d2fa4777cda59fdbe4bbaa3e319588066e3d66bff66ae8dc4b96589ac1d4b"
       ],
       "proxyType": "immutable",
+      "description": "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
       "sinceTimestamp": 1752763739,
       "sinceBlock": 22939622,
       "values": {
@@ -579,7 +407,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 19936800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x2c1fea684a661b68506d3c6B25C70252Fdf770D5",
+        "lastResolved": "eth:0x53fFb0B38B4B410aC311A6D2FA34c1b12C426786",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -617,6 +445,7 @@
         "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
       ],
       "proxyType": "immutable",
+      "description": "A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.",
       "sinceTimestamp": 1751494343,
       "sinceBlock": 22834443,
       "values": {
@@ -662,28 +491,6 @@
       },
       "implementationNames": {
         "eth:0x1fb8cdFc6831fc866Ed9C51aF8817Da5c287aDD3": "PreimageOracle"
-      }
-    },
-    {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xb65f1857d55c0e91fb6bef3bce6a2199a0e974fa8f7fd1942b2b46af4ffd70cb"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1742812703,
-      "sinceBlock": 22116217,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
-        "CONTROL_ROOT_0": "0x4c2d7bb17348241967b0276818329053",
-        "CONTROL_ROOT_1": "0x7645843b52b258e94f99b1cf022d2e12",
-        "SELECTOR": "0x9f39696c",
-        "VERSION": "2.0.0-rc.3"
-      },
-      "implementationNames": {
-        "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": "RiscZeroGroth16Verifier"
       }
     },
     {
@@ -782,56 +589,6 @@
         "eth:0x0b09ba359A106C9ea3b181CBc5F394570c7d2a7A": "L1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "name": "RiscZeroVerifierEmergencyStop",
-      "address": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
-      "type": "Contract",
-      "template": "risc0/RiscZeroVerifierEmergencyStop",
-      "sourceHashes": [
-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1718237459,
-      "sinceBlock": 20079239,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C"
-      },
-      "fieldMeta": {
-        "paused": {
-          "severity": "HIGH",
-          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
-        }
-      },
-      "implementationNames": {
-        "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7": "RiscZeroVerifierEmergencyStop"
-      }
-    },
-    {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xebc08ecb6ae486d78f6a6cc24c7b32098b167b2919bb79b6b571b2f60780f9b7"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747973051,
-      "sinceBlock": 22543063,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
-        "CONTROL_ROOT_0": "0x61ee75ec4d335b47328b123e27894388",
-        "CONTROL_ROOT_1": "0x60ee46c7447efe2120331cd433cb779b",
-        "SELECTOR": "0xf536085a",
-        "VERSION": "2.0.3"
-      },
-      "implementationNames": {
-        "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF": "RiscZeroGroth16Verifier"
-      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -955,37 +712,17 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "RiscZeroVerifierEmergencyStop",
-      "address": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
-      "type": "Contract",
-      "template": "risc0/RiscZeroVerifierEmergencyStop",
-      "sourceHashes": [
-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1742812715,
-      "sinceBlock": 22116218,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": true,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
-      },
-      "fieldMeta": {
-        "paused": {
-          "severity": "HIGH",
-          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
-        }
-      },
-      "implementationNames": {
-        "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3": "RiscZeroVerifierEmergencyStop"
-      }
-    },
-    {
       "address": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746",
+          "description": "propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock.",
+          "role": ".vanguard"
+        }
+      ]
     },
     {
       "name": "OptimismPortal2",
@@ -1049,7 +786,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 313808,
-          "prevBlockNum": 22965541
+          "prevBlockNum": 22975317
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1091,43 +828,17 @@
         "0x09d9c9ba25591eb4e658e547eb5f5cc798449477bf745e6fa9f516a339f88364"
       ],
       "proxyType": "immutable",
+      "description": "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).",
       "sinceTimestamp": 1718237375,
       "sinceBlock": 20079232,
       "values": {
         "$immutable": true,
         "owner": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier0Manual": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
-        "verifier1Manual": "eth:0x08AeD6C108E500540a9544beF7a8B8a05E056e87",
-        "verifier2Manual": "eth:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805",
-        "verifier3Manual": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
-        "verifier4Manual": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
         "verifier5Manual": "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698"
       },
       "implementationNames": {
         "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": "RiscZeroVerifierRouter"
-      }
-    },
-    {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "eth:0x94A4684d6F7085C19138Bd4f9F3295fa9943C622",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x14884aca682d89bed7cc0e2839040cc1358d321e2dbdfd048773ac997b3eb9bd"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1724963315,
-      "sinceBlock": 20636627,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x05a022e1db38457fb510bc347b30eb8f8cf3eda95587653d0eac19e1f10d164e",
-        "CONTROL_ROOT_0": "0x3f05edb31fb4615345ac63d411cf6d8b",
-        "CONTROL_ROOT_1": "0x2e853b01450e34db0fa0de1b4917b8eb",
-        "SELECTOR": "0x50bd1769",
-        "VERSION": "1.1.0-rc.3"
-      },
-      "implementationNames": {
-        "eth:0x94A4684d6F7085C19138Bd4f9F3295fa9943C622": "RiscZeroGroth16Verifier"
       }
     },
     {
@@ -1161,7 +872,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb",
-        "gameCount": 8,
+        "gameCount": 11,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -1216,28 +927,6 @@
       },
       "implementationNames": {
         "eth:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "eth:0xAC292cF957Dd5BA174cdA13b05C16aFC71700327",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf4b033c739bf6139a7c55e2a326fe751241631148f508bad83f31829794e7f48"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1733258927,
-      "sinceBlock": 21324466,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x04446e66d300eb7fb45c9726bb53c793dda407a62e9601618bb43c5c14657ac0",
-        "CONTROL_ROOT_0": "0x4d5a42c577a3ab1231be642624d9da8c",
-        "CONTROL_ROOT_1": "0x69042c9355281d562b4766691ceb35f7",
-        "SELECTOR": "0xc101b42b",
-        "VERSION": "1.2.0"
-      },
-      "implementationNames": {
-        "eth:0xAC292cF957Dd5BA174cdA13b05C16aFC71700327": "RiscZeroGroth16Verifier"
       }
     },
     {
@@ -1375,10 +1064,12 @@
       "name": "RiscZeroGroth16Verifier",
       "address": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
       "type": "Contract",
+      "template": "taiko/RiscZeroGroth16Verifier",
       "sourceHashes": [
         "0x0ec6714f2eae54d69f7eb8da9f402541927894bca21763405f3a4083e9c1c93a"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).",
       "sinceTimestamp": 1751494331,
       "sinceBlock": 22834442,
       "values": {
@@ -1560,11 +1251,12 @@
       "name": "KailuaGame",
       "address": "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb",
       "type": "Contract",
-      "template": "risc0/KailuaTreasury",
+      "template": "risc0/KailuaGame",
       "sourceHashes": [
         "0x8ccbc2dc7979e60f1522fe9a1da1a05647b47340b54f536bc9f43aa54c2d6a01"
       ],
       "proxyType": "immutable",
+      "description": "Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.",
       "sinceTimestamp": 1752763739,
       "sinceBlock": 22939622,
       "values": {
@@ -1616,34 +1308,6 @@
       },
       "implementationNames": {
         "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb": "KailuaGame"
-      }
-    },
-    {
-      "name": "RiscZeroVerifierEmergencyStop",
-      "address": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
-      "type": "Contract",
-      "template": "risc0/RiscZeroVerifierEmergencyStop",
-      "sourceHashes": [
-        "0x215b7779ba88b0e55cbc280c1640649f7ac41a2b2d76176efef0cfd88fe563f6"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747973063,
-      "sinceBlock": 22543064,
-      "values": {
-        "$immutable": true,
-        "owner": "eth:0xF616A4f81857CFEe54A4A049Ec187172574bd412",
-        "paused": false,
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
-      },
-      "fieldMeta": {
-        "paused": {
-          "severity": "HIGH",
-          "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
-        }
-      },
-      "implementationNames": {
-        "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1": "RiscZeroVerifierEmergencyStop"
       }
     },
     {
@@ -1809,7 +1473,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660474",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660489",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1960,18 +1624,6 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805",
-          "description": "pause the verifier.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x08AeD6C108E500540a9544beF7a8B8a05E056e87",
-          "description": "pause the verifier.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
@@ -2008,18 +1660,6 @@
         },
         {
           "permission": "interact",
-          "from": "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7",
-          "description": "pause the verifier.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3",
-          "description": "pause the verifier.",
-          "role": ".owner"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
           "description": "add/remove verifiers and the selectors they are mapped to.",
           "role": ".owner",
@@ -2029,12 +1669,6 @@
               "delay": 259200
             }
           ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1",
-          "description": "pause the verifier.",
-          "role": ".owner"
         }
       ],
       "directlyReceivedPermissions": [
@@ -2047,79 +1681,12 @@
       ]
     },
     {
-      "name": "RiscZeroGroth16Verifier",
-      "address": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x2f95fe116c6a0fcba2c22ae39f05005b38d1c065bc403b85568f1d6b99a6c8cc"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1718237447,
-      "sinceBlock": 20079238,
-      "values": {
-        "$immutable": true,
-        "BN254_CONTROL_ID": "0x0eb6febcf06c5df079111be116f79bd8c7e85dc9448776ef9a59aaf2624ab551",
-        "CONTROL_ROOT_0": "0x0e8ed4340930069162f5fbc957a016a5",
-        "CONTROL_ROOT_1": "0x2e7edecb6fd9ca4733501ee430425d77",
-        "SELECTOR": "0x310fe598"
-      },
-      "implementationNames": {
-        "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": "RiscZeroGroth16Verifier"
-      }
-    },
-    {
       "address": "eth:0xFB771f2640Dfd37B18332a84817B2a6e994f5BF6",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "eth:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805": [
-      "constructor(address _verifier, address guardian)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidProofOfExploit()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
-      "function estop()",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verifier() view returns (address)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
-    ],
-    "eth:0x08AeD6C108E500540a9544beF7a8B8a05E056e87": [
-      "constructor(address _verifier, address guardian)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidProofOfExploit()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
-      "function estop()",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verifier() view returns (address)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
-    ],
     "eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error ErrorNotAdmin()",
@@ -2408,20 +1975,6 @@
       "function version() view returns (string)",
       "function zeroHashes(uint256) view returns (bytes32)"
     ],
-    "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function VERSION() view returns (string)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
-    ],
     "eth:0x340f923E5c7cbB2171146f64169EC9d5a9FfE647": [
       "constructor()",
       "event ConfigUpdate(uint256 indexed version, uint8 indexed updateType, bytes data)",
@@ -2491,29 +2044,6 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
-    "eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7": [
-      "constructor(address _verifier, address guardian)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidProofOfExploit()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
-      "function estop()",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verifier() view returns (address)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
-    ],
     "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0": [
       "constructor()",
       "error GameAlreadyExists(bytes32 uuid)",
@@ -2568,20 +2098,6 @@
       "function deployments(address) view returns (address)",
       "function initialize(address _bridge)",
       "function version() view returns (string)"
-    ],
-    "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function VERSION() view returns (string)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ],
     "eth:0x5557408ab14013ce9Dbb300dE0D87D386BB09cb6": [
       "constructor(address _admin)",
@@ -2670,29 +2186,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3": [
-      "constructor(address _verifier, address guardian)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidProofOfExploit()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
-      "function estop()",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verifier() view returns (address)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
-    ],
     "eth:0x7aE1d3BD877a4C5CA257404ce26BE93A02C98013": [
       "constructor()",
       "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
@@ -2770,20 +2263,6 @@
       "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
       "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
     ],
-    "eth:0x94A4684d6F7085C19138Bd4f9F3295fa9943C622": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function VERSION() view returns (string)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
-    ],
     "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2814,20 +2293,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
-    ],
-    "eth:0xAC292cF957Dd5BA174cdA13b05C16aFC71700327": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function VERSION() view returns (string)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ],
     "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393": [
       "constructor(address _admin)",
@@ -3094,29 +2559,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1": [
-      "constructor(address _verifier, address guardian)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error InvalidProofOfExploit()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function acceptOwnership()",
-      "function estop(tuple(bytes seal, bytes32 claimDigest) receipt)",
-      "function estop()",
-      "function owner() view returns (address)",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function verifier() view returns (address)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view"
-    ],
     "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A": [
       "constructor(tuple(uint32 gameType, bytes32 absolutePrestate, uint256 maxGameDepth, uint256 splitDepth, uint64 clockExtension, uint64 maxClockDuration, address vm, address weth, address anchorStateRegistry, uint256 l2ChainId) _params, address _proposer, address _challenger)",
       "error AlreadyInitialized()",
@@ -3258,19 +2700,6 @@
       "function renounceOwnership()",
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
-    ],
-    "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C": [
-      "constructor(bytes32 control_root, bytes32 bn254_control_id)",
-      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
-      "error SelectorMismatch(bytes4 received, bytes4 expected)",
-      "error VerificationFailed()",
-      "function BN254_CONTROL_ID() view returns (bytes32)",
-      "function CONTROL_ROOT_0() view returns (bytes16)",
-      "function CONTROL_ROOT_1() view returns (bytes16)",
-      "function SELECTOR() view returns (bytes4)",
-      "function verify(bytes seal, bytes32 imageId, bytes32 journalDigest) view",
-      "function verifyIntegrity(tuple(bytes seal, bytes32 claimDigest) receipt) view",
-      "function verifyProof(uint256[2] _pA, uint256[2][2] _pB, uint256[2] _pC, uint256[5] _pubSignals) view returns (bool)"
     ]
   },
   "usedTemplates": {
@@ -3292,9 +2721,11 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "risc0/KailuaTreasury": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
+    "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
+    "risc0/KailuaTreasury": "0x70a7ad85301add32c4b61d2f51daa6d8179e4bd74a70c7db09d929f253e6a8df",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
-    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0x0f9a008c493ddfbacdf0bc132021fc0edc516c3069d2d7b962cdde59c8860d34"
+  "permissionsConfigHash": "0xc4213120fd4a0267fe93c84ebbd13d3515ef206aa16f0bb51bd15e01c703fb5c"
 }

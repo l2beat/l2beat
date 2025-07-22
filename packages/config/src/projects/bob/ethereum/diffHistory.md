@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x36ab83c8daa4fd79246eb031764aab3b10509c08
+Generated with discovered.json: 0x673122bb6cfe809b496416f2b9d9a595054cdb4b
 
-# Diff at Mon, 21 Jul 2025 09:44:48 GMT:
+# Diff at Tue, 22 Jul 2025 15:36:41 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b5fe7ac6e74ccc6e4e6d67ecb3f67a0783bb471d block: 22665980
-- current block number: 22965692
+- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 22665980
+- current block number: 22975539
 
 ## Description
 
@@ -81,8 +81,17 @@ some code:
 ```diff
     EOA  (0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1","role":".PROPOSER"}]
+      receivedPermissions.0.description:
++        "propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock."
+      receivedPermissions.0.role:
+-        ".PROPOSER"
++        ".vanguard"
+      receivedPermissions.0.from:
+-        "eth:0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
++        "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746"
+      receivedPermissions.0.permission:
+-        "propose"
++        "interact"
     }
 ```
 
@@ -340,18 +349,6 @@ some code:
 
 ```diff
 +   Status: CREATED
-    contract RiscZeroVerifierEmergencyStop (0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RiscZeroVerifierEmergencyStop (0x08AeD6C108E500540a9544beF7a8B8a05E056e87)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract TimelockController (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711)
     +++ description: A timelock with access control. The current minimum delay is 3d.
 ```
@@ -359,13 +356,13 @@ some code:
 ```diff
 +   Status: CREATED
     contract KailuaTreasury (0x0fbC22B052f4745Bc9F80760D2D47E4993F36746)
-    +++ description: None
+    +++ description: Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.
 ```
 
 ```diff
 +   Status: CREATED
     contract RiscZeroVerifierEmergencyStop (0x1efDd13f831ceeEa14940806705A53D3211CD698)
-    +++ description: None
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
 ```
 
 ```diff
@@ -376,26 +373,8 @@ some code:
 
 ```diff
 +   Status: CREATED
-    contract RiscZeroGroth16Verifier (0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract DelayedWETH (0x3a1D54496cf461fFc96d3b1a8A0B43B091ea3c13)
     +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
-```
-
-```diff
-+   Status: CREATED
-    contract RiscZeroVerifierEmergencyStop (0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RiscZeroGroth16Verifier (0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF)
-    +++ description: None
 ```
 
 ```diff
@@ -412,20 +391,8 @@ some code:
 
 ```diff
 +   Status: CREATED
-    contract RiscZeroVerifierEmergencyStop (0x68dC2cB4e61774873971c499D9b239ec5Ac540E3)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract RiscZeroVerifierRouter (0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RiscZeroGroth16Verifier (0x94A4684d6F7085C19138Bd4f9F3295fa9943C622)
-    +++ description: None
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
 ```
 
 ```diff
@@ -442,26 +409,14 @@ some code:
 
 ```diff
 +   Status: CREATED
-    contract RiscZeroGroth16Verifier (0xAC292cF957Dd5BA174cdA13b05C16aFC71700327)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract RiscZeroGroth16Verifier (0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9)
-    +++ description: None
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
 ```
 
 ```diff
 +   Status: CREATED
     contract KailuaGame (0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract RiscZeroVerifierEmergencyStop (0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1)
-    +++ description: None
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
 ```
 
 ```diff
@@ -486,12 +441,6 @@ some code:
 +   Status: CREATED
     contract MIPS (0xF027F4A985560fb13324e943edf55ad6F1d15Dc1)
     +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
-```
-
-```diff
-+   Status: CREATED
-    contract RiscZeroGroth16Verifier (0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C)
-    +++ description: None
 ```
 
 ## Source code changes
@@ -519,24 +468,14 @@ some code:
  .../projects/bob/ethereum/.flat/PreimageOracle.sol | 1311 +++++++
  ...0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0.sol} |    0
  ...:0xa70ddfb3e00fCFD083E64B200FE867104f703E1c.sol |  298 ++
- ...:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97.sol | 1689 ++++++++
- ...:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF.sol | 1698 ++++++++
- ...:0x94A4684d6F7085C19138Bd4f9F3295fa9943C622.sol | 1676 ++++++++
- ...:0xAC292cF957Dd5BA174cdA13b05C16aFC71700327.sol | 1691 ++++++++
- ...:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9.sol | 1699 ++++++++
- ...:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C.sol | 1683 ++++++++
- ...:0x03B66cEDaB014Ca7E970Bfb83C1951d10DD2A805.sol |  315 ++
- ...:0x08AeD6C108E500540a9544beF7a8B8a05E056e87.sol |  315 ++
- ...:0x1efDd13f831ceeEa14940806705A53D3211CD698.sol |  315 ++
- ...:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7.sol |  315 ++
- ...:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3.sol |  315 ++
- ...:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1.sol |  315 ++
+ .../bob/ethereum/.flat/RiscZeroGroth16Verifier.sol | 1699 ++++++++
+ .../.flat/RiscZeroVerifierEmergencyStop.sol        |  315 ++
  .../bob/ethereum/.flat/RiscZeroVerifierRouter.sol  |  240 ++
  .../ethereum/.flat/SuperchainConfig/Proxy.p.sol    |  200 +
  .../.flat/SuperchainConfig/SuperchainConfig.sol    |  477 +++
  .../SystemConfig/SystemConfig.sol                  |  715 ++--
  .../bob/ethereum/.flat/TimelockController.sol      | 1000 +++++
- 39 files changed, 33429 insertions(+), 3793 deletions(-)
+ 29 files changed, 23417 insertions(+), 3793 deletions(-)
 ```
 
 Generated with discovered.json: 0x8b55c0d14f76f0f19015fe74f09c905cbdbc2c45
