@@ -30,13 +30,11 @@ function decoder(
   transaction: TransactionWithLogs,
 ): Message | undefined {
   for (const log of transaction.logs) {
-    const contracts = CONTRACTS.find(
-      (b) => b.chainShortName === chain.shortName,
-    )
-    if (!contracts) continue
+    const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
+    if (!network) continue
 
     if (
-      EthereumAddress(log.address) === contracts.ultraLightNode &&
+      EthereumAddress(log.address) === network.ultraLightNode &&
       log.topics[0] === encodeEventTopics({ abi: ABI, eventName: 'Packet' })[0]
     ) {
       const data = decodeEventLog({
@@ -60,7 +58,7 @@ function decoder(
         decodedPacket.dstAddress,
       )
 
-      const destination = CONTRACTS.find(
+      const destination = NETWORKS.find(
         (b) => b.eid === decodedPacket.dstChainId,
       )?.chainShortName
 
@@ -78,7 +76,7 @@ function decoder(
     }
 
     if (
-      EthereumAddress(log.address) === contracts.ultraLightNode &&
+      EthereumAddress(log.address) === network.ultraLightNode &&
       log.topics[0] ===
         encodeEventTopics({ abi: ABI, eventName: 'PacketReceived' })[0]
     ) {
@@ -89,7 +87,7 @@ function decoder(
         eventName: 'PacketReceived',
       })
 
-      const dstChainId = contracts.eid
+      const dstChainId = network.eid
       assert(dstChainId)
 
       const packetId = createV1PacketId(
@@ -100,7 +98,7 @@ function decoder(
         data.args.dstAddress,
       )
 
-      const origin = CONTRACTS.find(
+      const origin = NETWORKS.find(
         (c) => c.eid === data.args.srcChainId,
       )?.chainShortName
 
@@ -118,7 +116,7 @@ function decoder(
     }
 
     if (
-      EthereumAddress(log.address) === contracts.sendUln &&
+      EthereumAddress(log.address) === network.sendUln &&
       log.topics[0] ===
         encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
     ) {
@@ -143,7 +141,7 @@ function decoder(
         decodedPacket.header.receiver,
       )
 
-      const destination = CONTRACTS.find(
+      const destination = NETWORKS.find(
         (b) => b.eid === decodedPacket.header.dstEid,
       )?.chainShortName
 
@@ -161,7 +159,7 @@ function decoder(
     }
 
     if (
-      EthereumAddress(log.address) === contracts.receiveUln &&
+      EthereumAddress(log.address) === network.receiveUln &&
       log.topics[0] ===
         encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
     ) {
@@ -172,7 +170,7 @@ function decoder(
         eventName: 'PacketDelivered',
       })
 
-      const dstChainId = contracts.eid
+      const dstChainId = network.eid
       assert(dstChainId)
 
       const packetId = createLayerZeroGuid(
@@ -183,7 +181,7 @@ function decoder(
         data.args.receiver,
       )
 
-      const origin = CONTRACTS.find(
+      const origin = NETWORKS.find(
         (c) => c.eid === data.args.origin.srcEid,
       )?.chainShortName
 
@@ -204,7 +202,7 @@ function decoder(
   return undefined
 }
 
-const CONTRACTS = [
+const NETWORKS = [
   {
     chainId: 1,
     eid: 101,
