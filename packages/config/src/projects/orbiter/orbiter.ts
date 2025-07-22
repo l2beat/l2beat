@@ -89,11 +89,11 @@ export const orbiter: Bridge = {
       references: [
         {
           title: 'Documentation - Maker System',
-          url: 'https://docs.orbiter.finance/makersystem',
+          url: 'https://docs.orbiter.finance/welcome/maker-system',
         },
         {
           title: 'Documentation - Technology',
-          url: 'https://docs.orbiter.finance/technology',
+          url: 'https://docs.orbiter.finance/welcome/bridge-protocol',
         },
       ],
       risks: [],
@@ -105,7 +105,7 @@ export const orbiter: Bridge = {
       references: [
         {
           title: 'Documentation - Maker System',
-          url: 'https://docs.orbiter.finance/makersystem',
+          url: 'https://docs.orbiter.finance/welcome/maker-system',
         },
       ],
       risks: [

@@ -2,6 +2,7 @@
 .code@*
 .flat
 .flat@*
-**/*.lp
-!_templates/**/*.lp
-!_clingo/**/*.lp
+
+# Clingo debug files
+**/clingo.input.lp
+**/clingo.output.lp
