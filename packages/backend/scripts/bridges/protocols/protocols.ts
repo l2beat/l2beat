@@ -7,7 +7,7 @@ import { CCTPV2 } from './decoders/cctpv2'
 import { LAYERZEROV1 } from './decoders/layerzerov1'
 import { LAYERZEROV2 } from './decoders/layerzerov2'
 
-interface Protocol {
+export interface Protocol {
   name: string
   decoder: (
     chain: Chain,

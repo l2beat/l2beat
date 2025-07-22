@@ -2,11 +2,10 @@ import { getEnv, Logger } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert, formatSeconds } from '@l2beat/shared-pure'
 import { command, number, positional, run, string } from 'cmd-ts'
-import groupBy from 'lodash/groupBy'
 import { CHAINS, type Chain } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
+import { runDecoders } from './runDecoders'
 import type { Message } from './types/Message'
-import { logToViemLog } from './utils/viem'
 
 const args = {
   protocol: positional({
@@ -40,28 +39,7 @@ const cmd = command({
     const protocol = PROTOCOLS.find((p) => p.name === args.protocol)
     assert(protocol, `${args.protocol}: Protocol not found`)
 
-    const messages: Message[] = []
-
-    for (const chain of chains) {
-      logger.info(`Fetching data for ${chain.name} @ ${chain.block}`)
-      const block = await chain.rpc.getBlockWithTransactions(chain.block)
-      const logs = await chain.rpc.getLogs(chain.block, chain.block)
-      const logsByTx = groupBy(logs, 'transactionHash')
-
-      logger.info(`Running decoder for ${protocol.name}`)
-      for (const transaction of block.transactions) {
-        assert(transaction.hash)
-        const decoded = protocol.decoder(chain, {
-          hash: transaction.hash,
-          blockNumber: block.number,
-          blockTimestamp: block.timestamp,
-          logs: (logsByTx[transaction.hash] ?? []).map(logToViemLog),
-        })
-        if (decoded) {
-          messages.push(decoded)
-        }
-      }
-    }
+    const messages: Message[] = await runDecoders(chains, logger, protocol)
 
     for (const message of messages) {
       logger.info(`${message.direction} (${message.type})`, message)
