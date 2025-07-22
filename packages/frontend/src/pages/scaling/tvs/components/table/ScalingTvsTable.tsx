@@ -7,7 +7,7 @@ import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { useScalingAssociatedTokensContext } from '../../../components/ScalingAssociatedTokensContext'
 import { toTableRows } from '../../utils/ToTableRows'
-import { getScalingTvsColumns } from './Columns'
+import { getScalingTvsColumns } from './columns'
 
 interface Props {
   entries: ScalingTvsEntry[]

@@ -5,8 +5,8 @@ import type {
   UsedInProject,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { RosetteValue } from '~/components/rosette/types'
-import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import {
@@ -140,6 +140,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
+          href: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     }),
@@ -160,6 +161,7 @@ function getDaSummaryEntry(
         .map((project) => ({
           ...project,
           icon: getProjectIcon(project.slug),
+          href: `/scaling/projects/${project.slug}`,
         })),
       dacInfo: undefined,
     })
@@ -222,6 +224,7 @@ function getDacEntry(
     usedIn: usedIn.map((project) => ({
       ...project,
       icon: getProjectIcon(project.slug),
+      href: `/scaling/projects/${project.slug}`,
     })),
   }
 
@@ -273,6 +276,7 @@ function getEthereumEntry(
           .map((project) => ({
             ...project,
             icon: getProjectIcon(project.slug),
+            href: `/scaling/projects/${project.slug}`,
           })),
       },
     ],

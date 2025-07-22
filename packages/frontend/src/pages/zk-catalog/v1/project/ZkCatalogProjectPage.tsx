@@ -12,11 +12,11 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import type { ZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/getZkCatalogProjectDetails'
 import { ProjectHeader } from './components/ProjectHeader'
 import { RequiredTools } from './components/RequiredTools'
 import { VerifiedCountWithDetails } from './components/VerifiedCountWithDetails'
 import { Verifiers } from './components/Verifiers'
+import type { ZkCatalogProjectDetails } from './utils/getZkCatalogProjectDetails'
 
 interface Props extends AppLayoutProps {
   projectDetails: ZkCatalogProjectDetails

@@ -1,7 +1,7 @@
 {
   "name": "debridge",
   "chain": "ethereum",
-  "blockNumber": 19531527,
+  "blockNumber": 22966882,
   "configHash": "0xe251156abc78df2f9ac8459c95dcb41b505c4bd9c2866225d24414a8191ae626",
   "entries": [
     {
@@ -11,11 +11,6 @@
     },
     {
       "address": "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -82,7 +77,7 @@
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "lockedClaim": 1,
-        "nonce": 16703,
+        "nonce": 100105,
         "paused": false,
         "signatureVerifier": "eth:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -151,7 +146,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 47,
+        "nonce": 64,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -300,7 +295,7 @@
         ],
         "$upgradeCount": 2,
         "confirmationThreshold": 3,
-        "currentBlock": 19531339,
+        "currentBlock": 22966860,
         "debridgeAddress": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "excessConfirmations": 3,
@@ -329,40 +324,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "address": "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1637430511,
-      "sinceBlock": 13653314,
-      "values": {
-        "$immutable": false,
-        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "eth:0x360f6cF86D3ed3c77E79dA6cE374aff842DfB0A0",
-          "eth:0xd725E456D5beD8275E297C4Dd11135e3C5cDe544",
-          "eth:0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xd9512e4bd742ce576138697d48c92dcc7b1776e492c423a4c0c37e3aa6999b8e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 0,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885": "GnosisSafeProxy",
-        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
-    },
-    {
       "address": "eth:0xbA7cE717928A6C51ab530aD9AdB69bA6E76D09B5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -378,14 +339,14 @@
       "type": "Contract",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0xc18d3818f9e809ced3dcce60fbe4287220ce2fced4f6c66711de5e704738bb9a"
+        "0x90a1adff0012e17a22d9eb35cecd932a71923919b443758b02b2c43ad666a352"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1637651844,
       "sinceBlock": 13669463,
       "values": {
         "$admin": "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe",
-        "$implementation": "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C",
+        "$implementation": "eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE",
         "$pastUpgrades": [
           [
             "2021-11-23T07:17:24.000Z",
@@ -396,19 +357,23 @@
             "2022-02-16T12:53:26.000Z",
             "0x67612f4676f3c141f8360be940caf971519f9bf1265465f94a6c13ed1e64adca",
             ["eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C"]
+          ],
+          [
+            "2025-07-16T10:55:35.000Z",
+            "0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",
+            ["eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE"]
           ]
         ],
-        "$upgradeCount": 2,
+        "$upgradeCount": 3,
         "debridgeGate": "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getChainId": 1,
+        "FEE_COLLECTOR_ROLE": "0x2dca0f5ce7e75a4b43fe2b0d6f5d0b7a2bf92ecf89f8f0aa17b8308b67038821",
         "paused": false,
-        "treasury": "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885",
-        "version": 400
+        "version": 410
       },
       "implementationNames": {
         "eth:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636": "TransparentUpgradeableProxy",
-        "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C": "SimpleFeeProxy"
+        "eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE": "SimpleFeeProxy"
       }
     },
     {
@@ -520,37 +485,6 @@
     }
   ],
   "abis": {
-    "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C": [
-      "error AdminBadRole()",
-      "error EmptyTreasuryAddress()",
-      "error EthTransferFailed()",
-      "event Paused(address account)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Unpaused(address account)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function debridgeGate() view returns (address)",
-      "function getChainId() view returns (uint256 cid)",
-      "function getDebridgeId(uint256 _chainId, address _tokenAddress) pure returns (bytes32)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getbDebridgeId(uint256 _chainId, bytes _tokenAddress) pure returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _debridgeGate, address _treasury)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setDebridgeGate(address _debridgeGate)",
-      "function setTreasury(address _treasury)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function treasury() view returns (address)",
-      "function unpause()",
-      "function version() pure returns (uint256)",
-      "function withdrawFee(address _tokenAddress)",
-      "function withdrawNativeFee()"
-    ],
     "eth:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -738,8 +672,34 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885": [
-      "constructor(address _singleton)"
+    "eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE": [
+      "constructor()",
+      "error AdminBadRole()",
+      "error EthTransferFailed()",
+      "error FeeCollectorBadRole()",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function FEE_COLLECTOR_ROLE() view returns (bytes32)",
+      "function debridgeGate() view returns (address)",
+      "function getDebridgeId(uint256 _chainId, address _tokenAddress) pure returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getbDebridgeId(uint256 _chainId, bytes _tokenAddress) pure returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address _debridgeGate)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setDebridgeGate(address _debridgeGate)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function version() pure returns (uint256)",
+      "function withdrawFees(address[] _tokens)"
     ],
     "eth:0xBd3d657AE87671eC6f8D6272A9f431a7c4a9B6f8": [
       "error CallFailed()",
@@ -936,5 +896,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x8c6fcc680b2ecd8aa1d492661466ac52d23105c37bf27187fe3ef53fae452890"
+  "permissionsConfigHash": "0xa6373d216fda56dcf55f9479a07797bcab40b4cbbef05590435342cccb33376c"
 }

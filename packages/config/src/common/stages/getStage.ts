@@ -3,6 +3,7 @@ import { type ChecklistTemplate, createGetStage, isSatisfied } from './stage'
 interface GetStageOptions {
   rollupNodeLink?: string
   securityCouncilReference?: string
+  stage1PrincipleDescription?: string
   additionalConsiderations?: {
     short: string
     long: string
@@ -27,6 +28,7 @@ export const getStage = (
   return {
     ...createGetStage(blueprint)(blueprintChecklist),
     additionalConsiderations: opts?.additionalConsiderations,
+    stage1PrincipleDescription: opts?.stage1PrincipleDescription,
   }
 }
 

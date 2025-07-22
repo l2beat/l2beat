@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x13c9862c09e0f194b1c400ef95c67be32bce29d2
+
+# Diff at Mon, 21 Jul 2025 10:32:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c89d5207a278197d1d4bfd60ac8e37852accba7c block: 22731106
+- current block number: 22966983
+
+## Description
+
+fee config change (decrease baseFeeOverhead and -scalar).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D) {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      values.messageQueueParameters.baseFeeOverhead:
+-        4790000
++        120000
+      values.messageQueueParameters.baseFeeScalar:
+-        388000000000000
++        9700000000000
+    }
+```
+
 Generated with discovered.json: 0xacdf1612ada3e9d9aac0773a9529a80bd2c48069
 
 # Diff at Mon, 14 Jul 2025 12:47:11 GMT:
