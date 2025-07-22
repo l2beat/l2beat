@@ -27,6 +27,7 @@ import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
+import { env } from '~/env'
 
 export interface BridgesProjectEntry {
   name: string
@@ -113,7 +114,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
     }),
-    colors: project.colors,
+    colors: env.CLIENT_SIDE_PARTNERS ? project.colors : undefined,
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     header: {
