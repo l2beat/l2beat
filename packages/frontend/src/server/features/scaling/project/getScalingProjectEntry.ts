@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
@@ -56,7 +56,12 @@ export interface ProjectScalingEntry {
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
-  colors: ProjectColors | undefined
+  colors:
+    | {
+        project: ProjectCustomColors | undefined
+        ecosystem: ProjectCustomColors | undefined
+      }
+    | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -126,6 +131,7 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
     | 'colors'
+    | 'ecosystemColors'
     | 'discoveryInfo'
   >,
   helpers: SsrHelpers,
@@ -219,6 +225,7 @@ export async function getScalingProjectEntry(
   }
 
   const changes = projectsChangeReport.getChanges(project.id)
+
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
@@ -232,7 +239,12 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: env.CLIENT_SIDE_PARTNERS ? project.colors : undefined,
+    colors: env.CLIENT_SIDE_PARTNERS
+      ? {
+          project: project.colors,
+          ecosystem: project.ecosystemColors,
+        }
+      : undefined,
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project),
