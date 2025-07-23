@@ -40,7 +40,7 @@ export const bob: ScalingProject = opStackL2({
   milestones: [
     {
       title: 'Phase 1: Optimistic BOB',
-      url: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
+      url: 'https://docs.gobob.xyz/docs/bob-chain/stack-overview',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',
