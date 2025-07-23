@@ -81,6 +81,7 @@ export function ScalingActivityTabs(props: Props) {
               milestones={props.milestones}
               type="Rollups"
             />
+
             <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>

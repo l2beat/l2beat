@@ -1,7 +1,7 @@
 import type {
   Milestone,
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
@@ -16,6 +16,7 @@ import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../projects-change-report/getProjectsChangeReport'
 import { getActivityLatestUops } from '../scaling/activity/getActivityLatestTps'
+import { getApprovedOngoingAnomalies } from '../scaling/liveness/getApprovedOngoingAnomalies'
 import {
   getScalingSummaryEntry,
   type ScalingSummaryEntry,
@@ -56,7 +57,7 @@ export interface EcosystemEntry {
     height: number
   }
   badges: BadgeWithParams[]
-  colors: ProjectColors
+  colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
   upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData
@@ -75,6 +76,7 @@ export interface EcosystemEntry {
     buildOn: string
     learnMore: string
     governance: EcosystemGovernanceLinks
+    ecosystemUpdate: string
   }
   images: {
     buildOn: string
@@ -105,6 +107,7 @@ export async function getEcosystemEntry(
   const [allScalingProjects, projects] = await Promise.all([
     ps.getProjects({
       where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
     }),
     ps.getProjects({
       select: [
@@ -128,10 +131,16 @@ export async function getEcosystemEntry(
     }),
   ])
 
-  const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
+  const [
+    projectsChangeReport,
+    tvs,
+    projectsActivity,
+    projectsOngoingAnomalies,
+  ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     getActivityLatestUops(allScalingProjects),
+    getApprovedOngoingAnomalies(),
   ])
 
   const ecosystemProjects = projects.filter(
@@ -144,7 +153,7 @@ export async function getEcosystemEntry(
   )
 
   const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects,
+    ecosystemProjects.filter((p) => !p.archivedAt),
     (p) => p.isUpcoming,
   )
 
@@ -160,19 +169,20 @@ export async function getEcosystemEntry(
       buildOn: ecosystem.ecosystemConfig.links.buildOn,
       learnMore: ecosystem.ecosystemConfig.links.learnMore,
       governance: getGovernanceLinks(ecosystem),
+      ecosystemUpdate: getEcosystemUpdateLink(ecosystem),
     },
     allScalingProjects: {
       tvs: tvs.total,
       uops: allScalingProjectsUops,
     },
-    tvsByStage: getTvsByStage(ecosystemProjects, tvs),
-    tvsByTokenType: getTvsByTokenType(ecosystemProjects, tvs),
-    projectsByDaLayer: getProjectsByDaLayer(ecosystemProjects),
-    blobsData: await getBlobsData(ecosystemProjects),
-    projectsByRaas: getProjectsByRaas(ecosystemProjects),
-    token: await getEcosystemToken(ecosystem, ecosystemProjects),
+    tvsByStage: getTvsByStage(liveProjects, tvs),
+    tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
+    projectsByDaLayer: getProjectsByDaLayer(liveProjects),
+    blobsData: await getBlobsData(liveProjects),
+    projectsByRaas: getProjectsByRaas(liveProjects),
+    token: await getEcosystemToken(ecosystem, liveProjects),
     projectsChartData: getEcosystemProjectsChartData(
-      ecosystemProjects,
+      liveProjects,
       allScalingProjects.length,
     ),
     liveProjects: liveProjects
@@ -183,6 +193,7 @@ export async function getEcosystemEntry(
           projectsChangeReport.getChanges(project.id),
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
+          !!projectsOngoingAnomalies[project.id.toString()],
         )
         return {
           ...entry,
@@ -246,4 +257,13 @@ function getGovernanceLinks(
     review: `/governance/publications/${lastPublication.id}`,
     bankImage,
   }
+}
+
+function getEcosystemUpdateLink(ecosystem: Project<'ecosystemConfig'>): string {
+  const lastReport = getCollection('monthly-updates')
+    .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
+    .at(-1)
+  assert(lastReport, 'No last report')
+
+  return `/publications/monthly-updates/${lastReport.id}#${ecosystem.id}`
 }

@@ -35,6 +35,8 @@ export async function getScalingProjectData(
       'milestones',
       'trackedTxsConfig',
       'tvsConfig',
+      'colors',
+      'ecosystemColors',
       'discoveryInfo',
     ],
   })

@@ -9,7 +9,7 @@ interface Props {
 export function UpcomingProjectUpdateSection({ upcomingProject }: Props) {
   return (
     <ProjectUpdateSection
-      name={upcomingProject.name}
+      id={upcomingProject.id}
       bannerImg={upcomingProject.bannerImg}
     >
       <News news={upcomingProject.news} />

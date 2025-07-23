@@ -9,6 +9,13 @@ export const stone: BaseProject = {
   name: 'Stone',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-14')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   display: {
     description:
       'Stone is a proving systems for programs written with Cairo language. Originally build by Starkware for proving Starknet state transition.',
@@ -33,14 +40,18 @@ export const stone: BaseProject = {
       ],
     },
     proofSystemInfo: '',
-    trustedSetups: {
-      StoneStark: [TRUSTED_SETUPS.TransparentSetup],
-    },
+    trustedSetups: [
+      {
+        ...TRUSTED_SETUPS.TransparentSetup,
+        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
+      },
+    ],
     verifierHashes: [
       {
         // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
+        // in hex format '0x...'
         hash: '0x5ed8957171b466464570ba10b3d5c5adfc54546ba56278129af5ae63a0d4ad22',
-        proofSystem: 'StoneStark',
+        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
           'https://etherscan.io/address/0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
         ],
@@ -62,7 +73,7 @@ export const stone: BaseProject = {
       {
         // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
         hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
-        proofSystem: 'StoneStark',
+        proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
           'https://etherscan.io/address/0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
         ],

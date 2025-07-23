@@ -2,7 +2,6 @@ import { HOMEPAGE_MILESTONES } from '../global/milestones'
 import type { ScalingProject } from '../internalTypes'
 import { abstract } from '../projects/abstract/abstract'
 import { aevo } from '../projects/aevo/aevo'
-import { aiechain } from '../projects/aiechain/aiechain'
 import { airas } from '../projects/airas/airas'
 import { alephzero } from '../projects/alephzero/alephzero'
 import { alienx } from '../projects/alienx/alienx'
@@ -17,7 +16,6 @@ import { arenaz } from '../projects/arenaz/arenaz'
 import { arithmic } from '../projects/arithmic/arithmic'
 import { astarzkevm } from '../projects/astarzkevm/astarzkevm'
 import { automata } from '../projects/automata/automata'
-import { axonum } from '../projects/axonum/axonum'
 import { azchain } from '../projects/azchain/azchain'
 import { aztec } from '../projects/aztec/aztec'
 import { aztecV2 } from '../projects/aztec-v2/aztec-v2'
@@ -230,7 +228,6 @@ import { zora } from '../projects/zora/zora'
 export const layer2s: ScalingProject[] = [
   abstract,
   aevo,
-  aiechain,
   airas,
   alephzero,
   alienx,
@@ -245,7 +242,6 @@ export const layer2s: ScalingProject[] = [
   arithmic,
   astarzkevm,
   automata,
-  axonum,
   azchain,
   aztecconnect,
   aztec,

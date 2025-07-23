@@ -23,6 +23,7 @@ import type { ChartScale } from '../types'
 import type { ActivityChartType } from './ActivityChart'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartHeader } from './ActivityChartHeader'
+import { ActivityRatioChart } from './ActivityRatioChart'
 
 interface Props {
   milestones: Milestone[]
@@ -83,6 +84,14 @@ export function ScalingActivityChart({
       ),
     [data?.data, metric],
   )
+
+  const ratioData = useMemo(() => {
+    return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
+      timestamp,
+      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+    }))
+  }, [data?.data])
+
   const chartRange = getChartRange(chartData)
 
   return (
@@ -102,6 +111,11 @@ export function ScalingActivityChart({
         scale={scale}
         metric={metric}
         type={type}
+      />
+      <ActivityRatioChart
+        data={ratioData}
+        isLoading={isLoading}
+        className="mb-2"
       />
       <Controls
         scale={scale}

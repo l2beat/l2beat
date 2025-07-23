@@ -19,11 +19,11 @@ export async function getTermsOfServiceData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'ZK Catalog - L2BEAT',
-        description: 'A catalog of the ZK projects with detailed research.',
+        title: 'Terms of Service - L2BEAT',
+        description: 'Terms of Service for L2BEAT.',
         openGraph: {
           url,
-          image: '/meta-images/zk-catalog/opengraph-image.png',
+          image: '/meta-images/terms-of-service/opengraph-image.png',
         },
       }),
     },

@@ -43,7 +43,6 @@ export function getTvsBreakdown(
 
     const { addresses, escrows } = extractAddressesFromTokenConfig(token)
     const address = processAddresses(addresses, chains)
-
     const tokenWithValues: BaseAssetBreakdownData = {
       ...token,
       address,

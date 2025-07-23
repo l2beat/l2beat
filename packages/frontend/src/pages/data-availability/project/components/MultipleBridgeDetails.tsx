@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { RiskBanner } from '~/components/projects/RiskBanner'
 import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
 import { GrissiniIcon } from '~/components/rosette/grissini/GrissiniIcon'
@@ -18,7 +19,6 @@ import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissin
 import { useRouter } from '~/hooks/useRouter'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
-import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'

@@ -4,12 +4,7 @@ import {
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  type ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
@@ -175,21 +170,6 @@ describe('getProjects', () => {
       // Array comparison to have a better error message with actual names
       expect(projectsWithoutDaBeatEntry).toEqual([])
     })
-  })
-
-  describe('milestones', () => {
-    for (const project of projects) {
-      if (project.milestones === undefined) {
-        continue
-      }
-      for (const milestone of project.milestones) {
-        it(`Milestone: ${milestone.title} (${project.id}) date is full day`, () => {
-          expect(
-            UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
-          ).toEqual(true)
-        })
-      }
-    }
   })
 
   describe('contracts', () => {

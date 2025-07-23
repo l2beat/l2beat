@@ -52,6 +52,7 @@ export async function getScalingDaEntries() {
     }),
     getDaProjectsEconomicSecurity(),
   ])
+
   const dacs = projects.filter((p) => !!p.customDa) as Project<'customDa'>[]
 
   const uniqueProjectsInUse = getDaUsers(daLayers, daBridges, dacs)

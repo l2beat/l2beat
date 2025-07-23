@@ -36,13 +36,14 @@ export function MonthlyUpdateThroughputChart({
   const { data, isLoading } = api.da.projectChart.useQuery({
     range: { type: 'custom', from, to: to + UnixTime.DAY },
     projectId: daLayer,
+    includeScalingOnly: false,
   })
 
   const chartMeta = useMemo(() => {
     return {
       projects: {
         label: 'Data Posted',
-        color: 'var(--project-primary)',
+        color: 'var(--project-primary, var(--ecosystem-primary))',
         indicatorType: {
           shape: 'line',
         },
@@ -114,8 +115,9 @@ export function MonthlyUpdateThroughputChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
+                primary: 'var(--project-primary, var(--ecosystem-primary))',
+                secondary:
+                  'var(--project-secondary, var(--ecosystem-secondary))',
               }}
             />
           </defs>

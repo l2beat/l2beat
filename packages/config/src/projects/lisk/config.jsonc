@@ -7,5 +7,16 @@
     "eth:0xE3622468Ea7dD804702B56ca2a4f88C0936995e6",
     "eth:0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf",
     "eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677" // EURC escrow
-  ]
+  ],
+  "overrides": {
+    "eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x095102Ec7bea1c5f25090705b196a6EA2e6b64f6": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }
