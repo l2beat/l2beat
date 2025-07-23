@@ -460,6 +460,12 @@ body:has(.reading) {
   --color-chart-stacked-pink: var(--chart-stacked-pink);
   --color-chart-stacked-purple: var(--chart-stacked-purple);
 
+  --color-branding-primary: var(--project-primary, var(--ecosystem-primary));
+  --color-branding-secondary: var(
+    --project-secondary,
+    var(--ecosystem-secondary)
+  );
+
   --z-1: 1;
   --z-10: 10;
   --z-20: 20;
