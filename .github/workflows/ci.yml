@@ -251,8 +251,8 @@ jobs:
 
           pnpm build
           
-          # Start the mock server in the background
-          pnpm start:mock &
+          # Start the mock server in the background and redirect output to /dev/null
+          pnpm start:mock > /dev/null 2>&1 &
           SERVER_PID=$!
           
           # Wait for server to start
@@ -265,5 +265,3 @@ jobs:
           echo "Stopping server..."
           kill $SERVER_PID
           wait $SERVER_PID 2>/dev/null || true
-
-
