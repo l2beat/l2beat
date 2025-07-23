@@ -71,7 +71,7 @@ export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
   description:
     'Actors watching the chain can challenge state proposals, and challenged proposals must provide ZK proofs. SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
-  orderHint: Infinity,
+  orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_ZKP_ST: TableReadyValue = {
