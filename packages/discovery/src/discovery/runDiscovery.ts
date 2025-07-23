@@ -23,6 +23,27 @@ import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
+async function getTimestamp(
+  configReader: ConfigReader,
+  config: DiscoveryModuleConfig,
+): Promise<Date> {
+  if (config.blockNumber !== undefined) {
+    const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
+    return UnixTime.toDate(
+      (await provider.getBlock(config.blockNumber)).timestamp,
+    )
+  }
+
+  const configuredTimestamp =
+    config.timestamp ??
+    (config.dev
+      ? configReader.readDiscovery(config.project, config.chain.name).timestamp
+      : undefined) ??
+    UnixTime.now()
+
+  return UnixTime.toDate(configuredTimestamp)
+}
+
 export async function runDiscovery(
   paths: DiscoveryPaths,
   http: HttpClient,
@@ -36,19 +57,7 @@ export async function runDiscovery(
     config.chain.name,
   )
 
-  const configuredBlockNumber =
-    config.blockNumber ??
-    (config.dev
-      ? configReader.readDiscovery(config.project, config.chain.name)
-          .blockNumber
-      : undefined)
-  const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
-  const timestampDate =
-    configuredBlockNumber === undefined
-      ? UnixTime.toDate(UnixTime.now())
-      : UnixTime.toDate(
-          (await provider.getBlock(configuredBlockNumber)).timestamp,
-        )
+  const timestampDate = await getTimestamp(configReader, config)
 
   const { result, blockNumber, timestamp, providerStats } = await discover(
     paths,
@@ -62,14 +71,21 @@ export async function runDiscovery(
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
-  await saveDiscoveryResult(result, projectConfig, blockNumber, timestamp, logger, {
-    paths,
-    sourcesFolder: config.sourcesFolder,
-    flatSourcesFolder: config.flatSourcesFolder,
-    discoveryFilename: config.discoveryFilename,
-    saveSources: config.saveSources,
-    templatesFolder,
-  })
+  await saveDiscoveryResult(
+    result,
+    projectConfig,
+    blockNumber,
+    timestamp,
+    logger,
+    {
+      paths,
+      sourcesFolder: config.sourcesFolder,
+      flatSourcesFolder: config.flatSourcesFolder,
+      discoveryFilename: config.discoveryFilename,
+      saveSources: config.saveSources,
+      templatesFolder,
+    },
+  )
 
   // TODO(radomski): This is a disaster from the point of view of separation of
   // concerns. We should agree on what even is a shared module and how to
@@ -164,7 +180,13 @@ async function justDiscover(
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return toDiscoveryOutput(templateService, config, blockNumber, timestamp, result)
+  return toDiscoveryOutput(
+    templateService,
+    config,
+    blockNumber,
+    timestamp,
+    result,
+  )
 }
 
 export async function discover(
