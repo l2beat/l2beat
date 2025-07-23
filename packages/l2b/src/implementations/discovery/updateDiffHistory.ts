@@ -222,7 +222,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   const rawConfig = configReader.readRawConfig(projectName)
   const dependencies: { project: string; chain: string }[] =
     rawConfig.modelCrossChainPermissions
-      ? getDependenciesToDiscoverForProject(projectName, configReader)
+      ? getDependenciesToDiscoverForProject(projectName, configReader) // TODO(radomski): enable this
       : [{ project: projectName, chain }]
 
   for (const dependency of dependencies) {
