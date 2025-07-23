@@ -15,6 +15,7 @@ import { isRevert } from '../utils/isRevert'
 import type { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { ContractDeployment, IProvider, RawProviders } from './IProvider'
+import type { IStatelessProvider } from './IStatelessProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
 
 interface AllProviders {
@@ -31,6 +32,14 @@ export class HighLevelProvider implements IProvider {
     readonly timestamp: UnixTime,
     readonly blockNumber: number,
   ) {}
+
+  static createStateless(
+    allProviders: AllProviders,
+    provider: BatchingAndCachingProvider,
+    chain: string,
+  ): IStatelessProvider {
+    return new HighLevelProvider(allProviders, provider, chain, 0, 0)
+  }
 
   async switchBlock(blockNumber: number): Promise<IProvider> {
     const block = await this.getBlock(blockNumber)
@@ -263,6 +272,14 @@ export class HighLevelProvider implements IProvider {
     const result = await this.provider.getBlock(blockNumber)
     duration += performance.now()
     this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
+    return result
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    let duration = -performance.now()
+    const result = await this.provider.getBlockNumberAtOrBefore(timestamp)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_BLOCK_NUMBER_AT_OR_BEFORE, duration)
     return result
   }
 
