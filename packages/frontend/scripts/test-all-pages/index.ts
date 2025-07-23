@@ -1,4 +1,5 @@
 import compact from 'lodash/compact'
+import { getCollection } from '~/content/getCollection'
 import { ps } from '~/server/projects'
 import { testPage } from './testPage'
 
@@ -29,6 +30,7 @@ async function main() {
       whereNot: ['archivedAt'],
     }),
   ])
+  const publications = getCollection('publications')
 
   const pages = compact([
     '/scaling/summary',
@@ -71,6 +73,7 @@ async function main() {
     '/donate',
     '/governance',
     '/governance/publications',
+    ...publications.map((p) => `/governance/publications/${p.id}`),
     '/terms-of-service',
     '/glossary',
     '/faq',
