@@ -19,6 +19,7 @@ async function main() {
     }),
     ps.getProjects({
       where: ['isDaLayer'],
+      select: ['daLayer'],
     }),
     ps.getProjects({
       select: ['daBridge'],
@@ -54,9 +55,14 @@ async function main() {
       const daBridges = daBridgeProjects.filter(
         (da) => da.daBridge.daLayer === p.id,
       )
-      return daBridges.map(
-        (da) => `/data-availability/projects/${p.slug}/${da.slug}`,
-      )
+      return [
+        p.daLayer.usedWithoutBridgeIn.length > 0
+          ? `/data-availability/projects/${p.slug}/no-bridge`
+          : undefined,
+        ...daBridges.map(
+          (da) => `/data-availability/projects/${p.slug}/${da.slug}`,
+        ),
+      ].filter(Boolean)
     }),
     '/zk-catalog',
     '/zk-catalog/v1',
