@@ -9,6 +9,13 @@ export const lineaprover: BaseProject = {
   name: 'Linea prover',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   display: {
     description:
       'Linea proving system is designed for proving EVM code execution and mainly used for proving Linea L2 state transitions.',

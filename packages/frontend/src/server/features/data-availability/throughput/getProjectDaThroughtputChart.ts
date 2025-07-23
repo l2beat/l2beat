@@ -1,4 +1,4 @@
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -9,12 +9,12 @@ import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 
-export type ProjectDaThroughputChartData = {
-  chart: ProjectDaThroughputDataPoint[]
+export type ProjectDaThroughputChart = {
+  chart: ProjectDaThroughputChartPoint[]
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
-export type ProjectDaThroughputDataPoint = [
+export type ProjectDaThroughputChartPoint = [
   timestamp: number,
   value: number | null,
 ]
@@ -30,6 +30,7 @@ export const ProjectDaThroughputChartParams = v.object({
       to: v.number(),
     }),
   ]),
+  includeScalingOnly: v.boolean(),
   projectId: v.string(),
 })
 export type ProjectDaThroughputChartParams = v.infer<
@@ -38,9 +39,9 @@ export type ProjectDaThroughputChartParams = v.infer<
 
 export async function getProjectDaThroughputChart(
   params: ProjectDaThroughputChartParams,
-): Promise<ProjectDaThroughputChartData | undefined> {
+): Promise<ProjectDaThroughputChart | undefined> {
   if (env.MOCK) {
-    return getMockProjectDaThroughputChartData(params)
+    return getMockProjectDaThroughputChart(params)
   }
 
   const db = getDb()
@@ -53,10 +54,15 @@ export async function getProjectDaThroughputChart(
     now: adjustedTarget,
   })
 
-  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
-    [params.projectId],
-    [from, adjustedTarget],
-  )
+  const throughput = await (params.includeScalingOnly
+    ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+        [params.projectId],
+        [from, adjustedTarget],
+      )
+    : db.dataAvailability.getByProjectIdsAndTimeRange(
+        [params.projectId],
+        [from, adjustedTarget],
+      ))
 
   if (throughput.length === 0) {
     return undefined
@@ -90,7 +96,7 @@ export async function getProjectDaThroughputChart(
 }
 
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord[],
+  records: ProjectsSummedDataAvailabilityRecord[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
@@ -118,10 +124,10 @@ function groupByTimestampAndProjectId(
   }
 }
 
-function getMockProjectDaThroughputChartData({
+function getMockProjectDaThroughputChart({
   range,
   projectId,
-}: ProjectDaThroughputChartParams): ProjectDaThroughputChartData {
+}: ProjectDaThroughputChartParams): ProjectDaThroughputChart {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY

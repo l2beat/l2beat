@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import capitalize from 'lodash/capitalize'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import { BridgedUsingCell } from '../cells/BridgedUsingCell'
@@ -15,6 +16,15 @@ export const externallyBridgedColumns = [
     id: 'Token',
     header: 'Token',
     cell: (ctx) => <TokenNameCell {...ctx.row.original} />,
+  }),
+  columnHelper.display({
+    id: 'category',
+    header: 'Category',
+    cell: (ctx) => (
+      <div className="font-medium text-xs">
+        {capitalize(ctx.row.original.category)}
+      </div>
+    ),
   }),
   columnHelper.display({
     id: 'contract',

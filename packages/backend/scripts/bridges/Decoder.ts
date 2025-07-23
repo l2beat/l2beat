@@ -41,6 +41,20 @@ export class Decoder {
         })
         if (decoded) {
           messages.push(decoded)
+          this.logger.info(`Decoded: ${decoded.direction} (${decoded.type})`)
+          this.logger.info(
+            'INPUT: Transaction with logs ./scripts/bridges/types/TransactionWithLogs.ts',
+            {
+              hash: transaction.hash,
+              blockNumber: block.number,
+              blockTimestamp: block.timestamp,
+              logs: `Array<${(logsByTx[transaction.hash] ?? []).length}>`,
+            },
+          )
+          this.logger.info(
+            'OUTPUT: Message ./scripts/bridges/types/Message.ts',
+            decoded,
+          )
         }
       }
     }

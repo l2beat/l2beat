@@ -83,7 +83,7 @@ function Item({
       className={cn(
         'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors',
         selected &&
-          'border-current border-b text-brand group-data-[has-colors=true]/section-wrapper:text-(--project-primary)',
+          'border-current border-b text-brand group-data-[has-colors=true]/section-wrapper:text-branding-primary',
       )}
     >
       {children}

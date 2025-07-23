@@ -1,7 +1,9 @@
 import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
 import { getImageParams } from '~/utils/project/getImageParams'
 
-export interface UpcomingProjectUpdateEntry extends UpcomingProjectUpdate {
+export interface UpcomingProjectUpdateEntry
+  extends Omit<UpcomingProjectUpdate, 'projectId'> {
+  id: string
   bannerImg?: string
 }
 
@@ -22,6 +24,7 @@ function getUpcomingMonthlyUpdateEntry(
 
   return {
     ...upcomingUpdateEntry,
+    id: upcomingUpdateEntry.projectId,
     bannerImg,
   }
 }

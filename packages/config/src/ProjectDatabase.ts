@@ -29,6 +29,7 @@ const schema = {
   statuses: 'TEXT',
   display: 'TEXT',
   colors: 'TEXT',
+  ecosystemColors: 'TEXT',
   milestones: 'TEXT',
   chainConfig: 'TEXT',
   escrows: 'TEXT',

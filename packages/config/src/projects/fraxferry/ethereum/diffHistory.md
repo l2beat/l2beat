@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x503d85997663ab8ed0a9ce35076b3977f266c489
+
+# Diff at Tue, 22 Jul 2025 16:12:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83bf55f537ce86d3d1dac9f1a98f31f9169b801f block: 22437895
+- current block number: 22975821
+
+## Description
+
+FRAX Ferry Bridge (evmos) paused.
+
+## Watched changes
+
+```diff
+    contract FRAX Ferry Bridge (evmos) (0x2d2261f970F605C813f160E8BAEd455E9004A842) {
+    +++ description: None
+      values.paused:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x023b4b96e4ad4dcf018289850e9bf5fdbd7b86d0
 
 # Diff at Mon, 14 Jul 2025 12:45:05 GMT:

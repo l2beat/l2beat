@@ -75,7 +75,8 @@ export interface BaseProject {
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
-  colors?: ProjectColors
+  colors?: ProjectCustomColors
+  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -129,7 +130,7 @@ export interface BaseProject {
 }
 
 // #region common data
-export interface ProjectColors {
+export interface ProjectCustomColors {
   primary: string
   secondary: string
 }

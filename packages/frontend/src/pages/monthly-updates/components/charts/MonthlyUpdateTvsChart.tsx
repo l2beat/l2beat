@@ -60,7 +60,7 @@ export function MonthlyUpdateTvsChart({
   const chartMeta = useMemo(() => {
     return {
       value: {
-        color: 'var(--project-primary)',
+        color: 'var(--project-primary, var(--ecosystem-primary))',
         indicatorType: { shape: 'line' },
         label:
           type === 'ecosystem'
@@ -89,8 +89,9 @@ export function MonthlyUpdateTvsChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
+                primary: 'var(--project-primary, var(--ecosystem-primary))',
+                secondary:
+                  'var(--project-secondary, var(--ecosystem-secondary))',
               }}
             />
           </defs>
@@ -98,7 +99,7 @@ export function MonthlyUpdateTvsChart({
             dataKey="value"
             fill={`url(#${id})`}
             fillOpacity={1}
-            stroke="var(--project-primary)"
+            stroke="var(--project-primary, var(--ecosystem-primary))"
             strokeWidth={2}
             isAnimationActive={false}
           />
