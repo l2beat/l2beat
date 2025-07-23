@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "taiko",
-  "blockNumber": 1275904,
+  "blockNumber": 1276050,
   "configHash": "0x2eca3ac0cdb89b8d29437009a22209634ddd682894f95748d744a5b878161399",
   "entries": [
     {
@@ -24,7 +24,7 @@
       "address": "taiko:0x1670000000000000000000000000000000000001",
       "type": "Contract",
       "sourceHashes": [
-        "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x5f895f5e5eff391b355fd960e8891da71f24b40a469036685e6306937f582f93"
       ],
       "proxyType": "EIP1967 proxy",
@@ -104,8 +104,8 @@
       "address": "taiko:0x1670000000000000000000000000000000000006",
       "type": "Contract",
       "sourceHashes": [
-        "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x6fe05ffd6df39bf2744926b989c92177a890441393df2e76bc191747b86fe675"
       ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1716620627,
