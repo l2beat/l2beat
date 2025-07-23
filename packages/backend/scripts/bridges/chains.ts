@@ -13,9 +13,9 @@ export interface Chain {
         chainId: number
       }
   getTxUrl: (hash: string) => string
-  envioUrl: string
-  envioCallsPerMinute: number
-  envioBatchSize: number
+  envioUrl?: string
+  envioCallsPerMinute?: number
+  envioBatchSize?: number
 }
 // Envio Rate Limiting Information: https://envio.dev/pricing
 //  Without API Token: Free unlimited usage with heavy rate limiting (60 requests/minute)
@@ -139,5 +139,15 @@ export const CHAINS: Chain[] = [
     envioUrl: 'https://ink.hypersync.xyz/query', //🪨
     envioCallsPerMinute: 120,
     envioBatchSize: 100,
+  },
+  {
+    name: 'polygonzkevm',
+    shortName: 'zkevm',
+    rpcCallsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'rpc',
+      callsPerMinute: 120,
+    },
+    getTxUrl: (hash: string) => `https://zkevm.polygonscan.com/tx/${hash}`,
   },
 ]
