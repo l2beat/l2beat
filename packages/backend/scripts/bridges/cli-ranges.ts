@@ -5,7 +5,7 @@ import {
   HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { command, option, optional, run, string } from 'cmd-ts'
 import groupBy from 'lodash/groupBy'
 import { CHAINS } from './chains'
@@ -66,15 +66,17 @@ const cmd = command({
                 retryStrategy: 'SCRIPT',
               }),
             ]),
-      envioClient: new EnvioClient({
-        url: c.envioUrl,
-        apiToken: envioApiToken,
-        sourceName: `${c.name} (Envio)`,
-        http,
-        logger,
-        callsPerMinute: c.envioCallsPerMinute,
-        retryStrategy: 'SCRIPT',
-      }),
+      envioClient: c.envioUrl
+        ? new EnvioClient({
+            url: c.envioUrl,
+            apiToken: envioApiToken,
+            sourceName: `${c.name} (Envio)`,
+            http,
+            logger,
+            callsPerMinute: c.envioCallsPerMinute ?? 120,
+            retryStrategy: 'SCRIPT',
+          })
+        : undefined,
       start: -1, // will be filled later
       end: -1, // will be filled later,
     }))
@@ -107,14 +109,22 @@ const cmd = command({
     const messages: Message[] = []
     const promises: (() => Promise<void>)[] = []
     for (const r of chains) {
+      if (!r.envioClient) {
+        logger.info(`Skipping ${r.name}: Missing Envio config`)
+        continue
+      }
+
+      assert(r.envioBatchSize)
       const totalRange = r.end - r.start
       const numBatches = Math.ceil(totalRange / r.envioBatchSize)
 
       for (let batchIndex = 0; batchIndex < numBatches; batchIndex++) {
         promises.push(async () => {
+          assert(r.envioBatchSize)
           const batchStart = r.start + batchIndex * r.envioBatchSize
           const batchEnd = Math.min(batchStart + r.envioBatchSize, r.end)
 
+          assert(r.envioClient)
           const transactions = await r.envioClient.getTransactionsWithLogs(
             batchStart,
             batchEnd,
