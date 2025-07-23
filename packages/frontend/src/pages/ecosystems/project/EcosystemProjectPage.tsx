@@ -20,10 +20,10 @@ import { EcosystemMilestonesAndIncidents } from './components/widgets/EcosystemM
 import { EcosystemMobileProjectLinks } from './components/widgets/EcosystemMobileProjectLinks'
 import { EcosystemProjectsByDaLayer } from './components/widgets/EcosystemProjectsByDaLayer'
 import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsByRaas'
-import { EcosystemReportLink } from './components/widgets/EcosystemReportLink'
 import { EcosystemToken } from './components/widgets/EcosystemToken'
 import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
 import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
+import { EcosystemUpdateLink } from './components/widgets/EcosystemUpdateLink'
 
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
@@ -142,9 +142,9 @@ export function EcosystemProjectPage({
                   }
                   className="col-span-12 lg:col-span-8"
                 />
-                <EcosystemReportLink
+                <EcosystemUpdateLink
                   className="col-span-12"
-                  href={ecosystem.links.ecosystemReport}
+                  href={ecosystem.links.ecosystemUpdate}
                 />
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />

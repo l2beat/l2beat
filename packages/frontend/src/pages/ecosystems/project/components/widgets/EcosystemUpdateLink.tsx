@@ -1,6 +1,6 @@
 import { cn } from '~/utils/cn'
 
-export function EcosystemReportLink({
+export function EcosystemUpdateLink({
   className,
   href,
 }: {
@@ -17,10 +17,10 @@ export function EcosystemReportLink({
     >
       <div className="rounded-sm bg-surface-primary px-4 py-5">
         <p className="mb-1 text-subtitle-12 uppercase transition-opacity group-hover:opacity-0">
-          Ecosystem Report
+          Ecosystem Updates
         </p>
         <p className="group-hover:-translate-y-2 origin-left font-bold text-label-value-20 transition-all will-change-transform group-hover:translate-x-4 group-hover:scale-125">
-          View our newest Ecosystem Report
+          View our newest Ecosystem Update
         </p>
       </div>
     </a>

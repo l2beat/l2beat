@@ -76,7 +76,7 @@ export interface EcosystemEntry {
     buildOn: string
     learnMore: string
     governance: EcosystemGovernanceLinks
-    ecosystemReport: string
+    ecosystemUpdate: string
   }
   images: {
     buildOn: string
@@ -169,7 +169,7 @@ export async function getEcosystemEntry(
       buildOn: ecosystem.ecosystemConfig.links.buildOn,
       learnMore: ecosystem.ecosystemConfig.links.learnMore,
       governance: getGovernanceLinks(ecosystem),
-      ecosystemReport: getEcosystemReportLink(ecosystem),
+      ecosystemUpdate: getEcosystemUpdateLink(ecosystem),
     },
     allScalingProjects: {
       tvs: tvs.total,
@@ -259,7 +259,7 @@ function getGovernanceLinks(
   }
 }
 
-function getEcosystemReportLink(ecosystem: Project<'ecosystemConfig'>): string {
+function getEcosystemUpdateLink(ecosystem: Project<'ecosystemConfig'>): string {
   const lastReport = getCollection('monthly-updates')
     .sort((a, b) => a.data.publishedOn.getTime() - b.data.publishedOn.getTime())
     .at(-1)
