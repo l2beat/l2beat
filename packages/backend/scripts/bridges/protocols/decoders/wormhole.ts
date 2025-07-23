@@ -4,7 +4,10 @@ import type { Chain } from '../../chains'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 import { extractAddressFromPadded } from '../../utils/viem'
-import { createWormholeSequence as createWormholeId } from '../../utils/wormhole'
+import {
+  createWormholeSequence as createWormholeId,
+  decodeWormholeTransfer,
+} from '../../utils/wormhole'
 
 export const WORMHOLE = {
   name: 'wormhole',
@@ -43,11 +46,18 @@ function decoder(
         data.args.sequence,
       )
 
+      const destinationChainId = decodeWormholeTransfer(
+        data.args.payload,
+      ).toChain
+      const destination = BRIDGES.find(
+        (b) => b.chainId === destinationChainId,
+      )?.chainShortName
+
       return {
         direction: 'outbound',
         protocol: WORMHOLE.name,
         origin: chain.shortName,
-        destination: 'UNSUPPORTED',
+        destination: destination ?? destinationChainId.toString(),
         blockTimestamp: transaction.blockTimestamp,
         blockNumber: transaction.blockNumber,
         txHash: transaction.hash,
