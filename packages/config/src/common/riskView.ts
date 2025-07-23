@@ -58,6 +58,14 @@ export const STATE_FP_1R_ZK: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
+export const STATE_FP_HYBRID_ZK: TableReadyValue = {
+  value: 'Fraud proofs (1R, ZK)',
+  description:
+    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof can eliminate a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used to prove the correctness of the state transition.',
+  sentiment: 'good',
+  orderHint: Number.POSITIVE_INFINITY,
+}
+
 export const STATE_ZKP_SN: TableReadyValue = {
   value: 'ZK proofs (SN)',
   description:
@@ -711,6 +719,7 @@ export const RISK_VIEW = {
   STATE_FP_INT,
   STATE_FP_INT_ZK,
   STATE_FP_1R_ZK,
+  STATE_FP_HYBRID_ZK,
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_ZKP_ST_SN_WRAP,

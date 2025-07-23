@@ -871,7 +871,7 @@ function getRiskViewStateValidation(
     }
     case 'Kailua': {
       return {
-        ...RISK_VIEW.STATE_FP_1R_ZK,
+        ...RISK_VIEW.STATE_FP_HYBRID_ZK,
         secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
     }
