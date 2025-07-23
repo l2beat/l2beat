@@ -61,7 +61,7 @@ export const STATE_FP_1R_ZK: TableReadyValue = {
 export const STATE_FP_HYBRID_ZK: TableReadyValue = {
   value: 'Fraud proofs (1R, ZK)',
   description:
-    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof can eliminate a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used to prove the correctness of the state transition.',
+    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Single round proofs (1R) prove the validity of a state proposal, only requiring a single transaction to resolve. A fault proof eliminates a state proposal by proving that any intermediate state transition in the proposal results in a different state root. For either, a ZK proof is used.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
 }
@@ -537,7 +537,7 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
   const delayString = formatSeconds(delay)
   return {
     value: 'Self propose',
-    description: `The primary whitelisted proposer has an optimistic advantage, letting them win by default over conflicting unproven proposals by others. This privilege is dropped after ${delayString} of inactivity, and anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal to win against the privileged proposer at any time.`,
+    description: `The primary whitelisted proposer has an optimistic advantage, letting them win by default if no conflicting proposals are made. This privilege is dropped after ${delayString} of inactivity, and anyone can leverage the source available zk prover to prove a fault or a conflicting valid proposal to win against the privileged proposer and/or supply a bond and make a counter proposal at any time.`,
     sentiment: 'good',
     orderHint: delay,
   }
