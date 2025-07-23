@@ -6,6 +6,7 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
   type Hash256,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -17,7 +18,7 @@ import type { ContractDeployment, IProvider, RawProviders } from './IProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
 
 interface AllProviders {
-  get(chain: string, blockNumber: number): IProvider
+  get(chain: string, timestamp: UnixTime): Promise<IProvider>
 }
 
 export class HighLevelProvider implements IProvider {
@@ -27,14 +28,23 @@ export class HighLevelProvider implements IProvider {
     private readonly allProviders: AllProviders,
     private readonly provider: BatchingAndCachingProvider,
     readonly chain: string,
+    readonly timestamp: UnixTime,
     readonly blockNumber: number,
   ) {}
-  switchBlock(blockNumber: number): IProvider {
-    return this.allProviders.get(this.chain, blockNumber)
+
+  async switchBlock(blockNumber: number): Promise<IProvider> {
+    const block = await this.getBlock(blockNumber)
+    assert(block !== undefined, `Could not find block ${blockNumber}`)
+    const blockTimestamp = UnixTime(block.timestamp)
+
+    return this.allProviders.get(this.chain, blockTimestamp)
   }
 
-  switchChain(chain: string, blockNumber: number): IProvider {
-    return this.allProviders.get(chain, blockNumber)
+  switchChain(
+    chain: string,
+    timestamp: UnixTime | undefined = undefined,
+  ): Promise<IProvider> {
+    return this.allProviders.get(chain, timestamp ?? this.timestamp)
   }
 
   raw<T>(

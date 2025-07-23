@@ -37,7 +37,7 @@ export const SingleDiscoveryCommand = command({
     })
     const http = new HttpClient()
 
-    const { result, blockNumber } = await discover(
+    const { result, blockNumber, timestamp } = await discover(
       paths,
       chainConfigs,
       projectConfig,
@@ -52,7 +52,7 @@ export const SingleDiscoveryCommand = command({
 
     await rimraf(rootFolder)
 
-    await saveDiscoveryResult(result, projectConfig, blockNumber, Logger.INFO, {
+    await saveDiscoveryResult(result, projectConfig, blockNumber, timestamp, Logger.INFO, {
       paths: { ...paths, discovery: rootFolder },
       templatesFolder,
     })

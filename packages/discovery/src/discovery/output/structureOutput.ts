@@ -1,5 +1,6 @@
 import {
   type Hash256,
+  type UnixTime,
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
@@ -12,12 +13,14 @@ import type { EntryParameters, StructureOutput } from './types'
 export function getStructureOutput(
   config: StructureConfig,
   blockNumber: number,
+  timestamp: UnixTime,
   results: Analysis[],
 ): StructureOutput {
   return withoutUndefinedKeys({
     name: config.name,
     chain: config.chain,
     blockNumber,
+    timestamp,
     configHash: hashJsonStable(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),

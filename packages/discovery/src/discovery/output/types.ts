@@ -15,6 +15,7 @@ export interface StructureOutput {
   name: string
   chain: string
   blockNumber: number
+  timestamp: number
   entries: StructureEntry[]
   abis: Record<string, string[]>
   configHash: Hash256
@@ -26,6 +27,7 @@ export interface DiscoveryOutput {
   name: string
   chain: string
   blockNumber: number
+  timestamp: number
   entries: EntryParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
