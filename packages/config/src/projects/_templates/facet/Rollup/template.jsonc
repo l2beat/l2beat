@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Rollup contract for Facet",
+  "description": "Rollup contract for Facet. This is the core contract that manages the transaction ordering, the state of the rollup and its proof system.",
   "ignoreMethods": [
     "getProposal",
     "gameOver",
@@ -9,5 +9,6 @@
     "needsDefense",
     "l1BlockHashes",
     "proposalIsCanonical"
-  ]
+  ],
+  "category": "core"
 }

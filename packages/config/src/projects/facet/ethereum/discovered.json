@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22981943,
+  "blockNumber": 22984888,
   "configHash": "0x0414d500c0200175afd8bef4ad7b0a791c54175d28c0b32831fc251d048c8f75",
   "entries": [
     {
@@ -14,7 +14,7 @@
         "0xd5a977325a2b053491581c54141a59a425e2fe510cdfa1cd3b85ab45ca437a7e"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Official Facet implementation of the Ether Bridge.",
+      "description": "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing.",
       "sinceTimestamp": 1734701579,
       "sinceBlock": 21444055,
       "values": {
@@ -38,7 +38,8 @@
       "implementationNames": {
         "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": "ERC1967Factory",
         "eth:0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": "FacetEtherBridgeV6"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "SP1Verifier",
@@ -187,10 +188,12 @@
       "name": "L1ETHBridge",
       "address": "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
       "type": "Contract",
+      "template": "facet/L1ETHBridge",
       "sourceHashes": [
         "0x3a64ad01421d13d01bcda2dccfa9afde7ed6dad28ed7471ada57175a7637e8bb"
       ],
       "proxyType": "immutable",
+      "description": "L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
       "sinceTimestamp": 1753123535,
       "sinceBlock": 22969441,
       "values": {
@@ -203,7 +206,8 @@
       },
       "implementationNames": {
         "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262": "L1ETHBridge"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
@@ -281,7 +285,7 @@
         "0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e"
       ],
       "proxyType": "immutable",
-      "description": "Rollup contract for Facet",
+      "description": "Rollup contract for Facet. This is the core contract that manages the transaction ordering, the state of the rollup and its proof system.",
       "sinceTimestamp": 1753123523,
       "sinceBlock": 22969440,
       "values": {
@@ -299,7 +303,7 @@
           "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
           1604382
         ],
-        "getProposalsLength": 9,
+        "getProposalsLength": 10,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
@@ -316,7 +320,8 @@
       },
       "implementationNames": {
         "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D": "Rollup"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0xD66Cb98865181a890ffee5654fAe1D6b4D1827a7",
@@ -656,6 +661,7 @@
     "facet/FacetEtherBridge": "0xbb9993b8f35798795519db980c5342ad5d79a1fa8975ca041dfa3b6910c8b229",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/Rollup": "0x008423e8e94166a96d76831182497354a4f4416a4293926b52238595623009e4",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

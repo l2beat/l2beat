@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "facet",
-  "blockNumber": 1619170,
+  "blockNumber": 1622139,
   "configHash": "0x822e745cc802dc13517e81554d85487e43149e50fd7cfbae4c03029087d90514",
   "entries": [
     {
@@ -13,11 +13,13 @@
       "name": "L2ToL1MessagePasser",
       "address": "facet:0x4200000000000000000000000000000000000016",
       "type": "Contract",
+      "template": "facet/L2ToL1MessagePasser",
       "sourceHashes": [
         "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d",
         "0x6b028499b0f22cef9cbca4b978fff42eab473a6826e795939827875790a562b2"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "L2ToL1MessagePasser is a contract that allows messages to be sent from the L2 to the L1, used to send withdrawal requests from the L2 to the L1.",
       "sinceTimestamp": 1733844551,
       "sinceBlock": 0,
       "values": {
@@ -32,7 +34,8 @@
       "implementationNames": {
         "facet:0x4200000000000000000000000000000000000016": "Proxy",
         "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "name": "ProxyAdmin",
@@ -86,10 +89,12 @@
       "name": "L2FFBBridge",
       "address": "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
       "type": "Contract",
+      "template": "facet/L2ERC20Bridge",
       "sourceHashes": [
         "0x06ae9715fb784184e109392e0c2013c69faaf598b8cbbc6debf154cef8d2d305"
       ],
       "proxyType": "immutable",
+      "description": "L2ERC20Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
       "sinceTimestamp": 1753123547,
       "sinceBlock": 1606584,
       "values": {
@@ -104,7 +109,8 @@
       },
       "implementationNames": {
         "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4": "L2ERC20Bridge"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -217,6 +223,8 @@
     ]
   },
   "usedTemplates": {
+    "facet/L2ERC20Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
   "permissionsConfigHash": "0xe489d23d27a080b6af0a97c150fed1047dc82c479f1058833ba8184cd246a8b1"
