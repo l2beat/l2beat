@@ -19,6 +19,7 @@ export async function getScalingProjectTvsBreakdownData(
   if (!tvsBreakdownData) {
     return undefined
   }
+  throw new Error('test')
 
   const range = tvsBreakdownData.project.archivedAt ? 'max' : '1y'
 
