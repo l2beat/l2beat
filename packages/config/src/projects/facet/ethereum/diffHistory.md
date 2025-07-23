@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x59a8a26de94cdfcb081cd369f1b8d46179a797bb
+Generated with discovered.json: 0xd76bfcd6594083805a27335b6289d7534c909b01
 
-# Diff at Wed, 23 Jul 2025 08:52:22 GMT:
+# Diff at Wed, 23 Jul 2025 09:20:24 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 22367347
-- current block number: 22980797
+- current block number: 22980937
 
 ## Description
 
@@ -87,6 +87,88 @@ Provide description of changes. This section will be preserved.
  ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++
  .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++
  5 files changed, 5939 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0xa1233c2DB638D41893a101B0e9dd44cb681270E8)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":".guardian"}
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":".guardian"}
+      receivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.4:
+-        {"permission":"interact","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
+      receivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.8:
+-        {"permission":"upgrade","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.9:
+-        {"permission":"upgrade","from":"eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 Generated with discovered.json: 0x37d75473b3d42a6c61e9b66fa480f51a19feafdb
