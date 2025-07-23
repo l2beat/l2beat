@@ -131,7 +131,9 @@ function getDaSummaryEntry(
         underReview:
           !!layer.statuses.reviewStatus || !!b.statuses.reviewStatus
             ? 'config'
-            : undefined,
+            : projectsChangeReport.getChanges(b.id).impactfulChange
+              ? 'impactful-change'
+              : undefined,
       },
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)),
       risks: mapBridgeRisksToRosetteValues(b.daBridge.risks),

@@ -10,6 +10,7 @@ import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type {
   DaBridgeSummaryEntry,
@@ -17,6 +18,7 @@ import type {
 } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { cn } from '~/utils/cn'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
+import { getUnderReviewText } from '~/utils/project/underReview'
 import { ProjectsUsedIn } from '../../../../../components/ProjectsUsedIn'
 import {
   BasicDaTable,
@@ -90,6 +92,7 @@ function BridgeCells({
         className={cn(
           'font-medium text-sm first:pl-0',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
         )}
       >
         <TableLink
@@ -107,12 +110,23 @@ function BridgeCells({
               </TooltipContent>
             </Tooltip>
           )}
+          {bridge.statuses?.underReview && (
+            <Tooltip>
+              <TooltipTrigger>
+                <UnderReviewIcon className="size-3.5 md:size-4" />
+              </TooltipTrigger>
+              <TooltipContent>
+                {getUnderReviewText(bridge.statuses?.underReview)}
+              </TooltipContent>
+            </Tooltip>
+          )}
         </TableLink>
       </TableCell>
       <TableCell
         className={cn(
           'flex items-center justify-center pl-4',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
         )}
       >
         <GrissiniCell
@@ -129,6 +143,7 @@ function BridgeCells({
         className={cn(
           'pr-[30px] font-medium text-sm md:pr-[42px]',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
         )}
         align="right"
       >
@@ -138,6 +153,7 @@ function BridgeCells({
         className={cn(
           'font-medium text-sm',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
         )}
       >
         <ProjectsUsedIn usedIn={bridge.usedIn} />
