@@ -27,7 +27,8 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
         'scroll-mt-[38px] px-4 py-8 md:mt-4 md:scroll-mt-4 md:p-6',
         'max-md:border-divider max-md:border-b max-md:last:border-none',
         'md:rounded-lg',
-        'border-t-branding-primary md:group-data-[has-colors=true]/section-wrapper:border-t-4',
+        !props.nested &&
+          'border-t-branding-primary md:group-data-[has-colors=true]/section-wrapper:border-t-4',
         props.nested && 'mt-10 p-0 md:p-0',
         props.className,
       )}
