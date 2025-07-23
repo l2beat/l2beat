@@ -179,6 +179,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                 value={id}
                 onSelect={() => {
                   setSelectedId(id)
+                  setSearch('')
                   track('filterIdSelected', {
                     props: { name: id },
                   })
