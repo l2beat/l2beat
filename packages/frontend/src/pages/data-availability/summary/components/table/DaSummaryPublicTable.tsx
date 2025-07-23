@@ -17,12 +17,12 @@ import type {
 } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 import { cn } from '~/utils/cn'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
+import { ProjectsUsedIn } from '../../../../../components/ProjectsUsedIn'
 import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../components/BasicDaTable'
-import { publicSystemsColumns } from './Columns'
-import { ProjectsUsedIn } from './ProjectsUsedIn'
+import { publicSystemsColumns } from './columns'
 
 export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
   const table = useTable({

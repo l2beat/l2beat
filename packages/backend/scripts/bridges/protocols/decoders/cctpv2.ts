@@ -2,7 +2,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Message } from '../../types/Message'
-import type { TransactionWithViemLogs } from '../../types/TransactionWithViemLogs'
+import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
 export const CCTPV2 = {
   name: 'cctpv2',
@@ -11,7 +11,7 @@ export const CCTPV2 = {
 
 function decoder(
   chain: Chain,
-  transaction: TransactionWithViemLogs,
+  transaction: TransactionWithLogs,
 ): Message | undefined {
   for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)

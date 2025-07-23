@@ -1,32 +1,14 @@
 {
   "name": "silicon",
   "chain": "ethereum",
-  "blockNumber": 22397534,
-  "configHash": "0xdc6f7c3e5f3921f2c7a29cd60fb40000a6246a85d97f710db4bd18dabc3a6ed4",
+  "blockNumber": 22975146,
+  "configHash": "0xe5320468f59d85bc317f39d62364cb9e98d82ed47d87ab57b3b0b086b4b0332c",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
       "address": "eth:0x07389Ba04a3D39c04BAf605bF9d254B5EB0bC3e0",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Verifier",
-      "address": "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-      "type": "Contract",
-      "template": "polygon-cdk/Verifier",
-      "sourceHashes": [
-        "0x0bc67d276b40b2ba13903d94fd6c25ae4d3d5162bc942763c418afdc11bc9b32"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
-      "sinceTimestamp": 1711291211,
-      "sinceBlock": 19505052,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": "FflonkVerifier"
-      },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x113958b2E9FFDECC74EEDb206A12b5f1168164fb",
@@ -171,7 +153,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xfd20867a5ac0777134040030e3587f45f627dff5ae3b5b1d1aed125aef947cc9",
+        "lastAccInputHash": "0xaeed872512ddbbf615b594a80e8a60cf6355d66580a32d5e9352a0293eb5eebf",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "silicon-zk",
@@ -215,6 +197,24 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Verifier",
+      "address": "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D",
+      "type": "Contract",
+      "template": "polygon-cdk/Verifier",
+      "sourceHashes": [
+        "0xa0662ee6bc9d2b6e692a65e797b6edb54b3019696dc845d2c644f705bd8bb5be"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.",
+      "sinceTimestamp": 1729157663,
+      "sinceBlock": 20984421,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": "FflonkVerifier_12"
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
       "address": "eth:0xef5D7af5dbBeE845860E75cE8f8e8fE7F6e8dBF7",
       "type": "EOA",
       "proxyType": "EOA",
@@ -251,9 +251,6 @@
     }
   ],
   "abis": {
-    "eth:0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
-    ],
     "eth:0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -403,6 +400,9 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
+    "eth:0x9B9671dB83CfcB4508bF361942488C5cA2b1286D": [
+      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
+    ],
     "eth:0xa2F7e6Dfd6f43976ee1E2e8A122984ECa8e38608": [
       "constructor()",
       "error CommitteeAddressDoesNotExist()",
@@ -434,5 +434,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xd7a5d1a062c689b2116c0e4ba991ca153a438718710e36d74172fbd7ca91dc8e"
+  "permissionsConfigHash": "0xa8a148ea86f277c4a63ff1683b3441b74293e7905f4b862a93af8e628d075c2a"
 }

@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xaef444f24f4b0cfe699baf99164c1b405f337739
+
+# Diff at Mon, 21 Jul 2025 10:11:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c89d5207a278197d1d4bfd60ac8e37852accba7c block: 19531527
+- current block number: 22966882
+
+## Description
+
+SimpleFeeProxy [upgraded](https://disco.l2beat.com/diff/eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C/eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE):
+- flashloans removed
+- AMB function added (sends only message, no tokens)
+- treasury deprecated, fees can now be removed by a permissioned actor
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xa0D6062Be29710c666aE850395Ac1A2AeCd14885)
+    +++ description: None
+```
+
+```diff
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xc18d3818f9e809ced3dcce60fbe4287220ce2fced4f6c66711de5e704738bb9a"
++        "0x90a1adff0012e17a22d9eb35cecd932a71923919b443758b02b2c43ad666a352"
+      values.$implementation:
+-        "eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C"
++        "eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE"
+      values.$pastUpgrades.2:
++        ["2025-07-16T10:55:35.000Z","0x2891ca2643f9cb857b006952744b633088f22b57a8a04495abec7b79a500f1e3",["eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.getChainId:
+-        1
+      values.treasury:
+-        "eth:0xa0D6062Be29710c666aE850395Ac1A2AeCd14885"
+      values.version:
+-        400
++        410
+      values.FEE_COLLECTOR_ROLE:
++        "0x2dca0f5ce7e75a4b43fe2b0d6f5d0b7a2bf92ecf89f8f0aa17b8308b67038821"
+      implementationNames.eth:0x37a52ddb753c924f8C914de65ef00b5210Caa83C:
+-        "SimpleFeeProxy"
+      implementationNames.eth:0xa1cc7E623423169e1C10e6e5CC8Ae6f1d11042DE:
++        "SimpleFeeProxy"
+    }
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafe/GnosisSafe.sol => /dev/null         | 953 ---------------------
+ .../GnosisSafe/GnosisSafeProxy.p.sol => /dev/null  |  35 -
+ .../SimpleFeeProxy/SimpleFeeProxy.sol              |  98 ++-
+ 3 files changed, 56 insertions(+), 1030 deletions(-)
+```
+
 Generated with discovered.json: 0xe7e0aa86404a86ca4b592bedd640b11d1f0fe52a
 
 # Diff at Mon, 14 Jul 2025 12:44:57 GMT:

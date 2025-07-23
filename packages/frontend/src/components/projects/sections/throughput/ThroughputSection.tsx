@@ -22,7 +22,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
       }
     | undefined
   totalPosted: number | undefined
-  customColors: Record<string, string>
+  customColors: Record<string, string> | undefined
   syncStatus: {
     warning: string | undefined
     isSynced: boolean

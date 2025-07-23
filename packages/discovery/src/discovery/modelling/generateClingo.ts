@@ -1,5 +1,8 @@
+import { existsSync, readFileSync } from 'fs'
 import merge from 'lodash/merge'
+import { join } from 'path'
 import type { TemplateService } from '../analysis/TemplateService'
+import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionsConfig } from '../config/PermissionConfig'
 import type { StructureEntry } from '../output/types'
 import { interpolateModelTemplate } from './interpolate'
@@ -51,4 +54,16 @@ export function generateClingoFromModelLp(
     return interpolated
   }
   return ''
+}
+
+export function getProjectSpecificModelLp(
+  project: string,
+  chain: string,
+  configReader: ConfigReader,
+): string | undefined {
+  const projectPath = configReader.getProjectPath(project)
+  const projectModelLpPath = join(projectPath, 'model.lp')
+  return existsSync(projectModelLpPath)
+    ? readFileSync(projectModelLpPath, 'utf8')
+    : undefined
 }

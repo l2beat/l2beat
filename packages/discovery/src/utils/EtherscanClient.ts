@@ -303,6 +303,7 @@ function decodeEtherscanSource(
   source: string,
   solidityVersion: string,
 ): DecodedSource {
+  source = source.trim()
   if (!source.startsWith('{')) {
     let extension = 'sol'
     if (solidityVersion.startsWith('vyper')) {

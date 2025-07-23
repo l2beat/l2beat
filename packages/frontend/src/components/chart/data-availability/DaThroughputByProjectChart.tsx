@@ -26,7 +26,7 @@ interface Props {
   data: DaThroughputChartDataByChart | undefined
   isLoading: boolean
   projectsToShow: string[]
-  customColors: Record<string, string>
+  customColors: Record<string, string> | undefined
   milestones: Milestone[]
 }
 
@@ -70,7 +70,7 @@ export function DaThroughputByProjectChart({
             project === 'Unknown'
               ? 'var(--secondary)'
               : // biome-ignore lint/style/noNonNullAssertion: we know it's there
-                (customColors[project] ?? colors[colorIndex++]!),
+                (customColors?.[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
         }
       }

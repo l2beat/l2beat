@@ -10,11 +10,11 @@ import { MissingIcon } from '~/icons/Missing'
 import { StopwatchIcon } from '~/icons/Stopwatch'
 import { CountdownSection } from '../CountdownSection'
 
-interface Props {
+export function StageOneRequirementsChangeNotice({
+  downgradePending,
+}: {
   downgradePending: NonNullable<StageConfigured['downgradePending']>
-}
-
-export function StageOneRequirementsChangeNotice({ downgradePending }: Props) {
+}) {
   const isMobile = useIsMobile()
   return (
     <CountdownSection>
@@ -49,7 +49,11 @@ export function StageOneRequirementsChangeNotice({ downgradePending }: Props) {
 
 export function StageOneRequirementsChangeStageSectionNotice({
   downgradePending,
-}: Props) {
+  stage1PrincipleDescription,
+}: {
+  downgradePending: NonNullable<StageConfigured['downgradePending']>
+  stage1PrincipleDescription?: string
+}) {
   return (
     <div className="flex gap-2 rounded-lg bg-brand/20 p-4">
       <StopwatchIcon className="mt-0.5 size-5 shrink-0" />
@@ -65,6 +69,11 @@ export function StageOneRequirementsChangeStageSectionNotice({
           <MissingIcon className="mt-[5px] size-4 shrink-0 fill-negative" />
           <span>{downgradePending.reason}</span>
         </div>{' '}
+        {stage1PrincipleDescription && (
+          <p className="mt-2 text-paragraph-15 md:text-paragraph-16">
+            {stage1PrincipleDescription}
+          </p>
+        )}
         <CustomLink
           href={externalLinks.articles.stageOneRequirementsChange}
           className="mt-4 flex items-center gap-1 font-bold text-paragraph-14"

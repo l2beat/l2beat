@@ -58,6 +58,9 @@ body:has(.reading) {
   --surface-primary: #fafafa;
   --surface-secondary: #e6e7ec;
   --surface-tertiary: #ccd0da;
+  --surface-info: #ccdbff;
+  --surface-warning: #ffc107;
+  --surface-negative: #f3c8c8;
   --header-primary: #ffffff;
   --header-secondary: #eeeff4;
   --icon-secondary: #5f6470;
@@ -123,6 +126,9 @@ body:has(.reading) {
   --surface-primary: #17191f;
   --surface-secondary: #3b3f45;
   --surface-tertiary: #484d54;
+  --surface-info: #26374f;
+  --surface-warning: #ffc107;
+  --surface-negative: #441111;
   --header-primary: #1a1c20;
   --header-secondary: #23262b;
   --icon-secondary: #62666c;
@@ -441,6 +447,9 @@ body:has(.reading) {
   --color-surface-primary: var(--surface-primary);
   --color-surface-secondary: var(--surface-secondary);
   --color-surface-tertiary: var(--surface-tertiary);
+  --color-surface-info: var(--surface-info);
+  --color-surface-warning: var(--surface-warning);
+  --color-surface-negative: var(--surface-negative);
   --color-header-secondary: var(--header-secondary);
   --color-header-primary: var(--header-primary);
   --color-icon-secondary: var(--icon-secondary);
@@ -456,6 +465,12 @@ body:has(.reading) {
   --color-chart-stacked-yellow: var(--chart-stacked-yellow);
   --color-chart-stacked-pink: var(--chart-stacked-pink);
   --color-chart-stacked-purple: var(--chart-stacked-purple);
+
+  --color-branding-primary: var(--project-primary, var(--ecosystem-primary));
+  --color-branding-secondary: var(
+    --project-secondary,
+    var(--ecosystem-secondary)
+  );
 
   --z-1: 1;
   --z-10: 10;

@@ -1,4 +1,4 @@
-import type { ZkCatalogProofVerification } from './utils/types'
+import type { ZkCatalogProofVerification } from './v1/utils/types'
 
 export interface ZkCatalogViewEntry extends ZkCatalogProofVerification {
   name: string

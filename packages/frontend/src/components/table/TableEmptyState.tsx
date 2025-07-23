@@ -1,12 +1,8 @@
 import { linkVariants } from '../link/CustomLink'
-import { useTableFilterContext } from './filters/TableFilterContext'
+import { useTableFilterReset } from './filters/TableFilterContext'
 
 export function TableEmptyState() {
-  const { dispatch } = useTableFilterContext()
-
-  const reset = () => {
-    dispatch({ type: 'clear' })
-  }
+  const reset = useTableFilterReset()
 
   return (
     <div className="mt-6 flex flex-col items-center justify-center rounded-b-lg bg-blue-700/15 py-10">

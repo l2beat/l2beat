@@ -6,7 +6,7 @@ import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { useLivenessTimeRangeContext } from '../LivenessTimeRangeContext'
-import { getScalingLivenessColumns } from './Columns'
+import { getScalingLivenessColumns } from './columns'
 import { toLivenessTableEntry } from './toTableEntry'
 
 export interface Props {
