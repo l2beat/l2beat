@@ -150,4 +150,14 @@ export const CHAINS: Chain[] = [
     },
     getTxUrl: (hash: string) => `https://zkevm.polygonscan.com/tx/${hash}`,
   },
+  {
+    name: 'katana',
+    shortName: 'katana',
+    rpcCallsPerMinute: 120,
+    blockProviderConfig: {
+      type: 'rpc',
+      callsPerMinute: 120,
+    },
+    getTxUrl: (hash: string) => `https://explorer.katanarpc.com/tx/${hash}`,
+  },
 ]

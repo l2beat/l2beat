@@ -109,13 +109,18 @@ function decoder(
 
 const BRIDGES = [
   {
-    chainId: 1,
+    chainId: 0,
     chainShortName: 'eth',
     address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
   },
   {
-    chainId: 1101,
+    chainId: 1,
     chainShortName: 'zkevm',
+    address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
+  },
+  {
+    chainId: 20,
+    chainShortName: 'katana',
     address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
   },
 ]
