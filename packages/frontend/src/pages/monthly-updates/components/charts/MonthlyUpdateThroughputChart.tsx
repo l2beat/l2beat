@@ -36,7 +36,6 @@ export function MonthlyUpdateThroughputChart({
   const { data, isLoading } = api.da.projectChart.useQuery({
     range: { type: 'custom', from, to: to + UnixTime.DAY },
     projectId: daLayer,
-    includeScalingOnly: false,
   })
 
   const chartMeta = useMemo(() => {
