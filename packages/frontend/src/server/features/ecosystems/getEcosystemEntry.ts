@@ -1,7 +1,7 @@
 import type {
   Milestone,
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert, type ProjectId } from '@l2beat/shared-pure'
@@ -57,7 +57,7 @@ export interface EcosystemEntry {
     height: number
   }
   badges: BadgeWithParams[]
-  colors: ProjectColors
+  colors: ProjectCustomColors
   liveProjects: EcosystemProjectEntry[]
   upcomingProjects: ScalingUpcomingEntry[]
   projectsChartData: EcosystemProjectsCountData

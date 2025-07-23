@@ -2,6 +2,7 @@
 export interface Chain {
   name: string
   shortName: string
+  rpcCallsPerMinute: number
   blockProviderConfig:
     | {
         type: 'rpc'
@@ -25,6 +26,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'ethereum',
     shortName: 'eth',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 1,
@@ -37,6 +39,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'arbitrum',
     shortName: 'arb1',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 42161,
@@ -49,6 +52,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'optimism',
     shortName: 'oeth',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 10,
@@ -61,6 +65,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'base',
     shortName: 'base',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 8453,
@@ -71,8 +76,9 @@ export const CHAINS: Chain[] = [
     envioBatchSize: 2000,
   },
   {
-    name: 'zksync',
+    name: 'zksync2',
     shortName: 'zksync',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 324,
@@ -85,6 +91,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'linea',
     shortName: 'linea',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 59144,
@@ -97,6 +104,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'scroll',
     shortName: 'scr',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 534352,
@@ -109,6 +117,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'unichain',
     shortName: 'unichain',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'etherscan',
       chainId: 130,
@@ -121,6 +130,7 @@ export const CHAINS: Chain[] = [
   {
     name: 'ink',
     shortName: 'ink',
+    rpcCallsPerMinute: 120,
     blockProviderConfig: {
       type: 'rpc',
       callsPerMinute: 120,
