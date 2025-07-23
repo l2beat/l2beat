@@ -1,11 +1,16 @@
 {
   "name": "taiko",
   "chain": "taiko",
-  "blockNumber": 1276050,
-  "configHash": "0x2eca3ac0cdb89b8d29437009a22209634ddd682894f95748d744a5b878161399",
+  "blockNumber": 1276319,
+  "configHash": "0x0994ab26eec95cd22282cca52036cb72ac162d6f1a4a20d84694ff08834306b0",
   "entries": [
     {
       "address": "taiko:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -23,6 +28,7 @@
       "name": "Bridge",
       "address": "taiko:0x1670000000000000000000000000000000000001",
       "type": "Contract",
+      "template": "taiko/L2Bridge",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x5f895f5e5eff391b355fd960e8891da71f24b40a469036685e6306937f582f93"
@@ -87,7 +93,8 @@
         "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
         "paused": false,
         "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
-        "RELAYER_MAX_PROOF_BYTES": 200000
+        "RELAYER_MAX_PROOF_BYTES": 200000,
+        "signalService": "taiko:0x1670000000000000000000000000000000000005"
       },
       "errors": {
         "context": "Processing error occurred.",
@@ -100,14 +107,53 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "SignalService",
+      "address": "taiko:0x1670000000000000000000000000000000000005",
+      "type": "Contract",
+      "template": "taiko/L2SignalService",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xe8788984d5d121a0c1b2a1f177ae2bf142631d845ff8cabda588ae96c9b63038"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1716620627,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
+        "$implementation": "taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762",
+        "$pastUpgrades": [
+          [
+            "2025-05-19T03:19:47.000Z",
+            "0x07f68497c517181b0110a51906fb5f5938aafeda78e07cb0480de417c9083f1b",
+            ["taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "authorizedRelayers": [],
+        "impl": "taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762",
+        "inNonReentrant": false,
+        "owner": "taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C",
+        "paused": false,
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
+        "resolver": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "taiko:0x1670000000000000000000000000000000000005": "ERC1967Proxy",
+        "taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762": "SignalService"
+      }
+    },
+    {
+      "name": "L2AddressManager",
       "address": "taiko:0x1670000000000000000000000000000000000006",
       "type": "Contract",
+      "template": "taiko/L2AddressManager",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
         "0x6fe05ffd6df39bf2744926b989c92177a890441393df2e76bc191747b86fe675"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
       "sinceTimestamp": 1716620627,
       "sinceBlock": 0,
       "values": {
@@ -119,14 +165,129 @@
         "impl": "taiko:0x0167000000000000000000000000000000000006",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
+        "namedAddresses": [
+          {
+            "name": "signal_service",
+            "address": "taiko:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+          },
+          {
+            "name": "bridge",
+            "address": "taiko:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+          },
+          {
+            "name": "erc20_vault",
+            "address": "taiko:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+          },
+          {
+            "name": "erc721_vault",
+            "address": "taiko:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa"
+          },
+          {
+            "name": "erc1155_vault",
+            "address": "taiko:0xaf145913EA4a56BE22E120ED9C24589659881702"
+          },
+          {
+            "name": "taiko_token",
+            "address": "taiko:0xA9d23408b9bA935c230493c40C73824Df71A0975"
+          },
+          {
+            "name": "bridged_erc20",
+            "address": "taiko:0x98161D67f762A9E589E502348579FA38B1Ac47A8"
+          }
+        ],
         "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
         "paused": false,
-        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000"
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
+      "fieldMeta": {
+        "namedAddresses": {
+          "description": "Don't necessarily trust because inconsistencies have been found, e.g. signal service"
+        }
+      },
       "implementationNames": {
         "taiko:0x1670000000000000000000000000000000000006": "ERC1967Proxy",
         "taiko:0x0167000000000000000000000000000000000006": "AddressManager"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000": "taiko_token",
+            "0x626f6e645f746f6b656e00000000000000000000000000000000000000000000": "bond_token",
+            "0x6272696467650000000000000000000000000000000000000000000000000000": "bridge",
+            "0x7369676e616c5f73657276696365000000000000000000000000000000000000": "signal_service",
+            "0x65726332305f7661756c74000000000000000000000000000000000000000000": "erc20_vault",
+            "0x6572633732315f7661756c740000000000000000000000000000000000000000": "erc721_vault",
+            "0x657263313135355f7661756c7400000000000000000000000000000000000000": "erc1155_vault",
+            "0x6272696467655f7761746368646f670000000000000000000000000000000000": "bridge_watchdog",
+            "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
+            "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
+            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155",
+            "0x71756f74615f6d616e6167657200000000000000000000000000000000000000": "quota_manager"
+          }
+        }
+      ]
+    },
+    {
+      "name": "TaikoAnchor",
+      "address": "taiko:0x1670000000000000000000000000000000010001",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xfa9502d01a723f0c39805d4056f6ba190e03e550f2e7839cbc6af8ab6b8341ab"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1716620627,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "$implementation": "taiko:0x3cfe9b8E0e12289D78c91295c8353aB1731F06E1",
+        "$pastUpgrades": [
+          [
+            "2024-11-01T09:22:59.000Z",
+            "0xdbe9caf2b1282d0fecf9a752f2c1aeade8820bb66bb5ad210f0081996504173b",
+            ["taiko:0x75E76c367D6be621bD90e4b1e32fBB3fF59150b6"]
+          ],
+          [
+            "2025-05-19T03:19:47.000Z",
+            "0x07f68497c517181b0110a51906fb5f5938aafeda78e07cb0480de417c9083f1b",
+            ["taiko:0x3cfe9b8E0e12289D78c91295c8353aB1731F06E1"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "getBlockHash": [
+          "0x90bc60466882de9637e269e87abab53c9108cf9113188bc4f80bcfcb10e489b9",
+          "0x2b58f652c63cadd274d48238175ba5fb2564d2813e96133b72b19d0be7cec895",
+          "0xf9325a1a933d06a82080cceb9caa3dfb73185762427cfcde6f6c3ac0dff8b254",
+          "0x1fbd5e39498e5198b591e78d3eb4c8fac7438d6f074a4d644f716d7b43aff5e6",
+          "0x76a5b09f42f0fa7db4e39f5232b41b4a322f80e7dd1564a11e71a7425d251e24"
+        ],
+        "GOLDEN_TOUCH_ADDRESS": "taiko:0x0000777735367b36bC9B61C50022d9D0700dB4Ec",
+        "impl": "taiko:0x3cfe9b8E0e12289D78c91295c8353aB1731F06E1",
+        "inNonReentrant": false,
+        "isOnL1": false,
+        "l1ChainId": 1,
+        "lastSyncedBlock": 22981341,
+        "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "pacayaForkHeight": 1166000,
+        "parentGasExcess": 1344899430,
+        "parentGasTarget": 40000000,
+        "parentTimestamp": 1753267319,
+        "paused": false,
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
+        "publicInputHash": "0xf7f9c58bfd8513a8431ba9cc47b824679ff3510c10d50898f94ce060a54c39f4",
+        "resolver": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
+        "signalService": "taiko:0x1670000000000000000000000000000000000005",
+        "skipFeeCheck": false
+      },
+      "errors": {
+        "getBlockHash": "Processing error occurred.",
+        "proxiableUUID": "Processing error occurred."
+      },
+      "implementationNames": {
+        "taiko:0x1670000000000000000000000000000000010001": "ERC1967Proxy",
+        "taiko:0x3cfe9b8E0e12289D78c91295c8353aB1731F06E1": "TaikoAnchor"
       }
     },
     {
@@ -150,6 +311,106 @@
       "proxyType": "EOA"
     },
     {
+      "name": "DefaultResolver",
+      "address": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
+      "type": "Contract",
+      "template": "taiko/DefaultResolver",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xf9a4e26dd0a60d8733fc4c14afb5ecadc963a19be4536a7303c8cd0529b358d9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
+      "sinceTimestamp": 1747550747,
+      "sinceBlock": 1158363,
+      "values": {
+        "$admin": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "$implementation": "taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4",
+        "$pastUpgrades": [
+          [
+            "2025-05-18T06:45:47.000Z",
+            "0xefaca4239f9de65d3339c0e6c5ba7d80ad5239952647ffc832c97c7f59ad5025",
+            ["taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "impl": "taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4",
+        "inNonReentrant": false,
+        "namedAddresses": [
+          {
+            "name": "bridge",
+            "address": "taiko:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+          },
+          {
+            "name": "signal_service",
+            "address": "taiko:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+          },
+          {
+            "name": "erc20_vault",
+            "address": "taiko:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+          },
+          {
+            "name": "erc721_vault",
+            "address": "taiko:0x0b470dd3A0e1C41228856Fb319649E7c08f419Aa"
+          },
+          {
+            "name": "erc1155_vault",
+            "address": "taiko:0xaf145913EA4a56BE22E120ED9C24589659881702"
+          },
+          {
+            "name": "bridged_erc20",
+            "address": "taiko:0x65666141a541423606365123Ed280AB16a09A2e1"
+          },
+          {
+            "name": "bridged_erc721",
+            "address": "taiko:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+          },
+          {
+            "name": "bridged_erc1155",
+            "address": "taiko:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+          },
+          {
+            "name": "0x7461696b6f000000000000000000000000000000000000000000000000000000",
+            "address": "taiko:0x1670000000000000000000000000000000010001"
+          },
+          {
+            "name": "taiko_token",
+            "address": "taiko:0xA9d23408b9bA935c230493c40C73824Df71A0975"
+          },
+          {
+            "name": "bond_token",
+            "address": "taiko:0xA9d23408b9bA935c230493c40C73824Df71A0975"
+          }
+        ],
+        "owner": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
+        "paused": false,
+        "pendingOwner": "taiko:0x0000000000000000000000000000000000000000",
+        "resolver": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8"
+      },
+      "implementationNames": {
+        "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8": "ERC1967Proxy",
+        "taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4": "DefaultResolver"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000": "taiko_token",
+            "0x626f6e645f746f6b656e00000000000000000000000000000000000000000000": "bond_token",
+            "0x6272696467650000000000000000000000000000000000000000000000000000": "bridge",
+            "0x7369676e616c5f73657276696365000000000000000000000000000000000000": "signal_service",
+            "0x65726332305f7661756c74000000000000000000000000000000000000000000": "erc20_vault",
+            "0x6572633732315f7661756c740000000000000000000000000000000000000000": "erc721_vault",
+            "0x657263313135355f7661756c7400000000000000000000000000000000000000": "erc1155_vault",
+            "0x6272696467655f7761746368646f670000000000000000000000000000000000": "bridge_watchdog",
+            "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
+            "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
+            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155"
+          }
+        }
+      ]
+    },
+    {
       "name": "GnosisSafeL2",
       "address": "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8",
       "type": "Contract",
@@ -161,8 +422,30 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "interact",
+          "from": "taiko:0x1670000000000000000000000000000000000006",
+          "description": "can update the contract address for a given name",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
+          "description": "can update the contract address for a given name",
+          "role": ".owner"
+        },
+        {
           "permission": "upgrade",
           "from": "taiko:0x1670000000000000000000000000000000000006",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "taiko:0x1670000000000000000000000000000000010001",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8",
           "role": "admin"
         }
       ],
@@ -185,7 +468,7 @@
         "getChainId": 167000,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 43,
+        "nonce": 44,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -208,6 +491,11 @@
         {
           "permission": "upgrade",
           "from": "taiko:0x1670000000000000000000000000000000000001",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "taiko:0x1670000000000000000000000000000000000005",
           "role": "admin"
         },
         {
@@ -296,11 +584,87 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "taiko:0x1670000000000000000000000000000000000005": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "taiko:0x1670000000000000000000000000000000000006": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "taiko:0x1670000000000000000000000000000000010001": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "taiko:0x3cfe9b8E0e12289D78c91295c8353aB1731F06E1": [
+      "constructor(address _resolver, address _signalService, uint64 _pacayaForkHeight)",
+      "error ACCESS_DENIED()",
+      "error ETH_TRANSFER_FAILED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error L2_BASEFEE_MISMATCH()",
+      "error L2_DEPRECATED_METHOD()",
+      "error L2_FORK_ERROR()",
+      "error L2_INVALID_L1_CHAIN_ID()",
+      "error L2_INVALID_L2_CHAIN_ID()",
+      "error L2_INVALID_SENDER()",
+      "error L2_PUBLIC_INPUT_HASH_MISMATCH()",
+      "error L2_TOO_LATE()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_NOT_FOUND()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Anchored(bytes32 parentHash, uint64 parentGasExcess)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event EIP1559Update(uint64 oldGasTarget, uint64 newGasTarget, uint64 oldGasExcess, uint64 newGasExcess, uint256 basefee)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function GOLDEN_TOUCH_ADDRESS() view returns (address)",
+      "function acceptOwnership()",
+      "function adjustExcess(uint64 _currGasExcess, uint64 _currGasTarget, uint64 _newGasTarget) pure returns (uint64 newGasExcess_)",
+      "function anchor(bytes32 _l1BlockHash, bytes32 _l1StateRoot, uint64 _l1BlockId, uint32 _parentGasUsed)",
+      "function anchorV2(uint64 _anchorBlockId, bytes32 _anchorStateRoot, uint32 _parentGasUsed, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) _baseFeeConfig)",
+      "function anchorV3(uint64 _anchorBlockId, bytes32 _anchorStateRoot, uint32 _parentGasUsed, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) _baseFeeConfig, bytes32[] _signalSlots)",
+      "function calculateBaseFee(tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) _baseFeeConfig, uint64 _blocktime, uint64 _parentGasExcess, uint32 _parentGasUsed) pure returns (uint256 basefee_, uint64 parentGasExcess_)",
+      "function getBasefee(uint64 _anchorBlockId, uint32 _parentGasUsed) pure returns (uint256 basefee_, uint64 parentGasExcess_)",
+      "function getBasefeeV2(uint32 _parentGasUsed, uint64 _blockTimestamp, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) _baseFeeConfig) view returns (uint256 basefee_, uint64 newGasTarget_, uint64 newGasExcess_)",
+      "function getBlockHash(uint256 _blockId) view returns (bytes32)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, uint64 _l1ChainId, uint64 _initialGasExcess)",
+      "function isOnL1() pure returns (bool)",
+      "function l1ChainId() view returns (uint64)",
+      "function lastSyncedBlock() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pacayaForkHeight() view returns (uint64)",
+      "function parentGasExcess() view returns (uint64)",
+      "function parentGasTarget() view returns (uint64)",
+      "function parentTimestamp() view returns (uint64)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function publicInputHash() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function signalService() view returns (address)",
+      "function skipFeeCheck() pure returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdraw(address _token, address _to)"
     ],
     "taiko:0x6900f893Fb1dcf2868c7799Ac9a2dAf1c046c6bF": [
       "constructor(uint64 _l1ChainId, address _l2Bridge, address _daoController)",
@@ -422,8 +786,118 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "taiko:0xaea51c413Bd15bBee72737C8094BE942B5208762": [
+      "constructor(address _resolver)",
+      "error ACCESS_DENIED()",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error InvalidDataRemainder()",
+      "error InvalidHeader()",
+      "error LTP_INVALID_ACCOUNT_PROOF()",
+      "error LTP_INVALID_INCLUSION_PROOF()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_NOT_FOUND()",
+      "error SS_EMPTY_PROOF()",
+      "error SS_INVALID_HOPS_WITH_LOOP()",
+      "error SS_INVALID_LAST_HOP_CHAINID()",
+      "error SS_INVALID_MID_HOP_CHAINID()",
+      "error SS_INVALID_STATE()",
+      "error SS_SIGNAL_NOT_FOUND()",
+      "error SS_SIGNAL_NOT_RECEIVED()",
+      "error SS_UNAUTHORIZED()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Authorized(address indexed addr, bool authorized)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ChainDataSynced(uint64 indexed chainId, uint64 indexed blockId, bytes32 indexed kind, bytes32 data, bytes32 signal)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event SignalSent(address app, bytes32 signal, bytes32 slot, bytes32 value)",
+      "event SignalsReceived(bytes32[] signalSlots)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function authorize(address _addr, bool _authorize)",
+      "function getSignalSlot(uint64 _chainId, address _app, bytes32 _signal) pure returns (bytes32)",
+      "function getSyncedChainData(uint64 _chainId, bytes32 _kind, uint64 _blockId) view returns (uint64 blockId_, bytes32 chainData_)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner)",
+      "function isAuthorized(address addr) view returns (bool authorized)",
+      "function isChainDataSynced(uint64 _chainId, bytes32 _kind, uint64 _blockId, bytes32 _chainData) view returns (bool)",
+      "function isSignalSent(address _app, bytes32 _signal) view returns (bool)",
+      "function isSignalSent(bytes32 _signalSlot) view returns (bool)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proveSignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) returns (uint256 numCacheOps_)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function receiveSignals(bytes32[] _signalSlots)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function sendSignal(bytes32 _signal) returns (bytes32)",
+      "function signalForChainData(uint64 _chainId, bytes32 _kind, uint64 _blockId) pure returns (bytes32)",
+      "function syncChainData(uint64 _chainId, bytes32 _kind, uint64 _blockId, bytes32 _chainData) returns (bytes32)",
+      "function topBlockId(uint64 chainId, bytes32 kind) view returns (uint64 blockId)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifySignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) view"
+    ],
+    "taiko:0xc32277f541bBADAA260337E71Cea53871D310DC8": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "taiko:0xCa5b76Cc7A38b86Db11E5aE5B1fc9740c3bA3DE8": [
       "constructor(address _singleton)"
+    ],
+    "taiko:0xDaD5a963618b340bC88F267920907bE567Fd88c4": [
+      "constructor()",
+      "error ACCESS_DENIED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error REENTRANT_CALL()",
+      "error RESOLVED_TO_ZERO_ADDRESS()",
+      "error RESOLVER_NOT_FOUND()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AddressRegistered(uint256 indexed chainId, bytes32 indexed name, address newAddress, address oldAddress)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function registerAddress(uint256 _chainId, bytes32 _name, address _newAddress)",
+      "function renounceOwnership()",
+      "function resolve(uint256 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address addr_)",
+      "function resolver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "taiko:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
@@ -477,7 +951,11 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "taiko/DefaultResolver": "0x53b32b1e255a1a1bdf21125cbb22170988a66cec3102548b5283ec54eaedf25e",
+    "taiko/L2AddressManager": "0x5533ac608c033768586f5ca8b97411e964866cfc7b52b48ffe5b89768761840b",
+    "taiko/L2Bridge": "0xf4bf2505f17a61ce09ef7a5889e91c81b50f4784da51abb520ef9b6108f36d5d",
+    "taiko/L2SignalService": "0x09e30d448e0e386015a86685ae74fbec31fc88084e9cb430d14a7b6d681d500e"
   },
-  "permissionsConfigHash": "0xf93aadf0f8a4370781b62c5900cb9df13a15548846b522791b9e5a52c983857e"
+  "permissionsConfigHash": "0xa73bc9c356fd41b0f61632bb79d0a29bb5d43b4e6f308ff9cc925edf222cf543"
 }

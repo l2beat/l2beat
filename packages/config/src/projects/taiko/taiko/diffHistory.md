@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb6f6f36baf26cb4d1cd1394b229dba95b0411d3e
+Generated with discovered.json: 0x00a5021e031d92508c5bbffc425de08f2aa180d8
 
-# Diff at Wed, 23 Jul 2025 08:24:34 GMT:
+# Diff at Wed, 23 Jul 2025 10:43:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 1276050
+- current block number: 1276319
 
 ## Description
 
@@ -19,8 +19,26 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract AddressManager (0x1670000000000000000000000000000000000006)
+    contract SignalService (0x1670000000000000000000000000000000000005)
     +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2AddressManager (0x1670000000000000000000000000000000000006)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoAnchor (0x1670000000000000000000000000000000010001)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0xc32277f541bBADAA260337E71Cea53871D310DC8)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
 ```
 
 ```diff
