@@ -1,7 +1,7 @@
 {
   "name": "appchain",
   "chain": "ethereum",
-  "blockNumber": 22779991,
+  "blockNumber": 22975805,
   "configHash": "0xd1eb0c0a2b75d03bff765bd453c80cefe9b84ddc8ffb3ab9008106a72754e761",
   "entries": [
     {
@@ -131,7 +131,7 @@
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 4744,
+        "delayedMessageCount": 4946,
         "inboxHistory": [
           "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
           "eth:0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -139,8 +139,8 @@
         "outboxHistory": ["eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "eth:0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 2294,
-        "sequencerReportedSubMessageCount": 446813
+        "sequencerMessageCount": 2419,
+        "sequencerReportedSubMessageCount": 470838
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -244,13 +244,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 565,
+        "firstUnresolvedNode": 579,
         "inbox": "eth:0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 564,
-        "latestNodeCreated": 567,
+        "latestConfirmed": 578,
+        "latestNodeCreated": 581,
         "loserStakeEscrow": "eth:0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -437,6 +437,9 @@
         "$immutable": false,
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
+          "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
+          "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
           "eth:0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
           "eth:0x356000Cec4fC967f8FC372381D983426760A0391",
           "eth:0xbf853295743511e8DC5F03809d209C33fC136d24",
@@ -448,14 +451,19 @@
         "domainSeparator": "0xd91194ba8cca06b67a77df9ba8745b666c7af26af03b914ede155b940b307d6b",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 19,
+        "multisigThreshold": "4 of 9 (44%)",
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "eth:0x2bf43034b9559643e986A2fE3cE015a18247b904": "GnosisSafeProxy",
         "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
+    },
+    {
+      "address": "eth:0x2F2d46D3dD36c8d1ae2Cb81c0cD2c05C68DBA675",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Caldera",
@@ -635,7 +643,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 2294,
+        "batchCount": 2419,
         "batchPosterManager": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
         "batchPosters": ["eth:0xC5dD640885cE582464e2fCa7b169581417822e6C"],
         "bridge": "eth:0x19df42E085e2c3fC4497172E412057F54D9f013E",
@@ -666,7 +674,7 @@
         "rollup": "eth:0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 4743,
+        "totalDelayedMessagesRead": 4945,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -767,6 +775,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0xc4548687682246e5B6ee8f914635c9f47836eDFe",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "eth:0xC5dD640885cE582464e2fCa7b169581417822e6C",
       "type": "EOA",
       "proxyType": "EOA",
@@ -809,6 +822,11 @@
     },
     {
       "address": "eth:0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "eth:0xe62a4A1e6D237d6fc40d88F819D5cE580a996A6b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1611,5 +1629,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x1a65f4dcb50dae68adbeced44b202e3a9dcb5c138ba7b732839462f854e8810e"
+  "permissionsConfigHash": "0x561cdda81a8d65c9dfb042f40b428cbff0d45f2f1aec9a36964a31acf8342979"
 }

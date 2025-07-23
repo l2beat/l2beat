@@ -120,7 +120,7 @@ export class EventHandler implements Handler {
       const log = this.abi.parseLog(rawLog)
       const value: Record<string, ContractValue> = {}
 
-      for (const key in log.args) {
+      for (const key of Object.keys(log.args).filter((k) => !isNumber(k))) {
         value[key] = toContractValue(log.args[key])
       }
 
@@ -328,4 +328,12 @@ function eventsAreCompatible(
   })
 
   return abiCompatible
+}
+
+function isNumber(str: string): boolean {
+  const trimmed = str.trim()
+  if (trimmed === '') return false
+
+  const num = Number(trimmed)
+  return !isNaN(num) && isFinite(num)
 }

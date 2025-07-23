@@ -298,7 +298,7 @@ where `EdgeStatus` can either be `Pending` or `Confirmed`.
 
 In particular, the `claimId` is checked to be the assertion hash to be confirmed, the `status` has to be `Confirmed` and the `confirmedAtBlock` value should not be zero. On top of the challenge period, it is required that the `confirmedAtBlock` value is at least `challengeGracePeriodBlocks` old, with the purpose of being able to recover in case an invalid assertion is confirmed because of a bug.
 
-The current assertion is checked to be `Pending`, as opposed to `NoAssertion` or `Confirmed`. An external call to the Outbox is made by passing the `sendRoot` and `blockHash` saved in the current assertion's `globalState`. Finally, the `_latestConfirmed` asserrtion is updated with the current one and the status is updated to `Confirmed`.
+The current assertion is checked to be `Pending`, as opposed to `NoAssertion` or `Confirmed`. An external call to the Outbox is made by passing the `sendRoot` and `blockHash` saved in the current assertion's `globalState`. Finally, the `_latestConfirmed` assertion is updated with the current one and the status is updated to `Confirmed`.
 
 
 
@@ -563,7 +563,7 @@ The proof is then decoded in the following manner:
 
 It is verified that the `startState` is part of the `startHistoryRoot` of the lower level edge and that the `endState` is part of the `endHistoryRoot` of the lower level edge, so that the current edge can be considered a more fine grained version of the lower level edge. It's important to note that it is still possible to propose an invalid higher-level edge for a valid lower-level edge, so it must be possible to propose multiple higher-level edges for the same lower-level edge.
 
-The rest of the checks follow the same as the `Block` level edges, starting from the ccreation of the `startHistoryRoot` as a length one merkle tree, followed by the check that the `endState` is included in the `endHistoryRoot` using the `edgeInclusionProof`, and so on.
+The rest of the checks follow the same as the `Block` level edges, starting from the creation of the `startHistoryRoot` as a length one merkle tree, followed by the check that the `endState` is included in the `endHistoryRoot` using the `edgeInclusionProof`, and so on.
 
 ### `bisectEdge` function
 
@@ -639,11 +639,11 @@ function confirmEdgeByTime(bytes32 edgeId, AssertionStateData calldata claimStat
 
 Only layer zero edges can be confirmed by time.
 
-If the edge is block-level and the claim is the first child of its predecessor, then the time between its assertoin and the second child's assertion is counted towards this edge. If this was not done, then the timer wouldn't count the time from when the assertion is created but it would need to wait it to be challenged, which is absurd. 
+If the edge is block-level and the claim is the first child of its predecessor, then the time between its assertion and the second child's assertion is counted towards this edge. If this was not done, then the timer wouldn't count the time from when the assertion is created but it would need to wait it to be challenged, which is absurd. 
 
 If the edge is unrivaled, then the time between the current block number and its creation is counted. If the edge is rivaled, and it was created before the rival, then the time between the rival's creation and this edge's creation is counted. If the edge is rivaled and it was created after the rival, then no time is counted.
 
-If the edge has been bisected, i.e. it has children, then the minimum children unrivaled time is counted. The rationale is that if a child is correct but the parent is not, it would be incorrect to count the unrivaled time of the correct child towards the parent. If the honest party acts as fast as possible, then an incorrect claim's unrivaled time would alywas be close to zero. If an edge is confirmed by a one step proof, then it's unrivaled time is set to infinity (in practice `type(uint64).max`).
+If the edge has been bisected, i.e. it has children, then the minimum children unrivaled time is counted. The rationale is that if a child is correct but the parent is not, it would be incorrect to count the unrivaled time of the correct child towards the parent. If the honest party acts as fast as possible, then an incorrect claim's unrivaled time would always be close to zero. If an edge is confirmed by a one step proof, then it's unrivaled time is set to infinity (in practice `type(uint64).max`).
 
 Finally, if the total time unrivaled is greater than the challenge period (espressed with `confirmationThresholdBlock`), then the edge is confirmed. Note that this value is a different variable compared to the `confirmPeriodBlocks` in the `RollupProxy` contract, which determines when an assertion can be confirmed if not challenged.
 

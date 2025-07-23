@@ -43,7 +43,7 @@ export function MonthlyUpdateThroughputChart({
     return {
       projects: {
         label: 'Data Posted',
-        color: 'var(--project-primary)',
+        color: 'var(--project-primary, var(--ecosystem-primary))',
         indicatorType: {
           shape: 'line',
         },
@@ -115,8 +115,9 @@ export function MonthlyUpdateThroughputChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
+                primary: 'var(--project-primary, var(--ecosystem-primary))',
+                secondary:
+                  'var(--project-secondary, var(--ecosystem-secondary))',
               }}
             />
           </defs>

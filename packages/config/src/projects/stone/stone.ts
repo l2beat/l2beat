@@ -9,6 +9,13 @@ export const stone: BaseProject = {
   name: 'Stone',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-14')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   display: {
     description:
       'Stone is a proving systems for programs written with Cairo language. Originally build by Starkware for proving Starknet state transition.',
@@ -42,6 +49,7 @@ export const stone: BaseProject = {
     verifierHashes: [
       {
         // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
+        // in hex format '0x...'
         hash: '0x5ed8957171b466464570ba10b3d5c5adfc54546ba56278129af5ae63a0d4ad22',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [

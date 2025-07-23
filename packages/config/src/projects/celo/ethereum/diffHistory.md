@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x68bad3a659fd59a82ca967d8bbe5e1b7e565cb96
+
+# Diff at Mon, 21 Jul 2025 10:06:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c89d5207a278197d1d4bfd60ac8e37852accba7c block: 22882513
+- current block number: 22966853
+
+## Description
+
+MS single member change.
+
+## Watched changes
+
+```diff
+    contract Safe (0xD1C635987B6Aa287361d08C6461491Fa9df087f2) {
+    +++ description: None
+      values.$members.0:
+-        "eth:0x4092A77bAF58fef0309452cEaCb09221e556E112"
++        "eth:0x4F0b8e0f51dE4dE1bA0bb59876e1A9bC157a4751"
+    }
+```
+
 Generated with discovered.json: 0x8374107fa9069d09f51b810f4501ffd4d43ffb72
 
 # Diff at Mon, 14 Jul 2025 12:44:54 GMT:

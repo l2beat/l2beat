@@ -36,8 +36,8 @@ export function CodeView({
     return () => {
       window.removeEventListener('resize', onResize)
       // Remove editor from store and dispose it when component unmounts
-      removeEditor(editorKey)
       editor.dispose()
+      removeEditor(editorKey)
     }
   }, [setEditor, editorKey, removeEditor, getEditor])
 

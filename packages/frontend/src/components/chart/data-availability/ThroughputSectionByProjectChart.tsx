@@ -25,7 +25,7 @@ interface Props {
   setRange: (range: DaThroughputTimeRange) => void
   selectedProjects: string[] | undefined
   setSelectedProjects: (projects: string[] | undefined) => void
-  customColors: Record<string, string>
+  customColors: Record<string, string> | undefined
   milestones: Milestone[]
 }
 

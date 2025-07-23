@@ -1,8 +1,9 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectCustomColors } from '@l2beat/config'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import { env } from '~/env'
 import {
   getEthereumDaProjectSections,
   getRegularDaProjectSections,
@@ -31,6 +32,7 @@ interface CommonDaProjectPageEntry {
   isUnderReview: boolean
   isUpcoming: boolean
   archivedAt: number | undefined
+  colors: ProjectCustomColors | undefined
   projectVariants?: {
     title: string
     href: string
@@ -90,7 +92,7 @@ export async function getDaProjectEntry(
   helpers: SsrHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
-    'isUpcoming' | 'milestones' | 'archivedAt'
+    'isUpcoming' | 'milestones' | 'archivedAt' | 'colors'
   >,
   bridgeSlug: string,
 ): Promise<DaProjectPageEntry | undefined> {
@@ -156,6 +158,7 @@ export async function getDaProjectEntry(
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: layer.isUpcoming ?? false,
     archivedAt: layer.archivedAt,
+    colors: env.CLIENT_SIDE_PARTNERS ? layer.colors : undefined,
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
@@ -289,6 +292,7 @@ export async function getEthereumDaProjectEntry(
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: false,
     archivedAt: undefined,
+    colors: undefined,
     header: {
       links: getProjectLinks(layer.display.links),
       tvs: layerTvs,

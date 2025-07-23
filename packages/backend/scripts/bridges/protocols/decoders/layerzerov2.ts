@@ -38,7 +38,7 @@ function decoder(
       }
 
       const destination = ENDPOINTS.find(
-        (b) => b.chainId === packet.header.dstEid,
+        (b) => b.eid === packet.header.dstEid,
       )?.chainShortName
 
       const guid = createLayerZeroGuid(

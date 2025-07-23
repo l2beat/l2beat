@@ -119,3 +119,167 @@ export function normalizeAddress(address: string): string {
 
   return '0x' + addr.padStart(64, '0')
 }
+
+export interface DecodedV1Packet {
+  nonce: bigint
+  localChainId: number
+  ua: string // User Application address
+  dstChainId: number
+  dstAddress: string // Destination address
+  payload: string // The actual message payload
+}
+
+export function decodeV1Packet(packetPayload: string): DecodedV1Packet | null {
+  try {
+    const hex = packetPayload.startsWith('0x')
+      ? packetPayload.slice(2)
+      : packetPayload
+
+    // Validate minimum length (8 + 2 + 20 + 2 + 20 = 52 bytes minimum)
+    if (hex.length < 104) {
+      // 52 * 2 = 104 hex chars
+      return null
+    }
+
+    let offset = 0
+
+    // Parse nonce (8 bytes, big endian)
+    const nonce = BigInt('0x' + hex.slice(offset, offset + 16))
+    offset += 16
+
+    // Parse localChainId (2 bytes, big endian)
+    const localChainId = Number.parseInt(hex.slice(offset, offset + 4), 16)
+    offset += 4
+
+    // Parse ua (20 bytes)
+    const ua = '0x' + hex.slice(offset, offset + 40)
+    offset += 40
+
+    // Parse dstChainId (2 bytes, big endian)
+    const dstChainId = Number.parseInt(hex.slice(offset, offset + 4), 16)
+    offset += 4
+
+    // Parse dstAddress (20 bytes for Ethereum addresses)
+    const dstAddress = '0x' + hex.slice(offset, offset + 40)
+    offset += 40
+
+    // Parse payload (remaining bytes)
+    const payload = hex.length > offset ? '0x' + hex.slice(offset) : '0x'
+
+    return {
+      nonce,
+      localChainId,
+      ua,
+      dstChainId,
+      dstAddress,
+      payload,
+    }
+  } catch (error) {
+    console.error('Failed to decode v1 packet:', error)
+    return null
+  }
+}
+
+export function createV1PacketId(
+  nonce: bigint,
+  srcChainId: number,
+  ua: string,
+  dstChainId: number,
+  dstAddress: string,
+): string {
+  // Convert to bytes format
+
+  const nonceBytes = nonce.toString(16).padStart(16, '0')
+
+  const srcChainIdBytes = srcChainId.toString(16).padStart(4, '0')
+
+  const uaBytes = normalizeAddress(ua).slice(2)
+
+  const dstChainIdBytes = dstChainId.toString(16).padStart(4, '0')
+
+  const dstAddressBytes = normalizeAddress(dstAddress).slice(2)
+
+  // Concatenate all components (equivalent to abi.encodePacked)
+
+  const concatenated =
+    nonceBytes + srcChainIdBytes + uaBytes + dstChainIdBytes + dstAddressBytes
+
+  // Use sha256 (should be keccak256 for exact match with contracts)
+
+  const hash = createHash('sha256').update(concatenated, 'hex').digest('hex')
+
+  return '0x' + hash
+}
+
+export interface DecodedV1PacketHeader {
+  version: number
+  nonce: bigint
+  srcEid: number // For SendUln301 events
+  sender: string // bytes32 sender
+  dstEid: number
+  receiver: string // bytes32 receiver
+}
+
+export interface DecodedV1SendUln301Packet {
+  header: DecodedV1PacketHeader
+  payload: string
+}
+
+export function decodeV1SendUln301Packet(
+  encodedPayload: string,
+): DecodedV1SendUln301Packet | null {
+  try {
+    const hex = encodedPayload.startsWith('0x')
+      ? encodedPayload.slice(2)
+      : encodedPayload
+
+    // Validate minimum length for header (1 + 8 + 4 + 32 + 4 + 32 = 81 bytes)
+    if (hex.length < 162) {
+      // 81 * 2 = 162 hex chars
+      return null
+    }
+    let offset = 0
+
+    // Parse version (1 byte)
+    const version = Number.parseInt(hex.slice(offset, offset + 2), 16)
+    offset += 2
+
+    // Parse nonce (8 bytes, big endian)
+    const nonce = BigInt('0x' + hex.slice(offset, offset + 16))
+    offset += 16
+
+    // Parse srcEid (4 bytes, big endian)
+    const srcEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
+    offset += 8
+
+    // Parse sender (32 bytes)
+    const sender = '0x' + hex.slice(offset, offset + 64)
+    offset += 64
+
+    // Parse dstEid (4 bytes, big endian)
+    const dstEid = Number.parseInt(hex.slice(offset, offset + 8), 16)
+    offset += 8
+
+    // Parse receiver (32 bytes)
+    const receiver = '0x' + hex.slice(offset, offset + 64)
+    offset += 64
+
+    // Parse payload (remaining bytes)
+    const payload = hex.length > offset ? '0x' + hex.slice(offset) : '0x'
+
+    return {
+      header: {
+        version,
+        nonce,
+        srcEid,
+        sender,
+        dstEid,
+        receiver,
+      },
+      payload,
+    }
+  } catch (error) {
+    console.error('Failed to decode v1 SendUln301 packet:', error)
+    return null
+  }
+}

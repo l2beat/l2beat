@@ -16,7 +16,7 @@ import type { ProjectSectionProps } from '../types'
 export interface ThroughputSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   throughput: DaLayerThroughput[]
-  customColors: Record<string, string>
+  customColors: Record<string, string> | undefined
   syncStatus: {
     warning: string | undefined
     isSynced: boolean

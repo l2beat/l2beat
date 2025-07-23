@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xe8b60c57d11ab9dbaa7c7b1d3ab560dcad2dc5b4
+
+# Diff at Tue, 22 Jul 2025 13:54:56 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 22397534
+- current block number: 22975146
+
+## Description
+
+Updated Fflonk verifier in the initial addresses to the correct one.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397534 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
 Generated with discovered.json: 0x1f730a21e9de2bef611b5ab993bdfaad573dcdb6
 
 # Diff at Mon, 14 Jul 2025 12:46:17 GMT:

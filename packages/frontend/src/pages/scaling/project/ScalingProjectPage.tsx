@@ -43,14 +43,21 @@ export function ScalingProjectPage({
             style={
               projectEntry.colors
                 ? ({
-                    '--project-primary': projectEntry.colors.primary,
-                    '--project-secondary': projectEntry.colors.secondary,
+                    '--project-primary': projectEntry.colors.project?.primary,
+                    '--project-secondary':
+                      projectEntry.colors.project?.secondary,
+                    '--ecosystem-primary':
+                      projectEntry.colors.ecosystem?.primary,
+                    '--ecosystem-secondary':
+                      projectEntry.colors.ecosystem?.secondary,
                   } as React.CSSProperties)
                 : undefined
             }
-            data-has-colors={!!projectEntry.colors}
+            data-has-colors={
+              !!projectEntry.colors?.project || !!projectEntry.colors?.ecosystem
+            }
           >
-            <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-(--project-primary) via-(--project-secondary) via-25% to-transparent max-md:hidden" />
+            <div className="-z-1 -translate-y-2/5 fixed h-[1440px] w-[900px] translate-x-1/5 rotate-[30deg] bg-radial-[ellipse_closest-side_at_center] from-branding-primary via-25% via-branding-secondary to-transparent max-md:hidden" />
 
             {!isNavigationEmpty && (
               <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
@@ -58,7 +65,7 @@ export function ScalingProjectPage({
               </div>
             )}
             <div className="relative z-0 max-md:bg-surface-primary">
-              <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-(--project-primary)/75 to-surface-primary md:hidden" />
+              <div className="-z-1 absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-branding-primary/75 to-surface-primary md:hidden" />
               <div className="pt-6 max-md:px-4 md:pt-6 lg:w-[calc(100%-196px)] lg:pt-[22px]">
                 <ProjectHeader
                   project={projectEntry}
