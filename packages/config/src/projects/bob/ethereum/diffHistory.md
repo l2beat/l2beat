@@ -1,12 +1,16 @@
-Generated with discovered.json: 0x673122bb6cfe809b496416f2b9d9a595054cdb4b
+Generated with discovered.json: 0x062861cee1e1bf6aa963ec55b86fe36d2c4e03cc
 
-# Diff at Tue, 22 Jul 2025 15:36:41 GMT:
+# Diff at Wed, 23 Jul 2025 06:06:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 22665980
-- current block number: 22975539
+- comparing to: main@b127194ffb9a32e4b6fde08f1602fbf66f1843fc block: 22665980
+- current block number: 22979976
 
 ## Description
+
+07-23: Upgrade OptimismPortal2 again to change the finality delays ([no code changes](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273)). 
+- proofMaturityDelaySeconds: 7d->1d
+- disputeGameFinalityDelaySeconds: 3.5d->1d 
 
 Upgrade to standard OP stack v3 contracts (OptiPortal2) with [KAILUA Hybrid mode](https://risc0.github.io/kailua/design.html) as respected dispute game. Kailua is configured in [Vanguard mode](https://risc0.github.io/kailua/parameters.html?highlight=vanguard#vanguard-advantage).
 
@@ -112,7 +116,7 @@ some code:
 +        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
       values.$implementation:
 -        "eth:0x994e3B01D130944a3E67BFd3B8Fc73069b959FEc"
-+        "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"
++        "eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273"
       values.$pastUpgrades.1:
 +        ["2025-07-17T13:28:47.000Z","0x1d93c182527e3c738f03ffb7baf66bbddfb29e1e60bbd9f5457c7de1a90eaaf1",["eth:0x6322C2f2D6a4305Fc033754d486A5A067Ee5F9b1"]]
       values.$pastUpgrades.2:
@@ -125,9 +129,11 @@ some code:
 +        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0x2D7e764a0D9919e16983a46595CfA81fc34fa7Cd"]]
       values.$pastUpgrades.6:
 +        ["2025-07-17T14:18:35.000Z","0x5fc7da71db9e1541e3eeeedbc3dd3058bf01b5d03b10eee95eaa5668e9efd74e",["eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"]]
+      values.$pastUpgrades.7:
++        ["2025-07-22T19:58:23.000Z","0xa7881069c54f1028d42b83406ac5a768154f8ff34ad37ec7641b4d45766e77c3",["eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273"]]
       values.$upgradeCount:
 -        1
-+        7
++        8
       values.GUARDIAN:
 -        "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
       values.L2_ORACLE:
@@ -140,11 +146,11 @@ some code:
       values.disputeGameFactory:
 +        "eth:0x96123dbFC3253185B594c6a7472EE5A21E9B1079"
       values.disputeGameFinalityDelaySeconds:
-+        302400
++        86400
       values.guardian:
 +        "eth:0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E"
       values.proofMaturityDelaySeconds:
-+        604800
++        86400
       values.RespectedGameString:
 +        "KailuaGame"
       values.respectedGameType:
@@ -157,7 +163,7 @@ some code:
 +        "eth:0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"
       implementationNames.eth:0x994e3B01D130944a3E67BFd3B8Fc73069b959FEc:
 -        "OptimismPortal"
-      implementationNames.eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4:
+      implementationNames.eth:0xB250566074B3c0f1B109A531A83f3d9B1a579273:
 +        "OptimismPortal2"
       fieldMeta:
 +        {"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
