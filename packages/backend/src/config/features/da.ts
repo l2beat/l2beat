@@ -246,7 +246,7 @@ async function getBlockDaTrackingSovereignProjects(
         const sinceBlock = Math.max(daLayerSinceBlock, c.sinceBlock)
 
         const withDaLayer = {
-          daLayer: ProjectId('ethereum'),
+          daLayer: daLayerProjectId,
           ...c,
         }
 
@@ -325,7 +325,7 @@ async function getTimestampDaTrackingSovereignProjects(
         const sinceTimestamp = Math.max(daLayerSinceTimestamp, c.sinceTimestamp)
 
         const withDaLayer = {
-          daLayer: ProjectId('ethereum'),
+          daLayer: daLayerProjectId,
           ...c,
         }
 
