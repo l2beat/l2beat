@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22980731,
+  "blockNumber": 22980797,
   "configHash": "0x40c99912cdc9b6e9fbdd0fb7254eb4adcffe15da5e8c53aa3ed6b8cbc03f5bfa",
   "entries": [
     {
@@ -182,11 +182,6 @@
       "implementationNames": {
         "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
       }
-    },
-    {
-      "address": "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "SP1VerifierGateway",
@@ -635,10 +630,12 @@
       "name": "Rollup",
       "address": "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D",
       "type": "Contract",
+      "template": "facet/Rollup",
       "sourceHashes": [
         "0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e"
       ],
       "proxyType": "immutable",
+      "description": "Rollup contract for Facet",
       "sinceTimestamp": 1753123523,
       "sinceBlock": 22969440,
       "values": {
@@ -652,107 +649,24 @@
         "CHALLENGER_BOND": "5000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
-        "gameOver": [true, false, false, false, false],
         "getAnchorRoot": [
           "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
           1604382
         ],
-        "getProposal": [
-          [
-            "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
-            "eth:0x0000000000000000000000000000000000000000",
-            1604382,
-            0,
-            0,
-            0,
-            4,
-            1,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x0d9f793ef0d311c996c7ace57cc48dfe555495634cf5845635cf1c6d7de09fa4",
-            "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
-            1606182,
-            0,
-            1753728623,
-            0,
-            0,
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x74d246b9642977418167d9995a0b0752e1639abfe10494021a496e0fc44371e2",
-            "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
-            1607982,
-            1,
-            1753745939,
-            0,
-            0,
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x825eb543ee03cd665c90ee423fee5dd5c3ea43fb0da578770ae76113fe406e1e",
-            "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
-            1609782,
-            2,
-            1753767563,
-            0,
-            0,
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x1ef64e82362ffd555117306f5d32590333749d4f863439f0f2fcf716535ce8c1",
-            "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
-            1611582,
-            3,
-            1753789163,
-            0,
-            0,
-            0,
-            "eth:0x0000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ]
-        ],
         "getProposalsLength": 8,
         "isInFallbackWindow": [],
-        "isResolvable": [false, false, false, false, false],
-        "l1BlockHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
         "l2BlockAge": [],
-        "latestProposals": [[], [7], [7, 6], [7, 6, 5], [7, 6, 5, 4]],
         "MAX_CHALLENGE_SECS": 604800,
         "MAX_PROVE_SECS": 259200,
-        "needsDefense": [false, false, false, false, false],
         "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
         "PROPOSAL_INTERVAL": 1800,
-        "proposalIsCanonical": [true, false, false, false, false],
         "PROPOSER_BOND": 1000000000000000,
         "RANGE_VKEY_COMMITMENT": "0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93",
         "ROLLUP_CONFIG_HASH": "0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c",
         "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
         "version": "1.0.0"
-      },
-      "errors": {
-        "gameOver": "Processing error occurred.",
-        "getProposal": "Processing error occurred.",
-        "isResolvable": "Processing error occurred.",
-        "l1BlockHashes": "Processing error occurred.",
-        "latestProposals": "Processing error occurred.",
-        "needsDefense": "Processing error occurred.",
-        "proposalIsCanonical": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D": "Rollup"
@@ -1550,6 +1464,7 @@
     "facet/FacetEtherBridge": "0xbb9993b8f35798795519db980c5342ad5d79a1fa8975ca041dfa3b6910c8b229",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/Rollup": "0x008423e8e94166a96d76831182497354a4f4416a4293926b52238595623009e4",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -1562,5 +1477,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x3f53d64012e5154779974c90c8c16cc5a3ce6a344ba24932fd844c9444aa5c44"
+  "permissionsConfigHash": "0x8776d0e94226f2f5e3fa8e99d630a77777651d2a259d3b4c2d010051d5b65d3b"
 }

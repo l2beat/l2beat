@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa972376da7b0ed8ac6bd213dca00f4e1652cca51
+Generated with discovered.json: 0x59a8a26de94cdfcb081cd369f1b8d46179a797bb
 
-# Diff at Wed, 23 Jul 2025 08:39:04 GMT:
+# Diff at Wed, 23 Jul 2025 08:52:22 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 22367347
-- current block number: 22980731
+- current block number: 22980797
 
 ## Description
 
@@ -36,23 +36,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
     contract Rollup (0xd0E3721bba691d3735b0827edBe893789cA1486D) {
-    +++ description: None
+    +++ description: Rollup contract for Facet
       type:
 -        "EOA"
 +        "Contract"
       proxyType:
 -        "EOA"
 +        "immutable"
+      template:
++        "facet/Rollup"
       sourceHashes:
 +        ["0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e"]
+      description:
++        "Rollup contract for Facet"
       sinceTimestamp:
 +        1753123523
       sinceBlock:
 +        22969440
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"gameOver":[true,false,false,false,false],"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposal":[["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","eth:0x0000000000000000000000000000000000000000",1604382,0,0,0,4,1,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"],["0x0d9f793ef0d311c996c7ace57cc48dfe555495634cf5845635cf1c6d7de09fa4","eth:0x615452db5467849689E98a8C5C242A96cF768a94",1606182,0,1753728623,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"],["0x74d246b9642977418167d9995a0b0752e1639abfe10494021a496e0fc44371e2","eth:0x615452db5467849689E98a8C5C242A96cF768a94",1607982,1,1753745939,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"],["0x825eb543ee03cd665c90ee423fee5dd5c3ea43fb0da578770ae76113fe406e1e","eth:0x615452db5467849689E98a8C5C242A96cF768a94",1609782,2,1753767563,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"],["0x1ef64e82362ffd555117306f5d32590333749d4f863439f0f2fcf716535ce8c1","eth:0x615452db5467849689E98a8C5C242A96cF768a94",1611582,3,1753789163,0,0,0,"eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]],"getProposalsLength":8,"isInFallbackWindow":[],"isResolvable":[false,false,false,false,false],"l1BlockHashes":["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"latestProposals":[[],[7],[7,6],[7,6,5],[7,6,5,4]],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"needsDefense":[false,false,false,false,false],"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"proposalIsCanonical":[true,false,false,false,false],"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
-      errors:
-+        {"gameOver":"Processing error occurred.","getProposal":"Processing error occurred.","isResolvable":"Processing error occurred.","l1BlockHashes":"Processing error occurred.","latestProposals":"Processing error occurred.","needsDefense":"Processing error occurred.","proposalIsCanonical":"Processing error occurred."}
++        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":8,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
       implementationNames:
 +        {"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D":"Rollup"}
     }

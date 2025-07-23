@@ -6,6 +6,8 @@
     "gameOver",
     "isResolvable",
     "latestProposals",
-    "needsDefense"
+    "needsDefense",
+    "l1BlockHashes",
+    "proposalIsCanonical"
   ]
 }

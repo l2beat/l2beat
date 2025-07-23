@@ -4,5 +4,11 @@
     "address": "0x101e853255f3a0cA1dd3772d00893A103A6d0261",
     "chain": "ethereum",
     "blockNumber": 22880502
+  },
+  "rollupV2": {
+    "hash": "0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e",
+    "address": "0xd0E3721bba691d3735b0827edBe893789cA1486D",
+    "chain": "ethereum",
+    "blockNumber": 22980731
   }
 }
