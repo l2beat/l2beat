@@ -23,7 +23,12 @@ export function EcosystemGovernanceLinks({
   className,
 }: Props) {
   return (
-    <div className={cn('grid gap-1 sm:grid-cols-2 sm:grid-rows-2', className)}>
+    <div
+      className={cn(
+        'grid gap-(--ecosystem-spacing) sm:grid-cols-2 sm:grid-rows-2',
+        className,
+      )}
+    >
       <GovernanceLink
         href={links.review}
         bankImage={links.bankImage}

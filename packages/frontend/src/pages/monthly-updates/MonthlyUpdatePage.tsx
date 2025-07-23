@@ -3,11 +3,11 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
+import type { UpcomingProjectUpdateEntry } from '~/server/features/monthly-reports/getUpcomingEntries'
 import { DaUpdateSection } from './components/da/DaUpdateSection'
 import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
 import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
@@ -20,7 +20,7 @@ interface Props extends AppLayoutProps {
     to: UnixTime
     ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
     daUpdatesEntries: DaMonthlyUpdateEntry[]
-    upcomingProjectsUpdatesEntries: UpcomingProjectUpdate[]
+    upcomingProjectsUpdatesEntries: UpcomingProjectUpdateEntry[]
   }
 }
 
@@ -47,8 +47,8 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
                 ...entry.upcomingProjectsUpdatesEntries,
               ].map((e, i) => (
                 <a
-                  href={`#${e.name}`}
-                  key={`#${e.name}`}
+                  href={`#${e.id}`}
+                  key={e.id}
                   className="w-fit font-normal font-roboto-serif text-link text-sm leading-[160%] underline md:text-[17px]"
                 >
                   {i + 1}. {e.name}
@@ -57,7 +57,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             </div>
             {entry.ecosystemsUpdatesEntries.map((ecosystem) => (
               <EcosystemUpdateSection
-                key={ecosystem.ecosystemId}
+                key={ecosystem.id}
                 ecosystem={ecosystem}
                 from={entry.from}
                 to={entry.to}
@@ -65,7 +65,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             ))}
             {entry.daUpdatesEntries.map((da) => (
               <DaUpdateSection
-                key={da.daLayerId}
+                key={da.id}
                 daLayer={da}
                 from={entry.from}
                 to={entry.to}
@@ -73,7 +73,7 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
             ))}
             {entry.upcomingProjectsUpdatesEntries.map((upcomingProject) => (
               <UpcomingProjectUpdateSection
-                key={upcomingProject.projectId}
+                key={upcomingProject.id}
                 upcomingProject={upcomingProject}
               />
             ))}
