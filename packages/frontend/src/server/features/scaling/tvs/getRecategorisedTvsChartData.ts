@@ -1,4 +1,3 @@
-import type { ProjectValueRecord } from '@l2beat/database'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
@@ -6,7 +5,10 @@ import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getRangeWithMax } from '~/utils/range/range'
-import { getSummedTvsValues } from './utils/getSummedTvsValues'
+import {
+  getSummedTvsValues,
+  type SummedTvsValues,
+} from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
@@ -26,9 +28,9 @@ export type RecategorisedTvsChartDataParams = v.infer<
 
 export type RecategorisedTvsChartData = (readonly [
   timestamp: number,
-  rollups: number,
-  validiumsAndOptimiums: number,
-  others: number,
+  rollups: number | null,
+  validiumsAndOptimiums: number | null,
+  others: number | null,
 ])[]
 
 /**
@@ -72,9 +74,9 @@ export async function getRecategorisedTvsChart({
 }
 
 function getChartData(
-  rollupsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
-  validiumAndOptimiumsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
-  othersValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  rollupsValues: SummedTvsValues[],
+  validiumAndOptimiumsValues: SummedTvsValues[],
+  othersValues: SummedTvsValues[],
 ) {
   const rolupsGroupedByTimestamp = groupBy(rollupsValues, (v) => v.timestamp)
   const validiumAndOptimiumsGroupedByTimestamp = groupBy(
@@ -95,20 +97,26 @@ function getChartData(
     const oVals = othersGroupedByTimestamp[timestamp]
 
     const rTotal =
-      rVals?.reduce((acc, curr) => {
-        acc += curr.value
+      rVals?.reduce<number | null>((acc, curr) => {
+        if (curr.value !== null) {
+          acc = (acc ?? 0) + curr.value
+        }
         return acc
-      }, 0) ?? 0
+      }, null) ?? null
     const vTotal =
-      vVals?.reduce((acc, curr) => {
-        acc += curr.value
+      vVals?.reduce<number | null>((acc, curr) => {
+        if (curr.value !== null) {
+          acc = (acc ?? 0) + curr.value
+        }
         return acc
-      }, 0) ?? 0
+      }, null) ?? null
     const oTotal =
-      oVals?.reduce((acc, curr) => {
-        acc += curr.value
+      oVals?.reduce<number | null>((acc, curr) => {
+        if (curr.value !== null) {
+          acc = (acc ?? 0) + curr.value
+        }
         return acc
-      }, 0) ?? 0
+      }, null) ?? null
 
     return [timestamp, rTotal, vTotal, oTotal] as const
   })

@@ -31,8 +31,12 @@ export async function getScalingTvsProjectApiData({
     excludeAssociatedTokens,
   })
 
-  const oldestTvsData = data.at(0)
-  const latestTvsData = data.at(-1)
+  const pointsWithData = data.filter(
+    ([_, native, canonical, external]) =>
+      native !== null && canonical !== null && external !== null,
+  ) as [number, number, number, number, number][]
+  const oldestTvsData = pointsWithData.at(0)
+  const latestTvsData = pointsWithData.at(-1)
 
   if (!oldestTvsData || !latestTvsData) {
     return {

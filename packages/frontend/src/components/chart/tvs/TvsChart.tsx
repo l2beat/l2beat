@@ -21,7 +21,7 @@ import type { ChartUnit } from '../types'
 
 export interface TvsChartDataPoint {
   timestamp: number
-  value: number
+  value: number | null
 }
 
 interface Props {

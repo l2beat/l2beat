@@ -19,9 +19,9 @@ import type { ChartUnit } from '../../types'
 
 export interface StackedTvsChartDataPoint {
   timestamp: number
-  native: number
-  canonical: number
-  external: number
+  native: number | null
+  canonical: number | null
+  external: number | null
 }
 
 interface Props {

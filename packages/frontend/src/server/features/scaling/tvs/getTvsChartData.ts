@@ -1,4 +1,3 @@
-import type { ProjectValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
@@ -6,7 +5,10 @@ import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getRangeWithMax } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
-import { getSummedTvsValues } from './utils/getSummedTvsValues'
+import {
+  getSummedTvsValues,
+  type SummedTvsValues,
+} from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
 import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
@@ -34,9 +36,9 @@ export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
 type TvsChartDataPoint = readonly [
   timestamp: number,
-  native: number,
-  canonical: number,
-  external: number,
+  native: number | null,
+  canonical: number | null,
+  external: number | null,
   ethPrice: number,
 ]
 export type TvsChartData = TvsChartDataPoint[]
@@ -90,7 +92,7 @@ export async function getTvsChart({
 }
 
 function getChartData(
-  values: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  values: SummedTvsValues[],
   ethPrices: Record<number, number>,
 ) {
   return values.map((value) => {

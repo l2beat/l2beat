@@ -98,11 +98,14 @@ function DefaultChart({
 
   const chartData: TvsChartDataPoint[] | undefined = data?.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: total / divider,
+        value: total !== null ? total / divider : null,
       }
     },
   )

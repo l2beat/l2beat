@@ -55,9 +55,9 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
-          native: native / divider,
-          canonical: canonical / divider,
-          external: external / divider,
+          native: native !== null ? native / divider : null,
+          canonical: canonical !== null ? canonical / divider : null,
+          external: external !== null ? external / divider : null,
         }
       }),
     [data, unit],
@@ -105,14 +105,25 @@ function getStats(
   data:
     | {
         timestamp: number
-        native: number
-        canonical: number
-        external: number
+        native: number | null
+        canonical: number | null
+        external: number | null
       }[]
     | undefined,
 ) {
-  const oldestDataPoint = data?.at(0)
-  const newestDataPoint = data?.at(-1)
+  const pointsWithData = data?.filter(
+    (point) =>
+      point.native !== null &&
+      point.canonical !== null &&
+      point.external !== null,
+  ) as {
+    timestamp: number
+    native: number
+    canonical: number
+    external: number
+  }[]
+  const oldestDataPoint = pointsWithData?.at(0)
+  const newestDataPoint = pointsWithData?.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }

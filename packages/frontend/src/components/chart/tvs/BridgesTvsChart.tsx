@@ -31,11 +31,14 @@ export function BridgesTvsChart() {
 
   const chartData: TvsChartDataPoint[] | undefined = data?.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: total / divider,
+        value: total !== null ? total / divider : null,
       }
     },
   )
@@ -118,8 +121,12 @@ function getStats(data: TvsChartDataPoint[] | undefined) {
   if (!data) {
     return undefined
   }
-  const oldestDataPoint = data.at(0)
-  const newestDataPoint = data.at(-1)
+  const pointsWithData = data.filter((point) => point.value !== null) as {
+    timestamp: number
+    value: number
+  }[]
+  const oldestDataPoint = pointsWithData.at(0)
+  const newestDataPoint = pointsWithData.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }

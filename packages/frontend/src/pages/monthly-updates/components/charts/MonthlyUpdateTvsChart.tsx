@@ -49,7 +49,10 @@ export function MonthlyUpdateTvsChart({
 
   const chartData: TvsChartDataPoint[] | undefined = data?.map(
     ([timestamp, native, canonical, external]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       return {
         timestamp,
         value: total,
@@ -155,7 +158,11 @@ function getStats(
     return undefined
   }
 
-  const last = chartData.at(-1)
+  const pointsWithData = chartData.filter((point) => point.value !== null) as {
+    timestamp: number
+    value: number
+  }[]
+  const last = pointsWithData.at(-1)
   if (!last) {
     return undefined
   }

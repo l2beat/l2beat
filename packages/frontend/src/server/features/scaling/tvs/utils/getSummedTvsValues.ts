@@ -7,11 +7,23 @@ import { getTvsTargetTimestamp } from './getTvsTargetTimestamp'
 import type { TvsChartRange } from './range'
 import { rangeToResolution } from './range'
 
+export type SummedTvsValues = {
+  timestamp: number
+  value: number | null
+  canonical: number | null
+  external: number | null
+  native: number | null
+  ether: number | null
+  stablecoin: number | null
+  other: number | null
+  associated: number | null
+}
+
 export async function getSummedTvsValues(
   projectIds: ProjectId[],
   range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
   type?: ProjectValueType,
-) {
+): Promise<SummedTvsValues[]> {
   const db = getDb()
   const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
@@ -77,14 +89,27 @@ export async function getSummedTvsValues(
 
   const timestamps = valueRecords.map((v) => v.timestamp)
   const fromTimestamp = Math.min(...timestamps)
-  const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
+  const groupedByTimestamp = keyBy(
+    valueRecords.filter((v) => v.timestamp < 1751275600),
+    (v) => v.timestamp,
+  )
 
   return generateTimestamps([fromTimestamp, target], resolution, {
     addTarget: true,
   }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]
     if (!record) {
-      return []
+      return {
+        timestamp,
+        value: null,
+        canonical: null,
+        external: null,
+        native: null,
+        ether: null,
+        stablecoin: null,
+        other: null,
+        associated: null,
+      }
     }
     return record
   })

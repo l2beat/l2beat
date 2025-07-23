@@ -249,9 +249,9 @@ function getStats(
   data:
     | {
         timestamp: number
-        rollups: number
-        validiumsAndOptimiums: number
-        others: number
+        rollups: number | null
+        validiumsAndOptimiums: number | null
+        others: number | null
       }[]
     | undefined,
 ) {
@@ -265,13 +265,13 @@ function getStats(
   }
 
   const oldestTotal =
-    oldestDataPoint.rollups +
-    oldestDataPoint.validiumsAndOptimiums +
-    oldestDataPoint.others
+    (oldestDataPoint.rollups ?? 0) +
+    (oldestDataPoint.validiumsAndOptimiums ?? 0) +
+    (oldestDataPoint.others ?? 0)
   const newestTotal =
-    newestDataPoint.rollups +
-    newestDataPoint.validiumsAndOptimiums +
-    newestDataPoint.others
+    (newestDataPoint.rollups ?? 0) +
+    (newestDataPoint.validiumsAndOptimiums ?? 0) +
+    (newestDataPoint.others ?? 0)
   const change = newestTotal / oldestTotal - 1
 
   return {
