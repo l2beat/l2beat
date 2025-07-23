@@ -36,11 +36,13 @@ export interface RawProviders {
 }
 
 export interface IProvider {
+  readonly timestamp: UnixTime
   readonly blockNumber: number
   readonly chain: string
 
-  switchBlock(blockNumber: number): IProvider
-  switchChain(chain: string, blockNumber: number): IProvider
+  switchBlock(blockNumber: number): Promise<IProvider>
+  switchChain(chain: string): Promise<IProvider>
+  switchChain(chain: string, timestamp: UnixTime): Promise<IProvider>
 
   /** Needs to return values that survive JSON serialization! */
   raw<T>(
