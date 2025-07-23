@@ -14,7 +14,7 @@ export type ContractValue =
 export interface StructureOutput {
   name: string
   chain: string
-  blockNumber: number
+  blockNumber?: number
   timestamp: number
   entries: StructureEntry[]
   abis: Record<string, string[]>
@@ -26,7 +26,7 @@ export interface StructureOutput {
 export interface DiscoveryOutput {
   name: string
   chain: string
-  blockNumber: number
+  blockNumber?: number
   timestamp: number
   entries: EntryParameters[]
   abis: Record<string, string[]>

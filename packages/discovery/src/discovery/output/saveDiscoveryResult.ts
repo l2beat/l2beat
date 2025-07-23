@@ -32,7 +32,6 @@ export interface SaveDiscoveryResultOptions {
 export async function saveDiscoveryResult(
   results: Analysis[],
   config: ConfigRegistry,
-  blockNumber: number,
   timestamp: UnixTime,
   logger: Logger,
   options: SaveDiscoveryResultOptions,
@@ -48,7 +47,6 @@ export async function saveDiscoveryResult(
   const discoveryOutput = toDiscoveryOutput(
     templateService,
     config,
-    blockNumber,
     timestamp,
     results,
   )

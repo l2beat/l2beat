@@ -6,11 +6,11 @@ export function getDiscoveryInfo(
 ): ProjectDiscoveryInfo {
   const blockNumberPerChain: Record<string, number> = {}
 
-  for (const { chain, blockNumber } of discoveries) {
+  for (const { chain, timestamp } of discoveries) {
     blockNumberPerChain[chain] ??= Number.POSITIVE_INFINITY
     blockNumberPerChain[chain] = Math.min(
       blockNumberPerChain[chain],
-      blockNumber,
+      timestamp,
     )
   }
 
