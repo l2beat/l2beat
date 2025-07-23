@@ -35,7 +35,7 @@ export async function getTvsBreakdownForProject(
     tokenValues.map((x) => [TokenId(x.tokenId), x]),
   )
 
-  const breakdown = await getTvsBreakdown(
+  const breakdown = getTvsBreakdown(
     project,
     tokenValuesMap,
     chains,
@@ -57,6 +57,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           amount: 100,
           id: TokenId('1'),
           usdValue: 100,
+          category: 'ether',
           iconUrl:
             'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
           symbol: 'ETH',
@@ -84,7 +85,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'ETH',
           source: 'canonical',
           isAssociated: true,
-
+          category: 'ether',
           formula: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
@@ -109,6 +110,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'TKN',
           source: 'native',
           isAssociated: true,
+          category: 'other',
           formula: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
@@ -133,6 +135,7 @@ function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
           symbol: 'TKN',
           source: 'external',
           isAssociated: true,
+          category: 'stablecoin',
           formula: {
             type: 'balanceOfEscrow',
             address: EthereumAddress(
