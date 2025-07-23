@@ -1,8 +1,9 @@
 import {
   assert,
+  assertUnreachable,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -83,7 +84,9 @@ export const OMNICHAIN_ESCROWS = escrows.map((escrow) => ({
   tokens: escrow.tokens,
   newVersion: true,
   useContractName: true,
-  contract: discovery.getContractDetails(escrow.address),
+  contract: discovery.getContractDetails(
+    ChainSpecificAddress.from('eth', escrow.address),
+  ),
   chain: 'ethereum',
 }))
 
@@ -115,7 +118,7 @@ const relevantAppConfigs = Object.fromEntries(
 )
 
 export const RELAYERS = Object.values(relevantAppConfigs)
-  .flatMap((x) => (x ? EthereumAddress(x.relayer) : []))
+  .flatMap((x) => (x ? ChainSpecificAddress(x.relayer) : []))
   .filter((x, i, a) => a.indexOf(x) === i)
 
 assert(
@@ -124,7 +127,7 @@ assert(
 )
 
 export const ORACLES = Object.values(relevantAppConfigs)
-  .flatMap((x) => (x ? EthereumAddress(x.oracle) : []))
+  .flatMap((x) => (x ? ChainSpecificAddress(x.oracle) : []))
   .filter((x, i, a) => a.indexOf(x) === i)
 
 const inboundProofLibraries = discovery.getContractValue<
@@ -134,4 +137,4 @@ const inboundProofLibraries = discovery.getContractValue<
 export const INBOUND_PROOF_LIBRARIES = Object.values(inboundProofLibraries)
   .flatMap((x) => x ?? [])
   .filter((x, i, a) => a.indexOf(x) === i)
-  .map((address) => EthereumAddress(address))
+  .map((address) => ChainSpecificAddress(address))

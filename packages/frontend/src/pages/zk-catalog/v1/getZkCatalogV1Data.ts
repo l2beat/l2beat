@@ -4,7 +4,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '../../../utils/Manifest'
-import { getZkCatalogEntries } from '../utils/getZkCatalogEntries'
+import { getZkCatalogV1Entries } from './utils/getZkCatalogV1Entries'
 
 export async function getZkCatalogV1Data(
   manifest: Manifest,
@@ -18,7 +18,7 @@ export async function getZkCatalogV1Data(
       whereNot: ['archivedAt'],
     }),
   ])
-  const entries = getZkCatalogEntries(projects, verifiers)
+  const entries = getZkCatalogV1Entries(projects, verifiers)
 
   return {
     head: {

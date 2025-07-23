@@ -3,7 +3,6 @@ import type {
   ChainConfig,
   OnchainVerifier,
   ProjectActivityConfig,
-  ProjectFinalityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
 import type {
@@ -20,8 +19,8 @@ import type {
   ProjectTvsConfig,
 } from '../modules/tvs/types'
 import type { MulticallConfigEntry } from '../peripherals/multicall/types'
-import type { ResolvedFeatureFlag } from './FeatureFlags'
 import type { ChainApi } from './chain/ChainApi'
+import type { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string
@@ -34,7 +33,6 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
-  readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
@@ -121,16 +119,6 @@ export interface TrackedTxsConfig {
         }
       | false
   }
-}
-
-export interface FinalityConfig {
-  readonly configurations: FinalityConfigProject[]
-}
-
-export type FinalityConfigProject = ProjectFinalityConfig & {
-  projectId: ProjectId
-  url?: string
-  callsPerMinute?: number
 }
 
 export interface BlockscoutChainConfig {

@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type UpdateMessageRecord, toRecord, toRow } from './entity'
-import { selectUpdateMessage } from './select'
+import { toRecord, toRow, type UpdateMessageRecord } from './entity'
 
 export class UpdateMessageRepository extends BaseRepository {
   async upsert(record: UpdateMessageRecord): Promise<void> {
@@ -39,7 +38,7 @@ export class UpdateMessageRepository extends BaseRepository {
   async getAll(): Promise<UpdateMessageRecord[]> {
     const rows = await this.db
       .selectFrom('UpdateMessage')
-      .select(selectUpdateMessage)
+      .selectAll()
       .orderBy('timestamp', 'desc')
       .execute()
 

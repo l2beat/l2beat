@@ -2,25 +2,25 @@
   "name": "gateway",
   "chain": "ethereum",
   "blockNumber": 22823769,
-  "configHash": "0x41db944b7c1b228c26e34ac04cc51ed846ac39e80139559b5c20ead4e3ac2ecc",
+  "configHash": "0x38b53ab405b1f257e0d15de14ea5119b34d1d19312b0925929b5b708242ff5e9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
       "name": "DualVerifier",
-      "address": "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
+      "address": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
       "type": "Contract",
       "template": "shared-zk-stack/DualVerifier",
       "sourceHashes": [
         "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
       ],
       "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.",
+      "description": "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.",
       "sinceTimestamp": 1747357991,
       "sinceBlock": 22492297,
       "values": {
         "$immutable": true,
-        "FFLONK_VERIFIER": "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
-        "PLONK_VERIFIER": "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
+        "FFLONK_VERIFIER": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
+        "PLONK_VERIFIER": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
         "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
       },
       "fieldMeta": {
@@ -29,12 +29,12 @@
         }
       },
       "implementationNames": {
-        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": "DualVerifier"
+        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": "DualVerifier"
       }
     },
     {
       "name": "GatewayTransactionFilterer",
-      "address": "0x5540DE94485dB078025318428F813C5d88215823",
+      "address": "eth:0x5540DE94485dB078025318428F813C5d88215823",
       "type": "Contract",
       "template": "shared-zk-stack/GatewayTransactionFilterer",
       "sourceHashes": [
@@ -42,7 +42,7 @@
         "0xddf32cb09a89624e3afcd665003e3a8f81d87a3408a0cf844ec4238889f8c850"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).",
+      "description": "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner (eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3).",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -54,44 +54,44 @@
       "sinceTimestamp": 1748609843,
       "sinceBlock": 22595693,
       "values": {
-        "$admin": "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
-        "$implementation": "0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde",
+        "$admin": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
+        "$implementation": "eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde",
         "$pastUpgrades": [
           [
             "2025-05-30T12:57:23.000Z",
             "0xac3985fb7e17642c669d9164f53c075503ec4c31208040e2bb47b8277a5cfe36",
-            ["0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde"]
+            ["eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde"]
           ]
         ],
         "$upgradeCount": 1,
         "blacklistedContracts": [
-          "0x65e424504400d8923BD19dde480919a4C19adcD3",
-          "0xcbd7298D64d7855C5a5736B4D8c5650aeA829214",
-          "0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9",
-          "0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831",
-          "0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6",
-          "0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8",
-          "0xa365401Dc76d077c702965ECc39CfbfE436A6167",
-          "0x7f124F72fB4f978798ffdedAD3332b0ce750F399",
-          "0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7",
-          "0x0ba2a65bb5CaB6b4b4CA797C4Aa825118a6A2A63",
-          "0x69653a812038424290EFd0e7Ae8DcFB2Bbf9c9b2",
-          "0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de",
-          "0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474",
-          "0x0000000000000000000000000000000000008006",
-          "0x000000000000000000000000000000000000800f",
-          "0x0000000000000000000000000000000000008014",
-          "0x0000000000000000000000000000000000010000",
-          "0x0000000000000000000000000000000000010001"
+          "eth:0x65e424504400d8923BD19dde480919a4C19adcD3",
+          "eth:0xcbd7298D64d7855C5a5736B4D8c5650aeA829214",
+          "eth:0x63825fc80a4B8d96EE99d37E958a3A5B01b995D9",
+          "eth:0xb742F4d52F6A5e98F11EAc60A7f75Acee534B831",
+          "eth:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6",
+          "eth:0x4659780be9E0863eFB2BAE5DD77E31e371f2d3C8",
+          "eth:0xa365401Dc76d077c702965ECc39CfbfE436A6167",
+          "eth:0x7f124F72fB4f978798ffdedAD3332b0ce750F399",
+          "eth:0xEE7f08400FDa3A46D32Ae78eBEC2D3841CeC53b7",
+          "eth:0x0ba2a65bb5CaB6b4b4CA797C4Aa825118a6A2A63",
+          "eth:0x69653a812038424290EFd0e7Ae8DcFB2Bbf9c9b2",
+          "eth:0x540E6ED9FC06dFCbf0a38Dcc7Ed7Ea3F56C551de",
+          "eth:0x6655933e34d8FD8f6d2CC7d5175bFC06112B7474",
+          "eth:0x0000000000000000000000000000000000008006",
+          "eth:0x000000000000000000000000000000000000800f",
+          "eth:0x0000000000000000000000000000000000008014",
+          "eth:0x0000000000000000000000000000000000010000",
+          "eth:0x0000000000000000000000000000000000010001"
         ],
-        "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "L1_ASSET_ROUTER": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
-        "owner": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "BRIDGE_HUB": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "L1_ASSET_ROUTER": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56",
+        "owner": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "whitelistedSenders": [
-          "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-          "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-          "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+          "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "eth:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
         ]
       },
       "fieldMeta": {
@@ -103,13 +103,13 @@
         }
       },
       "implementationNames": {
-        "0x5540DE94485dB078025318428F813C5d88215823": "TransparentUpgradeableProxy",
-        "0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde": "GatewayTransactionFilterer"
+        "eth:0x5540DE94485dB078025318428F813C5d88215823": "TransparentUpgradeableProxy",
+        "eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde": "GatewayTransactionFilterer"
       }
     },
     {
       "name": "L1VerifierPlonk",
-      "address": "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
+      "address": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierPlonk",
       "sourceHashes": [
@@ -130,12 +130,12 @@
         }
       },
       "implementationNames": {
-        "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": "L1VerifierPlonk"
+        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": "L1VerifierPlonk"
       }
     },
     {
       "name": "ProxyAdmin",
-      "address": "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
+      "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -153,15 +153,15 @@
       "sinceBlock": 22589160,
       "values": {
         "$immutable": true,
-        "owner": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+        "owner": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
       },
       "implementationNames": {
-        "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": "ProxyAdmin"
+        "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": "ProxyAdmin"
       }
     },
     {
       "name": "DiamondProxy",
-      "address": "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+      "address": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
@@ -190,50 +190,50 @@
       "values": {
         "$immutable": false,
         "$implementation": [
-          "0x431449e2a28A69122860A4956A3f7191eE15aFBC",
-          "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
-          "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
-          "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+          "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
+          "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
+          "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
+          "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
         ],
         "$pastUpgrades": [
           [
             "2025-05-12T21:47:35.000Z",
             "0x3e8cdd2eaeb071fb5c265c907558e6a92c07237bcf7b3dae70ae56a0650c08f1",
             [
-              "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
-              "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
-              "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
-              "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+              "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
+              "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
+              "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
+              "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
             ]
           ],
           [
             "2025-05-12T21:47:35.000Z",
             "0x3e8cdd2eaeb071fb5c265c907558e6a92c07237bcf7b3dae70ae56a0650c08f1",
             [
-              "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
-              "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
-              "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
-              "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+              "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
+              "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
+              "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
+              "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
             ]
           ],
           [
             "2025-05-12T21:47:35.000Z",
             "0x3e8cdd2eaeb071fb5c265c907558e6a92c07237bcf7b3dae70ae56a0650c08f1",
             [
-              "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
-              "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
-              "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
-              "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+              "eth:0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
+              "eth:0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
+              "eth:0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
+              "eth:0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
             ]
           ],
           [
             "2025-06-26T16:22:35.000Z",
             "0x5f1399621fcffa2658239a9192558bec47602896daa235483f85067cc011a45a",
             [
-              "0x431449e2a28A69122860A4956A3f7191eE15aFBC",
-              "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
-              "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
-              "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+              "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
+              "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
+              "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
+              "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
             ]
           ]
         ],
@@ -241,13 +241,13 @@
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 30000,
         "facetAddresses": [
-          "0x431449e2a28A69122860A4956A3f7191eE15aFBC",
-          "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
-          "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
-          "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+          "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
+          "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
+          "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
+          "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
         ],
         "facets": {
-          "0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
+          "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
             "acceptAdmin()",
             "unfreezeDiamond()",
             "upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))",
@@ -270,7 +270,7 @@
             "setPriorityTxMaxGasLimit(uint256)",
             "setPubdataPricingMode(uint8)"
           ],
-          "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
+          "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
             "getPubdataPricingMode()",
             "getPriorityTxMaxGasLimit()",
             "getTotalBlocksCommitted()",
@@ -320,7 +320,7 @@
             "isValidator(address)",
             "getL2DefaultAccountBytecodeHash()"
           ],
-          "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": [
+          "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": [
             "proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)",
             "bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))",
             "requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)",
@@ -333,22 +333,22 @@
             "bridgehubRequestL2TransactionOnGateway(bytes32,uint64)",
             "proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"
           ],
-          "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
+          "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
             "revertBatchesSharedBridge(uint256,uint256)",
             "proveBatchesSharedBridge(uint256,uint256,uint256,bytes)",
             "commitBatchesSharedBridge(uint256,uint256,uint256,bytes)",
             "executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"
           ]
         },
-        "getAdmin": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
-        "getBaseToken": "0x66A5cFB2e9c529f14FE6364Ad1075dF3a649C0A5",
+        "getAdmin": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+        "getBaseToken": "eth:0x66A5cFB2e9c529f14FE6364Ad1075dF3a649C0A5",
         "getBaseTokenAssetId": "0x83e2fbc0a739b3c765de4c2b4bf8072a71ea8fbb09c8cf579c71425d8bc8804a",
-        "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "getBridgehub": "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "getChainId": 9075,
-        "getChainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "getChainTypeManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getDAValidatorPair": [
-          "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
-          "0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
+          "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
+          "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
         "getFirstUnprocessedPriorityTx": 74,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
@@ -357,7 +357,7 @@
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getPendingAdmin": "0x0000000000000000000000000000000000000000",
+        "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
         "getPriorityTreeRoot": "0xe4a1fea16a4329e6b398dfb509c420bed03dad8c5030e92373cfceabc14cf85d",
         "getPriorityTreeStartIndex": 0,
@@ -365,7 +365,7 @@
         "getProtocolVersion": 120259084288,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
-        "getSettlementLayer": "0x0000000000000000000000000000000000000000",
+        "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
         "getTotalBatchesCommitted": 123,
         "getTotalBatchesExecuted": 123,
         "getTotalBatchesVerified": 123,
@@ -373,8 +373,8 @@
         "getTotalBlocksExecuted": 123,
         "getTotalBlocksVerified": 123,
         "getTotalPriorityTxs": 74,
-        "getTransactionFilterer": "0x5540DE94485dB078025318428F813C5d88215823",
-        "getVerifier": "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
+        "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
+        "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "recursionLeafLevelVkHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -384,7 +384,7 @@
         "isPermanentRollup": 1,
         "isPermanentRollupString": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
         "isPriorityQueueActive": false,
-        "validators": ["0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
+        "validators": ["eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
       },
       "fieldMeta": {
         "getAdmin": { "severity": "HIGH" },
@@ -416,11 +416,11 @@
         }
       },
       "implementationNames": {
-        "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": "DiamondProxy",
-        "0x431449e2a28A69122860A4956A3f7191eE15aFBC": "AdminFacet",
-        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": "GettersFacet",
-        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": "MailboxFacet",
-        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": "ExecutorFacet"
+        "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": "DiamondProxy",
+        "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC": "AdminFacet",
+        "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": "GettersFacet",
+        "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": "MailboxFacet",
+        "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": "ExecutorFacet"
       },
       "usedTypes": [
         {
@@ -435,7 +435,7 @@
     },
     {
       "name": "ValidatorTimelock",
-      "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+      "address": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
       "sourceHashes": [
@@ -455,25 +455,25 @@
       "sinceBlock": 21809364,
       "values": {
         "$immutable": true,
-        "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "chainTypeManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "executionDelay": 10800,
         "executionDelay_fmt": "3h",
         "getName": "ValidatorTimelock",
-        "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE",
-          "0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
+          "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE",
+          "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF"
         ]
       },
       "implementationNames": {
-        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
+        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "address": "0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE",
+      "address": "eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -485,7 +485,7 @@
       ]
     },
     {
-      "address": "0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF",
+      "address": "eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -498,7 +498,7 @@
     },
     {
       "name": "L1VerifierFflonk",
-      "address": "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
+      "address": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
       "type": "Contract",
       "template": "shared-zk-stack/L1VerifierFflonk",
       "sourceHashes": [
@@ -519,11 +519,11 @@
         }
       },
       "implementationNames": {
-        "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
+        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
       }
     },
     {
-      "address": "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
+      "address": "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -537,7 +537,7 @@
     },
     {
       "name": "ChainAdminOwnable",
-      "address": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+      "address": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
       "sourceHashes": [
@@ -577,9 +577,9 @@
       "sinceBlock": 22375679,
       "values": {
         "$immutable": true,
-        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "tokenMultiplierSetter": "0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
+        "owner": "eth:0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
+        "tokenMultiplierSetter": "eth:0xFC0cB5F27C8d27E9Ddf76b8A0adA9806227bA6a9",
         "upgradeTimestamps": []
       },
       "fieldMeta": {
@@ -588,13 +588,13 @@
         }
       },
       "implementationNames": {
-        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": "ChainAdminOwnable"
+        "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": "ChainAdminOwnable"
       },
       "category": { "name": "Governance", "priority": 3 }
     }
   ],
   "abis": {
-    "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
+    "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A": [
       "constructor(uint256 _l1ChainId)",
       "error BatchHashMismatch(bytes32 expected, bytes32 actual)",
       "error BatchNumberMismatch(uint256 expectedBatchNumber, uint256 providedBatchNumber)",
@@ -654,7 +654,7 @@
       "function proveBatchesSharedBridge(uint256, uint256 _processBatchFrom, uint256 _processBatchTo, bytes _proofData)",
       "function revertBatchesSharedBridge(uint256, uint256 _newLastBatch)"
     ],
-    "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": [
+    "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec": [
       "constructor(uint256 _eraChainId, uint256 _l1ChainId)",
       "error BaseTokenGasPriceDenominatorNotSet()",
       "error BatchNotExecuted(uint256 batchNumber)",
@@ -698,7 +698,7 @@
       "function requestL2Transaction(address _contractL2, uint256 _l2Value, bytes _calldata, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, bytes[] _factoryDeps, address _refundRecipient) payable returns (bytes32 canonicalTxHash)",
       "function requestL2TransactionToGatewayMailbox(uint256 _chainId, bytes32 _canonicalTxHash, uint64 _expirationTimestamp) returns (bytes32 canonicalTxHash)"
     ],
-    "0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
+    "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC": [
       "constructor(uint256 _l1ChainId, address _rollupDAManager)",
       "error AddressHasNoCode(address)",
       "error AlreadyMigrated()",
@@ -783,7 +783,7 @@
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": [
+    "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": [
       "constructor(address _fflonkVerifier, address _plonkVerifier)",
       "error EmptyProofLength()",
       "error UnknownVerifierType()",
@@ -793,17 +793,17 @@
       "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
       "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
     ],
-    "0x5540DE94485dB078025318428F813C5d88215823": [
+    "eth:0x5540DE94485dB078025318428F813C5d88215823": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": [
+    "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
-    "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": [
+    "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
       "function getProxyAdmin(address proxy) view returns (address)",
@@ -814,7 +814,7 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
-    "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": [
+    "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "error AddressHasNoCode(address)",
       "error DelegateCallFailed(bytes returnData)",
@@ -828,7 +828,7 @@
       "error UndefinedDiamondCutAction()",
       "event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)"
     ],
-    "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
+    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
       "error AddressAlreadyValidator(uint256 _chainId)",
       "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
@@ -863,7 +863,7 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
+    "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22": [
       "function baseTokenGasPriceMultiplierDenominator() view returns (uint128)",
       "function baseTokenGasPriceMultiplierNominator() view returns (uint128)",
       "function facetAddress(bytes4 _selector) view returns (address)",
@@ -914,7 +914,7 @@
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
     ],
-    "0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde": [
+    "eth:0xcb4B0E49CeaF3fB98CD375B3D2A1cbF4dD85fBde": [
       "constructor(address _bridgeHub, address _assetRouter)",
       "error AlreadyBlocklisted(address)",
       "error AlreadyWhitelisted(address)",
@@ -945,11 +945,11 @@
       "function transferOwnership(address newOwner)",
       "function whitelistedSenders(address sender) view returns (bool whitelisted)"
     ],
-    "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": [
+    "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[]) view returns (bool)"
     ],
-    "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": [
+    "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3": [
       "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
       "error NoCallsProvided()",
       "error Unauthorized(address caller)",
@@ -982,5 +982,5 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0xea7ed61f3e9321db15f4164994c5e7120c7c7fba5564f36f72bee5345bac98a8"
+  "permissionsConfigHash": "0x1da03f124bf820e9e22a3342cc8437ad577818017e0db1b7910056748b6494ea"
 }

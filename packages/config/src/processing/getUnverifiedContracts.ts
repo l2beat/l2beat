@@ -1,43 +1,34 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { getChainShortName } from '@l2beat/discovery'
+import { ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
 import type { Bridge, ScalingProject } from '../internalTypes'
-import type {
-  BaseProject,
-  ProjectPermissions,
-  ProjectUnverifiedContract,
-} from '../types'
+import type { BaseProject, ProjectPermissions } from '../types'
 
 function getUnverifiedContracts(
   project: ScalingProject | Bridge | BaseProject,
-): ProjectUnverifiedContract[] {
+): ChainSpecificAddress[] {
   return Object.values(project.contracts?.addresses ?? {})
     .flat()
     .filter((c) => !c.isVerified)
-    .map((c) => ({
-      chain: c.chain,
-      address: c.address,
-    }))
+    .map((c) => c.address)
 }
 
 function getUnverifiedPermissions(
   project: ScalingProject | Bridge | BaseProject,
-): ProjectUnverifiedContract[] {
+): ChainSpecificAddress[] {
   return Object.values(project.permissions ?? {})
     .flat()
     .flatMap((p) => [...(p.roles ?? []), ...(p.actors ?? [])])
     .flatMap((p) =>
-      p.accounts.map((a) => ({
-        chain: p.chain,
-        address: a.address,
-        isVerified: a.isVerified,
-      })),
+      p.accounts.map((a) => ({ address: a.address, isVerified: a.isVerified })),
     )
     .filter((c) => !c.isVerified)
+    .map((c) => c.address)
 }
 
 function getUnverifiedDaLayerContracts(
   project: ScalingProject,
   daBridges: BaseProject[],
-): ProjectUnverifiedContract[] {
+): ChainSpecificAddress[] {
   const bridge = daBridges.find(
     (p) => p.id === project.dataAvailability?.bridge.projectId,
   )
@@ -54,22 +45,16 @@ function getUnverifiedDaLayerContracts(
   )
     .flatMap((p) => [...(p.roles ?? []), ...(p.actors ?? [])])
     .flatMap((p) =>
-      p.accounts.map((a) => ({
-        chain: p.chain,
-        address: a.address,
-        isVerified: a.isVerified,
-      })),
+      p.accounts.map((a) => ({ address: a.address, isVerified: a.isVerified })),
     )
     .filter((c) => !c.isVerified)
+    .map((c) => c.address)
 
   const unverifiedDaBridgeContracts = bridge?.contracts?.addresses?.[
     hostChainId
   ]
     .filter((c) => !c.isVerified)
-    .map((c) => ({
-      chain: c.chain,
-      address: c.address,
-    }))
+    .map((c) => c.address)
 
   return [
     ...(unverifiedDaBridgeContracts ?? []),
@@ -79,14 +64,18 @@ function getUnverifiedDaLayerContracts(
 
 function getUnverifiedEscrows(
   project: ScalingProject | Bridge,
-): ProjectUnverifiedContract[] {
-  return project.config.escrows.filter((e) => e.contract?.isVerified === false)
+): ChainSpecificAddress[] {
+  return project.config.escrows
+    .filter((e) => e.contract?.isVerified === false)
+    .map((c) =>
+      ChainSpecificAddress.from(getChainShortName(c.chain), c.address),
+    )
 }
 
 export function getProjectUnverifiedContracts(
   project: ScalingProject | Bridge | BaseProject,
   daBridges?: BaseProject[],
-): ProjectUnverifiedContract[] {
+): ChainSpecificAddress[] {
   const contracts = getUnverifiedContracts(project)
   const permissions = getUnverifiedPermissions(project)
 

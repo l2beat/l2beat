@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
-import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
 import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
+import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -10,11 +10,11 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
-import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { MarketShare } from './MonthlyUpdateMarketShare'
@@ -42,7 +42,7 @@ export function MonthlyUpdateThroughputChart({
     return {
       projects: {
         label: 'Data Posted',
-        color: 'var(--project-primary)',
+        color: 'var(--project-primary, var(--ecosystem-primary))',
         indicatorType: {
           shape: 'line',
         },
@@ -70,7 +70,7 @@ export function MonthlyUpdateThroughputChart({
   const range = getChartRange(chartData)
 
   return (
-    <PrimaryCard className="!rounded-lg border border-divider">
+    <PrimaryCard className="rounded-lg! border border-divider">
       <Header
         range={range}
         stats={{
@@ -82,7 +82,7 @@ export function MonthlyUpdateThroughputChart({
         data={chartData}
         meta={chartMeta}
         isLoading={isLoading}
-        className="!h-44 !min-h-44"
+        className="h-44! min-h-44!"
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
@@ -114,8 +114,9 @@ export function MonthlyUpdateThroughputChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
+                primary: 'var(--project-primary, var(--ecosystem-primary))',
+                secondary:
+                  'var(--project-secondary, var(--ecosystem-secondary))',
               }}
             />
           </defs>
@@ -133,11 +134,11 @@ function Header({
   stats: { pastDayPosted: number; dataPosted: number }
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Throughput</div>
         <div className="font-medium text-secondary text-xs">
-          <ChartTimeRange range={range} />
+          <EcosystemChartTimeRange range={range} />
         </div>
       </div>
       <div className="text-right">

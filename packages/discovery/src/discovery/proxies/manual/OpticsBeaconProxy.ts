@@ -1,14 +1,13 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { getPastUpgradesSingleEvent } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 export async function getOpticsBeaconProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   // NOTE(radomski): These offsets are extracted manually from the runtime
   // bytecode. The only other way to extract these addresses is to look into
@@ -24,10 +23,14 @@ export async function getOpticsBeaconProxy(
   // Because of these issues which brought a lot of confusion and instability
   // a decision was made to extract these addresses basically manually.
   const beaconBytecode = await provider.getBytecode(address)
-  const upgradeBeacon = EthereumAddress(beaconBytecode.slice(66, 86).toString())
+  const upgradeBeacon = ChainSpecificAddress.fromLong(
+    provider.chain,
+    beaconBytecode.slice(66, 86).toString(),
+  )
 
   const upgradeBeaconBytecode = await provider.getBytecode(upgradeBeacon)
-  const beaconController = EthereumAddress(
+  const beaconController = ChainSpecificAddress.fromLong(
+    provider.chain,
     upgradeBeaconBytecode.slice(40, 60).toString(),
   )
 
@@ -37,7 +40,10 @@ export async function getOpticsBeaconProxy(
   )
 
   // TODO: (sz-piotr) what about reverts?
-  const implementation = bytes32ToAddress(implementationCallResult)
+  const implementation = ChainSpecificAddress.fromLong(
+    provider.chain,
+    bytes32ToAddress(implementationCallResult),
+  )
   const pastUpgrades = await getPastUpgradesSingleEvent(
     provider,
     upgradeBeacon,

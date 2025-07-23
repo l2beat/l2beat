@@ -1,7 +1,6 @@
 import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type VerifierStatusRecord, toRecord, toRow } from './entity'
-import { selectVerifierStatus } from './select'
+import { toRecord, toRow, type VerifierStatusRecord } from './entity'
 
 export class VerifierStatusRepository extends BaseRepository {
   async upsert(record: VerifierStatusRecord): Promise<void> {
@@ -33,7 +32,7 @@ export class VerifierStatusRepository extends BaseRepository {
   ): Promise<VerifierStatusRecord | undefined> {
     const row = await this.db
       .selectFrom('VerifierStatus')
-      .select(selectVerifierStatus)
+      .selectAll()
       .where('address', '=', address)
       .where('chainId', '=', +chainId)
       .limit(1)
@@ -46,7 +45,7 @@ export class VerifierStatusRepository extends BaseRepository {
   ): Promise<VerifierStatusRecord[]> {
     const rows = await this.db
       .selectFrom('VerifierStatus')
-      .select(selectVerifierStatus)
+      .selectAll()
       .where('address', 'in', addresses)
       .execute()
     return rows.map(toRecord)
@@ -55,7 +54,7 @@ export class VerifierStatusRepository extends BaseRepository {
   async getAll(): Promise<VerifierStatusRecord[]> {
     const rows = await this.db
       .selectFrom('VerifierStatus')
-      .select(selectVerifierStatus)
+      .selectAll()
       .execute()
     return rows.map(toRecord)
   }

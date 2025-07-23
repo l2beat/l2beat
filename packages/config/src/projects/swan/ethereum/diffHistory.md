@@ -1,3 +1,598 @@
+Generated with discovered.json: 0xd46f498e97b98c387f96a8e382abc530aadf0e2a
+
+# Diff at Mon, 14 Jul 2025 12:46:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    EOA  (0x000000000000000000000000000000000000dEaD) {
+    +++ description: None
+      address:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+    }
+```
+
+```diff
+    EOA  (0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D) {
+    +++ description: None
+      address:
+-        "0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D"
++        "eth:0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D"
+    }
+```
+
+```diff
+    EOA  (0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0) {
+    +++ description: None
+      address:
+-        "0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0"
++        "eth:0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x15567C4FfD9109795dFf1D9A5233D10aef0738D2) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      address:
+-        "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
++        "eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D"
++        "eth:0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D"
+      values.$pastUpgrades.0.2.0:
+-        "0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D"
++        "eth:0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D"
+      values.OTHER_MESSENGER:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+      values.otherMessenger:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+      values.portal:
+-        "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
+      values.PORTAL:
+-        "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
+      values.ResolvedDelegateProxy_addressManager:
+-        "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
++        "eth:0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
+      values.superchainConfig:
+-        "0xadE916De67511E5C24af4174Be67143d0dA94959"
++        "eth:0xadE916De67511E5C24af4174Be67143d0dA94959"
+      implementationNames.0x15567C4FfD9109795dFf1D9A5233D10aef0738D2:
+-        "ResolvedDelegateProxy"
+      implementationNames.0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2:
++        "ResolvedDelegateProxy"
+      implementationNames.eth:0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x1c22740A0B4511E11D76434A424487862b593901) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+      address:
+-        "0x1c22740A0B4511E11D76434A424487862b593901"
++        "eth:0x1c22740A0B4511E11D76434A424487862b593901"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x0092400cf9cbAC5ABD8518960Cb1F90663607630"
++        "eth:0x0092400cf9cbAC5ABD8518960Cb1F90663607630"
+      values.$pastUpgrades.0.2.0:
+-        "0x0092400cf9cbAC5ABD8518960Cb1F90663607630"
++        "eth:0x0092400cf9cbAC5ABD8518960Cb1F90663607630"
++++ severity: HIGH
+      values.challenger:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+      values.CHALLENGER:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++++ severity: HIGH
+      values.proposer:
+-        "0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366"
++        "eth:0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366"
+      values.PROPOSER:
+-        "0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366"
++        "eth:0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366"
+      implementationNames.0x1c22740A0B4511E11D76434A424487862b593901:
+-        "Proxy"
+      implementationNames.0x0092400cf9cbAC5ABD8518960Cb1F90663607630:
+-        "L2OutputOracle"
+      implementationNames.eth:0x1c22740A0B4511E11D76434A424487862b593901:
++        "Proxy"
+      implementationNames.eth:0x0092400cf9cbAC5ABD8518960Cb1F90663607630:
++        "L2OutputOracle"
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      address:
+-        "0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"
++        "eth:0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff"
++        "eth:0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff"
+      values.$pastUpgrades.0.2.0:
+-        "0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff"
++        "eth:0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff"
+      values.messenger:
+-        "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
++        "eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+      values.MESSENGER:
+-        "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
++        "eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000014"
++        "eth:0x4200000000000000000000000000000000000014"
+      values.otherBridge:
+-        "0x4200000000000000000000000000000000000014"
++        "eth:0x4200000000000000000000000000000000000014"
+      values.superchainConfig:
+-        "0xadE916De67511E5C24af4174Be67143d0dA94959"
++        "eth:0xadE916De67511E5C24af4174Be67143d0dA94959"
+      implementationNames.0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32:
+-        "Proxy"
+      implementationNames.0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff:
+-        "L1ERC721Bridge"
+      implementationNames.eth:0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32:
++        "Proxy"
+      implementationNames.eth:0x621729Ef0571a76E438689ec2bC88ee8E3f2Beff:
++        "L1ERC721Bridge"
+    }
+```
+
+```diff
+    EOA  (0x2c1877cDFa3649122CC0F41423A2a185217a2E23) {
+    +++ description: None
+      address:
+-        "0x2c1877cDFa3649122CC0F41423A2a185217a2E23"
++        "eth:0x2c1877cDFa3649122CC0F41423A2a185217a2E23"
+    }
+```
+
+```diff
+    EOA  (0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248) {
+    +++ description: None
+      address:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+    }
+```
+
+```diff
+    contract SystemConfig (0x504D56cf68f791B45E3A2e895B0e1562f3431328) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      address:
+-        "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
++        "eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a"
++        "eth:0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a"
+      values.$pastUpgrades.0.2.0:
+-        "0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a"
++        "eth:0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a"
+      values.batcherHash:
+-        "0xde794bEc196832474f2F218135bFd0f7cA7fb038"
++        "eth:0xde794bEc196832474f2F218135bFd0f7cA7fb038"
+      values.batchInbox:
+-        "0xfF00000000000000000000000000000000000254"
++        "eth:0xfF00000000000000000000000000000000000254"
+      values.l1CrossDomainMessenger:
+-        "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
++        "eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+      values.l1ERC721Bridge:
+-        "0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"
++        "eth:0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"
+      values.l1StandardBridge:
+-        "0xed7525946A09056C6AaE29941b8323017382050e"
++        "eth:0xed7525946A09056C6AaE29941b8323017382050e"
+      values.l2OutputOracle:
+-        "0x1c22740A0B4511E11D76434A424487862b593901"
++        "eth:0x1c22740A0B4511E11D76434A424487862b593901"
+      values.optimismMintableERC20Factory:
+-        "0xE9614162C6128ABD7790C65D711CfC43ea842153"
++        "eth:0xE9614162C6128ABD7790C65D711CfC43ea842153"
+      values.optimismPortal:
+-        "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
+      values.owner:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+      values.sequencerInbox:
+-        "0xfF00000000000000000000000000000000000254"
++        "eth:0xfF00000000000000000000000000000000000254"
+      values.unsafeBlockSigner:
+-        "0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0"
++        "eth:0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0"
+      implementationNames.0x504D56cf68f791B45E3A2e895B0e1562f3431328:
+-        "Proxy"
+      implementationNames.0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a:
+-        "SystemConfig"
+      implementationNames.eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328:
++        "Proxy"
+      implementationNames.eth:0x7CDAEa613E1D17e78F24CAF6349bCCf2bC364F0a:
++        "SystemConfig"
+    }
+```
+
+```diff
+    contract AddressManager (0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f) {
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      address:
+-        "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
++        "eth:0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
+      values.owner:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      implementationNames.0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f:
+-        "AddressManager"
+      implementationNames.eth:0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f:
++        "AddressManager"
+    }
+```
+
+```diff
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c) {
+    +++ description: None
+      address:
+-        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
++        "eth:0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xB12bd496383288A3c7916AEF8e40197d61e07815"
++        "eth:0xB12bd496383288A3c7916AEF8e40197d61e07815"
+      values.$members.1:
+-        "0x2c1877cDFa3649122CC0F41423A2a185217a2E23"
++        "eth:0x2c1877cDFa3649122CC0F41423A2a185217a2E23"
+      values.$members.2:
+-        "0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D"
++        "eth:0x04E1b8f517aF7dcD75a95B46DAdCc2c6f486502D"
+      values.$members.3:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+      implementationNames.0x6197f64902b9275e6815F9A5b641Ed2291A5d39c:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x6197f64902b9275e6815F9A5b641Ed2291A5d39c:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0xadE916De67511E5C24af4174Be67143d0dA94959) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      address:
+-        "0xadE916De67511E5C24af4174Be67143d0dA94959"
++        "eth:0xadE916De67511E5C24af4174Be67143d0dA94959"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802"
++        "eth:0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802"
+      values.$pastUpgrades.0.2.0:
+-        "0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802"
++        "eth:0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802"
+      values.guardian:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+      implementationNames.0xadE916De67511E5C24af4174Be67143d0dA94959:
+-        "Proxy"
+      implementationNames.0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802:
+-        "SuperchainConfig"
+      implementationNames.eth:0xadE916De67511E5C24af4174Be67143d0dA94959:
++        "Proxy"
+      implementationNames.eth:0x704Ad7cb61f3Ff97F790FAA747279244Eb2a1802:
++        "SuperchainConfig"
+    }
+```
+
+```diff
+    EOA  (0xB12bd496383288A3c7916AEF8e40197d61e07815) {
+    +++ description: None
+      address:
+-        "0xB12bd496383288A3c7916AEF8e40197d61e07815"
++        "eth:0xB12bd496383288A3c7916AEF8e40197d61e07815"
+    }
+```
+
+```diff
+    EOA  (0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366) {
+    +++ description: None
+      address:
+-        "0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366"
++        "eth:0xb2a5571C23d13Ce16EF3e993FbE8d225D3f67366"
+    }
+```
+
+```diff
+    contract OptimismPortal (0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      address:
+-        "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f"
++        "eth:0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f"
+      values.$pastUpgrades.0.2.0:
+-        "0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f"
++        "eth:0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f"
+      values.guardian:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+      values.GUARDIAN:
+-        "0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
++        "eth:0x3FcB6E08A960EF52Ec3101A444f71A2Fd964b248"
+      values.L2_ORACLE:
+-        "0x1c22740A0B4511E11D76434A424487862b593901"
++        "eth:0x1c22740A0B4511E11D76434A424487862b593901"
+      values.l2Oracle:
+-        "0x1c22740A0B4511E11D76434A424487862b593901"
++        "eth:0x1c22740A0B4511E11D76434A424487862b593901"
+      values.l2Sender:
+-        "0x000000000000000000000000000000000000dEaD"
++        "eth:0x000000000000000000000000000000000000dEaD"
+      values.superchainConfig:
+-        "0xadE916De67511E5C24af4174Be67143d0dA94959"
++        "eth:0xadE916De67511E5C24af4174Be67143d0dA94959"
+      values.SYSTEM_CONFIG:
+-        "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
++        "eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328"
+      values.systemConfig:
+-        "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
++        "eth:0x504D56cf68f791B45E3A2e895B0e1562f3431328"
+      implementationNames.0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15:
+-        "Proxy"
+      implementationNames.0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f:
+-        "OptimismPortal"
+      implementationNames.eth:0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15:
++        "Proxy"
+      implementationNames.eth:0x1606beCd26316B935B2dFE31D57C1C0B39f4f52f:
++        "OptimismPortal"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: None
+      address:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.addressManager:
+-        "0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
++        "eth:0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f"
+      values.owner:
+-        "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
++        "eth:0x6197f64902b9275e6815F9A5b641Ed2291A5d39c"
+      implementationNames.0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3:
+-        "ProxyAdmin"
+      implementationNames.eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xde794bEc196832474f2F218135bFd0f7cA7fb038) {
+    +++ description: None
+      address:
+-        "0xde794bEc196832474f2F218135bFd0f7cA7fb038"
++        "eth:0xde794bEc196832474f2F218135bFd0f7cA7fb038"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xE9614162C6128ABD7790C65D711CfC43ea842153) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      address:
+-        "0xE9614162C6128ABD7790C65D711CfC43ea842153"
++        "eth:0xE9614162C6128ABD7790C65D711CfC43ea842153"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0x351ABA1B5B72E6bA8d530740f073993069e7BC69"
++        "eth:0x351ABA1B5B72E6bA8d530740f073993069e7BC69"
+      values.$pastUpgrades.0.2.0:
+-        "0x351ABA1B5B72E6bA8d530740f073993069e7BC69"
++        "eth:0x351ABA1B5B72E6bA8d530740f073993069e7BC69"
+      values.bridge:
+-        "0xed7525946A09056C6AaE29941b8323017382050e"
++        "eth:0xed7525946A09056C6AaE29941b8323017382050e"
+      values.BRIDGE:
+-        "0xed7525946A09056C6AaE29941b8323017382050e"
++        "eth:0xed7525946A09056C6AaE29941b8323017382050e"
+      implementationNames.0xE9614162C6128ABD7790C65D711CfC43ea842153:
+-        "Proxy"
+      implementationNames.0x351ABA1B5B72E6bA8d530740f073993069e7BC69:
+-        "OptimismMintableERC20Factory"
+      implementationNames.eth:0xE9614162C6128ABD7790C65D711CfC43ea842153:
++        "Proxy"
+      implementationNames.eth:0x351ABA1B5B72E6bA8d530740f073993069e7BC69:
++        "OptimismMintableERC20Factory"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0xed7525946A09056C6AaE29941b8323017382050e) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      address:
+-        "0xed7525946A09056C6AaE29941b8323017382050e"
++        "eth:0xed7525946A09056C6AaE29941b8323017382050e"
+      values.$admin:
+-        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
++        "eth:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+      values.$implementation:
+-        "0xc7e1EA328166Eea934429Eaa9F6c55Ef5548Efe7"
++        "eth:0xc7e1EA328166Eea934429Eaa9F6c55Ef5548Efe7"
+      values.l2TokenBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.messenger:
+-        "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
++        "eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+      values.MESSENGER:
+-        "0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
++        "eth:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+      values.OTHER_BRIDGE:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.otherBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.superchainConfig:
+-        "0xadE916De67511E5C24af4174Be67143d0dA94959"
++        "eth:0xadE916De67511E5C24af4174Be67143d0dA94959"
+      implementationNames.0xed7525946A09056C6AaE29941b8323017382050e:
+-        "L1ChugSplashProxy"
+      implementationNames.0xc7e1EA328166Eea934429Eaa9F6c55Ef5548Efe7:
+-        "L1StandardBridge"
+      implementationNames.eth:0xed7525946A09056C6AaE29941b8323017382050e:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0xc7e1EA328166Eea934429Eaa9F6c55Ef5548Efe7:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    EOA  (0xfF00000000000000000000000000000000000254) {
+    +++ description: None
+      address:
+-        "0xfF00000000000000000000000000000000000254"
++        "eth:0xfF00000000000000000000000000000000000254"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x15567C4FfD9109795dFf1D9A5233D10aef0738D2)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x1c22740A0B4511E11D76434A424487862b593901)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x504D56cf68f791B45E3A2e895B0e1562f3431328)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x55Aec4EE11dA7d655565cCc2EB3bF21a46C94e6f)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0xadE916De67511E5C24af4174Be67143d0dA94959)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xE9614162C6128ABD7790C65D711CfC43ea842153)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xed7525946A09056C6AaE29941b8323017382050e)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+Generated with discovered.json: 0xacf1aa90048e49d5401035f6ec3b1ba8bf4a5a75
+
+# Diff at Mon, 14 Jul 2025 08:02:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0dc82cd5064c9c6dc9fb20e2291a8bb6b2048e27 block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract OptimismMintableERC20Factory (0xE9614162C6128ABD7790C65D711CfC43ea842153) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      description:
+-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
 Generated with discovered.json: 0x8389a5a6238f7c25af4325e763c4d456c3317e5a
 
 # Diff at Fri, 04 Jul 2025 12:19:23 GMT:

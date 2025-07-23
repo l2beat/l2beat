@@ -1,16 +1,16 @@
 import {
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  ESCROW,
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -19,7 +19,6 @@ import {
   STATE_ZKP_SN,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatExecutionDelay } from '../../common/formatDelays'
 import { PROOFS } from '../../common/proofSystems'
@@ -100,16 +99,6 @@ export const scroll: ScalingProject = {
       },
       explanation:
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
-    },
-    finality: {
-      warnings: {
-        timeToInclusion: {
-          sentiment: 'warning',
-          value:
-            'Transaction data batches that have not yet been proven can be reverted.',
-        },
-      },
-      finalizationPeriod,
     },
   },
   stage: getStage(
@@ -216,10 +205,10 @@ export const scroll: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
+        inbox: EthereumAddress('0xa13BAF47339d63B743e7Da8741db5456DAc1E556'),
         sequencers: [
-          '0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B',
-          '0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858',
+          EthereumAddress('0x054a47B9E2a22aF6c0CE55020238C8FEcd7d334B'),
+          EthereumAddress('0xE514A8aE91d164C6Fb48a7DE336e10C34AF4e858'),
         ],
       },
     ],
@@ -356,13 +345,6 @@ export const scroll: ScalingProject = {
         from: 'stateUpdates',
         to: 'proofSubmissions',
       },
-    },
-    finality: {
-      lag: 0,
-      type: 'Scroll',
-      // Scroll L1 Chain Proxy deployment
-      minTimestamp: UnixTime(1696775129),
-      stateUpdate: 'disabled',
     },
   },
   dataAvailability: {

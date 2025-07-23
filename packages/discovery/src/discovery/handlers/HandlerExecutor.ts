@@ -1,17 +1,17 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { DiscoveryCustomType } from '../config/StructureConfig'
 import type { StructureContractConfig } from '../config/structureUtils'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
-import type { HandlerResult } from './Handler'
 import { decodeHandlerResults } from './decodeHandlerResults'
 import { executeHandlers } from './executeHandlers'
 import { getHandlers } from './getHandlers'
+import type { HandlerResult } from './Handler'
 
 export class HandlerExecutor {
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     abi: string[],
     config: StructureContractConfig,
   ): Promise<{
@@ -23,6 +23,7 @@ export class HandlerExecutor {
     const handlers = getHandlers(abi, config)
     const results = await executeHandlers(provider, handlers, address)
     const { values, errors, usedTypes } = decodeHandlerResults(
+      provider.chain,
       results,
       config.fields,
       config.types,

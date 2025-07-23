@@ -7,7 +7,7 @@ export function getDiscoveryInfo(
   const blockNumberPerChain: Record<string, number> = {}
 
   for (const { chain, blockNumber } of discoveries) {
-    blockNumberPerChain[chain] ??= Infinity
+    blockNumberPerChain[chain] ??= Number.POSITIVE_INFINITY
     blockNumberPerChain[chain] = Math.min(
       blockNumberPerChain[chain],
       blockNumber,
@@ -20,5 +20,6 @@ export function getDiscoveryInfo(
     permissionsDiscoDriven: false,
     contractsDiscoDriven: false,
     blockNumberPerChain,
+    hasDiscoUi: false,
   }
 }

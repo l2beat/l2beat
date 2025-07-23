@@ -1,4 +1,10 @@
-import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  Bytes,
+  ChainSpecificAddress,
+  EthereumAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { StructureContract } from '../config/StructureConfig'
@@ -6,15 +12,17 @@ import { makeEntryStructureConfig } from '../config/structureUtils'
 import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
-import type { ContractSources } from '../source/SourceCodeService'
-import type { SourceCodeService } from '../source/SourceCodeService'
+import type {
+  ContractSources,
+  SourceCodeService,
+} from '../source/SourceCodeService'
 import { EMPTY_ANALYZED_CONTRACT, EMPTY_ANALYZED_EOA } from '../utils/testUtils'
 import { AddressAnalyzer } from './AddressAnalyzer'
 import type { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
   const overrides = StructureContract.parse({})
-  const address = EthereumAddress.random()
+  const address = ChainSpecificAddress.random()
   const config = makeEntryStructureConfig(
     { overrides: { [address]: overrides } },
     address,
@@ -58,7 +66,7 @@ describe(AddressAnalyzer.name, () => {
         }),
       )
 
-      const address = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
       const result = await addressAnalyzer.analyze(
         provider,
         address,
@@ -78,10 +86,10 @@ describe(AddressAnalyzer.name, () => {
     })
 
     it('handles contracts', async () => {
-      const address = EthereumAddress.random()
-      const implementation = EthereumAddress.random()
-      const admin = EthereumAddress.random()
-      const owner = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
+      const implementation = ChainSpecificAddress.random()
+      const admin = ChainSpecificAddress.random()
+      const owner = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',
@@ -195,10 +203,10 @@ describe(AddressAnalyzer.name, () => {
     })
 
     it('handles unverified contracts', async () => {
-      const address = EthereumAddress.random()
-      const implementation = EthereumAddress.random()
-      const admin = EthereumAddress.random()
-      const owner = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
+      const implementation = ChainSpecificAddress.random()
+      const admin = ChainSpecificAddress.random()
+      const owner = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',
@@ -311,10 +319,10 @@ describe(AddressAnalyzer.name, () => {
     })
 
     it('handles contracts while omitting the sinceTimestamp', async () => {
-      const address = EthereumAddress.random()
-      const implementation = EthereumAddress.random()
-      const admin = EthereumAddress.random()
-      const owner = EthereumAddress.random()
+      const address = ChainSpecificAddress.random()
+      const implementation = ChainSpecificAddress.random()
+      const admin = ChainSpecificAddress.random()
+      const owner = ChainSpecificAddress.random()
 
       const sources: ContractSources = {
         name: 'Test',

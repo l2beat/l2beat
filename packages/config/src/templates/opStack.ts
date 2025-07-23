@@ -1,10 +1,10 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
-  EthereumAddress,
+  ChainSpecificAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -16,10 +16,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
   pickWorseRisk,
+  RISK_VIEW,
   sumRisk,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -42,8 +42,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectFinalityConfig,
-  ProjectFinalityInfo,
   ProjectLivenessInfo,
   ProjectReviewStatus,
   ProjectRisk,
@@ -125,13 +123,12 @@ interface OpStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  l1StandardBridgeEscrow?: EthereumAddress
+  l1StandardBridgeEscrow?: ChainSpecificAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   optimismPortalPremintedTokens?: string[]
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
-  finality?: ProjectFinalityConfig
   l2OutputOracle?: EntryParameters
   disputeGameFactory?: EntryParameters
   portal?: EntryParameters
@@ -250,7 +247,7 @@ function opStackCommon(
       (templateVars.hasSuperchainScUpgrades
         ? ({
             category: 'Funds can be stolen if',
-            text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
+            text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
           } satisfies ProjectRisk)
         : CONTRACTS.UPGRADE_NO_DELAY_RISK),
   ]
@@ -308,7 +305,7 @@ function opStackCommon(
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: portal.address,
+          address: ChainSpecificAddress.address(portal.address),
           tokens: optimismPortalTokens,
           premintedTokens: templateVars.optimismPortalPremintedTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -318,7 +315,7 @@ function opStackCommon(
         }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: l1StandardBridgeEscrow,
+          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -373,7 +370,7 @@ function getDaTracking(
     ).isSequencerSendingBlobTx
 
   if (usesBlobs) {
-    const sequencerInbox = systemConfig.getContractValue<string>(
+    const sequencerInbox = systemConfig.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'sequencerInbox',
     )
@@ -384,7 +381,7 @@ function getDaTracking(
         'startBlock',
       ) ?? 0
 
-    const sequencer = systemConfig.getContractValue<string>(
+    const sequencer = systemConfig.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'batcherHash',
     )
@@ -394,8 +391,8 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxStartBlock,
-        inbox: sequencerInbox,
-        sequencers: [sequencer],
+        inbox: ChainSpecificAddress.address(sequencerInbox),
+        sequencers: [ChainSpecificAddress.address(sequencer)],
       },
     ]
   }
@@ -442,12 +439,10 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
       ...templateVars.display,
       warning: templateVars.display.warning,
       liveness: getLiveness(templateVars),
-      finality: getFinality(templateVars),
     },
     config: {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
-      finality: ifPostsToEthereum(templateVars, templateVars.finality),
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
@@ -683,7 +678,7 @@ function describeOPFP({
       },
       {
         title: 'Challenges',
-        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${gameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${gameMaxDepth}, and reaching it therefore requires a cumulative stake of ${Number.parseFloat(
           formatEther(permissionlessGameFullCost),
         ).toFixed(
           2,
@@ -758,7 +753,7 @@ function getRiskViewStateValidation(
         ...RISK_VIEW.STATE_FP_INT,
         description:
           RISK_VIEW.STATE_FP_INT.description +
-          ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
+          ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
         secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
@@ -855,8 +850,10 @@ function getTechnology(
   explorerUrl: string | undefined,
   daProvider: DAProvider | undefined,
 ): ProjectScalingTechnology {
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = ChainSpecificAddress.address(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+    ),
   )
 
   const portal = getOptimismPortal(templateVars)
@@ -1147,26 +1144,9 @@ function getLiveness(
       templateVars.display.name
     } is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
       HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-    )} or until it gets published. The state root gets finalized ${formatSeconds(
+    )} or until it gets published. The state root is settled ${formatSeconds(
       finalizationPeriod,
     )} after it has been posted.`,
-  })
-}
-
-function getFinality(
-  templateVars: OpStackConfigCommon,
-): ProjectFinalityInfo | undefined {
-  const finalizationPeriod = getFinalizationPeriod(templateVars)
-
-  return ifPostsToEthereum(templateVars, {
-    warnings: {
-      timeToInclusion: {
-        sentiment: 'neutral',
-        value:
-          "It's assumed that transaction data batches are submitted sequentially.",
-      },
-    },
-    finalizationPeriod: finalizationPeriod,
   })
 }
 
@@ -1178,11 +1158,15 @@ function getTrackedTxs(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = ChainSpecificAddress.address(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+    ),
   )
-  const sequencerAddress = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  const sequencerAddress = ChainSpecificAddress.address(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+    ),
   )
 
   switch (fraudProofType) {
@@ -1211,7 +1195,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: l2OutputOracle.address,
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
             selector: '0x9aaab648',
             functionSignature:
               'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
@@ -1248,7 +1232,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: disputeGameFactory.address,
+            address: ChainSpecificAddress.address(disputeGameFactory.address),
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
@@ -1363,11 +1347,11 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
   if (respectedGameType === 0) {
     return 'Permissionless'
-  } else if (respectedGameType === 1) {
-    return 'Permissioned'
-  } else {
-    throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
   }
+  if (respectedGameType === 1) {
+    return 'Permissioned'
+  }
+  throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {

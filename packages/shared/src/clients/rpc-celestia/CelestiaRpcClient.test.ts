@@ -42,16 +42,15 @@ describe(CelestiaRpcClient.name, () => {
                 txs_results: [],
               },
             }
-          } else {
-            return {
-              result: {
-                block: {
-                  header: {
-                    time: mockTimestamp,
-                  },
+          }
+          return {
+            result: {
+              block: {
+                header: {
+                  time: mockTimestamp,
                 },
               },
-            }
+            },
           }
         },
       })
@@ -98,16 +97,15 @@ describe(CelestiaRpcClient.name, () => {
                 txs_results: [],
               },
             }
-          } else {
-            return {
-              result: {
-                block: {
-                  header: {
-                    time: mockTimestamp,
-                  },
+          }
+          return {
+            result: {
+              block: {
+                header: {
+                  time: mockTimestamp,
                 },
               },
-            }
+            },
           }
         },
       })

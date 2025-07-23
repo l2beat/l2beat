@@ -2,9 +2,9 @@ import {
   assert,
   ChainId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
@@ -136,9 +136,6 @@ export const degate3: ScalingProject = {
       explanation:
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
-    finality: {
-      finalizationPeriod,
-    },
   },
   chainConfig: {
     name: 'degate3',
@@ -190,12 +187,6 @@ export const degate3: ScalingProject = {
         from: 'stateUpdates',
         to: 'proofSubmissions',
       },
-    },
-    finality: {
-      type: 'Degate',
-      minTimestamp: UnixTime(1699747007),
-      lag: 0,
-      stateUpdate: 'disabled',
     },
   },
   scopeOfAssessment: {
@@ -438,7 +429,7 @@ export const degate3: ScalingProject = {
     addresses: {
       [discovery.chain]: [
         discovery.getContractDetails('ExchangeV3', {
-          description: `Main ExchangeV3 contract.`,
+          description: 'Main ExchangeV3 contract.',
           ...timelockUpgrades1,
         }),
         discovery.getContractDetails(
@@ -446,7 +437,8 @@ export const degate3: ScalingProject = {
           'Contract used by the Prover to submit exchange blocks with zkSNARK proofs that are later processed and verified by the BlockVerifier contract.',
         ),
         discovery.getContractDetails('DefaultDepositContract', {
-          description: `ERC 20 token basic deposit contract. Handles user deposits and withdrawals.`,
+          description:
+            'ERC 20 token basic deposit contract. Handles user deposits and withdrawals.',
           ...timelockUpgrades2,
         }),
         discovery.getContractDetails(

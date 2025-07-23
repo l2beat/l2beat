@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .mdc h1,
 .mdc h2,
 .mdc h3,
@@ -24,15 +26,15 @@
 }
 
 .mdc h1 {
-  @apply text-3xl font-bold;
+  @apply text-heading-24;
 }
 
 .mdc h2 {
-  @apply text-2xl font-bold;
+  @apply text-heading-20;
 }
 
 .mdc h3 {
-  @apply text-xl font-bold;
+  @apply text-heading-18;
 }
 
 .mdc hr {
@@ -100,10 +102,6 @@
   @apply px-4 py-2;
 }
 
-.mdc strong {
-  @apply font-bold text-yellow-700 dark:text-yellow-300;
-}
-
 /* Make sure this is compatible with the <Link /> component */
 .mdc a:not([data-link-role="glossary"]) {
   @apply font-medium text-link underline transition-colors hover:text-blue-550;
@@ -127,10 +125,4 @@
 
 .mdc.zk-description h3 {
   @apply text-xl font-bold;
-}
-
-.mdc.da-beat h1,
-.mdc.da-beat h2,
-.mdc.da-beat h3 {
-  @apply dark:text-white text-gray-850;
 }

@@ -26,10 +26,10 @@ import { MissingIcon } from '~/icons/Missing'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { SatisfiedIcon } from '~/icons/Satisfied'
 import { UnderReviewIcon } from '~/icons/UnderReview'
-import { Callout } from '../../Callout'
-import { WarningBar } from '../../WarningBar'
 import { StageBadge } from '../../badge/StageBadge'
+import { Callout } from '../../Callout'
 import { Markdown } from '../../markdown/Markdown'
+import { WarningBar } from '../../WarningBar'
 import { ProjectSection } from './ProjectSection'
 import { ScopeOfAssessment } from './ScopeOfAssessment'
 import type { ProjectSectionProps } from './types'
@@ -145,6 +145,7 @@ export function StageSection({
       {stageConfig.downgradePending && (
         <StageOneRequirementsChangeStageSectionNotice
           downgradePending={stageConfig.downgradePending}
+          stage1PrincipleDescription={stageConfig.stage1PrincipleDescription}
         />
       )}
       {stageConfig.message && (
@@ -299,8 +300,8 @@ export function StageSection({
       <Callout
         color="blue"
         body="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
-        icon={<InfoIcon className="size-5" variant="blue" />}
-        className="mt-6 p-4 font-medium leading-snug"
+        icon={<InfoIcon className="size-4 md:size-5" variant="blue" />}
+        className="mt-6 p-4 font-medium text-paragraph-15 md:text-paragraph-16"
       />
     </ProjectSection>
   )

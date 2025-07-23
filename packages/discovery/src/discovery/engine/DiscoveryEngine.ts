@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import type {
   AddressAnalyzer,
@@ -7,15 +7,17 @@ import type {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
-import { makeEntryStructureConfig } from '../config/structureUtils'
-import { buildSharedModuleIndex } from '../config/structureUtils'
+import {
+  buildSharedModuleIndex,
+  makeEntryStructureConfig,
+} from '../config/structureUtils'
 import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
 export class DiscoveryEngine {
-  private objectCount: number = 0
+  private objectCount = 0
 
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -52,7 +54,10 @@ export class DiscoveryEngine {
       const relativesGraph = Object.fromEntries(
         Object.entries(resolved).map(([address, analysis]) =>
           analysis.type === 'Contract'
-            ? [address, Object.keys(analysis.relatives).map(EthereumAddress)]
+            ? [
+                address,
+                Object.keys(analysis.relatives).map(ChainSpecificAddress),
+              ]
             : [address, undefined],
         ),
       )
@@ -64,16 +69,18 @@ export class DiscoveryEngine {
       )
       // remove addresses from `resolved` that are no longer reachable from initial
       for (const address of Object.keys(resolved)) {
-        if (!reachableAddresses.has(EthereumAddress(address))) {
+        if (!reachableAddresses.has(ChainSpecificAddress(address))) {
           delete resolved[address]
         }
       }
 
       // filter out addresses from `toAnalyze` that are no longer reachable from initial
       const leftToAnalyze = Object.entries(toAnalyze)
-        .filter(([address]) => reachableAddresses.has(EthereumAddress(address)))
+        .filter(([address]) =>
+          reachableAddresses.has(ChainSpecificAddress(address)),
+        )
         .map(([address, templates]) => ({
-          address: EthereumAddress(address),
+          address: ChainSpecificAddress(address),
           templates,
         }))
       toAnalyze = {}
@@ -82,7 +89,7 @@ export class DiscoveryEngine {
       await Promise.all(
         leftToAnalyze.map(async ({ address, templates }) => {
           const skipReason = shouldSkip(
-            EthereumAddress(address),
+            address,
             config,
             sharedModuleIndex,
             depth,
@@ -164,7 +171,7 @@ export class DiscoveryEngine {
         logs.push(chalk.red(`E ${key} - ${value}`))
       }
       for (const [i, log] of logs.entries()) {
-        const prefix = i === logs.length - 1 ? `└─` : `├─`
+        const prefix = i === logs.length - 1 ? '└─' : '├─'
         const indent = ' '.repeat(6)
         this.logger.info(`${indent}${chalk.gray(prefix)} ${log}`)
       }

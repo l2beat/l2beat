@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -12,8 +12,8 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
+  REASON_FOR_BEING_OTHER,
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
@@ -105,8 +105,10 @@ export const fuel: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 20915271,
-        inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
-        sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
+        inbox: EthereumAddress('0xEA0337EFC12e98AB118948dA570C07691E8E4b37'),
+        sequencers: [
+          EthereumAddress('0xEA0337EFC12e98AB118948dA570C07691E8E4b37'),
+        ],
         untilBlock: 22837254,
       },
       // TODO: add as soon as we have their customerId
@@ -322,7 +324,7 @@ export const fuel: ScalingProject = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: `a contract receives a malicious code upgrade. There is no delay on upgrades.`,
+        text: 'a contract receives a malicious code upgrade. There is no delay on upgrades.',
         isCritical: true,
       },
       {

@@ -1,9 +1,9 @@
 import {
-  type SimulationNodeDatum,
   forceCenter,
   forceLink,
   forceManyBody,
   forceSimulation,
+  type SimulationNodeDatum,
 } from 'd3-force'
 import { useEffect, useState } from 'react'
 
@@ -27,21 +27,32 @@ interface SimulationNode extends SimulationNodeDatum {
 export function ClusterLayoutButton() {
   const nodes = useStore((state) => state.nodes)
   const hiddenNodes = useStore((state) => state.hidden)
+  const selected = useStore((state) => state.selected)
   const visibleNodes = nodes.filter((node) => !hiddenNodes.includes(node.id))
+  const simulationNodes =
+    selected.length === 0
+      ? visibleNodes
+      : visibleNodes.filter((node) => selected.includes(node.id))
+
   const layout = useStore((state) => state.layout)
   const [updatingLayout, setUpdatingLayout] = useState<boolean>(false)
 
   const draw = () => {
     if (!updatingLayout) return
 
-    const simNodes: SimulationNode[] = visibleNodes.map((node) => ({
+    const { left, top } = getAnchorPoints(
+      simulationNodes,
+      selected.length === 0,
+    )
+
+    const simNodes: SimulationNode[] = simulationNodes.map((node) => ({
       id: node.id,
       x: node.box.x / SIM_SCALE,
       y: node.box.y / SIM_SCALE,
       node,
     }))
 
-    const links = visibleNodes
+    const links = simulationNodes
       .flatMap((node) =>
         node.fields.map((field) => ({
           source: node.id,
@@ -62,10 +73,20 @@ export function ClusterLayoutButton() {
 
     function ended() {
       const nodeLocations: NodeLocations = {}
+      const { minY, minX } = simNodes.reduce(
+        (a, b) => ({
+          minY: Math.min(a.minY, b.y),
+          minX: Math.min(a.minX, b.x),
+        }),
+        { minY: Number.POSITIVE_INFINITY, minX: Number.POSITIVE_INFINITY },
+      )
+
+      console.log(minX, minY, minX * SIM_SCALE, minY * SIM_SCALE, top, left)
+
       simNodes.forEach((simNode) => {
         nodeLocations[simNode.id] = {
-          x: simNode.x * SIM_SCALE,
-          y: simNode.y * SIM_SCALE,
+          x: (simNode.x - minY) * SIM_SCALE + left,
+          y: (simNode.y - minX) * SIM_SCALE + top,
         }
       })
       layout(nodeLocations)
@@ -86,4 +107,22 @@ export function ClusterLayoutButton() {
       {updatingLayout ? 'Wait...' : 'Cluster layout'}
     </ControlButton>
   )
+}
+
+function getAnchorPoints(
+  nodes: readonly Node[],
+  freshLayout: boolean,
+): { top: number; left: number } {
+  if (freshLayout) {
+    return { top: 0, left: 0 }
+  }
+
+  const top = nodes
+    .map((node) => node.box.y)
+    .reduce((a, b) => Math.min(a, b), Number.POSITIVE_INFINITY)
+  const left = nodes
+    .map((node) => node.box.x)
+    .reduce((a, b) => Math.min(a, b), Number.POSITIVE_INFINITY)
+
+  return { top, left }
 }

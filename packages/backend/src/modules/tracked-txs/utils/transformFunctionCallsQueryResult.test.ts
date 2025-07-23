@@ -1,4 +1,11 @@
-import { readFileSync } from 'fs'
+import {
+  createTrackedTxId,
+  type TrackedTxConfigEntry,
+  type TrackedTxFunctionCallConfig,
+  type TrackedTxId,
+  type TrackedTxSharedBridgeConfig,
+  type TrackedTxSharpSubmissionConfig,
+} from '@l2beat/shared'
 import {
   EthereumAddress,
   ProjectId,
@@ -6,15 +13,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import {
-  type TrackedTxConfigEntry,
-  type TrackedTxFunctionCallConfig,
-  type TrackedTxId,
-  type TrackedTxSharedBridgeConfig,
-  type TrackedTxSharpSubmissionConfig,
-  createTrackedTxId,
-} from '@l2beat/shared'
+import { readFileSync } from 'fs'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -48,7 +47,7 @@ const txHashes = [
   '0x90d5e81b40d6a6fa6f34b3dc67d3fce6',
 ]
 
-const inputFile = `src/test/sharpVerifierInput.txt`
+const inputFile = 'src/test/sharpVerifierInput.txt'
 const sharpInput = readFileSync(inputFile, 'utf-8')
 const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'

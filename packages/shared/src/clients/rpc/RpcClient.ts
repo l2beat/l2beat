@@ -90,7 +90,7 @@ export class RpcClient extends ClientCore implements BlockClient {
       ? EVMBlockWithTransactionsResponse.safeParse(blockResponse)
       : EVMBlockResponse.safeParse(blockResponse)
     if (!block.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         blockNumber,
         includeTxs,
         response: JSON.stringify(blockResponse),
@@ -106,7 +106,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const transaction = EVMTransactionResponse.safeParse(response)
     if (!transaction.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         txHash,
         response: JSON.stringify(response),
       })
@@ -121,7 +121,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const receipt = EVMTransactionReceiptResponse.safeParse(response)
     if (!receipt.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         txHash,
         response: JSON.stringify(response),
       })
@@ -145,7 +145,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const balance = EVMBalanceResponse.safeParse(balanceResponse)
     if (!balance.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         blockNumber,
         holder,
         response: JSON.stringify(balanceResponse),
@@ -175,7 +175,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const logsResponse = EVMLogsResponse.safeParse(response)
     if (!logsResponse.success) {
-      this.$.logger.warn(`Invalid response`, {
+      this.$.logger.warn('Invalid response', {
         method,
         response: JSON.stringify(response),
       })
@@ -220,7 +220,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     const batches = this.$.multicallClient.encodeBatches(calls)
 
-    this.$.logger.debug(`Multicall`, { batches: batches.length })
+    this.$.logger.debug('Multicall', { batches: batches.length })
 
     const batchedResults = await Promise.all(
       batches.map(async (batch) => {
@@ -314,7 +314,7 @@ export class RpcClient extends ClientCore implements BlockClient {
 
     if (parsedError.success) {
       // TODO: based on error return differently
-      this.$.logger.warn(`Response validation error`, {
+      this.$.logger.warn('Response validation error', {
         ...parsedError.data.error,
       })
       return { success: false }

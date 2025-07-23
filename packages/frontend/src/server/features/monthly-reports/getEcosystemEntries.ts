@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
@@ -17,8 +17,8 @@ import {
   getActivityLeaderboard,
 } from '../../../server/features/monthly-reports/getActivityLeaderboard'
 import {
-  type TvsLeaderboard,
   getTvsLeaderboard,
+  type TvsLeaderboard,
 } from '../../../server/features/monthly-reports/getTvsLeaderboard'
 import {
   getEcosystemActivityLeaderboard,
@@ -33,7 +33,7 @@ interface BaseLeaderboard {
 
 export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
   name: string
-  colors: ProjectColors
+  colors: ProjectCustomColors
   projects: ProjectId[]
   bannerImg?: string
   allScalingProjects: {

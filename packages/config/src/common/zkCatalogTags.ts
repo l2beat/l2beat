@@ -1,14 +1,19 @@
 import type { ZkCatalogTag } from '../types'
 
+export type ZkCatalogTagType =
+  (typeof ZkCatalogTagType)[keyof typeof ZkCatalogTagType]
+
 export const ZkCatalogTagType = {
-  STARK: 'STARK',
-  ISA: 'ISA',
-  SNARK: 'SNARK',
-  Curve: 'Curve',
-  Field: 'Field',
-  PCS: 'PCS',
   Arithmetization: 'Arithmetization',
+  curve: 'curve',
+  Fflonk: 'Fflonk',
+  Field: 'Field',
+  Groth16: 'Groth16',
+  ISA: 'ISA',
   Other: 'Other',
+  PCS: 'PCS',
+  Plonk: 'Plonk',
+  STARK: 'STARK',
 } as const
 
 export const zkCatalogTags = [
@@ -17,76 +22,233 @@ export const zkCatalogTags = [
     id: 'Boojum',
     type: ZkCatalogTagType.STARK,
     name: 'boojum',
-    description: 'description',
+    description:
+      'zkVM STARK proving system developed by Matter Labs for proving state transition of ZKsync Era.',
   },
   {
     id: 'Plonky3',
     type: ZkCatalogTagType.STARK,
     name: 'Plonky3',
-    description: 'description',
+    description:
+      'Toolkit that implements a set of primitives for STARK-based zkVMs developed by Polygon Zero team.',
   },
   {
     id: 'PIL-STARK',
     type: ZkCatalogTagType.STARK,
     name: 'PIL-STARK',
-    description: 'description',
+    description:
+      'zkVM STARK proving system that works with Polynomial Identity Langugae (PIL) developed by Polygon Zero team.',
   },
   {
     id: 'Stone',
     type: ZkCatalogTagType.STARK,
     name: 'Stone',
-    description: 'description',
+    description:
+      'zkVM STARK proving system developed by Starkware for Cairo programs, including state transition of Starknet.',
   },
   {
     id: 'ZkvmProver',
     type: ZkCatalogTagType.STARK,
     name: 'zkvm-prover',
-    description: 'description',
+    description:
+      'zkVM STARK proving system developed by Scroll for openvm programs, including state transition of Scroll.',
   },
   {
     id: 'RISC0',
     type: ZkCatalogTagType.STARK,
     name: 'Risc0',
-    description: 'description',
+    description:
+      'zkVM STARK proving system developed by RISC ZERO for RISC-V programs.',
   },
   // ISA
   {
     id: 'EraVM',
     type: ZkCatalogTagType.ISA,
     name: 'EraVM',
-    description: 'description',
+    description: 'Instruction language for ZKsync Era virtual machine.',
   },
   {
     id: 'RISCV',
     type: ZkCatalogTagType.ISA,
     name: 'RISC-V',
-    description: 'description',
+    description:
+      'Free and open-source universal 32-bit ISA used across a variety of hardware and software.',
   },
   {
     id: 'ZkASM',
     type: ZkCatalogTagType.ISA,
     name: 'zkASM',
-    description: 'description',
+    description: 'Instruction language for Polygon zkEVM virtual machine.',
   },
   {
     id: 'CASM',
     type: ZkCatalogTagType.ISA,
     name: 'cASM',
-    description: 'description',
+    description: 'Instruction language for CairoVM developed by Starkware.',
   },
   {
     id: 'EVM',
     type: ZkCatalogTagType.ISA,
     name: 'EVM',
-    description: 'description',
+    description: 'Instruction language for Ethereum VM.',
   },
   {
     id: 'OpenVM',
     type: ZkCatalogTagType.ISA,
     name: 'OpenVM',
-    description: 'description',
+    description: 'Instruction language for zkVM developed by Scroll.',
   },
-  // configure rest tags here
+  // Plonk
+  {
+    id: 'Bellman',
+    type: ZkCatalogTagType.Plonk,
+    name: 'bellman',
+    description:
+      'Bellman Rust library for Plonk proving system, originally developed for ZCash.',
+  },
+  {
+    id: 'Gnark',
+    type: ZkCatalogTagType.Plonk,
+    name: 'gnark',
+    description:
+      'Consensys implementation of Plonk proving system written in Go.',
+  },
+  {
+    id: 'Halo2',
+    type: ZkCatalogTagType.Plonk,
+    name: 'halo2',
+    description:
+      'Rust implementation of Halo2 SNARK proving system, originally developed for ZCash.',
+  },
+  {
+    id: 'Zksync',
+    type: ZkCatalogTagType.Plonk,
+    name: 'zksync',
+    description:
+      'Matter Labs Rust implementation of Plonk proving system, originally developed for ZKsync Lite (old ZKsync).',
+  },
+  {
+    id: 'linea',
+    type: ZkCatalogTagType.Plonk,
+    name: 'linea',
+    description:
+      'Prover system of Linea written in Go, includes Vortex polynomial commitment and Arcane compiler.',
+  },
+  // Fflonk
+  {
+    id: 'Zksync',
+    type: ZkCatalogTagType.Fflonk,
+    name: 'zksync',
+    description:
+      'Matter Labs Rust implementation of Fflonk improvement over standard Plonk proving system.',
+  },
+  {
+    id: 'Snarkjs',
+    type: ZkCatalogTagType.Fflonk,
+    name: 'snarkjs',
+    description:
+      'Circom / iden3 implementation of Fflonk improvement over standard Plonk proving system written in JS.',
+  },
+  // Groth16
+  {
+    id: 'Gnark',
+    type: ZkCatalogTagType.Groth16,
+    name: 'gnark',
+    description:
+      'Consensys implementation of Groth16 proving system written in Go.',
+  },
+  {
+    id: 'Snarkjs',
+    type: ZkCatalogTagType.Groth16,
+    name: 'snarkjs',
+    description:
+      'Circom / iden3 implementation of Groth16 proving system written in JS.',
+  },
+  {
+    id: 'EthSnarks',
+    type: ZkCatalogTagType.Groth16,
+    name: 'EthSnarks',
+    description:
+      'EthSnarks implementation of Groth16 proving system written in C++.',
+  },
+  // Curve
+  {
+    id: 'BN254',
+    type: ZkCatalogTagType.curve,
+    name: 'BN254',
+    description:
+      'BN254, aka BN256, aka alt_bn128 pairing-friendly 254-bit prime field Weierstrass elliptic curve.',
+  },
+  {
+    id: 'BW6-761',
+    type: ZkCatalogTagType.curve,
+    name: 'BW6-761',
+    description:
+      'Pairing-friendly 761-bit prime field elliptic curve introduced by Housni and Guillevic.',
+  },
+  {
+    id: 'BLS12-377',
+    type: ZkCatalogTagType.curve,
+    name: 'BLS12-377',
+    description:
+      'Pairing-friendly 377-bit prime field Weierstrass elliptic curve.',
+  },
+  // Field
+  {
+    id: 'Goldilocks',
+    type: ZkCatalogTagType.Field,
+    name: 'Goldilocks',
+    description: 'Prime field of order p = 2**64 - 2**32  + 1.',
+  },
+  {
+    id: 'BabyBear',
+    type: ZkCatalogTagType.Field,
+    name: 'Baby Bear',
+    description: 'Prime field of order p = 15 * 2**27 + 1.',
+  },
+  {
+    id: 'felt252',
+    type: ZkCatalogTagType.Field,
+    name: 'felt252',
+    description: 'Prime field of order p = 2**251 + 17 * 2**192 + 1.',
+  },
+  // PCS
+  {
+    id: 'KZG',
+    type: ZkCatalogTagType.PCS,
+    name: 'KZG',
+    description:
+      'Polynomial commitment scheme that requires a universal trusted setup, introduced by Kate, Zaverucha and Goldberg.',
+  },
+  // Arithmetization
+  {
+    id: 'Plonkish',
+    type: ZkCatalogTagType.Arithmetization,
+    name: 'Plonkish',
+    description:
+      'General name for PLONK-like arithmetizations, i.e. value matrix with polynomial constraints, custom gates and lookup arguments.',
+  },
+  {
+    id: 'R1CS',
+    type: ZkCatalogTagType.Arithmetization,
+    name: 'R1CS',
+    description:
+      'Rank 1 constraint system defined by a set of quadratic conditions on the circuit input.',
+  },
+  {
+    id: 'AIR',
+    type: ZkCatalogTagType.Arithmetization,
+    name: 'AIR',
+    description:
+      'Algebraic intermediate representation that encodes a valid VM execution trace with polynomials.',
+  },
+  {
+    id: 'eAIR',
+    type: ZkCatalogTagType.Arithmetization,
+    name: 'eAIR',
+    description:
+      'Extended algebraic intermediate representation introduced by Polygon Zero for eSTARK.',
+  },
 ] as const satisfies ZkCatalogTag[]
 
 type AnyZkCatalogTag = (typeof zkCatalogTags)[number]
@@ -99,7 +261,7 @@ export const ZK_CATALOG_TAGS: {
   if (!acc[zkCatalogTag.type]) acc[zkCatalogTag.type] = {}
   acc[zkCatalogTag.type][zkCatalogTag.id] = zkCatalogTag
   return acc
-  // biome-ignore lint/suspicious/noExplicitAny:
+  // biome-ignore lint/suspicious/noExplicitAny: needed any
 }, {} as any)
 
 export const zkCatalogTagTypeOrder = Object.values<string>(ZkCatalogTagType)

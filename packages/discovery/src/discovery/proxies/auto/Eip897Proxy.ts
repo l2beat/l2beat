@@ -1,12 +1,11 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import type { BigNumber } from 'ethers'
-import type { ProxyDetails } from '../types'
-
 import type { IProvider } from '../../provider/IProvider'
+import type { ProxyDetails } from '../types'
 
 async function getProxyType(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<1 | 2 | undefined> {
   const type = await provider.callMethod<BigNumber>(
     address,
@@ -15,25 +14,31 @@ async function getProxyType(
   )
   if (type?.eq(1)) {
     return 1
-  } else if (type?.eq(2)) {
+  }
+  if (type?.eq(2)) {
     return 2
   }
 }
 
-function getImplementation(
+async function getImplementation(
   provider: IProvider,
-  address: EthereumAddress,
-): Promise<EthereumAddress | undefined> {
-  return provider.callMethod<EthereumAddress>(
+  address: ChainSpecificAddress,
+): Promise<ChainSpecificAddress | undefined> {
+  const result = await provider.callMethod<EthereumAddress>(
     address,
     'function implementation() public view returns (address codeAddr)',
     [],
   )
+  if (result === undefined) {
+    return
+  }
+
+  return ChainSpecificAddress.fromLong(provider.chain, result)
 }
 
 export async function detectEip897Proxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const type = await getProxyType(provider, address)
   if (!type) {

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -10,9 +15,11 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('nearomni')
-const nearBridgeDerivedAddress = discovery.getContractValue(
-  'OmniBridge',
-  'nearBridgeDerivedAddress',
+const nearBridgeDerivedAddress = ChainSpecificAddress.address(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'OmniBridge',
+    'nearBridgeDerivedAddress',
+  ),
 )
 
 export const nearomni: Bridge = {
@@ -91,7 +98,8 @@ export const nearomni: Bridge = {
     },
     validation: {
       name: 'MPC validation and ethereum light client',
-      description: `Multi-party computation (MPC) is used to validate bridge transactions going out from NEAR. This usually means that multiple distributed signers need to combine their signatures to create a single signature authorizings a transaction. The MPC setup is offchain and from an Ethereum L1 perspective is equal to an EOA. Transfers from Ethereum to NEAR are validated by an Ethereum light client implemented as a smart contract on NEAR, of which the source code is unverified.`,
+      description:
+        'Multi-party computation (MPC) is used to validate bridge transactions going out from NEAR. This usually means that multiple distributed signers need to combine their signatures to create a single signature authorizings a transaction. The MPC setup is offchain and from an Ethereum L1 perspective is equal to an EOA. Transfers from Ethereum to NEAR are validated by an Ethereum light client implemented as a smart contract on NEAR, of which the source code is unverified.',
       references: [],
       risks: [
         {

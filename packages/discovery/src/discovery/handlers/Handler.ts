@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 import type { ContractValue } from '../output/types'
 
@@ -17,7 +17,7 @@ export interface Handler {
   dependencies: string[]
   execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult>
 }

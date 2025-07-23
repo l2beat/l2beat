@@ -1,10 +1,3 @@
-import { readFileSync } from 'fs'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-
-import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { TrackedTxsClient } from './TrackedTxsClient'
-
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -12,7 +5,12 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { expect, mockFn, mockObject } from 'earl'
+import { readFileSync } from 'fs'
+import type { TrackedTxProject } from '../../config/Config'
+import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -24,6 +22,7 @@ import {
   elasticChainSharedBridgeCommitBatchesSignature,
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
+import { TrackedTxsClient } from './TrackedTxsClient'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
@@ -39,7 +38,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getData.name, () => {
     it('filters configurations and calls big query, parses results', async () => {
       const bigquery = getMockBiqQuery([TRANSFERS_RESPONSE, FUNCTIONS_RESPONSE])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, PROJECTS)
 
       const data = await trackedTxsClient.getData(
         CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
@@ -55,12 +54,33 @@ describe(TrackedTxsClient.name, () => {
       // returns parsed data returned from internal methods
       expect(data).toEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
     })
+
+    it('filters configurations from archived projects', async () => {
+      const projects = [
+        mockObject<TrackedTxProject>({
+          id: ProjectId('project1'),
+          isArchived: true,
+        }),
+      ]
+      const bigquery = getMockBiqQuery([])
+
+      const trackedTxsClient = new TrackedTxsClient(bigquery, projects)
+
+      const data = await trackedTxsClient.getData(
+        CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
+        FROM,
+        TO,
+      )
+
+      expect(bigquery.query).not.toHaveBeenCalled()
+      expect(data).toEqual([])
+    })
   })
 
   describe(TrackedTxsClient.prototype.getTransfers.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, PROJECTS)
 
       await trackedTxsClient.getTransfers([], FROM, TO)
 
@@ -71,7 +91,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getFunctionCalls.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, PROJECTS)
 
       await trackedTxsClient.getFunctionCalls([], [], [], FROM, TO)
 
@@ -87,7 +107,7 @@ const ADDRESS_3 = EthereumAddress.random()
 const TX_HASH = '0x123456'
 const BLOCK = 1
 
-const inputFile = `src/test/sharpVerifierInput.txt`
+const inputFile = 'src/test/sharpVerifierInput.txt'
 const sharpInput = readFileSync(inputFile, 'utf-8')
 const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'
@@ -201,6 +221,13 @@ const CONFIGURATIONS = [
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >,
 ] as const
+
+const PROJECTS = [
+  mockObject<TrackedTxProject>({
+    id: ProjectId('project1'),
+    isArchived: false,
+  }),
+]
 
 const TRANSFERS_RESPONSE = [
   {

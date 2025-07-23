@@ -117,9 +117,10 @@ export function onMouseMove(
           selected: state.nodes
             .filter(
               (node) =>
-                intersects(node.box, selection) ||
-                (state.mouseMoveAction === 'select-add' &&
-                  state.selected.includes(node.id)),
+                !state.hidden.includes(node.id) &&
+                (intersects(node.box, selection) ||
+                  (state.mouseMoveAction === 'select-add' &&
+                    state.selected.includes(node.id))),
             )
             .map((x) => x.id),
           mouseUpAction: undefined,

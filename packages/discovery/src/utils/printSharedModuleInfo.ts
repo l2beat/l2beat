@@ -1,14 +1,18 @@
+import type { Logger } from '@l2beat/backend-tools'
 import chalk from 'chalk'
 import type { StructureConfig } from '../discovery/config/StructureConfig'
 
-export function printSharedModuleInfo(backrefConfigs: StructureConfig[]) {
+export function printSharedModuleInfo(
+  logger: Logger,
+  backrefConfigs: StructureConfig[],
+) {
   if (backrefConfigs.length > 0) {
-    console.log(
+    logger.info(
       `\n    -----=====[ ${chalk.red('SHARED MODULE DETECTED!')} ]=====-----`,
     )
-    console.log('\nAny changes to it will affect the following projects:')
+    logger.info('\nAny changes to it will affect the following projects:')
     for (const c of backrefConfigs) {
-      console.log(`    - ${chalk.green(c.name)}`)
+      logger.info(`    - ${chalk.green(c.name)}`)
     }
   }
 }

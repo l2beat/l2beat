@@ -4,16 +4,19 @@
 
 import {
   assert,
+  ChainSpecificAddress,
   type EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import { utils } from 'ethers'
 import type { IProvider } from '../../provider/IProvider'
+import type { ProxyDetails } from '../types'
 
-async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
+async function getPastUpgrades(
+  provider: IProvider,
+  address: ChainSpecificAddress,
+) {
   const abi = new utils.Interface([
     'event DiamondCut(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata)',
   ])
@@ -45,14 +48,20 @@ async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
         case ADD:
           {
             for (const selector of cut.selectors) {
-              selectorAddress.set(selector, cut.facet)
+              selectorAddress.set(
+                selector,
+                ChainSpecificAddress.fromLong(provider.chain, cut.facet),
+              )
             }
           }
           break
         case REPLACE:
           {
             for (const selector of cut.selectors) {
-              selectorAddress.set(selector, cut.facet)
+              selectorAddress.set(
+                selector,
+                ChainSpecificAddress.fromLong(provider.chain, cut.facet),
+              )
             }
           }
           break
@@ -77,7 +86,7 @@ async function getPastUpgrades(provider: IProvider, address: EthereumAddress) {
 
 export async function detectEip2535proxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const facets = await provider.callMethod<EthereumAddress[]>(
     address,
@@ -96,7 +105,9 @@ export async function detectEip2535proxy(
     values: {
       // TODO: (sz-piotr) I'm not actually sure if this is correct. Diamonds actually have specific faucet that we should query for this.
       $immutable: false,
-      $implementation: facets.map((f) => f.toString()),
+      $implementation: facets.map((f) =>
+        ChainSpecificAddress.fromLong(provider.chain, f).toString(),
+      ),
       $pastUpgrades: pastUpgrades.map((v) => [v.date, v.hash, v.addresses]),
       $upgradeCount: Object.values(pastUpgrades).length,
     },

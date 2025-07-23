@@ -73,13 +73,10 @@ function SidebarProvider({
 }
 
 function Sidebar({
-  topNavbar,
   className,
   children,
   ...props
-}: React.ComponentProps<'div'> & {
-  topNavbar: boolean
-}) {
+}: React.ComponentProps<'div'>) {
   const breakpoint = useBreakpoint()
   const { openMobile, setOpenMobile } = useSidebar()
 
@@ -87,7 +84,7 @@ function Sidebar({
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent
-          className="z-999 w-[--sidebar-width] border-none bg-background p-0 text-primary [&>button]:hidden"
+          className="z-999 w-(--sidebar-width) border-none bg-background p-0 text-primary [&>button]:hidden"
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -105,17 +102,13 @@ function Sidebar({
     )
   }
 
-  if (topNavbar) {
-    return null
-  }
-
   return (
     <div className="group hidden text-primary lg:block">
       {/* This is what handles the sidebar gap on desktop */}
-      <div className="relative w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear" />
+      <div className="relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear" />
       <div
         className={cn(
-          'fixed inset-y-0 left-0 z-10 hidden h-svh w-[--sidebar-width] duration-200 ease-linear md:flex',
+          'fixed inset-y-0 left-0 z-10 hidden h-svh w-(--sidebar-width) duration-200 ease-linear md:flex',
           className,
         )}
         {...props}

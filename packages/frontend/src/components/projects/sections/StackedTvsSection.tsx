@@ -4,6 +4,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/TvsBreakdownSummaryBox'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'
@@ -16,6 +17,7 @@ export interface StackedTvsSectionProps extends ProjectSectionProps {
   tvsProjectStats: ProjectSevenDayTvsBreakdown
   tvsInfo: ProjectTvsInfo
   tvsBreakdownUrl?: string
+  defaultRange: TvsChartRange
 }
 
 export function StackedTvsSection({
@@ -25,6 +27,7 @@ export function StackedTvsSection({
   tvsProjectStats,
   tvsInfo,
   tvsBreakdownUrl,
+  defaultRange,
   ...sectionProps
 }: StackedTvsSectionProps) {
   return (
@@ -34,6 +37,7 @@ export function StackedTvsSection({
         projectId={projectId}
         tokens={tokens}
         tvsBreakdownUrl={tvsBreakdownUrl}
+        defaultRange={defaultRange}
       />
       {tvsProjectStats && (
         <>
@@ -70,13 +74,15 @@ export function StackedTvsSection({
 
 export function TvsBreakdownButton({
   tvsBreakdownUrl,
-}: { tvsBreakdownUrl: string }) {
+}: {
+  tvsBreakdownUrl: string
+}) {
   return (
     <a
       href={tvsBreakdownUrl}
       className={cn(
         'font-bold text-primary text-xs leading-none md:text-white',
-        'mt-4 flex w-full justify-center rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 md:mt-0 md:w-fit md:border-0 md:bg-gradient-to-r md:py-2',
+        'mt-4 flex w-full justify-center rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 md:mt-0 md:w-fit md:border-0 md:bg-linear-to-r md:py-2',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
       )}
     >

@@ -1,3 +1,1127 @@
+Generated with discovered.json: 0xfcc176a86d8568b55e1c49cb21e02bc24b16b86b
+
+# Diff at Mon, 14 Jul 2025 12:45:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22774371
+- current block number: 22774371
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22774371 (main branch discovery), not current.
+
+```diff
+    EOA  (0x001088E383A00ff4ab36F37f7021Cb6d7B415751) {
+    +++ description: None
+      address:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+    }
+```
+
+```diff
+    EOA  (0x02058Bb1d98D88087008F2ac1273584591380e3F) {
+    +++ description: None
+      address:
+-        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
++        "eth:0x02058Bb1d98D88087008F2ac1273584591380e3F"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      address:
+-        "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
++        "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
+      values.$pastUpgrades.0.2.0:
+-        "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
++        "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values.owner:
+-        "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+      values.ResolvedDelegateProxy_addressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0x081D1101855bD523bA69A9794e0217F0DB6323ff:
+-        "Lib_ResolvedDelegateProxy"
+      implementationNames.0x8bF439ef7167023F009E24b21719Ca5f768Ecb36:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff:
++        "Lib_ResolvedDelegateProxy"
+      implementationNames.eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+      address:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      values.$admin:
+-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.$implementation:
+-        "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"
++        "eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"
+      values.$pastUpgrades.0.2.0:
+-        "0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"
++        "eth:0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"
+      values.$pastUpgrades.1.2.0:
+-        "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"
++        "eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"
+      values.bridge:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      values.l1Token:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      values.l2Token:
+-        "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
++        "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
+      values.manager:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      values.owner:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.rewardPayer:
+-        "0x62478E4eeb4070fE399866aB05e821AB97200947"
++        "eth:0x62478E4eeb4070fE399866aB05e821AB97200947"
+      implementationNames.0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC:
+-        "LockingInfo"
+      implementationNames.eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC:
++        "LockingInfo"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9) {
+    +++ description: Storage container for SCC batches.
+      address:
+-        "0x10739F09f6e62689c0aA8A1878816de9e166d6f9"
++        "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0x10739F09f6e62689c0aA8A1878816de9e166d6f9:
+-        "ChainStorageContainer"
+      implementationNames.eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9:
++        "ChainStorageContainer"
+    }
+```
+
+```diff
+    EOA  (0x1577D2b835f561BD021E3219Cd786181D0e17ff5) {
+    +++ description: None
+      address:
+-        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
++        "eth:0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+    }
+```
+
+```diff
+    EOA  (0x1A9da0aedA630dDf2748a453BF6d92560762D914) {
+    +++ description: None
+      address:
+-        "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
++        "eth:0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      address:
+-        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
++        "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
++        "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
+      values.$pastUpgrades.0.2.0:
+-        "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"
++        "eth:0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"
+      values.$pastUpgrades.1.2.0:
+-        "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
++        "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.accessControl.GAME_CREATOR_ROLE.members.0:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.gameCreator.0:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.gameImpls.0:
+-        "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235"
++        "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235"
+      values.gameImpls.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls.3:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameImpls.4:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.METIS:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      implementationNames.0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    EOA  (0x217fD54d336f710F8aee19572dBfBf0B2297ed69) {
+    +++ description: None
+      address:
+-        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
++        "eth:0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
+    }
+```
+
+```diff
+    EOA  (0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6) {
+    +++ description: None
+      address:
+-        "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
++        "eth:0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
+    }
+```
+
+```diff
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff) {
+    +++ description: Contract used to manage configuration of global Metis values.
+      address:
+-        "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff"
++        "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff"
+      values.guardian:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff:
+-        "MetisConfig"
+      implementationNames.eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff:
++        "MetisConfig"
+    }
+```
+
+```diff
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      address:
+-        "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
++        "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
++        "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
+      values.$pastUpgrades.0.2.0:
+-        "0x6d554097D5784a7184650B95ba7EA359d162Dbb7"
++        "eth:0x6d554097D5784a7184650B95ba7EA359d162Dbb7"
+      values.$pastUpgrades.1.2.0:
+-        "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
++        "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
+      values.addressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values.config:
+-        "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff"
++        "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff"
+      values.owner:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.token:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      implementationNames.0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
+-        "LockingPool"
+      implementationNames.eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
++        "LockingPool"
+    }
+```
+
+```diff
+    EOA  (0x36B892a31b311E5e9960739A69D2dF0aa0F81A01) {
+    +++ description: None
+      address:
+-        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++        "eth:0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7) {
+    +++ description: Storage container for CTC batches.
+      address:
+-        "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7"
++        "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0x38473Feb3A6366757A249dB2cA4fBB2C663416B7:
+-        "ChainStorageContainer"
+      implementationNames.eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7:
++        "ChainStorageContainer"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b) {
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+      address:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xa0cfE8Af2AB5C9232714647702DbACf862EA4798"
++        "eth:0xa0cfE8Af2AB5C9232714647702DbACf862EA4798"
+      values.addressmgr:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values.l2TokenBridge:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+      values.messenger:
+-        "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      values.metis:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      implementationNames.0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b:
+-        "L1ChugSplashProxy"
+      implementationNames.0xa0cfE8Af2AB5C9232714647702DbACf862EA4798:
+-        "L1StandardBridge"
+      implementationNames.eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0xa0cfE8Af2AB5C9232714647702DbACf862EA4798:
++        "L1StandardBridge"
+    }
+```
+
+```diff
+    EOA  (0x4200000000000000000000000000000000000007) {
+    +++ description: None
+      address:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+    }
+```
+
+```diff
+    EOA  (0x4200000000000000000000000000000000000010) {
+    +++ description: None
+      address:
+-        "0x4200000000000000000000000000000000000010"
++        "eth:0x4200000000000000000000000000000000000010"
+    }
+```
+
+```diff
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235) {
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+      address:
+-        "0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235"
++        "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235"
+      values.disputeCreator:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.gameCreator:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.l2BlockNumberChallenger:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.scc:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      values.vm:
+-        "0xAFD640204D73B02C3521eA8ea3771182527Ff057"
++        "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057"
+      values.wmetis:
+-        "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+      implementationNames.0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235:
+-        "FaultDisputeGame"
+      implementationNames.eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235:
++        "FaultDisputeGame"
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      address:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
++        "eth:0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+      values.$members.1:
+-        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++        "eth:0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
+      values.$members.2:
+-        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
++        "eth:0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+      values.$members.3:
+-        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
++        "eth:0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
+      values.$members.4:
+-        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
++        "eth:0xB383E1331dEE29864b68f7D84b0dC289F770d846"
+      values.$members.5:
+-        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
++        "eth:0x7a9059F4A6e50090e4f55994d465918200AB4454"
+      values.$members.6:
+-        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
++        "eth:0x02058Bb1d98D88087008F2ac1273584591380e3F"
+      values.$members.7:
+-        "0xB961047013F974C5b6B6F8dA4402379525316550"
++        "eth:0xB961047013F974C5b6B6F8dA4402379525316550"
+      values.$members.8:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E"
+      implementationNames.0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9) {
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+      address:
+-        "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9"
++        "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9"
+      values.batches:
+-        "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7"
++        "eth:0x38473Feb3A6366757A249dB2cA4fBB2C663416B7"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values.queue:
+-        "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
++        "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
+      implementationNames.0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9:
+-        "CanonicalTransactionChain"
+      implementationNames.eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9:
++        "CanonicalTransactionChain"
+    }
+```
+
+```diff
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528) {
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+      address:
+-        "0x595801b85628ec6979C420988b8843A40F850528"
++        "eth:0x595801b85628ec6979C420988b8843A40F850528"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0x595801b85628ec6979C420988b8843A40F850528:
+-        "BondManager"
+      implementationNames.eth:0x595801b85628ec6979C420988b8843A40F850528:
++        "BondManager"
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: Escrows staking rewards for Sequencers.
+      address:
+-        "0x62478E4eeb4070fE399866aB05e821AB97200947"
++        "eth:0x62478E4eeb4070fE399866aB05e821AB97200947"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
++        "eth:0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"
+      values.$members.1:
+-        "0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
++        "eth:0x1577D2b835f561BD021E3219Cd786181D0e17ff5"
+      values.$members.2:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E"
+      values.$members.3:
+-        "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
++        "eth:0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"
+      implementationNames.0x62478E4eeb4070fE399866aB05e821AB97200947:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x62478E4eeb4070fE399866aB05e821AB97200947:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a) {
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+      address:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xC878771A4ff7466B7be8b59FB8766719AEa8d562"
++        "eth:0xC878771A4ff7466B7be8b59FB8766719AEa8d562"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a:
+-        "L1ChugSplashProxy"
+      implementationNames.0xC878771A4ff7466B7be8b59FB8766719AEa8d562:
+-        "MVM_CanonicalTransaction"
+      implementationNames.eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0xC878771A4ff7466B7be8b59FB8766719AEa8d562:
++        "MVM_CanonicalTransaction"
+    }
+```
+
+```diff
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC) {
+    +++ description: Oracle for providing preimages.
+      address:
+-        "0x789a64284e29d2225430606D3D89a9336870BBbC"
++        "eth:0x789a64284e29d2225430606D3D89a9336870BBbC"
+      implementationNames.0x789a64284e29d2225430606D3D89a9336870BBbC:
+-        "PreimageOracle"
+      implementationNames.eth:0x789a64284e29d2225430606D3D89a9336870BBbC:
++        "PreimageOracle"
+    }
+```
+
+```diff
+    EOA  (0x7a9059F4A6e50090e4f55994d465918200AB4454) {
+    +++ description: None
+      address:
+-        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
++        "eth:0x7a9059F4A6e50090e4f55994d465918200AB4454"
+    }
+```
+
+```diff
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063) {
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+      address:
+-        "0x7f6B0b7589febc40419a8646EFf9801b87397063"
++        "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0x7f6B0b7589febc40419a8646EFf9801b87397063:
+-        "MVM_DiscountOracle"
+      implementationNames.eth:0x7f6B0b7589febc40419a8646EFf9801b87397063:
++        "MVM_DiscountOracle"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      address:
+-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.owner:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      implementationNames.0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8:
+-        "ProxyAdmin"
+      implementationNames.eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      address:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values._1088_MVM_FraudVerifier:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values._1088_MVM_Proposer:
+-        "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
++        "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
+      values._1088_MVM_Sequencer:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      values._1088_MVM_Sequencer_Wrapper:
+-        "0xcDf02971871B7736874E20B8487c019D28090019"
++        "eth:0xcDf02971871B7736874E20B8487c019D28090019"
+      values.1088_MVM_FraudVerifier:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.blobBatcher:
+-        "0xae4d46bd9117cb017c5185844699c51107cb28a9"
++        "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
+      values.BondManager:
+-        "0x595801b85628ec6979C420988b8843A40F850528"
++        "eth:0x595801b85628ec6979C420988b8843A40F850528"
+      values.CanonicalTransactionChain:
+-        "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9"
++        "eth:0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9"
+      values.ChainStorageContainer_CTC_queue:
+-        "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
++        "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
+      values.DisputeGameFactory:
+-        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
++        "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+      values.FaultProofLockingPool:
+-        "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
++        "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+      values.inboxAddress:
+-        "0xFf00000000000000000000000000000000001088"
++        "eth:0xFf00000000000000000000000000000000001088"
+      values.L2CrossDomainMessenger:
+-        "0x4200000000000000000000000000000000000007"
++        "eth:0x4200000000000000000000000000000000000007"
+      values.METIS_MANAGER:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.MVM_DiscountOracle:
+-        "0x7f6B0b7589febc40419a8646EFf9801b87397063"
++        "eth:0x7f6B0b7589febc40419a8646EFf9801b87397063"
+      values.owner:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.Proxy__MVM_CanonicalTransaction:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      values.Proxy__MVM_ChainManager:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      values.Proxy__MVM_Verifier:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      values.Proxy__OVM_L1StandardBridge:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++++ description: Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers.
++++ severity: HIGH
+      values.StateCommitmentChain:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      values.undefined_MVM_FraudVerifier:
+-        "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
++        "eth:0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
+      implementationNames.0x918778e825747a892b17C66fe7D24C618262867d:
+-        "Lib_AddressManager"
+      implementationNames.eth:0x918778e825747a892b17C66fe7D24C618262867d:
++        "Lib_AddressManager"
+    }
+```
+
+```diff
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e) {
+    +++ description: Metis token contract.
+      address:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      values.owner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x9E32b13ce7f2E80A01932B42553652E053D6ed8e:
+-        "MToken"
+      implementationNames.eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e:
++        "MToken"
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      address:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365"
++        "eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365"
+      values.batches:
+-        "0x10739F09f6e62689c0aA8A1878816de9e166d6f9"
++        "eth:0x10739F09f6e62689c0aA8A1878816de9e166d6f9"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6:
+-        "L1ChugSplashProxy"
+      implementationNames.0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365:
++        "MVM_StateCommitmentChain"
+    }
+```
+
+```diff
+    EOA  (0xa6D8941F935932a531A856C2e48046DA73a1098E) {
+    +++ description: None
+      address:
+-        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
++        "eth:0xa6D8941F935932a531A856C2e48046DA73a1098E"
+    }
+```
+
+```diff
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57) {
+    +++ description: Storage container for CTC queue.
+      address:
+-        "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
++        "eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      implementationNames.0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57:
+-        "ChainStorageContainer"
+      implementationNames.eth:0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57:
++        "ChainStorageContainer"
+    }
+```
+
+```diff
+    EOA  (0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      address:
+-        "0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
++        "eth:0xaE4d46bD9117Cb017C5185844699c51107cB28a9"
+    }
+```
+
+```diff
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057) {
+    +++ description: None
+      address:
+-        "0xAFD640204D73B02C3521eA8ea3771182527Ff057"
++        "eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057"
+      values.oracle:
+-        "0x789a64284e29d2225430606D3D89a9336870BBbC"
++        "eth:0x789a64284e29d2225430606D3D89a9336870BBbC"
+      implementationNames.0xAFD640204D73B02C3521eA8ea3771182527Ff057:
+-        "MIPS"
+      implementationNames.eth:0xAFD640204D73B02C3521eA8ea3771182527Ff057:
++        "MIPS"
+    }
+```
+
+```diff
+    EOA  (0xB383E1331dEE29864b68f7D84b0dC289F770d846) {
+    +++ description: None
+      address:
+-        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
++        "eth:0xB383E1331dEE29864b68f7D84b0dC289F770d846"
+    }
+```
+
+```diff
+    EOA  (0xB961047013F974C5b6B6F8dA4402379525316550) {
+    +++ description: None
+      address:
+-        "0xB961047013F974C5b6B6F8dA4402379525316550"
++        "eth:0xB961047013F974C5b6B6F8dA4402379525316550"
+    }
+```
+
+```diff
+    EOA  (0xcDf02971871B7736874E20B8487c019D28090019) {
+    +++ description: None
+      address:
+-        "0xcDf02971871B7736874E20B8487c019D28090019"
++        "eth:0xcDf02971871B7736874E20B8487c019D28090019"
+    }
+```
+
+```diff
+    EOA  (0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b) {
+    +++ description: None
+      address:
+-        "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b"
++        "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+      address:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      values.$admin:
+-        "0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.$implementation:
+-        "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"
++        "eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"
+      values.$pastUpgrades.0.2.0:
+-        "0xd87Da73F82abe83915d61342199A4690cfdf4718"
++        "eth:0xd87Da73F82abe83915d61342199A4690cfdf4718"
+      values.$pastUpgrades.1.2.0:
+-        "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"
++        "eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"
+      values.escrow:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      values.mpcAddress:
+-        "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b"
++        "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b"
+      values.owner:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      implementationNames.0xD54c868362C2098E0E46F12E7D924C6A332952Dd:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xD8f38c831E5032d23065Eaaee8c0620e17c04D60:
+-        "LockingPool"
+      implementationNames.eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xD8f38c831E5032d23065Eaaee8c0620e17c04D60:
++        "LockingPool"
+    }
+```
+
+```diff
+    EOA  (0xDD6FFC7D9a4Fb420b637747edc6456340d12d377) {
+    +++ description: None
+      address:
+-        "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
++        "eth:0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    }
+```
+
+```diff
+    EOA  (0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000) {
+    +++ description: None
+      address:
+-        "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
++        "eth:0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000"
+    }
+```
+
+```diff
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb) {
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+      address:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E"
++        "eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E"
+      values.libAddressManager:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values.metis:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      implementationNames.0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb:
+-        "L1ChugSplashProxy"
+      implementationNames.0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E:
+-        "MVM_Verifier"
+      implementationNames.eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0x47b5A78E127Dfd521532Fdca89651c832Acb7e0E:
++        "MVM_Verifier"
+    }
+```
+
+```diff
+    EOA  (0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      address:
+-        "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
++        "eth:0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
+    }
+```
+
+```diff
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0) {
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+      address:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5"
++        "eth:0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5"
+      values.addressmgr:
+-        "0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      values.messenger:
+-        "0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      implementationNames.0xf3d58D1794f2634d6649a978f2dc093898FEEBc0:
+-        "L1ChugSplashProxy"
+      implementationNames.0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5:
+-        "MVM_L2ChainManagerOnL1"
+      implementationNames.eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0:
++        "L1ChugSplashProxy"
+      implementationNames.eth:0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5:
++        "MVM_L2ChainManagerOnL1"
+    }
+```
+
+```diff
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      address:
+-        "0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+      values.$admin:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"
++        "eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"
+      values.$pastUpgrades.0.2.0:
+-        "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"
++        "eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51"
+      values.config:
+-        "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff"
++        "eth:0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff"
+      values.metisToken:
+-        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
++        "eth:0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+      values.owner:
+-        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      implementationNames.0xfA947f70c3509d5b70A606e871aE0C85397D0738:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xa2033fbb6213B2233a6998391ccc8E070BcC1B51:
+-        "DelayedWMetis"
+      implementationNames.eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xa2033fbb6213B2233a6998391ccc8E070BcC1B51:
++        "DelayedWMetis"
+    }
+```
+
+```diff
+    EOA  (0xFf00000000000000000000000000000000001088) {
+    +++ description: None
+      address:
+-        "0xFf00000000000000000000000000000000001088"
++        "eth:0xFf00000000000000000000000000000000001088"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff)
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48)
+    +++ description: Contract acting as an escrow for METIS tokens managed by LockingPool.
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-SCC-batches (0x10739F09f6e62689c0aA8A1878816de9e166d6f9)
+    +++ description: Storage container for SCC batches.
+```
+
+```diff
++   Status: CREATED
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3)
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+```
+
+```diff
++   Status: CREATED
+    contract MetisConfig (0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff)
+    +++ description: Contract used to manage configuration of global Metis values.
+```
+
+```diff
++   Status: CREATED
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb)
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-CTC-batches (0x38473Feb3A6366757A249dB2cA4fBB2C663416B7)
+    +++ description: Storage container for CTC batches.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b)
+    +++ description: Main entry point for users depositing ERC20 tokens and ETH that do not require custom gateway.
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+```diff
++   Status: CREATED
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21)
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalTransactionChain (0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9)
+    +++ description: The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. Given that transactions batch hashes are sent to an EOA address, it allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.
+```
+
+```diff
++   Status: CREATED
+    contract BondManager (0x595801b85628ec6979C420988b8843A40F850528)
+    +++ description: The Bond Manager contract will handle deposits in the form of an ERC20 token from bonded Proposers. It will also handle the accounting of gas costs spent by a Verifier during the course of a challenge. In the event of a successful challenge, the faulty Proposer's bond will be slashed, and the Verifier's gas costs will be refunded. Current mock implementation allows only OVM_Proposer to propose new state roots. No slashing is implemented.
+```
+
+```diff
++   Status: CREATED
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947)
+    +++ description: Escrows staking rewards for Sequencers.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_CanonicalTransaction (0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a)
+    +++ description: MVM CanonicalTransaction is a wrapper of Canonical Transaction Chain that implements optimistic data availability scheme L1. If Sequencer is not malicious, it simply forwards appendSequencerBatch() calls to CanonicalTransactionChain.
+```
+
+```diff
++   Status: CREATED
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC)
+    +++ description: Oracle for providing preimages.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_DiscountOracle (0x7f6B0b7589febc40419a8646EFf9801b87397063)
+    +++ description: Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d)
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
++   Status: CREATED
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6)
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract ChainStorageContainer-CTC-queue (0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57)
+    +++ description: Storage container for CTC queue.
+```
+
+```diff
++   Status: CREATED
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd)
+    +++ description: Contract allowing users to lock tokens to apply to become a sequencer, receive rewards, unlock tokens to exit the sequencer, reward distribution.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_Verifier (0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb)
+    +++ description: The MVM Verifier contract is responsible for verifying the state of the MVM.
+```
+
+```diff
++   Status: CREATED
+    contract MVM_L2ChainManagerOnL1 (0xf3d58D1794f2634d6649a978f2dc093898FEEBc0)
+    +++ description: Contract that allows METIS_MANAGER to switch Sequencer.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738)
+    +++ description: Delayed wrapped Metis token contract.
+```
+
 Generated with discovered.json: 0x582819c46777f619913faed86222a47108cbd7da
 
 # Diff at Fri, 04 Jul 2025 12:19:09 GMT:

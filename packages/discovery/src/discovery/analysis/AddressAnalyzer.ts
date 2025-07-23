@@ -1,4 +1,8 @@
-import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
+import type {
+  ChainSpecificAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import type { DiscoveryCustomType } from '../config/StructureConfig'
 import type { StructureContractConfig } from '../config/structureUtils'
@@ -7,30 +11,30 @@ import type { HandlerExecutor } from '../handlers/HandlerExecutor'
 import type { ContractValue } from '../output/types'
 import type { IProvider } from '../provider/IProvider'
 import type { ProxyDetector } from '../proxies/ProxyDetector'
+import { getImplementationNames } from '../source/getDerivedName'
 import type {
   PerContractSource,
   SourceCodeService,
 } from '../source/SourceCodeService'
-import { getImplementationNames } from '../source/getDerivedName'
 import {
   get$Beacons,
   get$Implementations,
   get$PastUpgrades,
 } from '../utils/extractors'
-import type { TemplateService } from './TemplateService'
 import { codeIsEOA } from './codeIsEOA'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
+import type { TemplateService } from './TemplateService'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
 interface AnalyzedCommon {
-  address: EthereumAddress
+  address: ChainSpecificAddress
   deploymentTimestamp?: UnixTime
   deploymentBlockNumber?: number
-  implementationNames?: Record<EthereumAddress, string>
+  implementationNames?: Record<ChainSpecificAddress, string>
   isVerified: boolean
   proxyType?: string
-  implementations: EthereumAddress[]
+  implementations: ChainSpecificAddress[]
   values: Record<string, ContractValue | undefined>
   errors: Record<string, string>
   abis: Record<string, string[]>
@@ -69,7 +73,7 @@ export class AddressAnalyzer {
 
   async analyze(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     config: StructureContractConfig,
     suggestedTemplates?: Set<string>,
   ): Promise<Analysis> {

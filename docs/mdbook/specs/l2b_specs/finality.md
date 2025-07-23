@@ -184,7 +184,7 @@ event WithdrawalInitiated(address indexed l1Token, address indexed l2Token, addr
 
 To track the time of these events, the L2 block number in which they are emitted can be used.
 
-On L1, the `AnchorStateRegistry` is the contract used to mantain the latest state root that is ready to be used for withdrawals. The anchor root is updated using the `setAnchorState()` function, which is defined as follows:
+On L1, the `AnchorStateRegistry` is the contract used to maintain the latest state root that is ready to be used for withdrawals. The anchor root is updated using the `setAnchorState()` function, which is defined as follows:
 
 ```solidity
 function setAnchorState(IDisputeGame _game) public

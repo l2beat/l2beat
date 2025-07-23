@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
-import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
+import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxResult } from '../../types/model'

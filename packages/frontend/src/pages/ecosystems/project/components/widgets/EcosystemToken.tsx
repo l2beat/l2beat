@@ -1,5 +1,5 @@
-import { PercentChange } from '~/components/PercentChange'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { PercentChange } from '~/components/PercentChange'
 import type { EcosystemToken } from '~/server/features/ecosystems/getEcosystemToken'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -45,7 +45,7 @@ export function EcosystemToken({ token, className }: Props) {
           />
         </DataTile>
         <DataTile label="Circulating Supply">
-          <span>{`${formatNumber(token.data.amount.value)}`}</span>
+          <span>{`${formatNumber(token.data.amount.value)} ${token.symbol}`}</span>
           <PercentChange className="ml-0.5" value={token.data.amount.change} />
         </DataTile>
       </div>
@@ -57,7 +57,11 @@ function DataTile({
   label,
   children,
   className,
-}: { label: string; children: React.ReactNode; className?: string }) {
+}: {
+  label: string
+  children: React.ReactNode
+  className?: string
+}) {
   return (
     <div
       className={cn(

@@ -40,6 +40,7 @@ describe(getStage.name, () => {
         short: 'short notice',
         long: 'long notice',
       },
+      stage1PrincipleDescription: undefined,
       downgradePending: undefined,
       missing: {
         nextStage: 'Stage 2',

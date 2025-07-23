@@ -17,12 +17,13 @@ const CLIENT_CONFIG = {
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
-  NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default(false),
-  NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default(false),
-  NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
-  NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
-  NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default(false),
-  NEXT_PUBLIC_PARTNERS: coerceBoolean.default(false),
+  CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING: featureFlag.default(false),
+  CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
+  CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
+  CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
+  CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
+  CLIENT_SIDE_PARTNERS: coerceBoolean.default(false),
+  CLIENT_SIDE_ZK_CATALOG_V2: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -114,12 +115,13 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
 
     // Client
-    NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
-      process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,
-    NEXT_PUBLIC_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
-    NEXT_PUBLIC_PLAUSIBLE_DOMAIN: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN,
-    NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
-    NEXT_PUBLIC_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    NEXT_PUBLIC_PARTNERS: process.env.NEXT_PUBLIC_PARTNERS,
+    CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING:
+      process.env.CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING,
+    CLIENT_SIDE_GITCOIN_ROUND_LIVE: process.env.FEATURE_FLAG_GITCOIN_OPTION,
+    CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
+    CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
+    CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
+    CLIENT_SIDE_PARTNERS: process.env.CLIENT_SIDE_PARTNERS,
+    CLIENT_SIDE_ZK_CATALOG_V2: process.env.CLIENT_SIDE_ZK_CATALOG_V2,
   }
 }

@@ -1,6 +1,14 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -64,6 +72,7 @@ export const xlayer: ScalingProject = polygonCDKStack({
     name: 'xlayer',
     chainId: 196,
     explorerUrl: 'https://rpc.xlayer.tech',
+    gasTokens: ['OKB'],
     sinceTimestamp: UnixTime(1711782180),
     multicallContracts: [
       {
@@ -99,7 +108,7 @@ export const xlayer: ScalingProject = polygonCDKStack({
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       sinceTimestamp: UnixTime(1712620800),
       sharedEscrow: {

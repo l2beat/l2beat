@@ -1,3 +1,566 @@
+Generated with discovered.json: 0x64d15ddd42279442736523c7a1a2e0818353728c
+
+# Diff at Mon, 14 Jul 2025 12:44:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21628437
+- current block number: 21628437
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+    contract PeggedTokenBridge (0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB) {
+    +++ description: None
+      address:
+-        "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB"
++        "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      values.sigsVerifier:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      implementationNames.0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB:
+-        "PeggedTokenBridge"
+      implementationNames.eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB:
++        "PeggedTokenBridge"
+    }
+```
+
+```diff
+    EOA SentinelAdmin (0x1b9dFC56e38b0F92448659C114e2347Bd803911c) {
+    +++ description: None
+      address:
+-        "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    }
+```
+
+```diff
+    EOA  (0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2) {
+    +++ description: None
+      address:
+-        "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
++        "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+    }
+```
+
+```diff
+    EOA  (0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9) {
+    +++ description: None
+      address:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+    }
+```
+
+```diff
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C) {
+    +++ description: None
+      address:
+-        "0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
++        "eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
+      values.$admin:
+-        "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
++        "eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
+      values.$implementation:
+-        "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"
++        "eth:0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"
+      values.$pastUpgrades.0.2.0:
+-        "0xbc7B0223Dd16cbc679c0D04bA3F4530D76DFbA87"
++        "eth:0xbc7B0223Dd16cbc679c0D04bA3F4530D76DFbA87"
+      values.$pastUpgrades.1.2.0:
+-        "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"
++        "eth:0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"
+      values.liquidityBridge:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      values.owner:
+-        "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175"
++        "eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175"
+      values.pegBridge:
+-        "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB"
++        "eth:0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB"
+      values.pegBridgeV2:
+-        "0x52E4f244f380f8fA51816c8a10A63105dd4De084"
++        "eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084"
+      values.pegVault:
+-        "0xB37D31b2A74029B5951a2778F959282E2D518595"
++        "eth:0xB37D31b2A74029B5951a2778F959282E2D518595"
+      values.pegVaultV2:
+-        "0x7510792A3B1969F9307F3845CE88e39578f2bAE1"
++        "eth:0x7510792A3B1969F9307F3845CE88e39578f2bAE1"
+      values.sigsVerifier:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      implementationNames.0x4066D196A423b2b3B8B054f4F40efB47a74E200C:
+-        "OptimizedTransparentUpgradeableProxy"
+      implementationNames.0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8:
+-        "MessageBus"
+      implementationNames.eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C:
++        "OptimizedTransparentUpgradeableProxy"
+      implementationNames.eth:0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8:
++        "MessageBus"
+    }
+```
+
+```diff
+    EOA  (0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0) {
+    +++ description: None
+      address:
+-        "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
++        "eth:0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      address:
+-        "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
++        "eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
+      values.owner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x520d812604E7b2ce71819FDBFE9aC40E56327F8f:
+-        "ProxyAdmin"
+      implementationNames.eth:0x520d812604E7b2ce71819FDBFE9aC40E56327F8f:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract PeggedTokenBridgeV2 (0x52E4f244f380f8fA51816c8a10A63105dd4De084) {
+    +++ description: None
+      address:
+-        "0x52E4f244f380f8fA51816c8a10A63105dd4De084"
++        "eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      values.sigsVerifier:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      implementationNames.0x52E4f244f380f8fA51816c8a10A63105dd4De084:
+-        "PeggedTokenBridgeV2"
+      implementationNames.eth:0x52E4f244f380f8fA51816c8a10A63105dd4De084:
++        "PeggedTokenBridgeV2"
+    }
+```
+
+```diff
+    contract Liquidity Network (0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820) {
+    +++ description: None
+      address:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      values.governors.0:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.governors.1:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.governors.2:
+-        "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
++        "eth:0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+      values.governors.3:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+      values.nativeWrap:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      values.pausers.0:
+-        "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
++        "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+      values.pausers.1:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.pausers.2:
+-        "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
++        "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+      values.pausers.3:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.pausers.4:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+      implementationNames.0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820:
+-        "Bridge"
+      implementationNames.eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820:
++        "Bridge"
+    }
+```
+
+```diff
+    contract MessageBusOwner (0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175) {
+    +++ description: None
+      address:
+-        "0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175"
++        "eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175"
+      values.getVoters.0.4:
+-        "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
++        "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+      values.getVoters.0.3:
+-        "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823"
++        "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823"
+      values.getVoters.0.2:
+-        "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
++        "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+      values.getVoters.0.1:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.getVoters.0.0:
+-        "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+      implementationNames.0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175:
+-        "MessageBusOwner"
+      implementationNames.eth:0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175:
++        "MessageBusOwner"
+    }
+```
+
+```diff
+    contract OriginalTokenVaultV2 (0x7510792A3B1969F9307F3845CE88e39578f2bAE1) {
+    +++ description: None
+      address:
+-        "0x7510792A3B1969F9307F3845CE88e39578f2bAE1"
++        "eth:0x7510792A3B1969F9307F3845CE88e39578f2bAE1"
+      values.nativeWrap:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      values.sigsVerifier:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      implementationNames.0x7510792A3B1969F9307F3845CE88e39578f2bAE1:
+-        "OriginalTokenVaultV2"
+      implementationNames.eth:0x7510792A3B1969F9307F3845CE88e39578f2bAE1:
++        "OriginalTokenVaultV2"
+    }
+```
+
+```diff
+    EOA  (0x83039377ddD862821d92d416b2DDB9EFb5BA9000) {
+    +++ description: None
+      address:
+-        "0x83039377ddD862821d92d416b2DDB9EFb5BA9000"
++        "eth:0x83039377ddD862821d92d416b2DDB9EFb5BA9000"
+    }
+```
+
+```diff
+    EOA  (0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1) {
+    +++ description: None
+      address:
+-        "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1"
++        "eth:0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1"
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      address:
+-        "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
++        "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      implementationNames.0x8E339115b295DeD49880eA62C1F06d1dbec3496b:
+-        "ProxyAdmin"
+      implementationNames.eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C) {
+    +++ description: None
+      address:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+    }
+```
+
+```diff
+    contract TransferAgent (0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b) {
+    +++ description: None
+      address:
+-        "0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b"
++        "eth:0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      implementationNames.0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b:
+-        "TransferAgent"
+      implementationNames.eth:0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b:
++        "TransferAgent"
+    }
+```
+
+```diff
+    EOA  (0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823) {
+    +++ description: None
+      address:
+-        "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823"
++        "eth:0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823"
+    }
+```
+
+```diff
+    contract OriginalTokenVault (0xB37D31b2A74029B5951a2778F959282E2D518595) {
+    +++ description: None
+      address:
+-        "0xB37D31b2A74029B5951a2778F959282E2D518595"
++        "eth:0xB37D31b2A74029B5951a2778F959282E2D518595"
+      values.governors.0:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.governors.1:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.governors.2:
+-        "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
++        "eth:0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+      values.governors.3:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+      values.owner:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      values.pausers.0:
+-        "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
++        "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+      values.pausers.1:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.pausers.2:
+-        "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
++        "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+      values.pausers.3:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.pausers.4:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+      values.sigsVerifier:
+-        "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
++        "eth:0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
+      implementationNames.0xB37D31b2A74029B5951a2778F959282E2D518595:
+-        "OriginalTokenVault"
+      implementationNames.eth:0xB37D31b2A74029B5951a2778F959282E2D518595:
++        "OriginalTokenVault"
+    }
+```
+
+```diff
+    EOA  (0xDfE4F07D1F36B8d559b25082460a4f6A72531de2) {
+    +++ description: None
+      address:
+-        "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
++        "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+    }
+```
+
+```diff
+    EOA  (0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3) {
+    +++ description: None
+      address:
+-        "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
++        "eth:0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+    }
+```
+
+```diff
+    EOA  (0xED9fdF5B16F9F254bec5Ad389B80B48225186655) {
+    +++ description: None
+      address:
+-        "0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
++        "eth:0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
+    }
+```
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      address:
+-        "0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+      values.$admin:
+-        "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
++        "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+      values.$implementation:
+-        "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"
++        "eth:0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"
+      values.$pastUpgrades.0.2.0:
+-        "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"
++        "eth:0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"
+      values.governors.0:
+-        "0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
++        "eth:0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
+      values.governors.1:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.governors.2:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.governors.3:
+-        "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
++        "eth:0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+      values.guards.0:
+-        "0x83039377ddD862821d92d416b2DDB9EFb5BA9000"
++        "eth:0x83039377ddD862821d92d416b2DDB9EFb5BA9000"
+      values.guards.1:
+-        "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1"
++        "eth:0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1"
+      values.owner:
+-        "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
++        "eth:0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+      values.pausersPauseOnly.0:
+-        "0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
++        "eth:0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
+      values.pausersPauseOnly.1:
+-        "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
++        "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+      values.pausersPauseOnly.2:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.pausersPauseOnly.3:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.pausersPauseOnly.4:
+-        "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
++        "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+      values.pausersPauseOnly.5:
+-        "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
++        "eth:0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+      implementationNames.0xF140024969F6c76494a78518D9a99c8776B55f70:
+-        "OptimizedTransparentUpgradeableProxy"
+      implementationNames.0xaE41e6a597f4c65646e94E330D8BAd218Bec7896:
+-        "Sentinel"
+      implementationNames.eth:0xF140024969F6c76494a78518D9a99c8776B55f70:
++        "OptimizedTransparentUpgradeableProxy"
+      implementationNames.eth:0xaE41e6a597f4c65646e94E330D8BAd218Bec7896:
++        "Sentinel"
+    }
+```
+
+```diff
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575) {
+    +++ description: None
+      address:
+-        "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
++        "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
+      values.getVoters.0.5:
+-        "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
++        "eth:0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+      values.getVoters.0.4:
+-        "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
++        "eth:0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+      values.getVoters.0.3:
+-        "0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
++        "eth:0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
+      values.getVoters.0.2:
+-        "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
++        "eth:0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+      values.getVoters.0.1:
+-        "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
++        "eth:0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+      values.getVoters.0.0:
+-        "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
++        "eth:0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+      implementationNames.0xF380166F8490F24AF32Bf47D1aA217FBA62B6575:
+-        "SimpleGovernance"
+      implementationNames.eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575:
++        "SimpleGovernance"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PeggedTokenBridge (0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PeggedTokenBridgeV2 (0x52E4f244f380f8fA51816c8a10A63105dd4De084)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Liquidity Network (0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageBusOwner (0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OriginalTokenVaultV2 (0x7510792A3B1969F9307F3845CE88e39578f2bAE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransferAgent (0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OriginalTokenVault (0xB37D31b2A74029B5951a2778F959282E2D518595)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70)
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+```
+
+```diff
++   Status: CREATED
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd4b45f8c094600657730f5662dde9b615a9ec81f
 
 # Diff at Fri, 04 Jul 2025 12:18:56 GMT:

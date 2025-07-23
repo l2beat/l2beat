@@ -1,12 +1,12 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IProvider } from '../provider/IProvider'
 import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
 import type { ProxyDetails } from './types'
 
 describe(ProxyDetector.name, () => {
-  const address = EthereumAddress.random()
-  const implementation = EthereumAddress.random()
+  const address = ChainSpecificAddress.random()
+  const implementation = ChainSpecificAddress.random()
   const provider = mockObject<IProvider>({
     getBytecode: mockFn().returns(Bytes.fromHex('0xdeadbeef')),
     getDeployment: mockFn().returns(undefined),
@@ -15,7 +15,7 @@ describe(ProxyDetector.name, () => {
   const FIRST_DETAILS: ProxyDetails = {
     type: 'EIP1967 proxy',
     values: {
-      $admin: EthereumAddress.random().toString(),
+      $admin: ChainSpecificAddress.random().toString(),
       $implementation: implementation,
     },
   }
@@ -23,7 +23,7 @@ describe(ProxyDetector.name, () => {
   const SECOND_DETAILS: ProxyDetails = {
     type: 'EIP1967 proxy',
     values: {
-      $admin: EthereumAddress.random().toString(),
+      $admin: ChainSpecificAddress.random().toString(),
       $implementation: implementation,
     },
   }
@@ -55,9 +55,12 @@ describe(ProxyDetector.name, () => {
     ])
 
     const provider = mockObject<IProvider>({
+      chain: 'ethereum',
       getBytecode: mockFn().returns(
-        Bytes.fromHex(`0xef0100`).concat(
-          Bytes.fromHex(implementation.toString()),
+        Bytes.fromHex('0xef0100').concat(
+          Bytes.fromHex(
+            ChainSpecificAddress.address(implementation).toString(),
+          ),
         ),
       ),
       getDeployment: mockFn().returns(undefined),

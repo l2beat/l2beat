@@ -5,6 +5,9 @@
   "ignoreRelatives": ["l2Timelock"],
   "category": "gov",
   "fields": {
+    "l2Timelock": {
+      "edit": ["format", "ArbitrumAddress"]
+    },
     "timelockAdminAC": {
       "handler": {
         "type": "accessControl",

@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
@@ -11,15 +11,15 @@ import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import {
-  type ThroughputSummaryData,
   getDaThroughputSummary,
+  type ThroughputSummaryData,
 } from '../data-availability/throughput/getDaThroughputSummary'
 import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
 import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 
 export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
   name: string
-  colors: ProjectColors
+  colors: ProjectCustomColors
   daProjects: ProjectId[]
   bannerImg?: string
   allProjects: {

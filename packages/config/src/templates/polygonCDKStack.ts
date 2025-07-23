@@ -1,10 +1,10 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
+  ChainSpecificAddress,
   formatSeconds,
+  ProjectId,
+  type UnixTime,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -149,13 +149,12 @@ export function polygonCDKStack(
 
   assert(
     rollupManagerContract.address ===
-      EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+      ChainSpecificAddress('eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
   const bridge = shared.getContract('PolygonSharedBridge')
 
-  const finalizationPeriod =
-    templateVars.display.finality?.finalizationPeriod ?? 0
+  const finalizationPeriod = 0
 
   const discoveries = [templateVars.discovery, shared]
   return {
@@ -186,15 +185,6 @@ export function polygonCDKStack(
           : 'polygon-cdk-rollup',
       stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
-      finality: templateVars.display.finality ?? {
-        finalizationPeriod,
-        warnings: {
-          timeToInclusion: {
-            sentiment: 'neutral',
-            value: 'Uniform block distribution is assumed for calculations.',
-          },
-        },
-      },
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -215,15 +205,6 @@ export function polygonCDKStack(
         },
       },
       daTracking: getDaTracking(templateVars),
-      finality:
-        templateVars.daProvider !== undefined
-          ? undefined
-          : {
-              type: 'PolygonZkEvm',
-              minTimestamp: UnixTime(1679653163),
-              lag: 0,
-              stateUpdate: 'disabled',
-            },
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -478,18 +459,19 @@ function getDaTracking(
 
   if (templateVars.usesEthereumBlobs) {
     const polygonContract = templateVars.discovery.getContract('PolygonZkEVM')
-    const sequencer = templateVars.discovery.getContractValue<string>(
-      'PolygonZkEVM',
-      'trustedSequencer',
-    )
+    const sequencer =
+      templateVars.discovery.getContractValue<ChainSpecificAddress>(
+        'PolygonZkEVM',
+        'trustedSequencer',
+      )
 
     return [
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: polygonContract.sinceBlock ?? 0,
-        inbox: polygonContract.address,
-        sequencers: [sequencer],
+        inbox: ChainSpecificAddress.address(polygonContract.address),
+        sequencers: [ChainSpecificAddress.address(sequencer)],
       },
     ]
   }

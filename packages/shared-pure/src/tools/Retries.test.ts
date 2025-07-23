@@ -8,8 +8,8 @@ describe('Retries', () => {
       const result = exponentialBackOff({
         stepMs: 100,
         maxAttempts: 1,
-        maxDistanceMs: Infinity,
-        notifyAfterAttempts: Infinity,
+        maxDistanceMs: Number.POSITIVE_INFINITY,
+        notifyAfterAttempts: Number.POSITIVE_INFINITY,
       })(1)
       expect(result.shouldStop).toEqual(true)
     })
@@ -17,9 +17,9 @@ describe('Retries', () => {
     it('can respect max distance', () => {
       const result = exponentialBackOff({
         stepMs: 1000,
-        maxAttempts: Infinity,
+        maxAttempts: Number.POSITIVE_INFINITY,
         maxDistanceMs: 200,
-        notifyAfterAttempts: Infinity,
+        notifyAfterAttempts: Number.POSITIVE_INFINITY,
       })(1)
       expect(result).toEqual({
         shouldStop: false,
@@ -32,8 +32,8 @@ describe('Retries', () => {
       const shouldRetry = exponentialBackOff({
         stepMs: 1,
         maxAttempts: 5,
-        notifyAfterAttempts: Infinity,
-        maxDistanceMs: Infinity,
+        notifyAfterAttempts: Number.POSITIVE_INFINITY,
+        maxDistanceMs: Number.POSITIVE_INFINITY,
       })
       const results = [1, 2, 3, 4]
         .map((attempts) => shouldRetry(attempts))
@@ -44,9 +44,9 @@ describe('Retries', () => {
     it('notification threshold works', () => {
       const shouldRetry = exponentialBackOff({
         stepMs: 1000,
-        maxAttempts: Infinity,
+        maxAttempts: Number.POSITIVE_INFINITY,
         notifyAfterAttempts: 2,
-        maxDistanceMs: Infinity,
+        maxDistanceMs: Number.POSITIVE_INFINITY,
       })
       const results = [1, 2, 3]
         .map((attempts) => shouldRetry(attempts))

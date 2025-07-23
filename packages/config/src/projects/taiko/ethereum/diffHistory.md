@@ -1,3 +1,2905 @@
+Generated with discovered.json: 0x122a95c45ad7254441535d5785cdf2d32647a3eb
+
+# Diff at Wed, 16 Jul 2025 15:00:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@99f4c3c49844de20b37b0c4c9c35d616989eef7d block: 22923197
+- current block number: 22923197
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22923197 (main branch discovery), not current.
+
+```diff
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E) {
+    +++ description: Defines withdrawal limits per token.
+      usedTypes.0.arg.eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:
++        "USDC"
+      usedTypes.0.arg.eth:0xdAC17F958D2ee523a2206206994597C13D831ec7:
++        "USDT"
+      usedTypes.0.arg.eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800:
++        "TAIKO"
+      usedTypes.0.arg.eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:
++        "WETH"
+      usedTypes.0.arg.eth:0x0000000000000000000000000000000000000000:
++        "Ether"
+      usedTypes.0.arg.0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48:
+-        "USDC"
+      usedTypes.0.arg.0xdAC17F958D2ee523a2206206994597C13D831ec7:
+-        "USDT"
+      usedTypes.0.arg.0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800:
+-        "TAIKO"
+      usedTypes.0.arg.0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2:
+-        "WETH"
+      usedTypes.0.arg.0x0000000000000000000000000000000000000000:
+-        "Ether"
+    }
+```
+
+Generated with discovered.json: 0xb699939d690e0dc1d5373e5a2e4bc38539774aff
+
+# Diff at Tue, 15 Jul 2025 08:05:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fe7c3b2343ca7836e6a947e456ab91a6f0f6f592 block: 22882688
+- current block number: 22923197
+
+## Description
+
+[Single line change](https://disco.l2beat.com/diff/eth:0x497B13f9192B09244de9b5F0964830969FB26F07/eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC) to the baseFeeConfig.sharingPctg: 50 -> 75.
+
+[ai]: this means that 75% of transaction fees are going to the block proposer and 25% to taiko treasury (distribution logic on L2).
+i could not really verify this claim and unsuccessfully searched for any l2 logic that distributes fees.
+
+the pre-pacaya impl is the same.
+
+## Watched changes
+
+```diff
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      sourceHashes.1:
+-        "0xc4ae3ca2fcf606673a1324989a7ac169b3fdb6780917814506e56898484e99d7"
++        "0xd3d952e9a5655549b172292d82b0e6e7b2223cab5ef6819f2790ed53304f56a7"
+      values.$implementation.0:
+-        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
+      values.$implementation.2:
+-        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+      values.$pastUpgrades.26:
++        ["2025-07-15T01:20:35.000Z","0xffedb70a513e71486c3a47079508d3ba87ae5362e7efb3300febac1be69276bc",["eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319","eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"]]
+      values.$upgradeCount:
+-        26
++        27
+      values.impl:
+-        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319"
+      values.newFork:
+-        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC"
+      values.pacayaConfig.baseFeeConfig.sharingPctg:
+-        50
++        75
+      implementationNames.eth:0x4e030b19135869F6fd926614754B7F9c184E2B83:
+-        "PacayaForkRouter"
+      implementationNames.eth:0x497B13f9192B09244de9b5F0964830969FB26F07:
+-        "MainnetInbox"
+      implementationNames.eth:0xde813DD3b89702E5Eb186FeE6FBC5dCf02aE6319:
++        "PacayaForkRouter"
+      implementationNames.eth:0x80d888ce11738196CfCf27E3b18F65bD4a331CEC:
++        "MainnetInbox"
+    }
+```
+
+## Source code changes
+
+```diff
+.../taiko/ethereum/{.flat@22882688 => .flat}/TaikoL1/MainnetInbox.3.sol | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x68f1c20a820d13d60bb85440876ad5ed1c5c35a4
+
+# Diff at Mon, 14 Jul 2025 12:46:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22882688
+- current block number: 22882688
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882688 (main branch discovery), not current.
+
+```diff
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169) {
+    +++ description: Library for managing PEM certificate chains.
+      address:
+-        "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169"
++        "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169"
+      implementationNames.0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169:
+-        "PEMCertChainLib"
+      implementationNames.eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169:
++        "PEMCertChainLib"
+    }
+```
+
+```diff
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03) {
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+      address:
+-        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2"
++        "eth:0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2"
+      values.$pastUpgrades.0.2.0:
+-        "0x4BfB2bd9dC62474e440567D4D1D8bD72c022149b"
++        "eth:0x4BfB2bd9dC62474e440567D4D1D8bD72c022149b"
+      values.$pastUpgrades.1.2.0:
+-        "0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2"
++        "eth:0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2"
+      values.impl:
+-        "0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2"
++        "eth:0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2"
+      values.inbox:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.inboxWrapper:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x05d88855361808fA1d7fc28084Ef3fCa191c4e03:
+-        "ERC1967Proxy"
+      implementationNames.0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2:
+-        "ForcedInclusionStore"
+      implementationNames.eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03:
++        "ERC1967Proxy"
+      implementationNames.eth:0xcdb25e201Ad3fdcFe16730A6CA2cC0B1Ce2137a2:
++        "ForcedInclusionStore"
+    }
+```
+
+```diff
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      address:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation.0:
+-        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
+      values.$implementation.1:
+-        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
++        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.$implementation.2:
+-        "0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.$pastUpgrades.0.2.0:
+-        "0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"
++        "eth:0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"
+      values.$pastUpgrades.0.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.0.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.2.0:
+-        "0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"
++        "eth:0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"
+      values.$pastUpgrades.1.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.2.0:
+-        "0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"
++        "eth:0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"
+      values.$pastUpgrades.2.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.3.2.0:
+-        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
++        "eth:0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
+      values.$pastUpgrades.3.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.3.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.4.2.0:
+-        "0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"
++        "eth:0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"
+      values.$pastUpgrades.4.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.4.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.5.2.0:
+-        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
++        "eth:0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
+      values.$pastUpgrades.5.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.5.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.6.2.0:
+-        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
++        "eth:0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
+      values.$pastUpgrades.6.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.6.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.7.2.0:
+-        "0x0468745A07de44A9a3138adAc35875ecaf7a20D5"
++        "eth:0x0468745A07de44A9a3138adAc35875ecaf7a20D5"
+      values.$pastUpgrades.7.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.7.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.8.2.0:
+-        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
++        "eth:0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
+      values.$pastUpgrades.8.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.8.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.2.0:
+-        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
++        "eth:0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.$pastUpgrades.9.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.10.2.0:
+-        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
++        "eth:0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
+      values.$pastUpgrades.10.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.10.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.11.2.0:
+-        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
++        "eth:0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
+      values.$pastUpgrades.11.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.11.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.12.2.0:
+-        "0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"
++        "eth:0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"
+      values.$pastUpgrades.12.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.12.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.13.2.0:
+-        "0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"
++        "eth:0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"
+      values.$pastUpgrades.13.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.13.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.14.2.0:
+-        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
++        "eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.14.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.14.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.15.2.0:
+-        "0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"
++        "eth:0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"
+      values.$pastUpgrades.15.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.15.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.16.2.0:
+-        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
++        "eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.16.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.16.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.17.2.0:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "eth:0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
+      values.$pastUpgrades.17.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.17.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.18.2.0:
+-        "0xb74A66b6CF50AD63E29669F0BDE4354E11758162"
++        "eth:0xb74A66b6CF50AD63E29669F0BDE4354E11758162"
+      values.$pastUpgrades.18.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.18.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.2.0:
+-        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
++        "eth:0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.19.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.20.2.0:
+-        "0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"
++        "eth:0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"
+      values.$pastUpgrades.20.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.20.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.21.2.0:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "eth:0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
+      values.$pastUpgrades.21.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.21.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.22.2.0:
+-        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
++        "eth:0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
+      values.$pastUpgrades.22.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.22.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.23.2.0:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
++        "eth:0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
+      values.$pastUpgrades.23.2.1:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.23.2.2:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.24.2.0:
+-        "0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf"
++        "eth:0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf"
+      values.$pastUpgrades.24.2.1:
+-        "0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01"
++        "eth:0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01"
+      values.$pastUpgrades.24.2.2:
+-        "0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.$pastUpgrades.25.2.0:
+-        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
+      values.$pastUpgrades.25.2.1:
+-        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
++        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.$pastUpgrades.25.2.2:
+-        "0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.bondToken:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.impl:
+-        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
++        "eth:0x4e030b19135869F6fd926614754B7F9c184E2B83"
+      values.inboxWrapper:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.newFork:
+-        "0x497B13f9192B09244de9b5F0964830969FB26F07"
++        "eth:0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.oldFork:
+-        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
++        "eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.signalService:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.verifier:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      implementationNames.0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a:
+-        "ERC1967Proxy"
+      implementationNames.0x4e030b19135869F6fd926614754B7F9c184E2B83:
+-        "PacayaForkRouter"
+      implementationNames.0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264:
+-        "MainnetTaikoL1"
+      implementationNames.0x497B13f9192B09244de9b5F0964830969FB26F07:
+-        "MainnetInbox"
+      implementationNames.eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a:
++        "ERC1967Proxy"
+      implementationNames.eth:0x4e030b19135869F6fd926614754B7F9c184E2B83:
++        "PacayaForkRouter"
+      implementationNames.eth:0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264:
++        "MainnetTaikoL1"
+      implementationNames.eth:0x497B13f9192B09244de9b5F0964830969FB26F07:
++        "MainnetInbox"
+    }
+```
+
+```diff
+    EOA  (0x0aED2375549D1115e180bd0caea829C429Ea50B3) {
+    +++ description: None
+      address:
+-        "0x0aED2375549D1115e180bd0caea829C429Ea50B3"
++        "eth:0x0aED2375549D1115e180bd0caea829C429Ea50B3"
+    }
+```
+
+```diff
+    EOA  (0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438) {
+    +++ description: None
+      address:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+    }
+```
+
+```diff
+    contract Halborn (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351) {
+    +++ description: None
+      address:
+-        "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
++        "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556"
+      values.$members.1:
+-        "0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1"
++        "eth:0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1"
+      values.$members.2:
+-        "0xDFbD5490462963Cc242471913B53b034B209B32c"
++        "eth:0xDFbD5490462963Cc242471913B53b034B209B32c"
+      implementationNames.0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      address:
+-        "0x0F95E6968EC1B28c794CF1aD99609431de5179c2"
++        "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x584fE70fE82F728f0Fe26488857D623f3B59E070"
++        "eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070"
+      values.$pastUpgrades.0.2.0:
+-        "0x584fE70fE82F728f0Fe26488857D623f3B59E070"
++        "eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070"
+      values.dao:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.getEncryptionAgents.0:
+-        "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
++        "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
+      values.getEncryptionAgents.1:
+-        "0x884c3e8235788ae52C2106E847e30BD84F2FBCb8"
++        "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8"
+      values.getEncryptionAgents.2:
+-        "0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4"
++        "eth:0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4"
+      values.getEncryptionAgents.3:
+-        "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
++        "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
+      values.getEncryptionAgents.4:
+-        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
++        "eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.5:
+-        "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656"
++        "eth:0x18B4f2afe456Dc89bddE9710476dCfC62D01d656"
+      values.getEncryptionAgents.6:
+-        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556"
+      values.getEncryptionAgents.7:
+-        "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
++        "eth:0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
+      values.settings.encryptionRegistry:
+-        "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1"
++        "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1"
+      implementationNames.0x0F95E6968EC1B28c794CF1aD99609431de5179c2:
+-        "ERC1967Proxy"
+      implementationNames.0x584fE70fE82F728f0Fe26488857D623f3B59E070:
+-        "SignerList"
+      implementationNames.eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2:
++        "ERC1967Proxy"
+      implementationNames.eth:0x584fE70fE82F728f0Fe26488857D623f3B59E070:
++        "SignerList"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      address:
+-        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72"
++        "eth:0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72"
+      values.$pastUpgrades.0.2.0:
+-        "0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72"
++        "eth:0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72"
+      values.impl:
+-        "0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72"
++        "eth:0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pemCertLib:
+-        "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169"
++        "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.sigVerifyLib:
+-        "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
++        "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
+      implementationNames.0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261:
+-        "ERC1967Proxy"
+      implementationNames.0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72:
+-        "AutomataDcapV3Attestation"
+      implementationNames.eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261:
++        "ERC1967Proxy"
+      implementationNames.eth:0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72:
++        "AutomataDcapV3Attestation"
+    }
+```
+
+```diff
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.$admin:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$implementation:
+-        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
++        "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.$pastUpgrades.0.2.0:
+-        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
++        "eth:0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
+      values.$pastUpgrades.1.2.0:
+-        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
++        "eth:0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
+      values.$pastUpgrades.2.2.0:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "eth:0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
+      values.$pastUpgrades.3.2.0:
+-        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
++        "eth:0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
+      values.$pastUpgrades.4.2.0:
+-        "0xcfe803378D79d1180EbF030455040EA6513869dF"
++        "eth:0xcfe803378D79d1180EbF030455040EA6513869dF"
+      values.$pastUpgrades.5.2.0:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "eth:0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.6.2.0:
+-        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
++        "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.eip712Domain.verifyingContract:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.getNonVotingAccounts.0:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.getNonVotingAccounts.1:
+-        "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
++        "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
+      values.getNonVotingAccounts.2:
+-        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.getNonVotingAccounts.3:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      values.impl:
+-        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
++        "eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.owner:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.TAIKO_DAO_CONTROLLER:
+-        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.TAIKO_ERC20_VAULT:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      values.TAIKO_FOUNDATION_TREASURY:
+-        "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
++        "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
+      implementationNames.0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800:
+-        "ERC1967Proxy"
+      implementationNames.0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106:
+-        "TaikoToken"
+      implementationNames.eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800:
++        "ERC1967Proxy"
+      implementationNames.eth:0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106:
++        "TaikoToken"
+    }
+```
+
+```diff
+    EOA  (0x166868E5AE72592a06056775236d2E4D64CDcCa9) {
+    +++ description: None
+      address:
+-        "0x166868E5AE72592a06056775236d2E4D64CDcCa9"
++        "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9"
+    }
+```
+
+```diff
+    EOA Drew Van der Werff Agent (0x18B4f2afe456Dc89bddE9710476dCfC62D01d656) {
+    +++ description: None
+      address:
+-        "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656"
++        "eth:0x18B4f2afe456Dc89bddE9710476dCfC62D01d656"
+    }
+```
+
+```diff
+    EOA Halborn Agent (0x1d955983044548E03DAA583B36A37cA4bdE6F556) {
+    +++ description: None
+      address:
+-        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "eth:0x1d955983044548E03DAA583B36A37cA4bdE6F556"
+    }
+```
+
+```diff
+    EOA  (0x1eE487CEdCe52c370DB11e62987F3ABe873E145A) {
+    +++ description: None
+      address:
+-        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
++        "eth:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+    }
+```
+
+```diff
+    EOA Chainbound Agent (0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4) {
+    +++ description: None
+      address:
+-        "0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4"
++        "eth:0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4"
+    }
+```
+
+```diff
+    EOA  (0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB) {
+    +++ description: None
+      address:
+-        "0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB"
++        "eth:0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB"
+    }
+```
+
+```diff
+    contract Drew Van der Werff (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1) {
+    +++ description: None
+      address:
+-        "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
++        "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B"
++        "eth:0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B"
+      values.$members.1:
+-        "0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB"
++        "eth:0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB"
+      implementationNames.0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+      address:
+-        "0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd"
++        "eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x437E450452E8Bc142bd5317199296EcB187c514b"
++        "eth:0x437E450452E8Bc142bd5317199296EcB187c514b"
+      values.$pastUpgrades.0.2.0:
+-        "0x437E450452E8Bc142bd5317199296EcB187c514b"
++        "eth:0x437E450452E8Bc142bd5317199296EcB187c514b"
+      values.dao:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.implementation:
+-        "0x437E450452E8Bc142bd5317199296EcB187c514b"
++        "eth:0x437E450452E8Bc142bd5317199296EcB187c514b"
+      values.multisigSettings.signerList:
+-        "0x0F95E6968EC1B28c794CF1aD99609431de5179c2"
++        "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2"
+      implementationNames.0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd:
+-        "ERC1967Proxy"
+      implementationNames.0x437E450452E8Bc142bd5317199296EcB187c514b:
+-        "EmergencyMultisig"
+      implementationNames.eth:0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd:
++        "ERC1967Proxy"
+      implementationNames.eth:0x437E450452E8Bc142bd5317199296EcB187c514b:
++        "EmergencyMultisig"
+    }
+```
+
+```diff
+    contract EncryptionRegistry (0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1) {
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+      address:
+-        "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1"
++        "eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1"
+      values.accountList.0:
+-        "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
+      values.accountList.1:
+-        "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
++        "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
+      values.accountList.2:
+-        "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"
++        "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"
+      values.accountList.3:
+-        "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
++        "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
+      values.accountList.4:
+-        "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
++        "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
+      values.accountList.5:
+-        "0xb284810536C0dAB6A8e48153B58588A9B9e0F701"
++        "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701"
+      values.accountList.6:
+-        "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
++        "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
+      values.accountList.7:
+-        "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
++        "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
+      values.accountList.8:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.accountList.9:
+-        "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
++        "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
+      values.getRegisteredAccounts.0:
+-        "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
+      values.getRegisteredAccounts.1:
+-        "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
++        "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
+      values.getRegisteredAccounts.2:
+-        "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"
++        "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"
+      values.getRegisteredAccounts.3:
+-        "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
++        "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
+      values.getRegisteredAccounts.4:
+-        "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
++        "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
+      values.getRegisteredAccounts.5:
+-        "0xb284810536C0dAB6A8e48153B58588A9B9e0F701"
++        "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701"
+      values.getRegisteredAccounts.6:
+-        "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
++        "eth:0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1"
+      values.getRegisteredAccounts.7:
+-        "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
++        "eth:0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351"
+      values.getRegisteredAccounts.8:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.getRegisteredAccounts.9:
+-        "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
++        "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
+      implementationNames.0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1:
+-        "EncryptionRegistry"
+      implementationNames.eth:0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1:
++        "EncryptionRegistry"
+    }
+```
+
+```diff
+    EOA  (0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2) {
+    +++ description: None
+      address:
+-        "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2"
++        "eth:0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2"
+    }
+```
+
+```diff
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) {
+    +++ description: None
+      address:
+-        "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
++        "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$members.1:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.2:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      implementationNames.0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da:
+-        "GnosisSafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da:
++        "GnosisSafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x392EF0Ec3579436299E4f9b170c454995c03CE8A) {
+    +++ description: None
+      address:
+-        "0x392EF0Ec3579436299E4f9b170c454995c03CE8A"
++        "eth:0x392EF0Ec3579436299E4f9b170c454995c03CE8A"
+    }
+```
+
+```diff
+    EOA  (0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1) {
+    +++ description: None
+      address:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+    }
+```
+
+```diff
+    EOA  (0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB) {
+    +++ description: None
+      address:
+-        "0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB"
++        "eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB"
+    }
+```
+
+```diff
+    EOA  (0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859) {
+    +++ description: None
+      address:
+-        "0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859"
++        "eth:0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859"
+    }
+```
+
+```diff
+    EOA Nethermind Agent (0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A) {
+    +++ description: None
+      address:
+-        "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
++        "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
+    }
+```
+
+```diff
+    contract Chainbound (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7) {
+    +++ description: None
+      address:
+-        "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
++        "eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E"
++        "eth:0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E"
+      values.$members.1:
+-        "0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477"
++        "eth:0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477"
+      values.$members.2:
+-        "0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0"
++        "eth:0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0"
+      values.$members.3:
+-        "0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d"
++        "eth:0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d"
+      implementationNames.0x436a1075099A145417EBFc74BBaC9605e3e4f1A7:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x436a1075099A145417EBFc74BBaC9605e3e4f1A7:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9) {
+    +++ description: Library for verifying signatures.
+      address:
+-        "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
++        "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
+      implementationNames.0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9:
+-        "SigVerifyLib"
+      implementationNames.eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9:
++        "SigVerifyLib"
+    }
+```
+
+```diff
+    EOA  (0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d) {
+    +++ description: None
+      address:
+-        "0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d"
++        "eth:0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d"
+    }
+```
+
+```diff
+    contract Nethermind (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95) {
+    +++ description: None
+      address:
+-        "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
++        "eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a"
++        "eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a"
+      values.$members.1:
+-        "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
++        "eth:0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A"
+      values.$members.2:
+-        "0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f"
++        "eth:0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f"
+      implementationNames.0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x5374b2907a45a28c37caA45e06FC6eBceECAC72a) {
+    +++ description: None
+      address:
+-        "0x5374b2907a45a28c37caA45e06FC6eBceECAC72a"
++        "eth:0x5374b2907a45a28c37caA45e06FC6eBceECAC72a"
+    }
+```
+
+```diff
+    EOA  (0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e) {
+    +++ description: None
+      address:
+-        "0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e"
++        "eth:0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e"
+    }
+```
+
+```diff
+    EOA  (0x5811Ab14833720D743ec57BC49c9342DF66069d0) {
+    +++ description: None
+      address:
+-        "0x5811Ab14833720D743ec57BC49c9342DF66069d0"
++        "eth:0x5811Ab14833720D743ec57BC49c9342DF66069d0"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      address:
+-        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xE78659fbF234c84C909Cf317D84edc2f6C0D8413"
++        "eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413"
+      values.$pastUpgrades.0.2.0:
+-        "0xE78659fbF234c84C909Cf317D84edc2f6C0D8413"
++        "eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413"
+      values.impl:
+-        "0xE78659fbF234c84C909Cf317D84edc2f6C0D8413"
++        "eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413"
+      values.namedAddresses.0.address:
+-        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+      values.namedAddresses.1.address:
+-        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      values.namedAddresses.2.address:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.namedAddresses.3.address:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
++        "eth:0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+      values.namedAddresses.4.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.5.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.6.address:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.namedAddresses.7.address:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.namedAddresses.8.address:
+-        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      values.namedAddresses.9.address:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.namedAddresses.10.address:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      values.namedAddresses.11.address:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.namedAddresses.12.address:
+-        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      values.namedAddresses.13.address:
+-        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      values.namedAddresses.14.address:
+-        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      values.namedAddresses.15.address:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      values.namedAddresses.16.address:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      implementationNames.0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a:
+-        "ERC1967Proxy"
+      implementationNames.0xE78659fbF234c84C909Cf317D84edc2f6C0D8413:
+-        "DefaultResolver"
+      implementationNames.eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a:
++        "ERC1967Proxy"
+      implementationNames.eth:0xE78659fbF234c84C909Cf317D84edc2f6C0D8413:
++        "DefaultResolver"
+    }
+```
+
+```diff
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+      address:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
++        "eth:0xB8826B144eB895eFE2923b61b3b117B1298A9526"
+      values.$pastUpgrades.0.2.0:
+-        "0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"
++        "eth:0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"
+      values.$pastUpgrades.1.2.0:
+-        "0x500735343372Dd6c9B84dBc7a75babf4479742B9"
++        "eth:0x500735343372Dd6c9B84dBc7a75babf4479742B9"
+      values.$pastUpgrades.2.2.0:
+-        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
++        "eth:0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
+      values.$pastUpgrades.3.2.0:
+-        "0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
++        "eth:0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"
+      values.$pastUpgrades.4.2.0:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "eth:0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
+      values.$pastUpgrades.5.2.0:
+-        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
++        "eth:0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+      values.$pastUpgrades.6.2.0:
+-        "0x74828E5fe803072AF9Df512B3911B4223572D652"
++        "eth:0x74828E5fe803072AF9Df512B3911B4223572D652"
+      values.$pastUpgrades.7.2.0:
+-        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
++        "eth:0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
+      values.$pastUpgrades.8.2.0:
+-        "0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"
++        "eth:0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"
+      values.$pastUpgrades.9.2.0:
+-        "0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"
++        "eth:0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"
+      values.$pastUpgrades.10.2.0:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
++        "eth:0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+      values.$pastUpgrades.11.2.0:
+-        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
++        "eth:0xB8826B144eB895eFE2923b61b3b117B1298A9526"
+      values.admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.bondToken:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.entrypoint:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.impl:
+-        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
++        "eth:0xB8826B144eB895eFE2923b61b3b117B1298A9526"
+      values.inbox:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      implementationNames.0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9:
+-        "ERC1967Proxy"
+      implementationNames.0xB8826B144eB895eFE2923b61b3b117B1298A9526:
+-        "ProverSet"
+      implementationNames.eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9:
++        "ERC1967Proxy"
+      implementationNames.eth:0xB8826B144eB895eFE2923b61b3b117B1298A9526:
++        "ProverSet"
+    }
+```
+
+```diff
+    EOA  (0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf) {
+    +++ description: None
+      address:
+-        "0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
++        "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
+    }
+```
+
+```diff
+    EOA  (0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C) {
+    +++ description: None
+      address:
+-        "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
++        "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
+    }
+```
+
+```diff
+    EOA  (0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E) {
+    +++ description: None
+      address:
+-        "0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E"
++        "eth:0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E"
+    }
+```
+
+```diff
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      address:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.$pastUpgrades.0.2.0:
+-        "0x801878e56A8DA58d6a837006345CDD11a9E6a852"
++        "eth:0x801878e56A8DA58d6a837006345CDD11a9E6a852"
+      values.$pastUpgrades.1.2.0:
+-        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.impl:
+-        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.riscoGroth16Verifier:
+-        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+      implementationNames.0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE:
+-        "ERC1967Proxy"
+      implementationNames.0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be:
+-        "TaikoRisc0Verifier"
+      implementationNames.eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE:
++        "ERC1967Proxy"
+      implementationNames.eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be:
++        "TaikoRisc0Verifier"
+    }
+```
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      address:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$admin:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.$implementation:
+-        "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"
++        "eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"
+      values.$pastUpgrades.0.2.0:
+-        "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"
++        "eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"
+      values.impl:
+-        "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"
++        "eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"
+      values.owner:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a:
+-        "ERC1967Proxy"
+      implementationNames.0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06:
+-        "TaikoDAOController"
+      implementationNames.eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a:
++        "ERC1967Proxy"
+      implementationNames.eth:0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06:
++        "TaikoDAOController"
+    }
+```
+
+```diff
+    EOA  (0x7Cdd1c128Cd72dd252f569eeD942735330937F91) {
+    +++ description: None
+      address:
+-        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
++        "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+    }
+```
+
+```diff
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782) {
+    +++ description: Verifier contract for SGX proven blocks.
+      address:
+-        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5"
++        "eth:0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5"
+      values.$pastUpgrades.0.2.0:
+-        "0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5"
++        "eth:0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5"
+      values.automataDcapAttestation:
+-        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      values.impl:
+-        "0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5"
++        "eth:0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.taikoInbox:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.taikoProofVerifier:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      implementationNames.0x7e6409e9b6c5e2064064a6cC994f9a2e95680782:
+-        "ERC1967Proxy"
+      implementationNames.0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5:
+-        "SgxVerifier"
+      implementationNames.eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782:
++        "ERC1967Proxy"
+      implementationNames.eth:0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5:
++        "SgxVerifier"
+    }
+```
+
+```diff
+    EOA Aragon Agent (0x824Dce8d292a393DAb5FFdeb788DC1086257f678) {
+    +++ description: None
+      address:
+-        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
++        "eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+    }
+```
+
+```diff
+    EOA  (0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070) {
+    +++ description: None
+      address:
+-        "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "eth:0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
+    }
+```
+
+```diff
+    EOA L2BEAT Agent (0x884c3e8235788ae52C2106E847e30BD84F2FBCb8) {
+    +++ description: None
+      address:
+-        "0x884c3e8235788ae52C2106E847e30BD84F2FBCb8"
++        "eth:0x884c3e8235788ae52C2106E847e30BD84F2FBCb8"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      address:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"
++        "eth:0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"
+      values.$pastUpgrades.0.2.0:
+-        "0xEE8FC1dbb8D345f5bF35dFb939C6f9EdC5fCDAFc"
++        "eth:0xEE8FC1dbb8D345f5bF35dFb939C6f9EdC5fCDAFc"
+      values.$pastUpgrades.1.2.0:
+-        "0xde1b1FBe7D721af4A56651272ef91A59B7303323"
++        "eth:0xde1b1FBe7D721af4A56651272ef91A59B7303323"
+      values.$pastUpgrades.2.2.0:
+-        "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"
++        "eth:0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"
+      values.addressManager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.impl:
+-        "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"
++        "eth:0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pemCertLib:
+-        "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169"
++        "eth:0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.sigVerifyLib:
+-        "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
++        "eth:0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9"
+      implementationNames.0x8d7C954960a36a7596d7eA4945dDf891967ca8A3:
+-        "ERC1967Proxy"
+      implementationNames.0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5:
+-        "AutomataDcapV3Attestation"
+      implementationNames.eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3:
++        "ERC1967Proxy"
+      implementationNames.eth:0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5:
++        "AutomataDcapV3Attestation"
+    }
+```
+
+```diff
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      address:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D"
++        "eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D"
+      values.$pastUpgrades.0.2.0:
+-        "0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D"
++        "eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D"
+      values.impl:
+-        "0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D"
++        "eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D"
+      values.namedAddresses.0.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.1.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.2.address:
+-        "0x1670000000000000000000000000000000000001"
++        "eth:0x1670000000000000000000000000000000000001"
+      values.namedAddresses.3.address:
+-        "0x1670000000000000000000000000000000000005"
++        "eth:0x1670000000000000000000000000000000000005"
+      values.namedAddresses.4.address:
+-        "0x1670000000000000000000000000000000000002"
++        "eth:0x1670000000000000000000000000000000000002"
+      values.namedAddresses.5.address:
+-        "0x1670000000000000000000000000000000000003"
++        "eth:0x1670000000000000000000000000000000000003"
+      values.namedAddresses.6.address:
+-        "0x1670000000000000000000000000000000000004"
++        "eth:0x1670000000000000000000000000000000000004"
+      values.namedAddresses.7.address:
+-        "0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"
++        "eth:0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"
+      values.namedAddresses.8.address:
+-        "0x65666141a541423606365123Ed280AB16a09A2e1"
++        "eth:0x65666141a541423606365123Ed280AB16a09A2e1"
+      values.namedAddresses.9.address:
+-        "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
++        "eth:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+      values.namedAddresses.10.address:
+-        "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
++        "eth:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      implementationNames.0x8Efa01564425692d0a0838DC10E300BD310Cb43e:
+-        "ERC1967Proxy"
+      implementationNames.0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D:
+-        "DefaultResolver"
+      implementationNames.eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e:
++        "ERC1967Proxy"
+      implementationNames.eth:0xFca4F0Ab7B95EEf2e3A60EF2Bc0c42DdAA62E66D:
++        "DefaultResolver"
+    }
+```
+
+```diff
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E) {
+    +++ description: Defines withdrawal limits per token.
+      address:
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "eth:0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      values.$admin:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$implementation:
+-        "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"
++        "eth:0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"
+      values.$pastUpgrades.0.2.0:
+-        "0x49c5e5F131314Bb24b17E249960F8B12F925ef22"
++        "eth:0x49c5e5F131314Bb24b17E249960F8B12F925ef22"
+      values.$pastUpgrades.1.2.0:
+-        "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"
++        "eth:0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"
+      values.addressManager:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"
++        "eth:0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"
+      values.owner:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x91f67118DD47d502B1f0C354D0611997B022f29E:
+-        "ERC1967Proxy"
+      implementationNames.0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64:
+-        "QuotaManager"
+      implementationNames.eth:0x91f67118DD47d502B1f0C354D0611997B022f29E:
++        "ERC1967Proxy"
+      implementationNames.eth:0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64:
++        "QuotaManager"
+    }
+```
+
+```diff
+    EOA Toni Wahrstätter Agent (0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6) {
+    +++ description: None
+      address:
+-        "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
++        "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      address:
+-        "0x989E348275b659d36f8751ea1c10D146211650BE"
++        "eth:0x989E348275b659d36f8751ea1c10D146211650BE"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"
++        "eth:0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"
+      values.$pastUpgrades.0.2.0:
+-        "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"
++        "eth:0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"
+      values.dao:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.implementation:
+-        "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"
++        "eth:0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"
+      values.taikoBridge:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.taikoL1:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.votingToken:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      implementationNames.0x989E348275b659d36f8751ea1c10D146211650BE:
+-        "ERC1967Proxy"
+      implementationNames.0x5B0Da2FB08754a5dDf32e28887D2F5437485f085:
+-        "OptimisticTokenVotingPlugin"
+      implementationNames.eth:0x989E348275b659d36f8751ea1c10D146211650BE:
++        "ERC1967Proxy"
+      implementationNames.eth:0x5B0Da2FB08754a5dDf32e28887D2F5437485f085:
++        "OptimisticTokenVotingPlugin"
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      address:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      values.$admin:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$implementation:
+-        "0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63"
++        "eth:0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63"
+      values.$pastUpgrades.0.2.0:
+-        "0x15D9F7e12aEa18DAEF5c651fBf97567CAd4a4BEc"
++        "eth:0x15D9F7e12aEa18DAEF5c651fBf97567CAd4a4BEc"
+      values.$pastUpgrades.1.2.0:
+-        "0xC722d9f3f8D60288589F7f67a9CFAd34d3B9bf8E"
++        "eth:0xC722d9f3f8D60288589F7f67a9CFAd34d3B9bf8E"
+      values.$pastUpgrades.2.2.0:
+-        "0x4F750D13005444407D44dAA30922128db0374ca1"
++        "eth:0x4F750D13005444407D44dAA30922128db0374ca1"
+      values.$pastUpgrades.3.2.0:
+-        "0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
++        "eth:0xF8bdaC4E68bA2595Be8381aaa5456917e374E737"
+      values.$pastUpgrades.4.2.0:
+-        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
++        "eth:0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
+      values.$pastUpgrades.5.2.0:
+-        "0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
++        "eth:0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
+      values.$pastUpgrades.6.2.0:
+-        "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30"
++        "eth:0x7ACFBb369a552C45d402448A4d64b9da54C3FF30"
+      values.$pastUpgrades.7.2.0:
+-        "0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63"
++        "eth:0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63"
+      values.addressManager:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63"
++        "eth:0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63"
+      values.owner:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab:
+-        "ERC1967Proxy"
+      implementationNames.0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63:
+-        "MainnetERC20Vault"
+      implementationNames.eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab:
++        "ERC1967Proxy"
+      implementationNames.eth:0xb20C8Ffc2dD49596508d262b6E8B6817e9790E63:
++        "MainnetERC20Vault"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      address:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
++        "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.$members.1:
+-        "0x0aED2375549D1115e180bd0caea829C429Ea50B3"
++        "eth:0x0aED2375549D1115e180bd0caea829C429Ea50B3"
+      values.$members.2:
+-        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
++        "eth:0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.$members.3:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.4:
+-        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
++        "eth:0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$members.5:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "eth:0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      implementationNames.0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F:
+-        "GnosisSafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F:
++        "GnosisSafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+      address:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x52Af16664155608b845BE18aa29620EbF6eA2D3a"
++        "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a"
+      values.$pastUpgrades.0.2.0:
+-        "0x52Af16664155608b845BE18aa29620EbF6eA2D3a"
++        "eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a"
+      values.getTrustedForwarder:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.signatureValidator:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x9CDf589C941ee81D75F34d3755671d614f7cf261:
+-        "ERC1967Proxy"
+      implementationNames.0x52Af16664155608b845BE18aa29620EbF6eA2D3a:
+-        "DAO"
+      implementationNames.eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261:
++        "ERC1967Proxy"
+      implementationNames.eth:0x52Af16664155608b845BE18aa29620EbF6eA2D3a:
++        "DAO"
+    }
+```
+
+```diff
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      address:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.$admin:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$implementation:
+-        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
++        "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.$pastUpgrades.0.2.0:
+-        "0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"
++        "eth:0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"
+      values.$pastUpgrades.1.2.0:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "eth:0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
+      values.$pastUpgrades.2.2.0:
+-        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
++        "eth:0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
+      values.$pastUpgrades.3.2.0:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "eth:0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
+      values.$pastUpgrades.4.2.0:
+-        "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF"
++        "eth:0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF"
+      values.$pastUpgrades.5.2.0:
+-        "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
++        "eth:0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
+      values.$pastUpgrades.6.2.0:
+-        "0x0783Ee019C9b0f918A741469bD488A88827b3617"
++        "eth:0x0783Ee019C9b0f918A741469bD488A88827b3617"
+      values.$pastUpgrades.7.2.0:
+-        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
++        "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.impl:
+-        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
++        "eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.owner:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      implementationNames.0x9e0a24964e5397B566c1ed39258e21aB5E35C77C:
+-        "ERC1967Proxy"
+      implementationNames.0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c:
+-        "MainnetSignalService"
+      implementationNames.eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C:
++        "ERC1967Proxy"
+      implementationNames.eth:0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c:
++        "MainnetSignalService"
+    }
+```
+
+```diff
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136) {
+    +++ description: Verifier contract for SGX proven blocks.
+      address:
+-        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5"
++        "eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5"
+      values.$pastUpgrades.0.2.0:
+-        "0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5"
++        "eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5"
+      values.automataDcapAttestation:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.impl:
+-        "0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5"
++        "eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.taikoInbox:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.taikoProofVerifier:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      implementationNames.0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136:
+-        "ERC1967Proxy"
+      implementationNames.0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5:
+-        "SgxVerifier"
+      implementationNames.eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136:
++        "ERC1967Proxy"
+      implementationNames.eth:0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5:
++        "SgxVerifier"
+    }
+```
+
+```diff
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72) {
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+      address:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
+      values.$pastUpgrades.0.2.0:
+-        "0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
+      values.forcedInclusionStore:
+-        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      values.impl:
+-        "0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
++        "eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b"
+      values.inbox:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.preconfRouter:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x9F9D2fC7abe74C79f86F0D1212107692430eef72:
+-        "ERC1967Proxy"
+      implementationNames.0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b:
+-        "TaikoWrapper"
+      implementationNames.eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72:
++        "ERC1967Proxy"
+      implementationNames.eth:0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b:
++        "TaikoWrapper"
+    }
+```
+
+```diff
+    contract Toni Wahrstätter (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894) {
+    +++ description: None
+      address:
+-        "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
++        "eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F"
++        "eth:0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F"
+      values.$members.1:
+-        "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
++        "eth:0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
+      implementationNames.0xa384E224A3F3D664F43eBE33395eF0DCcE67e894:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xa384E224A3F3D664F43eBE33395eF0DCcE67e894:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1) {
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
+      address:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9"
++        "eth:0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9"
+      values.$pastUpgrades.0.2.0:
+-        "0xEbB8De866727984Ee3a364079f83177FE6d6e288"
++        "eth:0xEbB8De866727984Ee3a364079f83177FE6d6e288"
+      values.$pastUpgrades.1.2.0:
+-        "0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9"
++        "eth:0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9"
+      values.impl:
+-        "0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9"
++        "eth:0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9"
+      values.opVerifier:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.risc0RethVerifier:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      values.sgxGethVerifier:
+-        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      values.sgxRethVerifier:
+-        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      values.sp1RethVerifier:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      values.taikoInbox:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.tdxGethVerifier:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1:
+-        "ERC1967Proxy"
+      implementationNames.0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9:
+-        "MainnetVerifier"
+      implementationNames.eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1:
++        "ERC1967Proxy"
+      implementationNames.eth:0x8C520BB75590deaBC30c4fcaFD8778A43E5481b9:
++        "MainnetVerifier"
+    }
+```
+
+```diff
+    contract Aragon (0xb284810536C0dAB6A8e48153B58588A9B9e0F701) {
+    +++ description: None
+      address:
+-        "0xb284810536C0dAB6A8e48153B58588A9B9e0F701"
++        "eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x5811Ab14833720D743ec57BC49c9342DF66069d0"
++        "eth:0x5811Ab14833720D743ec57BC49c9342DF66069d0"
+      values.$members.1:
+-        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
++        "eth:0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.$members.2:
+-        "0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859"
++        "eth:0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859"
+      implementationNames.0xb284810536C0dAB6A8e48153B58588A9B9e0F701:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xb284810536C0dAB6A8e48153B58588A9B9e0F701:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract Daniel Wang (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a) {
+    +++ description: None
+      address:
+-        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
++        "eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2"
++        "eth:0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2"
+      values.$members.1:
+-        "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
++        "eth:0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
+      implementationNames.0xb47fE76aC588101BFBdA9E68F66433bA51E8029a:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xb47fE76aC588101BFBdA9E68F66433bA51E8029a:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0xB4BE8887908AA8a00A40F3a6AC28402672B83328) {
+    +++ description: None
+      address:
+-        "0xB4BE8887908AA8a00A40F3a6AC28402672B83328"
++        "eth:0xB4BE8887908AA8a00A40F3a6AC28402672B83328"
+    }
+```
+
+```diff
+    EOA  (0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0) {
+    +++ description: None
+      address:
+-        "0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0"
++        "eth:0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0"
+    }
+```
+
+```diff
+    EOA  (0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a) {
+    +++ description: None
+      address:
+-        "0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a"
++        "eth:0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
+      address:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
++        "eth:0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.$pastUpgrades.0.2.0:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "eth:0x35f26e14D0dAeDd1904843370f761C60B891D466"
+      values.$pastUpgrades.1.2.0:
+-        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
++        "eth:0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.impl:
+-        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
++        "eth:0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.sp1RemoteVerifier:
+-        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      implementationNames.0xbee1040D0Aab17AE19454384904525aE4A3602B9:
+-        "ERC1967Proxy"
+      implementationNames.0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7:
+-        "TaikoSP1Verifier"
+      implementationNames.eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9:
++        "ERC1967Proxy"
+      implementationNames.eth:0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7:
++        "TaikoSP1Verifier"
+    }
+```
+
+```diff
+    EOA  (0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1) {
+    +++ description: None
+      address:
+-        "0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1"
++        "eth:0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1"
+    }
+```
+
+```diff
+    EOA  (0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477) {
+    +++ description: None
+      address:
+-        "0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477"
++        "eth:0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477"
+    }
+```
+
+```diff
+    EOA  (0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F) {
+    +++ description: None
+      address:
+-        "0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F"
++        "eth:0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F"
+    }
+```
+
+```diff
+    contract Safe (0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487) {
+    +++ description: None
+      address:
+-        "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
++        "eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xB4BE8887908AA8a00A40F3a6AC28402672B83328"
++        "eth:0xB4BE8887908AA8a00A40F3a6AC28402672B83328"
+      values.$members.1:
+-        "0x392EF0Ec3579436299E4f9b170c454995c03CE8A"
++        "eth:0x392EF0Ec3579436299E4f9b170c454995c03CE8A"
+      values.$members.2:
+-        "0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e"
++        "eth:0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e"
+      values.$members.3:
+-        "0x5374b2907a45a28c37caA45e06FC6eBceECAC72a"
++        "eth:0x5374b2907a45a28c37caA45e06FC6eBceECAC72a"
+      implementationNames.0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      address:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.$admin:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$implementation:
+-        "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F"
++        "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F"
+      values.$pastUpgrades.0.2.0:
+-        "0x91d593d34f2E1904cDCe3D5290a74563F87bCF6f"
++        "eth:0x91d593d34f2E1904cDCe3D5290a74563F87bCF6f"
+      values.$pastUpgrades.1.2.0:
+-        "0x4A1091c2fb37D9C4a661c2384Ff539d94CCF853D"
++        "eth:0x4A1091c2fb37D9C4a661c2384Ff539d94CCF853D"
+      values.$pastUpgrades.2.2.0:
+-        "0xc71CC3B0a47149878fad337fb2ca54E546A645ba"
++        "eth:0xc71CC3B0a47149878fad337fb2ca54E546A645ba"
+      values.$pastUpgrades.3.2.0:
+-        "0x02F21B4C3d4dbfF70cE851741175a727c8D782Be"
++        "eth:0x02F21B4C3d4dbfF70cE851741175a727c8D782Be"
+      values.$pastUpgrades.4.2.0:
+-        "0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
++        "eth:0x71c2f41AEDe913AAEf2c62596E03702E348D6Cd0"
+      values.$pastUpgrades.5.2.0:
+-        "0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
++        "eth:0x951B7Ae1bB26d12dB37f01748e8fB62FEf45A8B5"
+      values.$pastUpgrades.6.2.0:
+-        "0x3c326483EBFabCf3252205f26dF632FE83d11108"
++        "eth:0x3c326483EBFabCf3252205f26dF632FE83d11108"
+      values.$pastUpgrades.7.2.0:
+-        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
++        "eth:0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
+      values.$pastUpgrades.8.2.0:
+-        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
++        "eth:0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
+      values.$pastUpgrades.9.2.0:
+-        "0x01E7D369a619eF1B0E92563d8737F42C09789986"
++        "eth:0x01E7D369a619eF1B0E92563d8737F42C09789986"
+      values.$pastUpgrades.10.2.0:
+-        "0xAc96FF285158bceBB8573D20d853e86BB2915aF3"
++        "eth:0xAc96FF285158bceBB8573D20d853e86BB2915aF3"
+      values.$pastUpgrades.11.2.0:
+-        "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F"
++        "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F"
+      values.addressManager:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F"
++        "eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F"
+      values.owner:
+-        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC:
+-        "ERC1967Proxy"
+      implementationNames.0x2705B12a971dA766A3f9321a743d61ceAD67dA2F:
+-        "MainnetBridge"
+      implementationNames.eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC:
++        "ERC1967Proxy"
+      implementationNames.eth:0x2705B12a971dA766A3f9321a743d61ceAD67dA2F:
++        "MainnetBridge"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      address:
+-        "0xD7dA1C25E915438720692bC55eb3a7170cA90321"
++        "eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"
++        "eth:0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"
+      values.$pastUpgrades.0.2.0:
+-        "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"
++        "eth:0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"
+      values.dao:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.implementation:
+-        "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"
++        "eth:0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"
+      values.multisigSettings.signerList:
+-        "0x0F95E6968EC1B28c794CF1aD99609431de5179c2"
++        "eth:0x0F95E6968EC1B28c794CF1aD99609431de5179c2"
+      implementationNames.0xD7dA1C25E915438720692bC55eb3a7170cA90321:
+-        "ERC1967Proxy"
+      implementationNames.0x8510d389236d7213eE9B9C38CAaBc0aD24853C25:
+-        "Multisig"
+      implementationNames.eth:0xD7dA1C25E915438720692bC55eb3a7170cA90321:
++        "ERC1967Proxy"
+      implementationNames.eth:0x8510d389236d7213eE9B9C38CAaBc0aD24853C25:
++        "Multisig"
+    }
+```
+
+```diff
+    EOA  (0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a) {
+    +++ description: None
+      address:
+-        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
++        "eth:0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+    }
+```
+
+```diff
+    EOA  (0xDFbD5490462963Cc242471913B53b034B209B32c) {
+    +++ description: None
+      address:
+-        "0xDFbD5490462963Cc242471913B53b034B209B32c"
++        "eth:0xDFbD5490462963Cc242471913B53b034B209B32c"
+    }
+```
+
+```diff
+    EOA  (0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B) {
+    +++ description: None
+      address:
+-        "0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B"
++        "eth:0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B"
+    }
+```
+
+```diff
+    EOA  (0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f) {
+    +++ description: None
+      address:
+-        "0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f"
++        "eth:0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      address:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.$implementation:
+-        "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449"
++        "eth:0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449"
+      values.$pastUpgrades.0.2.0:
+-        "0x9cA1Ab10c9fAc5153F8b78E67f03aAa69C9c6A15"
++        "eth:0x9cA1Ab10c9fAc5153F8b78E67f03aAa69C9c6A15"
+      values.$pastUpgrades.1.2.0:
+-        "0xF1cA1F1A068468E1dcF90dA6add185467de80943"
++        "eth:0xF1cA1F1A068468E1dcF90dA6add185467de80943"
+      values.$pastUpgrades.2.2.0:
+-        "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"
++        "eth:0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"
+      values.$pastUpgrades.3.2.0:
+-        "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD"
++        "eth:0x2f7126f78365AD54EAB26fD7faEc60435008E2fD"
+      values.$pastUpgrades.4.2.0:
+-        "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449"
++        "eth:0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449"
+      values.addressManager:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449"
++        "eth:0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449"
+      values.namedAddresses.0.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.1.address:
+-        "0x1670000000000000000000000000000000000005"
++        "eth:0x1670000000000000000000000000000000000005"
+      values.namedAddresses.2.address:
+-        "0x1670000000000000000000000000000000000001"
++        "eth:0x1670000000000000000000000000000000000001"
+      values.namedAddresses.3.address:
+-        "0x1670000000000000000000000000000000000002"
++        "eth:0x1670000000000000000000000000000000000002"
+      values.namedAddresses.4.address:
+-        "0x1670000000000000000000000000000000000003"
++        "eth:0x1670000000000000000000000000000000000003"
+      values.namedAddresses.5.address:
+-        "0x1670000000000000000000000000000000000004"
++        "eth:0x1670000000000000000000000000000000000004"
+      values.namedAddresses.6.address:
+-        "0x65666141a541423606365123Ed280AB16a09A2e1"
++        "eth:0x65666141a541423606365123Ed280AB16a09A2e1"
+      values.namedAddresses.7.address:
+-        "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
++        "eth:0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+      values.namedAddresses.8.address:
+-        "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
++        "eth:0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+      values.namedAddresses.9.address:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.namedAddresses.10.address:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.quotaManager:
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "eth:0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      implementationNames.0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa:
+-        "ERC1967Proxy"
+      implementationNames.0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449:
+-        "MainnetSharedAddressManager"
+      implementationNames.eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa:
++        "ERC1967Proxy"
+      implementationNames.eth:0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449:
++        "MainnetSharedAddressManager"
+    }
+```
+
+```diff
+    EOA Daniel Wang Agent (0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55) {
+    +++ description: None
+      address:
+-        "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
++        "eth:0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
+    }
+```
+
+```diff
+    contract L2BEAT (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06) {
+    +++ description: None
+      address:
+-        "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"
++        "eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB"
++        "eth:0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB"
+      values.$members.1:
+-        "0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
++        "eth:0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf"
+      values.$members.2:
+-        "0x166868E5AE72592a06056775236d2E4D64CDcCa9"
++        "eth:0x166868E5AE72592a06056775236d2E4D64CDcCa9"
+      implementationNames.0xf1cF63589A1e012F9124182c9eAa36B5333e5f06:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xf1cF63589A1e012F9124182c9eAa36B5333e5f06:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+      address:
+-        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+      implementationNames.0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a:
+-        "RiscZeroGroth16Verifier"
+      implementationNames.eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a:
++        "RiscZeroGroth16Verifier"
+    }
+```
+
+```diff
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      address:
+-        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.$admin:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.$implementation:
+-        "0xd1934807041B168f383870A0d8F565aDe2DF9D7D"
++        "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D"
+      values.$pastUpgrades.0.2.0:
+-        "0xd1934807041B168f383870A0d8F565aDe2DF9D7D"
++        "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D"
+      values.impl:
+-        "0xd1934807041B168f383870A0d8F565aDe2DF9D7D"
++        "eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D"
+      values.owner:
+-        "0x9CDf589C941ee81D75F34d3755671d614f7cf261"
++        "eth:0x9CDf589C941ee81D75F34d3755671d614f7cf261"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.resolver:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3:
+-        "ERC1967Proxy"
+      implementationNames.0xd1934807041B168f383870A0d8F565aDe2DF9D7D:
+-        "TaikoDAOController"
+      implementationNames.eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3:
++        "ERC1967Proxy"
+      implementationNames.eth:0xd1934807041B168f383870A0d8F565aDe2DF9D7D:
++        "TaikoDAOController"
+    }
+```
+
+```diff
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      address:
+-        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      implementationNames.0xFF5Adab685362DC4C33536a65aF5873738D1216B:
+-        "SP1Verifier"
+      implementationNames.eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B:
++        "SP1Verifier"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PEMCertChainLib (0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169)
+    +++ description: Library for managing PEM certificate chains.
+```
+
+```diff
++   Status: CREATED
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03)
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a)
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+```
+
+```diff
++   Status: CREATED
+    contract Halborn (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2)
+    +++ description: A signer list for registering agents, similar to a Multisig.
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800)
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+```
+
+```diff
++   Status: CREATED
+    contract Drew Van der Werff (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+```
+
+```diff
++   Status: CREATED
+    contract EncryptionRegistry (0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1)
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Chainbound (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SigVerifyLib (0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9)
+    +++ description: Library for verifying signatures.
+```
+
+```diff
++   Status: CREATED
+    contract Nethermind (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+```
+
+```diff
++   Status: CREATED
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
+    +++ description: Entry contract to verify batches using RISC Zero.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E)
+    +++ description: Defines withdrawal limits per token.
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE)
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+```
+
+```diff
++   Status: CREATED
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab)
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261)
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+```
+
+```diff
++   Status: CREATED
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C)
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72)
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+```
+
+```diff
++   Status: CREATED
+    contract Toni Wahrstätter (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
+```
+
+```diff
++   Status: CREATED
+    contract Aragon (0xb284810536C0dAB6A8e48153B58588A9B9e0F701)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Daniel Wang (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
+    +++ description: Entry contract to verify batches using SP1.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC)
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+```
+
+```diff
++   Status: CREATED
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract L2BEAT (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+Generated with discovered.json: 0x5062afcf00fa337bb7de1292f0f139b61536005a
+
+# Diff at Wed, 09 Jul 2025 16:02:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 22738242
+- current block number: 22882688
+
+## Description
+
+Enclave hashes updated. Safe Multisigs upgraded to newest version.
+
+Taiko Foundation Treasury Multisig 4/6 -> 2/3
+
+## Watched changes
+
+```diff
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.1:
++        "0x692c8624d30a327340b0dfbb67203e941175ac700d1a058c717e5269103d37e6"
+    }
+```
+
+```diff
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$members.2:
+-        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.$members.3:
+-        "0xFa92ff698D57f7B875570D9F59501812B843CD44"
+      values.$members.4:
+-        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$threshold:
+-        4
++        2
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "2 of 3 (67%)"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.14:
++        "0x631778b0d420d2d0bba4c730b0fd74857afeefb3429371ae97ab450e40ca127e"
+      values.mrEnclaves.15:
++        "0x482b06132c4306ea55bc34ff90d46532ff4151f473dbfe4d2cb2442af2ff288b"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Taiko Foundation Treasury Multisig/Safe.sol}   | 685 ++++++++++++---------
+ .../Taiko Multisig/Safe.sol}                       | 685 ++++++++++++---------
+ 2 files changed, 820 insertions(+), 550 deletions(-)
+```
+
 Generated with discovered.json: 0x9d79c226a38e8b7e71e666a00a7718d663d81030
 
 # Diff at Fri, 04 Jul 2025 12:19:25 GMT:

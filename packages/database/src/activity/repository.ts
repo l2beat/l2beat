@@ -1,14 +1,10 @@
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../BaseRepository'
 import { type ActivityRecord, toRecord, toRow } from './entity'
-import { selectActivity } from './select'
 
 export class ActivityRepository extends BaseRepository {
   async getAll(): Promise<ActivityRecord[]> {
-    const rows = await this.db
-      .selectFrom('Activity')
-      .select(selectActivity)
-      .execute()
+    const rows = await this.db.selectFrom('Activity').selectAll().execute()
     return rows.map(toRecord)
   }
 
@@ -61,7 +57,7 @@ export class ActivityRepository extends BaseRepository {
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('Activity')
-      .select(selectActivity)
+      .selectAll()
       .where('projectId', '=', projectId.toString())
 
       .where('timestamp', '<=', UnixTime.toDate(to))
@@ -82,7 +78,7 @@ export class ActivityRepository extends BaseRepository {
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('Activity')
-      .select(selectActivity)
+      .selectAll()
       .where(
         'projectId',
         'in',
@@ -184,7 +180,7 @@ export class ActivityRepository extends BaseRepository {
   ): Promise<ActivityRecord[]> {
     const rows = await this.db
       .selectFrom('Activity')
-      .select(selectActivity)
+      .selectAll()
       .where('projectId', '=', projectId.toString())
       .where('start', '<=', dataPoint)
       .where('end', '>=', dataPoint)
@@ -196,9 +192,10 @@ export class ActivityRepository extends BaseRepository {
   async getDailyCounts(): Promise<ActivityRecord[]> {
     const rows = await this.db
       .selectFrom('Activity')
-      .select(selectActivity)
+      .selectAll()
       .orderBy('timestamp', 'asc')
       .execute()
+
     return rows.map(toRecord)
   }
 
@@ -207,10 +204,11 @@ export class ActivityRepository extends BaseRepository {
   ): Promise<ActivityRecord[]> {
     const rows = await this.db
       .selectFrom('Activity')
-      .select(selectActivity)
+      .selectAll()
       .where('projectId', '=', projectId.toString())
       .orderBy('timestamp', 'asc')
       .execute()
+
     return rows.map(toRecord)
   }
 
@@ -243,7 +241,7 @@ export class ActivityRepository extends BaseRepository {
   async getLatestProcessedBlock(projectId: ProjectId) {
     const latestRecord = await this.db
       .selectFrom('Activity')
-      .select(selectActivity)
+      .selectAll()
       .where('projectId', '=', projectId)
       .orderBy('timestamp', 'desc')
       .executeTakeFirst()

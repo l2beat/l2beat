@@ -1,5 +1,5 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
-import type { ProjectId } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type ProjectId } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type {
@@ -138,11 +138,11 @@ function toTechnologyContract(
     (account) => ({
       name: account.name,
       href: account.url,
-      address: account.address.toString(),
+      address: ChainSpecificAddress.address(account.address).toString(),
       verificationStatus: toVerificationStatus(
         account.isVerified ?? false,
         projectChangeReport?.[permission.chain]?.becameVerified.includes(
-          account.address,
+          ChainSpecificAddress.address(account.address),
         ),
       ),
     }),
@@ -151,7 +151,11 @@ function toTechnologyContract(
   let usedInProjects: UsedInProject[] | undefined
   if (permission.accounts.length === 1) {
     usedInProjects = permission.accounts.flatMap((a) =>
-      contractUtils.getUsedIn(projectParams.id, permission.chain, a.address),
+      contractUtils.getUsedIn(
+        projectParams.id,
+        permission.chain,
+        ChainSpecificAddress.address(a.address),
+      ),
     )
     if (usedInProjects !== undefined) {
       usedInProjects = usedInProjects.map((p) => ({
@@ -169,7 +173,7 @@ function toTechnologyContract(
   const participants = permission.participants?.map((account) => ({
     name: account.name,
     href: account.url,
-    address: account.address,
+    address: ChainSpecificAddress.address(account.address),
   }))
 
   const changes = Object.values(projectChangeReport ?? {}).flat()

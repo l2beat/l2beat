@@ -1,18 +1,18 @@
 import {
   assert,
   Bytes,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ProxyDetails } from '../types'
-
 import { utils } from 'ethers'
 import zip from 'lodash/zip'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 
 // keccak256('settlement_module');
 const _SETTLEMENT_MODULE = Bytes.fromHex(
@@ -49,22 +49,25 @@ export const modules = [
 
 async function getModule(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
   module: Bytes,
-): Promise<EthereumAddress> {
-  const result = await provider.callMethod<EthereumAddress>(
+): Promise<ChainSpecificAddress> {
+  const rawAddress = await provider.callMethod<EthereumAddress>(
     address,
     'function modules(bytes32 _moduleType) external view returns (address _module)',
     [module.toString()],
   )
 
-  return result ?? EthereumAddress.ZERO
+  return ChainSpecificAddress.fromLong(
+    provider.chain,
+    rawAddress ?? EthereumAddress.ZERO,
+  )
 }
 
 async function getPastUpgrades(
   provider: IProvider,
-  address: EthereumAddress,
-  current: Record<string, EthereumAddress>,
+  address: ChainSpecificAddress,
+  current: Record<string, ChainSpecificAddress>,
 ): Promise<DateAddresses[]> {
   const abi = new utils.Interface([
     'event ModuleAddressUpdated(bytes32 type, address previousAddress, address newAddress)',
@@ -85,12 +88,14 @@ async function getPastUpgrades(
     blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
   const modules = Object.keys(current)
-  const addressEvolution: Record<string, EthereumAddress[]> = {}
+  const addressEvolution: Record<string, ChainSpecificAddress[]> = {}
   for (const log of logs.map((l) => abi.parseLog(l))) {
     if (log.name === 'ModuleAddressUpdated') {
       const module = log.args.type
       addressEvolution[module] ??= []
-      addressEvolution[module].push(EthereumAddress(log.args.previousAddress))
+      addressEvolution[module].push(
+        ChainSpecificAddress.fromLong(provider.chain, log.args.previousAddress),
+      )
     }
   }
 
@@ -99,14 +104,17 @@ async function getPastUpgrades(
     addressEvolution[module].push(address)
   }
 
-  let mainAddress: EthereumAddress | undefined
+  let mainAddress: ChainSpecificAddress | undefined
   return logs.map((l) => {
     const parsed = abi.parseLog(l)
 
     if (parsed.name === 'ModuleAddressUpdated') {
       addressEvolution[parsed.args.type]?.shift()
     } else if (parsed.name === 'Upgraded') {
-      mainAddress = parsed.args.implementation
+      mainAddress = ChainSpecificAddress.fromLong(
+        provider.chain,
+        parsed.args.implementation,
+      )
     }
 
     assert(mainAddress !== undefined, 'Unexpected event state')
@@ -132,7 +140,7 @@ async function getPastUpgrades(
 
 export async function getEverclearProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const mainImplementation = await getImplementation(provider, address)
   const moduleImplementations = await Promise.all(
@@ -158,9 +166,12 @@ export async function getEverclearProxy(
   return {
     type: 'Everclear proxy',
     values: {
-      $admin: (admin ?? EthereumAddress.ZERO).toString(),
+      $admin: ChainSpecificAddress.fromLong(
+        provider.chain,
+        admin ?? EthereumAddress.ZERO,
+      ).toString(),
       $implementation: implementations.filter(
-        (i) => i !== EthereumAddress.ZERO,
+        (i) => i !== ChainSpecificAddress.ZERO(provider.chain),
       ),
       $pastUpgrades: pastUpgrades as ContractValue,
       $upgradeCount: pastUpgrades.length,

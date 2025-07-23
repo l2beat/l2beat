@@ -3,8 +3,8 @@ import type { ProjectDetailsSection } from '~/components/projects/sections/types
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { SsrHelpers } from '~/trpc/server'
-import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
+import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { toTechnologyRisk } from '~/utils/project/risk-summary/toTechnologyRisk'
@@ -92,8 +92,7 @@ export async function getRegularDaProjectSections({
       title: 'Technology',
       diagram: getDiagramParams('da-layer-technology', layer.slug),
       content: layer.daLayer.technology.description,
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: layer.daLayer.technology.risks?.map(toTechnologyRisk),
       references: layer.daLayer.technology.references,
     },
@@ -125,8 +124,7 @@ export async function getRegularDaProjectSections({
       content:
         bridge?.daBridge.technology.description ??
         'No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.',
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: bridge?.daBridge.technology.risks?.map(toTechnologyRisk),
       references: bridge?.daBridge.technology.references,
     },
@@ -304,8 +302,7 @@ export async function getEthereumDaProjectSections({
         '\n\n',
         bridge.daBridge.technology.description,
       ),
-      mdClassName:
-        'da-beat text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
+      mdClassName: 'da-beat',
       risks: layer.daLayer.technology.risks?.map(toTechnologyRisk),
       references: layer.daLayer.technology.references?.concat(
         ...(bridge.daBridge.technology.references ?? []),

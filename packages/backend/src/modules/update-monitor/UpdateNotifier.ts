@@ -1,25 +1,24 @@
 import type { Logger } from '@l2beat/backend-tools'
+import { type ProjectScalingStack, ProjectService } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import {
   assert,
   type ChainConverter,
   type ChainId,
   type EthereumAddress,
+  formatAsAsciiTable,
   ProjectId,
   UnixTime,
-  formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-
-import { type ProjectScalingStack, ProjectService } from '@l2beat/config'
-import type { Database } from '@l2beat/database'
 import {
   type Channel,
   type DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
-import type { UpdateMessagesService } from './UpdateMessagesService'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
+import type { UpdateMessagesService } from './UpdateMessagesService'
 import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'

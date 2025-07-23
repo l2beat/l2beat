@@ -1,11 +1,11 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'react'
-import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { MilestoneDrawerContent } from '~/components/core/chart/ChartMilestones'
 import {
   getTickCondition,
   getTickFormatter,
 } from '~/components/core/chart/utils/getXAxisProps'
+import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -42,7 +42,6 @@ export function EcosystemMilestonesAndIncidents({
     UnixTime.DAY
 
   const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-
   return (
     <EcosystemWidget className={className}>
       <div className="grid grid-cols-3 gap-6" ref={sectionRef}>

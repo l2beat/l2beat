@@ -2,12 +2,12 @@
   "name": "brine",
   "chain": "ethereum",
   "blockNumber": 21981345,
-  "configHash": "0x4a30ec1d26db58def464119340226b6402fbc773ba9d54739e22207bbaf63518",
+  "configHash": "0x53d5ad7161a1e05b115544301abd897dbb11a91c79a9ae42276d3673c641fa04",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
       "name": "StarkExchange",
-      "address": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+      "address": "eth:0x1390f521A79BaBE99b69B37154D63D431da27A07",
       "type": "Contract",
       "template": "starkex/StarkExchange",
       "sourceHashes": [
@@ -27,42 +27,42 @@
       "sinceTimestamp": 1657453320,
       "sinceBlock": 15114701,
       "values": {
-        "$admin": "0x303775491494a08b07365938787274F742a81F63",
+        "$admin": "eth:0x303775491494a08b07365938787274F742a81F63",
         "$immutable": false,
         "$implementation": [
-          "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-          "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-          "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-          "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-          "0x613ee54C54D5548627064B4D648942bF3648f376",
-          "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-          "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+          "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+          "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+          "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+          "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+          "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+          "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+          "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
         ],
         "$pastUpgrades": [
           [
             "2022-07-10T11:43:26.000Z",
             "0xbb2c1a2af8cd1610e653c265b6e395bbea1bcea66006673a094a3d7e966a190c",
             [
-              "0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-              "0x4b9b30e6E135d5e39345a03F381D9c704b2Af010",
-              "0x07228f73AA048f67893F4b966D1D09783EdD8764",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xe6785C3AfF4292C9d7c6b039f649672C45CAfFee",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x4b9b30e6E135d5e39345a03F381D9c704b2Af010",
+              "eth:0x07228f73AA048f67893F4b966D1D09783EdD8764",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ],
           [
             "2022-09-01T15:17:55.000Z",
             "0x0ba3606ba4b0ec058a8fe2dfe68bd4f35a321771db1494d350192b5e3025dfb8",
             [
-              "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-              "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-              "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-              "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-              "0x613ee54C54D5548627064B4D648942bF3648f376",
-              "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-              "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+              "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+              "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+              "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+              "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+              "eth:0x613ee54C54D5548627064B4D648942bF3648f376",
+              "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+              "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
             ]
           ]
         ],
@@ -75,10 +75,10 @@
         "getOrderRoot": "1031509786002287148702332147900216116001518272025102076641953394895937127283",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
-          "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"
+          "eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446"
         ],
         "getRegisteredVerifiers": [
-          "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143"
+          "eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143"
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
@@ -86,20 +86,20 @@
         "getUpgradeActivationDelay": 0,
         "getValidiumTreeHeight": 31,
         "getValidiumVaultRoot": "936387733191507873094592096051483170647890439741044782239805417491661168442",
-        "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "implementation": "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
         "isStrictVaultBalancePolicy": false,
         "MAIN_GOVERNANCE_INFO_TAG": "StarkEx.Main.2019.GovernorsInformation",
         "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": 10,
         "MAX_VERIFIER_COUNT": 64,
-        "operators": ["0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25"],
-        "orderRegistryAddress": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+        "operators": ["eth:0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25"],
+        "orderRegistryAddress": "eth:0x806d435a82B0381bD884540c2235147c13B97fe6",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
         "StarkWareDiamond_upgradeDelay": 0,
-        "tokenAdmins": ["0x4a5e124201c38bf7a618388A8185D3f5C8E9133f"],
+        "tokenAdmins": ["eth:0x4a5e124201c38bf7a618388A8185D3f5C8E9133f"],
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
@@ -119,19 +119,19 @@
         }
       },
       "implementationNames": {
-        "0x1390f521A79BaBE99b69B37154D63D431da27A07": "Proxy",
-        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": "StarkExchange",
-        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
-        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": "TokensAndRamping",
-        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
-        "0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
-        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
-        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": "ProxyUtils"
+        "eth:0x1390f521A79BaBE99b69B37154D63D431da27A07": "Proxy",
+        "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": "StarkExchange",
+        "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": "AllVerifiers",
+        "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": "TokensAndRamping",
+        "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D": "StarkExState",
+        "eth:0x613ee54C54D5548627064B4D648942bF3648f376": "ForcedActions",
+        "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": "OnchainVaults",
+        "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": "ProxyUtils"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x303775491494a08b07365938787274F742a81F63",
+      "address": "eth:0x303775491494a08b07365938787274F742a81F63",
       "type": "EOA",
       "proxyType": "EOA",
       "controlsMajorityOfUpgradePermissions": true,
@@ -155,7 +155,7 @@
       ]
     },
     {
-      "address": "0x4a5e124201c38bf7a618388A8185D3f5C8E9133f",
+      "address": "eth:0x4a5e124201c38bf7a618388A8185D3f5C8E9133f",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -169,7 +169,7 @@
     },
     {
       "name": "DACommittee",
-      "address": "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
+      "address": "eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446",
       "type": "Contract",
       "template": "starkex/Committee",
       "sourceHashes": [
@@ -183,10 +183,10 @@
         "$immutable": true,
         "constructorArgs": [
           [
-            "0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1",
-            "0xC37a598468A59D5d6DCeb889847B5824aD61697e",
-            "0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9",
-            "0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00"
+            "eth:0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1",
+            "eth:0xC37a598468A59D5d6DCeb889847B5824aD61697e",
+            "eth:0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9",
+            "eth:0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00"
           ],
           "2"
         ],
@@ -201,37 +201,37 @@
         }
       },
       "implementationNames": {
-        "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446": "FinalizableCommittee"
+        "eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446": "FinalizableCommittee"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1",
+      "address": "eth:0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "GpsFactRegistryAdapter",
-      "address": "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
+      "address": "eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143",
       "type": "Contract",
       "template": "starkex/GpsFactRegistryAdapter",
       "sourceHashes": [
         "0x3c0fff412189244728e9be021e2c7a1084326cc80e71f930221094909caafec0"
       ],
       "proxyType": "immutable",
-      "description": "Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
+      "description": "Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).",
       "sinceTimestamp": 1657453372,
       "sinceBlock": 15114702,
       "values": {
         "$immutable": true,
-        "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+        "gpsContract": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
         "programHash": "16830627573509542901909952446321116535677491650708854009406762893086223513",
         "programHashMapped": "StarkEx Spot v4.5 (Brine, Canvasconnect, Myria, ReddioEX)"
       },
       "implementationNames": {
-        "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143": "GpsFactRegistryAdapter"
+        "eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143": "GpsFactRegistryAdapter"
       },
       "usedTypes": [
         {
@@ -265,7 +265,7 @@
     },
     {
       "name": "OrderRegistry",
-      "address": "0x806d435a82B0381bD884540c2235147c13B97fe6",
+      "address": "eth:0x806d435a82B0381bD884540c2235147c13B97fe6",
       "type": "Contract",
       "template": "starkex/OrderRegistry",
       "sourceHashes": [
@@ -281,16 +281,16 @@
         "identify": "StarkWare_OrderRegistry_2021_1"
       },
       "implementationNames": {
-        "0x806d435a82B0381bD884540c2235147c13B97fe6": "OrderRegistry"
+        "eth:0x806d435a82B0381bD884540c2235147c13B97fe6": "OrderRegistry"
       }
     },
     {
-      "address": "0xC37a598468A59D5d6DCeb889847B5824aD61697e",
+      "address": "eth:0xC37a598468A59D5d6DCeb889847B5824aD61697e",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25",
+      "address": "eth:0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -302,18 +302,18 @@
       ]
     },
     {
-      "address": "0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9",
+      "address": "eth:0xfceC0b967e4390Eb7Cd4f2318c247eD193fE78E9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00",
+      "address": "eth:0xFE4913D959064ee0b026ba0cE3Faccc1c5834a00",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x1390f521A79BaBE99b69B37154D63D431da27A07": [
+    "eth:0x1390f521A79BaBE99b69B37154D63D431da27A07": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
       "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
@@ -339,7 +339,7 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [
+    "eth:0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogDeposit(address depositorEthKey, uint256 starkKey, uint256 vaultId, uint256 assetType, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogDepositCancel(uint256 starkKey, uint256 vaultId, uint256 assetId)",
@@ -421,7 +421,7 @@
       "function withdrawNft(uint256 ownerKey, uint256 assetType, uint256 tokenId)",
       "function withdrawWithTokenId(uint256 ownerKey, uint256 assetType, uint256 tokenId)"
     ],
-    "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446": [
+    "eth:0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446": [
       "constructor(address[] committeeMembers, uint256 numSignaturesRequired)",
       "event NewMemberAdded(address newMember)",
       "event RequiredSignersIncrement(uint256 newRequiredSigners)",
@@ -442,7 +442,7 @@
       "function signaturesRequired() view returns (uint256)",
       "function verifyAvailabilityProof(bytes32 claimHash, bytes availabilityProofs)"
     ],
-    "0x5339AB7557b3152b91A57D10B0Caf5da88Db5143": [
+    "eth:0x5339AB7557b3152b91A57D10B0Caf5da88Db5143": [
       "constructor(address gpsStatementContract, uint256 programHash_)",
       "function gpsContract() view returns (address)",
       "function hasRegisteredFact() view returns (bool)",
@@ -450,7 +450,7 @@
       "function isValid(bytes32 fact) view returns (bool)",
       "function programHash() view returns (uint256)"
     ],
-    "0x613ee54C54D5548627064B4D648942bF3648f376": [
+    "eth:0x613ee54C54D5548627064B4D648942bF3648f376": [
       "event LogFrozen()",
       "event LogFullWithdrawalRequest(uint256 ownerKey, uint256 vaultId)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -497,7 +497,7 @@
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0x67e198743BC19fa4757720eDd0e769f8291e1F1D": [
+    "eth:0x67e198743BC19fa4757720eDd0e769f8291e1F1D": [
       "event LogAssetWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
       "event LogFrozen()",
       "event LogMintableWithdrawalAllowed(uint256 ownerKey, uint256 assetId, uint256 quantizedAmount)",
@@ -553,7 +553,7 @@
       "function updateState(uint256[] publicInput, uint256[] applicationData)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0x806d435a82B0381bD884540c2235147c13B97fe6": [
+    "eth:0x806d435a82B0381bD884540c2235147c13B97fe6": [
       "event LogL1LimitOrderRegistered(address userAddress, address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "event LogMsgRegistered(address from, address to, bytes32 msgHash)",
       "function calcL1LimitOrderHash(uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp) pure returns (bytes32)",
@@ -564,7 +564,7 @@
       "function registerLimitOrder(address exchangeAddress, uint256 tokenIdSell, uint256 tokenIdBuy, uint256 tokenIdFee, uint256 amountSell, uint256 amountBuy, uint256 amountFee, uint256 vaultIdSell, uint256 vaultIdBuy, uint256 vaultIdFee, uint256 nonce, uint256 expirationTimestamp)",
       "function registerMessage(address to, bytes32 messageHash)"
     ],
-    "0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
+    "eth:0xb2ED005D0278179001a49a9969BB22BA8e98f31F": [
       "event LogDefaultVaultWithdrawalLockSet(uint256 newDefaultLockTime)",
       "event LogDepositToVault(address ethKey, uint256 assetType, uint256 assetId, uint256 vaultId, uint256 nonQuantizedAmount, uint256 quantizedAmount)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
@@ -610,7 +610,7 @@
       "function withdrawErc1155FromVault(uint256 assetType, uint256 tokenId, uint256 vaultId, uint256 quantizedAmount)",
       "function withdrawFromVault(uint256 assetType, uint256 vaultId, uint256 quantizedAmount)"
     ],
-    "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": [
+    "eth:0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db": [
       "event ImplementationActivationRescheduled(address indexed implementation, uint256 updatedActivationTime)",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -629,13 +629,13 @@
       "function updateImplementationActivationTime(address implementation, bytes data, bool finalize)",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ],
-    "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": [
+    "eth:0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583": [
       "function VERSION() view returns (string)",
       "function getSubContract(bytes4 selector) view returns (address)",
       "function handlingContractId(bytes4 selector) pure returns (string id)",
       "function initialize(bytes data)"
     ],
-    "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
+    "eth:0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12": [
       "event LogFrozen()",
       "event LogNewGovernorAccepted(address acceptedGovernor)",
       "event LogNominatedGovernor(address nominatedGovernor)",
@@ -681,5 +681,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "permissionsConfigHash": "0x7e2fc9806a6eba223fd59a4ad0aa927d417c86bb7285c672b17a56c770ed70a7"
+  "permissionsConfigHash": "0x27fd945cb08cfc080b094831ae56513a438ddcf47417ebaf1b55af8938372fc7"
 }

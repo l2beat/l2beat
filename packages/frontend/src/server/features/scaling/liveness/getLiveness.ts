@@ -82,7 +82,7 @@ async function getLivenessData(projectId?: ProjectId) {
       projectId ? [projectId] : projectIds,
       last30Days,
     ),
-    db.realTimeAnomalies.getApprovedAndRecoveredAnomaliesByProjectIds(
+    db.realTimeAnomalies.getApprovedAnomaliesByProjectIds(
       projectId ? [projectId] : projectIds,
     ),
   ])
@@ -231,10 +231,14 @@ function getAnomalies(
   }
 
   const filteredAnomalies = anomalies.filter((a) => {
-    const record = realTimeAnomalies.find((r) => r.start === a.timestamp)
-    const alreadyExists =
-      record?.subtype === a.subtype && record.projectId === a.projectId
-    return !alreadyExists
+    const record = realTimeAnomalies.find(
+      (r) =>
+        r.start === a.timestamp &&
+        r.subtype === a.subtype &&
+        r.projectId === a.projectId,
+    )
+
+    return !record
   })
 
   return [
@@ -249,6 +253,7 @@ function getAnomalies(
         end: a.timestamp + a.duration,
         subtype: a.subtype,
         avgInterval,
+        isApproved: false,
       }
     }),
     ...realTimeAnomalies.map((a) => {
@@ -263,6 +268,7 @@ function getAnomalies(
         durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
         subtype: a.subtype,
         avgInterval,
+        isApproved: true,
       }
     }),
   ].sort(sortAnomalies)
@@ -396,6 +402,7 @@ function generateAnomalies(): LivenessAnomaly[] {
           end: isOngoing ? undefined : end,
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
           avgInterval: generateRandomTime(),
+          isApproved: isOngoing,
         } as const
       })
     : []

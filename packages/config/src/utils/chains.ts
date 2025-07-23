@@ -1,3 +1,5 @@
+import { getChainShortName } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { Bridge, ScalingProject } from '../internalTypes'
 import type { BaseProject, ProjectContract } from '../types'
 
@@ -19,7 +21,15 @@ function getProjectDevIds(
         if (!escrow.contract) {
           return []
         }
-        return [{ address: escrow.address, ...escrow.contract }]
+        return [
+          {
+            address: ChainSpecificAddress.from(
+              getChainShortName(escrow.chain),
+              escrow.address,
+            ),
+            ...escrow.contract,
+          },
+        ]
       },
     )
   }

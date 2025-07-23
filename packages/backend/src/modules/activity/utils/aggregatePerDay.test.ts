@@ -42,8 +42,8 @@ export function activityRecord(
   timestamp: UnixTime,
   count: number,
   uopsCount: number | null,
-  start: number = 0,
-  end: number = 10,
+  start = 0,
+  end = 10,
 ) {
   return {
     projectId: ProjectId(projectId),

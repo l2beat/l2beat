@@ -2,14 +2,10 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "hemi",
   "import": ["../globalConfig.jsonc"],
-  "chains": {
-    "ethereum": {
-      "initialAddresses": [
-        "0xA5F37791378c55941a52B4dCb70Be4D8D09f5e43", // AddressManager
-        "0xF005dFb08377faD44588Af68d0884D272A6fb050", // L1CrossDomainMessenger
-        "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e", // L1StandardBridge
-        "0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e" // OptimismPortal
-      ]
-    }
-  }
+  "initialAddresses": [
+    "eth:0xA5F37791378c55941a52B4dCb70Be4D8D09f5e43", // AddressManager
+    "eth:0xF005dFb08377faD44588Af68d0884D272A6fb050", // L1CrossDomainMessenger
+    "eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e", // L1StandardBridge
+    "eth:0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e" // OptimismPortal
+  ]
 }

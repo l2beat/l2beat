@@ -1,7 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
 import zip from 'lodash/zip'
-import type { DiscoveryCustomType } from '../discovery/output/types'
-import type { ContractValue } from '../discovery/output/types'
+import type {
+  ContractValue,
+  DiscoveryCustomType,
+} from '../discovery/output/types'
 import {
   getCustomTypeCaster,
   isCustomTypeCaster,
@@ -42,17 +44,15 @@ export class BlipRuntime {
         const [x, ...xs] = blip.slice(1).map((b) => this.executeBlip(v, b))
         if (xs.length === 0) {
           return x === v
-        } else {
-          return xs.every((e) => x === e)
         }
+        return xs.every((e) => x === e)
       }
       case '!=': {
         const [x, ...xs] = blip.slice(1).map((b) => this.executeBlip(v, b))
         if (xs.length === 0) {
           return x !== v
-        } else {
-          return xs.some((e) => x !== e)
         }
+        return xs.some((e) => x !== e)
       }
       case 'and': {
         const [x, ...xs] = blip.slice(1).map((b) => this.executeBlip(v, b))
@@ -228,11 +228,11 @@ export class BlipRuntime {
         result = input[key]
       }
 
-      assert(result !== undefined, `Key not found in object`)
+      assert(result !== undefined, 'Key not found in object')
       input = result
     }
 
-    assert(result !== undefined, `Key not found in object`)
+    assert(result !== undefined, 'Key not found in object')
     return result
   }
 

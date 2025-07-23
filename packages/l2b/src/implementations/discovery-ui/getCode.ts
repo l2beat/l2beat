@@ -1,15 +1,14 @@
-import { existsSync, readFileSync, readdirSync } from 'fs'
-import { join } from 'path'
-import { isDeepStrictEqual } from 'util'
 import {
   type ConfigReader,
-  type DiscoveryPaths,
   combineImplementationHashes,
+  type DiscoveryPaths,
   flatteningHash,
   get$Implementations,
-  getChainFullName,
-  getChainShortName,
 } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { existsSync, readdirSync, readFileSync } from 'fs'
+import { join } from 'path'
+import { isDeepStrictEqual } from 'util'
 import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
@@ -43,16 +42,21 @@ interface CodePathResult {
 function isFlatCodeCurrent(
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
   codePaths: CodePathResult['codePaths'],
 ): boolean {
-  const [chainShortName, simpleAddress] = address.split(':')
-  const chain = getChainFullName(chainShortName)
+  const chain = ChainSpecificAddress.longChain(address)
 
+  const discovery = configReader.readDiscovery(project, chain)
+  const discoveries = [
+    discovery,
+    ...(discovery.sharedModules ?? []).map((module) =>
+      configReader.readDiscovery(module, chain),
+    ),
+  ]
   const discoHashes =
-    configReader
-      .readDiscovery(project, chain)
-      .entries.find((e) => e.address === simpleAddress)?.sourceHashes ?? []
+    discoveries.flatMap((d) => d.entries).find((e) => e.address === address)
+      ?.sourceHashes ?? []
 
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
@@ -72,8 +76,8 @@ export function getCode(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
-  address: string,
-  checkFlatCode: boolean = false,
+  address: ChainSpecificAddress,
+  checkFlatCode = false,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(
     paths,
@@ -111,14 +115,10 @@ export function getAllCode(
   const allAddresses = discoveries.flatMap((discovery) =>
     discovery.entries
       .filter((e) => e.type === 'Contract')
-      .map((entry) => ({
-        chain: getChainShortName(discovery.chain),
-        address: entry.address,
-      })),
+      .map((entry) => entry.address),
   )
 
-  for (const { chain, address } of allAddresses) {
-    const fullAddress = `${chain}:${address}`
+  for (const fullAddress of allAddresses) {
     try {
       const { entryName, codePaths } = getCodePaths(
         paths,
@@ -152,14 +152,13 @@ export function getCodePaths(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
 ): CodePathResult {
-  const [chainShortName, simpleAddress] = address.split(':')
-  const chain = getChainFullName(chainShortName)
+  const chain = ChainSpecificAddress.longChain(address)
   const discoveries = getProjectDiscoveries(configReader, project, chain)
 
   for (const discovery of discoveries) {
-    const entry = discovery.entries.find((x) => x.address === simpleAddress)
+    const entry = discovery.entries.find((x) => x.address === address)
     if (!entry) {
       continue
     }
@@ -178,18 +177,17 @@ export function getCodePaths(
           { name: `${entry.name}.sol`, path: join(root, name + '.sol') },
         ],
       }
-    } else {
-      const dir = readdirSync(join(root, name))
-      const codePaths = dir
-        .map((file) => ({
-          name: file,
-          path: join(root, name, file),
-        }))
-        .sort((a, b) => compareFiles(a.name, b.name))
-      return {
-        entryName: entry.name,
-        codePaths,
-      }
+    }
+    const dir = readdirSync(join(root, name))
+    const codePaths = dir
+      .map((file) => ({
+        name: file,
+        path: join(root, name, file),
+      }))
+      .sort((a, b) => compareFiles(a.name, b.name))
+    return {
+      entryName: entry.name,
+      codePaths,
     }
   }
 
@@ -208,5 +206,5 @@ function fileNameToOrder(name: string) {
   if (ending === 'p') {
     return 0
   }
-  return /^\d+$/.test(ending) ? parseInt(ending) : 2
+  return /^\d+$/.test(ending) ? Number.parseInt(ending) : 2
 }

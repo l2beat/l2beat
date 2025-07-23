@@ -1,0 +1,25 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "shared-sp1",
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+    "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+    "oeth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+    "scr:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+  ],
+  "names": {
+    "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "arb1:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
+    "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "base:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
+    "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "eth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
+    "oeth:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "oeth:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig",
+    "scr:0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway",
+    "scr:0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "SP1VerifierGatewayMultisig"
+  },
+  "overrides": {}
+}

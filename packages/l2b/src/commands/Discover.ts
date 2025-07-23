@@ -1,19 +1,23 @@
+import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   DiscoverCommandArgs,
   type DiscoveryModuleConfig,
   getChainConfig,
+  getChainFullName,
+  getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
 // specify "all" as the chain namas the chain name.
-const { project, chain, ...remainingArgs } = DiscoverCommandArgs
+const { project: _, chain: __, ...remainingArgs } = DiscoverCommandArgs
 const args = {
   ...remainingArgs,
   chainQuery: positional({
@@ -43,12 +47,13 @@ export const Discover = command({
   description: 'User interface to discover projects located in discovery.',
   args,
   handler: async (args) => {
+    const logger = getPlainLogger()
     const projectsOnChain: Record<string, string[]> = resolveProjectsOnChain(
       args.projectQuery,
       args.chainQuery,
     )
 
-    logProjectsToDiscover(projectsOnChain)
+    logProjectsToDiscover(projectsOnChain, logger)
 
     for (const chainName in projectsOnChain) {
       const chain = getChainConfig(chainName)
@@ -59,23 +64,29 @@ export const Discover = command({
           chain,
         }
 
-        await discoverAndUpdateDiffHistory(config, args.message)
+        await discoverAndUpdateDiffHistory(config, {
+          logger,
+          description: args.message,
+        })
       }
     }
   },
 })
 
-function logProjectsToDiscover(projectsOnChain: Record<string, string[]>) {
+function logProjectsToDiscover(
+  projectsOnChain: Record<string, string[]>,
+  logger: Logger,
+) {
   if (Object.keys(projectsOnChain).length === 0) {
-    console.log(chalk.greenBright('Nothing to discover'))
+    logger.info(chalk.greenBright('Nothing to discover'))
     return
   }
 
-  console.log('Will discover')
+  logger.info('Will discover')
   for (const chainName in projectsOnChain) {
-    console.log(chalk.blue(chainName))
+    logger.info(chalk.blue(chainName))
     for (const project of projectsOnChain[chainName]) {
-      console.log(`  - ${chalk.yellowBright(project)}`)
+      logger.info(`  - ${chalk.yellowBright(project)}`)
     }
   }
 }
@@ -94,9 +105,13 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
         ? chains
         : chains.filter((chain) => chain === chainQuery)
 
-    const matchingChains = chainsToCheck.filter((chain) =>
-      predicate(projectQuery, project, chain),
-    )
+    const matchingChains = chainsToCheck.filter((chain) => {
+      const query = EthereumAddress.check(projectQuery)
+        ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
+        : projectQuery
+
+      return predicate(query, project)
+    })
 
     for (const chain of matchingChains) {
       if (!result[chain]) {
@@ -109,16 +124,11 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
   return result
 }
 
-type Predicate = (
-  needle: string,
-  haystackProject: string,
-  haystackChain: string,
-) => boolean
+type Predicate = (needle: string, haystackProject: string) => boolean
 
 function projectPredicate(
   needleProject: string,
   haystackProject: string,
-  _: string,
 ): boolean {
   return needleProject === haystackProject
 }
@@ -126,11 +136,10 @@ function projectPredicate(
 function addressPredicate(
   needleAddress: string,
   haystackProject: string,
-  haystackChain: string,
 ): boolean {
-  const discovery = configReader.readDiscovery(haystackProject, haystackChain)
+  const address = ChainSpecificAddress(needleAddress)
+  const chain = getChainFullName(ChainSpecificAddress.chain(address))
+  const discovery = configReader.readDiscovery(haystackProject, chain)
 
-  return (
-    discovery.entries.find((c) => c.address === needleAddress) !== undefined
-  )
+  return discovery.entries.find((c) => c.address === address) !== undefined
 }

@@ -1,8 +1,7 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import type { ContractValue } from '../output/types'
-
+import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { codeIsEIP7702, codeIsEOA } from '../analysis/codeIsEOA'
 import type { ManualProxyType } from '../config/StructureConfig'
+import type { ContractValue } from '../output/types'
 import type { ContractDeployment, IProvider } from '../provider/IProvider'
 import { get$Implementations } from '../utils/extractors'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
@@ -21,6 +20,7 @@ import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
 import { getEverclearProxy } from './manual/EverclearProxy'
+import { getImmutableProxy } from './manual/immutableProxy'
 import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
@@ -28,12 +28,11 @@ import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
-import { getImmutableProxy } from './manual/immutableProxy'
 import type { ProxyDetails, ProxyResult } from './types'
 
 type Detector = (
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ) => Promise<ProxyDetails | undefined>
 
 const DEFAULT_AUTO_DETECTORS: Detector[] = [
@@ -75,7 +74,7 @@ export class ProxyDetector {
 
   async detectProxy(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyResult> {
     const eoaProxy = await this.getEOAProxy(provider, address)
@@ -94,13 +93,16 @@ export class ProxyDetector {
 
   async getEOAProxy(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<ProxyDetails | undefined> {
     const code = await provider.getBytecode(address)
     const isEOA = codeIsEOA(code)
     if (isEOA) {
       if (codeIsEIP7702(code)) {
-        const implementation = EthereumAddress(code.slice(3, 23).toString())
+        const implementation = ChainSpecificAddress.fromLong(
+          provider.chain,
+          code.slice(3, 23).toString(),
+        )
 
         return {
           type: 'EIP7702 EOA',
@@ -108,15 +110,14 @@ export class ProxyDetector {
             $implementation: implementation.toString(),
           },
         }
-      } else {
-        return { type: 'EOA', values: {} }
       }
+      return { type: 'EOA', values: {} }
     }
   }
 
   async getAutoProxy(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<ProxyDetails | undefined> {
     const checks = await Promise.all(
       this.autoDetectors.map((detect) => detect(provider, address)),
@@ -128,7 +129,7 @@ export class ProxyDetector {
 
   async getManualProxy(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     manualProxyType: ManualProxyType,
   ): Promise<ProxyDetails> {
     const detector = this.manualDetectors[manualProxyType]
@@ -141,7 +142,7 @@ export class ProxyDetector {
 
   private async processProxyDetails(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     proxy: ProxyDetails | undefined,
     isEOA: boolean,
   ): Promise<ProxyResult> {

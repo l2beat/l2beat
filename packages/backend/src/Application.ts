@@ -1,14 +1,12 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
-
 import { createDatabase } from '@l2beat/database'
+import { HttpClient } from '@l2beat/shared'
 import { ApiServer } from './api/ApiServer'
 import type { Config } from './config'
 import type { ApplicationModule } from './modules/ApplicationModule'
 import { initActivityModule } from './modules/activity/ActivityModule'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { initDataAvailabilityModule } from './modules/data-availability/DataAvailabilityModule'
-import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createSharedModule } from './modules/shared/SharedModule'
@@ -72,13 +70,6 @@ export class Application {
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createFlatSourcesModule(config, logger, peripherals),
       trackedTxsModule,
-      createFinalityModule(
-        config,
-        logger,
-        database,
-        providers,
-        trackedTxsModule?.indexer,
-      ),
       initTvsModule(config, logger, database, providers, clock),
       createVerifiersModule(config, logger, peripherals, clock),
       createDaBeatModule(config, logger, peripherals, providers, clock),

@@ -1,3 +1,521 @@
+Generated with discovered.json: 0x250f60307b028aca6b853c3fae17ab02ffbbe9e7
+
+# Diff at Mon, 14 Jul 2025 12:47:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22438006
+- current block number: 22438006
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438006 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695) {
+    +++ description: None
+      address:
+-        "0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
++        "eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
++        "eth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
+      implementationNames.0x0897316DFE7141DB1E182551c3e8077cf5dd9695:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744) {
+    +++ description: None
+      address:
+-        "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
++        "eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
++        "eth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
+      implementationNames.0x140C0227Cbe493A56868DDF4ea582E92ef3e9744:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7) {
+    +++ description: None
+      address:
+-        "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
++        "eth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+    }
+```
+
+```diff
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986) {
+    +++ description: None
+      address:
+-        "0x39CcB3b670651a14da8b3835f42924f49C2C5986"
++        "eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986"
+      values.initialVerifiers.0:
+-        "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1"
++        "eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1"
+      values.initialVerifiers.1:
+-        "0x43B68ccBa7FC726540768fD1537c3179283140ed"
++        "eth:0x43B68ccBa7FC726540768fD1537c3179283140ed"
+      values.owner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x39CcB3b670651a14da8b3835f42924f49C2C5986:
+-        "VerifierLookupTable"
+      implementationNames.eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986:
++        "VerifierLookupTable"
+    }
+```
+
+```diff
+    EOA  (0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be) {
+    +++ description: None
+      address:
+-        "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
++        "eth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
+    }
+```
+
+```diff
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49) {
+    +++ description: None
+      address:
+-        "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49"
++        "eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49"
+      values.additionalVerifiers.0:
+-        "0xFC1c26E964F791f81a33F49D91f79456891AA1c1"
++        "eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1"
+      values.additionalVerifiers.1:
+-        "0xE44c83b9e1971A24EC698829297A0C4026B0CeF9"
++        "eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9"
+      values.initialVerifiers.1:
+-        "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258"
++        "eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258"
+      values.owner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49:
+-        "VerifierLookupTable"
+      implementationNames.eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49:
++        "VerifierLookupTable"
+    }
+```
+
+```diff
+    contract DeleteVerifierSize100 (0x43B68ccBa7FC726540768fD1537c3179283140ed) {
+    +++ description: None
+      address:
+-        "0x43B68ccBa7FC726540768fD1537c3179283140ed"
++        "eth:0x43B68ccBa7FC726540768fD1537c3179283140ed"
+      implementationNames.0x43B68ccBa7FC726540768fD1537c3179283140ed:
+-        "Verifier"
+      implementationNames.eth:0x43B68ccBa7FC726540768fD1537c3179283140ed:
++        "Verifier"
+    }
+```
+
+```diff
+    EOA  (0x541f3cc5772a64f2ba0a47e83236CcE2F089b188) {
+    +++ description: None
+      address:
+-        "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
++        "eth:0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
+    }
+```
+
+```diff
+    EOA  (0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04) {
+    +++ description: None
+      address:
+-        "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
++        "eth:0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6) {
+    +++ description: None
+      address:
+-        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
++        "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xB6d1621B770A088C16bfec22bAd00F77D874d011"
++        "eth:0xB6d1621B770A088C16bfec22bAd00F77D874d011"
+      values.$members.1:
+-        "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
++        "eth:0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+      implementationNames.0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421) {
+    +++ description: None
+      address:
+-        "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
++        "eth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+    }
+```
+
+```diff
+    EOA  (0x79b998ded1f4503CE3A0A76993c72a65449f4590) {
+    +++ description: None
+      address:
+-        "0x79b998ded1f4503CE3A0A76993c72a65449f4590"
++        "eth:0x79b998ded1f4503CE3A0A76993c72a65449f4590"
+    }
+```
+
+```diff
+    contract RegisterVerifierSize100 (0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258) {
+    +++ description: None
+      address:
+-        "0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258"
++        "eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258"
+      implementationNames.0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258:
+-        "Verifier"
+      implementationNames.eth:0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258:
++        "Verifier"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26) {
+    +++ description: None
+      address:
+-        "0xb67ac19693fB89880Ca5873f6a890E865b259c26"
++        "eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x79b998ded1f4503CE3A0A76993c72a65449f4590"
++        "eth:0x79b998ded1f4503CE3A0A76993c72a65449f4590"
+      values.$members.1:
+-        "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
++        "eth:0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+      implementationNames.0xb67ac19693fB89880Ca5873f6a890E865b259c26:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xB6d1621B770A088C16bfec22bAd00F77D874d011) {
+    +++ description: None
+      address:
+-        "0xB6d1621B770A088C16bfec22bAd00F77D874d011"
++        "eth:0xB6d1621B770A088C16bfec22bAd00F77D874d011"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      address:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
++        "eth:0x0897316DFE7141DB1E182551c3e8077cf5dd9695"
+      values.$members.1:
+-        "0xb67ac19693fB89880Ca5873f6a890E865b259c26"
++        "eth:0xb67ac19693fB89880Ca5873f6a890E865b259c26"
+      values.$members.2:
+-        "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
++        "eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
+      values.$members.3:
+-        "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
++        "eth:0x140C0227Cbe493A56868DDF4ea582E92ef3e9744"
+      values.$members.4:
+-        "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
++        "eth:0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
+      implementationNames.0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract DeleteVerifierSize10 (0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1) {
+    +++ description: None
+      address:
+-        "0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1"
++        "eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1"
+      implementationNames.0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1:
+-        "Verifier"
+      implementationNames.eth:0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1:
++        "Verifier"
+    }
+```
+
+```diff
+    contract SemaphoreVerifier (0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5) {
+    +++ description: None
+      address:
+-        "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5"
++        "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5"
+      implementationNames.0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5:
+-        "SemaphoreVerifier"
+      implementationNames.eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5:
++        "SemaphoreVerifier"
+    }
+```
+
+```diff
+    EOA  (0xE2DA046340e00264C4F0443243a0565007AE08AC) {
+    +++ description: None
+      address:
+-        "0xE2DA046340e00264C4F0443243a0565007AE08AC"
++        "eth:0xE2DA046340e00264C4F0443243a0565007AE08AC"
+    }
+```
+
+```diff
+    contract RegisterVerifierSize1200 (0xE44c83b9e1971A24EC698829297A0C4026B0CeF9) {
+    +++ description: None
+      address:
+-        "0xE44c83b9e1971A24EC698829297A0C4026B0CeF9"
++        "eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9"
+      implementationNames.0xE44c83b9e1971A24EC698829297A0C4026B0CeF9:
+-        "Verifier"
+      implementationNames.eth:0xE44c83b9e1971A24EC698829297A0C4026B0CeF9:
++        "Verifier"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c) {
+    +++ description: None
+      address:
+-        "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
++        "eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
++        "eth:0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
+      implementationNames.0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa) {
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+      address:
+-        "0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
++        "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
+      values.$admin:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.$implementation:
+-        "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"
++        "eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"
+      values.$pastUpgrades.0.2.0:
+-        "0xa3cD15EBed6075E33a54483C59818bC43D57c556"
++        "eth:0xa3cD15EBed6075E33a54483C59818bC43D57c556"
+      values.$pastUpgrades.1.2.0:
+-        "0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"
++        "eth:0x2Ad412A1dF96434Eed0779D2dB4A8694a06132f8"
+      values.$pastUpgrades.2.2.0:
+-        "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"
++        "eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"
+      values.getDeleteIdentitiesVerifierLookupTableAddress:
+-        "0x39CcB3b670651a14da8b3835f42924f49C2C5986"
++        "eth:0x39CcB3b670651a14da8b3835f42924f49C2C5986"
+      values.getRegisterIdentitiesVerifierLookupTableAddress:
+-        "0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49"
++        "eth:0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49"
+      values.getSemaphoreVerifierAddress:
+-        "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5"
++        "eth:0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5"
++++ description: Can call functions (manage identities) in the WorldIdIdentityManager2 implementation
+      values.identityOperator:
+-        "0xE2DA046340e00264C4F0443243a0565007AE08AC"
++        "eth:0xE2DA046340e00264C4F0443243a0565007AE08AC"
+      values.owner:
+-        "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
++        "eth:0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      implementationNames.0xf7134CE138832c1456F2a91D64621eE90c2bddEa:
+-        "WorldIDIdentityManager"
+      implementationNames.0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd:
+-        "WorldIDIdentityManagerImplV2"
+      implementationNames.eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa:
++        "WorldIDIdentityManager"
+      implementationNames.eth:0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd:
++        "WorldIDIdentityManagerImplV2"
+    }
+```
+
+```diff
+    contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1) {
+    +++ description: None
+      address:
+-        "0xFC1c26E964F791f81a33F49D91f79456891AA1c1"
++        "eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1"
+      implementationNames.0xFC1c26E964F791f81a33F49D91f79456891AA1c1:
+-        "Verifier"
+      implementationNames.eth:0xFC1c26E964F791f81a33F49D91f79456891AA1c1:
++        "Verifier"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeleteVerifierSize100 (0x43B68ccBa7FC726540768fD1537c3179283140ed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterVerifierSize100 (0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeleteVerifierSize10 (0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterVerifierSize1200 (0xE44c83b9e1971A24EC698829297A0C4026B0CeF9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa)
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+```
+
+```diff
++   Status: CREATED
+    contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x530040c0e8239d66d75d114ba3de6d05219ba306
 
 # Diff at Fri, 04 Jul 2025 12:19:28 GMT:

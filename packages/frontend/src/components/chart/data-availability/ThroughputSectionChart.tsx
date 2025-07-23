@@ -9,7 +9,7 @@ import { ThroughputSectionByProjectChart } from './ThroughputSectionByProjectCha
 interface Props {
   daLayer: ProjectId
   configuredThroughputs: DaLayerThroughput[]
-  customColors: Record<string, string>
+  customColors: Record<string, string> | undefined
   milestones: Milestone[]
 }
 

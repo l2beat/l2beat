@@ -1,12 +1,13 @@
-import type { Server } from 'http'
-import path, { join } from 'path'
 import {
   ConfigReader,
-  TemplateService,
   getDiscoveryPaths,
+  TemplateService,
 } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import express from 'express'
+import type { Server } from 'http'
+import path, { join } from 'path'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
@@ -27,12 +28,7 @@ const safeStringSchema = z
     'Input cannot be empty and must be alphanumeric and can contain underscores or hyphens.',
   )
 
-const ethereumAddressSchema = z
-  .string()
-  .check(
-    (v) => /^[\w\d]+:0x[a-fA-F0-9]{40}$/.test(v),
-    'Invalid address format. Must be chainId:0x...',
-  )
+const ethereumAddressSchema = z.string().transform(ChainSpecificAddress)
 
 const projectParamsSchema = z.object({
   project: safeStringSchema,
@@ -46,7 +42,7 @@ const projectAddressParamsSchema = z.object({
 const projectSearchTermParamsSchema = z.object({
   project: safeStringSchema,
   searchTerm: z.string(),
-  address: z.string().optional(),
+  address: ethereumAddressSchema.optional(),
 })
 
 const discoverQuerySchema = z.object({

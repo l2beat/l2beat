@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
@@ -22,5 +22,8 @@ export const pay: ScalingProject = upcomingL2({
       explorers: [],
       socialMedia: ['https://x.com/wirexpaychain'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
   },
 })

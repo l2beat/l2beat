@@ -13,15 +13,13 @@ import type {
   ProjectActivityConfig,
   ProjectBridgeRisks,
   ProjectBridgeTechnology,
-  ProjectColors,
   ProjectContracts,
+  ProjectCustomColors,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectFinalityConfig,
-  ProjectFinalityInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -49,7 +47,9 @@ export interface ScalingProject {
   id: ProjectId
   /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
-  /** Is the project univeral or app specific (e.g. DEX) */
+  /** Does the project have a testnet? */
+  hasTestnet?: boolean
+  /** Is the project universal or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
@@ -60,7 +60,7 @@ export interface ScalingProject {
   /** What is the review status of this project? */
   reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
-  colors?: ProjectColors
+  colors?: ProjectCustomColors
   /** Information displayed about the project on the frontend */
   display: ProjectScalingDisplay
   /** Information required to calculate the stats of the project */
@@ -116,8 +116,6 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
-  /** Configuration for getting finality data */
-  finality?: ProjectFinalityConfig
 }
 
 export interface ProjectScalingDisplay {
@@ -159,7 +157,6 @@ export interface ProjectScalingDisplay {
   sequencingImage?: string
   /** Tooltip contents for liveness tab for given project */
   liveness?: ProjectLivenessInfo
-  finality?: ProjectFinalityInfo
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }
@@ -249,6 +246,7 @@ export interface Bridge {
   isUpcoming?: boolean
   reviewStatus?: ProjectReviewStatus
   display: BridgeDisplay
+  colors?: ProjectCustomColors
   config: BridgeConfig
   chainConfig?: ChainConfig
   riskView: ProjectBridgeRisks

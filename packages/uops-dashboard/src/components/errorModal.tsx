@@ -1,7 +1,10 @@
 export function ErrorModal({
   errorMessage,
   onClose,
-}: { errorMessage: string; onClose: () => void }) {
+}: {
+  errorMessage: string
+  onClose: () => void
+}) {
   return (
     <div
       id="popup-modal"

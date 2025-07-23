@@ -1,25 +1,29 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { UPCOMING_RISK_VIEW } from '../common'
 import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
-import type { Badge, ChainConfig, ProjectScalingCapability } from '../types'
+import type {
+  Badge,
+  ChainConfig,
+  ProjectEcosystemInfo,
+  ProjectScalingCapability,
+} from '../types'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
 
-export interface UpcomingConfigL2 {
+interface UpcomingConfigCommon {
   id: string
   addedAt: UnixTime
+  hasTestnet?: boolean
   display: ProjectScalingDisplay
   capability: ProjectScalingCapability
   badges?: Badge[]
+  ecosystemInfo?: ProjectEcosystemInfo
+}
+export interface UpcomingConfigL2 extends UpcomingConfigCommon {
   chainConfig?: ChainConfig
 }
 
-export interface UpcomingConfigL3 {
-  id: string
-  addedAt: UnixTime
-  display: ProjectScalingDisplay
-  capability: ProjectScalingCapability
+export interface UpcomingConfigL3 extends UpcomingConfigCommon {
   hostChain: ScalingProject['hostChain']
-  badges?: Badge[]
 }
 
 export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
@@ -29,6 +33,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability,
+    hasTestnet: templateVars.hasTestnet,
     display: templateVars.display,
     stage: {
       stage: 'NotApplicable',
@@ -40,6 +45,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     riskView: UPCOMING_RISK_VIEW,
     badges: templateVars.badges,
     discoveryInfo: getDiscoveryInfo([]),
+    ecosystemInfo: templateVars.ecosystemInfo,
   }
 }
 
@@ -49,6 +55,7 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
     type: 'layer3',
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
+    hasTestnet: templateVars.hasTestnet,
     capability: templateVars.capability,
     display: {
       ...templateVars.display,
@@ -62,5 +69,6 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
     stackedRiskView: UPCOMING_RISK_VIEW,
     badges: templateVars.badges,
     discoveryInfo: getDiscoveryInfo([]),
+    ecosystemInfo: templateVars.ecosystemInfo,
   }
 }

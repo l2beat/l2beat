@@ -2,15 +2,11 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "pepeunchained",
   "import": ["../globalConfig.jsonc"],
-  "chains": {
-    "ethereum": {
-      "initialAddresses": ["0x384e3ae4d5efc9471201039b555eae496b2a7240"],
-      "names": {},
-      "overrides": {
-        "0x4e0371A2fCCf4CCC68217134bADa77914b50B7DD": {
-          "ignoreDiscovery": true
-        }
-      }
+  "initialAddresses": ["eth:0x384e3AE4D5efC9471201039b555EAe496b2A7240"],
+  "names": {},
+  "overrides": {
+    "eth:0x4e0371A2fCCf4CCC68217134bADa77914b50B7DD": {
+      "ignoreDiscovery": true
     }
   }
 }

@@ -1,19 +1,19 @@
-import path from 'path'
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { providers } from 'ethers'
+import path from 'path'
 import type {
   DiscoveryChainConfig,
   DiscoveryModuleConfig,
 } from '../config/types'
 import { printSharedModuleInfo } from '../utils/printSharedModuleInfo'
-import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { Analysis } from './analysis/AddressAnalyzer'
 import { TEMPLATES_PATH, TemplateService } from './analysis/TemplateService'
 import type { ConfigReader } from './config/ConfigReader'
 import type { ConfigRegistry } from './config/ConfigRegistry'
 import type { DiscoveryPaths } from './config/getDiscoveryPaths'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
+import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import { diffDiscovery } from './output/diffDiscovery'
 import { printTemplatization } from './output/printTemplatization'
 import { saveDiscoveryResult } from './output/saveDiscoveryResult'
@@ -73,7 +73,7 @@ export async function runDiscovery(
     const backrefConfigs = allConfigs
       .filter((c) => c.structure.sharedModules.includes(config.project))
       .map((c) => c.structure)
-    printSharedModuleInfo(backrefConfigs)
+    printSharedModuleInfo(logger, backrefConfigs)
   }
 
   if (config.printStats) {

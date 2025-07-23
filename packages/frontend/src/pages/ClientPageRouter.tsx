@@ -21,7 +21,6 @@ import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
 import { ScalingDataAvailabilityPage } from './scaling/data-availability/ScalingDataAvailabilityPage'
-import { ScalingFinalityPage } from './scaling/finality/ScalingFinalityPage'
 import { ScalingLivenessPage } from './scaling/liveness/ScalingLivenessPage'
 import { ScalingProjectPage } from './scaling/project/ScalingProjectPage'
 import { ScalingProjectTvsBreakdownPage } from './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
@@ -30,9 +29,9 @@ import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
 import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
-import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
-import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
+import { ZkCatalogProjectPage } from './zk-catalog/v1/project/ZkCatalogProjectPage'
 import { ZkCatalogPageV1 } from './zk-catalog/v1/ZkCatalogPageV1'
+import { ZkCatalogPage } from './zk-catalog/v2/ZkCatalogPage'
 export type Pages = typeof pages
 
 export type SsrData = {
@@ -50,7 +49,6 @@ const pages = {
   ScalingActivityPage,
   ScalingDataAvailabilityPage,
   ScalingLivenessPage,
-  ScalingFinalityPage,
   ScalingCostsPage,
   ScalingArchivedPage,
   ScalingUpcomingPage,

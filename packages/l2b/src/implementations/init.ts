@@ -1,7 +1,14 @@
+import { getDiscoveryPaths, readJsonc } from '@l2beat/discovery'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  formatJson,
+  unique,
+  withoutUndefinedKeys,
+} from '@l2beat/shared-pure'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
+import mergeWith from 'lodash/mergeWith'
 import path from 'path'
-import { getDiscoveryPaths, readJsonc, toPrettyJson } from '@l2beat/discovery'
-import { type EthereumAddress, withoutUndefinedKeys } from '@l2beat/shared-pure'
 
 interface ConfigSkeleton {
   chains?: Record<string, object>
@@ -9,7 +16,7 @@ interface ConfigSkeleton {
   archived?: boolean
 }
 
-export async function initDiscovery(
+export function initDiscovery(
   project: string,
   chain: string,
   initalAddresses: EthereumAddress[],
@@ -27,32 +34,34 @@ export async function initDiscovery(
   const config = createEmptyConfig(
     existingConfig,
     project,
-    chain,
-    initalAddresses,
+    initalAddresses.map((a) => ChainSpecificAddress.fromLong(chain, a)),
   )
 
-  const content = await toPrettyJson(config)
+  const content = formatJson(config)
   writeFileSync(configPath, content)
 }
 
 function createEmptyConfig(
   existingConfig: ConfigSkeleton,
   project: string,
-  chain: string,
-  initialAddresses: EthereumAddress[],
+  initialAddresses: ChainSpecificAddress[],
 ) {
-  const chains = {
-    ...(existingConfig.chains ?? {}),
-    [chain]: { initialAddresses },
-  }
-
-  const config = {
+  const newConfig = {
     $schema: '../../../../discovery/schemas/config.v2.schema.json',
     name: project,
-    import: existingConfig.import ?? ['../globalConfig.jsonc'],
+    import:
+      existingConfig.import === undefined
+        ? ['../globalConfig.jsonc']
+        : undefined,
     archived: existingConfig.archived ?? undefined,
-    chains,
+    initialAddresses,
   }
 
-  return withoutUndefinedKeys(config)
+  return withoutUndefinedKeys(
+    mergeWith({}, existingConfig, newConfig, (a, b) => {
+      if (Array.isArray(a) && Array.isArray(b)) {
+        return unique(a.concat(b), (a) => JSON.stringify(a))
+      }
+    }),
+  )
 }

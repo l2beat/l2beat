@@ -130,5 +130,11 @@
     "address": "0x318F7008D7B5541546248D248Fd1eB41A57a9E41",
     "chain": "ethereum",
     "blockNumber": 22395854
+  },
+  "L1StandardBridge_v2_3_0_celo": {
+    "hash": "0xcc038053dba84fe88b91f9062f3927165798c810fed5cb953c2045de301daf95",
+    "address": "0x28841965B26d41304905A836Da5C0921DA7dBB84",
+    "chain": "ethereum",
+    "blockNumber": 22882513
   }
 }

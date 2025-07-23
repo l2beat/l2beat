@@ -1,9 +1,10 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import {
-  type ScalingLivenessEntry,
   getScalingLivenessEntries,
+  type ScalingLivenessEntry,
 } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -55,7 +56,11 @@ function getProjectsWithAnomalies(
     .flat()
     .flatMap((entry) => {
       const recentAnomalies = entry.anomalies.filter(
-        (anomaly) => anomaly.end === undefined,
+        (anomaly) =>
+          anomaly.isApproved &&
+          (anomaly.end === undefined ||
+            anomaly.end >
+              UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY),
       )
 
       if (recentAnomalies.length === 0) {

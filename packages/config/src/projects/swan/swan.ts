@@ -35,15 +35,6 @@ export const swan: ScalingProject = opStackL2({
     },
   },
   genesisTimestamp: UnixTime(1718640220),
-  // failing, needs different analyzer?
-  // finality: {
-  //   type: 'OPStack-blob',
-  //   genesisTimestamp: UnixTime(1718640220),
-  //   minTimestamp: UnixTime(1718683727), // first blob
-  //   l2BlockTimeSeconds: 2,
-  //   lag: 0,
-  //   stateUpdate: 'disabled',
-  // },
   isNodeAvailable: true,
   chainConfig: {
     name: 'swan',

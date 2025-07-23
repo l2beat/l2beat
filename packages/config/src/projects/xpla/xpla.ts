@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -22,5 +22,8 @@ export const xpla: ScalingProject = upcomingL2({
       repositories: ['https://github.com/xpladev'],
       socialMedia: ['https://x.com/XPLA_Official'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

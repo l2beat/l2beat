@@ -73,17 +73,6 @@ model DiscoveryCache {
   value String
 }
 
-model Finality {
-  projectId              String   @db.VarChar(255)
-  timestamp              DateTime @db.Timestamp(6)
-  minimumTimeToInclusion Int
-  maximumTimeToInclusion Int
-  averageTimeToInclusion Int
-  averageStateUpdate     Int?
-
-  @@id([projectId, timestamp])
-}
-
 model IndexerConfiguration {
   id            String @id @db.Char(12)
   indexerId     String @db.VarChar(255)
@@ -207,11 +196,12 @@ model Anomaly {
 }
 
 model RealTimeAnomaly {
-  start     DateTime  @db.Timestamp(6)
-  projectId String    @db.VarChar(255)
-  subtype   String    @db.VarChar(255)
-  status    String    @db.VarChar(255)
-  end       DateTime? @db.Timestamp(6)
+  start      DateTime  @db.Timestamp(6)
+  projectId  String    @db.VarChar(255)
+  subtype    String    @db.VarChar(255)
+  status     String    @db.VarChar(255)
+  isApproved Boolean   @default(false)
+  end        DateTime? @db.Timestamp(6)
 
   @@id([start, projectId, subtype])
 }

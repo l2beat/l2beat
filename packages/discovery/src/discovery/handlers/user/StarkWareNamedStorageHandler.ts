@@ -1,4 +1,4 @@
-import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
@@ -27,7 +27,7 @@ export class StarkWareNamedStorageHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     let storage: Bytes
     try {

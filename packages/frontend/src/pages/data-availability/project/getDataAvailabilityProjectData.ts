@@ -4,13 +4,12 @@ import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/getDaProjectEntry'
-import type { RenderData } from '~/ssr/types'
-import type { Manifest } from '~/utils/Manifest'
-
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
 import type { SsrHelpers } from '~/trpc/server'
 import { getSsrHelpers } from '~/trpc/server'
+import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilityProjectData(
   manifest: Manifest,
@@ -43,7 +42,7 @@ export async function getDataAvailabilityProjectData(
       page: 'DataAvailabilityProjectPage',
       props: {
         ...appLayoutProps,
-        projectEntry,
+        entry: projectEntry,
         queryState: helpers.dehydrate(),
       },
     },
@@ -57,7 +56,7 @@ async function getProjectEntry(
   const layer = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
-    optional: ['isUpcoming', 'milestones', 'archivedAt'],
+    optional: ['isUpcoming', 'milestones', 'archivedAt', 'colors'],
   })
 
   if (!layer) return

@@ -93,7 +93,7 @@ function groupByTimestampAndProjectId(
   records: DataAvailabilityRecord[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
-  let minTimestamp = Infinity
+  let minTimestamp = Number.POSITIVE_INFINITY
   const result: Record<number, number> = {}
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(

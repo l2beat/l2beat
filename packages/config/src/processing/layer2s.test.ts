@@ -1,9 +1,11 @@
+import { getChainShortName } from '@l2beat/discovery'
 import {
   assert,
-  EthereumAddress,
-  UnixTime,
   assertUnreachable,
+  ChainSpecificAddress,
+  EthereumAddress,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
@@ -15,6 +17,7 @@ import { checkRisk } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
 import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
+import { ecosystems } from './ecosystems'
 import { layer2s, milestonesLayer2s } from './layer2s'
 
 const tokenList = getTokenList(chains)
@@ -38,6 +41,17 @@ describe('layer2s', () => {
       it(`every Other project has reasonsForBeingOther configured: ${layer2.display.name}`, () => {
         if (layer2.display.category === 'Other') {
           expect(!!layer2.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
+  describe('ecosystems', () => {
+    const ecosystemIds = ecosystems.map((e) => e.id)
+    for (const layer2 of layer2s) {
+      it(`every project with ecosystemInfo has valid ecosystem configured: ${layer2.display.name}`, () => {
+        if (layer2.ecosystemInfo) {
+          expect(ecosystemIds).toInclude(layer2.ecosystemInfo.id)
         }
       })
     }
@@ -81,7 +95,12 @@ describe('layer2s', () => {
             it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
               // try to resolve escrow by address
               // if it does not exist the assert will throw
-              discovery.getContractByAddress(escrow.address)
+              discovery.getContractByAddress(
+                ChainSpecificAddress.from(
+                  getChainShortName(discovery.chain),
+                  escrow.address,
+                ),
+              )
             })
           }
         } catch {
@@ -235,20 +254,14 @@ describe('layer2s', () => {
 
             const discovery = new ProjectDiscovery(project.id.toString())
             addresses.forEach((a) => {
-              discovery.getContractByAddress(a)
+              discovery.getContractByAddress(
+                ChainSpecificAddress.from(
+                  getChainShortName(discovery.chain),
+                  a,
+                ),
+              )
             })
           }
-        })
-      }
-    })
-  })
-
-  describe('finality', () => {
-    describe('every project with finality enabled has finalizationPeriod property', () => {
-      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
-      for (const project of projectsWithFinality) {
-        it(project.id.toString(), () => {
-          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
         })
       }
     })
@@ -296,7 +309,9 @@ describe('layer2s', () => {
             .flatMap((chain) =>
               new ProjectDiscovery(layer2.id, chain).getTopLevelAddresses(),
             )
-            .map((address) => address.toString().toLowerCase()),
+            .map((address) =>
+              ChainSpecificAddress.address(address).toString().toLowerCase(),
+            ),
         )
 
         const referencedAddresses = new Set(
@@ -443,28 +458,23 @@ describe('layer2s', () => {
     })
 
     describe('date', () => {
-      for (const project of layer2s) {
-        if (project.milestones === undefined) {
-          continue
-        }
-        for (const milestone of project.milestones) {
-          it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
-            expect(
-              UnixTime.isFull(
-                UnixTime.fromDate(new Date(milestone.date)),
-                'day',
-              ),
-            ).toEqual(true)
-          })
-        }
-      }
-      for (const milestone of milestonesLayer2s) {
-        it(`Milestone: ${milestone.title} (main page) date is full day`, () => {
+      const allMilestones = [
+        ...milestonesLayer2s,
+        ...layer2s.flatMap((l) => l.milestones ?? []),
+      ]
+      it('is full day', () => {
+        for (const milestone of allMilestones ?? []) {
           expect(
             UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
           ).toEqual(true)
-        })
-      }
+        }
+      })
+
+      it('is correct', () => {
+        for (const milestone of allMilestones ?? []) {
+          expect(new Date(milestone.date).getTime()).not.toEqual(Number.NaN)
+        }
+      })
     })
   })
 

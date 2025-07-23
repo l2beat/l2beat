@@ -1,3 +1,616 @@
+Generated with discovered.json: 0x91e8733f549ef3226d3548b57c91abfeadc24e48
+
+# Diff at Mon, 14 Jul 2025 12:46:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 21744185
+- current block number: 21744185
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744185 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0) {
+    +++ description: None
+      address:
+-        "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
++        "eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F"
++        "eth:0x86EBB3994A558C27d19E2BADF5f98b99C478F98F"
+      values.$members.1:
+-        "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245"
++        "eth:0x3E8eba8D8E1BA34cB5780d541748438aA21b1245"
+      values.$members.2:
+-        "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd"
++        "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd"
+      values.$members.3:
+-        "0x315537a8004A7E598f807e8e0ce2F92e6a497E18"
++        "eth:0x315537a8004A7E598f807e8e0ce2F92e6a497E18"
+      values.$members.4:
+-        "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
++        "eth:0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
+      implementationNames.0x13fD1622F0E7e50A87B79cb296cbAf18362631C0:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x315537a8004A7E598f807e8e0ce2F92e6a497E18) {
+    +++ description: None
+      address:
+-        "0x315537a8004A7E598f807e8e0ce2F92e6a497E18"
++        "eth:0x315537a8004A7E598f807e8e0ce2F92e6a497E18"
+    }
+```
+
+```diff
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a) {
+    +++ description: None
+      address:
+-        "0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a"
++        "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"
++        "eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"
+      values.$pastUpgrades.0.2.0:
+-        "0xd0Fc79156E3a60858F24F9b7172Cd64ef7cc1DBB"
++        "eth:0xd0Fc79156E3a60858F24F9b7172Cd64ef7cc1DBB"
+      values.$pastUpgrades.1.2.0:
+-        "0x825a23B6cBbb1880b3189C2C684b3DF53Dd8Cb83"
++        "eth:0x825a23B6cBbb1880b3189C2C684b3DF53Dd8Cb83"
+      values.$pastUpgrades.2.2.0:
+-        "0x2faDfcb4AB510463bA8B1aE6f44FB0D55a79a6db"
++        "eth:0x2faDfcb4AB510463bA8B1aE6f44FB0D55a79a6db"
+      values.$pastUpgrades.3.2.0:
+-        "0x947CB65494903A53E55f7Dfef949e66d43e076b3"
++        "eth:0x947CB65494903A53E55f7Dfef949e66d43e076b3"
+      values.$pastUpgrades.4.2.0:
+-        "0xDdE9fC39471F1D119b9928994c555E7296752b9A"
++        "eth:0xDdE9fC39471F1D119b9928994c555E7296752b9A"
+      values.$pastUpgrades.5.2.0:
+-        "0xBc03C79991f6a6486B5187ad91853626c9686bF2"
++        "eth:0xBc03C79991f6a6486B5187ad91853626c9686bF2"
+      values.$pastUpgrades.6.2.0:
+-        "0x9429952791A01c35E715826f34727E885A2b2f09"
++        "eth:0x9429952791A01c35E715826f34727E885A2b2f09"
+      values.$pastUpgrades.7.2.0:
+-        "0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"
++        "eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      values.linker:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
++        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304:
+-        "DepositBoxERC1155"
+      implementationNames.eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xE8d18a64e5bD3C3e96e7c163Dc67FF97296b6304:
++        "DepositBoxERC1155"
+    }
+```
+
+```diff
+    EOA  (0x3E8eba8D8E1BA34cB5780d541748438aA21b1245) {
+    +++ description: None
+      address:
+-        "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245"
++        "eth:0x3E8eba8D8E1BA34cB5780d541748438aA21b1245"
+    }
+```
+
+```diff
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94) {
+    +++ description: None
+      address:
+-        "0x49F583d263e4Ef938b9E09772D3394c71605Df94"
++        "eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"
++        "eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"
+      values.$pastUpgrades.0.2.0:
+-        "0x912B03Fa0aA8C848f7B16950870dC0B1B89CB28C"
++        "eth:0x912B03Fa0aA8C848f7B16950870dC0B1B89CB28C"
+      values.$pastUpgrades.1.2.0:
+-        "0xAcb26F2B4018e20ab4F5b729bbF70c56583dFBD9"
++        "eth:0xAcb26F2B4018e20ab4F5b729bbF70c56583dFBD9"
+      values.$pastUpgrades.2.2.0:
+-        "0x02113b595aF3BAFD390Bc4B0a44224c789dE3824"
++        "eth:0x02113b595aF3BAFD390Bc4B0a44224c789dE3824"
+      values.$pastUpgrades.3.2.0:
+-        "0xF0551a55E73734751324BF8299f50c9229754c56"
++        "eth:0xF0551a55E73734751324BF8299f50c9229754c56"
+      values.$pastUpgrades.4.2.0:
+-        "0x1d3c18a87DF66cc3F8e176f5bef4CDE0C40D50e7"
++        "eth:0x1d3c18a87DF66cc3F8e176f5bef4CDE0C40D50e7"
+      values.$pastUpgrades.5.2.0:
+-        "0x998D6AA8CaC99f1557b65E680fc4FDCD94Be70ca"
++        "eth:0x998D6AA8CaC99f1557b65E680fc4FDCD94Be70ca"
+      values.$pastUpgrades.6.2.0:
+-        "0xfE6faFAC88150A23D946E53E9e2285aAB98A0d90"
++        "eth:0xfE6faFAC88150A23D946E53E9e2285aAB98A0d90"
+      values.$pastUpgrades.7.2.0:
+-        "0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"
++        "eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      values.linker:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
++        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x49F583d263e4Ef938b9E09772D3394c71605Df94:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a:
+-        "DepositBoxEth"
+      implementationNames.eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x2f90BeD90fa0Cc605B86b8623612a2638EB4019a:
++        "DepositBoxEth"
+    }
+```
+
+```diff
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621) {
+    +++ description: None
+      address:
+-        "0x588801cA36558310D91234aFC2511502282b1621"
++        "eth:0x588801cA36558310D91234aFC2511502282b1621"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"
++        "eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"
+      values.$pastUpgrades.0.2.0:
+-        "0xf1b9d10472A62EA977089336dc4a65580Ebdae60"
++        "eth:0xf1b9d10472A62EA977089336dc4a65580Ebdae60"
+      values.$pastUpgrades.1.2.0:
+-        "0x8375acDca1feCdb89F3C3A440f40884C6B1a7A7D"
++        "eth:0x8375acDca1feCdb89F3C3A440f40884C6B1a7A7D"
+      values.$pastUpgrades.2.2.0:
+-        "0x956455d81d5DC0F4FbE666Bffb278Af292dFa4dB"
++        "eth:0x956455d81d5DC0F4FbE666Bffb278Af292dFa4dB"
+      values.$pastUpgrades.3.2.0:
+-        "0x06FE670E7647A67F95f09EbC292a833d66ebb681"
++        "eth:0x06FE670E7647A67F95f09EbC292a833d66ebb681"
+      values.$pastUpgrades.4.2.0:
+-        "0x59501EDE4441B566D43330938b01044168a4Af0C"
++        "eth:0x59501EDE4441B566D43330938b01044168a4Af0C"
+      values.$pastUpgrades.5.2.0:
+-        "0xAC1861ed87595E0AfF6C2bB9f8742D3308f48ba0"
++        "eth:0xAC1861ed87595E0AfF6C2bB9f8742D3308f48ba0"
+      values.$pastUpgrades.6.2.0:
+-        "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"
++        "eth:0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"
+      values.$pastUpgrades.7.2.0:
+-        "0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"
++        "eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x588801cA36558310D91234aFC2511502282b1621:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a:
+-        "CommunityPool"
+      implementationNames.eth:0x588801cA36558310D91234aFC2511502282b1621:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x3417B0DD0FBCC22c3111a083992dB8bABaB9e88a:
++        "CommunityPool"
+    }
+```
+
+```diff
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1) {
+    +++ description: None
+      address:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
++        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0x676FAFCE73F5a304988C519407AAc06bD117CdD0"
++        "eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0"
+      values.$pastUpgrades.0.2.0:
+-        "0x886C47563cA045dd3b41F4E13CdD0122D412738c"
++        "eth:0x886C47563cA045dd3b41F4E13CdD0122D412738c"
+      values.$pastUpgrades.1.2.0:
+-        "0x4827ecE3114796c9c26459b35B6E23E2A952Ae09"
++        "eth:0x4827ecE3114796c9c26459b35B6E23E2A952Ae09"
+      values.$pastUpgrades.2.2.0:
+-        "0xe8608987fee290114f99Cc23C1eABD084C0176E9"
++        "eth:0xe8608987fee290114f99Cc23C1eABD084C0176E9"
+      values.$pastUpgrades.3.2.0:
+-        "0xc107d8CCC84C391b0E66A6cE2460Ece69EF1ad26"
++        "eth:0xc107d8CCC84C391b0E66A6cE2460Ece69EF1ad26"
+      values.$pastUpgrades.4.2.0:
+-        "0xEde996A9899b570dE70eaDE06Fa69621cE1470Be"
++        "eth:0xEde996A9899b570dE70eaDE06Fa69621cE1470Be"
+      values.$pastUpgrades.5.2.0:
+-        "0x676FAFCE73F5a304988C519407AAc06bD117CdD0"
++        "eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x6ef406953bac772C2146389ED37846BA3b6086D1:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x676FAFCE73F5a304988C519407AAc06bD117CdD0:
+-        "Linker"
+      implementationNames.eth:0x6ef406953bac772C2146389ED37846BA3b6086D1:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x676FAFCE73F5a304988C519407AAc06bD117CdD0:
++        "Linker"
+    }
+```
+
+```diff
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d) {
+    +++ description: None
+      address:
+-        "0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d"
++        "eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"
++        "eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"
+      values.$pastUpgrades.0.2.0:
+-        "0xB6b164FD2b72a5Cf2570BB55b9cd9624DDD23ad7"
++        "eth:0xB6b164FD2b72a5Cf2570BB55b9cd9624DDD23ad7"
+      values.$pastUpgrades.1.2.0:
+-        "0x683325e0B5475222f6521e729Dd1f3D566a2fa66"
++        "eth:0x683325e0B5475222f6521e729Dd1f3D566a2fa66"
+      values.$pastUpgrades.2.2.0:
+-        "0xA99A7b8FBb46cbeb9BF8174B21964ba11399B272"
++        "eth:0xA99A7b8FBb46cbeb9BF8174B21964ba11399B272"
+      values.$pastUpgrades.3.2.0:
+-        "0x573383DB7D9b41e2a9Aa180e305d958c0CF9A52e"
++        "eth:0x573383DB7D9b41e2a9Aa180e305d958c0CF9A52e"
+      values.$pastUpgrades.4.2.0:
+-        "0x5C6Cbec4dbDbb5176BbfbF68aA33AbF4b49a116c"
++        "eth:0x5C6Cbec4dbDbb5176BbfbF68aA33AbF4b49a116c"
+      values.$pastUpgrades.5.2.0:
+-        "0x205fDFa8BB5b035152d9aca24cA32377A98838b8"
++        "eth:0x205fDFa8BB5b035152d9aca24cA32377A98838b8"
+      values.$pastUpgrades.6.2.0:
+-        "0xa66b813b2e32EEb82D4dafB5e784471cdba452E8"
++        "eth:0xa66b813b2e32EEb82D4dafB5e784471cdba452E8"
+      values.$pastUpgrades.7.2.0:
+-        "0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"
++        "eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      values.linker:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
++        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5:
+-        "DepositBoxERC721"
+      implementationNames.eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xAD64712a9F3F7Ca4e7064381135082AAA68F56d5:
++        "DepositBoxERC721"
+    }
+```
+
+```diff
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404) {
+    +++ description: None
+      address:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0x0AE92a5105111281151b980A0aD680b890bf1944"
++        "eth:0x0AE92a5105111281151b980A0aD680b890bf1944"
+      values.$pastUpgrades.0.2.0:
+-        "0x7B50F0d25a45Fa3e121F51e101099d2d5a6980eD"
++        "eth:0x7B50F0d25a45Fa3e121F51e101099d2d5a6980eD"
+      values.$pastUpgrades.1.2.0:
+-        "0xb7512b598d4751B5636573235588E42aAC0eCE02"
++        "eth:0xb7512b598d4751B5636573235588E42aAC0eCE02"
+      values.$pastUpgrades.2.2.0:
+-        "0xc8663c0bd8238A440C0E272c01b64F509ca4E1F5"
++        "eth:0xc8663c0bd8238A440C0E272c01b64F509ca4E1F5"
+      values.$pastUpgrades.3.2.0:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      values.$pastUpgrades.4.2.0:
+-        "0x7F388C2282987Fd7738D4d56Ea047ee05D2dFef7"
++        "eth:0x7F388C2282987Fd7738D4d56Ea047ee05D2dFef7"
+      values.$pastUpgrades.5.2.0:
+-        "0x7EeB2Fb952a11a4675717A34bA803D6E95FF24A5"
++        "eth:0x7EeB2Fb952a11a4675717A34bA803D6E95FF24A5"
+      values.$pastUpgrades.6.2.0:
+-        "0x8BaC52833c7901182ED972Bfa4A56A2432D79170"
++        "eth:0x8BaC52833c7901182ED972Bfa4A56A2432D79170"
+      values.$pastUpgrades.7.2.0:
+-        "0xC261084Dc6475d4980548Bd8C323FF825b3D0C38"
++        "eth:0xC261084Dc6475d4980548Bd8C323FF825b3D0C38"
+      values.$pastUpgrades.8.2.0:
+-        "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"
++        "eth:0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"
+      values.$pastUpgrades.9.2.0:
+-        "0x0AE92a5105111281151b980A0aD680b890bf1944"
++        "eth:0x0AE92a5105111281151b980A0aD680b890bf1944"
+      values.communityPool:
+-        "0x588801cA36558310D91234aFC2511502282b1621"
++        "eth:0x588801cA36558310D91234aFC2511502282b1621"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      implementationNames.0x8629703a9903515818C2FeB45a6f6fA5df8Da404:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x0AE92a5105111281151b980A0aD680b890bf1944:
+-        "MessageProxyForMainnet"
+      implementationNames.eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x0AE92a5105111281151b980A0aD680b890bf1944:
++        "MessageProxyForMainnet"
+    }
+```
+
+```diff
+    EOA  (0x86EBB3994A558C27d19E2BADF5f98b99C478F98F) {
+    +++ description: None
+      address:
+-        "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F"
++        "eth:0x86EBB3994A558C27d19E2BADF5f98b99C478F98F"
+    }
+```
+
+```diff
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669) {
+    +++ description: None
+      address:
+-        "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669"
++        "eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"
++        "eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"
+      values.$pastUpgrades.0.2.0:
+-        "0x28bb5918c37F8170D12C211Ae924bF02A7DF8CA4"
++        "eth:0x28bb5918c37F8170D12C211Ae924bF02A7DF8CA4"
+      values.$pastUpgrades.1.2.0:
+-        "0xD0aEc35561751FA11e622532383f5aAe4b58F66e"
++        "eth:0xD0aEc35561751FA11e622532383f5aAe4b58F66e"
+      values.$pastUpgrades.2.2.0:
+-        "0x0c02d198dd84582FA319dB9d53158C4a21AF3D09"
++        "eth:0x0c02d198dd84582FA319dB9d53158C4a21AF3D09"
+      values.$pastUpgrades.3.2.0:
+-        "0x0209B161D99E121C026697F6C7558905a9bD7089"
++        "eth:0x0209B161D99E121C026697F6C7558905a9bD7089"
+      values.$pastUpgrades.4.2.0:
+-        "0xBDA6d5ced98156377A9E3f60eadc0424b2934D19"
++        "eth:0xBDA6d5ced98156377A9E3f60eadc0424b2934D19"
+      values.$pastUpgrades.5.2.0:
+-        "0x1419fE9A82741fe6d9Ab27Fd7e007810a3c1896b"
++        "eth:0x1419fE9A82741fe6d9Ab27Fd7e007810a3c1896b"
+      values.$pastUpgrades.6.2.0:
+-        "0x4B4192649E9450f329dD36F56a81C08aD0c12c02"
++        "eth:0x4B4192649E9450f329dD36F56a81C08aD0c12c02"
+      values.$pastUpgrades.7.2.0:
+-        "0x778B105215e59e4731CcBDcB0A54C367FD3897a1"
++        "eth:0x778B105215e59e4731CcBDcB0A54C367FD3897a1"
+      values.$pastUpgrades.8.2.0:
+-        "0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"
++        "eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788"
+      values.contractManagerOfSkaleManager:
+-        "0xC04A10Fd5e6513242558f47331568aBD6185a310"
++        "eth:0xC04A10Fd5e6513242558f47331568aBD6185a310"
+      values.linker:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
++        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788:
+-        "DepositBoxERC20"
+      implementationNames.eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xc616EaF17c5e3349c1Fa493459494BB4DD0FD788:
++        "DepositBoxERC20"
+    }
+```
+
+```diff
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986) {
+    +++ description: None
+      address:
+-        "0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986"
++        "eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986"
+      values.$admin:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.$implementation:
+-        "0xF99F446340483C5d9D63697a60232ECb9274E1e7"
++        "eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7"
+      values.$pastUpgrades.0.2.0:
+-        "0x584cc3A9305867E30594647872cB5257E6769C1a"
++        "eth:0x584cc3A9305867E30594647872cB5257E6769C1a"
+      values.$pastUpgrades.1.2.0:
+-        "0xCe4ceF453a2D7071B845e36a2E1bf096fba6eEeA"
++        "eth:0xCe4ceF453a2D7071B845e36a2E1bf096fba6eEeA"
+      values.$pastUpgrades.2.2.0:
+-        "0x858b1F991F248Dc150cE2B839d3d0d71597dBF68"
++        "eth:0x858b1F991F248Dc150cE2B839d3d0d71597dBF68"
+      values.$pastUpgrades.3.2.0:
+-        "0xF99F446340483C5d9D63697a60232ECb9274E1e7"
++        "eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7"
+      values.contractManagerOfSkaleManager:
+-        "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A"
++        "eth:0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A"
+      values.linker:
+-        "0x6ef406953bac772C2146389ED37846BA3b6086D1"
++        "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1"
+      values.messageProxy:
+-        "0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
++        "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404"
+      implementationNames.0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xF99F446340483C5d9D63697a60232ECb9274E1e7:
+-        "DepositBoxERC721WithMetadata"
+      implementationNames.eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xF99F446340483C5d9D63697a60232ECb9274E1e7:
++        "DepositBoxERC721WithMetadata"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627) {
+    +++ description: None
+      address:
+-        "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
++        "eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      values.owner:
+-        "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
++        "eth:0x13fD1622F0E7e50A87B79cb296cbAf18362631C0"
+      implementationNames.0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627:
+-        "ProxyAdmin"
+      implementationNames.eth:0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd) {
+    +++ description: None
+      address:
+-        "0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd"
++        "eth:0xc0d6E904ADf6A55511B67907B0917D769F38c5Dd"
+    }
+```
+
+```diff
+    EOA  (0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e) {
+    +++ description: None
+      address:
+-        "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
++        "eth:0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
+    }
+```
+
+```diff
+    EOA  (0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A) {
+    +++ description: None
+      address:
+-        "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A"
++        "eth:0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminOwner (0x13fD1622F0E7e50A87B79cb296cbAf18362631C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC1155 (0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxEth (0x49F583d263e4Ef938b9E09772D3394c71605Df94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CommunityPool (0x588801cA36558310D91234aFC2511502282b1621)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Linker (0x6ef406953bac772C2146389ED37846BA3b6086D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC721 (0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageProxyForMainnet (0x8629703a9903515818C2FeB45a6f6fA5df8Da404)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC20 (0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DepositBoxERC721WithMetadata (0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xee5b9a0846837cc920db67c60dbc4ab46021d590
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

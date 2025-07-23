@@ -1,7 +1,6 @@
 import { StageBadge } from '~/components/badge/StageBadge'
 import type { FilterableValueId } from './filterableValue'
-import { filterValuesSortFn } from './filterableValue'
-import { filterIdToValues } from './filterableValue'
+import { filterIdToValues, filterValuesSortFn } from './filterableValue'
 
 interface Props {
   values: string[]

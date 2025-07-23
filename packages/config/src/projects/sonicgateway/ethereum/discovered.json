@@ -2,10 +2,10 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 22431552,
-  "configHash": "0xaf121cf9d2bcefd9c88b2b02ff9e67bb8fd8a958564972648c8e0929d088ec8b",
+  "configHash": "0x9719fd6ff448677fe9b90ef36545787931cd21ff7b2fcb8720fcbf61e5a74bc4",
   "entries": [
     {
-      "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
+      "address": "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -17,7 +17,7 @@
       ]
     },
     {
-      "address": "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
+      "address": "eth:0x2534ED5d1303F035fa7e5d6a52199e59328B3F72",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -29,12 +29,12 @@
       ]
     },
     {
-      "address": "0x2D407dDb06311396fE14D4b49da5F0471447d45C",
+      "address": "eth:0x2D407dDb06311396fE14D4b49da5F0471447d45C",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x32744b98cC03A76C0559e905a31E8474a31729c1",
+      "address": "eth:0x32744b98cC03A76C0559e905a31E8474a31729c1",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "address": "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
+      "address": "eth:0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -58,7 +58,7 @@
       ]
     },
     {
-      "address": "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
+      "address": "eth:0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -70,7 +70,7 @@
       ]
     },
     {
-      "address": "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
+      "address": "eth:0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -82,18 +82,18 @@
       ]
     },
     {
-      "address": "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9",
+      "address": "eth:0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5",
+      "address": "eth:0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ValidatorsRegistry",
-      "address": "0x72965045A6691E5A74299D1e878f303264D4D910",
+      "address": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
       "type": "Contract",
       "sourceHashes": [
         "0xcc25aa0a3dfaee567102dda1bbc3cac11de3d99aedbb1be6b059dc6230d61f8c"
@@ -106,8 +106,8 @@
         "$immutable": true,
         "getQuorum": 533,
         "lastValidatorId": 8,
-        "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
-        "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+        "owner": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+        "stateOracle": "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
         "totalWeight": 800,
         "validator1Weight": 100,
         "validator2Weight": 100,
@@ -118,24 +118,24 @@
         "validator7Weight": 100,
         "validator8Weight": 100,
         "validatorAddress": [
-          "0x0000000000000000000000000000000000000000",
-          "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
-          "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
-          "0x32744b98cC03A76C0559e905a31E8474a31729c1",
-          "0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
-          "0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
-          "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
-          "0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
-          "0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
+          "eth:0x0000000000000000000000000000000000000000",
+          "eth:0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
+          "eth:0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
+          "eth:0x32744b98cC03A76C0559e905a31E8474a31729c1",
+          "eth:0x551a7DAD9a14EfD0289c8ed3e52cf8352dc52011",
+          "eth:0x34F01d6B8ad8eB46D2A7bEcCc8611EED04ef5d65",
+          "eth:0x8406de45bfAca854d08377ca1436C6b4785b4D79",
+          "eth:0x3Dd6C793AbA45738e531639977a292A3A8E32C9D",
+          "eth:0x2534ED5d1303F035fa7e5d6a52199e59328B3F72"
         ]
       },
       "implementationNames": {
-        "0x72965045A6691E5A74299D1e878f303264D4D910": "ValidatorsRegistry"
+        "eth:0x72965045A6691E5A74299D1e878f303264D4D910": "ValidatorsRegistry"
       }
     },
     {
       "name": "DirectExitAdministrator",
-      "address": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
+      "address": "eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
       "type": "Contract",
       "sourceHashes": [
         "0x8098841579ecf27111655e2469db7694f23f693dcd7bc781864783f8c03ea4df"
@@ -153,15 +153,15 @@
       "sinceBlock": 21443151,
       "values": {
         "$immutable": true,
-        "deposit": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
+        "deposit": "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20"
       },
       "implementationNames": {
-        "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329": "DirectExitAdministrator"
+        "eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329": "DirectExitAdministrator"
       }
     },
     {
       "name": "SonicGatewayOpsMultisig",
-      "address": "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
+      "address": "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -194,11 +194,11 @@
       "sinceBlock": 21451725,
       "values": {
         "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB",
-          "0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9",
-          "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
+          "eth:0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB",
+          "eth:0x597Fa3ad161B16f450e257eD71bE8404BDEFCdC9",
+          "eth:0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1"
         ],
         "$threshold": 2,
         "domainSeparator": "0x40b7a1abeebce8f111e2609021710f9678f6feb89449097ec25fe19a4e26132f",
@@ -209,17 +209,17 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": "SafeProxy",
-        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+        "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
-      "address": "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1",
+      "address": "eth:0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x8406de45bfAca854d08377ca1436C6b4785b4D79",
+      "address": "eth:0x8406de45bfAca854d08377ca1436C6b4785b4D79",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -232,7 +232,7 @@
     },
     {
       "name": "MPTProofVerifier",
-      "address": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
+      "address": "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
       "type": "Contract",
       "sourceHashes": [
         "0xfca61099dca9ccc6f9eb4019b9ca13d0b1cbe6e68f74766cb39e25550441701e"
@@ -243,11 +243,11 @@
       "sinceBlock": 21443127,
       "values": { "$immutable": true },
       "implementationNames": {
-        "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306": "MPTProofVerifier"
+        "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306": "MPTProofVerifier"
       }
     },
     {
-      "address": "0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
+      "address": "eth:0x92E33222A1389aAf89C0794643fBBC7E679a6Dad",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -260,7 +260,7 @@
     },
     {
       "name": "SonicGatewayMultisig",
-      "address": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
+      "address": "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -310,12 +310,12 @@
       "sinceBlock": 21336741,
       "values": {
         "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$implementation": "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1",
-          "0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5",
-          "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7",
-          "0x2D407dDb06311396fE14D4b49da5F0471447d45C"
+          "eth:0x80957D62C7Cc252E5dd2f8691a9afB3087f88Fa1",
+          "eth:0x6E9f215876d210E5c8A197DF598db2d8FE09F6C5",
+          "eth:0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7",
+          "eth:0x2D407dDb06311396fE14D4b49da5F0471447d45C"
         ],
         "$threshold": 3,
         "domainSeparator": "0xb58116801c9725bab8724b2382a814662ec4c17ffcc756efb488be203816e707",
@@ -326,13 +326,13 @@
         "VERSION": "1.4.1"
       },
       "implementationNames": {
-        "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SafeProxy",
-        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+        "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": "SafeProxy",
+        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
       "name": "TokenDeposit",
-      "address": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+      "address": "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
       "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
@@ -343,35 +343,35 @@
       "sinceTimestamp": 1734690647,
       "sinceBlock": 21443147,
       "values": {
-        "$admin": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-        "$implementation": "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9",
+        "$admin": "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
+        "$implementation": "eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9",
         "$pastUpgrades": [
           [
             "2024-12-20T10:30:47.000Z",
             "0x5879a36c903422bd6ce93ddc176c999c831a926cd751ceb9753490b32353e08d",
-            ["0xd8a7d475931193C84b57663fb33a1738df83Ce6f"]
+            ["eth:0xd8a7d475931193C84b57663fb33a1738df83Ce6f"]
           ],
           [
             "2024-12-23T17:54:23.000Z",
             "0x8186d6acbf5d0d33ccb6a7054e1e9f61649873e7c85bdf7cd11825a266db5983",
-            ["0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"]
+            ["eth:0x4cbd824685F1E21B119F230B54d65C5a7D2a5330"]
           ],
           [
             "2025-04-17T03:06:47.000Z",
             "0x00658364f89d911d6cf167646f3d4cdcdaa90c60c1c1b5b7c1991e3e606dbf9c",
-            ["0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"]
+            ["eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9"]
           ]
         ],
         "$upgradeCount": 3,
-        "bridge": "0x9Ef7629F9B930168b76283AdD7120777b3c895b3",
+        "bridge": "eth:0x9Ef7629F9B930168b76283AdD7120777b3c895b3",
         "deadState": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EURC_BURN_PREPARER_ROLE": "0xea9b585a6ebd9633ce15a00ac59a64be294805b254faeed18790c2161e44e71a",
-        "exitAdministrator": "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
-        "owner": "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
-        "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
-        "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+        "exitAdministrator": "eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329",
+        "owner": "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0",
+        "proofVerifier": "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
+        "stateOracle": "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
         "TimeUntilDead": "200d",
-        "tokenPairs": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
+        "tokenPairs": "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC_BURN_PREPARER_ROLE": "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6",
         "USDT_BURN_PREPARER_ROLE": "0xcc83783a336c5977a84d3445de8848e96ef07372a420bac3d7f276ab3bcb0b40"
@@ -383,12 +383,12 @@
         "deadState": { "severity": "HIGH" }
       },
       "implementationNames": {
-        "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": "ERC1967Proxy",
-        "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9": "TokenDeposit"
+        "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": "ERC1967Proxy",
+        "eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9": "TokenDeposit"
       }
     },
     {
-      "address": "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
+      "address": "eth:0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -400,13 +400,13 @@
       ]
     },
     {
-      "address": "0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7",
+      "address": "eth:0xA7bC226C9586DcD93FF1b0B038C04e89b37C8fa7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "UpdateManager",
-      "address": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+      "address": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
       "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
@@ -426,55 +426,55 @@
       "sinceTimestamp": 1734690815,
       "sinceBlock": 21443161,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b",
         "$pastUpgrades": [
           [
             "2024-12-20T10:33:35.000Z",
             "0x33fa52748a5e6fa91b32346f5cadb3e562bae7721858bed27ef640cc255b68d7",
-            ["0x13bd43A6BE5795D4A4E3Efc4baC21Cd36Ae9e68A"]
+            ["eth:0x13bd43A6BE5795D4A4E3Efc4baC21Cd36Ae9e68A"]
           ],
           [
             "2025-01-17T21:24:23.000Z",
             "0xbac9b4af00eafd37875f3079cb05af1fe27ec8d09814cdb5695424550d54ed7a",
-            ["0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"]
+            ["eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b"]
           ]
         ],
         "$upgradeCount": 2,
-        "acAdmin": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
+        "acAdmin": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+            "members": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "FEE_SETTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"]
+            "members": ["eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"]
           },
           "HEARTBEAT_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"]
+            "members": ["eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"]
           },
           "RELAY_ROLE": {
             "adminRole": "RELAY_ADMIN_ROLE",
             "members": [
-              "0x11b0E7Bef4046dD43b09489926F30514584B1161",
-              "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+              "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161",
+              "eth:0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
             ]
           },
           "RELAY_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"]
+            "members": ["eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"]
           }
         },
-        "acFeeSetter": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
-        "acHeartbeat": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
+        "acFeeSetter": ["eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
+        "acHeartbeat": ["eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
         "acRelay": [
-          "0x11b0E7Bef4046dD43b09489926F30514584B1161",
-          "0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
+          "eth:0x11b0E7Bef4046dD43b09489926F30514584B1161",
+          "eth:0xa55e557Ab2Cc2DFa84Cd199e1fA1CB6E37326C4D"
         ],
-        "acRelayAdmin": ["0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
-        "activityMonitor": "0x0000000000000000000000000000000000000000",
+        "acRelayAdmin": ["eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B"],
+        "activityMonitor": "eth:0x0000000000000000000000000000000000000000",
         "chainId": 146,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "fastLaneFee": 6500000000000000,
@@ -485,22 +485,22 @@
         "HEARTBEAT_ROLE": "0x263f662867aed1ef0af950501cca3a06ac1a44f50df3b69605c41b638ae96976",
         "lastBlockNum": 24985800,
         "MONITOR_SETTER_ROLE": "0xa6ff0d617d2470b6d2096e183aa717d0ec41683b3ff292b2c29f38eecfd14c5c",
-        "proofVerifier": "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
-        "provingContract": "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+        "proofVerifier": "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306",
+        "provingContract": "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
         "RELAY_ADMIN_ROLE": "0xf332bf0a3b0e0c7961f2ab179184e8d3d849d12d0319ce7cf34b95605336f897",
         "RELAY_ROLE": "0x077a1d526a4ce8a773632ab13b4fbbf1fcc954c3dab26cd27ea0e2a6750da5d7",
-        "stateOracle": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
-        "updateVerifier": "0x72965045A6691E5A74299D1e878f303264D4D910",
+        "stateOracle": "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+        "updateVerifier": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": "ERC1967Proxy",
-        "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b": "UpdateManager"
+        "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": "ERC1967Proxy",
+        "eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b": "UpdateManager"
       }
     },
     {
       "name": "StateOracle",
-      "address": "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+      "address": "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
       "type": "Contract",
       "sourceHashes": [
         "0x32d9b287383d91a40dcf024a5f38e044b104c231806ecf21aa5867f45f895eb0"
@@ -516,14 +516,14 @@
         "lastBlockNum": 24985800,
         "lastState": "0x2a788f25a88a36ab41e4b0dc719c9834a8d5dc85a1dd848be0de2ec293dd9920",
         "lastUpdateTime": 1746614783,
-        "owner": "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
+        "owner": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4"
       },
       "implementationNames": {
-        "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f": "StateOracle"
+        "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f": "StateOracle"
       }
     },
     {
-      "address": "0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
+      "address": "eth:0xb8B86aAa072B3aa26d0D02A81642d00Bf58f6572",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
@@ -536,7 +536,7 @@
     },
     {
       "name": "TokenPairs",
-      "address": "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
+      "address": "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
       "type": "Contract",
       "sourceHashes": [
         "0x29faf4889af43049c742ca34aeff493c079c023986c7f794a3dbfe3b1c642d09",
@@ -547,46 +547,46 @@
       "sinceTimestamp": 1734690539,
       "sinceBlock": 21443138,
       "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x68A4DdEDc285241440733719e43B1BCB795dD8c7",
+        "$admin": "eth:0x0000000000000000000000000000000000000000",
+        "$implementation": "eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7",
         "$pastUpgrades": [
           [
             "2024-12-20T10:28:59.000Z",
             "0xc793a201858182f97a65c563295dc14c1bb63902b6af4afc6c367eafe9edcc1b",
-            ["0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943"]
+            ["eth:0x0c40Ae1c82401EA741953D3f026ADc07BE9e7943"]
           ],
           [
             "2025-03-31T13:26:35.000Z",
             "0xa0ea3636586490b57142400ba479e1309d04e948db316b43e85733d4a63dbbf6",
-            ["0x68A4DdEDc285241440733719e43B1BCB795dD8c7"]
+            ["eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7"]
           ]
         ],
         "$upgradeCount": 2,
-        "acAdmin": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
+        "acAdmin": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+            "members": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "REGISTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+            "members": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "UNREGISTER_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+            "members": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "0x366e34e4dd9cacc5f69a0ea920636c292b34b8951987dd08682365f7701b86f6": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+            "members": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           },
           "TERMINATOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
+            "members": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"]
           }
         },
-        "acRegister": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
-        "acUnregister": ["0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
+        "acRegister": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
+        "acUnregister": ["eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0"],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "REGISTER_ROLE": "0xd1f21ec03a6eb050fba156f5316dad461735df521fb446dd42c5a4728e9c70fe",
         "TERMINATOR_ROLE": "0x26aab3fbd9c7d505a96c193ccd3127894549d6ee75e38e08a6cef48fbab511e8",
@@ -594,18 +594,18 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": "ERC1967Proxy",
-        "0x68A4DdEDc285241440733719e43B1BCB795dD8c7": "TokenPairs"
+        "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": "ERC1967Proxy",
+        "eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7": "TokenPairs"
       }
     },
     {
-      "address": "0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB",
+      "address": "eth:0xfa2A05E6b505C3fCe3d8676149Ec6a4fBF1231cB",
       "type": "EOA",
       "proxyType": "EOA"
     }
   ],
   "abis": {
-    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+    "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -653,7 +653,7 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x50c42dEAcD8Fc9773493ED674b675bE577f2634b": [
+    "eth:0x50c42dEAcD8Fc9773493ED674b675bE577f2634b": [
       "constructor(address _stateOracle, address _provingContract)",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -711,7 +711,7 @@
       "function updateVerifier() view returns (address)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x68A4DdEDc285241440733719e43B1BCB795dD8c7": [
+    "eth:0x68A4DdEDc285241440733719e43B1BCB795dD8c7": [
       "constructor()",
       "error AccessControlBadConfirmation()",
       "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
@@ -752,7 +752,7 @@
       "function unregister(address original, address minted)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x72965045A6691E5A74299D1e878f303264D4D910": [
+    "eth:0x72965045A6691E5A74299D1e878f303264D4D910": [
       "constructor(address _stateOracle, address _ownedBy)",
       "error ECDSAInvalidSignature()",
       "error ECDSAInvalidSignatureLength(uint256 length)",
@@ -773,23 +773,23 @@
       "function validatorWeight(address validatorId) view returns (uint256 weight)",
       "function verifyUpdate(uint256 blockNum, bytes32 stateRoot, uint256 chainId, bytes newValidators, address proofVerifier, address updateVerifier, address exitAdmin, bytes[] signatures) view returns (uint256[])"
     ],
-    "0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329": [
+    "eth:0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329": [
       "constructor(address _deposit)",
       "function deposit() view returns (address)",
       "function getBalanceSlotIndex(address account) pure returns (bytes32)",
       "function tokenWithdrawn(bytes32 senderToken) view returns (bool isWithdrawn)",
       "function withdraw(address token, uint256 amount, bytes proof)"
     ],
-    "0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": [
+    "eth:0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B": [
       "constructor(address _singleton)"
     ],
-    "0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306": [
+    "eth:0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306": [
       "function verifyProof(address contractAddress, bytes32 slotIndex, bytes32 expectedValue, bytes32 stateRoot, bytes proof) pure"
     ],
-    "0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": [
+    "eth:0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0": [
       "constructor(address _singleton)"
     ],
-    "0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": [
+    "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -797,7 +797,7 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9": [
+    "eth:0xAdE2eF0101278fe11490F2EE2aaD7915a094ADe9": [
       "constructor(address _bridge, address _tokenPairs, address _stateOracle)",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -861,7 +861,7 @@
       "function userOperationId(address sender, uint96 uid) pure returns (uint256)",
       "function withdrawWhileDead(address recipient, address token, uint256 amount)"
     ],
-    "0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": [
+    "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -869,7 +869,7 @@
       "error FailedCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f": [
+    "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f": [
       "constructor(address _ownedBy, uint256 _chainId)",
       "error OwnableInvalidOwner(address owner)",
       "error OwnableUnauthorizedAccount(address account)",
@@ -883,7 +883,7 @@
       "function transferOwnership(address newOwner)",
       "function update(uint256 blockNum, bytes32 stateRoot)"
     ],
-    "0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": [
+    "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -895,5 +895,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xc95f45bbf57b0704f19a25d5e3b5a391da2de6ef5fee6c5fe5e46dce24366266"
+  "permissionsConfigHash": "0xf207239ca0d36aacf66b2fe67fe4e47e99dd9564032338344b1f3bb192dc0469"
 }

@@ -1,20 +1,23 @@
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { TableLink } from '~/components/table/TableLink'
-import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { useTable } from '~/hooks/useTable'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../components/BasicDaTable'
-import { customColumns, publicColumns } from './Columns'
+import { customColumns, publicColumns } from './columns'
 
 export function DaRiskTable({
   items,
   excludeBridge = false,
-}: { items: DaRiskEntry[]; excludeBridge?: boolean }) {
+}: {
+  items: DaRiskEntry[]
+  excludeBridge?: boolean
+}) {
   const table = useTable({
     columns: excludeBridge ? customColumns : publicColumns,
     data: items,

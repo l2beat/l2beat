@@ -1,3 +1,754 @@
+Generated with discovered.json: 0x9b49d33bd9ac1e033a4d1c2b829dd7072105eff1
+
+# Diff at Mon, 14 Jul 2025 12:46:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22824302
+- current block number: 22824302
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22824302 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      address:
+-        "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346"
++        "eth:0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346"
+      values.$implementation:
+-        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      values.$members.0:
+-        "0x4326E446013908fBEEE4ce7b6935219c01854B21"
++        "eth:0x4326E446013908fBEEE4ce7b6935219c01854B21"
+      values.$members.1:
+-        "0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B"
++        "eth:0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B"
+      values.$members.2:
+-        "0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8"
++        "eth:0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8"
+      values.$members.3:
+-        "0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3"
++        "eth:0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3"
+      implementationNames.0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346:
+-        "Proxy"
+      implementationNames.0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346:
++        "Proxy"
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e) {
+    +++ description: None
+      address:
+-        "0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
++        "eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
+    }
+```
+
+```diff
+    EOA  (0x050b37a12451F188c7bA53D48b8A1adE6D138E71) {
+    +++ description: None
+      address:
+-        "0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
++        "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
+    }
+```
+
+```diff
+    EOA  (0x0d4E989c7620C8749c9417d2BF218896C767B606) {
+    +++ description: None
+      address:
+-        "0x0d4E989c7620C8749c9417d2BF218896C767B606"
++        "eth:0x0d4E989c7620C8749c9417d2BF218896C767B606"
+    }
+```
+
+```diff
+    EOA  (0x106fc088aBA908130fBC343F2F6d212Ff36150D1) {
+    +++ description: None
+      address:
+-        "0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
++        "eth:0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
+    }
+```
+
+```diff
+    EOA  (0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8) {
+    +++ description: None
+      address:
+-        "0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8"
++        "eth:0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8"
+    }
+```
+
+```diff
+    EOA  (0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016) {
+    +++ description: None
+      address:
+-        "0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
++        "eth:0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
+    }
+```
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      address:
+-        "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567"
++        "eth:0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567"
+      values.$implementation:
+-        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      values.$members.0:
+-        "0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da"
++        "eth:0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da"
+      values.$members.1:
+-        "0xD804aB3355a634aEBd45e1252d6208807defD554"
++        "eth:0xD804aB3355a634aEBd45e1252d6208807defD554"
+      values.$members.2:
+-        "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
++        "eth:0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
+      values.$members.3:
+-        "0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
++        "eth:0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
+      values.$members.4:
+-        "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
++        "eth:0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
+      values.$members.5:
+-        "0xf6dcD4d7141E06B916987C3C46220f6241278a30"
++        "eth:0xf6dcD4d7141E06B916987C3C46220f6241278a30"
+      implementationNames.0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567:
+-        "Proxy"
+      implementationNames.0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567:
++        "Proxy"
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da) {
+    +++ description: None
+      address:
+-        "0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da"
++        "eth:0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da"
+    }
+```
+
+```diff
+    contract Multisig 3 (0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      address:
+-        "0x225d3822De44E58eE935440E0c0B829C4232086e"
++        "eth:0x225d3822De44E58eE935440E0c0B829C4232086e"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xB1A308e7F02798377b7acF685E997E3D774c5863"
++        "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863"
+      values.$members.1:
+-        "0x0d4E989c7620C8749c9417d2BF218896C767B606"
++        "eth:0x0d4E989c7620C8749c9417d2BF218896C767B606"
+      values.$members.2:
+-        "0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
++        "eth:0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"
+      implementationNames.0x225d3822De44E58eE935440E0c0B829C4232086e:
+-        "Proxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x225d3822De44E58eE935440E0c0B829C4232086e:
++        "Proxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027) {
+    +++ description: None
+      address:
+-        "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
++        "eth:0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
+    }
+```
+
+```diff
+    EOA  (0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc) {
+    +++ description: None
+      address:
+-        "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
++        "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
+    }
+```
+
+```diff
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01) {
+    +++ description: None
+      address:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      values.$admin:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
++        "eth:0x38A43F4330f24fe920F943409709fc9A6084C939"
+      values.$implementation:
+-        "0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8"
++        "eth:0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8"
+      values.defaultFactory:
+-        "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D"
++        "eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D"
+      values.networkGovernor:
+-        "0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
++        "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
+      values.tokenGovernance:
+-        "0x35cc31f63deef017c38d51B038891bAE7d614e86"
++        "eth:0x35cc31f63deef017c38d51B038891bAE7d614e86"
+      values.validators.0:
+-        "0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
++        "eth:0x01c3A1a6890A146aC187A019F9863B3Ab2BfF91e"
+      implementationNames.0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01:
+-        "Proxy"
+      implementationNames.0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8:
+-        "Governance"
+      implementationNames.eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01:
++        "Proxy"
+      implementationNames.eth:0x3FBc7C6c2437dE24F91b2Ca61Fc7AD3D2D62F4c8:
++        "Governance"
+    }
+```
+
+```diff
+    contract TokenGovernance (0x35cc31f63deef017c38d51B038891bAE7d614e86) {
+    +++ description: None
+      address:
+-        "0x35cc31f63deef017c38d51B038891bAE7d614e86"
++        "eth:0x35cc31f63deef017c38d51B038891bAE7d614e86"
+      values.governance:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      values.listingFeeToken:
+-        "0x6B175474E89094C44Da98b954EedeAC495271d0F"
++        "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F"
+      values.tokenListers.0:
+-        "0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
++        "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
+      values.treasury:
+-        "0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
++        "eth:0x2A0a81e257a2f5D6eD4F07b81DbDa09F107bd027"
+      implementationNames.0x35cc31f63deef017c38d51B038891bAE7d614e86:
+-        "TokenGovernance"
+      implementationNames.eth:0x35cc31f63deef017c38d51B038891bAE7d614e86:
++        "TokenGovernance"
+    }
+```
+
+```diff
+    EOA  (0x37A71E0C1A5808343D893Db40e12A74e0A387908) {
+    +++ description: None
+      address:
+-        "0x37A71E0C1A5808343D893Db40e12A74e0A387908"
++        "eth:0x37A71E0C1A5808343D893Db40e12A74e0A387908"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      address:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
++        "eth:0x38A43F4330f24fe920F943409709fc9A6084C939"
+      values.getMaster:
+-        "0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
++        "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
+      values.mainContract:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
++        "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      values.managedContracts.0:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      values.managedContracts.1:
+-        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
++        "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      values.managedContracts.2:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
++        "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      implementationNames.0x38A43F4330f24fe920F943409709fc9A6084C939:
+-        "UpgradeGatekeeper"
+      implementationNames.eth:0x38A43F4330f24fe920F943409709fc9A6084C939:
++        "UpgradeGatekeeper"
+    }
+```
+
+```diff
+    EOA  (0x39415255619783A2E71fcF7d8f708A951d92e1b6) {
+    +++ description: None
+      address:
+-        "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
++        "eth:0x39415255619783A2E71fcF7d8f708A951d92e1b6"
+    }
+```
+
+```diff
+    EOA  (0x399a6a13D298CF3F41a562966C1a450136Ea52C2) {
+    +++ description: None
+      address:
+-        "0x399a6a13D298CF3F41a562966C1a450136Ea52C2"
++        "eth:0x399a6a13D298CF3F41a562966C1a450136Ea52C2"
+    }
+```
+
+```diff
+    EOA  (0x4326E446013908fBEEE4ce7b6935219c01854B21) {
+    +++ description: None
+      address:
+-        "0x4326E446013908fBEEE4ce7b6935219c01854B21"
++        "eth:0x4326E446013908fBEEE4ce7b6935219c01854B21"
+    }
+```
+
+```diff
+    EOA  (0x45F9AfCf9565051344aFb36e665f4d7bb2d18415) {
+    +++ description: None
+      address:
+-        "0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
++        "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
+    }
+```
+
+```diff
+    EOA  (0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE) {
+    +++ description: None
+      address:
+-        "0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
++        "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
+    }
+```
+
+```diff
+    EOA  (0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6) {
+    +++ description: None
+      address:
+-        "0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6"
++        "eth:0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6"
+    }
+```
+
+```diff
+    EOA  (0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B) {
+    +++ description: None
+      address:
+-        "0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B"
++        "eth:0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B"
+    }
+```
+
+```diff
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D) {
+    +++ description: None
+      address:
+-        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
++        "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      values.$admin:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
++        "eth:0x38A43F4330f24fe920F943409709fc9A6084C939"
+      values.$implementation:
+-        "0x6e95812C432F293b8045811F4B1758285EBDB206"
++        "eth:0x6e95812C432F293b8045811F4B1758285EBDB206"
+      implementationNames.0x5290E9582B4FB706EaDf87BB1c129e897e04d06D:
+-        "Proxy"
+      implementationNames.0x6e95812C432F293b8045811F4B1758285EBDB206:
+-        "Verifier"
+      implementationNames.eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D:
++        "Proxy"
+      implementationNames.eth:0x6e95812C432F293b8045811F4B1758285EBDB206:
++        "Verifier"
+    }
+```
+
+```diff
+    EOA  (0x702caCafA54B88e9c54449563Fb2e496e85c78b7) {
+    +++ description: None
+      address:
+-        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
++        "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+    }
+```
+
+```diff
+    EOA  (0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3) {
+    +++ description: None
+      address:
+-        "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3"
++        "eth:0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3"
+    }
+```
+
+```diff
+    EOA  (0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11) {
+    +++ description: None
+      address:
+-        "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11"
++        "eth:0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11"
+    }
+```
+
+```diff
+    contract NftFactory (0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D) {
+    +++ description: None
+      address:
+-        "0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D"
++        "eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D"
+      implementationNames.0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D:
+-        "ZkSyncNFTFactory"
+      implementationNames.eth:0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D:
++        "ZkSyncNFTFactory"
+    }
+```
+
+```diff
+    EOA  (0x890Da36c3dD697CbB88E616668BEDaFA369f3793) {
+    +++ description: None
+      address:
+-        "0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
++        "eth:0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
+    }
+```
+
+```diff
+    EOA  (0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607) {
+    +++ description: None
+      address:
+-        "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607"
++        "eth:0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607"
+    }
+```
+
+```diff
+    EOA  (0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3) {
+    +++ description: None
+      address:
+-        "0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3"
++        "eth:0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3"
+    }
+```
+
+```diff
+    EOA  (0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B) {
+    +++ description: None
+      address:
+-        "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B"
++        "eth:0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B"
+    }
+```
+
+```diff
+    EOA  (0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769) {
+    +++ description: None
+      address:
+-        "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769"
++        "eth:0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769"
+    }
+```
+
+```diff
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF) {
+    +++ description: None
+      address:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
++        "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      values.$admin:
+-        "0x38A43F4330f24fe920F943409709fc9A6084C939"
++        "eth:0x38A43F4330f24fe920F943409709fc9A6084C939"
+      values.$implementation.0:
+-        "0x8e972b354E6933275513C355Ee14D44A832aD2d9"
++        "eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9"
+      values.$implementation.1:
+-        "0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
++        "eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD"
+      values.governance:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      values.securityCouncilMembers.0:
+-        "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769"
++        "eth:0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769"
+      values.securityCouncilMembers.1:
+-        "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607"
++        "eth:0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607"
+      values.securityCouncilMembers.2:
+-        "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346"
++        "eth:0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346"
+      values.securityCouncilMembers.3:
+-        "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3"
++        "eth:0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3"
+      values.securityCouncilMembers.4:
+-        "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11"
++        "eth:0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11"
+      values.securityCouncilMembers.5:
+-        "0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190"
++        "eth:0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190"
+      values.securityCouncilMembers.6:
+-        "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6"
++        "eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6"
+      values.securityCouncilMembers.7:
+-        "0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6"
++        "eth:0x4d1E3089042Ab3A93E03CA88B566b99Bd22438C6"
+      values.securityCouncilMembers.8:
+-        "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567"
++        "eth:0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567"
+      values.securityCouncilMembers.9:
+-        "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
++        "eth:0x39415255619783A2E71fcF7d8f708A951d92e1b6"
+      values.securityCouncilMembers.10:
+-        "0x399a6a13D298CF3F41a562966C1a450136Ea52C2"
++        "eth:0x399a6a13D298CF3F41a562966C1a450136Ea52C2"
+      values.securityCouncilMembers.11:
+-        "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB"
++        "eth:0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB"
+      values.securityCouncilMembers.12:
+-        "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f"
++        "eth:0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f"
+      values.securityCouncilMembers.13:
+-        "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B"
++        "eth:0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B"
+      values.securityCouncilMembers.14:
+-        "0x225d3822De44E58eE935440E0c0B829C4232086e"
++        "eth:0x225d3822De44E58eE935440E0c0B829C4232086e"
+      values.verifier:
+-        "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
++        "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      implementationNames.0xaBEA9132b05A70803a4E85094fD0e1800777fBEF:
+-        "Proxy"
+      implementationNames.0x8e972b354E6933275513C355Ee14D44A832aD2d9:
+-        "ZkSync"
+      implementationNames.0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD:
+-        "AdditionalZkSync"
+      implementationNames.eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF:
++        "Proxy"
+      implementationNames.eth:0x8e972b354E6933275513C355Ee14D44A832aD2d9:
++        "ZkSync"
+      implementationNames.eth:0x2eaa1377e0fC95dE998B9fA7611E9D67ebA534fD:
++        "AdditionalZkSync"
+    }
+```
+
+```diff
+    contract Proxy (0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6) {
+    +++ description: None
+      address:
+-        "0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6"
++        "eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6"
+      implementationNames.0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6:
+-        "Proxy"
+      implementationNames.eth:0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6:
++        "Proxy"
+    }
+```
+
+```diff
+    EOA  (0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193) {
+    +++ description: None
+      address:
+-        "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
++        "eth:0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
+    }
+```
+
+```diff
+    EOA  (0xB1A308e7F02798377b7acF685E997E3D774c5863) {
+    +++ description: None
+      address:
+-        "0xB1A308e7F02798377b7acF685E997E3D774c5863"
++        "eth:0xB1A308e7F02798377b7acF685E997E3D774c5863"
+    }
+```
+
+```diff
+    EOA  (0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA) {
+    +++ description: None
+      address:
+-        "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
++        "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+    }
+```
+
+```diff
+    EOA  (0xD804aB3355a634aEBd45e1252d6208807defD554) {
+    +++ description: None
+      address:
+-        "0xD804aB3355a634aEBd45e1252d6208807defD554"
++        "eth:0xD804aB3355a634aEBd45e1252d6208807defD554"
+    }
+```
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      address:
+-        "0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
++        "eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99"
+      values.$implementation:
+-        "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
++        "eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+      values.$members.0:
+-        "0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
++        "eth:0x4964D00fA975a7346ee6196a94b07c01ed1cD3CE"
+      values.$members.1:
+-        "0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
++        "eth:0x050b37a12451F188c7bA53D48b8A1adE6D138E71"
+      values.$members.2:
+-        "0x37A71E0C1A5808343D893Db40e12A74e0A387908"
++        "eth:0x37A71E0C1A5808343D893Db40e12A74e0A387908"
+      values.$members.3:
+-        "0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
++        "eth:0x890Da36c3dD697CbB88E616668BEDaFA369f3793"
+      values.$members.4:
+-        "0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
++        "eth:0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
+      values.$members.5:
+-        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
++        "eth:0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$members.6:
+-        "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
++        "eth:0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+      values.$members.7:
+-        "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
++        "eth:0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
+      implementationNames.0xE24f4870Ab85DE8E356C5fC56138587206c70d99:
+-        "Proxy"
+      implementationNames.0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
+-        "GnosisSafe"
+      implementationNames.eth:0xE24f4870Ab85DE8E356C5fC56138587206c70d99:
++        "Proxy"
+      implementationNames.eth:0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe) {
+    +++ description: None
+      address:
+-        "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
++        "eth:0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
+    }
+```
+
+```diff
+    EOA  (0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f) {
+    +++ description: None
+      address:
+-        "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f"
++        "eth:0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f"
+    }
+```
+
+```diff
+    EOA  (0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB) {
+    +++ description: None
+      address:
+-        "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB"
++        "eth:0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB"
+    }
+```
+
+```diff
+    EOA  (0xf6dcD4d7141E06B916987C3C46220f6241278a30) {
+    +++ description: None
+      address:
+-        "0xf6dcD4d7141E06B916987C3C46220f6241278a30"
++        "eth:0xf6dcD4d7141E06B916987C3C46220f6241278a30"
+    }
+```
+
+```diff
+    EOA  (0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190) {
+    +++ description: None
+      address:
+-        "0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190"
++        "eth:0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Multisig 1 (0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig 3 (0x225d3822De44E58eE935440E0c0B829C4232086e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenGovernance (0x35cc31f63deef017c38d51B038891bAE7d614e86)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x5290E9582B4FB706EaDf87BB1c129e897e04d06D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NftFactory (0x7C770595a2Be9A87CF49B35eA9bC534f1a59552D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSync (0xaBEA9132b05A70803a4E85094fD0e1800777fBEF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Proxy (0xAfC2F2D803479A2AF3A72022D54cc0901a0ec0d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xbc068f6a48615c73e1343481bd748d3086a54c63
 
 # Diff at Fri, 04 Jul 2025 12:19:31 GMT:

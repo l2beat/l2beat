@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import type { Config } from '../../config'
-import type { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -11,14 +11,14 @@ import type {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
-import { TrackedTxsClient } from './TrackedTxsClient'
-import { TrackedTxsIndexer } from './TrackedTxsIndexer'
-import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAggregatorIndexer'
 import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
-import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { AnomaliesIndexer } from './modules/liveness/indexers/AnomaliesIndexer'
 import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -42,7 +42,10 @@ export function createTrackedTxsModule(
     config.trackedTxsConfig.bigQuery,
   )
 
-  const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
+  const trackedTxsClient = new TrackedTxsClient(
+    bigQueryClient,
+    config.trackedTxsConfig.projects,
+  )
 
   const runtimeConfigurations = config.trackedTxsConfig.projects.flatMap(
     (project) => project.configurations,

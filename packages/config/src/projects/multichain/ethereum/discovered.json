@@ -2,21 +2,21 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0x98b1d497e5585f3df1ce85b6691e98f8c96b938d4178bdb2ba7b027588ff7b19",
+  "configHash": "0x8140325b08c8afbd7d4ff7aa005de5132e5ce76fc05308f14f84993c39cec2df",
   "entries": [
     {
-      "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
+      "address": "eth:0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00",
+      "address": "eth:0x5E583B6a1686f7Bc09A6bBa66E852A7C80d36F00",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "AnyswapV4Router",
-      "address": "0x6b7a87899490EcE95443e979cA9485CBE7E71522",
+      "address": "eth:0x6b7a87899490EcE95443e979cA9485CBE7E71522",
       "type": "Contract",
       "sourceHashes": [
         "0xb0a988b45b574080d5e8d605dfd609faf6df08d7e16a57eb2f754e278224f66f"
@@ -27,17 +27,17 @@
       "values": {
         "$immutable": true,
         "cID": 1,
-        "factory": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
-        "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
-        "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "factory": "eth:0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
+        "mpc": "eth:0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
+        "wNATIVE": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
-        "0x6b7a87899490EcE95443e979cA9485CBE7E71522": "AnyswapV4Router"
+        "eth:0x6b7a87899490EcE95443e979cA9485CBE7E71522": "AnyswapV4Router"
       }
     },
     {
       "name": "AnyswapV6Router",
-      "address": "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705",
+      "address": "eth:0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705",
       "type": "Contract",
       "sourceHashes": [
         "0xa42a1ba17ff7ccbd5f17722cec7254e3a5f29a6b808de5fab73eeb7d7696a756"
@@ -49,17 +49,17 @@
         "$immutable": true,
         "cID": 1,
         "enableSwapTrade": false,
-        "factory": "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
-        "mpc": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
-        "wNATIVE": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "factory": "eth:0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac",
+        "mpc": "eth:0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",
+        "wNATIVE": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
-        "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": "AnyswapV6Router"
+        "eth:0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": "AnyswapV6Router"
       }
     }
   ],
   "abis": {
-    "0x6b7a87899490EcE95443e979cA9485CBE7E71522": [
+    "eth:0x6b7a87899490EcE95443e979cA9485CBE7E71522": [
       "constructor(address _factory, address _wNATIVE, address _mpc)",
       "event LogAnySwapIn(bytes32 indexed txhash, address indexed token, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
       "event LogAnySwapOut(address indexed token, address indexed from, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
@@ -99,7 +99,7 @@
       "function quote(uint256 amountA, uint256 reserveA, uint256 reserveB) pure returns (uint256 amountB)",
       "function wNATIVE() view returns (address)"
     ],
-    "0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": [
+    "eth:0xBa8Da9dcF11B50B03fd5284f164Ef5cdEF910705": [
       "constructor(address _factory, address _wNATIVE, address _mpc)",
       "event LogAnySwapIn(bytes32 indexed txhash, address indexed token, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
       "event LogAnySwapOut(address indexed token, address indexed from, address indexed to, uint256 amount, uint256 fromChainID, uint256 toChainID)",
@@ -147,5 +147,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x5fd746db9b35f1d14e4452c99efbea03d5de657bbe37bb38c16d141b40ce8f38"
+  "permissionsConfigHash": "0xb981dc7cfeb6f87d6d9dfab17e747e0e022a77b261291e4642634b8c3ade6e5f"
 }

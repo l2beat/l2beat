@@ -1,16 +1,16 @@
 import {
   assert,
   Bytes,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import type { ContractValue } from '../../output/types'
-import type { ProxyDetails } from '../types'
-
 import { type providers, utils } from 'ethers'
+import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import type { DateAddresses } from '../pastUpgrades'
+import type { ProxyDetails } from '../types'
 import { getAdmin, getImplementation } from './Eip1967Proxy'
 
 // keccak256('eip1967.proxy.implementation.secondary') - 1)
@@ -19,6 +19,7 @@ const SECONDARY_IMPLEMENTATION_SLOT = Bytes.fromHex(
 )
 
 function mergeLogs(
+  chain: string,
   abi: utils.Interface,
   dateMap: Record<string, string>,
   lhsUnsorted: providers.Log[],
@@ -29,8 +30,8 @@ function mergeLogs(
 
   let lhi = 0
   let rhi = 0
-  let lastLeftImpl: EthereumAddress | undefined
-  let lastRightImpl: EthereumAddress | undefined
+  let lastLeftImpl: ChainSpecificAddress | undefined
+  let lastRightImpl: ChainSpecificAddress | undefined
 
   const result: DateAddresses[] = []
   while (lhi < lhs.length && rhi < rhs.length) {
@@ -39,8 +40,14 @@ function mergeLogs(
     // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const rightLog = rhs[rhi]!
 
-    lastLeftImpl = abi.parseLog(leftLog).args.implementation
-    lastRightImpl = abi.parseLog(rightLog).args.implementation
+    lastLeftImpl = ChainSpecificAddress.fromLong(
+      chain,
+      abi.parseLog(leftLog).args.implementation ?? EthereumAddress.ZERO,
+    )
+    lastRightImpl = ChainSpecificAddress.fromLong(
+      chain,
+      abi.parseLog(rightLog).args.implementation ?? EthereumAddress.ZERO,
+    )
 
     if (leftLog.blockNumber === rightLog.blockNumber) {
       lhi += 1
@@ -48,61 +55,52 @@ function mergeLogs(
       result.push([
         dateMap[leftLog.blockNumber] ?? 'ERROR',
         Hash256(leftLog.transactionHash),
-        [
-          lastLeftImpl ?? EthereumAddress.ZERO,
-          lastRightImpl ?? EthereumAddress.ZERO,
-        ],
+        [lastLeftImpl, lastRightImpl],
       ])
     } else if (leftLog.blockNumber < rightLog.blockNumber) {
       lhi += 1
       result.push([
         dateMap[leftLog.blockNumber] ?? 'ERROR',
         Hash256(leftLog.transactionHash),
-        [
-          lastLeftImpl ?? EthereumAddress.ZERO,
-          lastRightImpl ?? EthereumAddress.ZERO,
-        ],
+        [lastLeftImpl, lastRightImpl],
       ])
     } else {
       rhi += 1
       result.push([
         dateMap[rightLog.blockNumber] ?? 'ERROR',
         Hash256(rightLog.transactionHash),
-        [
-          lastLeftImpl ?? EthereumAddress.ZERO,
-          lastRightImpl ?? EthereumAddress.ZERO,
-        ],
+        [lastLeftImpl, lastRightImpl],
       ])
     }
   }
 
   while (lhi < lhs.length) {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const leftLog = lhs[lhi]!
     lhi += 1
-    lastLeftImpl = abi.parseLog(leftLog).args.implementation
+    lastLeftImpl = ChainSpecificAddress.fromLong(
+      chain,
+      abi.parseLog(leftLog).args.implementation ?? EthereumAddress.ZERO,
+    )
     result.push([
       dateMap[leftLog.blockNumber] ?? 'ERROR',
       Hash256(leftLog.transactionHash),
-      [
-        lastLeftImpl ?? EthereumAddress.ZERO,
-        lastRightImpl ?? EthereumAddress.ZERO,
-      ],
+      [lastLeftImpl, lastRightImpl ?? ChainSpecificAddress.ZERO(chain)],
     ])
   }
 
   while (rhi < rhs.length) {
-    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const rightLog = rhs[rhi]!
     rhi += 1
-    lastRightImpl = abi.parseLog(rightLog).args.implementation
+    lastRightImpl = ChainSpecificAddress.fromLong(
+      chain,
+      abi.parseLog(rightLog).args.implementation ?? EthereumAddress.ZERO,
+    )
     result.push([
       dateMap[rightLog.blockNumber] ?? 'ERROR',
       Hash256(rightLog.transactionHash),
-      [
-        lastLeftImpl ?? EthereumAddress.ZERO,
-        lastRightImpl ?? EthereumAddress.ZERO,
-      ],
+      [lastLeftImpl ?? ChainSpecificAddress.ZERO(chain), lastRightImpl],
     ])
   }
 
@@ -111,7 +109,7 @@ function mergeLogs(
 
 async function getPastUpgrades(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<DateAddresses[]> {
   const abi = new utils.Interface([
     'event Upgraded(address indexed implementation)',
@@ -142,18 +140,18 @@ async function getPastUpgrades(
     blocks.map((b) => [b.number, UnixTime.toDate(b.timestamp).toISOString()]),
   )
 
-  return mergeLogs(abi, dateMap, primaryLogs, secondaryLogs)
+  return mergeLogs(provider.chain, abi, dateMap, primaryLogs, secondaryLogs)
 }
 
 export async function detectArbitrumProxy(
   provider: IProvider,
-  address: EthereumAddress,
+  address: ChainSpecificAddress,
 ): Promise<ProxyDetails | undefined> {
   const userImplementation = await provider.getStorageAsAddress(
     address,
     SECONDARY_IMPLEMENTATION_SLOT,
   )
-  if (userImplementation === EthereumAddress.ZERO) {
+  if (userImplementation === ChainSpecificAddress.ZERO(provider.chain)) {
     return
   }
   const [adminImplementation, admin] = await Promise.all([

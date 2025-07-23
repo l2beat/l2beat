@@ -1,3 +1,1105 @@
+Generated with discovered.json: 0xfb4596b9bb5c3943a91023214543137831d1612a
+
+# Diff at Mon, 14 Jul 2025 12:45:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22823842
+- current block number: 22823842
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823842 (main branch discovery), not current.
+
+```diff
+    contract EigenDAOperationsMultisig (0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      address:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
++        "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
+      values.$members.1:
+-        "0x4985238672d91Baed43dF1B2431F67bc332A1753"
++        "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753"
+      values.$members.2:
+-        "0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6"
++        "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6"
+      values.$members.3:
+-        "0x403F4d4958409480502CdC78a54cE1B67263C17a"
++        "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a"
+      values.$members.4:
+-        "0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
++        "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
+      values.$members.5:
+-        "0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
++        "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
+      values.$members.6:
+-        "0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
++        "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
+      implementationNames.0x002721B4790d97dC140a049936aA710152Ba92D5:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x002721B4790d97dC140a049936aA710152Ba92D5:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D) {
+    +++ description: Keeps track of the total stake of each operator.
+      address:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"
++        "eth:0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"
++        "eth:0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"
+      values.delegation:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.0:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++        "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.1:
+-        "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
++        "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.2:
+-        "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
++        "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.3:
+-        "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"
++        "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.4:
+-        "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
++        "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.5:
+-        "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
++        "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.6:
+-        "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
++        "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.7:
+-        "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"
++        "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.8:
+-        "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
++        "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.9:
+-        "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
++        "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.10:
+-        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
++        "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.11:
+-        "0xAe60d8180437b5C34bB956822ac2710972584473"
++        "eth:0xAe60d8180437b5C34bB956822ac2710972584473"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.0.12:
+-        "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
++        "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.1.0:
+-        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
++        "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
++++ description: The strategies for the first quorum (ETH).
+      values.quorumStrategies.2.0:
+-        "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"
++        "eth:0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"
+      values.registryCoordinator:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      implementationNames.0x006124Ae7976137266feeBFb3F4D2BE4C073139D:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x1C468cf7089D263c2f53e2579b329B16aBc4dd96:
+-        "StakeRegistry"
+      implementationNames.eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x1C468cf7089D263c2f53e2579b329B16aBc4dd96:
++        "StakeRegistry"
+    }
+```
+
+```diff
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505) {
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+      address:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
++        "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"
++        "eth:0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"
++        "eth:0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"
+      values.registryCoordinator:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      implementationNames.0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b:
+-        "BLSApkRegistry"
+      implementationNames.eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b:
++        "BLSApkRegistry"
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      address:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x2088435ABcB1234A9427B755931C9064C93a2595"
++        "eth:0x2088435ABcB1234A9427B755931C9064C93a2595"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"
++        "eth:0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"
+      values.$pastUpgrades.2.2.0:
+-        "0xdcabf0bE991d4609096CCe316df08d091356E03F"
++        "eth:0xdcabf0bE991d4609096CCe316df08d091356E03F"
+      values.$pastUpgrades.3.2.0:
+-        "0x2088435ABcB1234A9427B755931C9064C93a2595"
++        "eth:0x2088435ABcB1234A9427B755931C9064C93a2595"
+      values.blsApkRegistry:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
++        "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      values.churnApprover:
+-        "0xe0550117Cb066D3b330eBd764B0d75D3BA378734"
++        "eth:0xe0550117Cb066D3b330eBd764B0d75D3BA378734"
+      values.ejector:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
++        "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      values.indexRegistry:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "eth:0x0c431C66F4dE941d089625E5B423D00707977060"
+      values.registries.0:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      values.registries.1:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
++        "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      values.registries.2:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      values.serviceManager:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
++        "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      values.socketRegistry:
+-        "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2"
++        "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2"
+      values.stakeRegistry:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      implementationNames.0x0BAAc79acD45A023E19345c352d8a7a83C4e5656:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x2088435ABcB1234A9427B755931C9064C93a2595:
+-        "RegistryCoordinator"
+      implementationNames.eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x2088435ABcB1234A9427B755931C9064C93a2595:
++        "RegistryCoordinator"
+    }
+```
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+      address:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "eth:0x0c431C66F4dE941d089625E5B423D00707977060"
+      values.pausers.0:
+-        "0xBE1685C81aA44FF9FB319dD389addd9374383e90"
++        "eth:0xBE1685C81aA44FF9FB319dD389addd9374383e90"
+      values.pausers.1:
+-        "0x5050389572f2d220ad927CcbeA0D406831012390"
++        "eth:0x5050389572f2d220ad927CcbeA0D406831012390"
+      values.pausers.2:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      values.unpauser:
+-        "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
++        "eth:0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
+      implementationNames.0x0c431C66F4dE941d089625E5B423D00707977060:
+-        "PauserRegistry"
+      implementationNames.eth:0x0c431C66F4dE941d089625E5B423D00707977060:
++        "PauserRegistry"
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      address:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
++        "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"
++        "eth:0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"
++        "eth:0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"
+      values.$pastUpgrades.2.2.0:
+-        "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"
++        "eth:0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"
+      values.$pastUpgrades.3.2.0:
+-        "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"
++        "eth:0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"
+      values.ejectors.0:
+-        "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"
++        "eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"
+      values.ejectors.1:
+-        "0x8642473a123FE33b0aaE90bD8604eA1029417236"
++        "eth:0x8642473a123FE33b0aaE90bD8604eA1029417236"
+      values.ejectors.2:
+-        "0x338477FfaF63c04AC06048787f910671eC914B34"
++        "eth:0x338477FfaF63c04AC06048787f910671eC914B34"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      values.registryCoordinator:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      values.stakeRegistry:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      implementationNames.0x130d8EA0052B45554e4C99079B84df292149Bd5E:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A:
+-        "EjectionManager"
+      implementationNames.eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A:
++        "EjectionManager"
+    }
+```
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      address:
+-        "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
++        "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x55688D9211bC00BA573A1e0672e5de050818a360"
++        "eth:0x55688D9211bC00BA573A1e0672e5de050818a360"
+      values.$members.1:
+-        "0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
++        "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
+      values.$members.2:
+-        "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
++        "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
+      values.$members.3:
+-        "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
++        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+      values.$members.4:
+-        "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
++        "eth:0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
+      implementationNames.0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6) {
+    +++ description: None
+      address:
+-        "0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6"
++        "eth:0x1b6cC4C0670bBA2B992b82Cb8E76B286D63264c6"
+    }
+```
+
+```diff
+    EOA  (0x2bBA03bA38D90634e6afD8C23C16ca01651bc493) {
+    +++ description: None
+      address:
+-        "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
++        "eth:0x2bBA03bA38D90634e6afD8C23C16ca01651bc493"
+    }
+```
+
+```diff
+    contract EigenDA Multisig (0x338477FfaF63c04AC06048787f910671eC914B34) {
+    +++ description: None
+      address:
+-        "0x338477FfaF63c04AC06048787f910671eC914B34"
++        "eth:0x338477FfaF63c04AC06048787f910671eC914B34"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0x9308319e3988843f36BC6682Ffa571525E56a125"
++        "eth:0x9308319e3988843f36BC6682Ffa571525E56a125"
+      values.$members.1:
+-        "0x5262498E7D4fbbb08425b2a06D91157acDC50aDA"
++        "eth:0x5262498E7D4fbbb08425b2a06D91157acDC50aDA"
+      values.$members.2:
+-        "0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F"
++        "eth:0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F"
+      values.$members.3:
+-        "0xA38372470ed4c3C4bb5123CC7f335212950e350A"
++        "eth:0xA38372470ed4c3C4bb5123CC7f335212950e350A"
+      values.$members.4:
+-        "0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904"
++        "eth:0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904"
+      values.$members.5:
+-        "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
++        "eth:0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
+      values.$members.6:
+-        "0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31"
++        "eth:0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31"
+      values.$members.7:
+-        "0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E"
++        "eth:0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E"
+      implementationNames.0x338477FfaF63c04AC06048787f910671eC914B34:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0x338477FfaF63c04AC06048787f910671eC914B34:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    EOA  (0x3C20b05f44ef008A5b848761e58e5Ca9594163e9) {
+    +++ description: None
+      address:
+-        "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
++        "eth:0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
+    }
+```
+
+```diff
+    EOA  (0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3) {
+    +++ description: None
+      address:
+-        "0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
++        "eth:0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3"
+    }
+```
+
+```diff
+    EOA  (0x403F4d4958409480502CdC78a54cE1B67263C17a) {
+    +++ description: None
+      address:
+-        "0x403F4d4958409480502CdC78a54cE1B67263C17a"
++        "eth:0x403F4d4958409480502CdC78a54cE1B67263C17a"
+    }
+```
+
+```diff
+    EOA  (0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904) {
+    +++ description: None
+      address:
+-        "0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904"
++        "eth:0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904"
+    }
+```
+
+```diff
+    EOA  (0x454Ef2f69f91527856E06659f92a66f464C1ca4e) {
+    +++ description: None
+      address:
+-        "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
++        "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
+    }
+```
+
+```diff
+    EOA  (0x4985238672d91Baed43dF1B2431F67bc332A1753) {
+    +++ description: None
+      address:
+-        "0x4985238672d91Baed43dF1B2431F67bc332A1753"
++        "eth:0x4985238672d91Baed43dF1B2431F67bc332A1753"
+    }
+```
+
+```diff
+    EOA  (0x5262498E7D4fbbb08425b2a06D91157acDC50aDA) {
+    +++ description: None
+      address:
+-        "0x5262498E7D4fbbb08425b2a06D91157acDC50aDA"
++        "eth:0x5262498E7D4fbbb08425b2a06D91157acDC50aDA"
+    }
+```
+
+```diff
+    EOA  (0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E) {
+    +++ description: None
+      address:
+-        "0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E"
++        "eth:0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E"
+    }
+```
+
+```diff
+    EOA  (0x55688D9211bC00BA573A1e0672e5de050818a360) {
+    +++ description: None
+      address:
+-        "0x55688D9211bC00BA573A1e0672e5de050818a360"
++        "eth:0x55688D9211bC00BA573A1e0672e5de050818a360"
+    }
+```
+
+```diff
+    contract SocketRegistry (0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2) {
+    +++ description: None
+      address:
+-        "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2"
++        "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x5b60105ceD5207D6ad217BF2d426e133454eCFB4"
++        "eth:0x5b60105ceD5207D6ad217BF2d426e133454eCFB4"
+      values.$pastUpgrades.0.2.0:
+-        "0x5b60105ceD5207D6ad217BF2d426e133454eCFB4"
++        "eth:0x5b60105ceD5207D6ad217BF2d426e133454eCFB4"
+      values.registryCoordinator:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      implementationNames.0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x5b60105ceD5207D6ad217BF2d426e133454eCFB4:
+-        "SocketRegistry"
+      implementationNames.eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x5b60105ceD5207D6ad217BF2d426e133454eCFB4:
++        "SocketRegistry"
+    }
+```
+
+```diff
+    EOA  (0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED) {
+    +++ description: None
+      address:
+-        "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED"
++        "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED"
+    }
+```
+
+```diff
+    EOA  (0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04) {
+    +++ description: None
+      address:
+-        "0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
++        "eth:0x5D9A6573206e5205702E4caD87DC61f4C2a1Ad04"
+    }
+```
+
+```diff
+    EOA  (0x68bbBD6c18B0bc1B563489A13a398345E9da23d0) {
+    +++ description: None
+      address:
+-        "0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
++        "eth:0x68bbBD6c18B0bc1B563489A13a398345E9da23d0"
+    }
+```
+
+```diff
+    contract EigenDADisperserRegistry (0x78cb05379a3b66E5227f2C1496432D7FFE794Fad) {
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+      address:
+-        "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
++        "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5"
++        "eth:0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5"
+      values.$pastUpgrades.0.2.0:
+-        "0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5"
++        "eth:0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5"
++++ severity: HIGH
+      values.dispersers.0:
+-        "0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9"
++        "eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      implementationNames.0x78cb05379a3b66E5227f2C1496432D7FFE794Fad:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5:
+-        "EigenDADisperserRegistry"
+      implementationNames.eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5:
++        "EigenDADisperserRegistry"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      address:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      implementationNames.0x8247EF5705d3345516286B72bFE6D690197C2E99:
+-        "ProxyAdmin"
+      implementationNames.eth:0x8247EF5705d3345516286B72bFE6D690197C2E99:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x8642473a123FE33b0aaE90bD8604eA1029417236) {
+    +++ description: None
+      address:
+-        "0x8642473a123FE33b0aaE90bD8604eA1029417236"
++        "eth:0x8642473a123FE33b0aaE90bD8604eA1029417236"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      address:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
++        "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0xae448D008B6F69033AfdA361b46b36C472B6FEE0"
++        "eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"
++        "eth:0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"
+      values.$pastUpgrades.2.2.0:
+-        "0x26089e9738b809d8308B0011B93b4225a112DB8C"
++        "eth:0x26089e9738b809d8308B0011B93b4225a112DB8C"
+      values.$pastUpgrades.3.2.0:
+-        "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
++        "eth:0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
+      values.$pastUpgrades.4.2.0:
+-        "0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"
++        "eth:0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"
+      values.$pastUpgrades.5.2.0:
+-        "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"
++        "eth:0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"
+      values.$pastUpgrades.6.2.0:
+-        "0xae448D008B6F69033AfdA361b46b36C472B6FEE0"
++        "eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0"
+      values.avsDirectory:
+-        "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++        "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF"
++++ description: The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.
++++ severity: HIGH
+      values.batchConfirmers.0:
+-        "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8"
++        "eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8"
++++ description: The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.
++++ severity: HIGH
+      values.batchConfirmers.1:
+-        "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED"
++        "eth:0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED"
++++ description: The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.
++++ severity: HIGH
+      values.batchConfirmers.2:
+-        "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
++        "eth:0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
+      values.blsApkRegistry:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
++        "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      values.delegation:
+-        "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
++        "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A"
+      values.eigenDADisperserRegistry:
+-        "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
++        "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
+      values.eigenDARelayRegistry:
+-        "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
++        "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
+      values.eigenDAThresholdRegistry:
+-        "0xdb4c89956eEa6F606135E7d366322F2bDE609F15"
++        "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15"
+      values.getRestakeableStrategies.0:
+-        "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
++        "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0"
+      values.getRestakeableStrategies.1:
+-        "0x93c4b944D05dfe6df7645A86cd2206016c51564D"
++        "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D"
+      values.getRestakeableStrategies.2:
+-        "0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
++        "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2"
+      values.getRestakeableStrategies.3:
+-        "0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"
++        "eth:0x54945180dB7943c0ed0FEE7EdaB2Bd24620256bc"
+      values.getRestakeableStrategies.4:
+-        "0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
++        "eth:0x9d7eD45EE2E8FC5482fa2428f15C971e6369011d"
+      values.getRestakeableStrategies.5:
+-        "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
++        "eth:0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff"
+      values.getRestakeableStrategies.6:
+-        "0xa4C637e0F704745D182e4D38cAb7E7485321d059"
++        "eth:0xa4C637e0F704745D182e4D38cAb7E7485321d059"
+      values.getRestakeableStrategies.7:
+-        "0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"
++        "eth:0x57ba429517c3473B6d34CA9aCd56c0e735b94c02"
+      values.getRestakeableStrategies.8:
+-        "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
++        "eth:0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6"
+      values.getRestakeableStrategies.9:
+-        "0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
++        "eth:0x7CA911E83dabf90C90dD3De5411a10F1A6112184"
+      values.getRestakeableStrategies.10:
+-        "0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
++        "eth:0x8CA7A5d6f3acd3A7A8bC468a8CD0FB14B6BD28b6"
+      values.getRestakeableStrategies.11:
+-        "0xAe60d8180437b5C34bB956822ac2710972584473"
++        "eth:0xAe60d8180437b5C34bB956822ac2710972584473"
+      values.getRestakeableStrategies.12:
+-        "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
++        "eth:0x298aFB19A105D59E74658C4C334Ff360BadE6dd2"
+      values.getRestakeableStrategies.13:
+-        "0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
++        "eth:0xaCB55C530Acdb2849e6d4f36992Cd8c9D50ED8F7"
+      values.getRestakeableStrategies.14:
+-        "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"
++        "eth:0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      values.pauserRegistry:
+-        "0x0c431C66F4dE941d089625E5B423D00707977060"
++        "eth:0x0c431C66F4dE941d089625E5B423D00707977060"
+      values.paymentVault:
+-        "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05"
++        "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05"
+      values.registryCoordinator:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      values.rewardsInitiator:
+-        "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
++        "eth:0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
+      values.stakeRegistry:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      implementationNames.0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xae448D008B6F69033AfdA361b46b36C472B6FEE0:
+-        "EigenDAServiceManager"
+      implementationNames.eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xae448D008B6F69033AfdA361b46b36C472B6FEE0:
++        "EigenDAServiceManager"
+    }
+```
+
+```diff
+    EOA  (0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489) {
+    +++ description: None
+      address:
+-        "0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
++        "eth:0x891bbCfEF0C7504218b3156Cd0795cA5C8c7d489"
+    }
+```
+
+```diff
+    EOA  (0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8) {
+    +++ description: None
+      address:
+-        "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8"
++        "eth:0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8"
+    }
+```
+
+```diff
+    EOA  (0x9308319e3988843f36BC6682Ffa571525E56a125) {
+    +++ description: None
+      address:
+-        "0x9308319e3988843f36BC6682Ffa571525E56a125"
++        "eth:0x9308319e3988843f36BC6682Ffa571525E56a125"
+    }
+```
+
+```diff
+    EOA  (0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F) {
+    +++ description: None
+      address:
+-        "0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F"
++        "eth:0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F"
+    }
+```
+
+```diff
+    EOA  (0xA38372470ed4c3C4bb5123CC7f335212950e350A) {
+    +++ description: None
+      address:
+-        "0xA38372470ed4c3C4bb5123CC7f335212950e350A"
++        "eth:0xA38372470ed4c3C4bb5123CC7f335212950e350A"
+    }
+```
+
+```diff
+    EOA  (0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE) {
+    +++ description: None
+      address:
+-        "0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
++        "eth:0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE"
+    }
+```
+
+```diff
+    EOA  (0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31) {
+    +++ description: None
+      address:
+-        "0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31"
++        "eth:0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31"
+    }
+```
+
+```diff
+    contract PaymentVault (0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05) {
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+      address:
+-        "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05"
++        "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x62242213E6FA34E943844f9B3124150EFb9CB0dD"
++        "eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD"
+      values.$pastUpgrades.0.2.0:
+-        "0x62242213E6FA34E943844f9B3124150EFb9CB0dD"
++        "eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      implementationNames.0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x62242213E6FA34E943844f9B3124150EFb9CB0dD:
+-        "PaymentVault"
+      implementationNames.eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x62242213E6FA34E943844f9B3124150EFb9CB0dD:
++        "PaymentVault"
+    }
+```
+
+```diff
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030) {
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+      address:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"
++        "eth:0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"
+      values.$pastUpgrades.0.2.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "eth:0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
+      values.$pastUpgrades.1.2.0:
+-        "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"
++        "eth:0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"
+      values.registryCoordinator:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      implementationNames.0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c:
+-        "IndexRegistry"
+      implementationNames.eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c:
++        "IndexRegistry"
+    }
+```
+
+```diff
+    EOA  (0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7) {
+    +++ description: None
+      address:
+-        "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
++        "eth:0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7"
+    }
+```
+
+```diff
+    contract EigenDARelayRegistry (0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B) {
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+      address:
+-        "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
++        "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0xF6D82FBBdf700c086389e72C3023812e956ECa9e"
++        "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e"
+      values.$pastUpgrades.0.2.0:
+-        "0xF6D82FBBdf700c086389e72C3023812e956ECa9e"
++        "eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      values.relayers.0.relay:
+-        "0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a"
++        "eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a"
+      implementationNames.0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xF6D82FBBdf700c086389e72C3023812e956ECa9e:
+-        "EigenDARelayRegistry"
+      implementationNames.eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0xF6D82FBBdf700c086389e72C3023812e956ECa9e:
++        "EigenDARelayRegistry"
+    }
+```
+
+```diff
+    EOA  (0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8) {
+    +++ description: None
+      address:
+-        "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"
++        "eth:0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"
+    }
+```
+
+```diff
+    contract EigenDAThresholdRegistry (0xdb4c89956eEa6F606135E7d366322F2bDE609F15) {
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+      address:
+-        "0xdb4c89956eEa6F606135E7d366322F2bDE609F15"
++        "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15"
+      values.$admin:
+-        "0x8247EF5705d3345516286B72bFE6D690197C2E99"
++        "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99"
+      values.$implementation:
+-        "0x92104977f16dAe423966caa5cD9C115F2D25a8D6"
++        "eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6"
+      values.$pastUpgrades.0.2.0:
+-        "0x92104977f16dAe423966caa5cD9C115F2D25a8D6"
++        "eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6"
+      values.owner:
+-        "0x002721B4790d97dC140a049936aA710152Ba92D5"
++        "eth:0x002721B4790d97dC140a049936aA710152Ba92D5"
+      implementationNames.0xdb4c89956eEa6F606135E7d366322F2bDE609F15:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x92104977f16dAe423966caa5cD9C115F2D25a8D6:
+-        "EigenDAThresholdRegistry"
+      implementationNames.eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x92104977f16dAe423966caa5cD9C115F2D25a8D6:
++        "EigenDAThresholdRegistry"
+    }
+```
+
+```diff
+    EOA  (0xe0550117Cb066D3b330eBd764B0d75D3BA378734) {
+    +++ description: None
+      address:
+-        "0xe0550117Cb066D3b330eBd764B0d75D3BA378734"
++        "eth:0xe0550117Cb066D3b330eBd764B0d75D3BA378734"
+    }
+```
+
+```diff
+    EOA  (0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a) {
+    +++ description: None
+      address:
+-        "0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a"
++        "eth:0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a"
+    }
+```
+
+```diff
+    EOA  (0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4) {
+    +++ description: None
+      address:
+-        "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
++        "eth:0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4"
+    }
+```
+
+```diff
+    EOA  (0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9) {
+    +++ description: None
+      address:
+-        "0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9"
++        "eth:0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAOperationsMultisig (0x002721B4790d97dC140a049936aA710152Ba92D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakeRegistry (0x006124Ae7976137266feeBFb3F4D2BE4C073139D)
+    +++ description: Keeps track of the total stake of each operator.
+```
+
+```diff
++   Status: CREATED
+    contract BLSApkRegistry (0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505)
+    +++ description: Keeps track of the BLS public keys of each operator and the quorum aggregated keys.
+```
+
+```diff
++   Status: CREATED
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656)
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+```
+
+```diff
++   Status: CREATED
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060)
+    +++ description: Defines and stores pauser and unpauser roles for EigenDA contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E)
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+```
+
+```diff
++   Status: CREATED
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDA Multisig (0x338477FfaF63c04AC06048787f910671eC914B34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SocketRegistry (0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDADisperserRegistry (0x78cb05379a3b66E5227f2C1496432D7FFE794Fad)
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0)
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+```
+
+```diff
++   Status: CREATED
+    contract PaymentVault (0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05)
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+```
+
+```diff
++   Status: CREATED
+    contract IndexRegistry (0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030)
+    +++ description: A registry contract that keeps track of an ordered list of operators for each quorum.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDARelayRegistry (0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B)
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAThresholdRegistry (0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+```
+
 Generated with discovered.json: 0xf45c76c4b21f213740d85595c1351af04e7d2582
 
 # Diff at Fri, 04 Jul 2025 12:18:59 GMT:

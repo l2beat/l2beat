@@ -31,6 +31,8 @@ export async function getBridgesProjectData(
       'milestones',
       'contracts',
       'permissions',
+      'discoveryInfo',
+      'colors',
     ],
   })
 

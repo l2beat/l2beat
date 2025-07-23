@@ -2,10 +2,11 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   type UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -39,7 +40,6 @@ import type {
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectFinalityConfig,
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingPurpose,
@@ -82,7 +82,6 @@ export interface ZkStackConfigCommon {
   diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  finality?: ProjectFinalityConfig
   l2OutputOracle?: EntryParameters
   portal?: EntryParameters
   milestones?: Milestone[]
@@ -100,6 +99,7 @@ export interface ZkStackConfigCommon {
   useDiscoveryMetaOnly?: boolean
   additionalPurposes?: ProjectScalingPurpose[]
   overridingPurposes?: ProjectScalingPurpose[]
+  archivedAt?: UnixTime
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
@@ -247,6 +247,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
+    archivedAt: templateVars.archivedAt,
     badges: mergeBadges(
       [
         BADGES.Stack.ZKStack,
@@ -281,16 +282,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
             } to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
           : undefined,
       },
-      finality: {
-        finalizationPeriod: executionDelayS,
-        warnings: {
-          timeToInclusion: {
-            sentiment: 'warning',
-            value:
-              'Proven but not executed batches can be reverted by the validator(s) or the StateTransitionManager.',
-          },
-        },
-      },
       tvsWarning: templateVars.display.tvsWarning,
       ...templateVars.display,
     },
@@ -311,7 +302,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       ),
       daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.nonTemplateTrackedTxs, // difficult to templatize as upgrades are not synced
-      finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -608,10 +598,9 @@ function getDaTracking(
     const validatorTimelock =
       templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
-    const validatorsVTL = templateVars.discovery.getContractValue<string[]>(
-      'ValidatorTimelock',
-      'validatorsVTL',
-    )
+    const validatorsVTL = templateVars.discovery.getContractValue<
+      ChainSpecificAddress[]
+    >('ValidatorTimelock', 'validatorsVTL')
 
     const inboxDeploymentBlockNumber =
       templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
@@ -622,7 +611,7 @@ function getDaTracking(
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
         inbox: validatorTimelock,
-        sequencers: validatorsVTL,
+        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
       },
     ]
   }

@@ -1,3 +1,415 @@
+Generated with discovered.json: 0xe8a1f0b7a637741f2360031ffcbb179d7a63f730
+
+# Diff at Mon, 14 Jul 2025 12:46:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22882091
+- current block number: 22882091
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882091 (main branch discovery), not current.
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      address:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      values.$admin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.$implementation:
+-        "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"
++        "eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"
+      values.$pastUpgrades.0.2.0:
+-        "0x2434564f3524b44258B11643729343Ef57D60989"
++        "eth:0x2434564f3524b44258B11643729343Ef57D60989"
+      values.$pastUpgrades.1.2.0:
+-        "0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"
++        "eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.accessControl.TIMELOCK_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.accessControl.GUARDIAN_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.gateway_deprecated:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.guardians.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.relayers.0:
+-        "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
++        "eth:0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
+      values.timelocks.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.verifier:
+-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+      implementationNames.0x02993cdC11213985b9B13224f3aF289F03bf298d:
+-        "ERC1967Proxy"
+      implementationNames.0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D:
+-        "SP1Vector"
+      implementationNames.eth:0x02993cdC11213985b9B13224f3aF289F03bf298d:
++        "ERC1967Proxy"
+      implementationNames.eth:0xc6217f1549Cab6f22ac4AC56d42e6C248731a33D:
++        "SP1Vector"
+    }
+```
+
+```diff
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a) {
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+      address:
+-        "0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      description:
+-        "Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum."
++        "Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum."
+      values.$admin:
+-        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+      values.$implementation:
+-        "0x737539737b44493F65c17eAfE165197b6410d254"
++        "eth:0x737539737b44493F65c17eAfE165197b6410d254"
+      values.$pastUpgrades.0.2.0:
+-        "0x737539737b44493F65c17eAfE165197b6410d254"
++        "eth:0x737539737b44493F65c17eAfE165197b6410d254"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.accessControl.PAUSER_ROLE.members.0:
+-        "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"
++        "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"
+      values.avail:
+-        "0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8"
++        "eth:0xEeB4d8400AEefafC1B2953e0094134A887C76Bd8"
+      values.defaultAdmin:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.defaultAdminAC.0:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.feeRecipient:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.owner:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.pauserAC.0:
+-        "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"
++        "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"
+      values.pendingDefaultAdmin.newAdmin:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.vectorx:
+-        "0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      implementationNames.0x054fd961708D8E2B9c10a63F6157c74458889F0a:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x737539737b44493F65c17eAfE165197b6410d254:
+-        "AvailBridgeV1"
+      implementationNames.eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x737539737b44493F65c17eAfE165197b6410d254:
++        "AvailBridgeV1"
+    }
+```
+
+```diff
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) {
+    +++ description: None
+      address:
+-        "0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"
++        "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xE458b870F2F59a49915591282f1Bb688901767AD"
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+      values.$members.1:
+-        "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A"
++        "eth:0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A"
+      values.$members.2:
+-        "0xAD379D3275a18bd4BB741C3b291a3778D51c3304"
++        "eth:0xAD379D3275a18bd4BB741C3b291a3778D51c3304"
+      values.$members.3:
+-        "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
++        "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
+      values.$members.4:
+-        "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
++        "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
+      implementationNames.0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5) {
+    +++ description: None
+      address:
+-        "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
++        "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
+    }
+```
+
+```diff
+    EOA  (0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A) {
+    +++ description: None
+      address:
+-        "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A"
++        "eth:0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      address:
+-        "0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+      values.owner:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      implementationNames.0x36194271a00dBBBae314E83dA56d0FF75fDa367B:
+-        "ProxyAdmin"
+      implementationNames.eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      address:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.accessControl.PROPOSER_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.accessControl.CANCELLER_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.Canceller.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.defaultAdminAC.0:
+-        "0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      values.defaultAdminAC.1:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.Executor.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.Proposer.0:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      implementationNames.0x45828180bbE489350D621d002968A0585406d487:
+-        "TimelockController"
+      implementationNames.eth:0x45828180bbE489350D621d002968A0585406d487:
++        "TimelockController"
+    }
+```
+
+```diff
+    EOA  (0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d) {
+    +++ description: None
+      address:
+-        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      address:
+-        "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
++        "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0xE458b870F2F59a49915591282f1Bb688901767AD"
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+      values.$members.1:
+-        "0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A"
++        "eth:0x340e77D5e114A9D4891d3a1EbC7419CC85Ca8E4A"
+      values.$members.2:
+-        "0xAD379D3275a18bd4BB741C3b291a3778D51c3304"
++        "eth:0xAD379D3275a18bd4BB741C3b291a3778D51c3304"
+      values.$members.3:
+-        "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
++        "eth:0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
+      values.$members.4:
+-        "0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
++        "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5"
+      values.$members.5:
+-        "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2"
++        "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2"
+      values.$members.6:
+-        "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
++        "eth:0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d"
+      implementationNames.0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0xAD379D3275a18bd4BB741C3b291a3778D51c3304) {
+    +++ description: None
+      address:
+-        "0xAD379D3275a18bd4BB741C3b291a3778D51c3304"
++        "eth:0xAD379D3275a18bd4BB741C3b291a3778D51c3304"
+    }
+```
+
+```diff
+    EOA  (0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2) {
+    +++ description: None
+      address:
+-        "0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2"
++        "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2"
+    }
+```
+
+```diff
+    EOA  (0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474) {
+    +++ description: None
+      address:
+-        "0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
++        "eth:0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"
+    }
+```
+
+```diff
+    EOA  (0xDEd0000E32f8F40414d3ab3a830f735a3553E18e) {
+    +++ description: None
+      address:
+-        "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
++        "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    }
+```
+
+```diff
+    EOA  (0xE458b870F2F59a49915591282f1Bb688901767AD) {
+    +++ description: None
+      address:
+-        "0xE458b870F2F59a49915591282f1Bb688901767AD"
++        "eth:0xE458b870F2F59a49915591282f1Bb688901767AD"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xf66dae769acb818d1676f99aaceffd4713363fa1
+
+# Diff at Wed, 09 Jul 2025 15:10:16 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780010
+- current block number: 22882091
+
+## Description
+
+Moved SP1 verifier into shared module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780010 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x52dffbe8086134d943ce439f8f66d5c05da5d124
 
 # Diff at Fri, 04 Jul 2025 12:19:26 GMT:

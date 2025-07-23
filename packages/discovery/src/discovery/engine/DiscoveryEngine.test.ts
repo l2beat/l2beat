@@ -1,7 +1,6 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-
 import { Logger } from '@l2beat/backend-tools'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
 import {
@@ -23,10 +22,10 @@ const base = {
 }
 
 describe(DiscoveryEngine.name, () => {
-  const A = EthereumAddress.from('0xA')
-  const B = EthereumAddress.from('0xB')
-  const C = EthereumAddress.from('0xC')
-  const D = EthereumAddress.from('0xD')
+  const A = ChainSpecificAddress.random()
+  const B = ChainSpecificAddress.random()
+  const C = ChainSpecificAddress.random()
+  const D = ChainSpecificAddress.random()
   const strB = B.toString()
   const strC = C.toString()
   const strD = D.toString()
@@ -87,7 +86,7 @@ describe(DiscoveryEngine.name, () => {
 })
 
 const generateFakeConfig = (
-  initialAddresses: EthereumAddress[],
+  initialAddresses: ChainSpecificAddress[],
   overrides: StructureConfig['overrides'],
 ): ConfigRegistry => {
   return new ConfigRegistry({

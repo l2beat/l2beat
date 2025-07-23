@@ -1,3 +1,345 @@
+Generated with discovered.json: 0x20e2c22e30ba229e228eea35b933c253f9afb8f6
+
+# Diff at Mon, 14 Jul 2025 12:46:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22022451
+- current block number: 22022451
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022451 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0ee552336134B6f8F0a72927b6124f8A81865928) {
+    +++ description: None
+      address:
+-        "0x0ee552336134B6f8F0a72927b6124f8A81865928"
++        "eth:0x0ee552336134B6f8F0a72927b6124f8A81865928"
+    }
+```
+
+```diff
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75) {
+    +++ description: None
+      address:
+-        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
++        "eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      values.owner:
+-        "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
++        "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      implementationNames.0x1Da522B35363c1eda4833bc121c8F3c67B2caa75:
+-        "ProxyAdmin"
+      implementationNames.eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9) {
+    +++ description: None
+      address:
+-        "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9"
++        "eth:0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9"
+    }
+```
+
+```diff
+    EOA  (0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F) {
+    +++ description: None
+      address:
+-        "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F"
++        "eth:0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F"
+    }
+```
+
+```diff
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      address:
+-        "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
++        "eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
+      values.owner:
+-        "0x0ee552336134B6f8F0a72927b6124f8A81865928"
++        "eth:0x0ee552336134B6f8F0a72927b6124f8A81865928"
+      implementationNames.0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA:
+-        "ProxyAdmin"
+      implementationNames.eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    contract Multisig (0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a) {
+    +++ description: None
+      address:
+-        "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
++        "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9"
++        "eth:0x28e41c41f61cab69aA0b50668eB3c38ee76d0BA9"
+      values.$members.1:
+-        "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
++        "eth:0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
+      values.$members.2:
+-        "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9"
++        "eth:0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9"
+      values.$members.3:
+-        "0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F"
++        "eth:0x32e42EEE9586D685a40A26f8BAc4197cEA967b5F"
+      values.$members.4:
+-        "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
++        "eth:0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
+      implementationNames.0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E) {
+    +++ description: None
+      address:
+-        "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
++        "eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
+      values.$admin:
+-        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
++        "eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      values.$implementation:
+-        "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"
++        "eth:0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"
+      values.$pastUpgrades.0.2.0:
+-        "0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"
++        "eth:0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365"
+      values.owner:
+-        "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
++        "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      implementationNames.0x5523985926Aa12BA58DC5Ad00DDca99678D7227E:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365:
+-        "BridgeV2"
+      implementationNames.eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x7057aB3fB2BeE9c18e0cDe4240DE4ff7f159E365:
++        "BridgeV2"
+    }
+```
+
+```diff
+    EOA  (0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9) {
+    +++ description: None
+      address:
+-        "0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9"
++        "eth:0x74Bcc68B52E3De4C105CEE3eb1814fe496a60ab9"
+    }
+```
+
+```diff
+    EOA  (0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971) {
+    +++ description: None
+      address:
+-        "0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
++        "eth:0x8dFCBe7ABd7426B7441a89B6Db97B28376E46971"
+    }
+```
+
+```diff
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      address:
+-        "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
++        "eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
+      values.$admin:
+-        "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
++        "eth:0x1Da522B35363c1eda4833bc121c8F3c67B2caa75"
+      values.$implementation:
+-        "0x755a967298c96d50216C6ED8D68869747B4f6878"
++        "eth:0x755a967298c96d50216C6ED8D68869747B4f6878"
+      values.$pastUpgrades.0.2.0:
+-        "0xda8057acB94905eb6025120cB2c38415Fd81BfEB"
++        "eth:0xda8057acB94905eb6025120cB2c38415Fd81BfEB"
+      values.$pastUpgrades.1.2.0:
+-        "0x81aB74A9f9d7457fF47dfD102e78A340cF72EC39"
++        "eth:0x81aB74A9f9d7457fF47dfD102e78A340cF72EC39"
+      values.$pastUpgrades.2.2.0:
+-        "0x1a039cE63AE35a67Bf0E9F6DbFaE969639D59eC8"
++        "eth:0x1a039cE63AE35a67Bf0E9F6DbFaE969639D59eC8"
+      values.$pastUpgrades.3.2.0:
+-        "0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf"
++        "eth:0x8a7F930003BedD63A1ebD99C5917FD6aE7E3dedf"
+      values.$pastUpgrades.4.2.0:
+-        "0x086488E659253FF26D0C743325C059FB57Ca7934"
++        "eth:0x086488E659253FF26D0C743325C059FB57Ca7934"
+      values.$pastUpgrades.5.2.0:
+-        "0x326adbE46D7E6C1B3927e9309B96DF478bda6D16"
++        "eth:0x326adbE46D7E6C1B3927e9309B96DF478bda6D16"
+      values.$pastUpgrades.6.2.0:
+-        "0x755a967298c96d50216C6ED8D68869747B4f6878"
++        "eth:0x755a967298c96d50216C6ED8D68869747B4f6878"
+      values.bridge:
+-        "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
++        "eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
+      values.metaRouter:
+-        "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
++        "eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
+      values.owner:
+-        "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
++        "eth:0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a"
+      values.wrapper:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
++        "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      implementationNames.0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x755a967298c96d50216C6ED8D68869747B4f6878:
+-        "Portal"
+      implementationNames.eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x755a967298c96d50216C6ED8D68869747B4f6878:
++        "Portal"
+    }
+```
+
+```diff
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0) {
+    +++ description: None
+      address:
+-        "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
++        "eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
+      values.$admin:
+-        "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
++        "eth:0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA"
+      values.$implementation:
+-        "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"
++        "eth:0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"
+      values.$pastUpgrades.0.2.0:
+-        "0xFb8aBa430cE64DC038a3078CDcB01A838d7f64b7"
++        "eth:0xFb8aBa430cE64DC038a3078CDcB01A838d7f64b7"
+      values.$pastUpgrades.1.2.0:
+-        "0x9c13159c5D5903dd07F52f46308Dbd7A6Ea68DB9"
++        "eth:0x9c13159c5D5903dd07F52f46308Dbd7A6Ea68DB9"
+      values.$pastUpgrades.2.2.0:
+-        "0xFC875FbdBaFeCD99FF0D2Cdf3DEF93FfcEc73949"
++        "eth:0xFC875FbdBaFeCD99FF0D2Cdf3DEF93FfcEc73949"
+      values.$pastUpgrades.3.2.0:
+-        "0xa3E661b51e9F6D8577968065D5d0f286553452c6"
++        "eth:0xa3E661b51e9F6D8577968065D5d0f286553452c6"
+      values.$pastUpgrades.4.2.0:
+-        "0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"
++        "eth:0x61608F9520C311052D88Bc7d0c2c4Cba1c964662"
+      implementationNames.0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0x61608F9520C311052D88Bc7d0c2c4Cba1c964662:
+-        ""
+      implementationNames.eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0:
++        "TransparentUpgradeableProxy"
+      implementationNames.eth:0x61608F9520C311052D88Bc7d0c2c4Cba1c964662:
++        ""
+    }
+```
+
+```diff
+    EOA  (0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e) {
+    +++ description: None
+      address:
+-        "0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
++        "eth:0xDD335D90dE6e4ECE62C966FF07a000cF26e19C0e"
+    }
+```
+
+```diff
+    contract MetaRouter (0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F) {
+    +++ description: None
+      address:
+-        "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
++        "eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
+      values.metaRouterGateway:
+-        "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
++        "eth:0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
+      implementationNames.0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F:
+-        "MetaRouter"
+      implementationNames.eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F:
++        "MetaRouter"
+    }
+```
+
+```diff
+    contract MetaRouterGateway (0xfCEF2Fe72413b65d3F393d278A714caD87512bcd) {
+    +++ description: None
+      address:
+-        "0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
++        "eth:0xfCEF2Fe72413b65d3F393d278A714caD87512bcd"
+      values.metaRouter:
+-        "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
++        "eth:0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F"
+      implementationNames.0xfCEF2Fe72413b65d3F393d278A714caD87512bcd:
+-        "MetaRouterGateway"
+      implementationNames.eth:0xfCEF2Fe72413b65d3F393d278A714caD87512bcd:
++        "MetaRouterGateway"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MetaRouter (0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MetaRouterGateway (0xfCEF2Fe72413b65d3F393d278A714caD87512bcd)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x4423a6cc3bad8c1e93eb92146a30622dbf4c14a3
 
 # Diff at Fri, 04 Jul 2025 12:19:24 GMT:

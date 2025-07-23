@@ -1,27 +1,32 @@
 import {
+  assert,
+  type ChainSpecificAddress,
+  type EthereumAddress,
+  formatJson,
+  Hash256,
+} from '@l2beat/shared-pure'
+import type { Parser } from '@l2beat/validate'
+import {
   existsSync,
   mkdirSync,
-  readFileSync,
   readdirSync,
+  readFileSync,
   writeFileSync,
 } from 'fs'
 import path, { join } from 'path'
-import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import type { Parser } from '@l2beat/validate'
 import {
   combineImplementationHashes,
   contractFlatteningHash,
   getHashForMatchingFromSources,
 } from '../../flatten/utils'
-import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import type { ContractSource } from '../../utils/IEtherscanClient'
 import { ColorContract } from '../config/ColorConfig'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
+import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
-import { hashJsonStable } from '../config/hashJsonStable'
-import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'
 import { readJsonc } from '../utils/readJsonc'
@@ -82,7 +87,6 @@ export class TemplateService {
       const criteria = existsSync(criteriaPath)
         ? JSON.parse(readFileSync(criteriaPath, 'utf8'))
         : undefined
-      criteria?.validAddresses?.map((a: string) => EthereumAddress(a))
 
       const templateId = path.substring(resolvedRootPath.length + 1)
       result[templateId] = {
@@ -95,7 +99,7 @@ export class TemplateService {
 
   findMatchingTemplates(
     sources: ContractSources,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): string[] {
     if (!sources.isVerified) {
       return []
@@ -112,7 +116,7 @@ export class TemplateService {
 
   findMatchingTemplatesByHash(
     sourcesHash: Hash256,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): string[] {
     const candidates = this.getHashIndex().get(sourcesHash.toString()) ?? []
 
@@ -296,7 +300,7 @@ export class TemplateService {
     }
   }
 
-  async ensureTemplateExists(templateId: string) {
+  ensureTemplateExists(templateId: string) {
     const templateDirPath = join(this.rootPath, TEMPLATES_PATH, templateId)
     const templatePath = join(templateDirPath, 'template.jsonc')
 
@@ -309,7 +313,7 @@ export class TemplateService {
         $schema: schemaProperty,
       }
 
-      writeFileSync(templatePath, await toPrettyJson(json))
+      writeFileSync(templatePath, formatJson(json))
 
       return true
     }
@@ -339,14 +343,14 @@ export class TemplateService {
     this.hashIndex = undefined
   }
 
-  async addToShape(
+  addToShape(
     templateId: string,
     chain: string,
     addresses: EthereumAddress[],
     fileName: string,
     blockNumber: number,
     sources: ContractSource[],
-  ): Promise<void> {
+  ): void {
     assert(this.exists(templateId), 'Template does not exist')
     const allTemplates = this.listAllTemplates()
     const entry = allTemplates[templateId]
@@ -383,7 +387,7 @@ export class TemplateService {
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)
     const templatePath = join(resolvedRootPath, templateId)
     const shapePath = join(templatePath, 'shapes.json')
-    writeFileSync(shapePath, await toPrettyJson(shapes))
+    writeFileSync(shapePath, formatJson(shapes))
   }
 
   readShapeSchema(shapePath: string | undefined): ShapeSchema {

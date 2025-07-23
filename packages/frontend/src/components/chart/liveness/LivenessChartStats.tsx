@@ -2,8 +2,8 @@ import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { Fragment } from 'react'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import { DurationCell } from '~/pages/scaling/finality/components/table/DurationCell'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'
+import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
 import { cn } from '~/utils/cn'
@@ -15,6 +15,7 @@ export function LivenessChartStats({
   isLoading,
   configuredSubtypes,
   timeRange,
+  isArchived,
 }: {
   stats:
     | Partial<
@@ -26,6 +27,7 @@ export function LivenessChartStats({
   configuredSubtypes: TrackedTxsConfigSubtype[]
   hasTrackedContractsChanged: boolean
   isLoading: boolean
+  isArchived: boolean
 }) {
   const timeRangeLabel = timeRange.toUpperCase()
   const elements = compact([
@@ -59,12 +61,14 @@ export function LivenessChartStats({
         )}
       </ChartStatsItem>
     ),
-    <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
-      <AnomalyIndicator
-        anomalies={anomalies}
-        hasTrackedContractsChanged={hasTrackedContractsChanged}
-      />
-    </ChartStatsItem>,
+    !isArchived && (
+      <ChartStatsItem key="anomalies" label="Past 30 days anomalies">
+        <AnomalyIndicator
+          anomalies={anomalies}
+          hasTrackedContractsChanged={hasTrackedContractsChanged}
+        />
+      </ChartStatsItem>
+    ),
   ])
 
   return (

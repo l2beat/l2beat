@@ -18,7 +18,6 @@ export const DiscoLupeProject = v.object({
 
   costsConfigured: v.boolean(),
   livenessConfigured: v.boolean(),
-  finalityConfigured: v.boolean(),
   milestonesConfigured: v.boolean(),
   operatorConfigured: v.boolean(),
   withdrawalsConfigured: v.boolean(),

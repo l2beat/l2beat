@@ -1,7 +1,6 @@
 import type { ChainId } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { type UpdateMonitorRecord, toRecord, toRow } from './entity'
-import { selectUpdateMonitor } from './select'
+import { toRecord, toRow, type UpdateMonitorRecord } from './entity'
 
 export class UpdateMonitorRepository extends BaseRepository {
   async findLatest(
@@ -10,7 +9,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   ): Promise<UpdateMonitorRecord | undefined> {
     const row = await this.db
       .selectFrom('UpdateMonitor')
-      .select(selectUpdateMonitor)
+      .selectAll()
       .where('projectId', '=', name)
       .where('chainId', '=', +chainId)
       .limit(1)
@@ -43,10 +42,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   }
 
   async getAll(): Promise<UpdateMonitorRecord[]> {
-    const rows = await this.db
-      .selectFrom('UpdateMonitor')
-      .select(selectUpdateMonitor)
-      .execute()
+    const rows = await this.db.selectFrom('UpdateMonitor').selectAll().execute()
 
     return rows.map(toRecord)
   }

@@ -1,6 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import type { KnowledgeBase } from './KnowledgeBase'
 import type { ClingoFact } from './clingoparser'
+import type { KnowledgeBase } from './KnowledgeBase'
 
 interface AddressData {
   modelId: string
@@ -79,7 +79,7 @@ export class ModelIdRegistry {
 
   idToChainSpecificAddress(modelId: string): ChainSpecificAddress {
     const data = this.getAddressData(modelId)
-    return ChainSpecificAddress(`${data.shortChain}:${data.address}`)
+    return ChainSpecificAddress(data.address)
   }
 
   replaceIdsWithNames(s: string): string {

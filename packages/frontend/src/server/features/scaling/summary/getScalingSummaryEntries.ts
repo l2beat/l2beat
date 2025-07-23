@@ -21,8 +21,9 @@ import { getActivityLatestUops } from '../activity/getActivityLatestTps'
 import { getActivitySyncWarning } from '../activity/utils/isActivitySynced'
 import type { CommonScalingEntry } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
-import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { getApprovedOngoingAnomalies } from '../liveness/getApprovedOngoingAnomalies'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
 import { compareStageAndTvs } from '../utils/compareStageAndTvs'
 
@@ -34,10 +35,16 @@ export async function getScalingSummaryEntries() {
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 
-  const [projectsChangeReport, tvs, projectsActivity] = await Promise.all([
+  const [
+    projectsChangeReport,
+    tvs,
+    projectsActivity,
+    projectsOngoingAnomalies,
+  ] = await Promise.all([
     getProjectsChangeReport(),
     get7dTvsBreakdown({ type: 'layer2' }),
     getActivityLatestUops(projects),
+    getApprovedOngoingAnomalies(),
   ])
 
   const entries = projects
@@ -47,6 +54,7 @@ export async function getScalingSummaryEntries() {
         projectsChangeReport.getChanges(project.id),
         tvs.projects[project.id.toString()],
         projectsActivity[project.id.toString()],
+        !!projectsOngoingAnomalies[project.id.toString()],
       ),
     )
     .sort(compareStageAndTvs)
@@ -97,6 +105,7 @@ export function getScalingSummaryEntry(
   changes: ProjectChanges,
   latestTvs: ProjectSevenDayTvsBreakdown | undefined,
   activity: ActivityLatestUopsData[string] | undefined,
+  ongoingAnomaly: boolean,
 ): ScalingSummaryEntry {
   const associatedTokenWarning =
     latestTvs && latestTvs.breakdown.total > 0
@@ -116,6 +125,7 @@ export function getScalingSummaryEntry(
     ...getCommonScalingEntry({
       project,
       changes,
+      ongoingAnomaly,
       syncWarning: activitySyncWarning,
     }),
     stage:

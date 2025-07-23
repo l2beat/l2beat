@@ -31,7 +31,7 @@ online.
 Alternatively you can simply run `./scripts/start_db.sh` which will always do what's needed.
 
 To update database schema to the latest version run `pnpm dev:migrate`. That way you will have the
-lastest schema in your local database.
+latest schema in your local database.
 
 ### Third party services
 
@@ -98,8 +98,7 @@ FEATURES=tvs,!tvs.*,tvs.ethereum
   https://www.coingecko.com/en/api/pricing
 
 - `ETHERSCAN_API_URL` - Etherscan API url
-- `ETHERSCAN_API_KEY` - Etherscan API key
-  Blockscout doesn't need it.
+- `ETHERSCAN_API_KEY` - Etherscan API key Blockscout doesn't need it.
 
 - `<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
 - `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to
@@ -136,15 +135,6 @@ The tracked-txs feature is configured via the following environment variables:
 
 - `tracked-txs` - enables tracked txs feature
 - `tracked-txs.liveness` - enables liveness feature
-
-### `finality` feature
-
-**Feature flags:**
-
-- `finality` - enables finality feature
-- `finality.[project_id]` - enables finality for project with given project_id
-
-In development.
 
 ### `activity` feature
 
@@ -211,7 +201,8 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `pnpm test` - run tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
 - `pnpm db:migrate` - apply the latest migration
-- `pnpm tvs:generate` - regenerate TVS config from latest inputs (check --help for available options)
+- `pnpm tvs:generate` - regenerate TVS config from latest inputs (check --help for available
+  options)
 - `pnpm tvs:execute` - executes TVS with latest config (check --help for available options)
 
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects

@@ -1,7 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { CONTRACTS } from '../../common'
-import { BRIDGE_RISK_VIEW } from '../../common'
+import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -12,9 +10,12 @@ export const hyphen: Bridge = {
   type: 'bridge',
   id: ProjectId('hyphen'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  archivedAt: UnixTime(1753083581),
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
+    warning:
+      'Hyphen has been decommissioned as of December 31, 2024. See the announcement [here](https://hyphen.biconomy.io).',
     category: 'Liquidity Network',
     links: {
       websites: ['https://hyphen.biconomy.io/'],

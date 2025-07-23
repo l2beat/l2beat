@@ -112,6 +112,19 @@ export const ERC4337_methods: Method[] = [
   ),
   defineMethod(
     parseAbiItem(
+      'function execute4337Ops((address target, uint256 value, bytes data)[] calls)',
+    ),
+    ([calls]) => {
+      return calls.map((call) => ({
+        type: 'recursive',
+        calldata: call.data,
+        to: call.target,
+      }))
+    },
+    'SmartAccount',
+  ),
+  defineMethod(
+    parseAbiItem(
       'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
     ),
     ([targets, , inputs]) => {

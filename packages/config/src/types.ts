@@ -1,6 +1,7 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type ChainId,
+  type ChainSpecificAddress,
   EthereumAddress,
   type ProjectId,
   type StringWithAutocomplete,
@@ -10,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
+import type { ZkCatalogTagType } from './common/zkCatalogTags'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -62,11 +64,6 @@ export type ProjectRiskCategory =
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
-export interface ProjectUnverifiedContract {
-  chain: string
-  address: EthereumAddress
-}
-
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -78,7 +75,8 @@ export interface BaseProject {
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
-  colors?: ProjectColors
+  colors?: ProjectCustomColors
+  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -103,9 +101,6 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
-  // zk catalog v2 data
-  proofSystem?: ProjectProofSystem
-
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -114,11 +109,10 @@ export interface BaseProject {
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
   trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
-  finalityInfo?: ProjectFinalityInfo
-  finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
+  zkCatalogInfo?: ProjectZkCatalogInfo
 
   // discovery data
   permissions?: Record<string, ProjectPermissions>
@@ -136,7 +130,7 @@ export interface BaseProject {
 }
 
 // #region common data
-export interface ProjectColors {
+export interface ProjectCustomColors {
   primary: string
   secondary: string
 }
@@ -146,7 +140,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  unverifiedContracts: ProjectUnverifiedContract[]
+  unverifiedContracts: ChainSpecificAddress[]
 }
 
 export interface ProjectDisplay {
@@ -212,13 +206,6 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
-
-export interface ZkCatalogTag {
-  id: string
-  type: string
-  name: string
-  description: string
-}
 
 export interface Milestone {
   title: string
@@ -441,6 +428,7 @@ export interface StageConfigured {
   missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
+  stage1PrincipleDescription?: string
   additionalConsiderations?: {
     short: string
     long: string
@@ -748,26 +736,39 @@ export interface RequiredTool {
 // #endregion
 
 // #region zk catalog v2 data
-export interface ProjectProofSystem {
+export interface ProjectZkCatalogInfo {
   creator?: string
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetup: {
-    risk: 'green' | 'yellow' | 'red'
-    shortDescription: string
-    longDescription: string
-  }
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
   verifierHashes: {
     hash: string
-    explorerLink: string
+    proofSystem: ZkCatalogTag
+    knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
     verificationSteps?: string
-    attesters: ZkCatalogAttester[]
+    attesters?: ZkCatalogAttester[]
   }[]
+}
+
+export interface ZkCatalogTag {
+  id: string
+  type: ZkCatalogTagType
+  name: string
+  description: string
+}
+
+export interface TrustedSetup {
+  id: string
+  risk: 'green' | 'yellow' | 'red' | 'N/A'
+  shortDescription: string
+  longDescription: string
 }
 
 // #endregion
@@ -858,56 +859,6 @@ export interface ProjectLivenessConfig {
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
 }
-
-export interface ProjectFinalityInfo {
-  /** Warning tooltip content for finality tab for given project */
-  warnings?: {
-    timeToInclusion?: WarningWithSentiment
-    stateUpdateDelay?: WarningWithSentiment
-  }
-  /** Finalization period displayed in table for given project (time in seconds) */
-  finalizationPeriod?: number
-}
-
-export type ProjectFinalityConfig =
-  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
-  | {
-      type:
-        | 'Linea'
-        | 'zkSyncEra'
-        | 'Scroll'
-        | 'zkSyncLite'
-        | 'Starknet'
-        | 'Arbitrum'
-        | 'Loopring'
-        | 'Degate'
-        | 'PolygonZkEvm'
-
-      minTimestamp: UnixTime
-      lag: number
-      stateUpdate: StateUpdateMode
-    }
-  | {
-      type: 'OPStack'
-      minTimestamp: UnixTime
-      lag: number
-      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-      // you can get this values by calling the RPC method optimism_rollupConfig
-      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
-      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
-      // <rpc-url> | jq
-      genesisTimestamp: UnixTime
-      l2BlockTimeSeconds: number
-      stateUpdate: StateUpdateMode
-    }
-
-/**
- * Determines how the state update should be handled.
- * - `analyze`: The state update delay should be analyzed as a part of the update.
- * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
- * - `disabled`: The state update analyzer will not be run.
- */
-export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
 
 export type ProjectDaTrackingConfig =
   | BlockDaTrackingConfig
@@ -1005,7 +956,7 @@ export interface ProjectPermission {
 export interface ProjectPermissionedAccount {
   name: string
   url: string
-  address: EthereumAddress
+  address: ChainSpecificAddress
   isVerified: boolean
   type: 'EOA' | 'Contract'
 }
@@ -1020,7 +971,7 @@ export interface ProjectContracts {
 
 export interface ProjectContract {
   /** Address of the contract */
-  address: EthereumAddress
+  address: ChainSpecificAddress
   /** Verification status of the contract */
   isVerified: boolean
   /** Name of the chain of this address. Optional for backwards compatibility */
@@ -1053,8 +1004,8 @@ export interface ProjectContract {
 export interface ProjectContractUpgradeability {
   proxyType: string
   immutable?: boolean
-  admins: EthereumAddress[]
-  implementations: EthereumAddress[]
+  admins: ChainSpecificAddress[]
+  implementations: ChainSpecificAddress[]
 }
 
 export interface ProjectUpgradeableActor {
@@ -1106,6 +1057,7 @@ export interface ProjectDiscoveryInfo {
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
   blockNumberPerChain: Record<string, number>
+  hasDiscoUi: boolean
 }
 // #endregion
 

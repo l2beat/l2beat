@@ -30,4 +30,7 @@ export const ungaii: ScalingProject = upcomingL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

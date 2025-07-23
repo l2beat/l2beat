@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -18,5 +18,8 @@ export const capx: ScalingProject = upcomingL2({
       websites: ['https://capx.ai/'],
       socialMedia: ['https://discord.com/invite/capx', 'https://x.com/0xCapx'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

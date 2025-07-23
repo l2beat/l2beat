@@ -1,9 +1,3 @@
-import { useEffect, useState } from 'react'
-import {
-  OthersInfo,
-  RollupsInfo,
-  ValidiumsAndOptimiumsInfo,
-} from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -11,6 +5,11 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
+import {
+  OthersInfo,
+  RollupsInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
@@ -22,7 +21,6 @@ export function ScalingArchivedTables(
   props: TabbedScalingEntries<ScalingArchivedEntry>,
 ) {
   const filterEntries = useFilterEntries()
-  const [tab, setTab] = useState('rollups')
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -36,13 +34,6 @@ export function ScalingArchivedTables(
     desc: true,
   }
 
-  useEffect(() => {
-    if (tab === 'others' && entries.others.length === 0) {
-      setTab('rollups')
-    }
-  }, [entries.others, tab])
-
-  const showOthers = entries.others.length > 0
   return (
     <>
       <TableFilters
@@ -52,7 +43,7 @@ export function ScalingArchivedTables(
           ...props.others,
         ]}
       />
-      <DirectoryTabs value={tab} onValueChange={setTab} defaultValue="rollups">
+      <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
@@ -61,11 +52,9 @@ export function ScalingArchivedTables(
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {showOthers && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -79,14 +68,12 @@ export function ScalingArchivedTables(
             <ScalingArchivedTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
-              <OthersInfo />
-              <ScalingArchivedTable entries={entries.others} />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            <OthersInfo />
+            <ScalingArchivedTable entries={entries.others} hideType />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

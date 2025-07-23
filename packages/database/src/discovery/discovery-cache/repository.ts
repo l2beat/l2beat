@@ -1,6 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
 import { type DiscoveryCacheRecord, toRecord, toRow } from './entity'
-import { selectDiscoveryCache } from './select'
 
 export class DiscoveryCacheRepository extends BaseRepository {
   async upsert(record: DiscoveryCacheRecord): Promise<string> {
@@ -21,7 +20,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
   async findByKey(key: string): Promise<DiscoveryCacheRecord | undefined> {
     const row = await this.db
       .selectFrom('DiscoveryCache')
-      .select(selectDiscoveryCache)
+      .selectAll()
       .where('key', '=', key)
       .limit(1)
       .executeTakeFirst()
@@ -31,7 +30,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
   async getAll(): Promise<DiscoveryCacheRecord[]> {
     const rows = await this.db
       .selectFrom('DiscoveryCache')
-      .select(selectDiscoveryCache)
+      .selectAll()
       .execute()
     return rows.map(toRecord)
   }

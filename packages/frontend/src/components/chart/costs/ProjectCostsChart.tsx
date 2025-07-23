@@ -1,11 +1,11 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
+import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
@@ -17,10 +17,17 @@ import { ProjectCostsChartStats } from './ProjectCostsChartStats'
 interface Props {
   milestones: Milestone[]
   projectId: string
+  defaultRange: CostsTimeRange
+  hasPostedData: boolean
 }
 
-export function ProjectCostsChart({ milestones, projectId }: Props) {
-  const [range, setRange] = useState<CostsTimeRange>('1y')
+export function ProjectCostsChart({
+  milestones,
+  projectId,
+  defaultRange,
+  hasPostedData,
+}: Props) {
+  const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
   const [showDataPosted, setShowDataPosted] = useState(true)
 
@@ -76,38 +83,31 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted,
+          posted: posted ?? 0,
           notSyncedPosted:
             !allDataPostedSynced &&
             lastDataPosted &&
             timestamp >= lastDataPosted[0]
-              ? lastDataPosted[13]
+              ? (lastDataPosted[13] ?? 0)
               : null,
         }
       },
     )
   }, [data, unit])
 
-  const hasPostedData = chartData?.some((cost) => cost.posted !== null)
-
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
     <div>
-      <div
-        className={cn(
-          'mt-4 mb-3 flex flex-col justify-between gap-1',
-          !hasPostedData && 'flex-row',
-        )}
-      >
+      <div className={cn('mt-4 mb-3 flex flex-col justify-between gap-1')}>
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
-          {hasPostedData && (
-            <DataPostedCheckbox
-              showDataPosted={showDataPosted}
-              setShowDataPosted={setShowDataPosted}
-            />
-          )}
+          <DataPostedCheckbox
+            isLoading={isLoading}
+            disabled={!hasPostedData}
+            showDataPosted={showDataPosted}
+            setShowDataPosted={setShowDataPosted}
+          />
           <CostsChartTimeRangeControls
             projectSection
             timeRange={range}
@@ -126,31 +126,38 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />
-      {data && (
-        <ProjectCostsChartStats
-          data={data}
-          isLoading={isLoading}
-          range={range}
-          unit={unit}
-          hasPostedData={hasPostedData}
-        />
-      )}
+      <ProjectCostsChartStats
+        data={data}
+        isLoading={isLoading}
+        range={range}
+        unit={unit}
+        hasPostedData={hasPostedData}
+      />
     </div>
   )
 }
 
 function DataPostedCheckbox({
+  disabled,
   showDataPosted,
   setShowDataPosted,
+  isLoading,
 }: {
+  disabled: boolean
   showDataPosted: boolean
   setShowDataPosted: (value: boolean) => void
+  isLoading?: boolean
 }) {
+  if (isLoading) {
+    return <Skeleton className="h-8 w-[168px]" />
+  }
+
   return (
     <Checkbox
       name="showDataPosted"
-      checked={showDataPosted}
+      checked={disabled ? false : showDataPosted}
       onCheckedChange={(state) => setShowDataPosted(!!state)}
+      disabled={disabled}
     >
       Show data posted
     </Checkbox>

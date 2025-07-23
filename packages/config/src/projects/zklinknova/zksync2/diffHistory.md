@@ -1,3 +1,238 @@
+Generated with discovered.json: 0x10df3d3d59c43384d71a1ace20e23108c5e7f890
+
+# Diff at Mon, 14 Jul 2025 12:47:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 57470008
+- current block number: 57470008
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57470008 (main branch discovery), not current.
+
+```diff
+    EOA  (0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9) {
+    +++ description: None
+      address:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "zksync:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    }
+```
+
+```diff
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      address:
+-        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.$implementation:
+-        "0x1727c2c531cf966f902E5927b98490fDFb3b2b70"
++        "zksync:0x1727c2c531cf966f902E5927b98490fDFb3b2b70"
+      values.$members.0:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "zksync:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.$members.1:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "zksync:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.$members.2:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "zksync:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.$members.3:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "zksync:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.$members.4:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "zksync:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+      values.$members.5:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "zksync:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.$members.6:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "zksync:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.$members.7:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "zksync:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      implementationNames.0x3334552599C9aA1FE08CfF276A02033FF37646ca:
+-        "GnosisSafeProxy"
+      implementationNames.0x1727c2c531cf966f902E5927b98490fDFb3b2b70:
+-        "GnosisSafeL2"
+      implementationNames.zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca:
++        "GnosisSafeProxy"
+      implementationNames.zksync:0x1727c2c531cf966f902E5927b98490fDFb3b2b70:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    EOA  (0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5) {
+    +++ description: None
+      address:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "zksync:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    }
+```
+
+```diff
+    EOA  (0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10) {
+    +++ description: None
+      address:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "zksync:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08) {
+    +++ description: None
+      address:
+-        "0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
++        "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+      values.$admin:
+-        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
++        "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+      values.$implementation:
+-        "0xdBA32e62e929a7e2Fa65782F812416CA65208E40"
++        "zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40"
+      values.$pastUpgrades.0.2.0:
+-        "0x022c9D356d6B020D3128de430458A28C7183a13d"
++        "zksync:0x022c9D356d6B020D3128de430458A28C7183a13d"
+      values.$pastUpgrades.1.2.0:
+-        "0xdBA32e62e929a7e2Fa65782F812416CA65208E40"
++        "zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40"
+      implementationNames.0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08:
+-        "TransparentUpgradeableProxy"
+      implementationNames.0xdBA32e62e929a7e2Fa65782F812416CA65208E40:
+-        ""
+      implementationNames.zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08:
++        "TransparentUpgradeableProxy"
+      implementationNames.zksync:0xdBA32e62e929a7e2Fa65782F812416CA65208E40:
++        ""
+    }
+```
+
+```diff
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A) {
+    +++ description: None
+      address:
+-        "0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
++        "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+      values.$admin:
+-        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      values.$implementation:
+-        "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"
++        "zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"
+      values.$pastUpgrades.0.2.0:
+-        "0x1D3A82B3BDE1d23D3989b77325C4875395c9D6a9"
++        "zksync:0x1D3A82B3BDE1d23D3989b77325C4875395c9D6a9"
+      values.$pastUpgrades.1.2.0:
+-        "0xCaAeA20e1e35214342f4Efe87d3912493E3e1CE5"
++        "zksync:0xCaAeA20e1e35214342f4Efe87d3912493E3e1CE5"
+      values.$pastUpgrades.2.2.0:
+-        "0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"
++        "zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E"
+      implementationNames.0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A:
+-        "ERC1967Proxy"
+      implementationNames.0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E:
+-        ""
+      implementationNames.zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A:
++        "ERC1967Proxy"
+      implementationNames.zksync:0xC9bBbdCf1778A4aA86544F02CccBf09fd3A0706E:
++        ""
+    }
+```
+
+```diff
+    EOA  (0xC75EFCffEE930706daec5CaCA012551f6a1845D7) {
+    +++ description: None
+      address:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "zksync:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+    }
+```
+
+```diff
+    EOA  (0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5) {
+    +++ description: None
+      address:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "zksync:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    }
+```
+
+```diff
+    EOA  (0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5) {
+    +++ description: None
+      address:
+-        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
++        "zksync:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+    EOA  (0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92) {
+    +++ description: None
+      address:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "zksync:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    }
+```
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      address:
+-        "0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
++        "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+      values.owner:
+-        "0x3334552599C9aA1FE08CfF276A02033FF37646ca"
++        "zksync:0x3334552599C9aA1FE08CfF276A02033FF37646ca"
+      implementationNames.0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98:
+-        "ProxyAdmin"
+      implementationNames.zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98:
++        "ProxyAdmin"
+    }
+```
+
+```diff
+    EOA  (0xF801886AE2e127A269B0F11892edb54F692d02dF) {
+    +++ description: None
+      address:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "zksync:0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xfc62f2799fa576164095eeba4d9497fa19bb78ff
 
 # Diff at Fri, 04 Jul 2025 12:19:30 GMT:

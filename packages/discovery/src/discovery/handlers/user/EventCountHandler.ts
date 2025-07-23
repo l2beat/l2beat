@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -22,7 +22,7 @@ export class EventCountHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
   ): Promise<HandlerResult> {
     const logs = await provider.getLogs(address, this.definition.topics)
     return {

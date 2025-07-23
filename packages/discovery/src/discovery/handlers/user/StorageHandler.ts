@@ -1,4 +1,4 @@
-import type { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import type { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
 
@@ -6,10 +6,10 @@ import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import {
-  Reference,
-  type ReferenceInput,
   generateReferenceInput,
   getReferencedName,
+  Reference,
+  type ReferenceInput,
   resolveReference,
 } from '../reference'
 import { SingleSlot } from '../storageCommon'
@@ -44,7 +44,7 @@ export class StorageHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    address: ChainSpecificAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const referenceInput = generateReferenceInput(

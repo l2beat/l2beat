@@ -15,6 +15,7 @@ import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
+import { ActivityRatioChart } from './ActivityRatioChart'
 import { getChartType } from './utils/getChartType'
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
   projectId: string
   category?: ProjectScalingCategory
   projectName?: string
+  defaultRange: ActivityTimeRange
 }
 
 export function ProjectActivityChart({
@@ -29,8 +31,9 @@ export function ProjectActivityChart({
   projectId,
   category,
   projectName,
+  defaultRange,
 }: Props) {
-  const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
+  const [timeRange, setTimeRange] = useState<ActivityTimeRange>(defaultRange)
   const [metric, setMetric] = useState<ActivityMetric>('uops')
   const [scale, setScale] = useState<ChartScale>('lin')
   const [showMainnet, setShowMainnet] = useState(true)
@@ -61,6 +64,13 @@ export function ProjectActivityChart({
     [chart?.data, metric],
   )
 
+  const ratioData = useMemo(() => {
+    return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
+      timestamp,
+      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+    }))
+  }, [chart?.data])
+
   const chartRange = getChartRange(chartData)
 
   return (
@@ -84,6 +94,11 @@ export function ProjectActivityChart({
         className="mt-4 mb-2"
         type={type}
         projectName={projectName}
+      />
+      <ActivityRatioChart
+        data={ratioData}
+        isLoading={isLoading}
+        className="mb-2"
       />
 
       <div className="flex justify-between gap-4">

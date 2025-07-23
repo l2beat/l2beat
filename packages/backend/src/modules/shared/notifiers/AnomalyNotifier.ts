@@ -6,7 +6,7 @@ import type {
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
 } from '@l2beat/database'
-import { type Block, UnixTime, formatAsAsciiTable } from '@l2beat/shared-pure'
+import { type Block, formatAsAsciiTable, UnixTime } from '@l2beat/shared-pure'
 import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import type { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
@@ -146,7 +146,7 @@ export class AnomalyNotifier {
     const now = UnixTime.now()
     const date = UnixTime.toYYYYMMDD(UnixTime.now())
 
-    const headers = ['Duration', 'ProjectId', 'Subtype', 'Status']
+    const headers = ['Duration', 'ProjectId', 'Subtype', 'Approval']
 
     const rows = ongoingAnomalies
       .map((anomaly) => ({
@@ -158,7 +158,7 @@ export class AnomalyNotifier {
         formatDuration(anomaly.duration),
         anomaly.projectId,
         anomaly.subtype,
-        anomaly.status === 'ongoing' ? 'not approved' : anomaly.status,
+        anomaly.isApproved ? 'approved' : 'not approved',
       ])
 
     const table = formatAsAsciiTable(headers, rows)

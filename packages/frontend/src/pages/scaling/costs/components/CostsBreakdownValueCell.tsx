@@ -1,12 +1,12 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { Badge } from '~/components/badge/Badge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { Skeleton } from '~/components/core/Skeleton'
+import { DetailedOnHover } from '~/components/DetailedOnHover'
 import { formatCostValue } from '../utils/formatCostValue'
 import { useCostsMetricContext } from './CostsMetricContext'
 import { useCostsUnitContext } from './CostsUnitContext'
-import type { CostsData } from './table/Columns'
+import type { CostsData } from './table/columns'
 
 interface Props {
   data: CostsData

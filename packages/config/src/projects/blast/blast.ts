@@ -1,8 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { EXITS } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
+import { ESCROW, EXITS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -51,16 +48,16 @@ export const blast: ScalingProject = opStackL2({
           {
             title:
               'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            url: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
+            url: 'https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code',
           },
           {
             title:
               'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            url: `https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code`,
+            url: 'https://etherscan.io/address/0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391#code',
           },
           {
             title: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            url: `https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code`,
+            url: 'https://etherscan.io/address/0x1C90963D451316E3DBFdD5A30354EE56C29016EB#code',
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
@@ -69,8 +66,8 @@ export const blast: ScalingProject = opStackL2({
         ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
-            title: 'Forced withdrawal from an OP Stack blockchain',
-            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced transaction from an OP Stack blockchain',
+            url: 'https://docs.optimism.io/stack/transactions/forced-transaction',
           },
         ],
       },
@@ -94,15 +91,6 @@ export const blast: ScalingProject = opStackL2({
       { type: 'rpc', url: 'https://rpc.blast.io/', callsPerMinute: 1500 },
       { type: 'etherscan', chainId },
     ],
-  },
-  finality: {
-    type: 'OPStack',
-    // timestamp of the first blob tx
-    minTimestamp: UnixTime(1716846455),
-    l2BlockTimeSeconds: 2,
-    genesisTimestamp: UnixTime(1708809815),
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   genesisTimestamp: UnixTime(1708825259), //First sequencer transaction
   nonTemplateEscrows: [

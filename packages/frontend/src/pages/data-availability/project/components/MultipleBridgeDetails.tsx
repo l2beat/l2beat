@@ -11,15 +11,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
+import { RiskBanner } from '~/components/projects/RiskBanner'
 import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
-import { GrissiniDetails } from '~/components/rosette/grissini/GrissiniDetails'
 import { GrissiniIcon } from '~/components/rosette/grissini/GrissiniIcon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/NoBridgeGrissiniDetailsPlaceholder'
 import { useRouter } from '~/hooks/useRouter'
-import { InfoIcon } from '~/icons/Info'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
-import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -32,26 +31,21 @@ export function MultipleBridgeDetails({ project }: Props) {
   const router = useRouter()
 
   return (
-    <div className="flex flex-row items-end gap-10 pt-4 md:py-0">
-      {/* Left side (table with title and banner) */}
-      <div className="flex flex-1 flex-col gap-4">
-        <div className="whitespace-pre text-secondary text-xs uppercase">
-          Select a bridge
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <div className="text-blue-700 text-paragraph-13 italic">
+          Please select DA bridge to view detailed risks & characteristics.
+          Bridge selection will define total DA risks.
         </div>
-        <div className="hidden flex-row items-center gap-2 rounded-md border border-blue-500 bg-blue-400 px-3 py-2 font-medium text-blue-700 text-xs md:flex lg:px-6 dark:text-blue-700">
-          <InfoIcon className="size-4 shrink-0 fill-current dark:fill-current" />
-          Please select one of the available DA bridges to view its risks and
-          detailed analysis.
-        </div>
-        <div className="flex flex-col rounded-lg bg-header-secondary lg:h-[278px]">
-          <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-secondary px-4 py-2 font-semibold text-secondary text-xs uppercase md:flex md:border-b">
-            <div className="w-12"></div>
+        <div className="flex flex-col rounded-lg bg-surface-secondary">
+          <div className="hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary px-4 py-2 text-secondary text-subtitle-12 uppercase leading-none! md:flex md:border-b">
+            <div className="w-12" />
             <div className="flex-1">DA Bridge</div>
             <div className="flex-1 text-center">DA Risks</div>
-            <div className="flex-1 pr-12 text-right">TVS</div>
+            <div className="flex-1 pr-12 text-right max-xs:hidden">TVS</div>
             <div className="flex-[1.5] lg:flex-1">Used by</div>
           </div>
-          <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg max-md:bg-header-secondary md:gap-0 md:rounded-t-none">
+          <div className="flex flex-1 flex-col gap-2 overflow-y-auto rounded-lg max-md:bg-surface-secondary md:gap-0 md:rounded-t-none">
             {project.bridges.map((bridge, index) => (
               <label
                 key={bridge.slug}
@@ -91,10 +85,10 @@ export function MultipleBridgeDetails({ project }: Props) {
                     </Tooltip>
                   )}
                 </div>
-                <div className="flex flex-1 items-center justify-center">
+                <div className="flex flex-1 items-center justify-end xs:justify-center">
                   <GrissiniCell values={bridge.grissiniValues} />
                 </div>
-                <div className="flex flex-1 items-center justify-end pr-1 font-bold text-primary text-sm md:pr-12">
+                <div className="flex flex-1 items-center justify-end pr-1 font-bold text-primary text-sm max-xs:hidden md:pr-12">
                   {formatCurrency(bridge.tvs, 'usd')}
                 </div>
                 <div className="hidden flex-[1.5] flex-row items-center md:flex lg:flex-1">
@@ -178,8 +172,7 @@ export function MultipleBridgeDetails({ project }: Props) {
         </div>
       </div>
 
-      {/* Right side (Grissini details) */}
-      <div className="hidden w-full max-w-[264px] flex-col space-y-4 pt-3 lg:flex">
+      <div className="space-y-2">
         <div className="whitespace-pre text-secondary text-xs">
           {project.selectedBridge.name} risks
         </div>
@@ -187,11 +180,16 @@ export function MultipleBridgeDetails({ project }: Props) {
         {project.selectedBridge.isNoBridge ? (
           <NoBridgeGrissiniDetailsPlaceholder />
         ) : (
-          <GrissiniDetails
-            values={project.header.daBridgeGrissiniValues}
-            descriptionAsTooltip
-            info="compact"
-          />
+          <div className="grid gap-2 md:grid-cols-3 md:gap-4">
+            {project.header.daBridgeGrissiniValues.map((value) => (
+              <RiskBanner
+                key={value.name}
+                {...value}
+                descriptionAsTooltip={true}
+                info="compact"
+              />
+            ))}
+          </div>
         )}
       </div>
     </div>
@@ -211,7 +209,7 @@ function RadioButton({ className, ...props }: React.ComponentProps<'input'>) {
         )}
         {...props}
       />
-      <div className="z-[2] col-start-1 row-start-1 hidden aspect-square size-3 rounded-full bg-brand peer-checked:block " />
+      <div className="z-2 col-start-1 row-start-1 hidden aspect-square size-3 rounded-full bg-brand peer-checked:block " />
     </div>
   )
 }

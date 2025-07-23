@@ -1,3 +1,340 @@
+Generated with discovered.json: 0xeadb8f582c4be81c79a8970b3504a2777523f3ea
+
+# Diff at Mon, 14 Jul 2025 12:45:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9f4300dad2f3d080cd56fa311d4a848556c74e72 block: 22615702
+- current block number: 22615702
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615702 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      address:
+-        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++        "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+      values.$members.0:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+      values.$members.1:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+      values.$members.2:
+-        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
++        "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+      values.$members.3:
+-        "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6"
++        "eth:0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6"
+      values.$members.4:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "eth:0x59232aC80E6d403b6381393e52f4665ECA328558"
+      implementationNames.0x0a64d3D7747549aF6d65C225D56ac8f71e436B93:
+-        "GnosisSafeProxy"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93:
++        "GnosisSafeProxy"
+      implementationNames.eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
++        "GnosisSafe"
+    }
+```
+
+```diff
+    EOA  (0x2871B956bC19D25961E9a7519f32D7fDaA21B403) {
+    +++ description: None
+      address:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "eth:0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+    }
+```
+
+```diff
+    EOA  (0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512) {
+    +++ description: None
+      address:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+    }
+```
+
+```diff
+    EOA  (0x64F4396bb0669C72858Cc50C779b48EB25F45770) {
+    +++ description: None
+      address:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "eth:0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+    }
+```
+
+```diff
+    EOA  (0x661B48092a5af3F8d5B551D66f5B3F639deD3155) {
+    +++ description: None
+      address:
+-        "0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
++        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+    }
+```
+
+```diff
+    EOA  (0x804d60CB1ade94511f7915A2062948685Ca8C81f) {
+    +++ description: None
+      address:
+-        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
++        "eth:0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+    }
+```
+
+```diff
+    EOA  (0x94d5dc7c96Eb6176783787669571970C7ba43e01) {
+    +++ description: None
+      address:
+-        "0x94d5dc7c96Eb6176783787669571970C7ba43e01"
++        "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01"
+    }
+```
+
+```diff
+    EOA  (0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6) {
+    +++ description: None
+      address:
+-        "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6"
++        "eth:0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6"
+    }
+```
+
+```diff
+    EOA  (0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      address:
+-        "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
++        "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
+    }
+```
+
+```diff
+    EOA  (0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199) {
+    +++ description: None
+      address:
+-        "0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
++        "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
+    }
+```
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+      address:
+-        "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
++        "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
++++ description: NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it.
++++ severity: HIGH
+      values.$admin:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.$implementation:
+-        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.$pastUpgrades.0.2.0:
+-        "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"
++        "eth:0x6Fd62239f3A441d1898683C5a84ce3681bB42C16"
+      values.$pastUpgrades.1.2.0:
+-        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.$pastUpgrades.2.2.0:
+-        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.$pastUpgrades.3.2.0:
+-        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.accessControl.GOVERNANCE_ADMIN.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_GOVERNOR.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.TOKEN_ADMIN.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.UPGRADE_GOVERNOR.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.SECURITY_ADMIN.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.accessControl.SECURITY_AGENT.members.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.bridgedToken:
+-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
++        "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      values.depositorAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
++++ description: This role is not the proxy upgrade admin role, but can assign / remove the proxy upgrader role (governor) via the `GovernanceAdminOnly` modifier in the implementation.
+      values.govAdminAC.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.implementation:
+-        "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
++        "eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"
+      values.l2TokenContract:
+-        "0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353"
++        "eth:0x311d3706Ce8A7d337Bcb67Cd53b0ED7b019C6353"
+      values.manager:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.messagingContract:
+-        "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
++        "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+      values.secAdminAC.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.secAgentAC.0:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      implementationNames.0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3:
+-        "Proxy"
+      implementationNames.0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77:
+-        "StarknetERC20Bridge"
+      implementationNames.eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3:
++        "Proxy"
+      implementationNames.eth:0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77:
++        "StarknetERC20Bridge"
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      address:
+-        "0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
++        "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
++++ description: Permissioned to upgrade the proxy implementation and access `onlyGovernance` restricted calls.
++++ severity: HIGH
+      values.$admin:
+-        "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
++        "eth:0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+      values.$implementation:
+-        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.$pastUpgrades.0.2.0:
+-        "0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"
++        "eth:0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"
+      values.$pastUpgrades.1.2.0:
+-        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
++        "eth:0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
+      values.$pastUpgrades.2.2.0:
+-        "0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
++        "eth:0x47103A9b801eB6a63555897d399e4b7c1c8Eb5bC"
+      values.$pastUpgrades.3.2.0:
+-        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.feeCollector:
+-        "0x0000000000000000000000000000000000000000"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.implementation:
+-        "0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
++        "eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04"
+      values.operators.0:
+-        "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
++        "eth:0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
+      values.verifier:
+-        "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
++        "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      implementationNames.0xF338cad020D506e8e3d9B4854986E0EcE6C23640:
+-        "Proxy"
+      implementationNames.0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
+-        "Starknet"
+      implementationNames.eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640:
++        "Proxy"
+      implementationNames.eth:0x2793010E6711Acd5C46ed17f2183a9d58db71e04:
++        "Starknet"
+    }
+```
+
+```diff
+    EOA  (0xfF206f46453A9dd8e1664532788f4987c15B937d) {
+    +++ description: None
+      address:
+-        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
++        "eth:0xfF206f46453A9dd8e1664532788f4987c15B937d"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      address:
+-        "0xFF57A3bB6465501c993acF8f3b29125a862661C0"
++        "eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0"
+      values.$implementation:
+-        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
++        "eth:0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
++        "eth:0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
+      values.$members.1:
+-        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
++        "eth:0xfF206f46453A9dd8e1664532788f4987c15B937d"
+      values.$members.2:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "eth:0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.$members.3:
+-        "0x94d5dc7c96Eb6176783787669571970C7ba43e01"
++        "eth:0x94d5dc7c96Eb6176783787669571970C7ba43e01"
+      values.$members.4:
+-        "0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
++        "eth:0x661B48092a5af3F8d5B551D66f5B3F639deD3155"
+      implementationNames.0xFF57A3bB6465501c993acF8f3b29125a862661C0:
+-        "SafeProxy"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
+-        "Safe"
+      implementationNames.eth:0xFF57A3bB6465501c993acF8f3b29125a862661C0:
++        "SafeProxy"
+      implementationNames.eth:0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x700957dd46ee6b1092cee792ff3594c6547c0538
 
 # Diff at Fri, 04 Jul 2025 12:19:14 GMT:
