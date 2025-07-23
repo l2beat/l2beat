@@ -23,6 +23,27 @@ import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
+async function getTimestamp(
+  configReader: ConfigReader,
+  config: DiscoveryModuleConfig,
+): Promise<Date> {
+  if (config.blockNumber !== undefined) {
+    const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
+    return UnixTime.toDate(
+      (await provider.getBlock(config.blockNumber)).timestamp,
+    )
+  }
+
+  const configuredTimestamp =
+    config.timestamp ??
+    (config.dev
+      ? configReader.readDiscovery(config.project, config.chain.name).timestamp
+      : undefined) ??
+    UnixTime.now()
+
+  return UnixTime.toDate(configuredTimestamp)
+}
+
 export async function runDiscovery(
   paths: DiscoveryPaths,
   http: HttpClient,
@@ -36,19 +57,7 @@ export async function runDiscovery(
     config.chain.name,
   )
 
-  const configuredBlockNumber =
-    config.blockNumber ??
-    (config.dev
-      ? configReader.readDiscovery(config.project, config.chain.name)
-          .blockNumber
-      : undefined)
-  const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
-  const timestampDate =
-    configuredBlockNumber === undefined
-      ? UnixTime.toDate(UnixTime.now())
-      : UnixTime.toDate(
-          (await provider.getBlock(configuredBlockNumber)).timestamp,
-        )
+  const timestampDate = await getTimestamp(configReader, config)
 
   const { result, blockNumber, timestamp, providerStats } = await discover(
     paths,
@@ -168,7 +177,13 @@ async function justDiscover(
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return toDiscoveryOutput(templateService, config, blockNumber, timestamp, result)
+  return toDiscoveryOutput(
+    templateService,
+    config,
+    blockNumber,
+    timestamp,
+    result,
+  )
 }
 
 export async function discover(
