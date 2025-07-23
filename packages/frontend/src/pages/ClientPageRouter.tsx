@@ -28,6 +28,7 @@ import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
+import { StagesPage } from './stages/StagesPage'
 import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
 import { ZkCatalogProjectPage } from './zk-catalog/v1/project/ZkCatalogProjectPage'
 import { ZkCatalogPageV1 } from './zk-catalog/v1/ZkCatalogPageV1'
@@ -82,6 +83,7 @@ const pages = {
   DaRiskFrameworkPage,
   MultisigReportPage,
   TermsOfServicePage,
+  StagesPage,
   // Monthly Updates
   MonthlyUpdatePage,
 }
