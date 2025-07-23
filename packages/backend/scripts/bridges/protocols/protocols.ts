@@ -6,6 +6,7 @@ import { CCTPV1 } from './decoders/cctpv1'
 import { CCTPV2 } from './decoders/cctpv2'
 import { LAYERZEROV1 } from './decoders/layerzerov1'
 import { LAYERZEROV2 } from './decoders/layerzerov2'
+import { WORMHOLE } from './decoders/wormhole'
 
 export interface Protocol {
   name: string
@@ -21,4 +22,5 @@ export const PROTOCOLS: Protocol[] = [
   CCTPV2,
   LAYERZEROV1,
   LAYERZEROV2,
+  WORMHOLE,
 ]
