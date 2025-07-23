@@ -95,7 +95,9 @@ function ThroughputChartStats({
         isSynced={syncStatus.isSynced}
         isLoading={isLoading}
       >
-        {`${data?.stats.pastDayAvgCapacityUtilization}%`}
+        {data?.stats.pastDayAvgCapacityUtilization
+          ? `${data.stats.pastDayAvgCapacityUtilization}%`
+          : undefined}
       </ChartStatsItem>
       <ChartStatsItem
         label="Past day largest poster"
