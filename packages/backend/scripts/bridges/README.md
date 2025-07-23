@@ -24,3 +24,9 @@ pnpm bridges:cli layerzerov1 ethereum 22956392 arbitrum 359491994
 ```
 pnpm bridges:cli wormhole ethereum 22981103 arbitrum 360690778
 ```
+```
+pnpm bridges:cli wormhole arbitrum 360686244 ethereum 22981206
+```
+```
+pnpm bridges:cli wormhole base 33233063 ethereum 22980487
+```
