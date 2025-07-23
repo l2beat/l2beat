@@ -1,0 +1,223 @@
+{
+  "name": "facet",
+  "chain": "facet",
+  "blockNumber": 1619170,
+  "configHash": "0x822e745cc802dc13517e81554d85487e43149e50fd7cfbae4c03029087d90514",
+  "entries": [
+    {
+      "address": "facet:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2ToL1MessagePasser",
+      "address": "facet:0x4200000000000000000000000000000000000016",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x6a90057e0a817ce81f9ed4b565f5efdbf1ebf76d5f59f3ce62f2994455e8199d",
+        "0x6b028499b0f22cef9cbca4b978fff42eab473a6826e795939827875790a562b2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1733844551,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "facet:0x4200000000000000000000000000000000000018",
+        "$implementation": "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619930",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "facet:0x4200000000000000000000000000000000000016": "Proxy",
+        "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": "L2ToL1MessagePasser"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "facet:0x4200000000000000000000000000000000000018",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "facet:0x4200000000000000000000000000000000000016",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "facet:0x4200000000000000000000000000000000000018",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1733844551,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "facet:0x4200000000000000000000000000000000000018",
+        "$implementation": "facet:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "addressManager": "facet:0x0000000000000000000000000000000000000000",
+        "isUpgrading": false,
+        "owner": "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
+      },
+      "implementationNames": {
+        "facet:0x4200000000000000000000000000000000000018": "Proxy",
+        "facet:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
+      }
+    },
+    {
+      "address": "facet:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "facet:0x8a119BE75ef97e17B2832Ce349A1cE7e60Dad373",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2FFBBridge",
+      "address": "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x06ae9715fb784184e109392e0c2013c69faaf598b8cbbc6debf154cef8d2d305"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1753123547,
+      "sinceBlock": 1606584,
+      "values": {
+        "$immutable": true,
+        "aliasedL1Bridge": "facet:0x8a119BE75ef97e17B2832Ce349A1cE7e60Dad373",
+        "decimals": 18,
+        "l1Bridge": "facet:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
+        "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
+        "name": "Facet Fun Bucks",
+        "symbol": "FFB",
+        "totalSupply": 1000000000000000
+      },
+      "implementationNames": {
+        "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4": "L2ERC20Bridge"
+      }
+    },
+    {
+      "address": "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "facet:0x4200000000000000000000000000000000000016",
+          "role": "admin",
+          "via": [
+            { "address": "facet:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "facet:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "facet:0x4200000000000000000000000000000000000018" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "facet:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        }
+      ]
+    }
+  ],
+  "abis": {
+    "facet:0x4200000000000000000000000000000000000016": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "facet:0x4200000000000000000000000000000000000018": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4": [
+      "constructor(string name_, string symbol_, address _l1Bridge)",
+      "error InvalidWithdrawalAmount()",
+      "error UnauthorizedBridge()",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event DepositFinalized(address indexed to, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event WithdrawalInitiated(address indexed from, address indexed to, uint256 amount)",
+      "function MESSAGE_PASSER() view returns (address)",
+      "function aliasedL1Bridge() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function finalizeDeposit(address to, uint256 amount)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initiateWithdrawal(address to, uint256 amount)",
+      "function l1Bridge() view returns (address)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
+    "facet:0xC0D3C0d3C0d3c0d3C0d3C0D3c0D3c0d3c0D30016": [
+      "event MessagePassed(uint256 indexed nonce, address indexed sender, address indexed target, uint256 value, uint256 gasLimit, bytes data, bytes32 withdrawalHash)",
+      "event WithdrawerBalanceBurnt(uint256 indexed amount)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function burn()",
+      "function initiateWithdrawal(address _target, uint256 _gasLimit, bytes _data) payable",
+      "function messageNonce() view returns (uint256)",
+      "function sentMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "facet:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ]
+  },
+  "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+  },
+  "permissionsConfigHash": "0xe489d23d27a080b6af0a97c150fed1047dc82c479f1058833ba8184cd246a8b1"
+}

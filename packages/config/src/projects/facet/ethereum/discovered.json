@@ -1,8 +1,8 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22981303,
-  "configHash": "0xd74b0a4e3d74121045ad04cd614cbd145f17f792cd378833b868f42f864d5a4d",
+  "blockNumber": 22981943,
+  "configHash": "0x0414d500c0200175afd8bef4ad7b0a791c54175d28c0b32831fc251d048c8f75",
   "entries": [
     {
       "name": "FacetEtherBridgeV6",
@@ -299,7 +299,7 @@
           "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
           1604382
         ],
-        "getProposalsLength": 8,
+        "getProposalsLength": 9,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
@@ -661,5 +661,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x13ba4c7fd7bad3d03d27ca6aca9fef8ef9d8d346f89c566ddc47ac14985b1676"
+  "permissionsConfigHash": "0xe489d23d27a080b6af0a97c150fed1047dc82c479f1058833ba8184cd246a8b1"
 }
