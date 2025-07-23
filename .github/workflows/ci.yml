@@ -261,7 +261,6 @@ jobs:
           # Test all pages
           pnpm test-all-pages
           
-          # Kill the server and wait for it to finish
+          # Kill the server
           echo "Stopping server..."
           kill $SERVER_PID
-          wait $SERVER_PID 2>/dev/null || true
