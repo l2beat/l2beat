@@ -2,6 +2,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import countBy from 'lodash/countBy'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
+import { useMemo } from 'react'
 import {
   Command,
   CommandDialog,
@@ -20,12 +21,14 @@ import {
 import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { useTracking } from '~/hooks/useTracking'
+import { ChevronIcon } from '~/icons/Chevron'
 import { FilterIcon } from '~/icons/Filter'
 import { PlusIcon } from '~/icons/Plus'
 import { cn } from '~/utils/cn'
 import type { FilterableEntry } from './filterableValue'
 import {
   emptyStateLabel,
+  type FilterableValueId,
   filterIdToLabel,
   inputPlaceholder,
 } from './filterableValue'
@@ -147,6 +150,23 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
     })
     .map((f) => f.id)
 
+  const valuesMap = useMemo(
+    () =>
+      new Map<FilterableValueId, string[]>(
+        uniqFilterablesIds.map((id) => [
+          id,
+          uniq(
+            entries.flatMap((e) =>
+              e.filterable?.filter((f) => f.id === id).map((f) => f.value),
+            ),
+          ).filter(notUndefined),
+        ]),
+      ),
+    [entries, uniqFilterablesIds],
+  )
+
+  const { state, dispatch } = useTableFilterContext()
+
   const { selectedId, setSelectedId, search, setSearch } =
     useTableFilterInternalContext()
 
@@ -162,13 +182,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
         {selectedId ? (
           <TableFilterValueMenuItems
             filterId={selectedId}
-            values={uniq(
-              entries.flatMap((e) =>
-                e.filterable
-                  ?.filter((f) => f.id === selectedId)
-                  .map((f) => f.value),
-              ),
-            ).filter(notUndefined)}
+            values={valuesMap.get(selectedId) ?? []}
           />
         ) : (
           <CommandGroup>
@@ -179,6 +193,7 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                 value={id}
                 onSelect={() => {
                   setSelectedId(id)
+                  setSearch('')
                   track('filterIdSelected', {
                     props: { name: id },
                   })
@@ -187,6 +202,45 @@ function Content({ entries }: { entries: FilterableEntry[] }) {
                 {filterIdToLabel[id]}
               </CommandItem>
             ))}
+          </CommandGroup>
+        )}
+        {!selectedId && search.length !== 0 && (
+          <CommandGroup>
+            {Array.from(valuesMap.entries()).map(([id, values]) => {
+              return values.map((value) => (
+                <CommandItem
+                  className="font-medium"
+                  key={`${id}-${value}`}
+                  value={`${value}`}
+                  onSelect={() => {
+                    const isSelected = state[id]?.values.includes(value)
+
+                    if (isSelected) {
+                      dispatch({
+                        type: 'remove',
+                        payload: {
+                          id,
+                          value,
+                        },
+                      })
+                    } else {
+                      dispatch({
+                        type: 'add',
+                        payload: {
+                          id,
+                          value,
+                        },
+                      })
+                    }
+                    setSearch('')
+                  }}
+                >
+                  <span className="text-secondary">{filterIdToLabel[id]}</span>
+                  <ChevronIcon className="-rotate-90 mx-1 size-2 fill-secondary" />
+                  <span>{value}</span>
+                </CommandItem>
+              ))
+            })}
           </CommandGroup>
         )}
       </CommandList>
