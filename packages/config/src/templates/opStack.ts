@@ -276,7 +276,9 @@ function opStackCommon(
         (templateVars.stateValidationImage ??
         fraudProofType === 'Permissionless')
           ? 'opfp'
-          : undefined,
+          : fraudProofType === 'Kailua'
+            ? 'kailua'
+            : undefined,
       stacks: ['OP Stack'],
       category:
         templateVars.display.category ??
