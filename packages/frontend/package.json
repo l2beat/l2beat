@@ -19,7 +19,8 @@
     "format": "biome check .",
     "format:fix": "biome check --write .",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test-all-pages": "node -r esbuild-register scripts/test-all-pages/index.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",

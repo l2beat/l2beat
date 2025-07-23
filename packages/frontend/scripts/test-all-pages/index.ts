@@ -1,0 +1,89 @@
+import compact from 'lodash/compact'
+import { ps } from '~/server/projects'
+import { testPage } from './testPage'
+
+async function main() {
+  const [
+    scalingProjects,
+    bridgedProjects,
+    daLayerProjects,
+    daBridgeProjects,
+    zkCatalogProjects,
+  ] = await Promise.all([
+    ps.getProjects({
+      where: ['isScaling'],
+      optional: ['tvsConfig'],
+    }),
+    ps.getProjects({
+      where: ['isBridge'],
+    }),
+    ps.getProjects({
+      where: ['isDaLayer'],
+    }),
+    ps.getProjects({
+      select: ['daBridge'],
+    }),
+    ps.getProjects({
+      where: ['isZkCatalog'],
+      whereNot: ['archivedAt'],
+    }),
+  ])
+
+  const pages = compact([
+    '/scaling/summary',
+    '/scaling/risk',
+    '/scaling/tvs',
+    '/scaling/activity',
+    '/scaling/data-availability',
+    '/scaling/liveness',
+    '/scaling/costs',
+    '/scaling/archived',
+    '/scaling/upcoming',
+    ...scalingProjects.flatMap((x) => [
+      `/scaling/projects/${x.slug}`,
+      x.tvsConfig && `/scaling/projects/${x.slug}/tvs-breakdown`,
+    ]),
+    '/bridges/summary',
+    '/bridges/archived',
+    ...bridgedProjects.map((x) => `/bridges/projects/${x.slug}`),
+    '/data-availability/summary',
+    '/data-availability/risk',
+    '/data-availability/throughput',
+    '/data-availability/archived',
+    ...daLayerProjects.flatMap((p) => {
+      const daBridges = daBridgeProjects.filter(
+        (da) => da.daBridge.daLayer === p.id,
+      )
+      return daBridges.map(
+        (da) => `/data-availability/projects/${p.slug}/${da.slug}`,
+      )
+    }),
+    '/zk-catalog',
+    '/zk-catalog/v1',
+    ...zkCatalogProjects.map((p) => `/zk-catalog/${p.slug}`),
+    '/about-us',
+    '/donate',
+    '/governance',
+    '/governance/publications',
+    '/terms-of-service',
+    '/glossary',
+    '/faq',
+  ])
+
+  for (const page of pages) {
+    console.log(
+      `Testing ${page} (${pages.indexOf(page) + 1} of ${pages.length})`,
+    )
+
+    const result = await testPage(`http://localhost:3000${page}`)
+    if (result.type === 'error') {
+      throw new Error(
+        `HTTP ${result.status}: ${result.message} - Failed to fetch ${result.url}`,
+      )
+    }
+  }
+
+  process.exit(0)
+}
+
+main().catch(console.error)
