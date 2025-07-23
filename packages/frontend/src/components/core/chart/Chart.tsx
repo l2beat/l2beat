@@ -116,7 +116,7 @@ function ChartContainer<T extends { timestamp: number }>({
         className={cn(
           chartContainerClassNames,
           size === 'regular' &&
-            'h-[188px] min-h-[188px] w-full project-page:max-md:h-[50vh] project-page:max-md:min-h-[50vh] md:h-[228px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]',
+            'h-[188px] min-h-[188px] w-full project-page:max-md:h-[50vh] project-page:max-md:min-h-[50vh] md:h-[228px] project-page:md:h-[300px] md:min-h-[228px] 2xl:h-[258px] 2xl:min-h-[258px]',
           size === 'small' && 'h-[114px] min-h-[114px] w-full',
           className,
         )}

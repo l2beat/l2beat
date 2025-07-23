@@ -14,7 +14,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import { formatTimestamp } from '~/utils/dates'
@@ -146,7 +146,6 @@ export function DaThroughputByProjectChart({
           isLoading,
           yAxis: {
             unit: ` ${unit}`,
-            tickCount: 3,
           },
         })}
         <ChartTooltip content={<CustomTooltip denominator={denominator} />} />

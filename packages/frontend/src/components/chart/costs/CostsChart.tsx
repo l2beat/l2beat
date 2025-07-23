@@ -10,7 +10,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
