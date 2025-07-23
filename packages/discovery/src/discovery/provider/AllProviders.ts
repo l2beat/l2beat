@@ -6,7 +6,7 @@ import {
   type HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import type { DiscoveryChainConfig } from '../../config/types'
 import { getExplorerClient } from '../../utils/IEtherscanClient'
@@ -119,7 +119,7 @@ export class AllProviders {
     )
   }
 
-  get(chain: string, blockNumber: number): IProvider {
+  async get(chain: string, timestamp: UnixTime): Promise<IProvider> {
     const config = this.config.get(chain)
     assert(
       config !== undefined,
@@ -160,13 +160,18 @@ export class AllProviders {
       )
     this.batchingAndCachingProviders.set(chain, batchingAndCachingProvider)
 
-    const chainKey = `${chain}:${blockNumber}`
+    const chainKey = `${chain}:${timestamp}`
+    const blockNumber = await getBlockNumberForTimestamp(
+      config.providers,
+      timestamp,
+    )
     const provider =
       this.highLevelProviders.get(chainKey) ??
       new HighLevelProvider(
         this,
         batchingAndCachingProvider,
         chain,
+        timestamp,
         blockNumber,
       )
     this.highLevelProviders.set(chainKey, provider)
@@ -191,4 +196,68 @@ export class AllProviders {
         this.lowLevelProviders.get(chain)?.stats ?? new ProviderStats(),
     }
   }
+}
+
+async function getBlockNumberForTimestamp(
+  providers: RawProviders,
+  timestamp: UnixTime,
+): Promise<number> {
+  try {
+    return providers.etherscanClient.getBlockNumberAtOrBefore(timestamp)
+  } catch {
+    return getBlockNumberSwitching(
+      timestamp,
+      1, // NOTE(radomski): We don't support discovery on block 0, but assuming it's fine
+      await providers.baseProvider.getBlockNumber(),
+      async (blockNumber: number) =>
+        (await providers.baseProvider.getBlock(blockNumber)).timestamp,
+    )
+  }
+}
+
+// TODO(radomski): Test and explain how it works
+export async function getBlockNumberSwitching(
+  timestamp: UnixTime,
+  lhsBlock: number,
+  rhsBlock: number,
+  getBlockTimestamp: (number: number) => Promise<number>,
+): Promise<number> {
+  let [lhsTimestamp, rhsTimestamp] = await Promise.all([
+    getBlockTimestamp(lhsBlock),
+    getBlockTimestamp(rhsBlock),
+  ])
+
+  if (timestamp <= lhsTimestamp) return lhsBlock
+  if (timestamp >= rhsTimestamp) return rhsBlock
+
+  while (lhsBlock + 1 < rhsBlock) {
+    const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
+    const blocksFromStart = Math.round(timestamp - lhsTimestamp / blockTime)
+    const guessedBlockNumber = Math.max(
+      lhsBlock + 1,
+      Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
+    )
+
+    const guessedBlockTimestamp = await getBlockTimestamp(guessedBlockNumber)
+
+    if (guessedBlockTimestamp <= timestamp) {
+      lhsBlock = guessedBlockNumber
+      lhsTimestamp = guessedBlockTimestamp
+    } else {
+      rhsBlock = guessedBlockNumber
+      rhsTimestamp = guessedBlockTimestamp
+    }
+
+    const midBlockNumber = lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2)
+    const midTimestamp = await getBlockTimestamp(midBlockNumber)
+    if (midTimestamp <= timestamp) {
+      lhsBlock = midBlockNumber
+      lhsTimestamp = midTimestamp
+    } else {
+      rhsBlock = midBlockNumber
+      rhsTimestamp = midTimestamp
+    }
+  }
+
+  return lhsBlock
 }

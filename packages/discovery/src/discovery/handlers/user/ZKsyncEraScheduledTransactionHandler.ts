@@ -176,7 +176,7 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     const calls = await Promise.all(
       operation.calls.map(
         async (call) =>
-          await this.decodeCall(provider.switchBlock(blockNumber), call),
+          await this.decodeCall(await provider.switchBlock(blockNumber), call),
       ),
     )
     return {
