@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
@@ -35,7 +35,7 @@ export interface EcosystemMonthlyUpdateEntry
   extends Omit<EcosystemUpdate, 'ecosystemId'> {
   id: string
   name: string
-  colors: ProjectColors
+  colors: ProjectCustomColors
   projects: ProjectId[]
   bannerImg?: string
   allScalingProjects: {

@@ -1,10 +1,10 @@
-import type { ProjectColors } from '@l2beat/config'
+import type { ProjectCustomColors } from '@l2beat/config'
 
 interface Props {
   id: string
   children: React.ReactNode
   bannerImg?: string
-  colors?: ProjectColors
+  colors?: ProjectCustomColors
 }
 
 export function ProjectUpdateSection({

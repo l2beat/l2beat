@@ -4,5 +4,11 @@
     "address": "0xcCBC73C251bCcAa5fEF457BDD404B0fb2a776B33",
     "chain": "ethereum",
     "blockNumber": 22923900
+  },
+  "PausableIsm_1": {
+    "hash": "0x47d13762d1ce665a34136f6aebec34983d77330992ac2d74b57c2b6c9d028de2",
+    "address": "0xBa32ca8BcD3AEd8bd5d9CB93B9967580C53aD728",
+    "chain": "ethereum",
+    "blockNumber": 22966922
   }
 }

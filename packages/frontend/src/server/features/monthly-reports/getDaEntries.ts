@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
@@ -21,7 +21,7 @@ export interface DaMonthlyUpdateEntry
   extends Omit<DataAvailabilityUpdate, 'daLayerId'> {
   id: string
   name: string
-  colors: ProjectColors
+  colors: ProjectCustomColors
   daProjects: ProjectId[]
   bannerImg?: string
   allProjects: {

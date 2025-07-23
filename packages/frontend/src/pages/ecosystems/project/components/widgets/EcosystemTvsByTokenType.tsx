@@ -128,7 +128,6 @@ export function EcosystemTvsByTokenType({
               isAnimationActive={false}
               innerRadius={breakpoint === 'xs' ? 24 : 35}
               outerRadius={breakpoint === 'xs' ? 58 : 70}
-              paddingAngle={2}
             >
               <Label
                 content={({ viewBox }) => {

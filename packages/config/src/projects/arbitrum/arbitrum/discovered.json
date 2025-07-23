@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 348602301,
+  "blockNumber": 360431467,
   "configHash": "0x6612e345d3fa27e6079fc85e49c9e86f16a6f48e24524f1223b3d0a6d0719cab",
   "entries": [
     {
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "arb1:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 34263,
+        "exitNum": 35289,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -91,7 +91,7 @@
       "sinceBlock": 70398215,
       "values": {
         "$immutable": true,
-        "constitutionHash": "0x28faf2acba9b3ff80ec484e3d5646931eeef40568b1b7c38dbe52b890bfd7938",
+        "constitutionHash": "0xaab5f245cfb0475d03f6a323db09181ec9c25e5d95c6c6d660660242cfed8630",
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       },
       "implementationNames": {
@@ -1643,7 +1643,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "arb1:0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2134,
+        "exitNum": 2157,
         "router": "arb1:0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -2036,7 +2036,7 @@
         "0x11ca3427c1f5954198dc46a75aefa2f2e29b40a4e18f78ecaac06fd242502431"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals.",
+      "description": "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 4.5% quorum for proposals.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -2466,13 +2466,13 @@
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "arb1:0x00000000000000000000000000000000000A4B86",
         "EXTENDED_BALLOT_TYPEHASH": "0xb3b3f3b703cd84ce352197dcff232b1b5d3cfb2025ce47cf04742d0651f1af88",
-        "l2CoreQuorumPercent": "5",
+        "l2CoreQuorumPercent": "4.5",
         "lateQuorumVoteExtension": 14400,
         "name": "L2ArbitrumGovernor",
         "owner": "arb1:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
         "proposalThreshold": "1000000000000000000000000",
         "quorumDenominator": 10000,
-        "quorumNumerator": 500,
+        "quorumNumerator": 450,
         "state": [],
         "timelock": "arb1:0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
         "token": "arb1:0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -3709,6 +3709,6 @@
   },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7",
   "dependentDiscoveries": {
-    "arbitrum": { "ethereum": { "blockNumber": 22730549 } }
+    "arbitrum": { "ethereum": { "blockNumber": 22966759 } }
   }
 }

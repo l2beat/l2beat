@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x88605507ad2fa74d71eeb938aea453656c9ba6fc
+Generated with discovered.json: 0x1d25ae560e93c4c39cbba13940cbba46196bff06
+
+# Diff at Tue, 22 Jul 2025 16:13:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@83bf55f537ce86d3d1dac9f1a98f31f9169b801f block: 348602301
+- current block number: 360431467
+
+## Description
+
+[AIP: Constitutional Quorum Threshold Reduction](https://www.tally.xyz/gov/arbitrum/proposal/94423886836435773843507976898262621297544156552971145658873213763398017341229?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) executed.
+
+## Watched changes
+
+```diff
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417) {
+    +++ description: Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.
+      values.constitutionHash:
+-        "0x28faf2acba9b3ff80ec484e3d5646931eeef40568b1b7c38dbe52b890bfd7938"
++        "0xaab5f245cfb0475d03f6a323db09181ec9c25e5d95c6c6d660660242cfed8630"
+    }
+```
+
+```diff
+    contract CoreGovernor (0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) {
+    +++ description: Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 4.5% quorum for proposals.
+      description:
+-        "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 5% quorum for proposals."
++        "Token governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the 4.5% quorum for proposals."
++++ description: The percentage of the total supply that is required to pass a proposal.
+      values.l2CoreQuorumPercent:
+-        "5"
++        "4.5"
+      values.quorumNumerator:
+-        500
++        450
+    }
+```
+
+Generated with discovered.json: 0x7bd19fed2011e654cbba3eec59e233c6a3d6c586
 
 # Diff at Mon, 14 Jul 2025 13:11:48 GMT:
 

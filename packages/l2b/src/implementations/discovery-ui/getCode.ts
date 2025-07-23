@@ -4,8 +4,8 @@ import {
   type DiscoveryPaths,
   flatteningHash,
   get$Implementations,
-  getChainFullName,
 } from '@l2beat/discovery'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { isDeepStrictEqual } from 'util'
@@ -42,16 +42,21 @@ interface CodePathResult {
 function isFlatCodeCurrent(
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
   codePaths: CodePathResult['codePaths'],
 ): boolean {
-  const [chainShortName, _] = address.split(':')
-  const chain = getChainFullName(chainShortName)
+  const chain = ChainSpecificAddress.longChain(address)
 
+  const discovery = configReader.readDiscovery(project, chain)
+  const discoveries = [
+    discovery,
+    ...(discovery.sharedModules ?? []).map((module) =>
+      configReader.readDiscovery(module, chain),
+    ),
+  ]
   const discoHashes =
-    configReader
-      .readDiscovery(project, chain)
-      .entries.find((e) => e.address === address)?.sourceHashes ?? []
+    discoveries.flatMap((d) => d.entries).find((e) => e.address === address)
+      ?.sourceHashes ?? []
 
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
@@ -71,7 +76,7 @@ export function getCode(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
   checkFlatCode = false,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(
@@ -147,10 +152,9 @@ export function getCodePaths(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
-  address: string,
+  address: ChainSpecificAddress,
 ): CodePathResult {
-  const [chainShortName, _] = address.split(':')
-  const chain = getChainFullName(chainShortName)
+  const chain = ChainSpecificAddress.longChain(address)
   const discoveries = getProjectDiscoveries(configReader, project, chain)
 
   for (const discovery of discoveries) {

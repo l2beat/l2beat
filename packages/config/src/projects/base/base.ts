@@ -21,7 +21,7 @@ export const base: ScalingProject = opStackL2({
   genesisTimestamp,
   additionalDiscoveries: { ['base']: l2Discovery },
   display: {
-    name: 'Base',
+    name: 'Base Chain',
     slug: 'base',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',

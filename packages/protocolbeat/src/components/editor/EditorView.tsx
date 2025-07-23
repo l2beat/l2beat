@@ -30,12 +30,6 @@ export function EditorView(props: Props) {
   }
 
   useEffect(() => {
-    if (props.files.length > 0) {
-      setActiveFileIndex(props.initialFileIndex ?? 0)
-    }
-  }, [props.files])
-
-  useEffect(() => {
     if (editor && props.files.length > 0) {
       const activeFile = props.files[activeFileIndex]
       editor.detachListeners()
@@ -58,10 +52,15 @@ export function EditorView(props: Props) {
   }, [editor, props.files, activeFileIndex])
 
   useEffect(() => {
-    if (props.range?.data !== undefined && editor) {
+    if (
+      props.range?.data !== undefined &&
+      props.range.index !== undefined &&
+      editor
+    ) {
       const shouldTrigger = activeFileIndex === props.range.index
 
       if (!shouldTrigger) {
+        setActiveFileIndex(props.range.index)
         return
       }
 

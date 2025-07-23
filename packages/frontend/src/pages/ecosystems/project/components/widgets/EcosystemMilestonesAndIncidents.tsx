@@ -42,7 +42,6 @@ export function EcosystemMilestonesAndIncidents({
     UnixTime.DAY
 
   const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-
   return (
     <EcosystemWidget className={className}>
       <div className="grid grid-cols-3 gap-6" ref={sectionRef}>

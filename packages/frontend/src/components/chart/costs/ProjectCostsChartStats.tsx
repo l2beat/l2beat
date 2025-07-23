@@ -19,7 +19,7 @@ export function ProjectCostsChartStats({
   range: CostsTimeRange
   unit: CostsUnit
   isLoading: boolean
-  data: ProjectCostsChartResponse
+  data: ProjectCostsChartResponse | undefined
   hasPostedData?: boolean
 }) {
   const elements = compact([
