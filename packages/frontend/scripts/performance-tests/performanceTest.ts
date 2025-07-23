@@ -3,8 +3,8 @@ import path from 'path'
 import { formatBytes } from './formatBytes'
 import { pages, projectPages } from './pages'
 
-const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
-// const BASE_URL = 'http://localhost:3000'
+// const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
+const BASE_URL = 'http://localhost:3000'
 
 const results: {
   mainPages: Record<
@@ -122,14 +122,18 @@ async function main() {
 }
 
 async function testPage(page: string) {
-  const response = await fetch(`${BASE_URL}${page}`)
+  const start = process.hrtime.bigint()
 
-  const duration = response.headers.get('metrics-execution-time')
-  const size = response.headers.get('metrics-data-size')
+  const response = await fetch(`${BASE_URL}${page}`)
+  const end = process.hrtime.bigint()
+  const durationMs = Number(end - start) / 1_000_000
+  const contentLength = response.headers.get('Content-Length')
 
   return {
-    duration: duration ? Number.parseFloat(duration) : Number.POSITIVE_INFINITY,
-    size: size ? Number.parseInt(size) : Number.POSITIVE_INFINITY,
+    duration: durationMs,
+    size: contentLength
+      ? Number.parseInt(contentLength)
+      : Number.POSITIVE_INFINITY,
   }
 }
 
