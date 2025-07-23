@@ -18,6 +18,7 @@ import type {
   IEtherscanClient,
 } from '../../utils/IEtherscanClient'
 import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
+import type { IStatelessProvider } from './IStatelessProvider'
 
 export interface ContractDeployment {
   deployer: EthereumAddress
@@ -35,7 +36,7 @@ export interface RawProviders {
   blobClient?: BlobClient
 }
 
-export interface IProvider {
+export interface IProvider extends IStatelessProvider {
   readonly timestamp: UnixTime
   readonly blockNumber: number
   readonly chain: string
