@@ -131,30 +131,35 @@ export async function getEcosystemEntry(
     }),
   ])
 
-  const [
-    projectsChangeReport,
-    tvs,
-    projectsActivity,
-    projectsOngoingAnomalies,
-  ] = await Promise.all([
-    getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    getActivityLatestUops(allScalingProjects),
-    getApprovedOngoingAnomalies(),
-  ])
-
   const ecosystemProjects = projects.filter(
     (p) => p.ecosystemInfo.id === ecosystem.id,
-  )
-  const allScalingProjectsUops = allScalingProjects.reduce(
-    (acc, curr) =>
-      acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
-    0,
   )
 
   const [upcomingProjects, liveProjects] = partition(
     ecosystemProjects.filter((p) => !p.archivedAt),
     (p) => p.isUpcoming,
+  )
+
+  const [
+    projectsChangeReport,
+    tvs,
+    projectsActivity,
+    projectsOngoingAnomalies,
+    blobsData,
+    token,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    get7dTvsBreakdown({ type: 'layer2' }),
+    getActivityLatestUops(allScalingProjects),
+    getApprovedOngoingAnomalies(),
+    getBlobsData(liveProjects),
+    getEcosystemToken(ecosystem, liveProjects),
+  ])
+
+  const allScalingProjectsUops = allScalingProjects.reduce(
+    (acc, curr) =>
+      acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
+    0,
   )
 
   return {
@@ -178,9 +183,9 @@ export async function getEcosystemEntry(
     tvsByStage: getTvsByStage(liveProjects, tvs),
     tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
     projectsByDaLayer: getProjectsByDaLayer(liveProjects),
-    blobsData: await getBlobsData(liveProjects),
+    blobsData,
     projectsByRaas: getProjectsByRaas(liveProjects),
-    token: await getEcosystemToken(ecosystem, liveProjects),
+    token,
     projectsChartData: getEcosystemProjectsChartData(
       liveProjects,
       allScalingProjects.length,
