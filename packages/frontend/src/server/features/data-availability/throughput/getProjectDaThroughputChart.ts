@@ -1,4 +1,4 @@
-import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
@@ -7,24 +7,10 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { getDaThroughputTable } from './getDaThroughputTable'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 
 export type ProjectDaThroughputChartData = {
   chart: ProjectDaThroughputDataPoint[]
-  stats: {
-    pastDayAvgCapacityUtilization: number | undefined
-    pastDayAvgThroughputPerSecond: number | undefined
-    largestPoster:
-      | {
-          name: string
-          percentage: number
-          totalPosted: number
-          href: string
-        }
-      | undefined
-    totalPosted: number | undefined
-  }
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
@@ -44,7 +30,6 @@ export const ProjectDaThroughputChartParams = v.object({
       to: v.number(),
     }),
   ]),
-  includeScalingOnly: v.boolean(),
   projectId: v.string(),
 })
 export type ProjectDaThroughputChartParams = v.infer<
@@ -68,23 +53,12 @@ export async function getProjectDaThroughputChart(
     now: adjustedTarget,
   })
 
-  const [throughput, throughputTable] = await Promise.all([
-    params.includeScalingOnly
-      ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-          [params.projectId],
-          [from, adjustedTarget],
-        )
-      : db.dataAvailability.getByProjectIdsAndTimeRange(
-          [params.projectId],
-          [from, adjustedTarget],
-        ),
-    getDaThroughputTable([params.projectId]),
-  ])
-  const projectData = params.includeScalingOnly
-    ? throughputTable.scalingOnlyData[params.projectId]
-    : throughputTable.data[params.projectId]
+  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
+    [params.projectId],
+    [from, adjustedTarget],
+  )
 
-  if (throughput.length === 0 || !projectData) {
+  if (throughput.length === 0) {
     return undefined
   }
 
@@ -110,21 +84,13 @@ export async function getProjectDaThroughputChart(
     chart: timestamps.map((timestamp) => {
       return [timestamp, grouped[timestamp] ?? null]
     }),
-    stats: {
-      pastDayAvgCapacityUtilization:
-        projectData.pastDayData?.avgCapacityUtilization,
-      pastDayAvgThroughputPerSecond:
-        projectData.pastDayData?.avgThroughputPerSecond,
-      largestPoster: projectData.pastDayData?.largestPoster,
-      totalPosted: projectData.pastDayData?.totalPosted,
-    },
     range: [minTimestamp, chartAdjustedTo],
     syncedUntil,
   }
 }
 
 function groupByTimestampAndProjectId(
-  records: ProjectsSummedDataAvailabilityRecord[],
+  records: DataAvailabilityRecord[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
@@ -163,12 +129,6 @@ function getMockProjectDaThroughputChartData({
   if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
     return {
       chart: [],
-      stats: {
-        pastDayAvgCapacityUtilization: 0,
-        pastDayAvgThroughputPerSecond: 0,
-        largestPoster: undefined,
-        totalPosted: 0,
-      },
       range: [from, to],
       syncedUntil: UnixTime.now(),
     }
@@ -181,12 +141,6 @@ function getMockProjectDaThroughputChartData({
 
       return [timestamp, Math.round(throughputValue)]
     }),
-    stats: {
-      pastDayAvgCapacityUtilization: Math.random() * 100,
-      pastDayAvgThroughputPerSecond: Math.random() * 900_000,
-      largestPoster: undefined,
-      totalPosted: Math.random() * 900_000_000 + 90_000_000,
-    },
     range: [from, to],
     syncedUntil: UnixTime.now(),
   }

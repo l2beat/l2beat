@@ -7,7 +7,6 @@ import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeCo
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { Skeleton } from '~/components/core/Skeleton'
 import { ProjectCombobox } from '~/components/ProjectCombobox'
-import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
@@ -15,7 +14,6 @@ import {
 import { api } from '~/trpc/React'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
 import { EigenDataSourceInfo } from './EigenDataSourceInfo'
-import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
 
 const DEFAULT_PROJECTS_TO_SHOW = 5
 
@@ -38,7 +36,6 @@ export function ThroughputSectionByProjectChart({
   customColors,
   milestones,
 }: Props) {
-  const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
     range,
     daLayer,
@@ -46,7 +43,7 @@ export function ThroughputSectionByProjectChart({
 
   const allProjects = useMemo(() => {
     // We want to get latest top projects.
-    const result = data
+    return data
       ? uniq(
           [...data]
             .reverse()
@@ -58,12 +55,7 @@ export function ThroughputSectionByProjectChart({
             }),
         )
       : []
-
-    if (includeScalingOnly) {
-      result.pop()
-    }
-    return result
-  }, [data, includeScalingOnly])
+  }, [data])
 
   const chartRange = useMemo(
     () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
@@ -72,16 +64,11 @@ export function ThroughputSectionByProjectChart({
 
   const projectsToShow = useMemo(
     () =>
-      selectedProjects?.filter((p) => {
-        if (includeScalingOnly) {
-          return p !== 'Unknown'
-        }
-        return true
-      }) ??
+      selectedProjects ??
       allProjects
         .filter((p) => p !== 'Unknown')
         .slice(0, DEFAULT_PROJECTS_TO_SHOW),
-    [allProjects, includeScalingOnly, selectedProjects],
+    [allProjects, selectedProjects],
   )
 
   return (
@@ -92,22 +79,15 @@ export function ThroughputSectionByProjectChart({
           {daLayer === 'eigenda' && <EigenDataSourceInfo />}
         </div>
         <div className="flex justify-between gap-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <EthereumProjectsOnlyCheckbox
-              name="projectByProjectThroughputIncludeScalingOnly"
-              checked={includeScalingOnly}
-              onCheckedChange={setIncludeScalingOnly}
+          {!data && isLoading ? (
+            <Skeleton className="h-8 w-44" />
+          ) : (
+            <ProjectCombobox
+              allProjects={allProjects}
+              projects={projectsToShow}
+              setProjects={setSelectedProjects}
             />
-            {!data && isLoading ? (
-              <Skeleton className="h-8 w-44" />
-            ) : (
-              <ProjectCombobox
-                allProjects={allProjects}
-                projects={projectsToShow}
-                setProjects={setSelectedProjects}
-              />
-            )}
-          </div>
+          )}
           <ChartTimeRangeControls
             name="Range"
             value={range}
