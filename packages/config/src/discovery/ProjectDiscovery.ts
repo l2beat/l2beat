@@ -76,8 +76,8 @@ export class ProjectDiscovery {
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
-  get blockNumber(): number {
-    return this.discoveries.reduce((min, d) => Math.max(min, d.blockNumber), 0)
+  get timestamp(): number {
+    return this.discoveries.reduce((min, d) => Math.max(min, d.timestamp), 0)
   }
 
   getName(address: ChainSpecificAddress): string {

@@ -16,14 +16,12 @@ import type {
 export function toDiscoveryOutput(
   templateService: TemplateService,
   config: ConfigRegistry,
-  blockNumber: number,
   timestamp: UnixTime,
   results: Analysis[],
 ): DiscoveryOutput {
   const discovery = toRawDiscoveryOutput(
     templateService,
     config,
-    blockNumber,
     timestamp,
     results,
   )
@@ -40,13 +38,11 @@ export function toDiscoveryOutput(
 export function toRawDiscoveryOutput(
   templateService: TemplateService,
   config: ConfigRegistry,
-  blockNumber: number,
   timestamp: UnixTime,
   results: Analysis[],
 ): DiscoveryOutput {
   const structure = getStructureOutput(
     config.structure,
-    blockNumber,
     timestamp,
     results,
   )
