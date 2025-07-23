@@ -248,9 +248,11 @@ jobs:
       - name: Start mock server and test pages
         run: |
           cd packages/frontend 
+
+          pnpm build
           
           # Start the mock server in the background
-          pnpm dev:mock &
+          pnpm start:mock &
           SERVER_PID=$!
           
           # Wait for server to start
@@ -259,7 +261,9 @@ jobs:
           # Test all pages
           pnpm test-all-pages
           
-          # Kill the server
+          # Kill the server and wait for it to finish
+          echo "Stopping server..."
           kill $SERVER_PID
+          wait $SERVER_PID 2>/dev/null || true
 
 
