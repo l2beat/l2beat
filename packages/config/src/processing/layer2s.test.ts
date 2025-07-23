@@ -458,28 +458,23 @@ describe('layer2s', () => {
     })
 
     describe('date', () => {
-      for (const project of layer2s) {
-        if (project.milestones === undefined) {
-          continue
-        }
-        for (const milestone of project.milestones) {
-          it(`Milestone: ${milestone.title} (${project.display.name}) date is full day`, () => {
-            expect(
-              UnixTime.isFull(
-                UnixTime.fromDate(new Date(milestone.date)),
-                'day',
-              ),
-            ).toEqual(true)
-          })
-        }
-      }
-      for (const milestone of milestonesLayer2s) {
-        it(`Milestone: ${milestone.title} (main page) date is full day`, () => {
+      const allMilestones = [
+        ...milestonesLayer2s,
+        ...layer2s.flatMap((l) => l.milestones ?? []),
+      ]
+      it('is full day', () => {
+        for (const milestone of allMilestones ?? []) {
           expect(
             UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
           ).toEqual(true)
-        })
-      }
+        }
+      })
+
+      it('is correct', () => {
+        for (const milestone of allMilestones ?? []) {
+          expect(new Date(milestone.date).getTime()).not.toEqual(Number.NaN)
+        }
+      })
     })
   })
 
