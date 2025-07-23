@@ -24,10 +24,11 @@ import {
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
-export type DiscoveryBlockNumbers = {
+export type DiscoveryTimestamps = {
   [project: string]: {
     [chain: string]: {
-      blockNumber: number
+      timestamp: number
+      blockNumber?: number // TODO(radomski): To be removed
     }
   }
 }
@@ -72,8 +73,8 @@ export class DiscoveryRegistry {
     return result
   }
 
-  getBlockNumbers(options: { skip?: { project: string; chain: string } } = {}) {
-    const result: DiscoveryBlockNumbers = {}
+  getTimestamps(options: { skip?: { project: string; chain: string } } = {}) {
+    const result: DiscoveryTimestamps = {}
     const skip = options.skip
 
     for (const [project, chains] of Object.entries(this.discoveries)) {
@@ -83,7 +84,7 @@ export class DiscoveryRegistry {
         }
         result[project] ??= {}
         result[project][chain] = {
-          blockNumber: discovery.discoveryOutput.blockNumber,
+          timestamp: discovery.discoveryOutput.timestamp,
         }
       }
     }
@@ -153,7 +154,7 @@ export function buildPermissionsOutput(
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
-    dependentBlockNumbers: discoveries.getBlockNumbers(),
+    dependentBlockNumbers: discoveries.getTimestamps(),
   }
 }
 
