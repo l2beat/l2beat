@@ -59,7 +59,7 @@ export async function runDiscovery(
 
   const timestampDate = await getTimestamp(configReader, config)
 
-  const { result, blockNumber, timestamp, providerStats } = await discover(
+  const { result, timestamp, providerStats } = await discover(
     paths,
     chainConfigs,
     projectConfig,
@@ -71,7 +71,7 @@ export async function runDiscovery(
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
-  await saveDiscoveryResult(result, projectConfig, blockNumber, timestamp, logger, {
+  await saveDiscoveryResult(result, projectConfig, timestamp, logger, {
     paths,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
@@ -166,7 +166,7 @@ async function justDiscover(
   overwriteCache: boolean,
   logger: Logger,
 ): Promise<DiscoveryOutput> {
-  const { result, blockNumber, timestamp } = await discover(
+  const { result, timestamp } = await discover(
     paths,
     chainConfigs,
     config,
@@ -177,13 +177,7 @@ async function justDiscover(
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return toDiscoveryOutput(
-    templateService,
-    config,
-    blockNumber,
-    timestamp,
-    result,
-  )
+  return toDiscoveryOutput(templateService, config, timestamp, result)
 }
 
 export async function discover(
@@ -196,7 +190,6 @@ export async function discover(
   overwriteChache: boolean,
 ): Promise<{
   result: Analysis[]
-  blockNumber: number
   timestamp: UnixTime
   providerStats: AllProviderStats
 }> {
@@ -219,7 +212,6 @@ export async function discover(
   const provider = await allProviders.get(chain, timestamp)
   return {
     result: await discoveryEngine.discover(provider, config.structure),
-    blockNumber: provider.blockNumber,
     timestamp,
     providerStats: allProviders.getStats(chain),
   }
