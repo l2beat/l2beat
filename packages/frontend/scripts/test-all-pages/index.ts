@@ -77,9 +77,10 @@ async function main() {
 
     const result = await testPage(`http://localhost:3000${page}`)
     if (result.type === 'error') {
-      throw new Error(
+      console.error(
         `HTTP ${result.status}: ${result.message} - Failed to fetch ${result.url}`,
       )
+      process.exit(1)
     }
   }
 
