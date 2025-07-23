@@ -435,6 +435,43 @@ export class BatchingAndCachingProvider {
     return block
   }
 
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    let duration = -performance.now()
+    const entry = await this.cache.entry(
+      'getBlockNumberAtOrBefore',
+      [timestamp],
+      undefined,
+    )
+    const cached = entry.read()
+    if (cached !== undefined) {
+      duration += performance.now()
+      this.stats.mark(
+        ProviderMeasurement.GET_BLOCK_NUMBER_AT_OR_BEFORE,
+        duration,
+      )
+      return parseCacheEntry(cached)
+    }
+    let blockNumber: number
+    try {
+      blockNumber =
+        await this.provider.getBlockNumberAtOrBeforeExplorer(timestamp)
+    } catch {
+      blockNumber = await getBlockNumberSwitching(
+        timestamp,
+        1, // NOTE(radomski): We don't support discovery on block 0, but assuming it's fine
+        await this.provider.getBlockNumber(),
+        async (blockNumber: number) => {
+          const block = await this.getBlock(blockNumber)
+          assert(block !== undefined, `Could not find block ${blockNumber}`)
+          return UnixTime(block.timestamp)
+        },
+      )
+    }
+
+    entry.write(blockNumber.toString())
+    return blockNumber
+  }
+
   async getTransaction(
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
@@ -646,4 +683,51 @@ async function getAllLogs(
     }
     throw e
   }
+}
+
+// TODO(radomski): Test and explain how it works
+async function getBlockNumberSwitching(
+  timestamp: UnixTime,
+  lhsBlock: number,
+  rhsBlock: number,
+  getBlockTimestamp: (number: number) => Promise<number>,
+): Promise<number> {
+  let [lhsTimestamp, rhsTimestamp] = await Promise.all([
+    getBlockTimestamp(lhsBlock),
+    getBlockTimestamp(rhsBlock),
+  ])
+
+  if (timestamp <= lhsTimestamp) return lhsBlock
+  if (timestamp >= rhsTimestamp) return rhsBlock
+
+  while (lhsBlock + 1 < rhsBlock) {
+    const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
+    const blocksFromStart = Math.round(timestamp - lhsTimestamp / blockTime)
+    const guessedBlockNumber = Math.max(
+      lhsBlock + 1,
+      Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
+    )
+
+    const guessedBlockTimestamp = await getBlockTimestamp(guessedBlockNumber)
+
+    if (guessedBlockTimestamp <= timestamp) {
+      lhsBlock = guessedBlockNumber
+      lhsTimestamp = guessedBlockTimestamp
+    } else {
+      rhsBlock = guessedBlockNumber
+      rhsTimestamp = guessedBlockTimestamp
+    }
+
+    const midBlockNumber = lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2)
+    const midTimestamp = await getBlockTimestamp(midBlockNumber)
+    if (midTimestamp <= timestamp) {
+      lhsBlock = midBlockNumber
+      lhsTimestamp = midTimestamp
+    } else {
+      rhsBlock = midBlockNumber
+      rhsTimestamp = midTimestamp
+    }
+  }
+
+  return lhsBlock
 }
