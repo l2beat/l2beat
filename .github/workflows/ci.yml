@@ -256,7 +256,7 @@ jobs:
           SERVER_PID=$!
           
           # Wait for server to start
-          sleep 10
+          sleep 3
           
           # Test all pages
           pnpm test-all-pages
