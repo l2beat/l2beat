@@ -40,6 +40,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   everclear: 'everclear',
   zircuit: 'zircuit',
   katana: 'katana',
+  taiko: 'taiko',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(
