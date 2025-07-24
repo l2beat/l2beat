@@ -145,7 +145,7 @@ model UpdateNotifier {
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
   projectId    String   @db.VarChar(255)
-  timestamp    DateTime @db.Timestamp(6)
+  timestamp    DateTime @default(now()) @db.Timestamp(6)
   diffJsonBlob Json
   chainId      Int      @default(1)
 
@@ -217,7 +217,7 @@ model AnomalyStats {
 model FlatSources {
   projectId   String   @db.VarChar(255)
   chainId     Int
-  timestamp   DateTime @db.Timestamp(6)
+  timestamp   DateTime @default(now()) @db.Timestamp(6)
   contentHash String   @db.VarChar(255)
   flat        Json
 
@@ -294,8 +294,8 @@ model UpdateDiff {
   address           String   @db.VarChar(255)
   type              String   @db.VarChar(255)
   timestamp         DateTime @db.Timestamp(6)
-  diffBaseTimestamp DateTime @db.Timestamp(6)
-  diffHeadTimestamp DateTime @db.Timestamp(6)
+  diffBaseTimestamp DateTime @default(now()) @db.Timestamp(6)
+  diffHeadTimestamp DateTime @default(now()) @db.Timestamp(6)
 
   @@unique([projectId, address, type, chain])
 }
