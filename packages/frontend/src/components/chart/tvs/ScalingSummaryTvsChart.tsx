@@ -22,8 +22,8 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'

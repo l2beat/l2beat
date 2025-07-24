@@ -296,7 +296,7 @@ export const katana: ScalingProject = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          url: 'https://etherscan.io/address/0x9a6c2dcc7e523f87716e17ba36d10ccffa0a60bb#code#F1#L578',
+          url: 'https://etherscan.io/address/0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc#code#F1#L578',
           title:
             '_depositTransaction() in OptimismPortal2 - Etherscan source code',
         },

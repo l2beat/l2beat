@@ -18,7 +18,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
   yAxis,
   isLoading,
 }: CommonChartComponentsProps<T>) {
-  const { scale, ...rest } = yAxis ?? {}
+  const { scale, tickCount, ...rest } = yAxis ?? {}
 
   return [
     <CartesianGrid
@@ -31,7 +31,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       tickLine={false}
       axisLine={false}
       mirror
-      tickCount={3}
+      tickCount={tickCount ?? 3}
       dy={-10}
       // It requires a type cast to avoid type error
       // I have checked their code and although symlog is not correct by the type definition,

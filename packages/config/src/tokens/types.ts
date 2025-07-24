@@ -18,7 +18,14 @@ export const GeneratedToken = z.object({
   coingeckoListingTimestamp: z.number().transform(UnixTime),
   untilTimestamp: z.number().transform(UnixTime).optional(),
   /** @deprecated */
-  category: z.enum(['ether', 'stablecoin', 'other']),
+  category: z.enum([
+    'ether',
+    'stablecoin',
+    'btc',
+    'rwaRestricted',
+    'rwaPublic',
+    'other',
+  ]),
   iconUrl: z.string().optional(),
   chainId: z.number().transform(ChainId),
   source: z.enum(['canonical', 'external', 'native']),
@@ -43,7 +50,9 @@ export const SourceEntry = z.object({
   symbol: z.string(),
   address: z.string().transform(EthereumAddress).optional(),
   coingeckoId: z.string().transform(CoingeckoId).optional(),
-  category: z.enum(['ether', 'stablecoin', 'other']).optional(),
+  category: z
+    .enum(['ether', 'stablecoin', 'btc', 'rwaRestricted', 'rwaPublic', 'other'])
+    .optional(),
   source: z.enum(['canonical', 'external', 'native']).optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
   bridgedUsing: z
