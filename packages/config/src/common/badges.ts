@@ -514,17 +514,6 @@ export const badges = [
     },
   },
   {
-    id: 'OPKailua',
-    type: BadgeType.Stack,
-    name: 'Built on OP Kailua',
-    description: 'The project is built on the OP Kailua stack',
-    action: {
-      type: 'scalingFilter',
-      id: 'stack',
-      value: '',
-    },
-  },
-  {
     id: 'LoopringFork',
     type: BadgeType.Fork,
     name: 'Fork of Loopring',
