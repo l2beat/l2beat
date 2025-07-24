@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import { Checkbox } from '~/components/core/Checkbox'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -10,6 +9,7 @@ import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { CostsChart } from './CostsChart'
 import { CostsChartTimeRangeControls } from './CostsChartTimeRangeControls'
 import { ProjectCostsChartStats } from './ProjectCostsChartStats'
@@ -18,18 +18,15 @@ interface Props {
   milestones: Milestone[]
   projectId: string
   defaultRange: CostsTimeRange
-  hasPostedData: boolean
 }
 
 export function ProjectCostsChart({
   milestones,
   projectId,
   defaultRange,
-  hasPostedData,
 }: Props) {
   const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const [showDataPosted, setShowDataPosted] = useState(true)
 
   const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
@@ -40,9 +37,6 @@ export function ProjectCostsChart({
     if (!data) {
       return undefined
     }
-
-    const lastDataPosted = data.chart.findLast((d) => d[13])
-    const allDataPostedSynced = data.chart.at(-1)?.[0] === lastDataPosted?.[0]
 
     return data.chart.map(
       ([
@@ -59,7 +53,6 @@ export function ProjectCostsChart({
         blobsGas,
         blobsEth,
         blobsUsd,
-        posted,
       ]) => {
         return {
           timestamp,
@@ -83,45 +76,36 @@ export function ProjectCostsChart({
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted: posted ?? 0,
-          notSyncedPosted:
-            !allDataPostedSynced &&
-            lastDataPosted &&
-            timestamp >= lastDataPosted[0]
-              ? (lastDataPosted[13] ?? 0)
-              : null,
         }
       },
     )
   }, [data, unit])
 
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(data?.chart),
+    [data?.chart],
+  )
+
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
     <div>
-      <div className={cn('mt-4 mb-3 flex flex-col justify-between gap-1')}>
+      <div className={cn('mt-4 mb-3 flex justify-between gap-1')}>
         <ProjectChartTimeRange range={chartRange} />
-        <div className="flex justify-between gap-1">
-          <DataPostedCheckbox
-            isLoading={isLoading}
-            disabled={!hasPostedData}
-            showDataPosted={showDataPosted}
-            setShowDataPosted={setShowDataPosted}
-          />
-          <CostsChartTimeRangeControls
-            projectSection
-            timeRange={range}
-            setTimeRange={setRange}
-          />
-        </div>
+
+        <CostsChartTimeRangeControls
+          projectSection
+          timeRange={range}
+          setTimeRange={setRange}
+        />
       </div>
       <CostsChart
         data={chartData}
+        lastValidTimestamp={lastValidTimestamp}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
         range={range}
-        showDataPosted={hasPostedData ? showDataPosted : false}
         tickCount={4}
         className="mt-4 mb-2"
       />
@@ -132,36 +116,8 @@ export function ProjectCostsChart({
         isLoading={isLoading}
         range={range}
         unit={unit}
-        hasPostedData={hasPostedData}
       />
     </div>
-  )
-}
-
-function DataPostedCheckbox({
-  disabled,
-  showDataPosted,
-  setShowDataPosted,
-  isLoading,
-}: {
-  disabled: boolean
-  showDataPosted: boolean
-  setShowDataPosted: (value: boolean) => void
-  isLoading?: boolean
-}) {
-  if (isLoading) {
-    return <Skeleton className="h-8 w-[168px]" />
-  }
-
-  return (
-    <Checkbox
-      name="showDataPosted"
-      checked={disabled ? false : showDataPosted}
-      onCheckedChange={(state) => setShowDataPosted(!!state)}
-      disabled={disabled}
-    >
-      Show data posted
-    </Checkbox>
   )
 }
 

@@ -8,11 +8,7 @@ export async function getCostsSection(
   helpers: SsrHelpers,
   project: Project<never | 'scalingInfo', 'archivedAt' | 'trackedTxsConfig'>,
 ): Promise<
-  | Pick<
-      CostsSectionProps,
-      'trackedTransactions' | 'defaultRange' | 'hasPostedData'
-    >
-  | undefined
+  Pick<CostsSectionProps, 'trackedTransactions' | 'defaultRange'> | undefined
 > {
   const trackedTransactions = getTrackedTransactions(project, 'l2costs')
 
@@ -28,7 +24,6 @@ export async function getCostsSection(
 
   return {
     trackedTransactions,
-    hasPostedData: data.chart.some((d) => d[13] !== null),
     defaultRange: range,
   }
 }

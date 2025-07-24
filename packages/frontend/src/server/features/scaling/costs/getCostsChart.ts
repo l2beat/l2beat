@@ -19,18 +19,18 @@ export type CostsChartParams = v.infer<typeof CostsChartParams>
 
 export type CostsChartDataPoint = readonly [
   timestamp: number,
-  overheadGas: number,
-  overheadGasEth: number,
-  overheadGasUsd: number,
-  calldataGas: number,
-  calldataGasEth: number,
-  calldataGasUsd: number,
-  computeGas: number,
-  computeGasEth: number,
-  computeGasUsd: number,
-  blobsGas: number | undefined,
-  blobsGasEth: number | undefined,
-  blobsGasUsd: number | undefined,
+  overheadGas: number | null,
+  overheadGasEth: number | null,
+  overheadGasUsd: number | null,
+  calldataGas: number | null,
+  calldataGasEth: number | null,
+  calldataGasUsd: number | null,
+  computeGas: number | null,
+  computeGasEth: number | null,
+  computeGasUsd: number | null,
+  blobsGas: number | null,
+  blobsGasEth: number | null,
+  blobsGasUsd: number | null,
 ]
 
 export type CostsChartData = CostsChartDataPoint[]
@@ -56,44 +56,43 @@ export async function getCostsChart({
     return []
   }
   const resolution = rangeToResolution(timeRange)
-  const range = getRangeWithMax({ type: timeRange }, resolution)
+  const [from, to] = getRangeWithMax({ type: timeRange }, resolution)
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
-    range,
+    [from, to],
   )
 
   if (data.length === 0) {
     return []
   }
 
-  const summedByTimestamp = sumByTimestamp(data, resolution)
-
-  const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
-  const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
-
-  const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
+  const summedByTimestamp = sumByTimestamp(
+    data.filter((p) => p.timestamp < 1751275600),
     resolution,
   )
+
+  const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+
+  const timestamps = generateTimestamps([minTimestamp, to], resolution)
   const result = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
-    const blobsFallback = timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
+    const blobsFallback = timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : null
     if (!entry) {
       return [
         timestamp,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        blobsFallback,
-        blobsFallback,
-        blobsFallback,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
       ] as const
     }
     return [
@@ -150,9 +149,9 @@ function sumByTimestamp(
   const result = new Map<
     number,
     {
-      blobsGas: number | undefined
-      blobsGasEth: number | undefined
-      blobsGasUsd: number | undefined
+      blobsGas: number | null
+      blobsGasEth: number | null
+      blobsGasUsd: number | null
       calldataGas: number
       calldataGasEth: number
       calldataGasUsd: number
@@ -204,9 +203,9 @@ function sumByTimestamp(
       computeGas: record.computeGas,
       computeGasEth: record.computeGasEth,
       computeGasUsd: record.computeGasUsd,
-      blobsGas: record.blobsGas ?? undefined,
-      blobsGasEth: record.blobsGasEth ?? undefined,
-      blobsGasUsd: record.blobsGasUsd ?? undefined,
+      blobsGas: record.blobsGas ?? null,
+      blobsGasEth: record.blobsGasEth ?? null,
+      blobsGasUsd: record.blobsGasUsd ?? null,
     })
   }
 

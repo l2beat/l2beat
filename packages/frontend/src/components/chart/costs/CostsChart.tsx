@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart, Line, YAxis } from 'recharts'
+import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -10,6 +10,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
@@ -45,46 +46,35 @@ const chartMeta = {
     color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
-  posted: {
-    label: 'Data posted',
-    color: 'var(--chart-emerald)',
-    indicatorType: { shape: 'line' },
-  },
-  notSyncedPosted: {
-    label: 'Data posted (not synced)',
-    color: 'var(--chart-emerald)',
-    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-  },
 } satisfies ChartMeta
 
 interface CostsChartDataPoint {
   timestamp: number
-  calldata: number
-  blobs: number | undefined
-  compute: number
-  overhead: number
-  posted?: number | null
+  calldata: number | null
+  blobs: number | null
+  compute: number | null
+  overhead: number | null
 }
 
 interface Props {
   data: CostsChartDataPoint[] | undefined
+  lastValidTimestamp: number | undefined
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
   range: CostsTimeRange
-  showDataPosted: boolean
   className?: string
   tickCount?: number
 }
 
 export function CostsChart({
   data,
+  lastValidTimestamp,
   unit,
   isLoading,
   milestones,
   className,
   range,
-  showDataPosted,
   tickCount,
 }: Props) {
   const resolution = rangeToResolution(range)
@@ -97,10 +87,9 @@ export function CostsChart({
       milestones={milestones}
       className={className}
     >
-      <ComposedChart data={data} margin={{ top: 20 }}>
+      <AreaChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
-          yAxisId="left"
           dataKey="overhead"
           fill={chartMeta.overhead.color}
           fillOpacity={1}
@@ -111,7 +100,6 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
-          yAxisId="left"
           dataKey="compute"
           fill={chartMeta.compute.color}
           fillOpacity={1}
@@ -122,7 +110,6 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
-          yAxisId="left"
           dataKey="blobs"
           fill={chartMeta.blobs.color}
           fillOpacity={1}
@@ -133,7 +120,6 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
-          yAxisId="left"
           dataKey="calldata"
           fill={chartMeta.calldata.color}
           fillOpacity={1}
@@ -143,51 +129,14 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {showDataPosted && (
-          <Line
-            yAxisId="right"
-            dataKey="posted"
-            strokeWidth={2}
-            stroke={chartMeta.posted.color}
-            dot={false}
-            isAnimationActive={false}
-          />
-        )}
-        {showDataPosted && (
-          <Line
-            yAxisId="right"
-            dataKey="notSyncedPosted"
-            strokeWidth={2}
-            stroke={chartMeta.notSyncedPosted.color}
-            strokeDasharray={
-              chartMeta.notSyncedPosted.indicatorType.strokeDasharray
-            }
-            dot={false}
-            isAnimationActive={false}
-            legendType="none"
-          />
-        )}
-        {showDataPosted && (
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tickFormatter={(value: number) => formatBytes(value)}
-            tickLine={false}
-            axisLine={false}
-            mirror
-            tickCount={tickCount ?? 3}
-            dy={-10}
-            tick={{
-              width: 100,
-            }}
-          />
+        {lastValidTimestamp && (
+          <ReferenceArea x1={lastValidTimestamp} fill="url(#not-synced-fill)" />
         )}
 
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
-            yAxisId: 'left',
             tickFormatter: (value: number) =>
               unit === 'gas'
                 ? formatNumber(value)
@@ -198,7 +147,10 @@ export function CostsChart({
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}
         />
-      </ComposedChart>
+        <defs>
+          <NotSyncedPatternDef />
+        </defs>
+      </AreaChart>
     </ChartContainer>
   )
 }

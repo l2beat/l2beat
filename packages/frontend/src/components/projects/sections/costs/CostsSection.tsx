@@ -12,7 +12,6 @@ export interface CostsSectionProps extends ProjectSectionProps {
   milestones: Milestone[]
   trackedTransactions: TrackedTransactionsByType
   defaultRange: CostsTimeRange
-  hasPostedData: boolean
 }
 
 export function CostsSection({
@@ -20,7 +19,6 @@ export function CostsSection({
   milestones,
   trackedTransactions,
   defaultRange,
-  hasPostedData,
   ...sectionProps
 }: CostsSectionProps) {
   return (
@@ -33,7 +31,6 @@ export function CostsSection({
         milestones={milestones}
         projectId={projectId}
         defaultRange={defaultRange}
-        hasPostedData={hasPostedData}
       />
       <HorizontalSeparator className="my-4" />
       <TrackedTransactions {...trackedTransactions} />
