@@ -26,6 +26,7 @@ import {
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
+import path, { join, relative } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
 import { updateDiffHistoryHash } from './hashing'
@@ -64,8 +65,12 @@ export async function updateDiffHistoryForChain(
 ) {
   // Get discovered.json from main branch and compare to current
   logger.info(`Updating diffHistory for: ${projectName} on ${chain}`)
+  const paths = getDiscoveryPaths()
   const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const discoveryFolder = configReader.getProjectChainPath(projectName, chain)
+  const discoveryFolder =
+    '.' +
+    path.sep +
+    relative(process.cwd(), join(paths.discovery, projectName, chain))
 
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`, logger)
