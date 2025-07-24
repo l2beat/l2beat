@@ -63,24 +63,31 @@ export async function getTokenData(
     saveResults(outputFilePath, sorted)
   }
 
-  function removeDeleted() {
-    const sourceKeys = new Set<string>()
-    for (const [chainName, tokens] of Object.entries(sourceToken)) {
-      const chainCfg = chains.find((c) => c.name === chainName)
-      if (!chainCfg) continue
-      for (const token of tokens) {
-        const key = `${chainCfg.chainId}:${(token.address ?? token.symbol).toLowerCase()}`
-        sourceKeys.add(key)
-      }
-    }
+  // TODO: We need to decide how to handle tokens that are removed or 
+  // no longer available.
+  // Simply *automatically* removing them from the generated.json
+  // might not be compatible with downstream tools (should this trigger 
+  // removal from DB?).
+  // Commenting this function for now.
+  //
+  // function removeDeleted() {
+  //   const sourceKeys = new Set<string>()
+  //   for (const [chainName, tokens] of Object.entries(sourceToken)) {
+  //     const chainCfg = chains.find((c) => c.name === chainName)
+  //     if (!chainCfg) continue
+  //     for (const token of tokens) {
+  //       const key = `${chainCfg.chainId}:${(token.address ?? token.symbol).toLowerCase()}`
+  //       sourceKeys.add(key)
+  //     }
+  //   }
 
-    const filtered = result.filter((t) => {
-      const key = `${t.chainId}:${(t.address ?? t.symbol).toLowerCase()}`
-      return sourceKeys.has(key)
-    })
+  //   const filtered = result.filter((t) => {
+  //     const key = `${t.chainId}:${(t.address ?? t.symbol).toLowerCase()}`
+  //     return sourceKeys.has(key)
+  //   })
 
-    saveResults(outputFilePath, sortByChainAndName(filtered))
-  }
+  //   saveResults(outputFilePath, sortByChainAndName(filtered))
+  // }
 
   for (const [chain, tokens] of Object.entries(sourceToken)) {
     const chainLogger = logger.prefix(chain)
@@ -194,7 +201,7 @@ export async function getTokenData(
     }
   }
 
-  removeDeleted()
+  // removeDeleted()
   saveTokenNames(result, chainConverter)
 }
 
