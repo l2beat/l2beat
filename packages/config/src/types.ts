@@ -383,7 +383,6 @@ export type ProjectScalingStack =
   | 'SN Stack'
   | 'Taiko'
   | 'Cartesi Rollups'
-  | 'OP Kailua'
 
 export type ProjectStageName =
   | 'Not applicable'

@@ -500,11 +500,7 @@ export const badges = [
     type: BadgeType.Stack,
     name: 'Built on the OP Kailua stack',
     description: 'The project is built on the OP Kailua stack',
-    action: {
-      type: 'scalingFilter',
-      id: 'stack',
-      value: 'Cartesi Rollups',
-    },
+    action: undefined
   },
   {
     id: 'SNStack',
@@ -525,7 +521,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'OP Kailua',
+      value: '',
     },
   },
   {
