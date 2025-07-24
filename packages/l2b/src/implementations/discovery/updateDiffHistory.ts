@@ -30,7 +30,10 @@ import path, { relative } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
 import { updateDiffHistoryHash } from './hashing'
-import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
+import {
+  rediscoverStructureOnBlock,
+  type Timing,
+} from './rediscoverStructureOnBlock'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -230,18 +233,30 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   const rawConfig = configReader.readRawConfig(projectName)
   const dependencies: { project: string; chain: string }[] =
     rawConfig.modelCrossChainPermissions
-      ? getDependenciesToDiscoverForProject(projectName, configReader) // TODO(radomski): enable this
+      ? getDependenciesToDiscoverForProject(projectName, configReader)
       : [{ project: projectName, chain }]
 
   for (const dependency of dependencies) {
+    // TODO(radomski): Remove the duplication after the PR containg this code is merged
+    let timestamp =
+      discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
+        dependency.chain
+      ]?.timestamp
+
     let blockNumber =
       discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
         dependency.chain
       ]?.blockNumber
+
     if (dependency.project === projectName && dependency.chain === chain) {
       blockNumber = discoveryFromMainBranch.blockNumber
     }
-    if (blockNumber === undefined) {
+
+    if (dependency.project === projectName && dependency.chain === chain) {
+      timestamp = discoveryFromMainBranch.timestamp
+    }
+
+    if (timestamp === undefined && blockNumber === undefined) {
       // We rediscover on the past block number, but with current configs and dependencies.
       // Those dependencies might not have been referenced in the old discovery.
       // In that case we don't fail - the diff will show all those "added".
@@ -250,10 +265,11 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       )
       continue
     }
+
     const prevStructure = await rediscoverStructureOnBlock(
       dependency.project,
       dependency.chain,
-      blockNumber,
+      { blockNumber, timestamp } as Timing,
       saveSources,
       overwriteCache,
     )

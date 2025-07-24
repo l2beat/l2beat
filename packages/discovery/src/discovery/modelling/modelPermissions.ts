@@ -154,7 +154,7 @@ export function buildPermissionsOutput(
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
-    dependentBlockNumbers: discoveries.getTimestamps(),
+    dependentTimestamps: discoveries.getTimestamps(),
   }
 }
 

@@ -42,7 +42,7 @@ export function ValuesPanel() {
         <Display
           selected={selected}
           chain={selected.chain}
-          blockNumber={selected.blockNumber}
+          timestamp={selected.timestamp}
         />
       )}
     </div>
@@ -52,11 +52,11 @@ export function ValuesPanel() {
 function Display({
   selected,
   chain,
-  blockNumber,
+  timestamp,
 }: {
   selected: ApiProjectContract | ApiAddressEntry
   chain: string
-  blockNumber: number
+  timestamp: number
 }) {
   const { project } = useParams()
   if (!project) {
@@ -71,7 +71,7 @@ function Display({
         addresses={addresses}
         project={project}
         chain={chain}
-        blockNumber={blockNumber}
+        timestamp={timestamp}
       />
     </TemplateDialog.Root>
   )
