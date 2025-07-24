@@ -5,22 +5,18 @@ export type ChartNotSyncedTimestamps = {
   x2: number
 }
 
-export function getNotSyncedTimestamps<T extends ChartPoint>(
+export function getLastValidTimestamp<T extends ChartPoint>(
   data: T[] | undefined,
-): ChartNotSyncedTimestamps | undefined {
+): number | undefined {
   if (!data) {
     return undefined
   }
   const lastValidTimestamp = data.findLast(([_, ...rest]) =>
     rest.every((v) => v !== null),
   )?.[0]
-  const lastTimestamp = data.at(-1)?.[0]
-  if (lastValidTimestamp === undefined || lastTimestamp === undefined) {
+  if (lastValidTimestamp === undefined) {
     return undefined
   }
 
-  return {
-    x1: lastValidTimestamp,
-    x2: lastTimestamp,
-  }
+  return lastValidTimestamp
 }

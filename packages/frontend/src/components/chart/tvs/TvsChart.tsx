@@ -18,7 +18,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
-import type { ChartNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 export interface TvsChartDataPoint {
   timestamp: number
@@ -29,7 +28,7 @@ interface Props {
   data: TvsChartDataPoint[] | undefined
   unit: ChartUnit
   isLoading: boolean
-  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
+  lastValidTimestamp: number | undefined
   milestones: Milestone[] | undefined
   tickCount?: number
 }
@@ -39,7 +38,7 @@ export function TvsChart({
   unit,
   isLoading,
   milestones,
-  notSyncedTimestamps,
+  lastValidTimestamp,
   tickCount,
 }: Props) {
   const chartMeta = {
@@ -78,9 +77,9 @@ export function TvsChart({
             tickCount,
           },
         })}
-        {notSyncedTimestamps && (
+        {lastValidTimestamp && (
           <ReferenceArea
-            {...notSyncedTimestamps}
+            x1={lastValidTimestamp}
             fill="var(--secondary)"
             fillOpacity={0.2}
           />

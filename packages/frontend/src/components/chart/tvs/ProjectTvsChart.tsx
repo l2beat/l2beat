@@ -11,12 +11,12 @@ import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import { TokenCombobox } from '../../TokenCombobox'
 import type { ChartUnit } from '../types'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { ProjectTokenChart } from './ProjectTokenChart'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
 import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from './TvsChartUnitControls'
-import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 interface Props {
   projectId: string
@@ -111,10 +111,7 @@ function DefaultChart({
     },
   )
 
-  const notSyncedTimestamps = useMemo(
-    () => getNotSyncedTimestamps(data),
-    [data],
-  )
+  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
@@ -131,7 +128,7 @@ function DefaultChart({
         data={chartData}
         unit={unit}
         isLoading={isLoading}
-        notSyncedTimestamps={notSyncedTimestamps}
+        lastValidTimestamp={lastValidTimestamp}
         milestones={milestones}
         tickCount={4}
       />

@@ -37,7 +37,6 @@ import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
-import type { ChartNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
@@ -58,7 +57,7 @@ interface Props {
   type: ActivityChartType
   projectName?: string
   className?: string
-  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
+  lastValidTimestamp: number | undefined
   tickCount?: number
 }
 
@@ -73,7 +72,7 @@ export function ActivityChart({
   metric,
   projectName,
   className,
-  notSyncedTimestamps,
+  lastValidTimestamp,
   tickCount,
 }: Props) {
   const chartMeta = {
@@ -119,9 +118,9 @@ export function ActivityChart({
             },
           ]),
         })}
-        {notSyncedTimestamps && (
+        {lastValidTimestamp && (
           <ReferenceArea
-            {...notSyncedTimestamps}
+            x1={lastValidTimestamp}
             fill="var(--secondary)"
             fillOpacity={0.2}
           />

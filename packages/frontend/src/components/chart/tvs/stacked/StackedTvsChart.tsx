@@ -16,7 +16,6 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
-import type { ChartNotSyncedTimestamps } from '../../utils/getNotSyncedTimestamps'
 
 export interface StackedTvsChartDataPoint {
   timestamp: number
@@ -27,7 +26,7 @@ export interface StackedTvsChartDataPoint {
 
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
-  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
+  lastValidTimestamp: number | undefined
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
@@ -55,7 +54,7 @@ const chartMeta = {
 
 export function StackedTvsChart({
   data,
-  notSyncedTimestamps,
+  lastValidTimestamp,
   milestones,
   unit,
   isLoading,
@@ -98,9 +97,9 @@ export function StackedTvsChart({
           stackId="a"
           isAnimationActive={false}
         />
-        {notSyncedTimestamps && (
+        {lastValidTimestamp && (
           <ReferenceArea
-            {...notSyncedTimestamps}
+            x1={lastValidTimestamp}
             fill="var(--secondary)"
             fillOpacity={0.2}
           />

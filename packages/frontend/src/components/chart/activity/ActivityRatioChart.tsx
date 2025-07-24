@@ -16,7 +16,6 @@ import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGrad
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
-import type { ChartNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
@@ -25,7 +24,7 @@ interface ActivityRatioChartDataPoint {
 
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
-  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
+  lastValidTimestamp: number | undefined
   isLoading: boolean
   className?: string
 }
@@ -34,7 +33,7 @@ export function ActivityRatioChart({
   data,
   isLoading,
   className,
-  notSyncedTimestamps,
+  lastValidTimestamp,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -64,9 +63,9 @@ export function ActivityRatioChart({
           dot={false}
           isAnimationActive={false}
         />
-        {notSyncedTimestamps && (
+        {lastValidTimestamp && (
           <ReferenceArea
-            {...notSyncedTimestamps}
+            x1={lastValidTimestamp}
             fill="var(--secondary)"
             fillOpacity={0.2}
           />

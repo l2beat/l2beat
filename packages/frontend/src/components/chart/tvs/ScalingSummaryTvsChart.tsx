@@ -35,7 +35,7 @@ import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
-import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 
 const chartMeta = {
   rollups: {
@@ -85,7 +85,7 @@ export function ScalingSummaryTvsChart({
   }, [data])
   const stats = getStats(chartData)
 
-  const notSyncedTimestamps = getNotSyncedTimestamps(data)
+  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   return (
     <section className="flex flex-col gap-4">
@@ -135,9 +135,9 @@ export function ScalingSummaryTvsChart({
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
           })}
-          {notSyncedTimestamps && (
+          {lastValidTimestamp && (
             <ReferenceArea
-              {...notSyncedTimestamps}
+              x1={lastValidTimestamp}
               fill="var(--secondary)"
               fillOpacity={0.2}
             />

@@ -20,7 +20,7 @@ import { Checkbox } from '../../core/Checkbox'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
-import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import type { ActivityChartType } from './ActivityChart'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartHeader } from './ActivityChartHeader'
@@ -101,7 +101,7 @@ export function ScalingActivityChart({
   }, [data?.data])
 
   const notSyncedTimestamps = useMemo(
-    () => getNotSyncedTimestamps(data?.data),
+    () => getLastValidTimestamp(data?.data),
     [data?.data],
   )
 
@@ -124,13 +124,13 @@ export function ScalingActivityChart({
         scale={scale}
         metric={metric}
         type={type}
-        notSyncedTimestamps={notSyncedTimestamps}
+        lastValidTimestamp={notSyncedTimestamps}
       />
       <ActivityRatioChart
         data={ratioData}
         isLoading={isLoading}
         className="mb-2"
-        notSyncedTimestamps={notSyncedTimestamps}
+        lastValidTimestamp={notSyncedTimestamps}
       />
       <Controls
         scale={scale}

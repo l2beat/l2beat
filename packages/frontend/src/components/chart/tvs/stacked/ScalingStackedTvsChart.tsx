@@ -12,7 +12,7 @@ import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartUnit } from '../../types'
-import { getNotSyncedTimestamps } from '../../utils/getNotSyncedTimestamps'
+import { getLastValidTimestamp } from '../../utils/getLastValidTimestamp'
 import { TvsChartHeader } from '../TvsChartHeader'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
 import { StackedTvsChart } from './StackedTvsChart'
@@ -63,10 +63,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
       }),
     [data, unit],
   )
-  const notSyncedTimestamps = useMemo(
-    () => getNotSyncedTimestamps(data),
-    [data],
-  )
+  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
   const chartRange = getChartRange(chartData)
   const stats = getStats(chartData)
 
@@ -85,7 +82,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
-        notSyncedTimestamps={notSyncedTimestamps}
+        lastValidTimestamp={lastValidTimestamp}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
