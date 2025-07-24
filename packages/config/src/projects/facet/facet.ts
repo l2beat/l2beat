@@ -197,7 +197,7 @@ export const facet: ScalingProject = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     },
-    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
       FALLBACK_TIMEOUT_SECS,
     ),
   },
