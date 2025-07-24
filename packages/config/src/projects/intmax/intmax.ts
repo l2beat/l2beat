@@ -1,7 +1,11 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getStage } from '../../common/stages/getStage'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
+
+const discovery = new ProjectDiscovery('intmax')
 
 export const intmax: ScalingProject = {
   type: 'layer2',
@@ -12,7 +16,7 @@ export const intmax: ScalingProject = {
     name: 'INTMAX',
     slug: 'intmax',
     description:
-      'INTMAX is a stateless Plasma-like ZK Rollup with permissionless block production.',
+      'INTMAX is a stateless Plasma-like ZK Rollup that enables private payments and minimal onchain costs.',
     purposes: ['Payments'],
     category: 'ZK Rollup',
     links: {
@@ -23,11 +27,31 @@ export const intmax: ScalingProject = {
       ],
       repositories: ['https://github.com/InternetMaximalism'],
       socialMedia: ['https://twitter.com/intmaxIO'],
+      bridges: ['https://app.intmax.io/bridge'],
     },
   },
   config: {
-    escrows: [],
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
+        tokens: '*',
+      }),
+    ],
   },
+  dataAvailability: {
+    layer: DA_LAYERS.SELF_CUSTODIED_INTMAX,
+    bridge: DA_BRIDGES.SELF_ATTESTED_INTMAX,
+    mode: DA_MODES.BALANCE_PROOF,
+  },
+  technology: {
+    dataAvailability: {
+
+    },
+    operator: {},
+    exitMechanisms: {},
+    stateValidation: {},
+    otherConsiderations: {}
+  }
   riskView: {
     stateValidation: {
       value: '',
@@ -49,7 +73,7 @@ export const intmax: ScalingProject = {
     {
       stage0: {
         callsItselfRollup: true,
-        stateRootsPostedToL1: true,
+        stateRootsPostedToL1: null,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
         stateVerificationOnL1: true,
@@ -57,9 +81,9 @@ export const intmax: ScalingProject = {
       },
       stage1: {
         principle: false,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: false,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: false,
@@ -68,10 +92,17 @@ export const intmax: ScalingProject = {
       },
     },
     {
-      rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
-      securityCouncilReference:
-        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
+      rollupNodeLink: 'https://github.com/InternetMaximalism/intmax2-node',
     },
   ),
-  discoveryInfo: getDiscoveryInfo([]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
+  contracts: {
+    addresses: {
+      [discovery.chain]: discovery.getDiscoveredContracts()
+    },
+    risks: []
+  },
+  permissions: {
+    [discovery.chain]: discovery.getDiscoveredPermissions(),
+  }
 }

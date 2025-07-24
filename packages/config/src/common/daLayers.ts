@@ -110,6 +110,13 @@ const HYPERLIQUID_DA: DaProjectTableValue = {
     'The data is custodied by Hyperliquid validators. On Arbitrum there is no direct reference of the data.',
 }
 
+const SELF_CUSTODIED_INTMAX: DaProjectTableValue = {
+  value: 'Self Custodied',
+  sentiment: 'good',
+  description:
+    "The data needed to prove users' own balance is stored by the users themselves. This data can be received from an aggregator when depositing or from senders when receiving funds. The protocol ensures that for a deposit to be accepted by the protocol, the user must confirm the collection of data from the aggregator.",
+}
+
 export const DA_LAYERS = {
   ETH_CALLDATA,
   ETH_BLOBS,
@@ -126,4 +133,5 @@ export const DA_LAYERS = {
   NEAR_DA,
   POLYGON_POS_DA,
   HYPERLIQUID_DA,
+  SELF_CUSTODIED_INTMAX,
 }

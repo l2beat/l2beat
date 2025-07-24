@@ -225,7 +225,7 @@
       }
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "INTMAX Multisig 2",
       "address": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -712,5 +712,5 @@
     "intmax/Rollup": "0xd95cbb375a904111a39d325b5240debea5483796f1532caeca626faddf0a1356",
     "intmax/Withdrawal": "0xd95cbb375a904111a39d325b5240debea5483796f1532caeca626faddf0a1356"
   },
-  "permissionsConfigHash": "0x2826620e186ab382c2c84c943c58e8299cdf2468e445b186b2cf352304273977"
+  "permissionsConfigHash": "0x415ad9dc1af0edc7dfc03fe8c4a718a3a6764fc1909a5b1a3eb3806dc655ecde"
 }

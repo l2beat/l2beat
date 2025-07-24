@@ -2,7 +2,7 @@
   "name": "intmax",
   "chain": "ethereum",
   "blockNumber": 22972987,
-  "configHash": "0x8d93833d1ed0ef67acdf13037245764d2b777e91c35bb2993418b2756325a4f6",
+  "configHash": "0xbf0659f19789bac0da54b122c2d13248089f74740c069898ebbcf845a28f9063",
   "entries": [
     {
       "name": "PredicatePermitter",
@@ -113,6 +113,7 @@
       "name": "Contribution",
       "address": "eth:0x4c614C7BB9420caA1F19cB2C58B00864f2125Ce2",
       "type": "Contract",
+      "template": "intmax/Contribution",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
         "0x04d47a14538cc31c1d5699cd1ba8e634345861e576bb09735cacd8e7569495da"
@@ -186,22 +187,7 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x875B5C06893563bA573ABe9b16801cA31A6ba4f4",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x8c910517388c87611e7aa4A6AEaaB7De7a649092",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x8F8bD9e43972F7015FCAB5B99f21F904790e967c",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafeL2",
+      "name": "INTMAX Multisig 1",
       "address": "eth:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -366,35 +352,6 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getDepositData": [
-          [
-            "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "eth:0x0000000000000000000000000000000000000000"
-          ],
-          [
-            "0x6acd54b8f315ba232ca8729210abccac3073dd371e366c1d10b77b822f6e1862",
-            "eth:0x8F8bD9e43972F7015FCAB5B99f21F904790e967c"
-          ],
-          [
-            "0xef3e41f08e4837fd0be9969635f412d4915c5ff86ae3c10def4ceb0bf79e4f9a",
-            "eth:0x8c910517388c87611e7aa4A6AEaaB7De7a649092"
-          ],
-          [
-            "0xeb6a853c7b43f5b2b28c58c2093515fa9c0ed77fd44696cdc6ba08f203ab6c17",
-            "eth:0x875B5C06893563bA573ABe9b16801cA31A6ba4f4"
-          ],
-          [
-            "0x73c4c536a230e606807abb0b95a9d6ed8ed2b2ca361e54fcf7a48ba8bb26a59c",
-            "eth:0x875B5C06893563bA573ABe9b16801cA31A6ba4f4"
-          ]
-        ],
-        "getDepositDataHash": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x6acd54b8f315ba232ca8729210abccac3073dd371e366c1d10b77b822f6e1862",
-          "0xef3e41f08e4837fd0be9969635f412d4915c5ff86ae3c10def4ceb0bf79e4f9a",
-          "0xeb6a853c7b43f5b2b28c58c2093515fa9c0ed77fd44696cdc6ba08f203ab6c17",
-          "0x73c4c536a230e606807abb0b95a9d6ed8ed2b2ca361e54fcf7a48ba8bb26a59c"
-        ],
         "getLastDepositId": 4445,
         "getLastRelayedDepositId": 4445,
         "getNativeTokenIndex": 0,
@@ -405,11 +362,6 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "WITHDRAWAL": "0x738128fe393bef1bcd8a524796fff40618b938cd467c71fcf37850ab0ba4f7d7",
         "WITHDRAWAL_FEE_RATIO_LIMIT": 1500
-      },
-      "errors": {
-        "getDepositData": "Processing error occurred.",
-        "getDepositDataHash": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3": "ERC1967Proxy",
@@ -965,7 +917,8 @@
   "usedTemplates": {
     "eigenlayer/PredicateServiceManager": "0x86aa1134b560cab7e1eda368f0131a927d40e3c6106b2041cec336ea9d0e49df",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "intmax/Liquidity": "0x3c9c66ca364e227370b44af90dc91d42334eba615afca4238408bdad8f4fef21"
+    "intmax/Contribution": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "intmax/Liquidity": "0x0ea24c4940f099c9a1b5712a34d80d8b61c4cf7eb079938f9c2c8fe381c61fc5"
   },
-  "permissionsConfigHash": "0x2826620e186ab382c2c84c943c58e8299cdf2468e445b186b2cf352304273977"
+  "permissionsConfigHash": "0x415ad9dc1af0edc7dfc03fe8c4a718a3a6764fc1909a5b1a3eb3806dc655ecde"
 }

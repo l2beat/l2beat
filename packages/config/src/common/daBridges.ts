@@ -86,6 +86,13 @@ function STAKED_OPERATORS({
   }
 }
 
+const SELF_ATTESTED_INTMAX: DaProjectTableValue = {
+  value: 'Self-attested',
+  sentiment: 'good',
+  description:
+    'Users self attest the collection of data to the aggregator when depositing, and the protocol verifies the signatures before accepting the deposit. When funds are received, users will need to confirm the collection of data from the sender before accepting the payment.',
+}
+
 export const DA_BRIDGES = {
   NONE,
   NONE_WITH_DA_CHALLENGES,
@@ -95,4 +102,5 @@ export const DA_BRIDGES = {
   VECTOR,
   DAC_MEMBERS,
   STAKED_OPERATORS,
+  SELF_ATTESTED_INTMAX,
 }
