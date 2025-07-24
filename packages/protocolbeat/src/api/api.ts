@@ -145,11 +145,11 @@ export async function writeTemplateFile(templateId: string, content: string) {
 export async function createShape(
   chain: string,
   addresses: string[],
-  blockNumber: number,
+  timestamp: number,
   templateId: string,
   fileName: string,
 ) {
-  const body = { chain, addresses, blockNumber, templateId, fileName }
+  const body = { chain, addresses, timestamp, templateId, fileName }
 
   const res = await fetch('/api/templates/create-shape', {
     method: 'POST',
