@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2e69b221179edaeb989a5ffb14cb7d54897b2f46
+Generated with discovered.json: 0xe8993b25162336bcd8a226689b0a2d7bf29844dd
 
-# Diff at Thu, 24 Jul 2025 08:43:23 GMT:
+# Diff at Thu, 24 Jul 2025 11:37:40 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 22731117
-- current block number: 22987901
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 22731117
+- current block number: 22988760
 
 ## Description
 
@@ -22,6 +22,28 @@ Generated with discovered.json: 0x2e69b221179edaeb989a5ffb14cb7d54897b2f46
       values.eip1559Elasticity:
 -        0
 +        2
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22731117 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.game1337:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0xEB06fFa16011B5628BaB98E29776361c83741dd3) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.1337:
++        "KailuaGame"
     }
 ```
 

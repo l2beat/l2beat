@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x662d7c5a9b5600e0a107a8c6a24812ff2eba2309
+
+# Diff at Tue, 22 Jul 2025 14:09:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 22924293
+- current block number: 22924293
+
+## Description
+
+Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22924293 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x10d7B35078d3baabB96Dd45a9143B94be65b12CD) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.game1337:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x5d66C1782664115999C47c9fA5cd031f495D3e4F) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+      usedTypes.0.arg.1337:
++        "KailuaGame"
+    }
+```
+
 Generated with discovered.json: 0x1f095ac8c9f5d9d75eff04745d2162120acf1bec
 
 # Diff at Tue, 15 Jul 2025 11:31:07 GMT:

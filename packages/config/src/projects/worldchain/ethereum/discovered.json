@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 22987918,
+  "blockNumber": 22988766,
   "configHash": "0x2d0ecd1924b8861c720f371a00f25df90a1a85a2aff5c10554a12da2375c88fa",
   "entries": [
     {
@@ -73,7 +73,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 4728,
+        "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 4731,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -83,7 +84,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 4728,
+        "permissionedGamesTotal": 4731,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1469,7 +1470,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 22987910
+          "prevBlockNum": 22988600
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1493,7 +1494,11 @@
       "usedTypes": [
         {
           "typeCaster": "Mapping",
-          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "1337": "KailuaGame"
+          }
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -1658,7 +1663,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651443",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651471",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2558,13 +2563,13 @@
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x67f69b090ef8ef37890cb4e7c28b9ee1844641f6c4eb75ff15cba998839606ed",
+    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
+    "opstack/OptimismPortal2": "0xbbab3a37f98fcaba96d2c5f14cdaaae474f1d611d2c49578972dff3cedefeed8",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
