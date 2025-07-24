@@ -37,6 +37,19 @@ export const facet: ScalingProject = {
     BADGES.VM.EVM,
     BADGES.Stack.OPStack,
   ],
+  scopeOfAssessment: {
+    inScope: [
+      'Ability to deposit, spend, and withdraw ETH from the selected bridge (L1ETHBridge) built on top of Rollup.',
+      'Sequencing mechanism via L1 through the Inbox and state validation mechanism via the Rollup proof system',
+      'Upgradability of contracts including the selected bridge (L1ETHBridge)',
+    ],
+    notInScope: [
+      'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1ETHBridge)',
+      'Bridged token compatibility with other DeFi applications e.g., Facet Fun Bucks (FFB)',
+      'The soundness of the ZK proof system of Rollup',
+      'Upgradability of the external bridge contracts including the fast bridge (FacetEtherBridgeV6)',
+    ],
+  },
   stage: getStage(
     {
       stage0: {
