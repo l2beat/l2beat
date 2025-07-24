@@ -106,7 +106,7 @@ function CustomTooltip({
   if (!active || !payload || typeof timestamp !== 'number') return null
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-40 flex-col sm:w-60">
+      <div className="flex w-40 flex-col sm:w-44">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatTimestamp(timestamp, {
             mode: 'datetime',
