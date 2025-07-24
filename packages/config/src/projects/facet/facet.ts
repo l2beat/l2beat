@@ -54,7 +54,7 @@ export const facet: ScalingProject = {
         securityCouncilProperlySetUp: null,
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: true,
+        proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: true,
       },
@@ -112,11 +112,7 @@ export const facet: ScalingProject = {
     dataAvailability: {
       ...DATA_ON_CHAIN,
     },
-    exitWindow: {
-      value: 'Immutable',
-      description: 'Core contracts are immutable and cannot be upgraded.',
-      sentiment: 'good',
-    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     },
