@@ -32,7 +32,7 @@ const createTemplateSchema = z.object({
   ),
   templateId: safeTemplateIdSchema,
   fileName: z.string(),
-  blockNumber: z.number(),
+  timestamp: z.number(),
 })
 
 export function attachTemplateRouter(
@@ -53,14 +53,14 @@ export function attachTemplateRouter(
       return
     }
 
-    const { chain, addresses, templateId, fileName, blockNumber } = data.data
+    const { chain, addresses, templateId, fileName, timestamp } = data.data
 
     const result = await wrapError(() =>
       createShape(
         templateService,
         addresses.map(EthereumAddress),
         chain,
-        blockNumber,
+        timestamp,
         templateId,
         fileName,
       ),

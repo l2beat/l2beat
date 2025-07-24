@@ -10,7 +10,7 @@ export async function createShape(
   templateService: TemplateService,
   addresses: EthereumAddress[],
   chain: string,
-  blockNumber: number,
+  timestamp: number,
   templateId: string,
   fileName: string,
 ) {
@@ -34,7 +34,7 @@ export async function createShape(
     chain,
     addresses,
     fileName,
-    blockNumber,
+    timestamp,
     sources,
   )
 }

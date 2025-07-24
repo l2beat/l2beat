@@ -67,20 +67,20 @@ export function combinePermissionsIntoDiscovery(
   }
 
   if (!options.skipDependentDiscoveries) {
-    const blockNumbersWithoutCurProj: DiscoveryTimestamps = {}
+    const timestampsWithoutCurProj: DiscoveryTimestamps = {}
     for (const [project, chains] of Object.entries(
-      permissionsOutput.dependentBlockNumbers,
+      permissionsOutput.dependentTimestamps,
     )) {
-      for (const [chain, blockNumber] of Object.entries(chains)) {
+      for (const [chain, timestamp] of Object.entries(chains)) {
         if (!(project === discovery.name && chain === discovery.chain)) {
-          blockNumbersWithoutCurProj[project] ??= {}
-          blockNumbersWithoutCurProj[project][chain] = blockNumber
+          timestampsWithoutCurProj[project] ??= {}
+          timestampsWithoutCurProj[project][chain] = timestamp
         }
       }
     }
-    discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
+    discovery.dependentDiscoveries = isEmpty(timestampsWithoutCurProj)
       ? undefined // remove entry if there are no dependent discoveries
-      : blockNumbersWithoutCurProj
+      : timestampsWithoutCurProj
   }
 }
 

@@ -132,5 +132,5 @@ export type PermissionsOutput = {
     isFinal: boolean
     role?: string
   }[]
-  dependentBlockNumbers: DiscoveryTimestamps
+  dependentTimestamps: DiscoveryTimestamps
 }

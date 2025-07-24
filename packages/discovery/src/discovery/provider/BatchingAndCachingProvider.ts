@@ -13,6 +13,7 @@ import type { ContractSource } from '../../utils/IEtherscanClient'
 import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { CacheEntry } from './DiscoveryCache'
+import { getBlockNumberSwitching } from './getBlockNumberSwitching'
 import type { ContractDeployment, RawProviders } from './IProvider'
 import type { LowLevelProvider } from './LowLevelProvider'
 import type { MulticallClient } from './multicall/MulticallClient'
@@ -683,51 +684,4 @@ async function getAllLogs(
     }
     throw e
   }
-}
-
-// TODO(radomski): Test and explain how it works
-async function getBlockNumberSwitching(
-  timestamp: UnixTime,
-  lhsBlock: number,
-  rhsBlock: number,
-  getBlockTimestamp: (number: number) => Promise<number>,
-): Promise<number> {
-  let [lhsTimestamp, rhsTimestamp] = await Promise.all([
-    getBlockTimestamp(lhsBlock),
-    getBlockTimestamp(rhsBlock),
-  ])
-
-  if (timestamp <= lhsTimestamp) return lhsBlock
-  if (timestamp >= rhsTimestamp) return rhsBlock
-
-  while (lhsBlock + 1 < rhsBlock) {
-    const blockTime = (rhsTimestamp - lhsTimestamp) / (rhsBlock - lhsBlock)
-    const blocksFromStart = Math.round(timestamp - lhsTimestamp / blockTime)
-    const guessedBlockNumber = Math.max(
-      lhsBlock + 1,
-      Math.min(rhsBlock - 1, lhsBlock + blocksFromStart),
-    )
-
-    const guessedBlockTimestamp = await getBlockTimestamp(guessedBlockNumber)
-
-    if (guessedBlockTimestamp <= timestamp) {
-      lhsBlock = guessedBlockNumber
-      lhsTimestamp = guessedBlockTimestamp
-    } else {
-      rhsBlock = guessedBlockNumber
-      rhsTimestamp = guessedBlockTimestamp
-    }
-
-    const midBlockNumber = lhsBlock + Math.floor((rhsBlock - lhsBlock) / 2)
-    const midTimestamp = await getBlockTimestamp(midBlockNumber)
-    if (midTimestamp <= timestamp) {
-      lhsBlock = midBlockNumber
-      lhsTimestamp = midTimestamp
-    } else {
-      rhsBlock = midBlockNumber
-      rhsTimestamp = midTimestamp
-    }
-  }
-
-  return lhsBlock
 }
