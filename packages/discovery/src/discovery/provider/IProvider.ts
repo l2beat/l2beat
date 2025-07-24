@@ -18,6 +18,7 @@ import type {
   IEtherscanClient,
 } from '../../utils/IEtherscanClient'
 import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
+import type { IStatelessProvider } from './IStatelessProvider'
 
 export interface ContractDeployment {
   deployer: EthereumAddress
@@ -35,12 +36,14 @@ export interface RawProviders {
   blobClient?: BlobClient
 }
 
-export interface IProvider {
+export interface IProvider extends IStatelessProvider {
+  readonly timestamp: UnixTime
   readonly blockNumber: number
   readonly chain: string
 
-  switchBlock(blockNumber: number): IProvider
-  switchChain(chain: string, blockNumber: number): IProvider
+  switchBlock(blockNumber: number): Promise<IProvider>
+  switchChain(chain: string): Promise<IProvider>
+  switchChain(chain: string, timestamp: UnixTime): Promise<IProvider>
 
   /** Needs to return values that survive JSON serialization! */
   raw<T>(

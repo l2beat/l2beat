@@ -229,7 +229,7 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     const l2Calldata = res.l2Calldata as string
     const providerForChain =
       // Nova arbiscan doesn't provide API so we're out of luck
-      chain === 'nova' ? undefined : provider.switchChain(chain, 0)
+      chain === 'nova' ? undefined : await provider.switchChain(chain)
     const decoded = await this.decodeExecuteCall(
       chain,
       l2Executor,
@@ -266,7 +266,7 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
     const l2Calldata = parsed.args.data as string
     const providerForChain =
       // Nova arbiscan doesn't provide API so we're out of luck
-      chain === 'nova' ? undefined : provider.switchChain(chain, 0)
+      chain === 'nova' ? undefined : await provider.switchChain(chain)
     const decoded = await this.decodeExecuteCall(
       chain,
       l2Executor,

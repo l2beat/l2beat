@@ -1,5 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import path from 'path'
 import type {
@@ -22,6 +23,27 @@ import type { DiscoveryOutput } from './output/types'
 import { SQLiteCache } from './provider/SQLiteCache'
 import { type AllProviderStats, printProviderStats } from './provider/Stats'
 
+async function getTimestamp(
+  configReader: ConfigReader,
+  config: DiscoveryModuleConfig,
+): Promise<Date> {
+  if (config.blockNumber !== undefined) {
+    const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
+    return UnixTime.toDate(
+      (await provider.getBlock(config.blockNumber)).timestamp,
+    )
+  }
+
+  const configuredTimestamp =
+    config.timestamp ??
+    (config.dev
+      ? configReader.readDiscovery(config.project, config.chain.name).timestamp
+      : undefined) ??
+    UnixTime.now()
+
+  return UnixTime.toDate(configuredTimestamp)
+}
+
 export async function runDiscovery(
   paths: DiscoveryPaths,
   http: HttpClient,
@@ -35,26 +57,21 @@ export async function runDiscovery(
     config.chain.name,
   )
 
-  const configuredBlockNumber =
-    config.blockNumber ??
-    (config.dev
-      ? configReader.readDiscovery(config.project, config.chain.name)
-          .blockNumber
-      : undefined)
+  const timestampDate = await getTimestamp(configReader, config)
 
-  const { result, blockNumber, providerStats } = await discover(
+  const { result, timestamp, providerStats } = await discover(
     paths,
     chainConfigs,
     projectConfig,
     logger,
-    configuredBlockNumber,
+    timestampDate,
     http,
     config.overwriteCache,
   )
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
-  await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
+  await saveDiscoveryResult(result, projectConfig, timestamp, logger, {
     paths,
     sourcesFolder: config.sourcesFolder,
     flatSourcesFolder: config.flatSourcesFolder,
@@ -102,10 +119,8 @@ export async function dryRunDiscovery(
   chainConfigs: DiscoveryChainConfig[],
   logger: Logger,
 ): Promise<void> {
-  const provider = new providers.StaticJsonRpcProvider(config.chain.rpcUrl)
-  const blockNumber = await provider.getBlockNumber()
-  const BLOCKS_PER_DAY = 86400 / 12
-  const blockNumberYesterday = blockNumber - BLOCKS_PER_DAY
+  const now = UnixTime.now()
+  const yesterday = now - UnixTime.DAY
 
   const projectConfig = configReader.readConfig(
     config.project,
@@ -117,7 +132,7 @@ export async function dryRunDiscovery(
       paths,
       chainConfigs,
       projectConfig,
-      blockNumber,
+      UnixTime.toDate(now),
       http,
       config.overwriteCache,
       logger,
@@ -126,7 +141,7 @@ export async function dryRunDiscovery(
       paths,
       chainConfigs,
       projectConfig,
-      blockNumberYesterday,
+      UnixTime.toDate(yesterday),
       http,
       config.overwriteCache,
       logger,
@@ -146,23 +161,23 @@ async function justDiscover(
   paths: DiscoveryPaths,
   chainConfigs: DiscoveryChainConfig[],
   config: ConfigRegistry,
-  blockNumber: number,
+  timestampDate: Date,
   http: HttpClient,
   overwriteCache: boolean,
   logger: Logger,
 ): Promise<DiscoveryOutput> {
-  const { result } = await discover(
+  const { result, timestamp } = await discover(
     paths,
     chainConfigs,
     config,
     logger,
-    blockNumber,
+    timestampDate,
     http,
     overwriteCache,
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return toDiscoveryOutput(templateService, config, blockNumber, result)
+  return toDiscoveryOutput(templateService, config, timestamp, result)
 }
 
 export async function discover(
@@ -170,12 +185,12 @@ export async function discover(
   chainConfigs: DiscoveryChainConfig[],
   config: ConfigRegistry,
   logger: Logger,
-  blockNumber: number | undefined,
+  timestampDate: Date | undefined,
   http: HttpClient,
   overwriteChache: boolean,
 ): Promise<{
   result: Analysis[]
-  blockNumber: number
+  timestamp: UnixTime
   providerStats: AllProviderStats
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
@@ -193,11 +208,11 @@ export async function discover(
     logger,
     chain,
   )
-  blockNumber ??= await allProviders.getLatestBlockNumber(chain)
-  const provider = allProviders.get(chain, blockNumber)
+  const timestamp = UnixTime.fromDate(timestampDate ?? new Date())
+  const provider = await allProviders.get(chain, timestamp)
   return {
     result: await discoveryEngine.discover(provider, config.structure),
-    blockNumber,
+    timestamp,
     providerStats: allProviders.getStats(chain),
   }
 }

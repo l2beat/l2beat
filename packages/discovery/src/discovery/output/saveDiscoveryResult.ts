@@ -4,6 +4,7 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
   formatJson,
+  type UnixTime,
 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
@@ -37,7 +38,7 @@ export interface SaveDiscoveryResultOptions {
 export async function saveDiscoveryResult(
   results: Analysis[],
   config: ConfigRegistry,
-  blockNumber: number,
+  timestamp: UnixTime,
   logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
@@ -54,7 +55,7 @@ export async function saveDiscoveryResult(
   const discoveryOutput = toDiscoveryOutput(
     templateService,
     config,
-    blockNumber,
+    timestamp,
     results,
   )
 

@@ -179,7 +179,7 @@ const toClipboard = async (
       if (!contract) break
       const fields = formatContractValues(
         contract,
-        contract.blockNumber,
+        contract.timestamp,
         contract.chain,
       )
       const abis = formatContractAbi(contract, contract.chain)
@@ -202,7 +202,7 @@ const toClipboard = async (
           )
           const values = formatContractValues(
             contract,
-            chain.blockNumber,
+            chain.timestamp,
             chain.chain,
           )
           const abi = formatContractAbi(contract, chain.chain)
@@ -228,7 +228,7 @@ const toClipboard = async (
           )
           const values = formatContractValues(
             contract,
-            chain.blockNumber,
+            chain.timestamp,
             chain.chain,
           )
           const abi = formatContractAbi(contract, chain.chain)

@@ -30,7 +30,7 @@ describe(shouldSkip.name, () => {
       readDiscovery: () => ({
         name: 'SharedFoo',
         chain: 'ethereum',
-        blockNumber: 1234,
+        timestamp: 1234,
         entries: [
           {
             type: 'Contract',

@@ -14,7 +14,6 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   Hash256,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'
@@ -30,8 +29,7 @@ const NAME_A = 'contract-a'
 const ADDRESS_A = EthereumAddress.random()
 const NAME_B = 'contract-b'
 const ADDRESS_B = EthereumAddress.random()
-const BLOCK_NUMBER = 1
-const TIMESTAMP = 0
+const TIMESTAMP = 1
 
 const COMMITTED: EntryParameters[] = [
   {
@@ -50,7 +48,7 @@ const COMMITTED: EntryParameters[] = [
 const DISCOVERY_RESULT: DiscoveryOutput = {
   name: PROJECT_A,
   chain: 'ethereum',
-  blockNumber: BLOCK_NUMBER,
+  timestamp: TIMESTAMP,
   configHash: Hash256.random(),
   entries: [
     {
@@ -66,7 +64,7 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
 const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
   name: PROJECT_B,
   chain: 'ethereum',
-  blockNumber: BLOCK_NUMBER,
+  timestamp: TIMESTAMP,
   configHash: Hash256.random(),
   entries: [
     {
@@ -83,7 +81,7 @@ const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
 const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   name: PROJECT_B,
   chain: 'arbitrum',
-  blockNumber: BLOCK_NUMBER,
+  timestamp: TIMESTAMP,
   configHash: Hash256.random(),
   entries: [
     {
@@ -125,7 +123,6 @@ describe(UpdateMonitor.name, () => {
         flatSources: {},
       }),
       chain: 'ethereum',
-      getBlockNumber: async () => BLOCK_NUMBER,
     })
     discoveryOutputCache = new DiscoveryOutputCache()
   })
@@ -139,7 +136,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'arbitrum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
@@ -182,10 +178,6 @@ describe(UpdateMonitor.name, () => {
       )
 
       await updateMonitor.update(timestamp)
-
-      // gets block number
-      expect(discoveryRunnerEth.getBlockNumber).toHaveBeenCalledTimes(1)
-      expect(discoveryRunnerArb.getBlockNumber).toHaveBeenCalledTimes(1)
 
       // reads all the configs
       expect(
@@ -254,7 +246,6 @@ describe(UpdateMonitor.name, () => {
           .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
           .resolvesToOnce({ discovery: discoveryB, flatSources: {} }),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -275,8 +266,6 @@ describe(UpdateMonitor.name, () => {
       )
       await updateMonitor.updateChain(discoveryRunner, TIMESTAMP)
 
-      // gets block number
-      expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
       expect(
         configReader.readAllDiscoveredConfigsForChain,
@@ -286,7 +275,7 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         1,
         mockConfig(PROJECT_A),
-        BLOCK_NUMBER,
+        TIMESTAMP,
         LOGGER,
         undefined,
         undefined,
@@ -295,16 +284,16 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         mockConfig(PROJECT_A),
-        BLOCK_NUMBER,
+        TIMESTAMP,
         LOGGER,
         undefined,
         undefined,
-        'useCurrentBlockNumber',
+        'useCurrentTimestamp',
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         3,
         mockConfig(PROJECT_B),
-        BLOCK_NUMBER,
+        TIMESTAMP,
         LOGGER,
         undefined,
         undefined,
@@ -313,11 +302,11 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         4,
         mockConfig(PROJECT_B),
-        BLOCK_NUMBER,
+        TIMESTAMP,
         LOGGER,
         undefined,
         undefined,
-        'useCurrentBlockNumber',
+        'useCurrentTimestamp',
       )
       // calls repository (and gets undefined)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(2)
@@ -332,7 +321,6 @@ describe(UpdateMonitor.name, () => {
         1,
         PROJECT_A,
         mockDiff,
-        BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
         [],
@@ -342,7 +330,6 @@ describe(UpdateMonitor.name, () => {
         2,
         PROJECT_B,
         mockDiff,
-        BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
         [],
@@ -384,8 +371,6 @@ describe(UpdateMonitor.name, () => {
 
       await updateMonitor.updateChain(discoveryRunner, 0)
 
-      // gets block number
-      expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
       expect(
         configReader.readAllDiscoveredConfigsForChain,
@@ -419,7 +404,6 @@ describe(UpdateMonitor.name, () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
         discoverWithRetry: mockFn().throws('Error'),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -453,7 +437,7 @@ describe(UpdateMonitor.name, () => {
         readConfig: () => config,
         readDiscovery: () => ({
           ...mockProject,
-          blockNumber: BLOCK_NUMBER - 1,
+          timestamp: TIMESTAMP - 1,
           entries: [],
         }),
       })
@@ -461,9 +445,9 @@ describe(UpdateMonitor.name, () => {
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
         findLatest: async () => ({
           ...mockRecord,
-          discovery: { ...DISCOVERY_RESULT, blockNumber: BLOCK_NUMBER - 1 },
+          discovery: { ...DISCOVERY_RESULT, timestamp: TIMESTAMP - 1 },
           configHash: hashJsonStable(config.structure),
-          blockNumber: BLOCK_NUMBER - 1,
+          timestamp: TIMESTAMP - 1,
         }),
         upsert: async () => undefined,
       })
@@ -471,7 +455,6 @@ describe(UpdateMonitor.name, () => {
       const discoveryRunner = mockObject<DiscoveryRunner>({
         discoverWithRetry: mockFn(),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       discoveryRunner.discoverWithRetry.resolvesToOnce({
@@ -510,13 +493,13 @@ describe(UpdateMonitor.name, () => {
         false,
       )
 
-      await updateMonitor.updateChain(discoveryRunner, 0)
+      await updateMonitor.updateChain(discoveryRunner, TIMESTAMP)
 
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(2)
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         1,
         config,
-        BLOCK_NUMBER - 1,
+        TIMESTAMP - 1,
         LOGGER,
         undefined,
         undefined,
@@ -525,11 +508,11 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         config,
-        BLOCK_NUMBER,
+        TIMESTAMP,
         LOGGER,
         undefined,
         undefined,
-        'useCurrentBlockNumber',
+        'useCurrentTimestamp',
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
@@ -546,7 +529,6 @@ describe(UpdateMonitor.name, () => {
           throw new Error('error')
         },
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -573,8 +555,6 @@ describe(UpdateMonitor.name, () => {
 
       await updateMonitor.updateChain(discoveryRunner, 0)
 
-      // gets block number
-      expect(discoveryRunner.getBlockNumber).toHaveBeenCalledTimes(1)
       // reads all the configs
       expect(
         configReader.readAllDiscoveredConfigsForChain,
@@ -606,7 +586,6 @@ describe(UpdateMonitor.name, () => {
           .resolvesToOnce({ discovery: discoveryA, flatSources: {} })
           .resolvesToOnce({ discovery: discoveryB, flatSources: {} }),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -662,7 +641,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -709,7 +687,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const configReader = mockObject<ConfigReader>({
@@ -771,7 +748,7 @@ describe(UpdateMonitor.name, () => {
           discovery: {
             ...mockProject,
             entries: dbEntry,
-            blockNumber: BLOCK_NUMBER - 1,
+            timestamp: TIMESTAMP - 1,
           },
           configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
         }),
@@ -783,7 +760,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -811,7 +787,7 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(1)
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledWith(
         mockConfig(PROJECT_A),
-        committed.blockNumber,
+        committed.timestamp,
         LOGGER,
         undefined,
         undefined,
@@ -837,7 +813,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'ethereum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
       const discoveryRunnerArb = mockObject<DiscoveryRunner>({
         discoverWithRetry: async () => ({
@@ -845,7 +820,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'arbitrum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
@@ -941,7 +915,6 @@ describe(UpdateMonitor.name, () => {
           flatSources: {},
         }),
         chain: 'arbitrum',
-        getBlockNumber: async () => BLOCK_NUMBER,
       })
 
       const runners = [discoveryRunnerEth, discoveryRunnerArb]
@@ -1051,8 +1024,7 @@ describe(UpdateMonitor.name, () => {
 const mockRecord: UpdateMonitorRecord = {
   projectId: 'name',
   chainId: ChainId.ETHEREUM,
-  blockNumber: 1,
-  timestamp: UnixTime.now(),
+  timestamp: 1,
   configHash: Hash256.random(),
   discovery: DISCOVERY_RESULT,
 }
@@ -1060,7 +1032,7 @@ const mockRecord: UpdateMonitorRecord = {
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
   chain: 'ethereum',
-  blockNumber: 1,
+  timestamp: 1,
   configHash: Hash256.random(),
   entries: COMMITTED,
   abis: {},

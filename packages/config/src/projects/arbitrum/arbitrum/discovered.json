@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 360431467,
+  "timestamp": 1753200796,
   "configHash": "0x6612e345d3fa27e6079fc85e49c9e86f16a6f48e24524f1223b3d0a6d0719cab",
   "entries": [
     {
@@ -3709,6 +3709,6 @@
   },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7",
   "dependentDiscoveries": {
-    "arbitrum": { "ethereum": { "blockNumber": 22966759 } }
+    "arbitrum": { "ethereum": { "timestamp": 1753091171 } }
   }
 }

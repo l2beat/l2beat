@@ -4,7 +4,7 @@ export const FlatSourcesApiResponse = v.array(
   v.object({
     projectId: v.string(),
     chainName: v.string(),
-    blockNumber: v.number(),
+    timestamp: v.number(),
     contentHash: v.string(),
     flat: v.record(v.string(), v.string()),
   }),

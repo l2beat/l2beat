@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
   "chain": "ethereum",
-  "blockNumber": 22975748,
+  "timestamp": 1753199735,
   "configHash": "0xc4e284eb6b58cca77d85e599c5a67b7ecfdf83cdcdd42e54321d53ffe9dda162",
   "entries": [
     {

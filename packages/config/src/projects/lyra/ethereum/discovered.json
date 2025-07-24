@@ -1,7 +1,7 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 22975733,
+  "timestamp": 1753199555,
   "configHash": "0xb10727db0cfbd61124519edf4a3aa228a5374d09bde8db3110df9ab8bcb555bd",
   "entries": [
     {
