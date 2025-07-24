@@ -11,7 +11,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -29,6 +29,7 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  tickCount?: number
   className?: string
 }
 
@@ -56,6 +57,7 @@ export function StackedTvsChart({
   unit,
   isLoading,
   className,
+  tickCount,
 }: Props) {
   return (
     <ChartContainer
@@ -97,6 +99,7 @@ export function StackedTvsChart({
           data,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
+            tickCount,
           },
           isLoading,
         })}

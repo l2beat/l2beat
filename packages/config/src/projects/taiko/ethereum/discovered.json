@@ -2855,7 +2855,7 @@
         "0xe1597b3a05a2f083910b7e1c6e81e56d4eff97191b25307544c7f2164d824d51"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for RISC Zero Groth16 proofs.",
+      "description": "Verifier contract for RISC Zero Groth16 proofs (version 2.1.0).",
       "sinceTimestamp": 1749624299,
       "sinceBlock": 22679611,
       "values": {

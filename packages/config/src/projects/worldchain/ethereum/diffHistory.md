@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x8acb8b405c79b0ddbf9ee9095060b8e081fbccaa
+
+# Diff at Thu, 24 Jul 2025 11:38:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 22731118
+- current block number: 22988766
+
+## Description
+
+block gas limit increase.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        36000000
++        39000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22731118 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x069c4c579671f8c120b1327a73217D01Ea2EC5ea) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.game1337:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      usedTypes.0.arg.1337:
++        "KailuaGame"
+    }
+```
+
 Generated with discovered.json: 0xbdd007fb8c097e4915ad9b5bac442979b864b53f
 
 # Diff at Mon, 14 Jul 2025 12:46:42 GMT:

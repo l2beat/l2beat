@@ -157,10 +157,10 @@ function ProjectNavigationList({
   )
 
   useEffect(() => {
-    if (currentMenuEntry.current && menuContainer.current) {
+    if (currentSection && currentMenuEntry.current && menuContainer.current) {
       scrollToItem(currentMenuEntry.current, menuContainer.current)
     }
-  }, [scrollToItem])
+  }, [scrollToItem, currentSection])
 
   return (
     <div
