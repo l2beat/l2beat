@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5f4eddf7ef832dc153463e0b2b0da0eba8225030
+
+# Diff at Thu, 24 Jul 2025 08:45:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 22779828
+- current block number: 22987909
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      values.$members.2:
+-        "eth:0x8A23548a640De1137e58e2D9600e1c5913E3D674"
++        "eth:0x5C7E59Dba6557C7dAB3B69ccd3E309d1965Cf1B1"
+    }
+```
+
 Generated with discovered.json: 0x0ae1a76b02db42231983c2297a12a99dea7f8c64
 
 # Diff at Mon, 14 Jul 2025 12:47:17 GMT:
