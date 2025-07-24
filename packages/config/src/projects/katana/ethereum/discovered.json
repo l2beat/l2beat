@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "chain": "ethereum",
-  "blockNumber": 22987846,
+  "blockNumber": 22988752,
   "configHash": "0xa29cce979f02451c6117d619654123a3e517735b29a6018de613fbc9eb92832c",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -485,11 +485,14 @@
       "name": "OptimismPortal2",
       "address": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
       "type": "Contract",
+      "template": "opstack/OptimismPortal2_noForce",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
+      "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
       "values": {
@@ -534,16 +537,30 @@
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
+        "RespectedGameString": "PermissionedDisputeGame",
         "respectedGameType": 1,
         "respectedGameTypeUpdatedAt": 1746742811,
         "superchainConfig": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
         "systemConfig": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
         "version": "3.14.0"
       },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
+      },
       "implementationNames": {
         "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E": "Proxy",
         "eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc": "OptimismPortal2"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+        }
+      ],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "eth:0x254f44F45ac892730e511f143DEd3Cd920b075aF",
@@ -630,7 +647,7 @@
           }
         },
         "asset": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 1533 },
+        "backingDifference": { "positive": true, "difference": 2083 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -655,13 +672,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 28826886051,
+        "stakedAssets": 28826886601,
         "symbol": "vbWBTC",
-        "totalAssets": 28826886051,
+        "totalAssets": 28826886601,
         "totalSupply": 28826884518,
         "underlyingToken": "eth:0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 1533,
+        "yield": 2083,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "eth:0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -733,7 +750,7 @@
         "asset": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "920275808767988655"
+          "difference": "1167604126473877182"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -759,13 +776,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "24570696997590288610418",
+        "stakedAssets": "24570944325907994498945",
         "symbol": "vbETH",
-        "totalAssets": "24570696997590288610418",
+        "totalAssets": "24570944325907994498945",
         "totalSupply": "24569776721781520621763",
         "underlyingToken": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "920275808767988655",
+        "yield": "1167604126473877182",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "eth:0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -1002,7 +1019,7 @@
         "asset": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "backingDifference": {
           "positive": true,
-          "difference": 4060894883034172
+          "difference": 5498360752511890
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1028,13 +1045,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "33440058593715959328",
+        "stakedAssets": "33441496059585437046",
         "symbol": "vbUSDS",
-        "totalAssets": "33440058593715959328",
+        "totalAssets": "33441496059585437046",
         "totalSupply": "33435997698832925156",
         "underlyingToken": "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "version": "0.5.0",
-        "yield": 4060894883034172,
+        "yield": 5498360752511890,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "eth:0x0868076663Bbc6638ceDd27704cc8F0Fa53d5b81",
@@ -1403,7 +1420,7 @@
           }
         },
         "asset": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 5608223261 },
+        "backingDifference": { "positive": true, "difference": 7321400462 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1428,13 +1445,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 97497949179943,
+        "stakedAssets": 97498812357145,
         "symbol": "vbUSDC",
-        "totalAssets": 97497949179943,
-        "totalSupply": 97492340956682,
+        "totalAssets": 97498812357145,
+        "totalSupply": 97491490956683,
         "underlyingToken": "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 5608223261,
+        "yield": 7321400462,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "eth:0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1669,7 +1686,7 @@
           }
         },
         "asset": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 604412290 },
+        "backingDifference": { "positive": true, "difference": 820474004 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1694,13 +1711,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 18903581064823,
+        "stakedAssets": 18921583569885,
         "symbol": "vbUSDT",
-        "totalAssets": 18903581064823,
-        "totalSupply": 18902976652533,
+        "totalAssets": 18921583569885,
+        "totalSupply": 18920763095881,
         "underlyingToken": "eth:0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 604412290,
+        "yield": 820474004,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "eth:0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "eth:0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -2275,6 +2292,7 @@
           ]
         ],
         "$upgradeCount": 2,
+        "game1337": "eth:0x0000000000000000000000000000000000000000",
         "gameCount": 0,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
@@ -3875,12 +3893,13 @@
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
-    "opstack/DisputeGameFactory": "0x67f69b090ef8ef37890cb4e7c28b9ee1844641f6c4eb75ff15cba998839606ed",
+    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

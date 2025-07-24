@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -12,7 +12,6 @@ export const bob: ScalingProject = opStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'BOB',
     slug: 'bob',
@@ -39,8 +38,16 @@ export const bob: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
+      title: 'OP Kailua Upgrade',
+      url: 'https://x.com/build_on_bob/status/1904569635434799524',
+      date: '2025-07-17T00:00:00Z',
+      description:
+        'BOB returns to the rollup section by using a hybrid zk fault proof system.',
+      type: 'general',
+    },
+    {
       title: 'Phase 1: Optimistic BOB',
-      url: 'https://docs.gobob.xyz/docs/learn/bob-stack/op-stack',
+      url: 'https://docs.gobob.xyz/docs/bob-chain/roadmap/#-phase-1-bootstrapping-as-an-ethereum-l2',
       date: '2024-05-01T00:00:00Z',
       description: 'BOB bootstrapping as an Optimistic Rollup on Ethereum.',
       type: 'general',
