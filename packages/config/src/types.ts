@@ -570,6 +570,7 @@ export interface ProjectDaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
+  sovereignProjectsTrackingConfig?: SovereignProjectDaTrackingConfig[]
 }
 
 export interface AdjustableEconomicSecurityRisk {
@@ -858,6 +859,17 @@ export interface ProjectLivenessConfig {
 
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
+}
+
+export interface SovereignProjectDaTrackingConfig {
+  projectId: ProjectId
+  name?: string
+  daTrackingConfig: (
+    | Omit<EthereumDaTrackingConfig, 'daLayer'>
+    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
+    | Omit<AvailDaTrackingConfig, 'daLayer'>
+    | Omit<EigenDaTrackingConfig, 'daLayer'>
+  )[]
 }
 
 export type ProjectDaTrackingConfig =
