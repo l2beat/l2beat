@@ -22,7 +22,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       const flatRecord: FlatSourcesRecord = {
         projectId,
         chainId,
-        blockNumber: -1,
+        timestamp: -1,
         contentHash: CONTENT_HASH,
         flat: {},
       }
@@ -38,7 +38,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       const flatRecord: FlatSourcesRecord = {
         projectId,
         chainId,
-        blockNumber: 1,
+        timestamp: 1,
         contentHash: CONTENT_HASH,
         flat: { key: 'before' },
       }
@@ -50,14 +50,14 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert({
         ...flatRecord,
-        blockNumber: 2,
+        timestamp: 2,
         flat: { key: 'after' },
       })
 
       latest = await repository.get(projectId, chainId)
       expect(latest).toEqual({
         ...flatRecord,
-        blockNumber: 2,
+        timestamp: 2,
       })
     })
 
@@ -67,7 +67,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       const flatRecord: FlatSourcesRecord = {
         projectId,
         chainId,
-        blockNumber: 1,
+        timestamp: 1,
         contentHash: CONTENT_HASH,
         flat: { key: 'before' },
       }
@@ -79,7 +79,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       const newRecord = {
         ...flatRecord,
-        blockNumber: 2,
+        timestamp: 2,
         contentHash: contentHash2,
         flat: { key: 'after' },
       }

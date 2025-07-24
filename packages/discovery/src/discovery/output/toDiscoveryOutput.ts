@@ -41,11 +41,7 @@ export function toRawDiscoveryOutput(
   timestamp: UnixTime,
   results: Analysis[],
 ): DiscoveryOutput {
-  const structure = getStructureOutput(
-    config.structure,
-    timestamp,
-    results,
-  )
+  const structure = getStructureOutput(config.structure, timestamp, results)
   const colorized = colorize(config.color, structure, templateService)
 
   return withoutUndefinedKeys(combineStructureAndColor(structure, colorized))

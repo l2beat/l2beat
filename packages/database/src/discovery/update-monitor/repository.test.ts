@@ -38,12 +38,11 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     const discovery: UpdateMonitorRecord = {
       projectId,
       chainId: ChainId.ETHEREUM,
-      blockNumber: -1,
       timestamp: 0,
       discovery: {
         name: projectId,
         chain: 'ethereum',
-        blockNumber: -1,
+        timestamp: -1,
         configHash: Hash256.random(),
         entries: [],
         abis: {},
@@ -53,7 +52,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     }
     await repository.upsert(discovery)
 
-    const updated: UpdateMonitorRecord = { ...discovery, blockNumber: 1 }
+    const updated: UpdateMonitorRecord = { ...discovery, timestamp: 1 }
     await repository.upsert(updated)
     const latest = await repository.findLatest(projectId, ChainId.ETHEREUM)
 
@@ -65,12 +64,11 @@ function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
   return {
     projectId: 'project',
     chainId: ChainId.ETHEREUM,
-    blockNumber: -1,
     timestamp: 0,
     discovery: {
       name: 'project',
       chain: 'ethereum',
-      blockNumber: -1,
+      timestamp: -1,
       configHash: Hash256.random(),
       entries: [],
       abis: {},

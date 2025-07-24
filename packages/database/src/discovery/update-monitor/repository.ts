@@ -30,7 +30,6 @@ export class UpdateMonitorRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb.columns(['projectId', 'chainId']).doUpdateSet((eb) => ({
-            blockNumber: eb.ref('excluded.blockNumber'),
             timestamp: eb.ref('excluded.timestamp'),
             discoveryJsonBlob: eb.ref('excluded.discoveryJsonBlob'),
             configHash: eb.ref('excluded.configHash'),
