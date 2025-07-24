@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x042393e4122062695684e5c37c60f8e3959330b5
+
+# Diff at Thu, 24 Jul 2025 08:47:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 351073243
+- current block number: 361016410
+
+## Description
+
+stateUpdateProgramImageId update.
+
+## Watched changes
+
+```diff
+    contract Hibachi (0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0x624424e8cfb1478de0bbd5b2dbdb1a19a2dd235c3f7997b9d585d7f2e87879c4"
++        "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328"
+    }
+```
+
 Generated with discovered.json: 0x4293bcdecdaca79f526667dcef172eb6d8d7bbb5
 
 # Diff at Mon, 14 Jul 2025 12:44:17 GMT:
