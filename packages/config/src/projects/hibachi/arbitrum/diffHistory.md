@@ -1,14 +1,25 @@
-Generated with discovered.json: 0xec91d339f6116c4423f183012b256eb16d2abdce
+Generated with discovered.json: 0x080cfec0c9279b1109d3dbaf28ca64aa1ade01b4
 
-# Diff at Thu, 24 Jul 2025 00:34:27 GMT:
+# Diff at Thu, 24 Jul 2025 10:06:55 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 351073243
-- current block number: 351073243
+- current block number: 361035581
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
+    contract Hibachi (0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0x624424e8cfb1478de0bbd5b2dbdb1a19a2dd235c3f7997b9d585d7f2e87879c4"
++        "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328"
+    }
+```
 
 ## Config/verification related changes
 

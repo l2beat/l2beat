@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22985468,
+  "blockNumber": 22988341,
   "configHash": "0x09f0a4367624f12666fd05f583768b04c3d004f4a64fbebeabec2d2d4af2912a",
   "entries": [
     {
@@ -156,6 +156,18 @@
       }
     },
     {
+      "address": "eth:0x615452db5467849689E98a8C5C242A96cF768a94",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D",
+          "role": ".whitelistedProposers"
+        }
+      ]
+    },
+    {
       "name": "SP1VerifierGateway",
       "address": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
       "type": "Contract",
@@ -302,6 +314,12 @@
           ]
         },
         {
+          "permission": "interact",
+          "from": "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D",
+          "description": "can set the whitelisted proposers.",
+          "role": ".owner"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
@@ -389,7 +407,7 @@
           "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
           1604382
         ],
-        "getProposalsLength": 11,
+        "getProposalsLength": 12,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
@@ -404,7 +422,10 @@
         "ROLLUP_CONFIG_HASH": "0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c",
         "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
         "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "whitelistedProposers": [
+          "eth:0x615452db5467849689E98a8C5C242A96cF768a94"
+        ]
       },
       "implementationNames": {
         "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D": "Rollup"
@@ -873,7 +894,7 @@
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "facet/Rollup": "0x0682eb3b9d87b30644465edabddec98c25c98bcdc73160d6559a2eca9b6d4b0f",
+    "facet/Rollup": "0x5f90d5f1f797bc179e7cefece5f58747e38c3404441d81b1a653d6f6ab628163",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -881,5 +902,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x05869a2557695813d3974c5a0e1a72d9d58e77e6a5c87bde03d8879805328305"
+  "permissionsConfigHash": "0x00296c6bd4985d3dbe68f2cdedc5a0af0956386929168e6ef13e1e067328cf07"
 }

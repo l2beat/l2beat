@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf73a1700a2ad06ea9e7a2ad4f3631e173f77b3ef
+Generated with discovered.json: 0xd562f58cf3721296c04249a0b4e95c4d076285a8
 
-# Diff at Thu, 24 Jul 2025 00:33:36 GMT:
+# Diff at Thu, 24 Jul 2025 10:11:49 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 22367347
-- current block number: 22985468
+- current block number: 22988341
 
 ## Description
 
@@ -41,6 +41,14 @@ Bridge version discovery.
 ```
 
 ```diff
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D","description":"can set the whitelisted proposers.","role":".owner"}
+    }
+```
+
+```diff
     contract Rollup (0xd0E3721bba691d3735b0827edBe893789cA1486D) {
     +++ description: Rollup contract for Facet. This is the core contract that manages the transaction ordering, the state of the rollup and its proof system.
       type:
@@ -60,7 +68,7 @@ Bridge version discovery.
       sinceBlock:
 +        22969440
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":11,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
++        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":12,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
       implementationNames:
 +        {"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D":"Rollup"}
       category:

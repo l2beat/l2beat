@@ -22,6 +22,33 @@
         "type": "hardcoded",
         "value": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001"
       }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can set the whitelisted proposers."
+        }
+      ]
+    },
+    "whitelistedProposers": {
+      "handler": {
+        "type": "event",
+        "select": "proposer",
+        "add": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["=", "#allowed", true]
+        },
+        "remove": {
+          "event": "ProposerPermissionUpdated",
+          "where": ["=", "#allowed", false]
+        }
+      },
+      "permissions": [
+        {
+          "type": "propose"
+        }
+      ]
     }
   },
   "category": "core"
