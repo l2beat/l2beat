@@ -6,6 +6,7 @@
   "initialAddresses": ["arb1:0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d"],
   "overrides": {
     "arb1:0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d": {
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "fields": {
         "$tokenData": {
           "handler": {
