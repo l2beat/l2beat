@@ -180,7 +180,7 @@ describe(UpdateDiffer.name, () => {
         mockObject<ConfigReader>({
           readDiscovery: mockFn().returns({
             ...mockProject,
-            blockNumber: 2,
+            timestamp: 2,
           }),
         }),
         mockObject<Database>({
@@ -188,7 +188,7 @@ describe(UpdateDiffer.name, () => {
           updateDiff: updateDiffRepository,
         }),
         mockObject<DiscoveryOutputCache>({
-          get: mockFn().returns({ entries: [], blockNumber: 1 }),
+          get: mockFn().returns({ entries: [], timestamp: 1 }),
         }),
         Logger.SILENT,
       )

@@ -91,7 +91,7 @@ function mockRecord(
 ): Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'> {
   return {
     projectId,
-    timestamp: -1,
+    timestamp: 1,
     diff: [
       {
         name: 'Contract',
