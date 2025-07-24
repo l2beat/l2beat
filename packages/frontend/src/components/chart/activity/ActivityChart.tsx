@@ -57,6 +57,7 @@ interface Props {
   type: ActivityChartType
   projectName?: string
   className?: string
+  tickCount?: number
 }
 
 export function ActivityChart({
@@ -70,6 +71,7 @@ export function ActivityChart({
   metric,
   projectName,
   className,
+  tickCount,
 }: Props) {
   const chartMeta = {
     projects: {
@@ -120,6 +122,7 @@ export function ActivityChart({
           yAxis: {
             scale,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
+            tickCount,
           },
         })}
         <ChartTooltip

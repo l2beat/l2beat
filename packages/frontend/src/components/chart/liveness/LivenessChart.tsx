@@ -33,6 +33,7 @@ interface Props {
   className?: string
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
+  tickCount?: number
 }
 
 export function LivenessChart({
@@ -41,6 +42,7 @@ export function LivenessChart({
   className,
   subtype,
   milestones,
+  tickCount,
 }: Props) {
   const chartMeta = {
     range: {
@@ -94,6 +96,7 @@ export function LivenessChart({
           yAxis: {
             tickFormatter: (value: number) => formatDuration(value),
             domain: ['auto', 'auto'],
+            tickCount,
           },
         })}
         <ReferenceArea

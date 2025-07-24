@@ -74,6 +74,7 @@ interface Props {
   range: CostsTimeRange
   showDataPosted: boolean
   className?: string
+  tickCount?: number
 }
 
 export function CostsChart({
@@ -84,6 +85,7 @@ export function CostsChart({
   className,
   range,
   showDataPosted,
+  tickCount,
 }: Props) {
   const resolution = rangeToResolution(range)
 
@@ -173,7 +175,7 @@ export function CostsChart({
             tickLine={false}
             axisLine={false}
             mirror
-            tickCount={3}
+            tickCount={tickCount ?? 3}
             dy={-10}
             tick={{
               width: 100,
@@ -190,6 +192,7 @@ export function CostsChart({
               unit === 'gas'
                 ? formatNumber(value)
                 : formatCurrency(value, unit),
+            tickCount,
           },
         })}
         <ChartTooltip

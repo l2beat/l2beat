@@ -136,6 +136,7 @@ export function ProjectTokenChart({
             yAxis: {
               tickFormatter: (value: number) =>
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
+              tickCount: 4,
             },
           })}
           <ChartTooltip content={<CustomTooltip unit={properUnit} />} />

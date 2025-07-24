@@ -29,6 +29,7 @@ interface Props {
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
+  tickCount?: number
   className?: string
 }
 
@@ -56,6 +57,7 @@ export function StackedTvsChart({
   unit,
   isLoading,
   className,
+  tickCount,
 }: Props) {
   return (
     <ChartContainer
@@ -97,6 +99,7 @@ export function StackedTvsChart({
           data,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
+            tickCount,
           },
           isLoading,
         })}

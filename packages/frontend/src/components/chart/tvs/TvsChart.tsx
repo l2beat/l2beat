@@ -29,9 +29,16 @@ interface Props {
   unit: ChartUnit
   isLoading: boolean
   milestones: Milestone[] | undefined
+  tickCount?: number
 }
 
-export function TvsChart({ data, unit, isLoading, milestones }: Props) {
+export function TvsChart({
+  data,
+  unit,
+  isLoading,
+  milestones,
+  tickCount,
+}: Props) {
   const chartMeta = {
     value: {
       color: 'var(--chart-pink)',
@@ -65,6 +72,7 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
           isLoading,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
+            tickCount,
           },
         })}
         <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />

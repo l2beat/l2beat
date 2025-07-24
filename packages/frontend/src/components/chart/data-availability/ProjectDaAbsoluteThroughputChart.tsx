@@ -143,6 +143,7 @@ export function ProjectDaAbsoluteThroughputChart({
           isLoading,
           yAxis: {
             unit: ` ${unit}`,
+            tickCount: 4,
           },
         })}
       </AreaChart>
