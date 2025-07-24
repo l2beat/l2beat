@@ -500,7 +500,7 @@ export const badges = [
     type: BadgeType.Stack,
     name: 'Built on the OP Kailua stack',
     description: 'The project is built on the OP Kailua stack',
-    action: undefined
+    action: undefined,
   },
   {
     id: 'SNStack',
