@@ -1,10 +1,23 @@
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { UnderReviewIcon } from '~/icons/UnderReview'
+import { UnverifiedIcon } from '~/icons/Unverified'
+import {
+  UNDER_REVIEW_DA_CLASSNAME,
+  UNVERIFIED_DA_CLASSNAME,
+} from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
+import { cn } from '~/utils/cn'
+import { getUnderReviewText } from '~/utils/project/underReview'
 import {
   BasicDaTable,
   getRowTypeClassNames,
@@ -83,27 +96,74 @@ function BridgeCells({
   bridge: DaRiskEntry['bridges'][number]
   excludeBridge?: boolean
 }) {
+  const isUnverified = bridge.statuses?.verificationWarning === true
+
   return (
     <>
       {excludeBridge ? (
         <TableCell />
       ) : (
-        <TableCell className="font-medium text-sm first:pl-0">
-          <TableLink href={`${bridge.href}#da-bridge`} className="ml-4 md:ml-1">
+        <TableCell
+          className={cn(
+            'font-medium text-sm first:pl-0',
+            isUnverified && UNVERIFIED_DA_CLASSNAME,
+            bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
+          )}
+        >
+          <TableLink
+            href={`${bridge.href}#da-bridge`}
+            className="ml-4 flex items-center gap-1.5 md:ml-1"
+          >
             {bridge.name}
+            {isUnverified && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  This bridge contains unverified contracts.
+                </TooltipContent>
+              </Tooltip>
+            )}
+            {bridge.statuses?.underReview && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <UnderReviewIcon className="size-3.5 md:size-4" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {getUnderReviewText(bridge.statuses?.underReview)}
+                </TooltipContent>
+              </Tooltip>
+            )}
           </TableLink>
         </TableCell>
       )}
-      <TableCell className="pl-6">
+      <TableCell
+        className={cn(
+          'pl-6',
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
+        )}
+      >
         <TableValueCell
           emptyMode="n/a"
           value={bridge.risks.committeeSecurity}
         />
       </TableCell>
-      <TableCell>
+      <TableCell
+        className={cn(
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
+        )}
+      >
         <TableValueCell emptyMode="n/a" value={bridge.risks.upgradeability} />
       </TableCell>
-      <TableCell>
+      <TableCell
+        className={cn(
+          isUnverified && UNVERIFIED_DA_CLASSNAME,
+          bridge.statuses?.underReview && UNDER_REVIEW_DA_CLASSNAME,
+        )}
+      >
         <TableValueCell emptyMode="n/a" value={bridge.risks.relayerFailure} />
       </TableCell>
     </>
