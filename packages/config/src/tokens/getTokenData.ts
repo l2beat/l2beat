@@ -63,10 +63,10 @@ export async function getTokenData(
     saveResults(outputFilePath, sorted)
   }
 
-  // TODO: We need to decide how to handle tokens that are removed or 
+  // TODO: We need to decide how to handle tokens that are removed or
   // no longer available.
   // Simply *automatically* removing them from the generated.json
-  // might not be compatible with downstream tools (should this trigger 
+  // might not be compatible with downstream tools (should this trigger
   // removal from DB?).
   // Commenting this function for now.
   //
