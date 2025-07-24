@@ -2,7 +2,7 @@
   "name": "usds",
   "chain": "ethereum",
   "blockNumber": 22945160,
-  "configHash": "0x93af9ff3859dfeeb073465db0985cef771b33e8bedaacb0e7497699cf08d8ebf",
+  "configHash": "0xf315ceeb3c0b36e05dbb79206249c02ff28f6a514e2ce90869ab20eb556e9a1a",
   "entries": [
     {
       "name": "Usds",
@@ -13,6 +13,7 @@
         "0x3511bc489974e8a833d7590187eaab4f8835886bdcb8fff1ea63b7b4caaab165"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1725290327,
       "sinceBlock": 20663730,
       "values": {

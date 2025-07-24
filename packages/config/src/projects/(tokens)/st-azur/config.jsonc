@@ -7,6 +7,7 @@
   "overrides": {
     "eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB": {
       "ignoreMethods": ["calculateWithdrawalAmount", "withdrawalRequests"],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "fields": {
         "$tokenData": {
           "handler": {

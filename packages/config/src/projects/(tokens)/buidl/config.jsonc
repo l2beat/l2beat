@@ -7,6 +7,7 @@
   "overrides": {
     "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": {
       "ignoreMethods": ["getDSService", "proxiableUUID"],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "fields": {
         "$tokenData": {
           "handler": {

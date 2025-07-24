@@ -16,6 +16,7 @@
         "previewWithdraw",
         "rewardData"
       ],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "fields": {
         "$tokenData": {
           "handler": {
