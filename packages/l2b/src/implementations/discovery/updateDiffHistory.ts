@@ -71,6 +71,7 @@ export async function updateDiffHistoryForChain(
     '.' +
     path.sep +
     relative(process.cwd(), join(paths.discovery, projectName, chain))
+
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`, logger)
   const discoveryFromMainBranch =
@@ -292,9 +293,17 @@ function getMainBranchName(): 'main' | 'master' {
   }
 }
 
+function shellQuote(p: string): string {
+  return `'${p.replaceAll("'", "'\\''")}'`
+}
+
 function compareFolders(path1: string, path2: string, logger: Logger): string {
   try {
-    return execSync(`git diff --no-index --stat ${path1} ${path2}`).toString()
+    const quoted1 = shellQuote(path1)
+    const quoted2 = shellQuote(path2)
+    return execSync(
+      `git diff --no-index --stat ${quoted1} ${quoted2}`,
+    ).toString()
   } catch (error) {
     // When difference is found, git diff returns non-zero exit code
     // so execSync throws and error, which we handle here
@@ -334,9 +343,16 @@ function getFileVersionOnMainBranch(
     // time of writing this (21.10.2024) discovered.json of transporter is
     // around 1.2MB.
     const BUFFER_SIZE = 10 * 1024 * 1024
-    const content = execSync(`git show ${mainBranch}:${filePath} 2>/dev/null`, {
-      maxBuffer: BUFFER_SIZE,
-    }).toString()
+    // Wrap the path in single quotes to avoid the shell interpreting
+    // characters like parentheses or spaces. We also escape any single quotes
+    // inside the path (extremely unlikely in our repo layout).
+    const quotedPath = shellQuote(filePath)
+    const content = execSync(
+      `git show ${mainBranch}:${quotedPath} 2>/dev/null`,
+      {
+        maxBuffer: BUFFER_SIZE,
+      },
+    ).toString()
     const mainBranchHash = execSync(`git rev-parse ${mainBranch}`)
       .toString()
       .trim()

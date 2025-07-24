@@ -496,6 +496,13 @@ export const badges = [
     },
   },
   {
+    id: 'OPKailua',
+    type: BadgeType.Stack,
+    name: 'Built on the OP Kailua stack',
+    description: 'The project is built on the OP Kailua stack',
+    action: undefined,
+  },
+  {
     id: 'SNStack',
     type: BadgeType.Stack,
     name: 'Built on the SN Stack',

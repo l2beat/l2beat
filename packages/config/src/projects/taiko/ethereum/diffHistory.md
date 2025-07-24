@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x25328d8657ce654b01aac3364901b8042e569bbc
+
+# Diff at Tue, 22 Jul 2025 15:40:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 22923197
+- current block number: 22923197
+
+## Description
+
+Config: add version to verifier decription.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22923197 (main branch discovery), not current.
+
+```diff
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.1.0).
+      description:
+-        "Verifier contract for RISC Zero Groth16 proofs."
++        "Verifier contract for RISC Zero Groth16 proofs (version 2.1.0)."
+    }
+```
+
 Generated with discovered.json: 0x122a95c45ad7254441535d5785cdf2d32647a3eb
 
 # Diff at Wed, 16 Jul 2025 15:00:31 GMT:

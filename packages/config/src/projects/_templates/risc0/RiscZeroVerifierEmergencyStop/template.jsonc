@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A verifier wrapper for the {{verifier}} that allows pausing (emergency stop) the verifier by its owner.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the verifier."
+        }
+      ]
+    },
+    "paused": {
+      "severity": "HIGH",
+      "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
+    }
+  }
+}
