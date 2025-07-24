@@ -1,7 +1,6 @@
 {
   "name": "hemi",
   "chain": "ethereum",
-  "blockNumber": 22765735,
   "timestamp": 1750664843,
   "configHash": "0x9bebbaa165be697efa45fa1dd2de399069bd1f75abb5abbaea70a56126cbb80e",
   "entries": [

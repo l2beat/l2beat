@@ -1,7 +1,6 @@
 {
   "name": "lachain",
   "chain": "zksync2",
-  "blockNumber": 60986426,
   "timestamp": 1748359783,
   "configHash": "0x061d69103add7eaba060fad4a3275833cfba1cdc11ee5620205c9769917c44c8",
   "sharedModules": ["shared-zk-stack"],

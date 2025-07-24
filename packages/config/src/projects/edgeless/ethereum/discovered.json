@@ -1,7 +1,6 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 22231350,
   "timestamp": 1744201739,
   "configHash": "0x16b1fee9f5519961230b7bc1990ec1e2afc6773946c8e5fc3d6d7b34f01f3a17",
   "entries": [

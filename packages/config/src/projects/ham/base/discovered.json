@@ -1,7 +1,6 @@
 {
   "name": "ham",
   "chain": "base",
-  "blockNumber": 30252032,
   "timestamp": 1747293411,
   "configHash": "0x4e62d4076af22d10db760b0ef0da971cafcfefbf94b60bf4f50e34d29676002a",
   "entries": [

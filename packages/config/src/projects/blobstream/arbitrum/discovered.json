@@ -1,7 +1,6 @@
 {
   "name": "blobstream",
   "chain": "arbitrum",
-  "blockNumber": 355902089,
   "timestamp": 1752069676,
   "configHash": "0xb87265297e4167cb79d0347cf33e13c01ff46d9d75448541d89a1d8780bce304",
   "sharedModules": ["shared-sp1"],

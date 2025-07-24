@@ -1,7 +1,6 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 22966922,
   "timestamp": 1753093127,
   "configHash": "0xaa940923a72d73071a770a8ce3bbd379921abd0ad1de4783d6a5a7e977830f5c",
   "entries": [

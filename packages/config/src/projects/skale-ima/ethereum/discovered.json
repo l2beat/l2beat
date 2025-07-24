@@ -1,7 +1,6 @@
 {
   "name": "skale-ima",
   "chain": "ethereum",
-  "blockNumber": 21744185,
   "timestamp": 1738322567,
   "configHash": "0x21982f2aa824b78f09f1079e35e24e380d2a7f3355c6e97a257b040861871899",
   "entries": [

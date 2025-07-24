@@ -1,7 +1,6 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 22765709,
   "timestamp": 1750664531,
   "configHash": "0xf10901dfe14f54ba69cc8963f008b238f3b35a12b218550ec3160027b9c14e0e",
   "entries": [

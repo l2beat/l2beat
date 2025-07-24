@@ -1,7 +1,6 @@
 {
   "name": "sophon",
   "chain": "zksync2",
-  "blockNumber": 54952361,
   "timestamp": 1738324277,
   "configHash": "0xbf47ead378b5067ec1a01a40e45649ab3017a5295a3a1f29387442a5982eece7",
   "sharedModules": ["shared-zk-stack"],

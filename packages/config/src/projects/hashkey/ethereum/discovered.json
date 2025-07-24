@@ -1,7 +1,6 @@
 {
   "name": "hashkey",
   "chain": "ethereum",
-  "blockNumber": 22243976,
   "timestamp": 1744353755,
   "configHash": "0x18bb13b44a161e2a05fe1161a1998e7a75d412ac19a9fb52a4e53a3ac4cf411a",
   "entries": [

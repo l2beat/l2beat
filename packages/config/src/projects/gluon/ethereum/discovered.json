@@ -1,7 +1,6 @@
 {
   "name": "gluon",
   "chain": "ethereum",
-  "blockNumber": 21686363,
   "timestamp": 1737625319,
   "configHash": "0x4a7170f2ec368fe4cd61a3dbfcbe941b0deb64b54abe21c0c3df3a0c01d657eb",
   "entries": [

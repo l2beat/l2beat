@@ -1,7 +1,6 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 22480922,
   "timestamp": 1747219823,
   "configHash": "0xad3be60e230b5768eb1f949c76372e4616cf705ea8f882c0d90968455c9d7519",
   "sharedModules": ["shared-sharp-verifier"],

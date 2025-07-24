@@ -1,7 +1,6 @@
 {
   "name": "treasure",
   "chain": "zksync2",
-  "blockNumber": 54952364,
   "timestamp": 1738324280,
   "configHash": "0x79520fbf2ac391a29ba38574c0e1e972efc465549a129b1f58ed78756b9d1f29",
   "sharedModules": ["shared-zk-stack"],

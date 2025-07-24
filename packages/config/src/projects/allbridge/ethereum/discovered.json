@@ -1,7 +1,6 @@
 {
   "name": "allbridge",
   "chain": "ethereum",
-  "blockNumber": 22593366,
   "timestamp": 1748581691,
   "configHash": "0x765b7ef32df88ff59e7f03948fd9e99bc43636003691cc3fcc7251155fb7a80f",
   "entries": [

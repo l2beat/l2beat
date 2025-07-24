@@ -1,7 +1,6 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 22975729,
   "timestamp": 1753199507,
   "configHash": "0xb9023ec3d49afc2217ca5ff37ab8233d6e2ec27ca17106715ee67c03f1c50d04",
   "entries": [

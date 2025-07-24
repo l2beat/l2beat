@@ -1,7 +1,6 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 22966759,
   "timestamp": 1753091171,
   "configHash": "0x7042994a5c447c2013ca4eef36bec48f935c9490accdae81016c2318d3a1471a",
   "entries": [

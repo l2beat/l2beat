@@ -1,7 +1,6 @@
 {
   "name": "popboss",
   "chain": "arbitrum",
-  "blockNumber": 356574016,
   "timestamp": 1752237555,
   "configHash": "0x1b6c73cc86a51f72592c3873b8004a3d8fa502313e11a5ff5a19c77bf46db0ad",
   "entries": [

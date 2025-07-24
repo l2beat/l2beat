@@ -1,7 +1,6 @@
 {
   "name": "geist",
   "chain": "base",
-  "blockNumber": 31729291,
   "timestamp": 1750247929,
   "configHash": "0xed30382f2feda08b9a374d7665f5743adab4e524ee125c416ce5327197945fc3",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 22273219,
   "timestamp": 1744706039,
   "configHash": "0x02afdfa21898c7decd7f727bc2bdee8b34c5c740bde86aa64c8a037fa4997f50",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "zkcandy",
   "chain": "zksync2",
-  "blockNumber": 54952349,
   "timestamp": 1738324264,
   "configHash": "0xab37ff87868547817bf100403f3d706218f1baef6149260cbdd769d62977c1ea",
   "sharedModules": ["shared-zk-stack"],

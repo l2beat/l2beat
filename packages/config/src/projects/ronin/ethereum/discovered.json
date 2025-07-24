@@ -1,7 +1,6 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 22824247,
   "timestamp": 1751371163,
   "configHash": "0x11449098ce42833b8be9219119d4e5c6c4c6a4599659d0cec423bbdf6677c3a4",
   "entries": [

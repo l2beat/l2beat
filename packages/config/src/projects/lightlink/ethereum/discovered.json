@@ -1,7 +1,6 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 22208513,
   "timestamp": 1743926099,
   "configHash": "0x2033f8a75dc71ddb50adba75ab282061b8a1ba59381493dbe69232c64de152c3",
   "entries": [

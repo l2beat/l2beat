@@ -1,7 +1,6 @@
 {
   "name": "reddioex",
   "chain": "ethereum",
-  "blockNumber": 19825385,
   "timestamp": 1715171819,
   "configHash": "0x9fb134dce112b0184f8a290e77c8f71fab043bc9ec216f295b9368c89423b8de",
   "sharedModules": ["shared-sharp-verifier"],

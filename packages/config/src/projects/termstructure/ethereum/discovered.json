@@ -1,7 +1,6 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20469346,
   "timestamp": 1722945083,
   "configHash": "0x5401df17d2466030c9d12aed104deaf2ba6d3dd82e3e702d1bb133422ff5a61b",
   "entries": [

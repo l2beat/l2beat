@@ -1,7 +1,6 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 332541645,
   "timestamp": 1746206122,
   "configHash": "0xf7888b85aff1435210f072424456097d8355a4fa379ba65cb56addf9532d2b27",
   "entries": [

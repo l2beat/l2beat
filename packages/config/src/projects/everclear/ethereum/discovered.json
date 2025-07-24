@@ -1,7 +1,6 @@
 {
   "name": "everclear",
   "chain": "ethereum",
-  "blockNumber": 22923583,
   "timestamp": 1752570455,
   "configHash": "0xa7ea0cb1df973a6c8831ddbfca32315643d0840c44e3fdf88502a96d2d006b27",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "playblock",
   "chain": "nova",
-  "blockNumber": 82973305,
   "timestamp": 1742892328,
   "configHash": "0x764ba1449e05b06a176d593a1eb528f94904866eb50e0c29deb49ce3697ce94b",
   "entries": [
