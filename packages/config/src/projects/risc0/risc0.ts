@@ -24,7 +24,7 @@ export const risc0: BaseProject = {
       repositories: ['https://github.com/risc0/risc0'],
       socialMedia: [
         'https://x.com/RiscZero',
-        'https://www.youtube.com/@risczero',
+        'https://youtube.com/@risczero',
         'https://discord.com/invite/risczero',
       ],
     },
