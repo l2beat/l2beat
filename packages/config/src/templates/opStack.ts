@@ -946,7 +946,7 @@ function computedStage(
       stage1: {
         principle: false,
         usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
+        usersCanExitWithoutCooperation: fraudProofType === 'Kailua',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
       },
