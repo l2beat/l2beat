@@ -65,7 +65,6 @@ export const scroll: ScalingProject = {
   display: {
     name: 'Scroll',
     slug: 'scroll',
-    stacks: ['Agglayer CDK', 'OP Kailua'],
     description:
       'Scroll is ZK Rollup that extends Ethereum’s capabilities through ZK tech and EVM compatibility.',
     purposes: ['Universal'],
