@@ -22,5 +22,11 @@
     "address": "0x1d31a15050DBE75c6c060D6da696332a5CB943e1",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "SuperchainConfigNoGuard_1": {
+    "hash": "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686",
+    "address": "0x4da82a327773965b8d4D85Fa3dB8249b387458E7",
+    "chain": "ethereum",
+    "blockNumber": 22987846
   }
 }

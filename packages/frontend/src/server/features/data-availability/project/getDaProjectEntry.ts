@@ -51,6 +51,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
     name: string
     slug: string
     verificationWarning?: boolean
+    impactfulChangeWarning?: boolean
     isNoBridge: boolean
     grissiniValues: RosetteValue[]
     tvs: number
@@ -172,6 +173,8 @@ export async function getDaProjectEntry(
         bridge.statuses.unverifiedContracts,
         projectsChangeReport.getChanges(bridge.id),
       ),
+      impactfulChangeWarning: projectsChangeReport.getChanges(bridge.id)
+        .impactfulChange,
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
       tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)).latest,

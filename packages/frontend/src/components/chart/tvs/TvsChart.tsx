@@ -14,7 +14,7 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
@@ -29,9 +29,16 @@ interface Props {
   unit: ChartUnit
   isLoading: boolean
   milestones: Milestone[] | undefined
+  tickCount?: number
 }
 
-export function TvsChart({ data, unit, isLoading, milestones }: Props) {
+export function TvsChart({
+  data,
+  unit,
+  isLoading,
+  milestones,
+  tickCount,
+}: Props) {
   const chartMeta = {
     value: {
       color: 'var(--chart-pink)',
@@ -65,6 +72,7 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
           isLoading,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
+            tickCount,
           },
         })}
         <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />

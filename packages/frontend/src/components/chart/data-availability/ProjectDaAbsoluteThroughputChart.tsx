@@ -17,7 +17,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
@@ -143,6 +143,7 @@ export function ProjectDaAbsoluteThroughputChart({
           isLoading,
           yAxis: {
             unit: ` ${unit}`,
+            tickCount: 4,
           },
         })}
       </AreaChart>

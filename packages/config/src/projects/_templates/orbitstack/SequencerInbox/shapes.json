@@ -34,5 +34,11 @@
     "address": "0xC1fB0cCa6e751dEe25e3D537D309d336E8304d50",
     "chain": "ethereum",
     "blockNumber": 22396423
+  },
+  "SequencerInbox_BoLD_customGas": {
+    "hash": "0xb57f3e67e08492b235337cda4f3ea0117e3e043cceaf8e9a7a51b57611ba99de",
+    "address": "0xfEB2537afD8519d16d0CcEa741A70f97f3D4288B",
+    "chain": "arbitrum",
+    "blockNumber": 360996679
   }
 }

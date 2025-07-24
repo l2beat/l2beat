@@ -56,6 +56,12 @@ export const RefreshDiscovery = command({
       description:
         'Message that will be written in the description section of diffHistory.md.',
     }),
+    group: option({
+      type: optional(string),
+      long: 'group',
+      short: 'g',
+      description: 'group of projects to refresh.',
+    }),
     overwriteCache: flag({
       type: boolean,
       long: 'overwrite-cache',
@@ -74,13 +80,24 @@ export const RefreshDiscovery = command({
     const templateService = new TemplateService(paths.discovery)
     const logger = getPlainLogger(args.concise ? 'WARN' : 'INFO')
 
+    const projects = args.group
+      ? configReader.getProjectsInGroup(args.group)
+      : null
+
     const chainConfigs = configReader
       .readAllDiscoveredProjects()
-      .filter((entry) => !args.excludeProjects?.includes(entry.project))
+      .filter((entry) => (projects ? projects.includes(entry.project) : true))
+      .filter((entry) =>
+        args.excludeProjects
+          ? !args.excludeProjects.includes(entry.project)
+          : true,
+      )
       .flatMap(({ project, chains }) =>
         chains.map((chain) => configReader.readConfig(project, chain)),
       )
-      .filter((config) => !args.excludeChains?.includes(config.chain))
+      .filter((config) =>
+        args.excludeChains ? !args.excludeChains.includes(config.chain) : true,
+      )
       .sort((a, b) => a.chain.localeCompare(b.chain))
 
     const toRefresh: { config: ConfigRegistry; reason: string }[] = []
