@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -18,6 +18,7 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommo
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
+import type { ChartNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 export interface TvsChartDataPoint {
   timestamp: number
@@ -28,10 +29,17 @@ interface Props {
   data: TvsChartDataPoint[] | undefined
   unit: ChartUnit
   isLoading: boolean
+  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
   milestones: Milestone[] | undefined
 }
 
-export function TvsChart({ data, unit, isLoading, milestones }: Props) {
+export function TvsChart({
+  data,
+  unit,
+  isLoading,
+  milestones,
+  notSyncedTimestamps,
+}: Props) {
   const chartMeta = {
     value: {
       color: 'var(--chart-pink)',
@@ -67,6 +75,13 @@ export function TvsChart({ data, unit, isLoading, milestones }: Props) {
             tickFormatter: (value: number) => formatCurrency(value, unit),
           },
         })}
+        {notSyncedTimestamps && (
+          <ReferenceArea
+            {...notSyncedTimestamps}
+            fill="var(--secondary)"
+            fillOpacity={0.2}
+          />
+        )}
         <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
       </AreaChart>
     </ChartContainer>

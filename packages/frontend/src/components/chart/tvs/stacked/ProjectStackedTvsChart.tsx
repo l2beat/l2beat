@@ -13,6 +13,7 @@ import { ChartControlsWrapper } from '../../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartUnit } from '../../types'
+import { getNotSyncedTimestamps } from '../../utils/getNotSyncedTimestamps'
 import { ProjectTokenChart } from '../ProjectTokenChart'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
 import { StackedTvsChart } from './StackedTvsChart'
@@ -116,6 +117,10 @@ function DefaultChart({
     [data, unit],
   )
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
+  const notSyncedTimestamps = useMemo(
+    () => getNotSyncedTimestamps(data),
+    [data],
+  )
 
   return (
     <section className="flex flex-col">
@@ -133,6 +138,7 @@ function DefaultChart({
         unit={unit}
         isLoading={isLoading}
         className="mt-4 mb-2"
+        notSyncedTimestamps={notSyncedTimestamps}
       />
       <div className="flex flex-wrap items-center justify-between gap-1">
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>

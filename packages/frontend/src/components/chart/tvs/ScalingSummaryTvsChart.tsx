@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { AreaChart } from 'recharts'
+import { AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -35,6 +35,7 @@ import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
+import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 const chartMeta = {
   rollups: {
@@ -84,6 +85,8 @@ export function ScalingSummaryTvsChart({
   }, [data])
   const stats = getStats(chartData)
 
+  const notSyncedTimestamps = getNotSyncedTimestamps(data)
+
   return (
     <section className="flex flex-col gap-4">
       <Header
@@ -132,6 +135,13 @@ export function ScalingSummaryTvsChart({
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
           })}
+          {notSyncedTimestamps && (
+            <ReferenceArea
+              {...notSyncedTimestamps}
+              fill="var(--secondary)"
+              fillOpacity={0.2}
+            />
+          )}
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>
       </ChartContainer>
@@ -258,20 +268,32 @@ function getStats(
   if (!data) {
     return undefined
   }
-  const oldestDataPoint = data.at(0)
-  const newestDataPoint = data.at(-1)
+  const pointsWithData = data.filter(
+    (point) =>
+      point.rollups !== null &&
+      point.validiumsAndOptimiums !== null &&
+      point.others !== null,
+  ) as {
+    timestamp: number
+    rollups: number
+    validiumsAndOptimiums: number
+    others: number
+  }[]
+
+  const oldestDataPoint = pointsWithData.at(0)
+  const newestDataPoint = pointsWithData.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }
 
   const oldestTotal =
-    (oldestDataPoint.rollups ?? 0) +
-    (oldestDataPoint.validiumsAndOptimiums ?? 0) +
-    (oldestDataPoint.others ?? 0)
+    oldestDataPoint.rollups +
+    oldestDataPoint.validiumsAndOptimiums +
+    oldestDataPoint.others
   const newestTotal =
-    (newestDataPoint.rollups ?? 0) +
-    (newestDataPoint.validiumsAndOptimiums ?? 0) +
-    (newestDataPoint.others ?? 0)
+    newestDataPoint.rollups +
+    newestDataPoint.validiumsAndOptimiums +
+    newestDataPoint.others
   const change = newestTotal / oldestTotal - 1
 
   return {

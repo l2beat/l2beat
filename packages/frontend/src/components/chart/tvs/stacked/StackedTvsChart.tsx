@@ -1,7 +1,7 @@
 import type { Milestone } from '@l2beat/config'
 
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -16,6 +16,7 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
+import type { ChartNotSyncedTimestamps } from '../../utils/getNotSyncedTimestamps'
 
 export interface StackedTvsChartDataPoint {
   timestamp: number
@@ -26,6 +27,7 @@ export interface StackedTvsChartDataPoint {
 
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
+  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
@@ -52,6 +54,7 @@ const chartMeta = {
 
 export function StackedTvsChart({
   data,
+  notSyncedTimestamps,
   milestones,
   unit,
   isLoading,
@@ -93,6 +96,13 @@ export function StackedTvsChart({
           stackId="a"
           isAnimationActive={false}
         />
+        {notSyncedTimestamps && (
+          <ReferenceArea
+            {...notSyncedTimestamps}
+            fill="var(--secondary)"
+            fillOpacity={0.2}
+          />
+        )}
         {getCommonChartComponents({
           data,
           yAxis: {

@@ -16,6 +16,7 @@ import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
 import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from './TvsChartUnitControls'
+import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 interface Props {
   projectId: string
@@ -109,6 +110,11 @@ function DefaultChart({
       }
     },
   )
+
+  const notSyncedTimestamps = useMemo(
+    () => getNotSyncedTimestamps(data),
+    [data],
+  )
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
@@ -125,6 +131,7 @@ function DefaultChart({
         data={chartData}
         unit={unit}
         isLoading={isLoading}
+        notSyncedTimestamps={notSyncedTimestamps}
         milestones={milestones}
       />
       <TvsChartUnitControls unit={unit} setUnit={setUnit}>
