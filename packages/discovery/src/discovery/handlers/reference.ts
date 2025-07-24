@@ -29,7 +29,7 @@ export function generateReferenceInput(
       address: currentContractAddress.toString(),
     },
     $$: {
-      blockNumber: 424242424242, // TODO(radomski): Check if we use that
+      blockNumber: provider.blockNumber,
       chainName: provider.chain,
     },
   }
