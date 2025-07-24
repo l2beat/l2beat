@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
@@ -17,9 +17,11 @@ import {
 import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
 import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 
-export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
+export interface DaMonthlyUpdateEntry
+  extends Omit<DataAvailabilityUpdate, 'daLayerId'> {
+  id: string
   name: string
-  colors: ProjectColors
+  colors: ProjectCustomColors
   daProjects: ProjectId[]
   bannerImg?: string
   allProjects: {

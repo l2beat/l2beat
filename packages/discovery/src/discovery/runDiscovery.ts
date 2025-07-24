@@ -77,7 +77,7 @@ export async function runDiscovery(
     const backrefConfigs = allConfigs
       .filter((c) => c.structure.sharedModules.includes(config.project))
       .map((c) => c.structure)
-    printSharedModuleInfo(backrefConfigs)
+    printSharedModuleInfo(logger, backrefConfigs)
   }
 
   if (config.printStats) {

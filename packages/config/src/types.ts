@@ -11,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
+import type { ZkCatalogTagType } from './common/zkCatalogTags'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -74,7 +75,8 @@ export interface BaseProject {
   // common data
   statuses?: ProjectStatuses
   display?: ProjectDisplay
-  colors?: ProjectColors
+  colors?: ProjectCustomColors
+  ecosystemColors?: ProjectCustomColors
   milestones?: Milestone[]
   chainConfig?: ChainConfig
   escrows?: ProjectEscrow[]
@@ -128,7 +130,7 @@ export interface BaseProject {
 }
 
 // #region common data
-export interface ProjectColors {
+export interface ProjectCustomColors {
   primary: string
   secondary: string
 }
@@ -426,6 +428,7 @@ export interface StageConfigured {
   missing?: MissingStageDetails
   message: StageConfiguredMessage | undefined
   summary: StageSummary[]
+  stage1PrincipleDescription?: string
   additionalConsiderations?: {
     short: string
     long: string
@@ -567,6 +570,7 @@ export interface ProjectDaLayer {
   finality?: number
   dataAvailabilitySampling?: DataAvailabilitySampling
   economicSecurity?: DaEconomicSecurity
+  sovereignProjectsTrackingConfig?: SovereignProjectDaTrackingConfig[]
 }
 
 export interface AdjustableEconomicSecurityRisk {
@@ -740,12 +744,12 @@ export interface ProjectZkCatalogInfo {
     finalWrap?: ZkCatalogTag[]
   }
   proofSystemInfo: string
-  trustedSetups: {
-    [key in ZkCatalogProofSystem]?: TrustedSetup[]
-  }
+  trustedSetups: (TrustedSetup & {
+    proofSystem: ZkCatalogTag
+  })[]
   verifierHashes: {
     hash: string
-    proofSystem: ZkCatalogProofSystem
+    proofSystem: ZkCatalogTag
     knownDeployments: string[]
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
@@ -754,15 +758,9 @@ export interface ProjectZkCatalogInfo {
   }[]
 }
 
-export type ZkCatalogProofSystem =
-  | 'PlonkBellman'
-  | 'PlonkGnark'
-  | 'Groth16Gnark'
-  | 'FflonkZksync'
-
 export interface ZkCatalogTag {
   id: string
-  type: string
+  type: ZkCatalogTagType
   name: string
   description: string
 }
@@ -861,6 +859,17 @@ export interface ProjectLivenessConfig {
 
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
+}
+
+export interface SovereignProjectDaTrackingConfig {
+  projectId: ProjectId
+  name?: string
+  daTrackingConfig: (
+    | Omit<EthereumDaTrackingConfig, 'daLayer'>
+    | Omit<CelestiaDaTrackingConfig, 'daLayer'>
+    | Omit<AvailDaTrackingConfig, 'daLayer'>
+    | Omit<EigenDaTrackingConfig, 'daLayer'>
+  )[]
 }
 
 export type ProjectDaTrackingConfig =
@@ -1060,6 +1069,7 @@ export interface ProjectDiscoveryInfo {
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
   blockNumberPerChain: Record<string, number>
+  hasDiscoUi: boolean
 }
 // #endregion
 
@@ -1213,7 +1223,14 @@ export const TvsTokenSchema = v.object({
   valueForSummary: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  category: v.enum(['ether', 'stablecoin', 'other']),
+  category: v.enum([
+    'ether',
+    'stablecoin',
+    'btc',
+    'rwaRestricted',
+    'rwaPublic',
+    'other',
+  ]),
   source: v.enum(['canonical', 'external', 'native']),
   isAssociated: v.boolean(),
   bridgedUsing: v

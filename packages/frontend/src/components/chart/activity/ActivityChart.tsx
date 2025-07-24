@@ -29,13 +29,13 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/GetStrokeOverFillAreaComponents'
+import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
@@ -57,6 +57,7 @@ interface Props {
   type: ActivityChartType
   projectName?: string
   className?: string
+  tickCount?: number
 }
 
 export function ActivityChart({
@@ -70,6 +71,7 @@ export function ActivityChart({
   metric,
   projectName,
   className,
+  tickCount,
 }: Props) {
   const chartMeta = {
     projects: {
@@ -120,6 +122,7 @@ export function ActivityChart({
           yAxis: {
             scale,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
+            tickCount,
           },
         })}
         <ChartTooltip

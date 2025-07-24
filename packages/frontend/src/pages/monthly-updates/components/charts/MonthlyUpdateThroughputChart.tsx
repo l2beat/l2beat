@@ -11,8 +11,8 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
@@ -36,13 +36,14 @@ export function MonthlyUpdateThroughputChart({
   const { data, isLoading } = api.da.projectChart.useQuery({
     range: { type: 'custom', from, to: to + UnixTime.DAY },
     projectId: daLayer,
+    includeScalingOnly: false,
   })
 
   const chartMeta = useMemo(() => {
     return {
       projects: {
         label: 'Data Posted',
-        color: 'var(--project-primary)',
+        color: 'var(--project-primary, var(--ecosystem-primary))',
         indicatorType: {
           shape: 'line',
         },
@@ -114,8 +115,9 @@ export function MonthlyUpdateThroughputChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--project-primary)',
-                secondary: 'var(--project-secondary)',
+                primary: 'var(--project-primary, var(--ecosystem-primary))',
+                secondary:
+                  'var(--project-secondary, var(--ecosystem-secondary))',
               }}
             />
           </defs>

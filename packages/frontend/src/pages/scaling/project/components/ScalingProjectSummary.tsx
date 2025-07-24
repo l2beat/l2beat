@@ -13,6 +13,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
+import { CustomLink } from '~/components/link/CustomLink'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
@@ -46,7 +47,7 @@ export function ProjectScalingSummary({ project }: Props) {
     <section
       id="summary"
       data-role="project-section"
-      className="w-full border-divider bg-surface-primary px-4 max-md:border-b md:rounded-lg md:p-6"
+      className="w-full border-divider px-4 max-md:border-b md:rounded-lg md:bg-surface-primary md:p-6"
     >
       <div className="flex">
         <div className="w-full">
@@ -68,24 +69,29 @@ export function ProjectScalingSummary({ project }: Props) {
                 Tokens breakdown
               </p>
               <Tooltip>
-                <TooltipTrigger className="flex w-full items-center gap-1">
-                  <TokenBreakdown
-                    total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                    associated={
-                      project.header.tvs?.tokens.breakdown?.associated ?? 0
-                    }
-                    ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                    stablecoin={
-                      project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                    }
-                    className="h-1.5 w-full"
-                  />
-                  {hasTokenWarnings && (
-                    <RoundedWarningIcon
-                      sentiment={warningSentiment}
-                      className="size-[22px]"
+                <TooltipTrigger asChild>
+                  <a
+                    className="flex w-full items-center gap-1"
+                    href={`/scaling/projects/${project.slug}/tvs-breakdown`}
+                  >
+                    <TokenBreakdown
+                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                      associated={
+                        project.header.tvs?.tokens.breakdown?.associated ?? 0
+                      }
+                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                      stablecoin={
+                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                      }
+                      className="h-1.5 w-full"
                     />
-                  )}
+                    {hasTokenWarnings && (
+                      <RoundedWarningIcon
+                        sentiment={warningSentiment}
+                        className="size-[22px]"
+                      />
+                    )}
+                  </a>
                 </TooltipTrigger>
                 <TooltipContent>
                   <TokenBreakdownTooltipContent
@@ -102,6 +108,9 @@ export function ProjectScalingSummary({ project }: Props) {
                     }
                     tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
                   />
+                  <p className="mt-2 text-label-value-13 text-secondary">
+                    Click to view TVS breakdown
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -110,13 +119,18 @@ export function ProjectScalingSummary({ project }: Props) {
                 Value secured breakdown
               </p>
               <Tooltip>
-                <TooltipTrigger className="block w-full">
-                  <ValueSecuredBreakdown
-                    canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                    external={project.header.tvs?.breakdown?.external ?? 0}
-                    native={project.header.tvs?.breakdown?.native ?? 0}
-                    className="h-1.5 w-full"
-                  />
+                <TooltipTrigger asChild>
+                  <a
+                    className="block w-full"
+                    href={`/scaling/projects/${project.slug}/tvs-breakdown`}
+                  >
+                    <ValueSecuredBreakdown
+                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                      external={project.header.tvs?.breakdown?.external ?? 0}
+                      native={project.header.tvs?.breakdown?.native ?? 0}
+                      className="h-1.5 w-full"
+                    />
+                  </a>
                 </TooltipTrigger>
                 <TooltipContent>
                   <ValueSecuredBreakdownTooltipContent
@@ -126,8 +140,17 @@ export function ProjectScalingSummary({ project }: Props) {
                     change={project.header.tvs?.breakdown?.totalChange ?? 0}
                     tvsWarnings={[]}
                   />
+                  <p className="mt-2 text-label-value-13 text-secondary">
+                    Click to view TVS breakdown
+                  </p>
                 </TooltipContent>
               </Tooltip>
+              <CustomLink
+                href={`/scaling/projects/${project.slug}/tvs-breakdown`}
+                className="mt-2 font-medium text-label-value-13 md:hidden"
+              >
+                View TVS breakdown
+              </CustomLink>
             </div>
           </div>
         </div>

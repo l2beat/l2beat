@@ -1,6 +1,7 @@
 import type {
   Project,
   ProjectBridgeInfo,
+  ProjectCustomColors,
   TableReadyValue,
   WarningWithSentiment,
 } from '@l2beat/config'
@@ -8,6 +9,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { env } from '~/env'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
 import type { SsrHelpers } from '~/trpc/server'
@@ -35,6 +37,7 @@ export interface BridgesProjectEntry {
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   underReviewStatus: UnderReviewStatus
+  colors: ProjectCustomColors | undefined
   header: {
     description?: string
     warning?: string
@@ -61,7 +64,7 @@ export interface BridgesProjectEntry {
     validatedBy: TableReadyValue | undefined
   }
   sections: ProjectDetailsSection[]
-  discoUiHref: string
+  discoUiHref: string | undefined
 }
 
 export async function getBridgesProjectEntry(
@@ -81,6 +84,8 @@ export async function getBridgesProjectEntry(
     | 'milestones'
     | 'contracts'
     | 'permissions'
+    | 'discoveryInfo'
+    | 'colors'
   >,
 ): Promise<BridgesProjectEntry> {
   const [projectsChangeReport, tvsStats, tvsChartData, tokens, contractUtils] =
@@ -109,6 +114,7 @@ export async function getBridgesProjectEntry(
       isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
     }),
+    colors: env.CLIENT_SIDE_PARTNERS ? project.colors : undefined,
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     header: {
@@ -142,7 +148,9 @@ export async function getBridgesProjectEntry(
       category: project.bridgeInfo.category,
       validatedBy: project.bridgeRisks.validatedBy,
     },
-    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
+    discoUiHref: project.discoveryInfo?.hasDiscoUi
+      ? `https://disco.l2beat.com/ui/p/${project.id}`
+      : undefined,
   }
 
   const sections: ProjectDetailsSection[] = []

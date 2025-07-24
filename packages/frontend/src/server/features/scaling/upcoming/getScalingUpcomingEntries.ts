@@ -32,7 +32,11 @@ export function getScalingUpcomingEntry(
   project: Project<'scalingInfo' | 'statuses' | 'display'>,
 ): ScalingUpcomingEntry {
   return {
-    ...getCommonScalingEntry({ project, changes: undefined }),
+    ...getCommonScalingEntry({
+      project,
+      ongoingAnomaly: false,
+      changes: undefined,
+    }),
     category: project.scalingInfo.type,
     stacks: project.scalingInfo.stacks,
     purposes: project.scalingInfo.purposes,

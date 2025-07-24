@@ -56,7 +56,7 @@ async function getProjectEntry(
   const layer = await ps.getProject({
     slug: params.layer,
     select: ['daLayer', 'display', 'statuses'],
-    optional: ['isUpcoming', 'milestones', 'archivedAt'],
+    optional: ['isUpcoming', 'milestones', 'archivedAt', 'colors'],
   })
 
   if (!layer) return

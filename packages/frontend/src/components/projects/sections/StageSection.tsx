@@ -145,6 +145,7 @@ export function StageSection({
       {stageConfig.downgradePending && (
         <StageOneRequirementsChangeStageSectionNotice
           downgradePending={stageConfig.downgradePending}
+          stage1PrincipleDescription={stageConfig.stage1PrincipleDescription}
         />
       )}
       {stageConfig.message && (

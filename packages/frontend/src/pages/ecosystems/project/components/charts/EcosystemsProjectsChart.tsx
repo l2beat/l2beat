@@ -11,8 +11,8 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import type { EcosystemMilestone } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/getEcosystemProjectsChartData'
 import { formatTimestamp } from '~/utils/dates'
@@ -35,7 +35,7 @@ export function EcosystemsProjectsChart({
     return {
       projectCount: {
         color: 'var(--ecosystem-primary)',
-        label: 'Project count',
+        label: 'Live project count',
         indicatorType: {
           shape: 'line',
         },
@@ -106,7 +106,7 @@ function Header({
   return (
     <div className="mb-3 flex items-start justify-between">
       <div>
-        <div className="font-bold text-xl">Projects count</div>
+        <div className="font-bold text-xl">Live projects count</div>
         <EcosystemChartTimeRange range={range} />
       </div>
       <div className="text-right">
@@ -140,7 +140,7 @@ export function CustomTooltip({
             return (
               <div
                 key={entry.name}
-                className="flex items-center justify-between gap-x-1"
+                className="flex items-center justify-between gap-x-3"
               >
                 <span className="flex items-center gap-1">
                   <ChartDataIndicator
@@ -151,7 +151,7 @@ export function CustomTooltip({
                     {config.label}
                   </span>
                 </span>
-                <span className="whitespace-nowrap font-medium">
+                <span className="whitespace-nowrap font-medium leading-none">
                   {entry.value}
                 </span>
               </div>

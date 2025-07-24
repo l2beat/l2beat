@@ -7,6 +7,7 @@
     "dev:mock": "MOCK=true pnpm dev",
     "build": "scripts/build.sh",
     "start": "NODE_ENV=production node dist/server/index.js",
+    "start:mock": "MOCK=true pnpm start",
     "og-images": "cd ../config && pnpm build && cd ../frontend && tsx scripts/opengraph-images/index.ts",
     "tinify": "tsx scripts/tinify",
     "new-project": "pnpm og-images && pnpm tinify",
@@ -19,7 +20,8 @@
     "format": "biome check .",
     "format:fix": "biome check --write .",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test-all-pages": "node -r esbuild-register scripts/test-all-pages/index.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",

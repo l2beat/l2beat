@@ -10,9 +10,12 @@ export const hyphen: Bridge = {
   type: 'bridge',
   id: ProjectId('hyphen'),
   addedAt: UnixTime(1662628329), // 2022-09-08T09:12:09Z
+  archivedAt: UnixTime(1753083581),
   display: {
     name: 'Hyphen',
     slug: 'hyphen',
+    warning:
+      'Hyphen has been decommissioned as of December 31, 2024. See the announcement [here](https://hyphen.biconomy.io).',
     category: 'Liquidity Network',
     links: {
       websites: ['https://hyphen.biconomy.io/'],

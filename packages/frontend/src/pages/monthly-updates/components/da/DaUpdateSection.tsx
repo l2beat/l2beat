@@ -15,7 +15,7 @@ interface Props {
 export function DaUpdateSection({ daLayer, from, to }: Props) {
   return (
     <ProjectUpdateSection
-      name={daLayer.name}
+      id={daLayer.id}
       colors={daLayer.colors}
       bannerImg={daLayer.bannerImg}
     >
@@ -28,7 +28,7 @@ export function DaUpdateSection({ daLayer, from, to }: Props) {
           to={to}
         />
         <MonthlyUpdateThroughputChart
-          daLayer={daLayer.daLayerId}
+          daLayer={daLayer.id}
           dataPosted={daLayer.allProjects.dataPosted}
           pastDayPosted={daLayer.pastDayPosted}
           from={from}

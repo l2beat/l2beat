@@ -157,10 +157,10 @@ function ProjectNavigationList({
   )
 
   useEffect(() => {
-    if (currentMenuEntry.current && menuContainer.current) {
+    if (currentSection && currentMenuEntry.current && menuContainer.current) {
       scrollToItem(currentMenuEntry.current, menuContainer.current)
     }
-  }, [scrollToItem])
+  }, [scrollToItem, currentSection])
 
   return (
     <div
@@ -233,7 +233,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
       className={cn(
         'flex size-5 shrink-0 items-center justify-center rounded text-center text-label-value-12',
         props.selected
-          ? 'bg-linear-to-r from-purple-100 to-pink-100 text-white'
+          ? 'bg-linear-to-r from-purple-100 to-pink-100 text-white group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary'
           : 'bg-surface-tertiary text-secondary group-hover:text-primary',
       )}
     >
@@ -257,7 +257,7 @@ function NavigationSubsectionEntry(props: {
         {/* Left side */}
         <div className="flex w-6 flex-col items-center">
           {props.selected && (
-            <div className="absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100" />
+            <div className="absolute h-[18px] w-[5px] rounded-full bg-linear-to-r from-purple-100 to-pink-100 group-data-[has-colors=true]/section-wrapper:bg-[image:none] group-data-[has-colors=true]/section-wrapper:bg-branding-primary" />
           )}
           <div className="h-full border-divider border-l" />
         </div>

@@ -10,7 +10,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
@@ -74,6 +74,7 @@ interface Props {
   range: CostsTimeRange
   showDataPosted: boolean
   className?: string
+  tickCount?: number
 }
 
 export function CostsChart({
@@ -84,6 +85,7 @@ export function CostsChart({
   className,
   range,
   showDataPosted,
+  tickCount,
 }: Props) {
   const resolution = rangeToResolution(range)
 
@@ -173,7 +175,7 @@ export function CostsChart({
             tickLine={false}
             axisLine={false}
             mirror
-            tickCount={3}
+            tickCount={tickCount ?? 3}
             dy={-10}
             tick={{
               width: 100,
@@ -190,6 +192,7 @@ export function CostsChart({
               unit === 'gas'
                 ? formatNumber(value)
                 : formatCurrency(value, unit),
+            tickCount,
           },
         })}
         <ChartTooltip

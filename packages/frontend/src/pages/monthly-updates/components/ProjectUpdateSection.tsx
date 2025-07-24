@@ -1,22 +1,22 @@
-import type { ProjectColors } from '@l2beat/config'
+import type { ProjectCustomColors } from '@l2beat/config'
 
 interface Props {
-  name: string
+  id: string
   children: React.ReactNode
   bannerImg?: string
-  colors?: ProjectColors
+  colors?: ProjectCustomColors
 }
 
 export function ProjectUpdateSection({
   children,
-  name,
+  id,
   bannerImg,
   colors,
 }: Props) {
   return (
     <div
-      id={name}
-      className="mb-8 md:mb-16"
+      id={id}
+      className="mb-8 scroll-mt-8 md:mb-16"
       style={
         colors
           ? ({
