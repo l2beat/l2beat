@@ -86,6 +86,36 @@ export const facet: ScalingProject = {
     },
   },
   config: {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: EthereumAddress('0x00000000000000000000000000000000000face7'), // how do I set anyone?
+          to: EthereumAddress('0x00000000000000000000000000000000000face7'),
+          sinceTimestamp: UnixTime(1715312711),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd0E3721bba691d3735b0827edBe893789cA1486D',
+          ),
+          selector: '0x45925013',
+          functionSignature:
+            'function submitProposal(bytes32 root, uint256 l2BlockNumber, uint256 parentId) payable returns (uint256 proposalId)',
+          sinceTimestamp: UnixTime(1753156223),
+        },
+      },
+    ],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
