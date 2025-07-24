@@ -2,6 +2,7 @@
   "name": "redstone",
   "chain": "ethereum",
   "blockNumber": 22208357,
+  "timestamp": 1743924215,
   "configHash": "0x2c7d17685a1e99cfa4086c058685cd3b56009e131d4c6c86283bde0878a3ba5d",
   "entries": [
     {

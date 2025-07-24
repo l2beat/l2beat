@@ -2,6 +2,7 @@
   "name": "zkswap",
   "chain": "ethereum",
   "blockNumber": 22865800,
+  "timestamp": 1751872967,
   "configHash": "0xeaa7a7cea5067e18818444a3f5c346a08427db6d98dbc8ebe04a3720b961648c",
   "entries": [
     {

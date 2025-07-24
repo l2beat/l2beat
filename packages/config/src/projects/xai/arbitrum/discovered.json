@@ -1,7 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 355131295,
+  "blockNumber": 355131296,
+  "timestamp": 1751875719,
   "configHash": "0xb4e447e1d3350a9914d9e8b0619b89ec0219e96ca098fcf32c98addc46dbbf94",
   "entries": [
     {

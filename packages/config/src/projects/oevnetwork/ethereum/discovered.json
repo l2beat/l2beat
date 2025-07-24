@@ -2,6 +2,7 @@
   "name": "oevnetwork",
   "chain": "ethereum",
   "blockNumber": 22975810,
+  "timestamp": 1753200503,
   "configHash": "0xcbb08ab04ae8632b58d03d80db29d60b63172c7a9c2eec8f863da2337aae73f5",
   "entries": [
     {

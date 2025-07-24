@@ -2,6 +2,7 @@
   "name": "base",
   "chain": "base",
   "blockNumber": 31338532,
+  "timestamp": 1749466411,
   "configHash": "0x5e785129684f1569c775f27f5e1ebc6616a5b1664d010d6e1f75e5ab3dd33ade",
   "entries": [
     {

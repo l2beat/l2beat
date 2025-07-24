@@ -2,6 +2,7 @@
   "name": "aztecconnect",
   "chain": "ethereum",
   "blockNumber": 21041827,
+  "timestamp": 1729849619,
   "configHash": "0xc4dd622c1486bebc1893aa133166b91d2700338b448104a058a4828aafeb3e94",
   "entries": [
     {

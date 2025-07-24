@@ -2,6 +2,7 @@
   "name": "shared-sp1",
   "chain": "base",
   "blockNumber": 32642215,
+  "timestamp": 1752073777,
   "configHash": "0x0d92ad4bf6f9ca6ee74fd8fc271b886d7174fe114f3ef96cadff02d4fd7043cb",
   "entries": [
     {

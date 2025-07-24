@@ -2,6 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 22975737,
+  "timestamp": 1753199603,
   "configHash": "0x9802d4dea9bab443cc944631526c0b44feb8d6565d53bb06ee7d1669b29b722b",
   "entries": [
     {

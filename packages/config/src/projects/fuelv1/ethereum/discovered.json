@@ -2,6 +2,7 @@
   "name": "fuelv1",
   "chain": "ethereum",
   "blockNumber": 21594621,
+  "timestamp": 1736518679,
   "configHash": "0xa36d7f63a7abea20d5ed76b6369cd7bf3eee9a3b4f259505fb6177d7acda984f",
   "entries": [
     {

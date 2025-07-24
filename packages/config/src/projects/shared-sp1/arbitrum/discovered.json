@@ -1,7 +1,8 @@
 {
   "name": "shared-sp1",
   "chain": "arbitrum",
-  "blockNumber": 355918538,
+  "blockNumber": 355918541,
+  "timestamp": 1752073777,
   "configHash": "0x2d8dfb596960352a3b79835bc9561bc5dbe3628683fe436631c68f6fb18e96fb",
   "entries": [
     {

@@ -2,6 +2,7 @@
   "name": "xchain",
   "chain": "ethereum",
   "blockNumber": 22895951,
+  "timestamp": 1752237071,
   "configHash": "0xf781c3d5a2d654aa25420b4b84b55e5f27ade8437b81b1a45d4455a6aed0a3b1",
   "entries": [
     {

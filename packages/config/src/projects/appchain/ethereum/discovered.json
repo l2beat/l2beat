@@ -2,6 +2,7 @@
   "name": "appchain",
   "chain": "ethereum",
   "blockNumber": 22975805,
+  "timestamp": 1753200443,
   "configHash": "0xd1eb0c0a2b75d03bff765bd453c80cefe9b84ddc8ffb3ab9008106a72754e761",
   "entries": [
     {

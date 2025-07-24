@@ -2,6 +2,7 @@
   "name": "zircuit",
   "chain": "zircuit",
   "blockNumber": 15364203,
+  "timestamp": 1750664621,
   "configHash": "0x127004c822d62f183c8278cd5ab897a2d75c2988addb86ca14e4ffd3e27762c9",
   "entries": [
     {

@@ -2,6 +2,7 @@
   "name": "r0ar",
   "chain": "ethereum",
   "blockNumber": 22195184,
+  "timestamp": 1743765215,
   "configHash": "0x70cbae15dce18d3d0182a9bb9c5691c9420faf6c58c87e8646a633b102c66834",
   "entries": [
     {

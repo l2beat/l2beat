@@ -1,7 +1,8 @@
 {
   "name": "l3x",
   "chain": "arbitrum",
-  "blockNumber": 287771362,
+  "blockNumber": 287771364,
+  "timestamp": 1734957965,
   "configHash": "0x9d8d838aaa04715e948196b0203b9154a266f72694ae384ee8ce90ec34bac259",
   "entries": [
     {

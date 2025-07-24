@@ -2,6 +2,7 @@
   "name": "stargatev2",
   "chain": "ethereum",
   "blockNumber": 22882452,
+  "timestamp": 1752074075,
   "configHash": "0xfafd6fd9c21b1decf6cf0a9b603266907867155382f9848fa31d2660f6cfbb46",
   "entries": [
     {

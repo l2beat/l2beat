@@ -2,6 +2,7 @@
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
   "blockNumber": 22732019,
+  "timestamp": 1750257587,
   "configHash": "0x96b9e7274ae02e5ff46efce01ef04557d7e31826c2a85095c3dbbe9ee1be4105",
   "entries": [
     {

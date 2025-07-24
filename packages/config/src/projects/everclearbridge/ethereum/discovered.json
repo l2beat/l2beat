@@ -2,6 +2,7 @@
   "name": "everclearbridge",
   "chain": "ethereum",
   "blockNumber": 22895905,
+  "timestamp": 1752236519,
   "configHash": "0x42c1375ef4adc20f46ca456718adc1138e9a8956fe62509b9aab261c71dcf404",
   "entries": [
     {

@@ -2,6 +2,7 @@
   "name": "ebichain",
   "chain": "ethereum",
   "blockNumber": 22895934,
+  "timestamp": 1752236867,
   "configHash": "0x70cff1d730ee41843d4497b8b27e4e99da052393a8a04f9617ee8e60df44d828",
   "entries": [
     {

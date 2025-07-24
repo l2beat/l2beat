@@ -2,6 +2,7 @@
   "name": "nova",
   "chain": "nova",
   "blockNumber": 83594372,
+  "timestamp": 1748266540,
   "configHash": "0xc7cd4d180e81f69cff58af141315c40d8e51e4bc9e049df677d9626ba498575a",
   "entries": [
     {

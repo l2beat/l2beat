@@ -2,6 +2,7 @@
   "name": "fluence",
   "chain": "ethereum",
   "blockNumber": 22923588,
+  "timestamp": 1752570515,
   "configHash": "0x7d31d045a6409e259172e47d7ca5d0c28b4537a254b996b8933bbd2e8bda5869",
   "entries": [
     {

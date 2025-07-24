@@ -2,6 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "blockNumber": 136932647,
+  "timestamp": 1749464071,
   "configHash": "0x9fb2829c463db0c0256a1279cd8cd872fcce6bc32825135fd8106f5ac86a8269",
   "entries": [
     {

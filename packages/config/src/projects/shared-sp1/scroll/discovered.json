@@ -2,6 +2,7 @@
   "name": "shared-sp1",
   "chain": "scroll",
   "blockNumber": 17075744,
+  "timestamp": 1752073780,
   "configHash": "0x48b739646a9c2f8920634900351744ad3a54d0a57d112e7a5cce579fab7d1490",
   "entries": [
     {

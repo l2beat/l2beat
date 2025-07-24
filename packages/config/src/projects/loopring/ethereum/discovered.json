@@ -2,6 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 22865639,
+  "timestamp": 1751871011,
   "configHash": "0xaf5bcd8c886cb30f1ad7d1dd612d976978d10df1f24d6b09429184ec1b62bd81",
   "entries": [
     {

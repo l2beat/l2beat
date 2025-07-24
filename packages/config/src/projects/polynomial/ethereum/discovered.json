@@ -2,6 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 22975746,
+  "timestamp": 1753199711,
   "configHash": "0x4df05d89737975bbbd41d8703cc6f18412096d3e9b266ec42a4a2a2ccd620bf5",
   "entries": [
     {
