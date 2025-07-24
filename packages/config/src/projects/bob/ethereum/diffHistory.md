@@ -1,4 +1,37 @@
-Generated with discovered.json: 0xfcd7b4206d10de3a93e0f9073b53b9a5e7f247d1
+Generated with discovered.json: 0xfa99e90b94d041702d2993969e737a18c819eb96
+
+# Diff at Thu, 24 Jul 2025 12:21:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8ea8c4bdec260dd5774704d85ceb7d7dbf9bbd48 block: 22979976
+- current block number: 22988923
+
+## Description
+
+ignore `lastResolved` in watch mode and push some more info into the contract description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22979976 (main branch discovery), not current.
+
+```diff
+    contract KailuaTreasury (0x0fbC22B052f4745Bc9F80760D2D47E4993F36746) {
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+      description:
+-        "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory."
++        "Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d."
+      values.participationBondFmt:
++        "0.5"
+      values.vanguardAdvantageFmt:
++        "30d"
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+    }
+```
+
+Generated with discovered.json: 0x062861cee1e1bf6aa963ec55b86fe36d2c4e03cc
 
 # Diff at Wed, 23 Jul 2025 06:06:54 GMT:
 

@@ -379,7 +379,7 @@
         "0x114d2fa4777cda59fdbe4bbaa3e319588066e3d66bff66ae8dc4b96589ac1d4b"
       ],
       "proxyType": "immutable",
-      "description": "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
+      "description": "Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.",
       "ignoreInWatchMode": ["lastResolved"],
       "sinceTimestamp": 1752763739,
       "sinceBlock": 22939622,
@@ -415,6 +415,7 @@
         "OUTPUT_BLOCK_SPAN": 6,
         "parentGame": "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746",
         "participationBond": "500000000000000000",
+        "participationBondFmt": "0.5",
         "PROPOSAL_BLOBS": 1,
         "PROPOSAL_OUTPUT_COUNT": 3600,
         "proposalBlobHashes": [],
@@ -430,12 +431,14 @@
         "validChildSignature": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "vanguard": "eth:0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "vanguardAdvantage": 2592000,
+        "vanguardAdvantageFmt": "30d",
         "version": "0.1.0",
         "wasRespectedGameTypeWhenCreated": false
       },
       "implementationNames": {
         "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746": "KailuaTreasury"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "name": "RiscZeroVerifierEmergencyStop",
@@ -2728,7 +2731,7 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
-    "risc0/KailuaTreasury": "0x6c87ebe457551ac7eddb8099755ca825a3b2970f1b34c4a31ab45c8fcba869a6",
+    "risc0/KailuaTreasury": "0xd380054459d0d0b82a4da06bf538b8ecad2fa61a2270945c6fc558f81ee7774c",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
