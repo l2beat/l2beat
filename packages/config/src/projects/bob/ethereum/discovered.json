@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22979976,
+  "blockNumber": 22988923,
   "configHash": "0x8783151623484da48be1f986ab9d83b4d14444d4dfb527f2e4e37f6663edc3b3",
   "entries": [
     {
@@ -380,6 +380,7 @@
       ],
       "proxyType": "immutable",
       "description": "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
+      "ignoreInWatchMode": ["lastResolved"],
       "sinceTimestamp": 1752763739,
       "sinceBlock": 22939622,
       "values": {
@@ -407,7 +408,7 @@
         "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "L2_BLOCK_NUMBER": 19936800,
         "l2BlockNumber": 0,
-        "lastResolved": "eth:0x703bB79663f5fC2303f5f82aDE3940A3d5309E42",
+        "lastResolved": "eth:0x2Db39129d7c28C652A5fb305EF893800F251bBCD",
         "minCreationTime": 0,
         "opponentIndex": 0,
         "OPTIMISM_PORTAL": "eth:0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
@@ -790,8 +791,8 @@
         "l2Sender": "eth:0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 100000,
-          "prevBlockNum": 22979857
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 22988127
         },
         "paused": false,
         "proofMaturityDelaySeconds": 86400,
@@ -877,7 +878,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb",
-        "gameCount": 12,
+        "gameCount": 15,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xe3BD00F57B44E7aa4A6C212878427c85D638702A",
@@ -1478,7 +1479,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660490",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660497",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2727,7 +2728,7 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "risc0/KailuaGame": "0x698a37dfdd60a9608ad7f2d27cd1907323187899efc08fda957e3443e0ef05fe",
-    "risc0/KailuaTreasury": "0x70a7ad85301add32c4b61d2f51daa6d8179e4bd74a70c7db09d929f253e6a8df",
+    "risc0/KailuaTreasury": "0x6c87ebe457551ac7eddb8099755ca825a3b2970f1b34c4a31ab45c8fcba869a6",
     "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"

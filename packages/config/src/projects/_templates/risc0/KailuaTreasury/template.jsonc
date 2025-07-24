@@ -3,7 +3,18 @@
   "description": "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
   "ignoreMethods": ["getChallengerDuration"],
   "ignoreRelatives": ["children", "parentGame", "lastResolved"],
+  "ignoreInWatchMode": ["lastResolved"],
   "fields": {
+    "fields": {
+      "participationBondFmt": {
+        "handler": {
+          "type": "call",
+          "method": "function participationBond() view returns (uint256)",
+          "args": []
+        },
+        "edit": ["format", "Undecimal18"]
+      }
+    },
     "vanguard": {
       "permissions": [
         {
