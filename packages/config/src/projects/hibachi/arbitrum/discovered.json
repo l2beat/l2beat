@@ -273,10 +273,12 @@
       "name": "SP1Verifier",
       "address": "arb1:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748550121,
       "sinceBlock": 341867739,
       "values": {
@@ -997,6 +999,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "hibachi/Hibachi": "0x3a32f94bd067707675239403b6066a4ef372d07752f0fe4e42283a9c7baddbc3",
     "hibachi/HibachiEscape": "0x8c07546a9915614b8f2fbb99d21c17bebe3af8b84e7aaca3abf5b0a40347642e",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },

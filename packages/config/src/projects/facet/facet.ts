@@ -35,6 +35,7 @@ export const facet: ScalingProject = {
     BADGES.Other.BasedSequencing,
     BADGES.DA.EthereumCalldata,
     BADGES.VM.EVM,
+    BADGES.Stack.OPStack,
   ],
   stage: getStage(
     {
@@ -67,7 +68,7 @@ export const facet: ScalingProject = {
     name: 'Facet',
     slug: 'facet',
     description:
-      'Facet is a based rollup built on the OP stack. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
+      'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -88,6 +89,16 @@ export const facet: ScalingProject = {
         address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
         tokens: ['ETH'],
         description: 'Fast bridge contract.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x79009BE75Ef97e17b2832CE349a1CE7e60dac262'),
+        tokens: ['ETH'],
+        description: 'Escrow for ETH bridge.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x8F75466D69a52EF53C7363F38834bEfC027A2909'),
+        tokens: ['ETH', 'WETH'],
+        description: 'L1StandardBridge (deprecated).',
       }),
     ],
   },
@@ -166,7 +177,7 @@ export const facet: ScalingProject = {
       {
         name: 'Gas Token Minting',
         description:
-          'Facet uses FCT as its native gas token, which is minted through L1 gas consumption rather than being pre-minted. FCT issuance is directly tied to the amount of calldata used in Ethereum transactions, calculated as: FCT minted = calldata gas used × mint rate. The mint rate starts at 800,000 gwei and dynamically adjusts every 10,000 Facet blocks (~1.4 days) based on a target issuance of 40 FCT per block. The system also includes annual halvings (every 2,630,000 blocks) to regulate total supply growth over time. Note that this mechanism differs from standard OP Stack guaranteed gas markets, where L1 gas is burned to purchase L2 gas for deposits through an EIP-1559-style fee market. In Facet, FCT tokens are directly minted based on L1 calldata usage rather than using a burn-to-purchase model for cross-chain gas payment. \n\n![Facet Token Minting and Bridging](/images/other-considerations/facet.png#center)',
+          'Facet uses FCT as its native gas token, which is minted through L1 gas consumption rather than being pre-minted. FCT issuance is directly tied to the amount of calldata used in Ethereum transactions, calculated as: FCT minted = calldata gas used × mint rate. The mint rate starts at 800,000 gwei and dynamically adjusts every 10,000 Facet blocks (~1.4 days) based on a target issuance of 40 FCT per block. The system also includes annual halvings (every 2,630,000 blocks) to regulate total supply growth over time. Note that this mechanism differs from standard OP Stack guaranteed gas markets, where L1 gas is burned to purchase L2 gas for deposits through an EIP-1559-style fee market. In Facet, FCT tokens are directly minted based on L1 calldata usage rather than using a burn-to-purchase model for cross-chain gas payment. \n\n![Facet Token Minting and Bridging](/images/other-considerations/facet.png#center).',
         risks: [],
         references: [
           {

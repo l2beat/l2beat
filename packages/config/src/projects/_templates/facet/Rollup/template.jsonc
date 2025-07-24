@@ -10,5 +10,19 @@
     "l1BlockHashes",
     "proposalIsCanonical"
   ],
+  "fields": {
+    "sequencerInbox": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0x00000000000000000000000000000000000face7"
+      }
+    },
+    "renouncedOwner": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001"
+      }
+    }
+  },
   "category": "core"
 }

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x38da09de759f59b81111587ea0cb9bfadd5d28cc
+Generated with discovered.json: 0xf73a1700a2ad06ea9e7a2ad4f3631e173f77b3ef
 
-# Diff at Wed, 23 Jul 2025 22:37:11 GMT:
+# Diff at Thu, 24 Jul 2025 00:33:36 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 22367347
-- current block number: 22984888
+- current block number: 22985468
 
 ## Description
 
@@ -60,7 +60,7 @@ Bridge version discovery.
       sinceBlock:
 +        22969440
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":10,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
++        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":11,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0"}
       implementationNames:
 +        {"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D":"Rollup"}
       category:
@@ -77,7 +77,7 @@ Bridge version discovery.
 ```diff
 +   Status: CREATED
     contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
-    +++ description: None
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
 ```
 
 ```diff
@@ -116,20 +116,25 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 
 ```diff
 -   Status: DELETED
-    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA)
-    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
-```
-
-```diff
--   Status: DELETED
     contract OptimismPortal (0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD)
     +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
 ```
 
 ```diff
--   Status: DELETED
-    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
-    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. 
+      description:
+-        "The main entry point to deposit ERC20 tokens from host chain to this chain."
++        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. "
+      values.messenger:
+-        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      values.MESSENGER:
+-        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      values.superchainConfig:
+-        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      values.systemConfig:
+-        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+    }
 ```
 
 ```diff
@@ -145,14 +150,10 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 -        {"permission":"guard","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":".guardian"}
       receivedPermissions.1:
 -        {"permission":"guard","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":".guardian"}
-      receivedPermissions.3:
--        {"permission":"interact","from":"eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
       receivedPermissions.4:
 -        {"permission":"interact","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
       receivedPermissions.5:
 -        {"permission":"upgrade","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-      receivedPermissions.6:
--        {"permission":"upgrade","from":"eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
       receivedPermissions.7:
 -        {"permission":"upgrade","from":"eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
       receivedPermissions.8:
@@ -161,8 +162,6 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 -        {"permission":"upgrade","from":"eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
       receivedPermissions.10:
 -        {"permission":"upgrade","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-      directlyReceivedPermissions:
--        [{"permission":"act","from":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C","role":".owner"}]
     }
 ```
 
@@ -179,9 +178,19 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C)
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C) {
     +++ description: None
+      directlyReceivedPermissions.1:
+-        {"permission":"upgrade","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":"admin"}
+      directlyReceivedPermissions.3:
+-        {"permission":"upgrade","from":"eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8","role":"admin"}
+      directlyReceivedPermissions.4:
+-        {"permission":"upgrade","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","role":"admin"}
+      directlyReceivedPermissions.5:
+-        {"permission":"upgrade","from":"eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":"admin"}
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":"admin"}
+    }
 ```
 
 ```diff

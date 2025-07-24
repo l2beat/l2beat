@@ -1,9 +1,15 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22984888,
-  "configHash": "0x0414d500c0200175afd8bef4ad7b0a791c54175d28c0b32831fc251d048c8f75",
+  "blockNumber": 22985468,
+  "configHash": "0x09f0a4367624f12666fd05f583768b04c3d004f4a64fbebeabec2d2d4af2912a",
   "entries": [
+    {
+      "name": "Inbox",
+      "address": "eth:0x00000000000000000000000000000000000FacE7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "FacetEtherBridgeV6",
       "address": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
@@ -68,6 +74,27 @@
       "proxyType": "EOA"
     },
     {
+      "name": "AddressManager",
+      "address": "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+      "type": "Contract",
+      "template": "opstack/AddressManager",
+      "sourceHashes": [
+        "0xdc86a850f11dc2b5c0472a05d0e3c14f239baf2c3b1ab19631591b0827985380"
+      ],
+      "proxyType": "immutable",
+      "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "sinceTimestamp": 1733855411,
+      "sinceBlock": 21373904,
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      },
+      "implementationNames": {
+        "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA": "AddressManager"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "address": "eth:0x314d660b083675f415cCAA9c545FeedF377d1006",
       "type": "EOA",
       "proxyType": "EOA",
@@ -111,10 +138,12 @@
       "name": "SP1Verifier",
       "address": "eth:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748550083,
       "sinceBlock": 22590749,
       "values": {
@@ -210,6 +239,38 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "name": "L1StandardBridge",
+      "address": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+      "type": "Contract",
+      "template": "opstack/L1StandardBridge_facet",
+      "sourceHashes": [
+        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
+        "0x9060db4f3f7bf996f9a1db86c049a15d8a68dff34b2e9bdd31e9e53ba3e79c8f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. ",
+      "sinceTimestamp": 1733855519,
+      "sinceBlock": 21373913,
+      "values": {
+        "$admin": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+        "$implementation": "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "admin": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "l2TokenBridge": "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9",
+        "OTHER_BRIDGE": "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9",
+        "otherBridge": "eth:0xaCde2ce9a9Bc89ED083FaA80685E2bA2c9ec72E9",
+        "paused": false,
+        "version": "2.2.0",
+        "weth": "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "implementationNames": {
+        "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": "L1ChugSplashProxy",
+        "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "PausedL1StandardBridge"
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
       "address": "eth:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -230,6 +291,31 @@
           "from": "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C",
           "description": "can withdraw all funds from the bridge.",
           "role": ".getAdmin"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+          "description": "set and change address mappings.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin",
+          "via": [
+            { "address": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -303,7 +389,7 @@
           "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
           1604382
         ],
-        "getProposalsLength": 10,
+        "getProposalsLength": 11,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
@@ -314,7 +400,9 @@
         "PROPOSAL_INTERVAL": 1800,
         "PROPOSER_BOND": 1000000000000000,
         "RANGE_VKEY_COMMITMENT": "0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93",
+        "renouncedOwner": "eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001",
         "ROLLUP_CONFIG_HASH": "0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c",
+        "sequencerInbox": "eth:0x00000000000000000000000000000000000face7",
         "VERIFIER": "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
         "version": "1.0.0"
       },
@@ -353,6 +441,46 @@
       },
       "implementationNames": {
         "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": "EthscriptionsSafeModule"
+      }
+    },
+    {
+      "address": "eth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+          "description": "set and change address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
+          "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
+          "role": ".$admin"
+        }
+      ],
+      "sinceTimestamp": 1733855423,
+      "sinceBlock": 21373905,
+      "values": {
+        "$immutable": true,
+        "addressManager": "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA",
+        "isUpgrading": false,
+        "owner": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+      },
+      "implementationNames": {
+        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C": "ProxyAdmin"
       }
     },
     {
@@ -401,6 +529,15 @@
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA": [
+      "event AddressSet(string indexed name, address newAddress, address oldAddress)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getAddress(string _name) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function transferOwnership(address newOwner)"
     ],
     "eth:0x3235AdE33cF7013f5b5A51089390396e931e6BCF": [
       "function facetProxyAddress() view returns (address)",
@@ -462,6 +599,51 @@
       "function transferOwnership(address newOwner)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": [
+      "constructor()",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event Initialized(uint8 version)",
+      "event L1ERC20DepositAttempted(bytes32 indexed depositId, address indexed l1Token, address indexed l2Token, address from, address to, uint256 amount, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function admin() pure returns (address)",
+      "function adminWithdraw(address recipient, uint256 amount)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHToWETH(address _localWeth, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHToWETHTo(address _localWeth, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function depositETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function depositETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeERC20Replayable(bytes32 _depositId, address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function getDepositHash(bytes32 _depositId) view returns (bytes32)",
+      "function getFinalizedDeposit(bytes32 _depositId) view returns (bool)",
+      "function initialize(address _messenger, address _superchainConfig, address _systemConfig, address _otherBridge)",
+      "function l2TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function paused() view returns (bool)",
+      "function replayERC20Deposit(bytes32 _depositId, address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function superchainConfig() view returns (address)",
+      "function systemConfig() view returns (address)",
+      "function version() view returns (string)",
+      "function weth() view returns (address)"
+    ],
     "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262": [
       "constructor(address _rollup)",
       "error ContentLengthMismatch()",
@@ -509,6 +691,14 @@
       "function transferOwnership(address newOwner)",
       "function unpause()",
       "function withdrawalDelay() view returns (uint256)"
+    ],
+    "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525": [
       "constructor(address _singleton)"
@@ -647,6 +837,27 @@
       "function ethscriptionsProxyAddress() view returns (address)",
       "function transferEthscription(address to, bytes32 ethscriptionId)"
     ],
+    "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
     "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095": [
       "constructor()",
       "event ethscriptions_protocol_CreateEthscription(address indexed initialOwner, string contentURI)",
@@ -662,10 +873,13 @@
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "facet/Rollup": "0x008423e8e94166a96d76831182497354a4f4416a4293926b52238595623009e4",
+    "facet/Rollup": "0x0682eb3b9d87b30644465edabddec98c25c98bcdc73160d6559a2eca9b6d4b0f",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "opstack/L1StandardBridge_facet": "0xf0b0a009b2460a496a4ba02e53c0b6f71714bca771cc0e657e83da6cc9a3de22",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0xe489d23d27a080b6af0a97c150fed1047dc82c479f1058833ba8184cd246a8b1"
+  "permissionsConfigHash": "0x05869a2557695813d3974c5a0e1a72d9d58e77e6a5c87bde03d8879805328305"
 }
