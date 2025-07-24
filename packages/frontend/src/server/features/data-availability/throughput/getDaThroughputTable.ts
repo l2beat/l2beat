@@ -36,6 +36,17 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     }),
   ])
 
+  const sovereignProjectsNamesMap = new Map(
+    daLayers.flatMap((daLayer) => {
+      return (
+        daLayer.daLayer.sovereignProjectsTrackingConfig?.map((p) => [
+          p.projectId,
+          p.name,
+        ]) ?? []
+      )
+    }),
+  )
+
   const [daLayerValues, projectValues] = partition(values, (v) =>
     daLayerIds.includes(v.projectId),
   )
@@ -57,6 +68,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const largestPosters = await getLargestPosters(
     groupedDaLayerValues,
     groupedProjectValues,
+    sovereignProjectsNamesMap,
   )
 
   const getData = (
@@ -119,7 +131,7 @@ function getPastDayData(
         readonly daLayer: string
         readonly totalSize: bigint
         readonly name: string
-        readonly slug: string
+        readonly slug: string | undefined
       }
     | undefined,
   maxThroughputPerSecond: number,
@@ -143,7 +155,9 @@ function getPastDayData(
             2,
           ),
           totalPosted: Number(largestPoster.totalSize),
-          href: `/scaling/projects/${largestPoster.slug}`,
+          href: largestPoster.slug
+            ? `/scaling/projects/${largestPoster.slug}`
+            : undefined,
         }
       : undefined,
   }
@@ -256,7 +270,16 @@ async function getLargestPosters(
     string,
     Omit<DataAvailabilityRecord, 'configurationId'>[]
   >,
-) {
+  sovereignProjectsNamesMap: Map<string, string>,
+): Promise<
+  Record<
+    string,
+    Omit<DataAvailabilityRecord, 'configurationId'> & {
+      name: string
+      slug: string | undefined
+    }
+  >
+> {
   const largestPosters = Object.fromEntries(
     Object.entries(groupedProjectValues)
       .map(([daLayer, values]) => {
@@ -293,15 +316,30 @@ async function getLargestPosters(
       const largestPosterProject = largestPostersProjects.find(
         (p) => p.id === largestPoster.projectId,
       )
-      assert(largestPosterProject, 'Project not found')
-      return [
-        daLayer,
-        {
-          name: largestPosterProject.name,
-          slug: largestPosterProject.slug,
-          ...largestPoster,
-        },
-      ] as const
+      if (largestPosterProject) {
+        return [
+          daLayer,
+          {
+            name: largestPosterProject.name,
+            slug: largestPosterProject.slug,
+            ...largestPoster,
+          },
+        ]
+      }
+
+      if (sovereignProjectsNamesMap.has(largestPoster.projectId)) {
+        return [
+          daLayer,
+          {
+            name: sovereignProjectsNamesMap.get(largestPoster.projectId),
+            slug: undefined,
+            ...largestPoster,
+          },
+        ]
+      }
+      throw new Error(
+        `Project not found in config or in sovereign projects list: ${largestPoster.projectId}`,
+      )
     }),
   )
 }
