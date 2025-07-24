@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('bob')
 export const bob: ScalingProject = opStackL2({
   addedAt: UnixTime(1714521600), // 2024-05-01T00:00:00Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Conduit],
+  additionalBadges: [BADGES.RaaS.Conduit, BADGES.Stack.OPKailua],
   additionalPurposes: ['Bitcoin DApps'],
   display: {
     name: 'BOB',
