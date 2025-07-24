@@ -1,7 +1,7 @@
 {
   "name": "settlus",
   "chain": "ethereum",
-  "blockNumber": 22987892,
+  "blockNumber": 22988756,
   "configHash": "0x79ac1df75f6ced94d90a53540802fe221a76e6745989687d28a58afac30c2f84",
   "entries": [
     {
@@ -1364,7 +1364,8 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 2440,
+        "game1337": "eth:0x0000000000000000000000000000000000000000",
+        "gameCount": 2442,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0xf9534EBc84082dF9d35Fb1Ed8786bF8cE8a90294",
@@ -1374,7 +1375,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 2440,
+        "permissionedGamesTotal": 2442,
         "version": "1.0.0"
       },
       "implementationNames": {

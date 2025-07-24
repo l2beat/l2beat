@@ -4,5 +4,11 @@
     "address": "0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb",
     "chain": "ethereum",
     "blockNumber": 22794595
+  },
+  "OptimismPortal2_noForce_1": {
+    "hash": "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338",
+    "address": "0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc",
+    "chain": "ethereum",
+    "blockNumber": 22988752
   }
 }
