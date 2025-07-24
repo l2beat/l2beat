@@ -83,7 +83,7 @@ export const facet: ScalingProject = {
     description:
       'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
     headerWarning:
-      'Multiple bridges: As the Facet team does not designate a canonical bridge and no gas token bridge is used, for the purposes of this risk analysis the canonical bridge was arbitrarily selected by the L2BEAT team. There are multiple bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
+      'Multiple bridges: As the Facet team does not designate a canonical bridge and no gas token bridge is used, for the purpose of this risk analysis the canonical bridge was arbitrarily selected by the L2BEAT team. There are multiple bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
