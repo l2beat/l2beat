@@ -59,10 +59,10 @@ export const risc0: BaseProject = {
         hash: '0x21c5fdd9b4d576b17581f50b755482ba7a2134a3b5186e8e454acfa1f69511ab',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
-          'https://etherscan.io/address/0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a',
           'https://etherscan.io/address/0x20ff7c2cf391a5f096a2cc181cb41916680f8e97',
           'https://etherscan.io/address/0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9',
           'https://arbiscan.io/address/0xac292cf957dd5ba174cda13b05c16afc71700327',
+          'https://etherscan.io/address/0x34Eda8BfFb539AeC33078819847B36D221c6641c',
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('taiko'), ProjectId('bob'), ProjectId('hibachi')],
