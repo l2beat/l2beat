@@ -14,6 +14,7 @@ import {
   CyanFillGradientDef,
   CyanStrokeGradientDef,
 } from '~/components/core/chart/defs/CyanGradientDef'
+import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -107,6 +108,7 @@ export function ScalingSummaryTvsChart({
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
             <YellowFillGradientDef id="others-fill" />
             <YellowStrokeGradientDef id="others-stroke" />
+            <NotSyncedPatternDef />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
@@ -138,8 +140,7 @@ export function ScalingSummaryTvsChart({
           {lastValidTimestamp && (
             <ReferenceArea
               x1={lastValidTimestamp}
-              fill="var(--secondary)"
-              fillOpacity={0.2}
+              fill="url(#not-synced-fill)"
             />
           )}
           <ChartTooltip content={<CustomTooltip />} />

@@ -13,6 +13,7 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
+import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -64,11 +65,7 @@ export function ActivityRatioChart({
           isAnimationActive={false}
         />
         {lastValidTimestamp && (
-          <ReferenceArea
-            x1={lastValidTimestamp}
-            fill="var(--secondary)"
-            fillOpacity={0.2}
-          />
+          <ReferenceArea x1={lastValidTimestamp} fill="url(#not-synced-fill)" />
         )}
         {getCommonChartComponents({
           data,
@@ -85,6 +82,7 @@ export function ActivityRatioChart({
         <ChartLegend content={<ChartLegendContent />} />
         <defs>
           <EmeraldFillGradientDef id="fillRatio" />
+          <NotSyncedPatternDef />
         </defs>
       </AreaChart>
     </ChartContainer>

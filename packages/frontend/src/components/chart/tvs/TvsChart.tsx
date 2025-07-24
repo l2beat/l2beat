@@ -78,11 +78,7 @@ export function TvsChart({
           },
         })}
         {lastValidTimestamp && (
-          <ReferenceArea
-            x1={lastValidTimestamp}
-            fill="var(--secondary)"
-            fillOpacity={0.2}
-          />
+          <ReferenceArea x1={lastValidTimestamp} fill="url(#not-synced-fill)" />
         )}
         <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
       </AreaChart>

@@ -11,6 +11,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
@@ -98,11 +99,7 @@ export function StackedTvsChart({
           isAnimationActive={false}
         />
         {lastValidTimestamp && (
-          <ReferenceArea
-            x1={lastValidTimestamp}
-            fill="var(--secondary)"
-            fillOpacity={0.2}
-          />
+          <ReferenceArea x1={lastValidTimestamp} fill="url(#not-synced-fill)" />
         )}
         {getCommonChartComponents({
           data,
@@ -113,6 +110,9 @@ export function StackedTvsChart({
           isLoading,
         })}
         <ChartTooltip content={<CustomTooltip unit={unit} />} />
+        <defs>
+          <NotSyncedPatternDef />
+        </defs>
       </AreaChart>
     </ChartContainer>
   )

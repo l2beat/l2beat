@@ -21,6 +21,7 @@ import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
+import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -119,11 +120,7 @@ export function ActivityChart({
           ]),
         })}
         {lastValidTimestamp && (
-          <ReferenceArea
-            x1={lastValidTimestamp}
-            fill="var(--secondary)"
-            fillOpacity={0.2}
-          />
+          <ReferenceArea x1={lastValidTimestamp} fill="url(#not-synced-fill)" />
         )}
         {getCommonChartComponents({
           data,
@@ -156,6 +153,7 @@ export function ActivityChart({
               <YellowStrokeGradientDef id="strokeProjects" />
             </>
           )}
+          <NotSyncedPatternDef />
           <EthereumFillGradientDef id="fillEthereum" />
           <EthereumStrokeGradientDef id="strokeEthereum" />
         </defs>
