@@ -496,6 +496,17 @@ export const badges = [
     },
   },
   {
+    id: 'OPKailua',
+    type: BadgeType.Stack,
+    name: 'Built on the OP Kailua stack',
+    description: 'The project is built on the OP Kailua stack',
+    action: {
+      type: 'scalingFilter',
+      id: 'stack',
+      value: 'Cartesi Rollups',
+    },
+  },
+  {
     id: 'SNStack',
     type: BadgeType.Stack,
     name: 'Built on the SN Stack',
@@ -504,6 +515,17 @@ export const badges = [
       type: 'scalingFilter',
       id: 'stack',
       value: 'SN Stack',
+    },
+  },
+  {
+    id: 'OPKailua',
+    type: BadgeType.Stack,
+    name: 'Built on OP Kailua',
+    description: 'The project is built on the OP Kailua stack',
+    action: {
+      type: 'scalingFilter',
+      id: 'stack',
+      value: 'OP Kailua',
     },
   },
   {
