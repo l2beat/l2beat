@@ -432,6 +432,31 @@ describe('config and discovery resolution', () => {
         { project: 'uniswap', chains: ['ethereum'] },
       ])
     })
+
+    it('should skip projects in skipTokens group', () => {
+      mockFs({
+        '/base/project1/ethereum/discovered.json': JSON.stringify({
+          chain: 'ethereum',
+        }),
+        '/base/(tokens)/usdc/ethereum/discovered.json': JSON.stringify({
+          chain: 'ethereum',
+        }),
+        '/base/(defi)/uniswap/ethereum/discovered.json': JSON.stringify({
+          chain: 'ethereum',
+        }),
+        '/base/(defi)/aave/polygon/discovered.json': JSON.stringify({
+          chain: 'polygon',
+        }),
+      })
+
+      const reader = new ConfigReader('/base')
+      const result = reader.readAllDiscoveredProjects({ skipGroup: 'defi' })
+
+      expect(result).toEqual([
+        { project: 'project1', chains: ['ethereum'] },
+        { project: 'usdc', chains: ['ethereum'] },
+      ])
+    })
   })
 
   describe('readConfig with grouping', () => {

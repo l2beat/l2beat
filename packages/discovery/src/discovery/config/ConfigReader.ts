@@ -144,8 +144,14 @@ export class ConfigReader {
   // NOTE(radomski): Generates a list of projects that _have_ a
   // discovered.json. Most of the time this is what you want to use. We assume
   // that projects that have a discovered.json are also configured.
-  readAllDiscoveredProjects(): { project: string; chains: string[] }[] {
+  readAllDiscoveredProjects(
+    options: { skipGroup?: string } = {},
+  ): { project: string; chains: string[] }[] {
     return this.enumerateProjectDirectories()
+      .filter(
+        (path) =>
+          !options.skipGroup || !path.includes(`(${options.skipGroup})`),
+      ) // quick fix to hide tokens in DiscoUI
       .map((projectPath) => {
         const projectName = path.basename(projectPath)
         const chains = readdirSync(projectPath, { withFileTypes: true })
