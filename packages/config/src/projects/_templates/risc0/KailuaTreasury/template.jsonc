@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entrypoint for state root proposals. Manages bonds and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory.",
+  "ignoreMethods": ["getChallengerDuration"],
+  "ignoreRelatives": ["children", "parentGame", "lastResolved"],
+  "fields": {
+    "vanguard": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "propose new state roots before anyone else, giving a first-mover advantage on the optimistic clock."
+        }
+      ]
+    }
+  }
+}

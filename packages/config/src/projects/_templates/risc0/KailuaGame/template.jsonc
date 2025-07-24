@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Implementation of the KailuaGame with type {{GAME_TYPE}}. Based on this implementation, new KailuaGames are created with every new state root proposal.",
+  "ignoreMethods": ["getChallengerDuration"],
+  "ignoreRelatives": ["children", "parentGame", "lastResolved"]
+}

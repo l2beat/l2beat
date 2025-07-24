@@ -1,14 +1,16 @@
-Generated with discovered.json: 0x080cfec0c9279b1109d3dbaf28ca64aa1ade01b4
+Generated with discovered.json: 0xb74ec2373881c5581514daffc14019c45ae977c0
 
-# Diff at Thu, 24 Jul 2025 10:06:55 GMT:
+# Diff at Thu, 24 Jul 2025 11:35:40 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 351073243
-- current block number: 361035581
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 351073243
+- current block number: 361056917
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+
+Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
 
 ## Watched changes
 
@@ -28,12 +30,36 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 351073243 (main branch discovery), not current.
 
 ```diff
-    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
-    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+    contract RiscZeroVerifierRouter (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15).
       template:
-+        "succinct/SP1Verifier"
++        "risc0/RiscZeroVerifierRouter"
       description:
-+        "Verifier contract for SP1 proofs (v5.0.0)."
++        "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15)."
+    }
+```
+
+```diff
+    contract TimelockController (0xDC986a09728F76110FF666eE7b20d99086501d15) {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]},"PROPOSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"CANCELLER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]}}
+      values.Canceller:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      values.defaultAdminAC:
++        ["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]
+      values.Executor:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      values.getMinDelayFormatted:
++        "3d"
+      values.Proposer:
++        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
+      template:
++        "global/TimelockController"
+      description:
++        "A timelock with access control. The current minimum delay is 3d."
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner"},{"permission":"interact","from":"arb1:0xDC986a09728F76110FF666eE7b20d99086501d15","description":"manage all access control roles.","role":".defaultAdminAC"}]
     }
 ```
 

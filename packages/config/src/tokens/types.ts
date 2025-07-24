@@ -1,5 +1,6 @@
 import {
   ChainId,
+  ChainSpecificAddress,
   CoingeckoId,
   EthereumAddress,
   UnixTime,
@@ -10,7 +11,15 @@ export type GeneratedToken = z.infer<typeof GeneratedToken>
 export const GeneratedToken = z.object({
   name: z.string(),
   coingeckoId: z.string().transform(CoingeckoId),
-  address: z.string().transform(EthereumAddress).optional(),
+  address: z
+    .string()
+    .transform((address) => {
+      if (ChainSpecificAddress.check(address)) {
+        return ChainSpecificAddress.address(address)
+      }
+      return EthereumAddress(address)
+    })
+    .optional(),
   symbol: z.string(),
   decimals: z.number(),
   deploymentTimestamp: z.number().transform(UnixTime),

@@ -11,6 +11,13 @@
         "length": 5
       }
     },
+    "game1337": {
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [1337]
+      }
+    },
     "initBonds": {
       "handler": {
         "type": "array",

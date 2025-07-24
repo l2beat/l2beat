@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "RiscZeroGroth16Verifier",
-  "description": "Verifier contract for RISC Zero Groth16 proofs.",
+  "description": "Verifier contract for RISC Zero Groth16 proofs (version {{VERSION}}).",
   "ignoreMethods": ["proxiableUUID"]
 }
