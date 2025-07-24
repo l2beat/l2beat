@@ -39,7 +39,7 @@ export const facet: ScalingProject = {
   ],
   scopeOfAssessment: {
     inScope: [
-      'Ability to deposit, spend, and withdraw ETH from the selected bridge (L1ETHBridge) built on top of Rollup.',
+      'Ability to deposit, spend, and withdraw ETH from the selected bridge (L1ETHBridge) built on top of Rollup',
       'Sequencing mechanism via L1 through the Inbox and state validation mechanism via the Rollup proof system',
       'Upgradability of contracts including the selected bridge (L1ETHBridge)',
     ],
