@@ -36,7 +36,8 @@ export function DataAvailabilityProjectPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div
-            className="smooth-scroll project-page group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            className="smooth-scroll group/section-wrapper relative z-0 max-md:bg-surface-primary"
+            data-project-page
             style={
               entry.colors
                 ? ({
