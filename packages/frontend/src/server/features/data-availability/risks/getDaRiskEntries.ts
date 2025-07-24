@@ -94,7 +94,9 @@ function getDaRiskEntry(
         underReview:
           layer.statuses.reviewStatus || b.statuses.reviewStatus
             ? 'config'
-            : undefined,
+            : projectsChangeReport.getChanges(b.id).impactfulChange
+              ? 'impactful-change'
+              : undefined,
       },
       risks: b.daBridge.risks,
       tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)).latest,
