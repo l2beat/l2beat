@@ -116,9 +116,7 @@ export const facet: ScalingProject = {
         },
       },
       {
-        uses: [
-          { type: 'l2costs', subtype: 'stateUpdates' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -131,9 +129,7 @@ export const facet: ScalingProject = {
         },
       },
       {
-        uses: [
-          { type: 'l2costs', subtype: 'stateUpdates' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -143,23 +139,20 @@ export const facet: ScalingProject = {
           functionSignature:
             'function proveProposal(uint256 id, uint256 l1BlockNumber, bytes proof)',
           sinceTimestamp: UnixTime(1753156223),
-        }
+        },
       },
       {
-        uses: [
-          { type: 'l2costs', subtype: 'stateUpdates' },
-        ],
+        uses: [{ type: 'l2costs', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd0E3721bba691d3735b0827edBe893789cA1486D',
           ),
           selector: '0x0062804e',
-          functionSignature:
-            'function resolveProposal(uint256 id)',
+          functionSignature: 'function resolveProposal(uint256 id)',
           sinceTimestamp: UnixTime(1753156223),
-        }
-      }
+        },
+      },
     ],
     escrows: [
       discovery.getEscrowDetails({
