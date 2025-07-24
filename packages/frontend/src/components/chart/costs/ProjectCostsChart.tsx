@@ -122,6 +122,7 @@ export function ProjectCostsChart({
         milestones={milestones}
         range={range}
         showDataPosted={hasPostedData ? showDataPosted : false}
+        tickCount={4}
         className="mt-4 mb-2"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />

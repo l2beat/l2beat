@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 22731118,
+  "blockNumber": 22987918,
   "configHash": "0x2d0ecd1924b8861c720f371a00f25df90a1a85a2aff5c10554a12da2375c88fa",
   "entries": [
     {
@@ -73,8 +73,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 3870,
+        "gameCount": 4728,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -84,7 +83,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 3870,
+        "permissionedGamesTotal": 4728,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -397,7 +396,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 73,
+        "nonce": 76,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -700,7 +699,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 19,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -793,7 +792,7 @@
         "disputeGameFactory": "eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea",
         "eip1559Denominator": 250,
         "eip1559Elasticity": 2,
-        "gasLimit": 36000000,
+        "gasLimit": 39000000,
         "gasPayingToken": {
           "addr_": "eth:0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
           "decimals_": 18
@@ -954,7 +953,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 31,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1073,7 +1072,7 @@
         ],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 107,
+        "nonce": 108,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1341,7 +1340,7 @@
           "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
         ],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 31,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1470,7 +1469,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 22731001
+          "prevBlockNum": 22987910
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1663,7 +1662,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292645302",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292651443",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

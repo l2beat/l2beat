@@ -17,11 +17,16 @@ import { GrissiniCell } from '~/components/rosette/grissini/GrissiniCell'
 import { GrissiniIcon } from '~/components/rosette/grissini/GrissiniIcon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/NoBridgeGrissiniDetailsPlaceholder'
 import { useRouter } from '~/hooks/useRouter'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
-import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
+import {
+  UNDER_REVIEW_DA_CLASSNAME,
+  UNVERIFIED_DA_CLASSNAME,
+} from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { getUnderReviewText } from '~/utils/project/underReview'
 
 interface Props {
   project: DaProjectPageEntry
@@ -58,7 +63,9 @@ export function MultipleBridgeDetails({ project }: Props) {
                   index === 0 && 'md:rounded-t-none',
                   bridge.verificationWarning
                     ? UNVERIFIED_DA_CLASSNAME
-                    : 'bg-surface-secondary md:bg-transparent',
+                    : bridge.impactfulChangeWarning
+                      ? UNDER_REVIEW_DA_CLASSNAME
+                      : 'bg-surface-secondary md:bg-transparent',
                 )}
               >
                 <RadioButton
@@ -81,6 +88,16 @@ export function MultipleBridgeDetails({ project }: Props) {
                       </TooltipTrigger>
                       <TooltipContent>
                         This bridge contains unverified contracts.
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  {bridge.impactfulChangeWarning && (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnderReviewIcon className="size-3.5 md:size-4" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {getUnderReviewText('impactful-change')}
                       </TooltipContent>
                     </Tooltip>
                   )}

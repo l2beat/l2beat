@@ -9,6 +9,12 @@ export const CCTPV1 = {
   decoder: decoder,
 }
 
+const ABI = parseAbi([
+  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
+  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
+  'event MintAndWithdraw(address indexed mintRecipient,uint256 amount,address indexed mintToken)',
+])
+
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
@@ -81,12 +87,6 @@ function decoder(
 
   return undefined
 }
-
-const ABI = parseAbi([
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
-  'event MintAndWithdraw(address indexed mintRecipient,uint256 amount,address indexed mintToken)',
-])
 
 const BRIDGES = [
   {

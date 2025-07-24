@@ -19,3 +19,11 @@ pnpm bridges:cli layerzerov1 ethereum 22969147 arbitrum 360108534
 ```
 pnpm bridges:cli layerzerov1 ethereum 22956392 arbitrum 359491994
 ```
+
+### AggLayer
+```
+pnpm bridges:cli agglayer ethereum 22980710 polygonzkevm 24133897
+```
+```
+pnpm bridges:cli agglayer ethereum 22980856 katana 6519624
+```

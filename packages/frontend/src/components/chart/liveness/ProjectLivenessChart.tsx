@@ -89,6 +89,7 @@ export function ProjectLivenessChart({
         isLoading={isLoading}
         subtype={subtype}
         milestones={milestones}
+        tickCount={4}
       />
       <LivenessChartStats
         timeRange={timeRange}

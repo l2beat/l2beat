@@ -708,7 +708,14 @@
             ]
           },
           "category": {
-            "enum": ["ether", "stablecoin", "other"]
+            "enum": [
+              "ether",
+              "stablecoin",
+              "btc",
+              "rwaRestricted",
+              "rwaPublic",
+              "other"
+            ]
           },
           "source": {
             "enum": ["canonical", "external", "native"]

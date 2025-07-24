@@ -1,52 +1,23 @@
-Generated with discovered.json: 0x8d6b176e3fd2d24e455e097ca440cfc7e4a1f2fa
+Generated with discovered.json: 0x042393e4122062695684e5c37c60f8e3959330b5
 
-# Diff at Tue, 22 Jul 2025 15:40:05 GMT:
+# Diff at Thu, 24 Jul 2025 08:47:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 351073243
-- current block number: 351073243
+- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 351073243
+- current block number: 361016410
 
 ## Description
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+stateUpdateProgramImageId update.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 351073243 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract RiscZeroVerifierRouter (0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) {
-    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15).
-      template:
-+        "risc0/RiscZeroVerifierRouter"
-      description:
-+        "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15)."
-    }
-```
-
-```diff
-    contract TimelockController (0xDC986a09728F76110FF666eE7b20d99086501d15) {
-    +++ description: A timelock with access control. The current minimum delay is 3d.
-      values.accessControl:
-+        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]},"PROPOSER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"CANCELLER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]},"EXECUTOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]}}
-      values.Canceller:
-+        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
-      values.defaultAdminAC:
-+        ["arb1:0xDC986a09728F76110FF666eE7b20d99086501d15"]
-      values.Executor:
-+        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
-      values.getMinDelayFormatted:
-+        "3d"
-      values.Proposer:
-+        ["arb1:0xF616A4f81857CFEe54A4A049Ec187172574bd412"]
-      template:
-+        "global/TimelockController"
-      description:
-+        "A timelock with access control. The current minimum delay is 3d."
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711","description":"add/remove verifiers and the selectors they are mapped to.","role":".owner"},{"permission":"interact","from":"arb1:0xDC986a09728F76110FF666eE7b20d99086501d15","description":"manage all access control roles.","role":".defaultAdminAC"}]
+    contract Hibachi (0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400) {
+    +++ description: Main contract handling deposits, withdrawals and state updates.
+      values.stateUpdateProgramImageId:
+-        "0x624424e8cfb1478de0bbd5b2dbdb1a19a2dd235c3f7997b9d585d7f2e87879c4"
++        "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328"
     }
 ```
 

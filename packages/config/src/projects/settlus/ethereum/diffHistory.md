@@ -1,34 +1,27 @@
-Generated with discovered.json: 0xa3d29e9f6ec0819140c41f353bbe491ac0a385c0
+Generated with discovered.json: 0x0805054e225ceb6c199402810547023b54b9f67c
 
-# Diff at Tue, 22 Jul 2025 14:10:52 GMT:
+# Diff at Thu, 24 Jul 2025 08:41:35 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@d5d65d1883c757ae790bbd0a6f785c98310d2516 block: 22731117
-- current block number: 22731117
+- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 22731117
+- current block number: 22987892
 
 ## Description
 
-Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
+1559 gas config added.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22731117 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract DisputeGameFactory (0xde9FDA9C499bA1C0168AC083acF5BEc5cC67fA76) {
-    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
-      values.game1337:
-+        "eth:0x0000000000000000000000000000000000000000"
-    }
-```
-
-```diff
-    contract OptimismPortal2 (0xFc1D560eB01443e31B0EB56620703E80e42A7E4e) {
-    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
-      usedTypes.0.arg.1337:
-+        "KailuaGame"
+    contract SystemConfig (0x15C1dAED5443A77b4DcF6FE35cAFcCEBb0c6da0E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        2
     }
 ```
 
