@@ -33,10 +33,10 @@ export const ActivityChartParams = v.object({
 export type ActivityChartData = {
   data: [
     timestamp: number,
-    projectsTxCount: number,
-    ethereumTxCount: number,
-    projectsUopsCount: number,
-    ethereumUopsCount: number,
+    projectsTxCount: number | null,
+    ethereumTxCount: number | null,
+    projectsUopsCount: number | null,
+    ethereumUopsCount: number | null,
   ][]
   syncWarning: string | undefined
   syncedUntil: UnixTime
@@ -81,7 +81,9 @@ export async function getActivityChart({
     }
   }
 
-  const aggregatedEntries = aggregateActivityRecords(entries)
+  const aggregatedEntries = aggregateActivityRecords(
+    entries.filter((e) => e.timestamp < 1751275600),
+  )
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
     return { data: [], syncWarning, syncedUntil: syncedUntil }
   }
@@ -92,21 +94,25 @@ export async function getActivityChart({
     'daily',
   )
 
-  const data: [number, number, number, number, number][] = timestamps.map(
-    (timestamp) => {
-      const entry = aggregatedEntries[timestamp]
-      if (!entry) {
-        return [+timestamp, 0, 0, 0, 0]
-      }
-      return [
-        +timestamp,
-        entry.count,
-        entry.ethereumCount,
-        entry.uopsCount,
-        entry.ethereumUopsCount,
-      ]
-    },
-  )
+  const data: [
+    number,
+    number | null,
+    number | null,
+    number | null,
+    number | null,
+  ][] = timestamps.map((timestamp) => {
+    const entry = aggregatedEntries[timestamp]
+    if (!entry) {
+      return [timestamp, null, null, null, null]
+    }
+    return [
+      timestamp,
+      entry.count,
+      entry.ethereumCount,
+      entry.uopsCount,
+      entry.ethereumUopsCount,
+    ]
+  })
   return {
     data,
     syncWarning,

@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -16,19 +16,26 @@ import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGrad
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import type { ChartNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
-  ratio: number
+  ratio: number | null
 }
 
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
+  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
   isLoading: boolean
   className?: string
 }
 
-export function ActivityRatioChart({ data, isLoading, className }: Props) {
+export function ActivityRatioChart({
+  data,
+  isLoading,
+  className,
+  notSyncedTimestamps,
+}: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -57,6 +64,13 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
           dot={false}
           isAnimationActive={false}
         />
+        {notSyncedTimestamps && (
+          <ReferenceArea
+            {...notSyncedTimestamps}
+            fill="var(--secondary)"
+            fillOpacity={0.2}
+          />
+        )}
         {getCommonChartComponents({
           data,
           isLoading,

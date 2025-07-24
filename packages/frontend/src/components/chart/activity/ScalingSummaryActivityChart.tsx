@@ -79,9 +79,12 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
         return {
           timestamp,
-          rollups: countPerSecond(rollups),
-          validiumsAndOptimiums: countPerSecond(validiumsAndOptimiums),
-          ethereum: countPerSecond(ethereum),
+          rollups: rollups !== null ? countPerSecond(rollups) : null,
+          validiumsAndOptimiums:
+            validiumsAndOptimiums !== null
+              ? countPerSecond(validiumsAndOptimiums)
+              : null,
+          ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
         }
       },
     )

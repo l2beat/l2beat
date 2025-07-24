@@ -21,7 +21,17 @@ export async function getActivityChartStats(
     range: { type: '30d' },
   })
 
-  const latestData = chartData.at(-1)
+  const pointsWithData = chartData.filter(
+    ([_, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
+      return (
+        projectsTx !== null &&
+        ethereumTx !== null &&
+        projectsUops !== null &&
+        ethereumUops !== null
+      )
+    },
+  ) as [number, number, number, number, number][]
+  const latestData = pointsWithData.at(-1)
   if (!latestData) {
     return {
       tps: {
@@ -36,28 +46,45 @@ export async function getActivityChartStats(
   }
 
   const totalTxs = chartData.slice(-7)?.reduce(
-    (acc, curr) => {
-      acc.restTps += curr[1]
-      acc.ethereumTps += curr[2]
-      acc.restUops += curr[3]
-      acc.ethereumUops += curr[4]
+    (acc, [_, projectsTx, ethereumTx, projectsUops, ethereumUops]) => {
+      acc.restTps = projectsTx !== null ? (acc.restTps ?? 0) + projectsTx : null
+      acc.ethereumTps =
+        ethereumTx !== null ? (acc.ethereumTps ?? 0) + ethereumTx : null
+      acc.restUops =
+        projectsUops !== null ? (acc.restUops ?? 0) + projectsUops : null
+      acc.ethereumUops =
+        ethereumUops !== null ? (acc.ethereumUops ?? 0) + ethereumUops : null
       return acc
     },
-    { ethereumTps: 0, restTps: 0, ethereumUops: 0, restUops: 0 },
+    {
+      ethereumTps: null,
+      restTps: null,
+      ethereumUops: null,
+      restUops: null,
+    } as {
+      ethereumTps: number | null
+      restTps: number | null
+      ethereumUops: number | null
+      restUops: number | null
+    },
   )
 
   return {
     tps: {
       latestProjectsTxCount: latestData[1],
       scalingFactor:
-        totalTxs.ethereumTps === 0
+        totalTxs.ethereumTps === 0 ||
+        totalTxs.restTps === null ||
+        totalTxs.ethereumTps === null
           ? 0
           : (totalTxs.restTps + totalTxs.ethereumTps) / totalTxs.ethereumTps,
     },
     uops: {
       latestProjectsTxCount: latestData[3],
       scalingFactor:
-        totalTxs.ethereumUops === 0
+        totalTxs.ethereumUops === 0 ||
+        totalTxs.restUops === null ||
+        totalTxs.ethereumUops === null
           ? 0
           : (totalTxs.restUops + totalTxs.ethereumUops) / totalTxs.ethereumUops,
     },

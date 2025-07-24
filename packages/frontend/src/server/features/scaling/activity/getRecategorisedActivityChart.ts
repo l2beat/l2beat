@@ -15,9 +15,9 @@ import type { ActivityTimeRange } from './utils/range'
 export type RecategorisedActivityChartData = {
   data: [
     timestamp: number,
-    rollupsCount: number,
-    validiumsAndOptimiumsCount: number,
-    ethereumCount: number,
+    rollupsCount: number | null,
+    validiumsAndOptimiumsCount: number | null,
+    ethereumCount: number | null,
   ][]
   syncWarning: string | undefined
   syncedUntil: number
@@ -96,17 +96,17 @@ export async function getRecategorisedActivityChart(
     'daily',
   )
 
-  const data: [number, number, number, number][] = timestamps.map(
-    (timestamp) => {
+  const data: [number, number | null, number | null, number | null][] =
+    timestamps.map((timestamp) => {
       const rollupsEntry = aggregatedRollupsEntries[timestamp]
       const validiumsAndOptimiumsEntry =
         aggregatedValidiumsAndOptimiumsEntries[timestamp]
       const ethereumEntry = aggregatedEthereumEntries[timestamp]
 
-      const rollupsCount = rollupsEntry?.uopsCount ?? 0
+      const rollupsCount = rollupsEntry?.uopsCount ?? null
       const validiumsAndOptimiumsCount =
-        validiumsAndOptimiumsEntry?.uopsCount ?? 0
-      const ethereumCount = ethereumEntry?.ethereumUopsCount ?? 0
+        validiumsAndOptimiumsEntry?.uopsCount ?? null
+      const ethereumCount = ethereumEntry?.ethereumUopsCount ?? null
 
       return [
         +timestamp,
@@ -114,8 +114,7 @@ export async function getRecategorisedActivityChart(
         validiumsAndOptimiumsCount,
         ethereumCount,
       ]
-    },
-  )
+    })
   return {
     data,
     syncWarning,

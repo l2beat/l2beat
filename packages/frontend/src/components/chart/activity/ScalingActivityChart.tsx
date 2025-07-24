@@ -20,6 +20,7 @@ import { Checkbox } from '../../core/Checkbox'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
+import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 import type { ActivityChartType } from './ActivityChart'
 import { ActivityChart } from './ActivityChart'
 import { ActivityChartHeader } from './ActivityChartHeader'
@@ -77,8 +78,10 @@ export function ScalingActivityChart({
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
           return {
             timestamp,
-            projects: projectMetric / UnixTime.DAY,
-            ethereum: ethereumMetric / UnixTime.DAY,
+            projects:
+              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
+            ethereum:
+              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
           }
         },
       ),
@@ -88,9 +91,19 @@ export function ScalingActivityChart({
   const ratioData = useMemo(() => {
     return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
       timestamp,
-      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+      ratio:
+        projectsTx !== null && projectsUops !== null
+          ? projectsTx === 0
+            ? 1
+            : projectsUops / projectsTx
+          : null,
     }))
   }, [data?.data])
+
+  const notSyncedTimestamps = useMemo(
+    () => getNotSyncedTimestamps(data?.data),
+    [data?.data],
+  )
 
   const chartRange = getChartRange(chartData)
 
@@ -111,11 +124,13 @@ export function ScalingActivityChart({
         scale={scale}
         metric={metric}
         type={type}
+        notSyncedTimestamps={notSyncedTimestamps}
       />
       <ActivityRatioChart
         data={ratioData}
         isLoading={isLoading}
         className="mb-2"
+        notSyncedTimestamps={notSyncedTimestamps}
       />
       <Controls
         scale={scale}

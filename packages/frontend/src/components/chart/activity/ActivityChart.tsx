@@ -2,7 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
-import { AreaChart } from 'recharts'
+import { AreaChart, ReferenceArea } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -37,13 +37,14 @@ import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/GetStrokeOverFillAreaComponents'
 import type { ChartScale } from '../types'
+import type { ChartNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 interface ActivityChartDataPoint {
   timestamp: number
-  projects: number
-  ethereum: number
+  projects: number | null
+  ethereum: number | null
 }
 
 interface Props {
@@ -57,6 +58,7 @@ interface Props {
   type: ActivityChartType
   projectName?: string
   className?: string
+  notSyncedTimestamps: ChartNotSyncedTimestamps | undefined
 }
 
 export function ActivityChart({
@@ -70,6 +72,7 @@ export function ActivityChart({
   metric,
   projectName,
   className,
+  notSyncedTimestamps,
 }: Props) {
   const chartMeta = {
     projects: {
@@ -114,6 +117,13 @@ export function ActivityChart({
             },
           ]),
         })}
+        {notSyncedTimestamps && (
+          <ReferenceArea
+            {...notSyncedTimestamps}
+            fill="var(--secondary)"
+            fillOpacity={0.2}
+          />
+        )}
         {getCommonChartComponents({
           data,
           isLoading,

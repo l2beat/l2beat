@@ -62,7 +62,7 @@ export function MonthlyUpdateActivityChart({
       data?.data.map(([timestamp, _, __, projectsUops]) => {
         return {
           timestamp,
-          projects: projectsUops / UnixTime.DAY,
+          projects: projectsUops !== null ? projectsUops / UnixTime.DAY : null,
         }
       }),
     [data?.data],
@@ -209,19 +209,23 @@ export function CustomTooltip({
 }
 
 function getStats(
-  chartData: { projects: number }[] | undefined,
+  chartData: { projects: number | null }[] | undefined,
   allScalingProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
   }
-  const last = chartData.at(-1)
-  if (!last) {
+  const lastWithData = chartData.filter((d) => d.projects !== null).at(-1) as
+    | {
+        projects: number
+      }
+    | undefined
+  if (!lastWithData) {
     return undefined
   }
 
   return {
-    latestUops: last.projects,
-    marketShare: last.projects / allScalingProjectsUops,
+    latestUops: lastWithData.projects,
+    marketShare: lastWithData.projects / allScalingProjectsUops,
   }
 }

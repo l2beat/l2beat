@@ -17,6 +17,7 @@ import type { ChartScale } from '../types'
 import { ActivityChart } from './ActivityChart'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import { getChartType } from './utils/getChartType'
+import { getNotSyncedTimestamps } from '../utils/getNotSyncedTimestamps'
 
 interface Props {
   milestones: Milestone[]
@@ -56,8 +57,10 @@ export function ProjectActivityChart({
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
           return {
             timestamp,
-            projects: projectMetric / UnixTime.DAY,
-            ethereum: ethereumMetric / UnixTime.DAY,
+            projects:
+              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
+            ethereum:
+              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
           }
         },
       ),
@@ -67,9 +70,19 @@ export function ProjectActivityChart({
   const ratioData = useMemo(() => {
     return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
       timestamp,
-      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+      ratio:
+        projectsTx !== null && projectsUops !== null
+          ? projectsTx === 0
+            ? 1
+            : projectsUops / projectsTx
+          : null,
     }))
   }, [chart?.data])
+
+  const notSyncedTimestamps = useMemo(
+    () => getNotSyncedTimestamps(chart?.data),
+    [chart?.data],
+  )
 
   const chartRange = getChartRange(chartData)
 
@@ -93,10 +106,12 @@ export function ProjectActivityChart({
         syncedUntil={chart?.syncedUntil}
         className="mt-4 mb-2"
         type={type}
+        notSyncedTimestamps={notSyncedTimestamps}
         projectName={projectName}
       />
       <ActivityRatioChart
         data={ratioData}
+        notSyncedTimestamps={notSyncedTimestamps}
         isLoading={isLoading}
         className="mb-2"
       />
