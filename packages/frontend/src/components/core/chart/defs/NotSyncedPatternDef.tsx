@@ -1,7 +1,7 @@
 export function NotSyncedPatternDef() {
   return (
     <pattern
-      id="not-synced-fill"
+      id="notSyncedFill"
       patternUnits="userSpaceOnUse"
       width="20"
       height="20"

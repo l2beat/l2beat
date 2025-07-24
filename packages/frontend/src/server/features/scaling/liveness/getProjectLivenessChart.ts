@@ -27,9 +27,11 @@ export type ProjectLivenessChartData = {
     | readonly [number, null, null, null]
     | readonly [number, number, number | null, number]
   )[]
-  stats: Partial<
-    Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
-  >
+  stats:
+    | Partial<
+        Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
+      >
+    | undefined
 }
 
 /**
@@ -40,7 +42,7 @@ export async function getProjectLivenessChart({
   range,
   subtype,
   projectId,
-}: ProjectLivenessChartParams) {
+}: ProjectLivenessChartParams): Promise<ProjectLivenessChartData> {
   if (env.MOCK) {
     return getMockProjectLivenessChartData({ range, subtype, projectId })
   }
@@ -92,15 +94,17 @@ export async function getProjectLivenessChart({
     stats[to] = stats[from]
   }
 
-  const groupedByResolution = groupBy(chartEntries, (e) =>
-    UnixTime.toStartOf(
-      e.timestamp,
-      resolution === 'hourly'
-        ? 'hour'
-        : resolution === 'daily'
-          ? 'day'
-          : 'six hours',
-    ),
+  const groupedByResolution = groupBy(
+    chartEntries.filter((e) => e.timestamp < 1751275600),
+    (e) =>
+      UnixTime.toStartOf(
+        e.timestamp,
+        resolution === 'hourly'
+          ? 'hour'
+          : resolution === 'daily'
+            ? 'day'
+            : 'six hours',
+      ),
   )
 
   const startTimestamp = Math.min(
@@ -113,10 +117,10 @@ export async function getProjectLivenessChart({
   const data = timestamps.map((timestamp) => {
     const entry = groupedByResolution[timestamp]
     if (!entry) {
-      return [+timestamp, null, null, null] as const
+      return [timestamp, null, null, null] as const
     }
     const { min, max, avg } = calculateLivenessStats(entry)
-    return [+timestamp, min, avg, max] as const
+    return [timestamp, min, avg, max] as const
   })
   return {
     data,

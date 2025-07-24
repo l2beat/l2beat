@@ -138,10 +138,7 @@ export function ScalingSummaryTvsChart({
             },
           })}
           {lastValidTimestamp && (
-            <ReferenceArea
-              x1={lastValidTimestamp}
-              fill="url(#not-synced-fill)"
-            />
+            <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
           )}
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>

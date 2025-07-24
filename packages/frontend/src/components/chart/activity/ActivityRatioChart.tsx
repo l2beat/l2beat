@@ -65,7 +65,7 @@ export function ActivityRatioChart({
           isAnimationActive={false}
         />
         {lastValidTimestamp && (
-          <ReferenceArea x1={lastValidTimestamp} fill="url(#not-synced-fill)" />
+          <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
         )}
         {getCommonChartComponents({
           data,
