@@ -22,7 +22,7 @@ import {
   UpdateNotifier,
 } from './UpdateNotifier'
 
-const BLOCK = 123
+const TIMESTAMP = 123
 
 describe(UpdateNotifier.name, () => {
   const chainConverter = new ChainConverter([
@@ -79,7 +79,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
@@ -121,7 +120,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -178,7 +177,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
@@ -224,7 +222,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -275,7 +273,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
@@ -321,7 +318,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -369,7 +366,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
@@ -396,7 +392,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -466,7 +462,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
@@ -577,7 +572,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
