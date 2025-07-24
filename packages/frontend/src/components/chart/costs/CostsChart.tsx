@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart, Line, YAxis } from 'recharts'
+import { Area, ComposedChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -20,7 +20,6 @@ import {
   rangeToResolution,
 } from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
-import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
 
@@ -45,16 +44,6 @@ const chartMeta = {
     color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
-  posted: {
-    label: 'Data posted',
-    color: 'var(--chart-emerald)',
-    indicatorType: { shape: 'line' },
-  },
-  notSyncedPosted: {
-    label: 'Data posted (not synced)',
-    color: 'var(--chart-emerald)',
-    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-  },
 } satisfies ChartMeta
 
 interface CostsChartDataPoint {
@@ -63,7 +52,6 @@ interface CostsChartDataPoint {
   blobs: number | undefined
   compute: number
   overhead: number
-  posted?: number | null
 }
 
 interface Props {
@@ -72,7 +60,6 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   range: CostsTimeRange
-  showDataPosted: boolean
   className?: string
   tickCount?: number
 }
@@ -84,7 +71,6 @@ export function CostsChart({
   milestones,
   className,
   range,
-  showDataPosted,
   tickCount,
 }: Props) {
   const resolution = rangeToResolution(range)
@@ -143,46 +129,6 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {showDataPosted && (
-          <Line
-            yAxisId="right"
-            dataKey="posted"
-            strokeWidth={2}
-            stroke={chartMeta.posted.color}
-            dot={false}
-            isAnimationActive={false}
-          />
-        )}
-        {showDataPosted && (
-          <Line
-            yAxisId="right"
-            dataKey="notSyncedPosted"
-            strokeWidth={2}
-            stroke={chartMeta.notSyncedPosted.color}
-            strokeDasharray={
-              chartMeta.notSyncedPosted.indicatorType.strokeDasharray
-            }
-            dot={false}
-            isAnimationActive={false}
-            legendType="none"
-          />
-        )}
-        {showDataPosted && (
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tickFormatter={(value: number) => formatBytes(value)}
-            tickLine={false}
-            axisLine={false}
-            mirror
-            tickCount={tickCount ?? 3}
-            dy={-10}
-            tick={{
-              width: 100,
-            }}
-          />
-        )}
-
         {getCommonChartComponents({
           data,
           isLoading,
@@ -214,19 +160,8 @@ function CustomTooltip({
   resolution: CostsResolution
 }) {
   if (!active || !payload || typeof label !== 'number') return null
-  const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndNotSynced =
-    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
-  const filteredPayload = payload.filter(
-    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
-  )
-  const reversedPayload = [...filteredPayload].reverse()
-  const total = payload.reduce((acc, curr) => {
-    if (curr.name === 'posted' || curr.name === 'notSyncedPosted') {
-      return acc
-    }
-    return acc + (curr?.value ?? 0)
-  }, 0)
+  const reversedPayload = [...payload].reverse()
+  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
@@ -262,9 +197,7 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.name === 'posted' || entry.name === 'notSyncedPosted'
-                    ? formatBytes(entry.value)
-                    : formatCostValue(entry.value, unit, 'total')}
+                  {formatCostValue(entry.value, unit, 'total')}
                 </span>
               </div>
             )
