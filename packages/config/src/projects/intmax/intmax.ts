@@ -45,7 +45,20 @@ export const intmax: ScalingProject = {
   },
   technology: {
     dataAvailability: {
-
+      name: 'All data required for payments is self-custodied by users.',
+      description: 'INTMAX uses a self-custodied data availability model where users maintain their own "balance proofs" to allow for private payments. These balance proofs are computed using data received from aggregators when depositing or initiating a transfer, and from payment senders when receiving funds. The protocol ensures that all data has been made available by requiring users to sign off blocks that contain their deposits or outgoing transfers. Users would not accept payments if they have not received the necessary balance proof from the sender.',
+      references: [
+        {
+          title: 'INTMAX Whitepaper',
+          url: 'https://eprint.iacr.org/2023/1082.pdf',
+        }
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'users lose the self-custodied data required to prove their balance.',
+        }
+      ]
     },
     operator: {},
     exitMechanisms: {},

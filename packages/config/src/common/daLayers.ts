@@ -114,7 +114,7 @@ const SELF_CUSTODIED_INTMAX: DaProjectTableValue = {
   value: 'Self Custodied',
   sentiment: 'good',
   description:
-    "The data needed to prove users' own balance is stored by the users themselves. This data can be received from an aggregator when depositing or from senders when receiving funds. The protocol ensures that for a deposit to be accepted by the protocol, the user must confirm the collection of data from the aggregator.",
+    "The data needed to prove users' own balance is stored by the users themselves. This data can be received from an aggregator when depositing or transferring funds, or from senders when receiving funds. The protocol ensures that for a deposit or transfer to be accepted by the protocol, the user must confirm the collection of data from the aggregator.",
 }
 
 export const DA_LAYERS = {
