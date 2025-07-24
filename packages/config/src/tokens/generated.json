@@ -12041,6 +12041,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Hyperlane",
+      "coingeckoId": "hyperlane",
+      "address": "0xC9d23ED2ADB0f551369946BD377f8644cE1ca5c4",
+      "symbol": "HYPER",
+      "decimals": 18,
+      "deploymentTimestamp": 1744671373,
+      "coingeckoListingTimestamp": 1745280000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55298/large/Hyperlane.png?1745248900",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "JoeToken",
       "coingeckoId": "joe",
       "address": "0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07",
@@ -12614,6 +12628,20 @@
       "coingeckoListingTimestamp": 1710201600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/34147/large/Screenshot_2024-03-08_180444.png?1709892309",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Talos",
+      "coingeckoId": "talos-2",
+      "address": "0x30a538eFFD91ACeFb1b12CE9Bc0074eD18c9dFc9",
+      "symbol": "T",
+      "decimals": 9,
+      "deploymentTimestamp": 1752599437,
+      "coingeckoListingTimestamp": 1753142400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67570/large/talos.jpg?1753181426",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
