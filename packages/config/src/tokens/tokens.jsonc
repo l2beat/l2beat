@@ -2242,6 +2242,18 @@
   ],
   "arbitrum": [
     {
+      "symbol": "HYPER",
+      "address": "0xC9d23ED2ADB0f551369946BD377f8644cE1ca5c4",
+      "source": "native",
+      "supply": "circulatingSupply" // multichain token, totalSupply would include 700M illiquid tokens
+    },
+    {
+      "symbol": "T",
+      "address": "0x30a538eFFD91ACeFb1b12CE9Bc0074eD18c9dFc9",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "wM",
       "address": "0x437cc33344a0B27A429f795ff6B469C72698B291",
       "source": "native",
