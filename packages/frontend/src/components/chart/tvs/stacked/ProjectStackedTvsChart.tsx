@@ -137,6 +137,7 @@ function DefaultChart({
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
+        tickCount={4}
         className="mt-4 mb-2"
         notSyncedTimestamps={notSyncedTimestamps}
       />

@@ -133,6 +133,7 @@ function DefaultChart({
         isLoading={isLoading}
         notSyncedTimestamps={notSyncedTimestamps}
         milestones={milestones}
+        tickCount={4}
       />
       <TvsChartUnitControls unit={unit} setUnit={setUnit}>
         {tokens && (

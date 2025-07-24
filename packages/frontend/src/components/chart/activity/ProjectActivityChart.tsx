@@ -108,6 +108,7 @@ export function ProjectActivityChart({
         type={type}
         notSyncedTimestamps={notSyncedTimestamps}
         projectName={projectName}
+        tickCount={4}
       />
       <ActivityRatioChart
         data={ratioData}

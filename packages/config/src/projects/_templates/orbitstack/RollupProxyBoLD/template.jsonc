@@ -15,6 +15,14 @@
     "stakeToken"
   ],
   "fields": {
+    "getValidators": {
+      "permissions": [
+        {
+          "type": "validate",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+        }
+      ]
+    },
     "isPostBoLD": {
       "handler": {
         "type": "hardcoded",
