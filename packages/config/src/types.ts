@@ -863,6 +863,7 @@ export interface ProjectCostsInfo {
 
 export interface SovereignProjectDaTrackingConfig {
   projectId: ProjectId
+  name?: string
   daTrackingConfig: (
     | Omit<EthereumDaTrackingConfig, 'daLayer'>
     | Omit<CelestiaDaTrackingConfig, 'daLayer'>
