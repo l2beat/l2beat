@@ -42,7 +42,7 @@ export const bob: ScalingProject = opStackL2({
       url: 'https://app.blocksec.com/explorer/tx/eth/0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806?line=7',
       date: '2025-07-17T00:00:00Z',
       description:
-        'A state root proposal is manually resolved by changing the gameType implementation.',
+        'A state root proposal is manually resolved after changing the finalization config.',
       type: 'incident',
     },
     {
