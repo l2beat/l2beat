@@ -37,7 +37,7 @@ function getHeader(
   if (nonce === undefined) {
     return `${name} | detected changes on chain: ${chain}`
   }
-  return `Changes: **${name}:${chain}** at timestamp ${timestamp}`
+  return `Changes: ${name}:${chain} at timestamp ${timestamp}`
 }
 
 function getDependentsMessage(dependents: string[]) {
