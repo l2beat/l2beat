@@ -15,6 +15,9 @@
     }
   },
   "fields": {
+    "respectedGameType": {
+      "severity": "HIGH"
+    },
     "RespectedGameString": {
       "handler": {
         "type": "call",
