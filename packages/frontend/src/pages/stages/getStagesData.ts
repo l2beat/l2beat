@@ -5,12 +5,12 @@ import type { RenderData } from '~/ssr/types'
 import { formatPublicationDate } from '~/utils/dates'
 import type { Manifest } from '../../utils/Manifest'
 
-export async function getTermsOfServiceData(
+export async function getStagesData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData | undefined> {
   const appLayoutProps = await getAppLayoutProps()
-  const content = getCollectionEntry('pages', 'terms-of-service')
+  const content = getCollectionEntry('pages', 'stages')
   if (!content) {
     return undefined
   }
@@ -19,16 +19,16 @@ export async function getTermsOfServiceData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Terms of Service - L2BEAT',
-        description: 'Terms of Service for L2BEAT.',
+        title: 'Stages - L2BEAT',
+        description: 'Page explaining the L2BEAT Stages framework.',
         openGraph: {
           url,
-          image: '/meta-images/terms-of-service/opengraph-image.png',
+          image: '/meta-images/stages/opengraph-image.png',
         },
       }),
     },
     ssr: {
-      page: 'TermsOfServicePage',
+      page: 'StagesPage',
       props: {
         ...appLayoutProps,
         content,

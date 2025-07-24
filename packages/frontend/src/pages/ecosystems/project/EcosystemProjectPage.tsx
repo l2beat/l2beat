@@ -23,6 +23,7 @@ import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsB
 import { EcosystemToken } from './components/widgets/EcosystemToken'
 import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
 import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
+import { EcosystemUpdateLink } from './components/widgets/EcosystemUpdateLink'
 
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
@@ -140,6 +141,10 @@ export function EcosystemProjectPage({
                     ecosystem.images.delegateToL2BEAT
                   }
                   className="col-span-12 lg:col-span-8"
+                />
+                <EcosystemUpdateLink
+                  className="col-span-12"
+                  href={ecosystem.links.ecosystemUpdate}
                 />
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />

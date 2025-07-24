@@ -3,7 +3,6 @@ import { useState } from 'react'
 import {
   Tooltip,
   TooltipContent,
-  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
@@ -116,12 +115,10 @@ function ProjectLinkWithTooltip({
       <a href={`/scaling/projects/${project.slug}`} className="size-6">
         <TooltipTrigger>{children}</TooltipTrigger>
       </a>
-      <TooltipPortal>
-        <TooltipContent>
-          <p className="font-bold">{project.name}</p>
-          <p className="text-secondary text-xs">Click to view project page</p>
-        </TooltipContent>
-      </TooltipPortal>
+      <TooltipContent>
+        <p className="font-bold">{project.name}</p>
+        <p className="text-secondary text-xs">Click to view project page</p>
+      </TooltipContent>
     </Tooltip>
   )
 }

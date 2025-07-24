@@ -1,7 +1,6 @@
 import {
   Tooltip,
   TooltipContent,
-  TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { LiveIndicator } from '~/components/LiveIndicator'
@@ -122,17 +121,15 @@ function NameWithProjectInfoTooltip({
   return (
     <Tooltip>
       <TooltipTrigger>{projectName}</TooltipTrigger>
-      <TooltipPortal>
-        <TooltipContent className="flex flex-col gap-2">
-          <span className="text-heading-18">What is {projectName}?</span>
-          <p>{project.description}</p>
-          <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
-            {project.badges?.map((badge, key) => (
-              <ProjectBadge key={key} badge={badge} className="h-16!" />
-            ))}
-          </div>
-        </TooltipContent>
-      </TooltipPortal>
+      <TooltipContent className="flex flex-col gap-2">
+        <span className="text-heading-18">What is {projectName}?</span>
+        <p>{project.description}</p>
+        <div className="flex max-w-(--breakpoint-xs)! flex-row flex-wrap">
+          {project.badges?.map((badge, key) => (
+            <ProjectBadge key={key} badge={badge} className="h-16!" />
+          ))}
+        </div>
+      </TooltipContent>
     </Tooltip>
   )
 }

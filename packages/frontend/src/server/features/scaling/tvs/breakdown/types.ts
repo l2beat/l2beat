@@ -14,6 +14,7 @@ export type BaseAssetBreakdownData = {
   iconUrl: string
   amount: number
   usdValue: number
+  category: TvsToken['category']
   source: TvsToken['source']
   isAssociated: TvsToken['isAssociated']
   isGasToken?: boolean

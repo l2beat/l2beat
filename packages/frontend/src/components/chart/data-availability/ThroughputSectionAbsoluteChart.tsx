@@ -5,13 +5,15 @@ import { Checkbox } from '~/components/core/Checkbox'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
-import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChart'
+import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
+import type { ProjectDaThroughputChartPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChartData'
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { EigenDataSourceInfo } from './EigenDataSourceInfo'
+import { EthereumProjectsOnlyCheckbox } from './EthereumProjectsOnlyCheckbox'
 import type { ProjectChartDataWithConfiguredThroughput } from './ProjectDaAbsoluteThroughputChart'
 import { ProjectDaAbsoluteThroughputChart } from './ProjectDaAbsoluteThroughputChart'
 
@@ -34,9 +36,11 @@ export function ThroughputSectionAbsoluteChart({
   showMax,
   setShowMax,
 }: Props) {
+  const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
   const { data, isLoading } = api.da.projectChart.useQuery({
     range: { type: range },
     projectId: daLayer,
+    includeScalingOnly,
   })
 
   const chartRange = useMemo(
@@ -58,13 +62,21 @@ export function ThroughputSectionAbsoluteChart({
           {daLayer === 'eigenda' && <EigenDataSourceInfo />}
         </div>
         <div className="flex justify-between gap-1">
-          <Checkbox
-            name="showMaximumThroughput"
-            checked={showMax}
-            onCheckedChange={(state) => setShowMax(!!state)}
-          >
-            Show maximum
-          </Checkbox>
+          <div className="flex flex-wrap items-center gap-2">
+            <EthereumProjectsOnlyCheckbox
+              name="projectThroughputIncludeScalingOnly"
+              checked={includeScalingOnly}
+              onCheckedChange={setIncludeScalingOnly}
+            />
+
+            <Checkbox
+              name="showMaximumThroughput"
+              checked={showMax}
+              onCheckedChange={(state) => setShowMax(!!state)}
+            >
+              Show maximum
+            </Checkbox>
+          </div>
           <ChartTimeRangeControls
             name="Range"
             value={range}
@@ -89,7 +101,7 @@ export function ThroughputSectionAbsoluteChart({
 }
 
 function getDataWithConfiguredThroughputs(
-  data: ProjectDaThroughputDataPoint[] | undefined,
+  data: ProjectDaThroughputChartPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
   range: DaThroughputTimeRange,
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {

@@ -10,6 +10,11 @@ export const LAYERZEROV2 = {
   decoder: decoder,
 }
 
+const ABI = parseAbi([
+  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
+  'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
+])
+
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
@@ -102,11 +107,6 @@ function decoder(
 
   return undefined
 }
-
-const ABI = parseAbi([
-  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
-  'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
-])
 
 const ENDPOINTS = [
   {

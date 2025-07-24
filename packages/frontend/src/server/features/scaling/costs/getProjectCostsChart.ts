@@ -1,7 +1,7 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughputChart'
+import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughtputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { getCostsChart } from './getCostsChart'
 import { getCostsForProject } from './getCostsForProject'
@@ -32,6 +32,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     getProjectDaThroughputChart({
       range: { type: params.range },
       projectId: params.projectId,
+      includeScalingOnly: false,
     }),
     getActivityForProjectAndRange(params.projectId, params.range),
   ])

@@ -15,6 +15,7 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMonthlyUpdatesRouter } from './monthly-updates/MonthlyUpdatesRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
+import { createStagesRouter } from './stages/StagesRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
@@ -56,6 +57,7 @@ export function createServerPageRouter(
     createDaRiskFrameworkRouter,
     createMutlisigReportRouter,
     createTermsOfServiceRouter,
+    createStagesRouter,
     createMonthlyUpdatesRouter,
   ]
 

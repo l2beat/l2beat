@@ -49,10 +49,6 @@ const cmd = command({
       },
     ])
 
-    for (const message of messages) {
-      logger.info(`${message.direction} (${message.type})`, message)
-    }
-
     const outbound = messages.find((m) => m.direction === 'outbound')
     assert(outbound, 'Outbound message not found, update decoder')
     const inbound = messages.find(

@@ -10,6 +10,11 @@ import {
   decodeV1SendUln301Packet,
 } from '../../utils/layerzero'
 
+export const LAYERZEROV1 = {
+  name: 'layerzerov1',
+  decoder: decoder,
+}
+
 const ABI = parseAbi([
   // UltraLightNodeV2
   'event Packet(bytes payload)',
@@ -19,11 +24,6 @@ const ABI = parseAbi([
   // ReceiveUln301
   'event PacketDelivered((uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)',
 ])
-
-export const LAYERZEROV1 = {
-  name: 'layerzerov1',
-  decoder: decoder,
-}
 
 function decoder(
   chain: Chain,
