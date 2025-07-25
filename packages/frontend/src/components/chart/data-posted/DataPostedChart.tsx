@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, ComposedChart, Line } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -58,7 +58,7 @@ export function DataPostedChart({
       meta={chartMeta}
       isLoading={isLoading}
     >
-      <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
+      <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="posted"
@@ -69,20 +69,17 @@ export function DataPostedChart({
           isAnimationActive={false}
           dot={false}
         />
-        <Area
+        <Line
           dataKey="notSyncedPosted"
-          fill="url(#fillPosted)"
-          fillOpacity={1}
+          strokeWidth={2}
           stroke={chartMeta.notSyncedPosted.color}
           strokeDasharray={
             chartMeta.notSyncedPosted.indicatorType.strokeDasharray
           }
-          strokeWidth={2}
-          isAnimationActive={false}
           dot={false}
+          isAnimationActive={false}
           legendType="none"
         />
-
         {getCommonChartComponents({
           data,
           isLoading,
@@ -97,7 +94,7 @@ export function DataPostedChart({
         <defs>
           <EmeraldFillGradientDef id="fillPosted" />
         </defs>
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
