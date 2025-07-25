@@ -8,7 +8,7 @@ Generated with discovered.json: 0x766a9e4d6c8d2b6185197aa41b1ecd9da604781d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+    Kinto has added SC members to the validator list to satisfy the new stage 1 requirement.
 
 ## Watched changes
 
