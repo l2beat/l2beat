@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x86eefa688455af22e5af232af36260299d816f05
+Generated with discovered.json: 0x8c15b4eedc6971552d2dd4144f0cec7cfb2e07b2
 
-# Diff at Fri, 25 Jul 2025 17:48:25 GMT:
+# Diff at Fri, 25 Jul 2025 18:14:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@dff0cc78015c4909229d9a2a9ca8fb6a3498b9d5 block: 22437746
+- comparing to: main@edf934bbf1dfa0097f816502d06b2a18e93845f2 block: 22437746
 - current block number: 22996539
 
 ## Description
@@ -236,8 +236,11 @@ Check optimism diffhistory for [the upgrade 16 breakdown](https://gov.optimism.i
 +        "eth:0x89889B569c3a505f3640ee1Bd0ac1D557f436D2a"
       values.proxyAdminOwner:
 +        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++++ severity: HIGH
       values.superRootsActive:
 +        false
+      fieldMeta.superRootsActive:
++        {"severity":"HIGH"}
       implementationNames.eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4:
 -        "OptimismPortal2"
       implementationNames.eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a:
