@@ -2,8 +2,8 @@ import type { NextFunction, Request, Response } from 'express'
 import { getLogger } from '../utils/logger'
 
 export function MetricsMiddleware() {
+  const logger = getLogger().for('Metrics')
   return (req: Request, res: Response, next: NextFunction) => {
-    const logger = getLogger().for('Metrics')
     logger.info('Processing request', {
       method: req.method,
       url: req.originalUrl,

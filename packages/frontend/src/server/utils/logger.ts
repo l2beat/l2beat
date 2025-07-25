@@ -11,6 +11,10 @@ import type { ElasticSearchTransportOptions } from '~/utils/elastic-search/Elast
 
 let logger: Logger | undefined
 
+/**
+ * Gets the singleton Logger instance. Creates a new instance on first call,
+ * then returns the cached instance on subsequent calls.
+ */
 export function getLogger(): Logger {
   if (logger) {
     return logger
