@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xeca708c73fdeb14c348df9d65afce23cb7288d7f
+Generated with discovered.json: 0x40dffd57c03a56e5c494dc5ffd89824d3931b80b
 
-# Diff at Fri, 25 Jul 2025 08:43:06 GMT:
+# Diff at Fri, 25 Jul 2025 09:16:01 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@7a4cc0fa28e50e7f953dabb7af07b31dabe5250d block: 22367347
-- current block number: 22995043
+- current block number: 22995207
 
 ## Description
 
@@ -129,8 +129,11 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
+    contract L1ETHLockbox (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
     +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
+      name:
+-        "L1StandardBridge"
++        "L1ETHLockbox"
       description:
 -        "The main entry point to deposit ERC20 tokens from host chain to this chain."
 +        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."

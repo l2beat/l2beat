@@ -1,7 +1,7 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22995043,
+  "blockNumber": 22995207,
   "configHash": "0x7546b81e53a87f82c6f5807621ee32e69327b559c8b0e53200dcc6922b71e873",
   "entries": [
     {
@@ -256,7 +256,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1StandardBridge",
+      "name": "L1ETHLockbox",
       "address": "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
       "type": "Contract",
       "template": "opstack/L1StandardBridge_facet",
@@ -844,5 +844,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0xfd5faa62759edcfbbeda0e7cad382d4242eb1185f80a889dd7b774cbfaa41a88"
+  "permissionsConfigHash": "0xfe6454ea16a2b66edc2c7c2acb6692039e9c56146f060d41db55910d92749471"
 }
