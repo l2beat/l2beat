@@ -54,6 +54,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
         ...common,
         href: `/scaling/projects/${p.slug}`,
         category: 'scaling',
+        scalingCategory: p.scalingInfo?.type,
       })
     }
 

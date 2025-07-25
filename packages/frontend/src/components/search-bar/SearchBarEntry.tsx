@@ -1,3 +1,4 @@
+import type { ProjectScalingCategory } from '@l2beat/config'
 import type { SearchBarCategory } from './searchBarCategories'
 
 interface SearchBarEntry {
@@ -18,6 +19,7 @@ export type SearchBarProject = SearchBarEntry & {
   iconUrl: string
   addedAt: number
   kind: 'layer2' | 'layer3' | 'bridge' | 'da' | 'zkCatalog'
+  scalingCategory?: ProjectScalingCategory
   filePrepared?: Fuzzysort.Prepared
 }
 

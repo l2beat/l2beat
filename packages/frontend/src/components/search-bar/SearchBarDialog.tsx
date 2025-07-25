@@ -131,7 +131,16 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       width={20}
                       height={20}
                     />
-                    {project.name}
+                    <div className="flex flex-col">
+                      <div className="font-medium text-sm leading-none tracking-[-1%]">
+                        {project.name}
+                      </div>
+                      {project.scalingCategory && (
+                        <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                          {project.scalingCategory}
+                        </div>
+                      )}
+                    </div>
                   </SearchBarItem>
                 )
               })}
@@ -170,7 +179,16 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                           height={20}
                         />
                       )}
-                      {item.name}
+                      <div className="flex flex-col">
+                        <div className="font-medium text-sm leading-none tracking-[-1%]">
+                          {item.name}
+                        </div>
+                        {item.type === 'project' && item.scalingCategory && (
+                          <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                            {item.scalingCategory}
+                          </div>
+                        )}
+                      </div>
                     </SearchBarItem>
                   )
                 })}
