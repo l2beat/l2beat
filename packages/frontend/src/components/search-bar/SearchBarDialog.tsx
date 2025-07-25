@@ -1,3 +1,4 @@
+import type { ProjectScalingCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
@@ -123,6 +124,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     key={project.id}
                     onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
+                    category={project.scalingCategory}
                   >
                     <img
                       src={project.iconUrl}
@@ -150,6 +152,11 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       key={item.href}
                       onSelect={() => onItemSelect(item)}
                       label={entryToLabel(item)}
+                      category={
+                        item.type === 'project'
+                          ? item.scalingCategory
+                          : undefined
+                      }
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
                         // For example try to search "nea" without this hack.
@@ -187,11 +194,13 @@ function SearchBarItem({
   children,
   label,
   value,
+  category,
 }: {
   onSelect: () => void
   children: React.ReactNode
   label?: string
   value?: string
+  category?: ProjectScalingCategory
 }) {
   return (
     <CommandItem
@@ -200,7 +209,11 @@ function SearchBarItem({
       value={value}
     >
       {children}
-      {label && <div className="ml-auto text-secondary text-xs">{label}</div>}
+      {label && (
+        <div className="ml-auto text-secondary text-xs">
+          {label} {category && `| ${category}`}
+        </div>
+      )}
     </CommandItem>
   )
 }
