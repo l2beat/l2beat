@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A simple escrow contract storing ETH for the canonical bridge."
+}

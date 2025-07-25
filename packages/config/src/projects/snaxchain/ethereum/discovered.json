@@ -1,7 +1,7 @@
 {
   "name": "snaxchain",
   "chain": "ethereum",
-  "blockNumber": 22997060,
+  "blockNumber": 22997466,
   "configHash": "0x795a2ad0b79104094fdc585ccd98933dd3fabac57c31ee60c0db62cfa04b6fb6",
   "entries": [
     {
@@ -88,7 +88,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2,
+        "gameCount": 3,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x1B780edfb393CB9f07Dcd7C699CBDF0fd663572b",
@@ -98,7 +98,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 2,
+        "permissionedGamesTotal": 3,
         "version": "1.0.1"
       },
       "fieldMeta": {

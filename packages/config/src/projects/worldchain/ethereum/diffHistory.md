@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x153c4303e3a411facad7297423f92b6525e958f0
+
+# Diff at Fri, 25 Jul 2025 13:52:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22988766
+- current block number: 22988766
+
+## Description
+
+templatize op upgrade 16 contracts
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22988766 (main branch discovery), not current.
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      template:
++        "gnosisSafeModules/LivenessGuard"
+      description:
++        "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.via.3.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+      directlyReceivedPermissions.0.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+    }
+```
+
 Generated with discovered.json: 0xbdb97f05edcc34536c75323d56e0e952c41c936b
 
 # Diff at Thu, 24 Jul 2025 16:48:30 GMT:
