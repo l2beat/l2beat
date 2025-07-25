@@ -13,6 +13,10 @@ export type ScalingProjectDaThroughputChart = {
   chart: ScalingProjectDaThroughputChartPoint[]
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
+  stats: {
+    total: number
+    avgPerDay: number
+  }
 }
 export type ScalingProjectDaThroughputChartPoint = [
   timestamp: number,
@@ -77,14 +81,27 @@ export async function getScalingProjectDaThroughputChart(
   const syncedUntil = throughput.at(-1)?.timestamp
   assert(syncedUntil, 'syncedUntil is undefined')
 
-  return {
-    chart: timestamps.map((timestamp) => {
+  let total = 0
+  const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
+    (timestamp) => {
       const posted =
         timestamp <= syncedUntil ? (grouped[timestamp] ?? null) : null
+      total += posted ?? 0
       return [timestamp, posted]
-    }),
+    },
+  )
+
+  const days = Math.round((chartAdjustedTo - minTimestamp) / UnixTime.DAY)
+  const avgPerDay = total / days
+
+  return {
+    chart,
     range: [minTimestamp, chartAdjustedTo],
     syncedUntil,
+    stats: {
+      total,
+      avgPerDay,
+    },
   }
 }
 
@@ -125,13 +142,26 @@ function getMockScalingProjectDaThroughputChart({
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return {
-    chart: timestamps.map((timestamp) => {
-      const throughputValue = Math.random() * 900_000_000 + 90_000_000
 
+  let total = 0
+  const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
+    (timestamp) => {
+      const throughputValue = Math.random() * 900_000_000 + 90_000_000
+      total += throughputValue
       return [timestamp, Math.round(throughputValue)]
-    }),
+    },
+  )
+
+  const numberOfDays = Math.round((to - from) / UnixTime.DAY)
+  const avgPerDay = total / numberOfDays
+
+  return {
+    chart,
     range: [from, to],
     syncedUntil: UnixTime.now(),
+    stats: {
+      total,
+      avgPerDay,
+    },
   }
 }

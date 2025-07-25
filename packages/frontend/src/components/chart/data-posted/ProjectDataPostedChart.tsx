@@ -6,6 +6,7 @@ import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import { DataPostedChart } from './DataPostedChart'
+import { ProjectDataPostedChartStats } from './ProjectDataPostedChartStats'
 
 interface Props {
   projectId: string
@@ -60,6 +61,11 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
         syncedUntil={data?.syncedUntil}
         className="mt-4 mb-2"
         tickCount={4}
+      />
+      <ProjectDataPostedChartStats
+        data={data?.stats}
+        isLoading={isLoading}
+        range={timeRange}
       />
     </section>
   )
