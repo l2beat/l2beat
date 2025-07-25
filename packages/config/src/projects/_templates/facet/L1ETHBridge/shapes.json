@@ -1,0 +1,14 @@
+{
+  "L1ETHBridge": {
+    "hash": "0x3a64ad01421d13d01bcda2dccfa9afde7ed6dad28ed7471ada57175a7637e8bb",
+    "address": "0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
+    "chain": "ethereum",
+    "blockNumber": 22981943
+  },
+  "L1ETHBridge2": {
+    "hash": "0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68",
+    "address": "0x13D21988F08997d20822d247A5015C4D13102F88",
+    "chain": "ethereum",
+    "blockNumber": 22995010
+  }
+}

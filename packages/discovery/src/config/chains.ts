@@ -339,4 +339,14 @@ export const chains: ChainConfig[] = [
     },
     coingeckoPlatform: 'katana',
   },
+  {
+    name: 'facet',
+    chainId: 1027303,
+    shortName: 'facet',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.facet.org/api',
+    },
+  },
 ] as const satisfies ChainConfig[]
