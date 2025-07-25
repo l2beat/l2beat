@@ -18,9 +18,14 @@ const TRANSACTION_DATA_COMPRESSED: TableReadyValue = {
   secondLine: 'Compressed',
 }
 
+const BALANCE_PROOF: TableReadyValue = {
+  value: 'Balance proofs',
+}
+
 export const DA_MODES = {
   STATE_DIFFS,
   STATE_DIFFS_COMPRESSED,
   TRANSACTION_DATA,
   TRANSACTION_DATA_COMPRESSED,
+  BALANCE_PROOF,
 }
