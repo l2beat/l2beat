@@ -47,7 +47,7 @@ export const facet: ScalingProject = {
       'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1ETHBridge)',
       'Bridged token compatibility with other DeFi applications e.g., Albatross WETH (AWETH)',
       'The soundness of the ZK proof system of Rollup',
-      'Upgradability of the external bridge contracts including the FacetEtherBridgeV6 bridge',
+      'Upgradability of the external bridge contracts (e.g., FacetEtherBridgeV6)',
     ],
   },
   stage: getStage(
@@ -82,8 +82,6 @@ export const facet: ScalingProject = {
     slug: 'facet',
     description:
       'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
-    headerWarning:
-      'Multiple bridges: As the Facet team does not designate a canonical bridge and no gas token bridge is used, for the purpose of this risk analysis the canonical bridge was arbitrarily selected by the L2BEAT team. There are multiple bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -169,19 +167,9 @@ export const facet: ScalingProject = {
     ],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
-        tokens: ['ETH'],
-        description: 'Fast bridge contract.',
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0x13D21988F08997d20822d247A5015C4D13102F88'),
         tokens: ['ETH'],
         description: 'Escrow for ETH bridge.',
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x8F75466D69a52EF53C7363F38834bEfC027A2909'),
-        tokens: ['ETH', 'WETH'],
-        description: 'L1StandardBridge (deprecated).',
       }),
     ],
   },
@@ -230,14 +218,8 @@ export const facet: ScalingProject = {
       {
         name: 'Multi-bridging',
         description:
-          'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the FacetEtherBridgeV6 EOA operator signs an invalid withdrawal.',
-            isCritical: true,
-          },
-        ],
+          'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the [FacetEtherBridgeV6](https://etherscan.io/address/0x0000000000000b07ED001607f5263D85bf28Ce4C) fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
+        risks: [],
         references: [
           {
             title: 'L1 ETH Bridge - Etherscan',
@@ -246,10 +228,6 @@ export const facet: ScalingProject = {
           {
             title: 'L2 ETH (AWETH) Bridge - Facet Explorer',
             url: 'https://explorer.facet.org/address/0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850',
-          },
-          {
-            title: 'FacetEtherBridgeV6 - Etherscan',
-            url: 'https://etherscan.io/address/0x0000000000000b07ED001607f5263D85bf28Ce4C',
           },
         ],
       },

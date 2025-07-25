@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x40dffd57c03a56e5c494dc5ffd89824d3931b80b
+Generated with discovered.json: 0xe4a97658840612506da7a3a24a72afe3c3326b15
 
-# Diff at Fri, 25 Jul 2025 09:16:01 GMT:
+# Diff at Fri, 25 Jul 2025 11:13:34 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@7a4cc0fa28e50e7f953dabb7af07b31dabe5250d block: 22367347
-- current block number: 22995207
+- current block number: 22995789
 
 ## Description
 
@@ -37,14 +37,6 @@ Bridge version discovery.
 +        {"eth:0x13D21988F08997d20822d247A5015C4D13102F88":"L1Bridge"}
       category:
 +        {"name":"Canonical Bridges","priority":2}
-    }
-```
-
-```diff
-    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
-    +++ description: None
-      receivedPermissions.2:
-+        {"permission":"interact","from":"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D","description":"can set the whitelisted proposers.","role":".owner"}
     }
 ```
 
@@ -84,6 +76,12 @@ Bridge version discovery.
 
 ```diff
 +   Status: CREATED
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF)
+    +++ description: Module that allows the Safe to send Facet transactions.
+```
+
+```diff
++   Status: CREATED
     contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
     +++ description: Verifier contract for SP1 proofs (v5.0.0).
 ```
@@ -94,15 +92,31 @@ Bridge version discovery.
     +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
 
+```diff
++   Status: CREATED
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FacetSafeProxy (0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25)
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
+```
+
 ## Source code changes
 
 ```diff
-.../projects/facet/ethereum/.flat/L1ETHBridge.sol  | 2517 ++++++++++++++++++++
+.../ethereum/.flat/Facet Multisig/GnosisSafe.sol   |  953 ++++++++
+ .../.flat/Facet Multisig/GnosisSafeProxy.p.sol     |   35 +
+ .../facet/ethereum/.flat/FacetSafeModule.sol       |   29 +
+ .../facet/ethereum/.flat/FacetSafeProxy.sol        |  488 ++++
+ .../projects/facet/ethereum/.flat/L1ETHBridge.sol  | 2517 ++++++++++++++++++++
  .../src/projects/facet/ethereum/.flat/Rollup.sol   | 1199 ++++++++++
  ...:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol | 1396 +++++++++++
  ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++
  .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++
- 5 files changed, 5945 insertions(+)
+ 9 files changed, 7450 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -112,14 +126,21 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22367347 (main branch discovery), not current.
 
 ```diff
-    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
-    +++ description: A Facet implementation of the ETH Bridge. This bridge is also called "fast bridge" as it uses a permissioned EOA as operator for faster withdrawal processing.
-      description:
--        "Official Facet implementation of the Ether Bridge."
-+        "A Facet implementation of the ETH Bridge. This bridge is also called \"fast bridge\" as it uses a permissioned EOA as operator for faster withdrawal processing."
-      category:
-+        {"name":"External Bridges","priority":1}
-    }
+-   Status: DELETED
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C)
+    +++ description: Official Facet implementation of the Ether Bridge.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF)
+    +++ description: Module that allows the Safe to send Facet transactions.
 ```
 
 ```diff
@@ -129,23 +150,9 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 ```
 
 ```diff
-    contract L1ETHLockbox (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
-    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
-      name:
--        "L1StandardBridge"
-+        "L1ETHLockbox"
-      description:
--        "The main entry point to deposit ERC20 tokens from host chain to this chain."
-+        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."
-      values.messenger:
--        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
-      values.MESSENGER:
--        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
-      values.superchainConfig:
--        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
-      values.systemConfig:
--        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
-    }
+-   Status: DELETED
+    contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
 ```
 
 ```diff
@@ -155,31 +162,21 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+-   Status: DELETED
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525)
     +++ description: None
-      receivedPermissions.0:
--        {"permission":"guard","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":".guardian"}
-      receivedPermissions.1:
--        {"permission":"guard","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":".guardian"}
-      receivedPermissions.4:
--        {"permission":"interact","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"}
-      receivedPermissions.5:
--        {"permission":"upgrade","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-      receivedPermissions.7:
--        {"permission":"upgrade","from":"eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-      receivedPermissions.8:
--        {"permission":"upgrade","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-      receivedPermissions.9:
--        {"permission":"upgrade","from":"eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-      receivedPermissions.10:
--        {"permission":"upgrade","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":"admin","via":[{"address":"eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"}]}
-    }
 ```
 
 ```diff
 -   Status: DELETED
     contract SystemConfig (0xC1E935F25f9c1198200ec442c6F02f1A2F04534e)
     +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FacetSafeProxy (0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25)
+    +++ description: Helper of the Safe Module that allows to send Facet transactions.
 ```
 
 ```diff
@@ -195,19 +192,9 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C) {
+-   Status: DELETED
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C)
     +++ description: None
-      directlyReceivedPermissions.1:
--        {"permission":"upgrade","from":"eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD","role":"admin"}
-      directlyReceivedPermissions.3:
--        {"permission":"upgrade","from":"eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8","role":"admin"}
-      directlyReceivedPermissions.4:
--        {"permission":"upgrade","from":"eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e","role":"admin"}
-      directlyReceivedPermissions.5:
--        {"permission":"upgrade","from":"eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6","role":"admin"}
-      directlyReceivedPermissions.6:
--        {"permission":"upgrade","from":"eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59","role":"admin"}
-    }
 ```
 
 ```diff

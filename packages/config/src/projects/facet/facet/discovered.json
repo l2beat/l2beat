@@ -1,8 +1,8 @@
 {
   "name": "facet",
   "chain": "facet",
-  "blockNumber": 1632534,
-  "configHash": "0xce1cb87ca6e803ab2a84cbd24281055907bad31dcbb01fccd16c3caae04f39ec",
+  "blockNumber": 1633122,
+  "configHash": "0xedc152611d3045e925529a6069b3e4ff3541449bfe3c5ffb4fdf8ec532fab6e6",
   "entries": [
     {
       "address": "facet:0x13D21988F08997d20822d247A5015C4D13102F88",
@@ -122,5 +122,5 @@
     "facet/L2ERC20Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xfe6454ea16a2b66edc2c7c2acb6692039e9c56146f060d41db55910d92749471"
+  "permissionsConfigHash": "0xca4442f35d48306dfa54ab1dcb8035b9f2c017911a82ca39e1ce4c6793f19930"
 }
