@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xee58b448a5fb1f5fe9f6a077055d7129ef035c1c
+
+# Diff at Thu, 24 Jul 2025 16:48:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22923575
+- current block number: 22923575
+
+## Description
+
+set dispute game impl changes to high severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22923575 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0x658656A14AFdf9c507096aC406564497d13EC754) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0xB20f99b598E8d888d1887715439851BC68806b22) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xc28e877cd3b10f47644bafb51f3d67abac1636d5
 
 # Diff at Tue, 22 Jul 2025 14:07:52 GMT:

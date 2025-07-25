@@ -60,9 +60,9 @@ const cmd = command({
 
     const start = Date.now()
 
-    const timestampForTvs =
-      args.timestamp ??
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+    const timestampForTvs = args.timestamp
+      ? UnixTime.toStartOf(args.timestamp, 'hour')
+      : UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     logger.info(
       `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toUTCString()})`,

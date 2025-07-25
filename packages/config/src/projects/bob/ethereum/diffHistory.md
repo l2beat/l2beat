@@ -1,3 +1,82 @@
+Generated with discovered.json: 0xa00cbb3de3d013031d0d143f59e4a76e781ee777
+
+# Diff at Thu, 24 Jul 2025 16:48:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22988923
+- current block number: 22990276
+
+## Description
+
+set dispute game impl changes to high severity.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract KailuaTreasury (0x0fbC22B052f4745Bc9F80760D2D47E4993F36746)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
+    EOA  (0x7cB1022D30b9860C36b243E7B181A1d46f618C69) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "eth:0x0fbC22B052f4745Bc9F80760D2D47E4993F36746"
++        "eth:0x72284bbB177B13db6F7b703846EEDfB24914B764"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
++++ severity: HIGH
+      values.game1337:
+-        "eth:0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb"
++        "eth:0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract KailuaGame (0xCD1173B1B7A93E63070E1Ec37E8c8a9316f5AfDb)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaTreasury (0x72284bbB177B13db6F7b703846EEDfB24914B764)
+    +++ description: Entrypoint for state root proposals. Manages bonds (currently 0.5 ETH) and tournaments for the OP Kailua state validation system, wrapping the OP stack native DisputeGameFactory. The current vanguard advantage is defined here as 30d.
+```
+
+```diff
++   Status: CREATED
+    contract KailuaGame (0xD5A72E5C2d8fC5e12cba6F81FA67d9A5F4A48B6a)
+    +++ description: Implementation of the KailuaGame with type 1337. Based on this implementation, new KailuaGames are created with every new state root proposal.
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22988923 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame.
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x96123dbFC3253185B594c6a7472EE5A21E9B1079) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xfa99e90b94d041702d2993969e737a18c819eb96
 
 # Diff at Thu, 24 Jul 2025 12:21:30 GMT:

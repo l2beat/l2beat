@@ -2306,6 +2306,10 @@
         "permissionedGamesTotal": 0,
         "version": "1.0.1"
       },
+      "fieldMeta": {
+        "gameImpls": { "severity": "HIGH" },
+        "game1337": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe": "Proxy",
         "eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0": "DisputeGameFactory"

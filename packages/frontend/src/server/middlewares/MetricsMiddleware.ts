@@ -1,10 +1,10 @@
-import type { Logger } from '@l2beat/backend-tools'
 import type { NextFunction, Request, Response } from 'express'
+import { getLogger } from '../utils/logger'
 
-export function MetricsMiddleware(logger: Logger) {
+export function MetricsMiddleware() {
+  const logger = getLogger().for('Metrics')
   return (req: Request, res: Response, next: NextFunction) => {
-    const appLogger = logger.for('Metrics')
-    appLogger.info('Processing request', {
+    logger.info('Processing request', {
       method: req.method,
       url: req.originalUrl,
       referer: req.headers.referer ?? 'unknown',
@@ -16,7 +16,7 @@ export function MetricsMiddleware(logger: Logger) {
       const end = process.hrtime.bigint()
       const durationMs = Number(end - start) / 1_000_000
       const contentLength = res.getHeader('Content-Length')
-      appLogger.info('Request processed', {
+      logger.info('Request processed', {
         method: req.method,
         url: req.originalUrl,
         status: res.statusCode,

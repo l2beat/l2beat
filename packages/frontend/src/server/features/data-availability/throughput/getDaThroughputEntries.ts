@@ -57,7 +57,7 @@ interface DaThroughputEntryData {
         largestPoster:
           | {
               name: string
-              href: string
+              href?: string
               percentage: number
               totalPosted: number
             }
