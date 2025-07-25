@@ -12,7 +12,7 @@ export const superseed: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1743379200), // 2025-03-31T00:00:00Z
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Superseed',
     slug: 'superseed',
