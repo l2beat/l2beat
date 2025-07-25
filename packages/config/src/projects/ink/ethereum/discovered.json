@@ -789,13 +789,13 @@
       "name": "OptimismPortal2",
       "address": "eth:0x5d66C1782664115999C47c9fA5cd031f495D3e4F",
       "type": "Contract",
-      "template": "opstack/OptimismPortal2",
+      "template": "opstack/OptimismPortal2_post13",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x025be6415d31a7c8f475bf94e05a8288787b4adb41562108a42d0574c9af9543"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
+      "description": "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the FaultDisputeGame.",
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1733498411,
       "sinceBlock": 21344310,
@@ -1826,13 +1826,13 @@
       "name": "AnchorStateRegistry",
       "address": "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2",
       "type": "Contract",
-      "template": "opstack/AnchorStateRegistry",
+      "template": "opstack/AnchorStateRegistry_post13",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x1601463fd2e47d8994c28a90b556c6933f38e8685214f702dc41a5ae08d9787c"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
+      "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.",
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "sinceTimestamp": 1753379243,
       "sinceBlock": 22990599,
@@ -1858,16 +1858,28 @@
         "paused": false,
         "proxyAdmin": "eth:0xd56045E68956FCe2576E680c95a4750cf8241f79",
         "proxyAdminOwner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+        "RespectedGameString": "FaultDisputeGame",
         "respectedGameType": 0,
         "retirementTimestamp": 1753379243,
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
         "version": "3.5.0"
       },
+      "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xEe018bAf058227872540AC60eFbd38b023d9dAe2": "Proxy",
         "eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": "AnchorStateRegistry"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "1337": "KailuaGame"
+          }
+        }
+      ]
     },
     {
       "address": "eth:0xEF9A98511939eEe6Ec69af62082E3F2ff606877c",
@@ -2961,7 +2973,7 @@
     "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
+    "opstack/AnchorStateRegistry_post13": "0xb417258e0bed7d0b309a24f12000afea0e9d5952fb11707db35357da315500fd",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
     "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
@@ -2972,7 +2984,7 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
+    "opstack/OptimismPortal2_post13": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",

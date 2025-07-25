@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x79adba7d04005adf6273b9de06a94fc5b2800849
+Generated with discovered.json: 0x4b938c7e00629ee2cabee67b3b8c4a9ac0f22cc8
 
-# Diff at Fri, 25 Jul 2025 13:44:45 GMT:
+# Diff at Fri, 25 Jul 2025 17:48:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22924293
+- comparing to: main@dff0cc78015c4909229d9a2a9ca8fb6a3498b9d5 block: 22924293
 - current block number: 22996536
 
 ## Description
@@ -122,10 +122,16 @@ Check optimism diffhistory for [the upgrade 16 breakdown](https://gov.optimism.i
 
 ```diff
     contract OptimismPortal2 (0x5d66C1782664115999C47c9fA5cd031f495D3e4F) {
-    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the FaultDisputeGame.
+      template:
+-        "opstack/OptimismPortal2"
++        "opstack/OptimismPortal2_post13"
       sourceHashes.1:
 -        "0xc483ef9e0a5ec2a0450732e743b3784de0cd3876b8fadfce14c0805a0846d26b"
 +        "0x025be6415d31a7c8f475bf94e05a8288787b4adb41562108a42d0574c9af9543"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the FaultDisputeGame."
       values.$implementation:
 -        "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"
 +        "eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a"
@@ -448,7 +454,7 @@ Check optimism diffhistory for [the upgrade 16 breakdown](https://gov.optimism.i
 ```diff
 +   Status: CREATED
     contract AnchorStateRegistry (0xEe018bAf058227872540AC60eFbd38b023d9dAe2)
-    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
 ```
 
 ## Source code changes

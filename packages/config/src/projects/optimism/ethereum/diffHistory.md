@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x407427549cd1994c850e10e3b283a6d1cd0ccc39
+Generated with discovered.json: 0xb78b434a9cecf0905f34bbaae9cf197e59f47dd6
 
-# Diff at Fri, 25 Jul 2025 13:43:40 GMT:
+# Diff at Fri, 25 Jul 2025 17:48:24 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22567749
+- comparing to: main@dff0cc78015c4909229d9a2a9ca8fb6a3498b9d5 block: 22567749
 - current block number: 22995199
 
 ## Description
@@ -23,6 +23,7 @@ almost all contracts have:
 
 [OptimismPortal2](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a)
 - add `migrateLiquidity()` and `migrateToSuperRoots()`, callable by proxyAdminOwner
+- `setRespectedGameType()` and `blacklistDisputeGame()` removed (moved to AnchorStateRegistry)
 - ETH moved to the ETHLockbox
 - superRoots (interop) support (e.g. for proving withdrawals)
 
@@ -43,8 +44,8 @@ ETHLockbox
 [DisputeGameFactory](https://disco.l2beat.com/diff/eth:0x4bbA758F006Ef09402eF31724203F316ab74e4a0/eth:0x33D1e8571a85a538ed3D5A4d88f46C112383439D)
 - minimal changes
 
-[AnchorStateRegistry](https://disco.l2beat.com/diff/eth:0x1c68ECfbf9C8B1E6C0677965b3B9Ecf9A104305b/eth:0x23B2C62946350F4246f9f9D027e071f0264FD113)
-- no diff
+[AnchorStateRegistry](https://disco.l2beat.com/diff/eth:0x7b465370BB7A333f99edd19599EB7Fb1c2D3F8D2/eth:0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E)
+- `setRespectedGameType()` and `blacklistDisputeGame()` added, can be called by guardian (not DeputyPauser)
 
 [FaultDisputeGame](https://disco.l2beat.com/diff/eth:0x89D68b1D63AAA0db4af1163e81f56B76934292F8/eth:0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F)
 - minimal changes
@@ -52,8 +53,9 @@ ETHLockbox
 [PermissionedDisputegame](https://disco.l2beat.com/diff/eth:0xa1E0baCde89d899B3f24eEF3D179cC335A24E777/eth:0xEcca4BFbD017002abf25Aeebf2B21b903A5fC124)
 - minimal changes
 
-[DelayedWETH](https://disco.l2beat.com/diff/eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC/eth:0xc5f54F934075677FBA99b5E43468439cbdE88ca7)
-- no diff
+[DelayedWETH](https://disco.l2beat.com/diff/eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e/eth:0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998)
+- ownable removed
+- `hold()` (recover) now requires msg.sender == proxyadminowner
 
 [MIPS64](https://disco.l2beat.com/diff/eth:0xF027F4A985560fb13324e943edf55ad6F1d15Dc1/eth:0xA1B54D89e305bcd322Ba0C9C094093173C0d6b3a)
 - explanations about the diff are in the forum post
@@ -371,10 +373,16 @@ ETHLockbox
 
 ```diff
     contract OptimismPortal2 (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
-    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the FaultDisputeGame.
+      template:
+-        "opstack/OptimismPortal2"
++        "opstack/OptimismPortal2_post13"
       sourceHashes.1:
 -        "0xc483ef9e0a5ec2a0450732e743b3784de0cd3876b8fadfce14c0805a0846d26b"
 +        "0x025be6415d31a7c8f475bf94e05a8288787b4adb41562108a42d0574c9af9543"
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. The state root respected for withdrawals comnes from the FaultDisputeGame."
       values.$implementation:
 -        "eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4"
 +        "eth:0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a"
@@ -461,7 +469,7 @@ ETHLockbox
 ```diff
 +   Status: CREATED
     contract AnchorStateRegistry (0x23B2C62946350F4246f9f9D027e071f0264FD113)
-    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game.
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the FaultDisputeGame.
 ```
 
 ```diff
