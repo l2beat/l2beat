@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xed0c597d0512a0d84d5de4a3d7dd1a15d3da18c8
+Generated with discovered.json: 0x87993f0e3cda36894527de316e403f5c6f4b90e5
 
-# Diff at Fri, 25 Jul 2025 15:25:41 GMT:
+# Diff at Fri, 25 Jul 2025 15:49:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22975742
@@ -19,18 +19,20 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
     +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0xef91b38Ca24C97C7147FcA3429503c76CdE043DD","role":".challenger"}
       receivedPermissions.1:
 -        {"permission":"guard","from":"eth:0x91493a61ab83b62943E6dCAa5475Dd330704Cc84","role":".guardian"}
       receivedPermissions.2:
 -        {"permission":"guard","from":"eth:0x91493a61ab83b62943E6dCAa5475Dd330704Cc84","role":".GUARDIAN"}
-      receivedPermissions.3:
+      receivedPermissions.4:
 +        {"permission":"interact","from":"eth:0xFc908935E4BBA7D7bD1CBFf72bDD79bd1c1d751E","description":"can pull funds from the contract in case of emergency.","role":".owner"}
       receivedPermissions.6.from:
 -        "eth:0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
 +        "eth:0x4d3189fa0E612fb640a1DbEd9fAd9518bB3c13Dc"
-      receivedPermissions.11:
+      receivedPermissions.12:
 +        {"permission":"upgrade","from":"eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136","role":"admin","via":[{"address":"eth:0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"}]}
-      receivedPermissions.13:
+      receivedPermissions.14:
 +        {"permission":"upgrade","from":"eth:0xFc908935E4BBA7D7bD1CBFf72bDD79bd1c1d751E","role":"admin","via":[{"address":"eth:0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"}]}
     }
 ```
@@ -44,8 +46,14 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     EOA  (0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0x5e76821C3c1AbB9fD6E310224804556C61D860e0","role":".proposer"},{"permission":"propose","from":"eth:0x5e76821C3c1AbB9fD6E310224804556C61D860e0","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0x5e76821C3c1AbB9fD6E310224804556C61D860e0","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0x5e76821C3c1AbB9fD6E310224804556C61D860e0"
++        "eth:0xef91b38Ca24C97C7147FcA3429503c76CdE043DD"
     }
 ```
 

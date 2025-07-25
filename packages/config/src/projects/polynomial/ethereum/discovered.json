@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 22997045,
-  "configHash": "0x4df05d89737975bbbd41d8703cc6f18412096d3e9b266ec42a4a2a2ccd620bf5",
+  "configHash": "0x597f6e0f0e674b77e9b1e5c11e8e52aabc034bf92b220a335c1aa69a22af3a97",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -414,6 +414,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "eth:0x7C54ef577132b3A82c229372CC505DFC8B705955",
+          "role": ".challenger"
+        },
+        {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
           "role": ".guardian"
@@ -753,7 +758,14 @@
     {
       "address": "eth:0x5DA28F0186051a9F7b9eE2553FFdc165EB0A6714",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x7C54ef577132b3A82c229372CC505DFC8B705955",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "address": "eth:0x67a44CE38627F46F20b1293960559eD85Dd194F1",
@@ -1092,7 +1104,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1753169831,
       "sinceBlock": 22973279,
       "values": {
@@ -1858,5 +1870,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xdae8dac77bfdeb5ab2de6f467826f61a93188de6e5b81b54d2331196332388ce"
+  "permissionsConfigHash": "0x8a3a6cc85a2d397a8886fac5f0d2aa1d87fb88e58ffabdbe81dbc46cdad1adfc"
 }

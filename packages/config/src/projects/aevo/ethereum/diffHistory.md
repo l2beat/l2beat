@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc884dcb1f33eda6b20b88b48398f689c1f810410
+Generated with discovered.json: 0x5ce599f420b01dc54a92af8bcd8d899da8c44b90
 
-# Diff at Fri, 25 Jul 2025 07:15:06 GMT:
+# Diff at Fri, 25 Jul 2025 15:49:51 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@295d114e709e8645bf1ccf4060f325de53a829ab block: 22975693
+- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22975693
 - current block number: 22994605
 
 ## Description
@@ -115,8 +115,12 @@ maxClockDuration = 30min
     +++ description: None
       receivedPermissions.0:
 -        {"permission":"challenge","from":"eth:0x909E51211e959339EFb14b36f5A50955a8ae3770","role":".challenger"}
-      receivedPermissions.1:
--        {"permission":"challenge","from":"eth:0x909E51211e959339EFb14b36f5A50955a8ae3770","role":".CHALLENGER"}
+      receivedPermissions.1.role:
+-        ".CHALLENGER"
++        ".challenger"
+      receivedPermissions.1.from:
+-        "eth:0x909E51211e959339EFb14b36f5A50955a8ae3770"
++        "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C"
       receivedPermissions.3:
 -        {"permission":"guard","from":"eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320","role":".guardian"}
       receivedPermissions.4.description:
@@ -130,11 +134,11 @@ maxClockDuration = 30min
       receivedPermissions.4.permission:
 -        "guard"
 +        "interact"
-      receivedPermissions.5:
+      receivedPermissions.6:
 +        {"permission":"upgrade","from":"eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8","role":"admin","via":[{"address":"eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
-      receivedPermissions.9:
-+        {"permission":"upgrade","from":"eth:0x535fA600a9Cb3e0731a18B0C16b39ad461B63bDb","role":"admin","via":[{"address":"eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
       receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x535fA600a9Cb3e0731a18B0C16b39ad461B63bDb","role":"admin","via":[{"address":"eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
+      receivedPermissions.11:
 +        {"permission":"upgrade","from":"eth:0x5c30F525Ca2F10377F352B349fca9a6b2AA1cA2E","role":"admin","via":[{"address":"eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
       receivedPermissions.13:
 -        {"permission":"upgrade","from":"eth:0x909E51211e959339EFb14b36f5A50955a8ae3770","role":"admin","via":[{"address":"eth:0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"}]}
@@ -168,8 +172,14 @@ maxClockDuration = 30min
 ```diff
     EOA  (0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0x909E51211e959339EFb14b36f5A50955a8ae3770","role":".proposer"},{"permission":"propose","from":"eth:0x909E51211e959339EFb14b36f5A50955a8ae3770","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0x909E51211e959339EFb14b36f5A50955a8ae3770","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0x909E51211e959339EFb14b36f5A50955a8ae3770"
++        "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C"
     }
 ```
 

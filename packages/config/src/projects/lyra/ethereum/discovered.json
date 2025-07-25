@@ -2,7 +2,7 @@
   "name": "lyra",
   "chain": "ethereum",
   "blockNumber": 22994843,
-  "configHash": "0xb10727db0cfbd61124519edf4a3aa228a5374d09bde8db3110df9ab8bcb555bd",
+  "configHash": "0xedebc90f72a3d0e0a023eecc28f9918b5e551c5f2a2870c86ae12f65b8e4b73e",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -12,7 +12,14 @@
     {
       "address": "eth:0x03e820562ffd2e0390787caD706EaF1FF98C2608",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x35844639E3e674C484180C650EfD2170433Df71c",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -464,6 +471,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x35844639E3e674C484180C650EfD2170433Df71c",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -982,7 +994,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1753168547,
       "sinceBlock": 22973172,
       "values": {
@@ -1858,5 +1870,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x23636d09b56bce8193a16836675b5d3fb4bd12b28feade6eb6934aabc8517b7a"
+  "permissionsConfigHash": "0xfaac04e3dcc13abee2f0694c2959b92c68bc9e0198d9ee66961ac69722f085cf"
 }

@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 22997066,
-  "configHash": "0x9802d4dea9bab443cc944631526c0b44feb8d6565d53bb06ee7d1669b29b722b",
+  "configHash": "0x79d88bcc595a9c8234566956548939847fb8f38d24cd43a8b907d3398e087f5d",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -114,7 +114,14 @@
     {
       "address": "eth:0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "PermissionedDisputeGame",
@@ -231,6 +238,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -929,7 +941,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1753168895,
       "sinceBlock": 22973201,
       "values": {
@@ -1858,5 +1870,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x6ddde93c29e142668ff9fa8694f5b0f85c1bba224db251b44f5d1e7230891a87"
+  "permissionsConfigHash": "0x37f73b5606dfbc27cf80b41135101694ab359fdf985f9f90c762bb1d780c627b"
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x028dff1d7b05680760166e5dedd2efd7215ce172
+Generated with discovered.json: 0xbeea1cffbcdd10ecbb11b6e472a022da2a6420ac
 
-# Diff at Fri, 25 Jul 2025 08:02:53 GMT:
+# Diff at Fri, 25 Jul 2025 15:49:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@295d114e709e8645bf1ccf4060f325de53a829ab block: 22975733
+- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22975733
 - current block number: 22994843
 
 ## Description
@@ -19,8 +19,14 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     EOA  (0x03e820562ffd2e0390787caD706EaF1FF98C2608) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","role":".proposer"},{"permission":"propose","from":"eth:0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
++        "eth:0x35844639E3e674C484180C650EfD2170433Df71c"
     }
 ```
 
@@ -120,18 +126,20 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
     +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0x35844639E3e674C484180C650EfD2170433Df71c","role":".challenger"}
       receivedPermissions.1:
 -        {"permission":"guard","from":"eth:0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8","role":".guardian"}
       receivedPermissions.2:
 -        {"permission":"guard","from":"eth:0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8","role":".GUARDIAN"}
-      receivedPermissions.2:
+      receivedPermissions.3:
 +        {"permission":"interact","from":"eth:0x50E61EBCAB2307584B22bCFC32B97a0B56Ed2A31","description":"can pull funds from the contract in case of emergency.","role":".owner"}
       receivedPermissions.8.from:
 -        "eth:0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
 +        "eth:0x50E61EBCAB2307584B22bCFC32B97a0B56Ed2A31"
-      receivedPermissions.12:
-+        {"permission":"upgrade","from":"eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21","role":"admin","via":[{"address":"eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"}]}
       receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21","role":"admin","via":[{"address":"eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"}]}
+      receivedPermissions.14:
 +        {"permission":"upgrade","from":"eth:0xd6f5C91E2bD2ed5726eE84e8D7B97B01A079E1C5","role":"admin","via":[{"address":"eth:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"}]}
     }
 ```

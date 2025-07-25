@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc9457d0e432fe32823c57c0af2fe720f6eab7067
+Generated with discovered.json: 0x6ed915c2e48cd581211412052e2a78845f5ff1cc
 
-# Diff at Fri, 25 Jul 2025 07:26:44 GMT:
+# Diff at Fri, 25 Jul 2025 15:49:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@295d114e709e8645bf1ccf4060f325de53a829ab block: 22975729
+- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22975729
 - current block number: 22994665
 
 ## Description
@@ -126,18 +126,20 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
     +++ description: None
+      receivedPermissions.0:
++        {"permission":"challenge","from":"eth:0xF91357dCa2abDB3388600792d51CAe6644632Cd5","role":".challenger"}
       receivedPermissions.1:
 -        {"permission":"guard","from":"eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68","role":".guardian"}
       receivedPermissions.2:
 -        {"permission":"guard","from":"eth:0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68","role":".GUARDIAN"}
-      receivedPermissions.3:
+      receivedPermissions.4:
 +        {"permission":"interact","from":"eth:0x7b4F80Bf01b0Dc86C08C55d8AfC1F5535fA925db","description":"can pull funds from the contract in case of emergency.","role":".owner"}
-      receivedPermissions.8:
+      receivedPermissions.9:
 +        {"permission":"upgrade","from":"eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1","role":"admin","via":[{"address":"eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492"}]}
       receivedPermissions.10.from:
 -        "eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996"
 +        "eth:0x7b4F80Bf01b0Dc86C08C55d8AfC1F5535fA925db"
-      receivedPermissions.12:
+      receivedPermissions.13:
 +        {"permission":"upgrade","from":"eth:0xd5FeaB771AD626fA33ceE0423Aa0DCF05C13b5C6","role":"admin","via":[{"address":"eth:0x75a223Fb459461B9Fa61dd25109EA05522b4b492"}]}
     }
 ```
@@ -222,8 +224,14 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     EOA  (0xAF24199C29D5cc3fd298356137913A42847eA690) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996","role":".proposer"},{"permission":"propose","from":"eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0xB09DC08428C8b4EFB4ff9C0827386CDF34277996"
++        "eth:0xF91357dCa2abDB3388600792d51CAe6644632Cd5"
     }
 ```
 

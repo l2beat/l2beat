@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x68efbfce66e8f41a4ac20d8a3eeaa79b0b5ea7af
+Generated with discovered.json: 0x6f5f9e4ae5fadbbf99600a7517c96ef5da08f105
 
-# Diff at Fri, 25 Jul 2025 15:31:39 GMT:
+# Diff at Fri, 25 Jul 2025 15:49:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22975737
@@ -38,8 +38,14 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     EOA  (0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","role":".proposer"},{"permission":"propose","from":"eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED"
++        "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531"
     }
 ```
 
@@ -48,8 +54,12 @@ standard 3.5; 3.5; 7 finality conf
     +++ description: None
       receivedPermissions.0:
 -        {"permission":"challenge","from":"eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","role":".challenger"}
-      receivedPermissions.1:
--        {"permission":"challenge","from":"eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","role":".CHALLENGER"}
+      receivedPermissions.1.role:
+-        ".CHALLENGER"
++        ".challenger"
+      receivedPermissions.1.from:
+-        "eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED"
++        "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531"
       receivedPermissions.3:
 -        {"permission":"guard","from":"eth:0x59625d1FE0Eeb8114a4d13c863978F39b3471781","role":".guardian"}
       receivedPermissions.4.description:
@@ -63,12 +73,12 @@ standard 3.5; 3.5; 7 finality conf
       receivedPermissions.4.permission:
 -        "guard"
 +        "interact"
-      receivedPermissions.7:
+      receivedPermissions.8:
 +        {"permission":"upgrade","from":"eth:0x6d4A27F3eb196E4d039a5EE5B510Cc4C89b7eA9a","role":"admin","via":[{"address":"eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]}
       receivedPermissions.10.from:
 -        "eth:0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED"
 +        "eth:0x807c2aF3Ae99a20576B00b58327B594D47f837FB"
-      receivedPermissions.11:
+      receivedPermissions.12:
 +        {"permission":"upgrade","from":"eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662","role":"admin","via":[{"address":"eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"}]}
     }
 ```

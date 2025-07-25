@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x02b79e80246303939478df9375cc10bc3f2e29d7
+Generated with discovered.json: 0x0f80c3fd3804c6edd781698f956d55335ab2f4d6
 
-# Diff at Fri, 25 Jul 2025 15:20:59 GMT:
+# Diff at Fri, 25 Jul 2025 15:49:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22975755
@@ -177,18 +177,22 @@ standard 3.5; 3.5; 7 finality conf
     +++ description: None
       receivedPermissions.0:
 -        {"permission":"challenge","from":"eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949","role":".challenger"}
-      receivedPermissions.1:
--        {"permission":"challenge","from":"eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949","role":".CHALLENGER"}
-      receivedPermissions.3:
+      receivedPermissions.1.role:
+-        ".CHALLENGER"
++        ".challenger"
+      receivedPermissions.1.from:
+-        "eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949"
++        "eth:0x97dd8AF1eCcfa97158Ce9ee8A60B0264acE8435F"
+      receivedPermissions.4:
 +        {"permission":"interact","from":"eth:0x6edCB2D479f9137EE0ae4678b9f930574DFe3115","description":"can pull funds from the contract in case of emergency.","role":".owner"}
       receivedPermissions.6:
 -        {"permission":"upgrade","from":"eth:0x118D04d841B54FC52e56D39371E278EF7815C358","role":"admin","via":[{"address":"eth:0xF3b7697c9C0CbdE923f34991F2D19cC1c66612bD"}]}
-      receivedPermissions.9:
+      receivedPermissions.10:
 +        {"permission":"upgrade","from":"eth:0x657c1b0e31FFc69A02B207Be20699bDFF938c7E7","role":"admin","via":[{"address":"eth:0xF3b7697c9C0CbdE923f34991F2D19cC1c66612bD"}]}
       receivedPermissions.11.from:
 -        "eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949"
 +        "eth:0x6edCB2D479f9137EE0ae4678b9f930574DFe3115"
-      receivedPermissions.13:
+      receivedPermissions.14:
 +        {"permission":"upgrade","from":"eth:0xdFC38b17b9ca4610dAD13Da43CbEc2277D14C5c1","role":"admin","via":[{"address":"eth:0xF3b7697c9C0CbdE923f34991F2D19cC1c66612bD"}]}
     }
 ```
@@ -327,8 +331,14 @@ standard 3.5; 3.5; 7 finality conf
 ```diff
     EOA  (0xB2354BDF5925d03cA06B03a7bD7386Bd685cE814) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949","role":".proposer"},{"permission":"propose","from":"eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0x693A0F8854F458D282DE3C5b69E8eE5EEE8aA949"
++        "eth:0x97dd8AF1eCcfa97158Ce9ee8A60B0264acE8435F"
     }
 ```
 

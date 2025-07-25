@@ -2,7 +2,7 @@
   "name": "ancient",
   "chain": "ethereum",
   "blockNumber": 22994665,
-  "configHash": "0xb9023ec3d49afc2217ca5ff37ab8233d6e2ec27ca17106715ee67c03f1c50d04",
+  "configHash": "0x8ed9dcfba38c53a9287a76666e5fdf25a49553308965f5788ecf30d8616a42be",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -393,7 +393,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1753167575,
       "sinceBlock": 22973091,
       "values": {
@@ -447,6 +447,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0xF91357dCa2abDB3388600792d51CAe6644632Cd5",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -864,7 +869,14 @@
     {
       "address": "eth:0xAF24199C29D5cc3fd298356137913A42847eA690",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0xF91357dCa2abDB3388600792d51CAe6644632Cd5",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -1897,5 +1909,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xcb9d1418c318f268396b3a6ad7869de64e0cd00f98c507fe23ee0005fb881ada"
+  "permissionsConfigHash": "0xd82c6ccb59a3493d59d58d29e93a8a4a54d2adc023f6ec9555d2f4be1af498dc"
 }
