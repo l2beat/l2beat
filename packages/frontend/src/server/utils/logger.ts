@@ -9,7 +9,13 @@ import {
 import { env } from '~/env'
 import type { ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
 
-export function createLogger(): Logger {
+let logger: Logger | undefined
+
+export function getLogger(): Logger {
+  if (logger) {
+    return logger
+  }
+
   const isLocal = env.NODE_ENV !== 'production'
 
   const loggerTransports: LoggerTransportOptions[] = [
@@ -50,5 +56,6 @@ export function createLogger(): Logger {
     metricsEnabled: false,
   }
 
-  return new Logger(options)
+  logger = new Logger(options)
+  return logger
 }
