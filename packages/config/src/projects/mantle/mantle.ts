@@ -27,7 +27,7 @@ export const mantle: ScalingProject = opStackL2({
       websites: ['https://mantle.xyz/'],
       bridges: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs-v2.mantle.xyz/'],
-      explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
+      explorers: ['https://explorer.mantle.xyz/'],
       repositories: ['https://github.com/mantlenetworkio'],
       socialMedia: [
         'https://discord.gg/0xMantle',
