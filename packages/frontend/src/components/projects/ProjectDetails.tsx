@@ -3,6 +3,7 @@ import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
+import { DataPostedSection } from './sections/DataPostedSection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
@@ -68,6 +69,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'CostsSection':
             return (
               <CostsSection
+                key={item.props.id}
+                {...{ nested, sectionOrder }}
+                {...item.props}
+              />
+            )
+          case 'DataPostedSection':
+            return (
+              <DataPostedSection
                 key={item.props.id}
                 {...{ nested, sectionOrder }}
                 {...item.props}

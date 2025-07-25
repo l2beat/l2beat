@@ -5,24 +5,28 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
-import { CostsTimeRange } from '../../scaling/costs/utils/range'
+import { DataPostedTimeRange } from '../../scaling/data-posted/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import { rangeToResolution } from './utils/range'
 
-export type ProjectDaThroughputChart = {
-  chart: ProjectDaThroughputChartPoint[]
+export type ScalingProjectDaThroughputChart = {
+  chart: ScalingProjectDaThroughputChartPoint[]
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
+  stats: {
+    total: number
+    avgPerDay: number
+  }
 }
-export type ProjectDaThroughputChartPoint = [
+export type ScalingProjectDaThroughputChartPoint = [
   timestamp: number,
   value: number | null,
 ]
 
-export const ProjectDaThroughputChartParams = v.object({
+export const ScalingProjectDaThroughputChartParams = v.object({
   range: v.union([
     v.object({
-      type: v.union([DaThroughputTimeRange, CostsTimeRange]),
+      type: DataPostedTimeRange,
     }),
     v.object({
       type: v.literal('custom'),
@@ -30,18 +34,17 @@ export const ProjectDaThroughputChartParams = v.object({
       to: v.number(),
     }),
   ]),
-  includeScalingOnly: v.boolean(),
   projectId: v.string(),
 })
-export type ProjectDaThroughputChartParams = v.infer<
-  typeof ProjectDaThroughputChartParams
+export type ScalingProjectDaThroughputChartParams = v.infer<
+  typeof ScalingProjectDaThroughputChartParams
 >
 
-export async function getProjectDaThroughputChart(
-  params: ProjectDaThroughputChartParams,
-): Promise<ProjectDaThroughputChart | undefined> {
+export async function getScalingProjectDaThroughputChart(
+  params: ScalingProjectDaThroughputChartParams,
+): Promise<ScalingProjectDaThroughputChart | undefined> {
   if (env.MOCK) {
-    return getMockProjectDaThroughputChart(params)
+    return getMockScalingProjectDaThroughputChart(params)
   }
 
   const db = getDb()
@@ -54,24 +57,16 @@ export async function getProjectDaThroughputChart(
     now: adjustedTarget,
   })
 
-  const throughput = await (params.includeScalingOnly
-    ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        [params.projectId],
-        [from, adjustedTarget],
-      )
-    : db.dataAvailability.getByProjectIdsAndTimeRange(
-        [params.projectId],
-        [from, adjustedTarget],
-      ))
+  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
+    [params.projectId],
+    [from, adjustedTarget],
+  )
 
   if (throughput.length === 0) {
     return undefined
   }
 
-  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
-    throughput,
-    resolution,
-  )
+  const { grouped, minTimestamp } = groupByTimestamp(throughput, resolution)
   const chartAdjustedTo =
     resolution === 'hourly'
       ? to - UnixTime.HOUR
@@ -86,17 +81,31 @@ export async function getProjectDaThroughputChart(
   const syncedUntil = throughput.at(-1)?.timestamp
   assert(syncedUntil, 'syncedUntil is undefined')
 
-  return {
-    chart: timestamps.map((timestamp) => {
-      const posted = timestamp <= syncedUntil ? (grouped[timestamp] ?? 0) : null
+  let total = 0
+  const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
+    (timestamp) => {
+      const posted =
+        timestamp <= syncedUntil ? (grouped[timestamp] ?? null) : null
+      total += posted ?? 0
       return [timestamp, posted]
-    }),
+    },
+  )
+
+  const days = Math.round((chartAdjustedTo - minTimestamp) / UnixTime.DAY)
+  const avgPerDay = total / days
+
+  return {
+    chart,
     range: [minTimestamp, chartAdjustedTo],
     syncedUntil,
+    stats: {
+      total,
+      avgPerDay,
+    },
   }
 }
 
-function groupByTimestampAndProjectId(
+function groupByTimestamp(
   records: ProjectsSummedDataAvailabilityRecord[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
@@ -125,30 +134,34 @@ function groupByTimestampAndProjectId(
   }
 }
 
-function getMockProjectDaThroughputChart({
+function getMockScalingProjectDaThroughputChart({
   range,
-  projectId,
-}: ProjectDaThroughputChartParams): ProjectDaThroughputChart {
+}: ScalingProjectDaThroughputChartParams): ScalingProjectDaThroughputChart {
   const days = rangeToDays(range) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 
-  if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
-    return {
-      chart: [],
-      range: [from, to],
-      syncedUntil: UnixTime.now(),
-    }
-  }
-
   const timestamps = generateTimestamps([from, to], 'daily')
-  return {
-    chart: timestamps.map((timestamp) => {
-      const throughputValue = Math.random() * 900_000_000 + 90_000_000
 
+  let total = 0
+  const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
+    (timestamp) => {
+      const throughputValue = Math.random() * 900_000_000 + 90_000_000
+      total += throughputValue
       return [timestamp, Math.round(throughputValue)]
-    }),
+    },
+  )
+
+  const numberOfDays = Math.round((to - from) / UnixTime.DAY)
+  const avgPerDay = total / numberOfDays
+
+  return {
+    chart,
     range: [from, to],
     syncedUntil: UnixTime.now(),
+    stats: {
+      total,
+      avgPerDay,
+    },
   }
 }

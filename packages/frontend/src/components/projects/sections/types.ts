@@ -2,6 +2,7 @@ import type { ActivitySectionProps } from './ActivitySection'
 import type { ContractsSectionProps } from './contracts/ContractsSection'
 import type { CostsSectionProps } from './costs/CostsSection'
 import type { DaRiskSummarySectionProps } from './DaRiskSummarySection'
+import type { DataPostedSectionProps } from './DataPostedSection'
 import type { DetailedDescriptionSectionProps } from './DetailedDescriptionSection'
 import type { GrissiniRiskAnalysisSectionProps } from './GrissiniRiskAnalysisSection'
 import type { GroupSectionProps } from './GroupSection'
@@ -44,6 +45,7 @@ type SectionId =
   | 'contracts'
   | 'sequencing'
   | 'throughput'
+  | 'data-posted'
 
 type GroupId = 'da-layer' | 'da-bridge'
 
@@ -156,6 +158,11 @@ interface ProjectDetailsContractsSection {
   props: ProjectDetailsProps<ContractsSectionProps>
 }
 
+interface ProjectDetailsDataPostedSection {
+  type: 'DataPostedSection'
+  props: ProjectDetailsProps<DataPostedSectionProps>
+}
+
 interface ProjectDetailsUpcomingDisclaimer {
   type: 'UpcomingDisclaimer'
   excludeFromNavigation: true
@@ -191,6 +198,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsSequencingSection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
+  | ProjectDetailsDataPostedSection
   | ProjectDetailsUpcomingDisclaimer
   | ProjectDetailsGroup
   | ProjectDetailsGrissiniRiskAnalysisSection
