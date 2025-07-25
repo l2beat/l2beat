@@ -91,17 +91,15 @@ export async function getProjectLivenessChart({
     stats[to] = stats[from]
   }
 
-  const groupedByResolution = groupBy(
-    chartEntries.filter((e) => e.timestamp < 1751275600),
-    (e) =>
-      UnixTime.toStartOf(
-        e.timestamp,
-        resolution === 'hourly'
-          ? 'hour'
-          : resolution === 'daily'
-            ? 'day'
-            : 'six hours',
-      ),
+  const groupedByResolution = groupBy(chartEntries, (e) =>
+    UnixTime.toStartOf(
+      e.timestamp,
+      resolution === 'hourly'
+        ? 'hour'
+        : resolution === 'daily'
+          ? 'day'
+          : 'six hours',
+    ),
   )
 
   const startTimestamp = Math.min(

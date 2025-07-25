@@ -89,10 +89,7 @@ export async function getSummedTvsValues(
 
   const timestamps = valueRecords.map((v) => v.timestamp)
   const fromTimestamp = Math.min(...timestamps)
-  const groupedByTimestamp = keyBy(
-    valueRecords.filter((v) => v.timestamp < 1751275600),
-    (v) => v.timestamp,
-  )
+  const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
   return generateTimestamps([fromTimestamp, target], resolution, {
     addTarget: true,

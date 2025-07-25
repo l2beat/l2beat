@@ -81,9 +81,7 @@ export async function getActivityChart({
     }
   }
 
-  const aggregatedEntries = aggregateActivityRecords(
-    entries.filter((e) => e.timestamp < 1750377600),
-  )
+  const aggregatedEntries = aggregateActivityRecords(entries)
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
     return { data: [], syncWarning, syncedUntil: syncedUntil }
   }
@@ -102,7 +100,7 @@ export async function getActivityChart({
     number | null,
   ][] = timestamps.map((timestamp) => {
     const entry = aggregatedEntries[timestamp]
-    if (!entry) {
+    if (!entry || entry.uopsCount === null || entry.count === null) {
       return [timestamp, null, null, null, null]
     }
     return [

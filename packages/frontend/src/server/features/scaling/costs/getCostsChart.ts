@@ -67,10 +67,7 @@ export async function getCostsChart({
     return []
   }
 
-  const summedByTimestamp = sumByTimestamp(
-    data.filter((p) => p.timestamp < 1751275600),
-    resolution,
-  )
+  const summedByTimestamp = sumByTimestamp(data, resolution)
 
   const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
 
