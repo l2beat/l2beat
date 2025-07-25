@@ -1,8 +1,9 @@
-import type { Logger } from '@l2beat/backend-tools'
 import { randomUUID } from 'crypto'
 import type { NextFunction, Request, Response } from 'express'
+import { getLogger } from '../utils/logger'
 
-export function ErrorHandler(appLogger: Logger) {
+export function ErrorHandler() {
+  const logger = getLogger().for('ErrorHandler')
   return (err: Error, req: Request, res: Response, next: NextFunction) => {
     if (res.headersSent) {
       return next(err)
@@ -10,7 +11,7 @@ export function ErrorHandler(appLogger: Logger) {
 
     const errorId = randomUUID()
     res.status(500)
-    appLogger.error('Error processing request', {
+    logger.error('Error processing request', {
       error: err instanceof Error ? err.message : String(err),
       method: req.method,
       url: req.originalUrl,
