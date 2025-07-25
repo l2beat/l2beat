@@ -45,8 +45,7 @@
             "chain": "ethereum",
             "escrowAddress": "0x88e529A6ccd302c948689Cd5156C83D4614FAE92",
             "decimals": 18,
-            "sinceTimestamp": 1733134751,
-            "untilTimestamp": 1753380095
+            "sinceTimestamp": 1733134751
           },
           {
             "type": "balanceOfEscrow",
