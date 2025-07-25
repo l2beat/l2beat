@@ -150,6 +150,25 @@ export const TRUSTED_SETUPS = {
     - Blog post: https://www.zircuit.com/blog/zircuit-kzg-ceremony
     `,
   },
+  Loopring: {
+    id: 'Loopring',
+    risk: 'red',
+    shortDescription:
+      'Two circuit-specific trusted setups for Groth16 verifiers of two L2s built with Loopring zk rollup stack.',
+    longDescription: `
+    
+    ## Loopring Stack
+
+    This entry incorporates two different trusted setups with very similar properties. Namely, these are 
+    circuit-specific trusted setups for Groth16 circuits over BN254 curve of DeGate and Loopring app chains 
+    that are built with Loopring zk tech stack. DeGate trusted setup includes 5 phase 2 (i.e. circuit-specific) 
+    contributions, Loopring trusted setup includes 16 phase 2 contributions. Circuit-specific phase builds on top 
+    of the [Perpetual Powers of Tau ceremony](https://github.com/privacy-scaling-explorations/perpetualpowersoftau).
+
+    - Repo for Loopring trusted setup: https://github.com/Loopring/trusted_setup/tree/master, repo for DeGate trusted setup: https://github.com/degatedev/trusted_setup/tree/master
+    - Post for DeGate ceremony: https://medium.com/degate/degate-completes-zk-trusted-setup-ceremony-4752301e379f
+    `,
+  },
 } as const satisfies Record<string, TrustedSetup>
 
 export type TrustedSetupId = keyof typeof TRUSTED_SETUPS

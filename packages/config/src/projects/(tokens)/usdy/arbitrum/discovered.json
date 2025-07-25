@@ -2,7 +2,7 @@
   "name": "usdy",
   "chain": "arbitrum",
   "blockNumber": 358948574,
-  "configHash": "0x314d9f6e3495dc56f9521ed193001cbc374886259d36d0befc8617f3c80e9657",
+  "configHash": "0xdbd8faaf81f843bcb3a069bf26b2b8f581c1590601c5cf54f3b728b107623422",
   "entries": [
     {
       "name": "USDY",
@@ -13,6 +13,7 @@
         "0x43a5711ce2edb57c1a757db5b3ca553200f976c92f71bde014acdb5c74b0bdfb"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1723057357,
       "sinceBlock": 240467591,
       "values": {

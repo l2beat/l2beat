@@ -6,6 +6,7 @@
   "initialAddresses": ["base:0x1Bc71130A0e39942a7658878169764Bbd8A45993"],
   "overrides": {
     "base:0x1Bc71130A0e39942a7658878169764Bbd8A45993": {
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "fields": {
         "$tokenData": {
           "handler": {

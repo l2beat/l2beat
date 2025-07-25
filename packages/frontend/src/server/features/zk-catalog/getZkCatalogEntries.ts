@@ -17,6 +17,7 @@ import {
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
+import { getLogger } from '~/server/utils/logger'
 
 export interface ZkCatalogEntry extends CommonProjectEntry {
   name: string
@@ -67,7 +68,11 @@ function getZkCatalogEntry(
   const projectsForTvs = uniq(
     usedInVerifiers.flatMap((vp) => {
       const project = allProjects.find((p) => p.id === vp)
-      assert(project, `Project ${vp} not found`)
+      if (!project) {
+        const logger = getLogger().for('getZkCatalogEntry')
+        logger.warn(`Project ${vp} not found`)
+        return []
+      }
 
       // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
       if (project.daBridge) {
@@ -130,20 +135,26 @@ function getProjectsUsedIn(
     'daBridge' | 'isBridge' | 'isScaling' | 'isDaLayer'
   >[],
 ): UsedInProjectWithIcon[] {
-  return usedInVerifiers.map((id) => {
-    const project = allProjects.find((p) => p.id === id)
-    assert(project, `Project ${id} not found`)
+  return usedInVerifiers
+    .map((id) => {
+      const project = allProjects.find((p) => p.id === id)
+      if (!project) {
+        const logger = getLogger().for('getProjectsUsedIn')
+        logger.warn(`Project ${id} not found`)
+        return undefined
+      }
 
-    const href = getProjectHref(project, allProjects)
+      const href = getProjectHref(project, allProjects)
 
-    return {
-      id: id,
-      name: project.name,
-      slug: project.slug,
-      icon: getProjectIcon(project.slug),
-      href,
-    }
-  })
+      return {
+        id: id,
+        name: project.name,
+        slug: project.slug,
+        icon: getProjectIcon(project.slug),
+        href,
+      }
+    })
+    .filter((e) => e !== undefined)
 }
 
 function getProjectHref(

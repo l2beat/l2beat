@@ -2,7 +2,7 @@
   "name": "w",
   "chain": "base",
   "blockNumber": 33021689,
-  "configHash": "0x9a7ad2cf295dda32f0d8c210dd2a8c88a255fcaccc8b59f9302b86ff01d55d79",
+  "configHash": "0x631e8b6aff9e61a5a4e3bca817642da424a52077d5cc7735ed8367f43bb6d6cb",
   "entries": [
     {
       "name": "WToken",
@@ -13,6 +13,7 @@
         "0xae7747ba69b9cd64276b32152e64b4e68fc64d4530f73c5984f57132fa2a01bb"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1713221517,
       "sinceBlock": 13216085,
       "values": {

@@ -98,7 +98,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "unichain-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -114,15 +114,16 @@
             "chain": "ethereum",
             "escrowAddress": "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2",
             "decimals": 18,
-            "sinceTimestamp": 1730748203
+            "sinceTimestamp": 1730748203,
+            "untilTimestamp": 1753380731
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+            "escrowAddress": "0x08bA0023eD60C7Bd040716dD13C45fA0062df5C5",
             "decimals": 18,
-            "sinceTimestamp": 1730748227
+            "sinceTimestamp": 1753380731
           }
         ]
       },
@@ -308,6 +309,25 @@
           }
         ]
       }
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-rETH",
+      "priceId": "rocket-pool-eth",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xae78736Cd615f374D3085123A210448E74Fc6393",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -661,6 +681,25 @@
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-wstETH-1",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
         "chain": "ethereum",
         "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
         "decimals": 18,

@@ -2,7 +2,7 @@
   "name": "pz-eth",
   "chain": "ethereum",
   "blockNumber": 22945156,
-  "configHash": "0x209c754fdf7a73b59a198d20539a967a81c34e6b09aa393df45130376a62cafb",
+  "configHash": "0x269f54fe8438545e6578858c4f80e2fd2c19048c0ef788573ba80cbf34dc1410",
   "entries": [
     {
       "name": "MultiVault",
@@ -13,6 +13,7 @@
         "0xdf0f0eb6be5581f33b6bdf19907308ff38c72febf850dcb99646c05ab48746d9"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1719403475,
       "sinceBlock": 20175746,
       "values": {
