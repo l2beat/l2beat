@@ -5,5 +5,16 @@
   "initialAddresses": [
     "eth:0x994233366C8E11da5c525AB903c04e7AFB2915bD",
     "eth:0xD5890BBAFaFdce942597757385E55174569e8d1A"
-  ]
+  ],
+  "overrides": {
+    "eth:0xe9394679d0f0676E4a2dE99F8ed6B4aCb16c5f0f": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x7C54ef577132b3A82c229372CC505DFC8B705955": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }
