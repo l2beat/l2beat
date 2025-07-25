@@ -112,7 +112,11 @@ export function TvsCustomTooltip({
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.value === null
+            )
               return null
             const config = meta[entry.name]
             assert(config, 'No config')

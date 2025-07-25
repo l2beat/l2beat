@@ -39,8 +39,8 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartUnit } from '../types'
-import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
 import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
+import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
 
 interface Props {
   projectId: string
@@ -100,10 +100,7 @@ export function ProjectTokenChart({
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data),
-    [data],
-  )
+  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   return (
     <section>
@@ -200,7 +197,11 @@ function CustomTooltip({
           </div>
           <div className="flex flex-col gap-2">
             {payload.map((entry) => {
-              if (entry.name === undefined || entry.value === undefined)
+              if (
+                entry.name === undefined ||
+                entry.value === undefined ||
+                entry.value === null
+              )
                 return null
               const config = meta[entry.name]
               assert(config, 'No config')

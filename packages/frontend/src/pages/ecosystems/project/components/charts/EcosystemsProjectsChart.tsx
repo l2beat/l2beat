@@ -133,7 +133,11 @@ export function CustomTooltip({
         </div>
         <div>
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.value === null
+            )
               return null
             const config = meta[entry.name]
             assert(config, 'No config')

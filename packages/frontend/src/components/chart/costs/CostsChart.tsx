@@ -227,7 +227,12 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
-            if (entry.value === undefined || entry.value === null) return null
+            if (
+              entry.value === undefined ||
+              entry.value === null ||
+              entry.type === 'none'
+            )
+              return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div

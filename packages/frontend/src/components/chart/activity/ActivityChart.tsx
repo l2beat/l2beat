@@ -187,6 +187,7 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
+              entry.value === null ||
               entry.type === 'none'
             )
               return null
@@ -224,6 +225,7 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
+              entry.value === null ||
               entry.type === 'none'
             )
               return null

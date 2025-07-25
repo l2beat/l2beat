@@ -176,6 +176,7 @@ export function CustomTooltip({
           if (
             entry.name === undefined ||
             entry.value === undefined ||
+            entry.value === null ||
             entry.type === 'none'
           )
             return null
