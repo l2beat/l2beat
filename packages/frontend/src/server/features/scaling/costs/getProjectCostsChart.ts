@@ -27,8 +27,7 @@ type StatsValues<T extends number | null> = {
   total: T
 }
 
-export type ProjectCostsChartResponse = {
-  chart: CostsChartData
+export type ProjectCostsChartResponse = CostsChartData & {
   stats:
     | {
         total: Stats<number>
@@ -40,7 +39,7 @@ export type ProjectCostsChartResponse = {
 export async function getProjectCostsChart(
   params: ProjectCostsChartParams,
 ): Promise<ProjectCostsChartResponse> {
-  const [chart, costs, activityRecords] = await Promise.all([
+  const [chartData, costs, activityRecords] = await Promise.all([
     getCostsChart({
       filter: { type: 'projects', projectIds: [params.projectId] },
       range: params.range,
@@ -52,6 +51,7 @@ export async function getProjectCostsChart(
   if (!costs) {
     return {
       chart: [],
+      hasBlobs: false,
       stats: undefined,
     }
   }
@@ -68,7 +68,7 @@ export async function getProjectCostsChart(
       : undefined
 
   return {
-    chart,
+    ...chartData,
     stats: { total, perL2Uop },
   }
 }

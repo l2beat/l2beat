@@ -9,8 +9,6 @@ import { addIfDefined } from './utils/addIfDefined'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
-const DENCUN_UPGRADE_TIMESTAMP = 1710288000
-
 export const CostsChartParams = v.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
@@ -33,7 +31,10 @@ export type CostsChartDataPoint = [
   blobsGasUsd: number | null,
 ]
 
-export type CostsChartData = CostsChartDataPoint[]
+export type CostsChartData = {
+  chart: CostsChartDataPoint[]
+  hasBlobs: boolean
+}
 
 /**
  * A function that computes values for chart data of the costs over time.
@@ -53,7 +54,7 @@ export async function getCostsChart({
   const db = getDb()
   const projects = await getCostsProjects(filter)
   if (projects.length === 0) {
-    return []
+    return { chart: [], hasBlobs: false }
   }
   const resolution = rangeToResolution(timeRange)
   const [from, to] = getRangeWithMax({ type: timeRange }, resolution)
@@ -64,7 +65,7 @@ export async function getCostsChart({
   )
 
   if (data.length === 0) {
-    return []
+    return { chart: [], hasBlobs: false }
   }
 
   const summedByTimestamp = sumByTimestamp(data, resolution)
@@ -72,9 +73,14 @@ export async function getCostsChart({
   const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
 
   const timestamps = generateTimestamps([minTimestamp, to], resolution)
-  const result: CostsChartData = timestamps.map((timestamp) => {
+  const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
+    ([_, value]) => value.blobsGas !== null,
+  )?.[0]
+
+  const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
-    const blobsFallback = timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : null
+    const blobsFallback =
+      blobsTimestamp && timestamp >= blobsTimestamp ? 0 : null
     if (!entry) {
       return [
         timestamp,
@@ -108,7 +114,7 @@ export async function getCostsChart({
       entry.blobsGasUsd ?? blobsFallback,
     ] as const
   })
-  return result
+  return { chart, hasBlobs: blobsTimestamp !== undefined }
 }
 
 function getMockCostsChartData({
@@ -122,21 +128,24 @@ function getMockCostsChartData({
 
   const timestamps = generateTimestamps(range, resolution)
 
-  return timestamps.map((timestamp) => [
-    timestamp,
-    20000,
-    0.5,
-    1000,
-    400000,
-    10,
-    20000,
-    600000,
-    15,
-    30000,
-    1000000,
-    0.25,
-    500,
-  ])
+  return {
+    chart: timestamps.map((timestamp) => [
+      timestamp,
+      20000,
+      0.5,
+      1000,
+      400000,
+      10,
+      20000,
+      600000,
+      15,
+      30000,
+      1000000,
+      0.25,
+      500,
+    ]),
+    hasBlobs: true,
+  }
 }
 
 function sumByTimestamp(

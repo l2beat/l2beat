@@ -106,6 +106,7 @@ export function ProjectCostsChart({
         isLoading={isLoading}
         milestones={milestones}
         range={range}
+        hasBlobs={!!data?.hasBlobs}
         tickCount={4}
         className="mt-4 mb-2"
       />

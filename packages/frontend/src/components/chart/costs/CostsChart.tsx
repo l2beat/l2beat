@@ -63,8 +63,9 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   range: CostsTimeRange
-  className?: string
+  hasBlobs: boolean
   tickCount?: number
+  className?: string
 }
 
 export function CostsChart({
@@ -76,7 +77,35 @@ export function CostsChart({
   className,
   range,
   tickCount,
+  hasBlobs,
 }: Props) {
+  const chartMeta = {
+    calldata: {
+      label: 'Calldata',
+      color: 'var(--chart-stacked-blue)',
+      indicatorType: { shape: 'square' },
+    },
+    ...(hasBlobs
+      ? {
+          blobs: {
+            label: 'Blobs',
+            color: 'var(--chart-stacked-yellow)',
+            indicatorType: { shape: 'square' },
+          },
+        }
+      : {}),
+    compute: {
+      label: 'Compute',
+      color: 'var(--chart-stacked-pink)',
+      indicatorType: { shape: 'square' },
+    },
+    overhead: {
+      label: 'Overhead',
+      color: 'var(--chart-stacked-purple)',
+      indicatorType: { shape: 'square' },
+    },
+  } satisfies ChartMeta
+
   const resolution = rangeToResolution(range)
 
   return (
@@ -109,16 +138,18 @@ export function CostsChart({
           activeDot={false}
           isAnimationActive={false}
         />
-        <Area
-          dataKey="blobs"
-          fill={chartMeta.blobs.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          dot={false}
-          activeDot={false}
-          isAnimationActive={false}
-        />
+        {chartMeta.blobs && (
+          <Area
+            dataKey="blobs"
+            fill={chartMeta.blobs.color}
+            fillOpacity={1}
+            strokeWidth={0}
+            stackId="a"
+            dot={false}
+            activeDot={false}
+            isAnimationActive={false}
+          />
+        )}
         <Area
           dataKey="calldata"
           fill={chartMeta.calldata.color}
@@ -196,7 +227,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.value === undefined || entry.value === null) return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div

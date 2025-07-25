@@ -59,7 +59,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   })
 
   const chartData = useMemo(() => {
-    return data?.map(
+    return data?.chart.map(
       ([
         timestamp,
         overheadGas,
@@ -102,7 +102,10 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     )
   }, [data, unit])
 
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(data?.chart),
+    [data?.chart],
+  )
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
@@ -116,6 +119,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         isLoading={isLoading}
         milestones={milestones}
         range={range}
+        hasBlobs={!!data?.hasBlobs}
         className="mt-4 mb-2"
       />
       <ChartControlsWrapper>

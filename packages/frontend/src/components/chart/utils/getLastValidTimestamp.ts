@@ -10,11 +10,8 @@ export function getLastValidTimestamp<
     return undefined
   }
   const lastValidTimestamp = data.findLast(([_, ...rest]) =>
-    rest.every((v) => v !== null),
+    rest.some((v) => v !== null),
   )?.[0]
-  if (lastValidTimestamp === undefined) {
-    return undefined
-  }
 
   return lastValidTimestamp
 }
