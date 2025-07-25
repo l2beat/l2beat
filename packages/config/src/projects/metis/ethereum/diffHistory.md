@@ -1,3 +1,235 @@
+Generated with discovered.json: 0x74bcc988241ae0e2bafd7c2b66d15c7df36c74ba
+
+# Diff at Thu, 24 Jul 2025 14:45:19 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@7a4cc0fa28e50e7f953dabb7af07b31dabe5250d block: 22774371
+- current block number: 22989692
+
+## Description
+
+Upgraded the proof system, new flow:
+1. A watcher requests a dispute by bonding METIS (unchanged).
+2. The request waits for a game to be deployed (by a whitelisted gameCreator) (unchanged)
+3. If the deadline arrives and no game exists, anyone can call disputeTimeout. The diffence here is that disputeTimeout is not just a flagging function, but it now calls saveDisputedBatchTimeout on the StateCommitmentChain, which marks the batch root as disputed with disputedBatches[root]=true.
+4. Because the batch is now disputed, all later safety checks treat it as not final until a fault‑proof game (or other governance action) clears it. In particular, L2->L1 messaging/withdrawal is blocked for the batch root since the relayMessage() function in the L1CrossDomainMessanger eventually (in _verifyStateRootProofByChainId()) calls the ovmStateCommitmentChain to check the earliestDisputedBlockNumber, and any withdrawal whose L2 block ≥ earliestDisputedBlockNumber reverts until the dispute is resolved.
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: None
+      template:
+-        "metis/L1CrossDomainMessenger"
+      sourceHashes.1:
+-        "0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7"
++        "0x27041f5f59b6e2efc5f1041e1ffb068e899b3da3761cafa4259df6c44b760893"
+      description:
+-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function."
+      values.$implementation:
+-        "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
++        "eth:0xc1Ce5240B42AB158027095f658d530F9989b414F"
+      values.$pastUpgrades.1:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0xc1Ce5240B42AB158027095f658d530F9989b414F"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0xc1Ce5240B42AB158027095f658d530F9989b414F:
++        "L1CrossDomainMessenger"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: None
+      template:
+-        "metis/DisputeGameFactory_Metis"
+      sourceHashes.1:
+-        "0x45c38e69c9d8bca18eef505efeea8dfbe4deec90b00e915cedc1a2bb22743119"
++        "0xd86d5b68e9916386254080e646f5f34295ee3dcc904ba1b186df6cdc65ea4268"
+      description:
+-        "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise."
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.$implementation:
+-        "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
++        "eth:0x61B220bbfeF9A94163764928B039d85e94A509d9"
+      values.$pastUpgrades.2:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x61B220bbfeF9A94163764928B039d85e94A509d9"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]},"GAME_CREATOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]}}
+      values.gameCreator:
+-        ["eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+      values.gameImpls:
+-        ["eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000","eth:0x0000000000000000000000000000000000000000"]
+      values.initBonds:
+-        ["4000000000000000000",0,0,0,0]
+      values.DEFAULT_CHAIN_ID:
++        1088
+      implementationNames.eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x61B220bbfeF9A94163764928B039d85e94A509d9:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract LockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: None
+      name:
+-        "FaultProofLockingPool"
++        "LockingPool"
+      template:
+-        "metis/FaultProofLockingPool"
+      sourceHashes.1:
+-        "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
++        "0x4e82791368b36a60ae6fc09aeb4023ce27c20f273f81bd9d6822056101d268ec"
+      description:
+-        "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS."
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.$implementation:
+-        "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
++        "eth:0x1061528C33b8034952fb7355cC481e193b29FCa6"
+      values.$pastUpgrades.2:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x1061528C33b8034952fb7355cC481e193b29FCa6"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
+-        "LockingPool"
+      implementationNames.eth:0x1061528C33b8034952fb7355cC481e193b29FCa6:
++        "LockingPool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.0:
+-        {"permission":"metisGameCreator","from":"eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3","role":".gameCreator"}
+      receivedPermissions.4.via:
++        [{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.5.via:
++        [{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.12:
+-        {"permission":"upgrade","from":"eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PreimageOracle (0x789a64284e29d2225430606D3D89a9336870BBbC)
+    +++ description: Oracle for providing preimages.
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3","role":"admin"}
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb","role":"admin"}
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: None
+      template:
+-        "metis/MVM_StateCommitmentChain"
+      sourceHashes.1:
+-        "0x97bafeecd79eafa0a2d331c68498ce2ccecf89112ed12cb22b90aac48f1d0aa5"
++        "0xc9988c7d5840913f9a08b776cd81c6474c41bcb476822f537b3763d33f8e30e3"
+      description:
+-        "The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots."
+      values.$implementation:
+-        "eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365"
++        "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7"
+      values.getLastSequencerTimestamp:
+-        1750767395
++        1753364471
+      values.getLastSequencerTimestampByChainId:
+-        1750767395
++        [0,0,0,0,0]
+      values.getTotalBatches:
+-        29820
++        30673
+      values.getTotalBatchesByChainId:
+-        29820
++        [0,0,0,0,0]
+      values.getTotalElements:
+-        20704198
++        20881127
+      values.getTotalElementsByChainId:
+-        20704198
++        [0,0,0,0,0]
+      values.earliestDisputedBlockNumber:
++        0
+      implementationNames.eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7:
++        "MVM_StateCommitmentChain"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"getLastSequencerTimestampByChainId":"Processing error occurred.","getTotalBatchesByChainId":"Processing error occurred.","getTotalElementsByChainId":"Processing error occurred."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MIPS (0xAFD640204D73B02C3521eA8ea3771182527Ff057)
+    +++ description: None
+```
+
+```diff
+    EOA  (0xDD6FFC7D9a4Fb420b637747edc6456340d12d377) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff","description":"block (censor) specific L2->L1 messages (e.g. withdrawals), so that they cannot be relayed, pause the contract.","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738)
+    +++ description: Delayed wrapped Metis token contract.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWMetis/DelayedWMetis.sol => /dev/null   |  966 -----
+ .../DisputeGameFactory/DisputeGameFactory.sol      |   83 +-
+ .../FaultDisputeGame.sol => /dev/null              | 4083 --------------------
+ .../TransparentUpgradeableProxy.p.sol => /dev/null |  695 ----
+ .../L1CrossDomainMessenger.sol                     |  632 ++-
+ .../LockingPool.sol                                |    3 +
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../LockingPool.sol                                |    0
+ .../TransparentUpgradeableProxy.p.sol              |    0
+ .../ethereum/.flat@22774371/MIPS.sol => /dev/null  | 1528 --------
+ .../.flat@22774371/PreimageOracle.sol => /dev/null | 1353 -------
+ .../MVM_StateCommitmentChain.sol                   |  131 +-
+ 12 files changed, 615 insertions(+), 8859 deletions(-)
+```
+
 Generated with discovered.json: 0xfcc176a86d8568b55e1c49cb21e02bc24b16b86b
 
 # Diff at Mon, 14 Jul 2025 12:45:25 GMT:
