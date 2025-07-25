@@ -2,12 +2,14 @@ import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
 import { AreaChart, type TooltipProps } from 'recharts'
+import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -68,6 +70,11 @@ export function MonthlyUpdateActivityChart({
     [data?.data],
   )
 
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(data?.data),
+    [data?.data],
+  )
+
   const stats = getStats(chartData, allScalingProjectsUops)
   const range = getChartRange(chartData)
 
@@ -98,8 +105,9 @@ export function MonthlyUpdateActivityChart({
               scale: 'lin',
               unit: ' UOPS',
             },
+            lastValidTimestamp,
           })}
-          <ChartTooltip content={<CustomTooltip />} />
+          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
           <defs>
             <CustomFillGradientDef
               id={id}
@@ -148,15 +156,19 @@ function Header({
 export function CustomTooltip({
   active,
   payload,
-  label: timestamp,
+  label,
 }: TooltipProps<number, string>) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
+          {formatTimestamp(label, {
             longMonthName: true,
           })}
         </div>

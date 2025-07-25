@@ -17,7 +17,7 @@ export const CostsChartParams = v.object({
 })
 export type CostsChartParams = v.infer<typeof CostsChartParams>
 
-export type CostsChartDataPoint = readonly [
+export type CostsChartDataPoint = [
   timestamp: number,
   overheadGas: number | null,
   overheadGasEth: number | null,
@@ -75,7 +75,7 @@ export async function getCostsChart({
   const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
 
   const timestamps = generateTimestamps([minTimestamp, to], resolution)
-  const result = timestamps.map((timestamp) => {
+  const result: CostsChartData = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
     const blobsFallback = timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : null
     if (!entry) {

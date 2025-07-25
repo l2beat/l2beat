@@ -1,20 +1,21 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
-import { AreaChart, ReferenceArea } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
+  ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
   CyanFillGradientDef,
   CyanStrokeGradientDef,
 } from '~/components/core/chart/defs/CyanGradientDef'
-import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -108,7 +109,6 @@ export function ScalingSummaryTvsChart({
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
             <YellowFillGradientDef id="others-fill" />
             <YellowStrokeGradientDef id="others-stroke" />
-            <NotSyncedPatternDef />
           </defs>
           <ChartLegend content={<ChartLegendContent />} />
           {getStrokeOverFillAreaComponents({
@@ -136,11 +136,9 @@ export function ScalingSummaryTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
+            lastValidTimestamp,
           })}
-          {lastValidTimestamp && (
-            <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
-          )}
-          <ChartTooltip content={<CustomTooltip />} />
+          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
       </ChartContainer>
     </section>
@@ -153,52 +151,62 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
   const validPayload = payload.filter((p) => p.type !== 'none')
   const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
-    <div className={tooltipContentVariants()}>
-      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
-        <div className="mb-3 font-medium text-label-value-14 text-secondary">
-          {isFullDay
-            ? formatTimestamp(label, { longMonthName: true })
-            : formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
-        </div>
-        <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
-          <span className="[@media(min-width:600px)]:hidden">Total</span>
-          <span className="hidden [@media(min-width:600px)]:inline">
-            Total value secured
-          </span>
-          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
-        </div>
-        <HorizontalSeparator />
-        <div className="mt-2 flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
-            const config = chartMeta[entry.name as keyof typeof chartMeta]
-            return (
-              <div
-                key={entry.name}
-                className="flex items-center justify-between gap-x-1"
-              >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
+    <ChartTooltipWrapper>
+      <div className={tooltipContentVariants()}>
+        <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
+          <div className="mb-3 font-medium text-label-value-14 text-secondary">
+            {isFullDay
+              ? formatTimestamp(label, { longMonthName: true })
+              : formatTimestamp(label, {
+                  longMonthName: true,
+                  mode: 'datetime',
+                })}
+          </div>
+          <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
+            <span className="[@media(min-width:600px)]:hidden">Total</span>
+            <span className="hidden [@media(min-width:600px)]:inline">
+              Total value secured
+            </span>
+            <span className="text-primary">{formatCurrency(total, 'usd')}</span>
+          </div>
+          <HorizontalSeparator />
+          <div className="mt-2 flex flex-col gap-2">
+            {payload.map((entry) => {
+              if (entry.value === undefined || entry.type === 'none')
+                return null
+              const config = chartMeta[entry.name as keyof typeof chartMeta]
+              return (
+                <div
+                  key={entry.name}
+                  className="flex items-center justify-between gap-x-1"
+                >
+                  <span className="flex items-center gap-1">
+                    <ChartDataIndicator
+                      backgroundColor={config.color}
+                      type={config.indicatorType}
+                    />
+                    <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+                      {config.label}
+                    </span>
                   </span>
-                </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, 'usd')}
-                </span>
-              </div>
-            )
-          })}
+                  <span className="whitespace-nowrap font-medium text-label-value-15">
+                    {formatCurrency(entry.value, 'usd')}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

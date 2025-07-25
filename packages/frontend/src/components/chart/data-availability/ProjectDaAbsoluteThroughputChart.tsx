@@ -9,6 +9,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -20,6 +21,7 @@ import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
@@ -72,6 +74,11 @@ export function ProjectDaAbsoluteThroughputChart({
   }, [dataWithConfiguredThroughputs, denominator])
 
   const projectChartMeta = getProjectChartMeta(projectId)
+
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(dataWithConfiguredThroughputs),
+    [dataWithConfiguredThroughputs],
+  )
 
   return (
     <ChartContainer
@@ -131,6 +138,7 @@ export function ProjectDaAbsoluteThroughputChart({
           />
         )}
         <ChartTooltip
+          filterNull={false}
           content={
             <ProjectDaThroughputCustomTooltip
               unit={unit}
@@ -145,6 +153,7 @@ export function ProjectDaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
+          lastValidTimestamp,
         })}
       </AreaChart>
     </ChartContainer>
@@ -160,6 +169,9 @@ export function ProjectDaThroughputCustomTooltip({
 }: TooltipProps<number, string> & { unit: string; syncedUntil?: UnixTime }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
 
   return (
     <ChartTooltipWrapper>

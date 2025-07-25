@@ -10,6 +10,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -148,8 +149,12 @@ export function DaThroughputByProjectChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
+          lastValidTimestamp: undefined,
         })}
-        <ChartTooltip content={<CustomTooltip denominator={denominator} />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<CustomTooltip denominator={denominator} />}
+        />
       </BarChart>
     </ChartContainer>
   )
@@ -168,6 +173,9 @@ function CustomTooltip({
     if (b.name === 'Unknown') return -1
     return (b.value ?? 0) - (a.value ?? 0)
   })
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
 
   return (
     <ChartTooltipWrapper>

@@ -2,13 +2,14 @@ import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
-import { AreaChart, ReferenceArea } from 'recharts'
+import { AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -21,7 +22,6 @@ import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
-import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -119,9 +119,6 @@ export function ActivityChart({
             },
           ]),
         })}
-        {lastValidTimestamp && (
-          <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
-        )}
         {getCommonChartComponents({
           data,
           isLoading,
@@ -130,8 +127,10 @@ export function ActivityChart({
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
             tickCount,
           },
+          lastValidTimestamp,
         })}
         <ChartTooltip
+          filterNull={false}
           content={<ActivityCustomTooltip syncedUntil={syncedUntil} />}
         />
         <defs>
@@ -153,7 +152,6 @@ export function ActivityChart({
               <YellowStrokeGradientDef id="strokeProjects" />
             </>
           )}
-          <NotSyncedPatternDef />
           <EthereumFillGradientDef id="fillEthereum" />
           <EthereumStrokeGradientDef id="strokeEthereum" />
         </defs>
@@ -170,6 +168,10 @@ export function ActivityCustomTooltip({
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={timestamp} />
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">

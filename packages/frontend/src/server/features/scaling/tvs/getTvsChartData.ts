@@ -34,7 +34,7 @@ export const TvsChartDataParams = v.object({
 
 export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
-type TvsChartDataPoint = readonly [
+type TvsChartDataPoint = [
   timestamp: number,
   native: number | null,
   canonical: number | null,
@@ -94,7 +94,7 @@ export async function getTvsChart({
 function getChartData(
   values: SummedTvsValues[],
   ethPrices: Record<number, number>,
-) {
+): TvsChartDataPoint[] {
   return values.map((value) => {
     const ethPrice = ethPrices[value.timestamp]
     assert(ethPrice, 'No ETH price for ' + value.timestamp)

@@ -11,6 +11,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
@@ -24,7 +25,7 @@ import { formatTimestamp } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
   timestamp: number
-  range: (number | null)[]
+  range: readonly [number | null, number | null] | null
   avg: number | null
 }
 
@@ -100,6 +101,8 @@ export function LivenessChart({
             domain: ['auto', 'auto'],
             tickCount,
           },
+          // We want to show custom ReferenceArea for this chart
+          lastValidTimestamp: undefined,
         })}
         {lastValidTimestamp && (
           <ReferenceArea
@@ -109,6 +112,7 @@ export function LivenessChart({
           />
         )}
         <ChartTooltip
+          filterNull={false}
           content={
             <LivenessCustomTooltip
               subtype={subtype}
@@ -137,6 +141,10 @@ export function LivenessCustomTooltip({
   anyAnomalyLive: boolean
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={timestamp} />
+
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
   )

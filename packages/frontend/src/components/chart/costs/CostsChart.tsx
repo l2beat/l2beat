@@ -1,16 +1,16 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
@@ -129,10 +129,6 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {lastValidTimestamp && (
-          <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
-        )}
-
         {getCommonChartComponents({
           data,
           isLoading,
@@ -143,13 +139,12 @@ export function CostsChart({
                 : formatCurrency(value, unit),
             tickCount,
           },
+          lastValidTimestamp,
         })}
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}
+          filterNull={false}
         />
-        <defs>
-          <NotSyncedPatternDef />
-        </defs>
       </AreaChart>
     </ChartContainer>
   )
@@ -166,6 +161,10 @@ function CustomTooltip({
   resolution: CostsResolution
 }) {
   if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
   const dataKeys = payload.map((p) => p.dataKey)
   const hasPostedAndNotSynced =
     dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')

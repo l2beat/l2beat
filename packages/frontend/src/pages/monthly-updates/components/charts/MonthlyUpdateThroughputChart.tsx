@@ -18,6 +18,7 @@ import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/c
 import { api } from '~/trpc/React'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { MarketShare } from './MonthlyUpdateMarketShare'
+import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 
 export function MonthlyUpdateThroughputChart({
   daLayer,
@@ -68,6 +69,11 @@ export function MonthlyUpdateThroughputChart({
     })
   }, [data?.chart, denominator])
 
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(data?.chart),
+    [data?.chart],
+  )
+
   const range = getChartRange(chartData)
 
   return (
@@ -102,8 +108,10 @@ export function MonthlyUpdateThroughputChart({
             yAxis: {
               unit: ` ${unit}`,
             },
+            lastValidTimestamp,
           })}
           <ChartTooltip
+            filterNull={false}
             content={
               <ProjectDaThroughputCustomTooltip
                 unit={unit}

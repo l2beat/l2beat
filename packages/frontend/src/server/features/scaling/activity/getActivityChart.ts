@@ -82,7 +82,7 @@ export async function getActivityChart({
   }
 
   const aggregatedEntries = aggregateActivityRecords(
-    entries.filter((e) => e.timestamp < 1751275600),
+    entries.filter((e) => e.timestamp < 1750377600),
   )
   if (!aggregatedEntries || Object.values(aggregatedEntries).length === 0) {
     return { data: [], syncWarning, syncedUntil: syncedUntil }

@@ -1,5 +1,12 @@
-import { CartesianGrid, XAxis, YAxis, type YAxisProps } from 'recharts'
+import {
+  CartesianGrid,
+  ReferenceArea,
+  XAxis,
+  YAxis,
+  type YAxisProps,
+} from 'recharts'
 import type { ScaleType } from 'recharts/types/util/types'
+import { NotSyncedPatternDef } from '../defs/NotSyncedPatternDef'
 import { getXAxisProps } from './getXAxisProps'
 export interface CommonChartComponentsProps<
   T extends {
@@ -9,6 +16,7 @@ export interface CommonChartComponentsProps<
   data: T[] | undefined
   yAxis?: Omit<YAxisProps, 'scale' | 'tick'> & { scale?: 'log' | 'lin' }
   isLoading: boolean | undefined
+  lastValidTimestamp: number | undefined
 }
 
 // Recharts 2.x does not support wrapping its components, so to solve it we need to return an array of components
@@ -17,6 +25,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
   data,
   yAxis,
   isLoading,
+  lastValidTimestamp,
 }: CommonChartComponentsProps<T>) {
   const { scale, tickCount, ...rest } = yAxis ?? {}
 
@@ -42,5 +51,17 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       {...rest}
     />,
     <XAxis key={'x-axis'} {...getXAxisProps(data)} />,
+    lastValidTimestamp && (
+      <ReferenceArea
+        key={'last-valid-timestamp'}
+        x1={lastValidTimestamp}
+        fill="url(#notSyncedFill)"
+      />
+    ),
+    lastValidTimestamp && (
+      <defs>
+        <NotSyncedPatternDef />
+      </defs>
+    ),
   ]
 }

@@ -23,10 +23,7 @@ export const ProjectLivenessChartParams = v.object({
 })
 
 export type ProjectLivenessChartData = {
-  data: (
-    | readonly [number, null, null, null]
-    | readonly [number, number, number | null, number]
-  )[]
+  data: [number, number | null, number | null, number | null][]
   stats:
     | Partial<
         Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
@@ -114,14 +111,15 @@ export async function getProjectLivenessChart({
     addTarget: true,
   })
 
-  const data = timestamps.map((timestamp) => {
-    const entry = groupedByResolution[timestamp]
-    if (!entry) {
-      return [timestamp, null, null, null] as const
-    }
-    const { min, max, avg } = calculateLivenessStats(entry)
-    return [timestamp, min, avg, max] as const
-  })
+  const data: [number, number | null, number | null, number | null][] =
+    timestamps.map((timestamp) => {
+      const entry = groupedByResolution[timestamp]
+      if (!entry) {
+        return [timestamp, null, null, null]
+      }
+      const { min, max, avg } = calculateLivenessStats(entry)
+      return [timestamp, min, avg, max]
+    })
   return {
     data,
     stats,

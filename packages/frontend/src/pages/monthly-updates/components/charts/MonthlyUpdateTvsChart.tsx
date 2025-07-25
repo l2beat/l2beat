@@ -3,6 +3,7 @@ import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
+import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -75,6 +76,8 @@ export function MonthlyUpdateTvsChart({
     } satisfies ChartMeta
   }, [type])
 
+  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
+
   const stats = getStats(chartData, allScalingProjectsTvs)
   const range = getChartRange(chartData)
 
@@ -112,8 +115,12 @@ export function MonthlyUpdateTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, 'usd'),
             },
+            lastValidTimestamp,
           })}
-          <ChartTooltip content={<TvsCustomTooltip unit={'usd'} fullDate />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<TvsCustomTooltip unit={'usd'} fullDate />}
+          />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>

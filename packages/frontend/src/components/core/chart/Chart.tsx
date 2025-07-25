@@ -5,6 +5,8 @@ import { Logo } from '~/components/Logo'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
+import { formatTimestamp } from '~/utils/dates'
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import {
@@ -184,6 +186,30 @@ function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   return <div className={tooltipContentVariants()}>{children}</div>
 }
 
+function ChartTooltipNotSyncedState({
+  children,
+  timestamp,
+}: {
+  timestamp: number
+  children?: React.ReactNode
+}) {
+  return (
+    <ChartTooltipWrapper>
+      <div className="font-medium text-label-value-14 text-secondary">
+        {formatTimestamp(timestamp, { longMonthName: true, mode: 'datetime' })}
+      </div>
+      <HorizontalSeparator className="mt-1.5" />
+      {children ? (
+        children
+      ) : (
+        <div className="mt-2 font-medium text-label-value-16">
+          Not synced data
+        </div>
+      )}
+    </ChartTooltipWrapper>
+  )
+}
+
 const ChartLegend = RechartsPrimitive.Legend
 
 function ChartLegendContent({
@@ -286,5 +312,6 @@ export {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
+  ChartTooltipNotSyncedState,
   SimpleChartContainer,
 }

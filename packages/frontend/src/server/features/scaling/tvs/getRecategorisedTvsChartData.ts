@@ -26,12 +26,12 @@ export type RecategorisedTvsChartDataParams = v.infer<
   typeof RecategorisedTvsChartDataParams
 >
 
-export type RecategorisedTvsChartData = (readonly [
+export type RecategorisedTvsChartData = [
   timestamp: number,
   rollups: number | null,
   validiumsAndOptimiums: number | null,
   others: number | null,
-])[]
+][]
 
 /**
  * A function that computes values for chart data of the TVS over time.
@@ -77,7 +77,7 @@ function getChartData(
   rollupsValues: SummedTvsValues[],
   validiumAndOptimiumsValues: SummedTvsValues[],
   othersValues: SummedTvsValues[],
-) {
+): RecategorisedTvsChartData {
   const rolupsGroupedByTimestamp = groupBy(rollupsValues, (v) => v.timestamp)
   const validiumAndOptimiumsGroupedByTimestamp = groupBy(
     validiumAndOptimiumsValues,
@@ -91,35 +91,38 @@ function getChartData(
     ...othersValues.map((v) => v.timestamp),
   ]).sort()
 
-  return timestamps.map((timestamp) => {
-    const rVals = rolupsGroupedByTimestamp[timestamp]
-    const vVals = validiumAndOptimiumsGroupedByTimestamp[timestamp]
-    const oVals = othersGroupedByTimestamp[timestamp]
+  const data: [number, number | null, number | null, number | null][] =
+    timestamps.map((timestamp) => {
+      const rVals = rolupsGroupedByTimestamp[timestamp]
+      const vVals = validiumAndOptimiumsGroupedByTimestamp[timestamp]
+      const oVals = othersGroupedByTimestamp[timestamp]
 
-    const rTotal =
-      rVals?.reduce<number | null>((acc, curr) => {
-        if (curr.value !== null) {
-          acc = (acc ?? 0) + curr.value
-        }
-        return acc
-      }, null) ?? null
-    const vTotal =
-      vVals?.reduce<number | null>((acc, curr) => {
-        if (curr.value !== null) {
-          acc = (acc ?? 0) + curr.value
-        }
-        return acc
-      }, null) ?? null
-    const oTotal =
-      oVals?.reduce<number | null>((acc, curr) => {
-        if (curr.value !== null) {
-          acc = (acc ?? 0) + curr.value
-        }
-        return acc
-      }, null) ?? null
+      const rTotal =
+        rVals?.reduce<number | null>((acc, curr) => {
+          if (curr.value !== null) {
+            acc = (acc ?? 0) + curr.value
+          }
+          return acc
+        }, null) ?? null
+      const vTotal =
+        vVals?.reduce<number | null>((acc, curr) => {
+          if (curr.value !== null) {
+            acc = (acc ?? 0) + curr.value
+          }
+          return acc
+        }, null) ?? null
+      const oTotal =
+        oVals?.reduce<number | null>((acc, curr) => {
+          if (curr.value !== null) {
+            acc = (acc ?? 0) + curr.value
+          }
+          return acc
+        }, null) ?? null
 
-    return [timestamp, rTotal, vTotal, oTotal] as const
-  })
+      return [timestamp, rTotal, vTotal, oTotal]
+    })
+
+  return data
 }
 
 function getMockTvsChartData({

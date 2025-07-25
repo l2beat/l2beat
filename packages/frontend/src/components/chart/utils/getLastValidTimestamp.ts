@@ -1,13 +1,11 @@
-type ChartPoint = readonly [timestamp: number, ...rest: (number | null)[]]
-
 export type ChartNotSyncedTimestamps = {
   x1: number
   x2: number
 }
 
-export function getLastValidTimestamp<T extends ChartPoint>(
-  data: T[] | undefined,
-): number | undefined {
+export function getLastValidTimestamp<
+  T extends [timestamp: number, ...rest: (number | null)[]],
+>(data: T[] | undefined): number | undefined {
   if (!data) {
     return undefined
   }

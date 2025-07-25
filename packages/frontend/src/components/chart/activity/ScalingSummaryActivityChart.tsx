@@ -8,6 +8,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -36,6 +37,7 @@ import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 
 interface Props {
   timeRange: ActivityTimeRange
@@ -90,6 +92,11 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     )
   }, [data])
 
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(data?.data),
+    [data?.data],
+  )
+
   return (
     <section className="flex flex-col gap-4">
       <Header stats={stats} />
@@ -132,6 +139,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             yAxis: {
               unit: ' UOPS',
             },
+            lastValidTimestamp,
           })}
         </AreaChart>
       </ChartContainer>
@@ -142,15 +150,19 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 function CustomTooltip({
   active,
   payload,
-  label: timestamp,
+  label,
   syncedUntil,
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
+          {formatTimestamp(label, {
             longMonthName: true,
           })}
         </div>
@@ -175,7 +187,7 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
+                  {syncedUntil && syncedUntil < label
                     ? 'Not synced'
                     : formatActivityCount(entry.value)}
                 </span>
@@ -205,7 +217,7 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
+                  {syncedUntil && syncedUntil < label
                     ? 'Not synced'
                     : formatInteger(entry.value * UnixTime.DAY)}
                 </span>

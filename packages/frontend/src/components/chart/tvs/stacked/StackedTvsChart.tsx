@@ -1,17 +1,17 @@
 import type { Milestone } from '@l2beat/config'
 
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
@@ -98,9 +98,6 @@ export function StackedTvsChart({
           stackId="a"
           isAnimationActive={false}
         />
-        {lastValidTimestamp && (
-          <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
-        )}
         {getCommonChartComponents({
           data,
           yAxis: {
@@ -108,11 +105,12 @@ export function StackedTvsChart({
             tickCount,
           },
           isLoading,
+          lastValidTimestamp,
         })}
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
-        <defs>
-          <NotSyncedPatternDef />
-        </defs>
+        <ChartTooltip
+          content={<CustomTooltip unit={unit} />}
+          filterNull={false}
+        />
       </AreaChart>
     </ChartContainer>
   )
@@ -125,6 +123,10 @@ function CustomTooltip({
   unit,
 }: TooltipProps<number, string> & { unit: ChartUnit }) {
   if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
   const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
   const reversedPayload = [...payload].reverse()
   return (

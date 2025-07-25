@@ -52,7 +52,7 @@ export function ProjectLivenessChart({
     return chart?.data?.map(([timestamp, min, avg, max]) => {
       return {
         timestamp,
-        range: [min, max],
+        range: min === null && max === null ? null : ([min, max] as const),
         avg,
       }
     })

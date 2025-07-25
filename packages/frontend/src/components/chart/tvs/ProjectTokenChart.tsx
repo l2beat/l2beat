@@ -10,6 +10,8 @@ import {
   ChartLegendContent,
   type ChartMeta,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -38,6 +40,7 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartUnit } from '../types'
 import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 
 interface Props {
   projectId: string
@@ -97,6 +100,11 @@ export function ProjectTokenChart({
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
+  const lastValidTimestamp = useMemo(
+    () => getLastValidTimestamp(data),
+    [data],
+  )
+
   return (
     <section>
       <ChartControlsWrapper>
@@ -138,8 +146,12 @@ export function ProjectTokenChart({
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
               tickCount: 4,
             },
+            lastValidTimestamp,
           })}
-          <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip unit={properUnit} />}
+          />
         </AreaChart>
       </ChartContainer>
       <div
@@ -175,42 +187,48 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { unit: string }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
-  return (
-    <div className={tooltipContentVariants()}>
-      <div className="flex min-w-28 flex-col gap-1">
-        <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true })}
-        </div>
-        <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
-              return null
-            const config = meta[entry.name]
-            assert(config, 'No config')
 
-            return (
-              <div
-                key={entry.name}
-                className="flex items-center justify-between gap-x-1"
-              >
-                <span className="flex items-center gap-1">
-                  <ChartDataIndicator
-                    backgroundColor={config.color}
-                    type={config.indicatorType}
-                  />
-                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                    {config.label}
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
+  return (
+    <ChartTooltipWrapper>
+      <div className={tooltipContentVariants()}>
+        <div className="flex min-w-28 flex-col gap-1">
+          <div className="mb-1 font-medium text-label-value-14 text-secondary">
+            {formatTimestamp(label, { longMonthName: true })}
+          </div>
+          <div className="flex flex-col gap-2">
+            {payload.map((entry) => {
+              if (entry.name === undefined || entry.value === undefined)
+                return null
+              const config = meta[entry.name]
+              assert(config, 'No config')
+
+              return (
+                <div
+                  key={entry.name}
+                  className="flex items-center justify-between gap-x-1"
+                >
+                  <span className="flex items-center gap-1">
+                    <ChartDataIndicator
+                      backgroundColor={config.color}
+                      type={config.indicatorType}
+                    />
+                    <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+                      {config.label}
+                    </span>
                   </span>
-                </span>
-                <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, unit)}
-                </span>
-              </div>
-            )
-          })}
+                  <span className="whitespace-nowrap font-medium text-label-value-15">
+                    {formatCurrency(entry.value, unit)}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

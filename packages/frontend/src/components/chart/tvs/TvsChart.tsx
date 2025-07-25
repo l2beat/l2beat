@@ -1,11 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -76,11 +77,12 @@ export function TvsChart({
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
           },
+          lastValidTimestamp,
         })}
-        {lastValidTimestamp && (
-          <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
-        )}
-        <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<TvsCustomTooltip unit={unit} />}
+        />
       </AreaChart>
     </ChartContainer>
   )
@@ -95,6 +97,10 @@ export function TvsCustomTooltip({
 }: TooltipProps<number, string> & { unit: ChartUnit; fullDate?: boolean }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
+
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">

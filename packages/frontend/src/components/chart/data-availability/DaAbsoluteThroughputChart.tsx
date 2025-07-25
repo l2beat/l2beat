@@ -7,6 +7,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -20,6 +21,7 @@ import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/g
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import { formatTimestamp } from '~/utils/dates'
+import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { getDaDataParams } from './getDaDataParams'
 import { getDaChartMeta } from './meta'
 
@@ -58,6 +60,8 @@ export function DaAbsoluteThroughputChart({
       }
     })
   }, [data, denominator])
+
+  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -100,8 +104,10 @@ export function DaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 3,
           },
+          lastValidTimestamp,
         })}
         <ChartTooltip
+          filterNull={false}
           content={
             <CustomTooltip
               unit={unit}
@@ -129,6 +135,9 @@ function CustomTooltip({
 }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={label} />
 
   const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 

@@ -1,19 +1,19 @@
 import { assert } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart, ReferenceArea } from 'recharts'
+import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -64,9 +64,7 @@ export function ActivityRatioChart({
           dot={false}
           isAnimationActive={false}
         />
-        {lastValidTimestamp && (
-          <ReferenceArea x1={lastValidTimestamp} fill="url(#notSyncedFill)" />
-        )}
+
         {getCommonChartComponents({
           data,
           isLoading,
@@ -74,15 +72,16 @@ export function ActivityRatioChart({
             tickFormatter: (value) => `${round(value, 2)}x`,
             domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
           },
+          lastValidTimestamp,
         })}
 
         <ChartTooltip
+          filterNull={false}
           content={<ActivityCustomTooltip syncedUntil={undefined} />}
         />
         <ChartLegend content={<ChartLegendContent />} />
         <defs>
           <EmeraldFillGradientDef id="fillRatio" />
-          <NotSyncedPatternDef />
         </defs>
       </AreaChart>
     </ChartContainer>
@@ -97,6 +96,10 @@ export function ActivityCustomTooltip({
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
+  if (payload.every((p) => p.value === null))
+    return <ChartTooltipNotSyncedState timestamp={timestamp} />
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
