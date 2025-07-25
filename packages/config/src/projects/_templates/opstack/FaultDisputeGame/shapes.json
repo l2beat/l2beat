@@ -40,5 +40,11 @@
     "address": "0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
     "chain": "ethereum",
     "blockNumber": 22437733
+  },
+  "FaultDisputeGame_v3_5_0": {
+    "hash": "0x825c4efedd1d48e3087fc99ff4e29a742c8e2a95498e4165e580f93ae5d23e74",
+    "address": "0xd73Dd0F5665055B03eA0bFcac49bd4d26F1FFA4F",
+    "chain": "ethereum",
+    "blockNumber": 22995199
   }
 }
