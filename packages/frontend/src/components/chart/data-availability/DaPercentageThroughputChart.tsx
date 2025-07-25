@@ -17,7 +17,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import { formatTimestamp } from '~/utils/dates'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { getDaChartMeta } from './meta'
 
 interface Props {
@@ -54,11 +53,6 @@ export function DaPercentageThroughputChart({
       }
     })
   }, [data])
-
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data),
-    [data],
-  )
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -103,7 +97,7 @@ export function DaPercentageThroughputChart({
             // And allow data overflow to avoid Y Axis labels being off
             allowDataOverflow: true,
           },
-          lastValidTimestamp
+          lastValidTimestamp: undefined,
         })}
         <ChartTooltip
           filterNull={false}
