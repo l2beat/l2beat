@@ -32,12 +32,12 @@ assert(
 )
 assert(
   l2critDelay ===
-  l2discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'),
+    l2discovery.getContractValue<number>('Kinto Multisig 2', 'RECOVERY_TIME'),
   'recovery time in the KintoWallet is not 12d, malicious recoveries do not provide a 7d exit window.',
 )
 assert(
   l2critDelay ===
-  l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD'),
+    l2discovery.getContractValue<number>('KintoID', 'EXIT_WINDOW_PERIOD'),
   'exit window period in the KintoID is not 12d, malicious sanctions do not provide a 7d exit window.',
 )
 
