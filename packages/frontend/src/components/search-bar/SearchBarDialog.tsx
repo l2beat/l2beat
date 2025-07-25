@@ -1,4 +1,3 @@
-import type { ProjectScalingCategory } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
@@ -124,7 +123,6 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     key={project.id}
                     onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
-                    category={project.scalingCategory}
                   >
                     <img
                       src={project.iconUrl}
@@ -133,7 +131,16 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       width={20}
                       height={20}
                     />
-                    {project.name}
+                    <div className="flex flex-col">
+                      <div className="font-medium text-sm leading-none tracking-[-1%]">
+                        {project.name}
+                      </div>
+                      {project.scalingCategory && (
+                        <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                          {project.scalingCategory}
+                        </div>
+                      )}
+                    </div>
                   </SearchBarItem>
                 )
               })}
@@ -152,11 +159,6 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       key={item.href}
                       onSelect={() => onItemSelect(item)}
                       label={entryToLabel(item)}
-                      category={
-                        item.type === 'project'
-                          ? item.scalingCategory
-                          : undefined
-                      }
                       value={
                         // I know it looks ugly but there is a bug in CMDK that scrolls to wrong item sometimes.
                         // For example try to search "nea" without this hack.
@@ -177,7 +179,16 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                           height={20}
                         />
                       )}
-                      {item.name}
+                      <div className="flex flex-col">
+                        <div className="font-medium text-sm leading-none tracking-[-1%]">
+                          {item.name}
+                        </div>
+                        {item.type === 'project' && item.scalingCategory && (
+                          <div className="font-medium text-2xs text-secondary leading-none tracking-[-1%]">
+                            {item.scalingCategory}
+                          </div>
+                        )}
+                      </div>
                     </SearchBarItem>
                   )
                 })}
@@ -194,13 +205,11 @@ function SearchBarItem({
   children,
   label,
   value,
-  category,
 }: {
   onSelect: () => void
   children: React.ReactNode
   label?: string
   value?: string
-  category?: ProjectScalingCategory
 }) {
   return (
     <CommandItem
@@ -209,11 +218,7 @@ function SearchBarItem({
       value={value}
     >
       {children}
-      {label && (
-        <div className="ml-auto text-secondary text-xs">
-          {label} {category && `| ${category}`}
-        </div>
-      )}
+      {label && <div className="ml-auto text-secondary text-xs">{label}</div>}
     </CommandItem>
   )
 }
