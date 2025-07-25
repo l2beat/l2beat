@@ -20,7 +20,7 @@ export function EcosystemUpdateLink({
           Ecosystem Updates
         </p>
         <p className="group-hover:-translate-y-2 origin-left font-bold text-label-value-20 transition-all will-change-transform group-hover:translate-x-4 group-hover:scale-125">
-          View our newest Ecosystem Update
+          Explore the latest Ecosystem Updates
         </p>
       </div>
     </a>
