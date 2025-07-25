@@ -308,16 +308,29 @@ function opStackCommon(
         },
       ),
       escrows: [
-        templateVars.discovery.getEscrowDetails({
-          includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(portal.address),
-          tokens: optimismPortalTokens,
-          premintedTokens: templateVars.optimismPortalPremintedTokens,
-          description: `Main entry point for users depositing ${optimismPortalTokens.join(
-            ', ',
-          )}.`,
-          ...upgradeability,
-        }),
+        migratedToLockbox(templateVars)
+          ? templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: ChainSpecificAddress.address(
+                templateVars.discovery.getContract('ETHLockbox').address,
+              ),
+              tokens: optimismPortalTokens,
+              premintedTokens: templateVars.optimismPortalPremintedTokens,
+              description: `Main escrow for users depositing ${optimismPortalTokens.join(
+                ', ',
+              )}.`,
+              ...upgradeability,
+            })
+          : templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: ChainSpecificAddress.address(portal.address),
+              tokens: optimismPortalTokens,
+              premintedTokens: templateVars.optimismPortalPremintedTokens,
+              description: `Main entry point for users depositing ${optimismPortalTokens.join(
+                ', ',
+              )}.`,
+              ...upgradeability,
+            }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
           address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
@@ -1536,6 +1549,10 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
+}
+
+function migratedToLockbox(templateVars: OpStackConfigCommon): boolean {
+  return templateVars.discovery.hasContract('ETHLockbox')
 }
 
 function hostChainDAProvider(hostChain: ScalingProject): DAProvider {
