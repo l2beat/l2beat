@@ -83,7 +83,7 @@ export function ProjectCostsChart({
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted: posted ?? 0,
+          posted,
           notSyncedPosted:
             !allDataPostedSynced &&
             lastDataPosted &&

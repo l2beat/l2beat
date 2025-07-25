@@ -44,6 +44,11 @@ export function DataPostedChart({
         shape: 'line',
       },
     },
+    notSyncedPosted: {
+      label: 'Data posted (not synced)',
+      color: 'var(--chart-emerald)',
+      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+    },
   } satisfies ChartMeta
 
   return (
@@ -63,6 +68,19 @@ export function DataPostedChart({
           strokeWidth={2}
           isAnimationActive={false}
           dot={false}
+        />
+        <Area
+          dataKey="notSyncedPosted"
+          fill="url(#fillPosted)"
+          fillOpacity={1}
+          stroke={chartMeta.notSyncedPosted.color}
+          strokeDasharray={
+            chartMeta.notSyncedPosted.indicatorType.strokeDasharray
+          }
+          strokeWidth={2}
+          isAnimationActive={false}
+          dot={false}
+          legendType="none"
         />
 
         {getCommonChartComponents({
@@ -92,16 +110,23 @@ export function DataPostedCustomTooltip({
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
+  const dataKeys = payload.map((p) => p.dataKey)
+  const hasPostedAndNotSynced =
+    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
+  const filteredPayload = payload.filter(
+    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
+  )
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-40 flex-col sm:w-48">
+      <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatTimestamp(timestamp, {
             mode: 'datetime',
           })}
         </div>
         <div className="flex flex-col gap-2">
-          {payload.map((entry) => {
+          {filteredPayload.map((entry) => {
             if (
               entry.name === undefined ||
               entry.value === undefined ||
