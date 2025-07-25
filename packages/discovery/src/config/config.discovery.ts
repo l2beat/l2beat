@@ -91,6 +91,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
                   'ETHERSCAN_API_KEY_FOR_DISCOVERY',
                   'ETHERSCAN_API_KEY',
                 ]),
+                unsupported: chainConfig.explorer.unsupported,
               }
             : ({
                 type: chainConfig.explorer.type,
