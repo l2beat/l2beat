@@ -8,5 +8,16 @@
   ],
   "names": {
     "eth:0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4": "OrderlyMultisig"
+  },
+  "overrides": {
+    "eth:0xC8BF04A73704051E5E274F1B43B1F2F153Db2136": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0xef91b38Ca24C97C7147FcA3429503c76CdE043DD": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
   }
 }

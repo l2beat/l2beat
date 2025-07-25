@@ -11,5 +11,16 @@
   ],
   "names": {
     "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": "Ancient8GuardianMultisig"
+  },
+  "overrides": {
+    "eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0xF91357dCa2abDB3388600792d51CAe6644632Cd5": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
   }
 }
