@@ -229,7 +229,7 @@ export const optimism: ScalingProject = opStackL2({
         fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
-        principle: false,
+        principle: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
