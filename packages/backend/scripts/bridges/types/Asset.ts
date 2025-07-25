@@ -1,9 +1,8 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 
-export interface Message {
+export interface Asset {
   direction: 'inbound' | 'outbound'
-  /** Protocol used for bridging, see protocols.ts for constants */
-  protocol: string
+  application: string
   /** Short name of the origin chain */
   origin: string
   /** Short name of the destination chain */
@@ -16,4 +15,6 @@ export interface Message {
   type?: string
   /** Custom id used (by given protocol) to identify other part of the transfer */
   matchingId?: string
+  amount: bigint
+  token: string
 }

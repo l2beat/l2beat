@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
@@ -17,7 +18,7 @@ const ABI = parseAbi([
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
-): Message | undefined {
+): Partial<{ message: Message; asset: Asset }> | undefined {
   for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
@@ -40,15 +41,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'outbound',
-        protocol: ACROSS.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.destinationChainId.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'FundsDeposited',
-        matchingId: data.args.depositId.toString(),
+        message: {
+          direction: 'outbound',
+          protocol: ACROSS.name,
+          origin: chain.shortName,
+          destination: destination ?? data.args.destinationChainId.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'FundsDeposited',
+          matchingId: data.args.depositId.toString(),
+        },
       }
     }
 
@@ -69,15 +71,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'inbound',
-        protocol: ACROSS.name,
-        origin: origin ?? data.args.originChainId.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'FilledRelay',
-        matchingId: data.args.depositId.toString(),
+        message: {
+          direction: 'inbound',
+          protocol: ACROSS.name,
+          origin: origin ?? data.args.originChainId.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'FilledRelay',
+          matchingId: data.args.depositId.toString(),
+        },
       }
     }
   }
