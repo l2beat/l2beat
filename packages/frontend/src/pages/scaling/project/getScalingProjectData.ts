@@ -38,6 +38,7 @@ export async function getScalingProjectData(
       'colors',
       'ecosystemColors',
       'discoveryInfo',
+      'daTrackingConfig',
     ],
   })
   if (!project) return undefined
