@@ -133,8 +133,8 @@ const cmd = command({
           for (const t of transactions) {
             for (const decoder of decoders) {
               const d = decoder(r, t)
-              if (d) {
-                messages.push(d)
+              if (d?.message) {
+                messages.push(d.message)
               }
             }
           }
