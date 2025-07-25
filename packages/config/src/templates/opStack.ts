@@ -957,7 +957,9 @@ function computedStage(
         fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
-        principle: false,
+        principle:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: fraudProofType === 'Kailua',
         securityCouncilProperlySetUp:
