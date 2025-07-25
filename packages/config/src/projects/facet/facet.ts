@@ -218,7 +218,7 @@ export const facet: ScalingProject = {
       {
         name: 'Multi-bridging',
         description:
-          'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the [FacetEtherBridgeV6](https://etherscan.io/address/0x0000000000000b07ED001607f5263D85bf28Ce4C) fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
+          'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
         risks: [],
         references: [
           {
