@@ -179,10 +179,12 @@
       "name": "LivenessGuard",
       "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
       "type": "Contract",
+      "template": "gnosisSafeModules/LivenessGuard",
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
       ],
       "proxyType": "immutable",
+      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -330,7 +332,7 @@
             { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
             }
           ]
         },
@@ -342,7 +344,7 @@
             { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
             }
           ]
         },
@@ -359,7 +361,7 @@
             { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
             }
           ]
         }
@@ -369,7 +371,7 @@
           "permission": "act",
           "from": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
           "role": ".deputy",
-          "condition": "though restricted to the global pause function"
+          "condition": "though restricted to the SuperchainConfig's `pause()` function"
         }
       ]
     },
@@ -2048,6 +2050,7 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/DeputyGuardianModule": "0x8da514975752668828a2c5aa3ed0719bbaac8af5a7835f307de80580ac13ea27",
+    "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
@@ -2061,5 +2064,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x3e77d8880476fd2f589a0e84740c5134106c431dcb9f84a73de3074b6a891516"
+  "permissionsConfigHash": "0x55b7cb2b704301f1d1d9fb29e4ee7fce3df901705909768b7fb797569297bea1"
 }
