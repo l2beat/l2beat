@@ -1,7 +1,7 @@
 {
   "name": "superseed",
   "chain": "ethereum",
-  "blockNumber": 22997013,
+  "blockNumber": 22997468,
   "configHash": "0xc195c5322a085a25086f1dc3e1d1babfb69509f00ad9fa997f5578911dda74b4",
   "entries": [
     {
@@ -632,7 +632,7 @@
         ],
         "$upgradeCount": 2,
         "game1337": "eth:0x0000000000000000000000000000000000000000",
-        "gameCount": 2,
+        "gameCount": 3,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
           "eth:0x97dd8AF1eCcfa97158Ce9ee8A60B0264acE8435F",
@@ -642,7 +642,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-        "permissionedGamesTotal": 2,
+        "permissionedGamesTotal": 3,
         "version": "1.0.1"
       },
       "fieldMeta": {
