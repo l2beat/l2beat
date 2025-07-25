@@ -66,18 +66,18 @@ export const STATE_FP_HYBRID_ZK: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_ZKP_SN: TableReadyValue = {
-  value: 'ZK proofs (SN)',
+export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
+  value: 'Fraud proofs (1R, ZK)',
   description:
-    'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+    'Actors watching the chain can challenge state proposals, and challenged proposals must provide ZK proofs. SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_ZKP_OPTIMISTIC: TableReadyValue = {
-  value: 'ZK fault proofs (SN)',
+export const STATE_ZKP_SN: TableReadyValue = {
+  value: 'ZK proofs (SN)',
   description:
-    'Actors watching the chain can challenge state proposals, and challenged proposals must provide ZK proofs. SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+    'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
 }
