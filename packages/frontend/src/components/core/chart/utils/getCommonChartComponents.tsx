@@ -31,12 +31,12 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
 
   return [
     <CartesianGrid
-      key={'cartesian-grid'}
+      key="cartesian-grid"
       vertical={false}
       syncWithTicks={!isLoading}
     />,
     <YAxis
-      key={'y-axis'}
+      key="y-axis"
       tickLine={false}
       axisLine={false}
       mirror
@@ -50,16 +50,16 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       tick={{ width: 350 }}
       {...rest}
     />,
-    <XAxis key={'x-axis'} {...getXAxisProps(data)} />,
+    <XAxis key="x-axis" {...getXAxisProps(data)} />,
     lastValidTimestamp && (
       <ReferenceArea
-        key={'last-valid-timestamp'}
+        key="last-valid-timestamp"
         x1={lastValidTimestamp}
         fill="url(#notSyncedFill)"
       />
     ),
     lastValidTimestamp && (
-      <defs>
+      <defs key="not-synced-defs">
         <NotSyncedPatternDef />
       </defs>
     ),
