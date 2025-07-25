@@ -960,13 +960,17 @@ function computedStage(
         principle:
           fraudProofType === 'Permissionless' &&
           (templateVars.hasProperSecurityCouncil ?? false),
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: fraudProofType === 'Kailua',
+        usersHave7DaysToExit:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
+        usersCanExitWithoutCooperation:
+          fraudProofType === 'Permissionless' || fraudProofType === 'Kailua',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
+        proofSystemOverriddenOnlyInCaseOfABug:
+          fraudProofType === 'None' ? null : false,
         fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
         delayWith30DExitWindow: false,
       },

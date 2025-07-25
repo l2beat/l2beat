@@ -1,6 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
-import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -45,33 +44,9 @@ export const unichain: ScalingProject = opStackL2({
     ],
     notInScope: [SOA.specToSourceCode, SOA.sequencerPolicy, SOA.nonGasTokens],
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-      },
-      stage1: {
-        principle: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: true,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
-    },
-  ),
+  hasProperSecurityCouncil: true,
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
   associatedTokens: ['UNI'],
   nonTemplateExcludedTokens: ['USDC'],
   genesisTimestamp,
