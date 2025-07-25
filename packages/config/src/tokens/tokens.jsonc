@@ -1742,6 +1742,7 @@
     },
     {
       "symbol": "sUSDe",
+      "category": "stablecoin",
       "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
     },
     {
@@ -4053,6 +4054,7 @@
       "symbol": "sUSDz",
       "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
       "source": "external",
+      "category": "stablecoin",
       "coingeckoId": "anzen-staked-usdz",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -6963,7 +6965,7 @@
   ],
   "morph": [
     {
-      "symbol": "USDa",
+      "symbol": "USDa",  // avalon
       "coingeckoId": "usda-2",
       "address": "0xff12470a969Dd362EB6595FFB44C82c959Fe9ACc",
       "category": "stablecoin",
@@ -6979,7 +6981,7 @@
       }
     },
     {
-      "symbol": "sUSDa",
+      "symbol": "sUSDa", // avalon
       "coingeckoId": "susda",
       "address": "0x2840F9d9f96321435Ab0f977E7FDBf32EA8b304f",
       "category": "stablecoin",
