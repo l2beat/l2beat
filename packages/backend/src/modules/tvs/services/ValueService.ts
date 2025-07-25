@@ -93,16 +93,17 @@ export class ValueService {
     }
 
     const config = createAmountConfig(formula)
+
+    if (
+      timestamp < config.sinceTimestamp ||
+      (config.untilTimestamp && timestamp > config.untilTimestamp)
+    ) {
+      return undefined
+    }
+
     const amount = await this.storage.getAmount(config.id, timestamp)
 
     if (amount === undefined) {
-      if (
-        timestamp < config.sinceTimestamp ||
-        (config.untilTimestamp && timestamp > config.untilTimestamp)
-      ) {
-        return undefined
-      }
-
       throw new Error(
         `${tokenId}: Amount not found for ${config.id} within configured range (timestamp: ${timestamp}, since: ${config.sinceTimestamp}, until: ${config.untilTimestamp})`,
       )
