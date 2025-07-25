@@ -1,11 +1,21 @@
 {
   "name": "facet",
   "chain": "facet",
-  "blockNumber": 1625610,
-  "configHash": "0x0cee03f59ff05acdf86de4f75abc6bf6eedf268812fd835311525dc90a0727d9",
+  "blockNumber": 1632110,
+  "configHash": "0x5260779af4fcad7397001ec410b79146179b6a2345b03f21b0e4baa9a4059e29",
   "entries": [
     {
       "address": "facet:0x0000000000000000000000000000000000000000",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "facet:0x13D21988F08997d20822d247A5015C4D13102F88",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "facet:0x24e31988F08997D20822D247A5015C4D13104099",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -28,7 +38,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619930",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619931",
         "version": "1.1.0"
       },
       "implementationNames": {
@@ -76,41 +86,28 @@
       }
     },
     {
-      "address": "facet:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "facet:0x8a119BE75ef97e17B2832Ce349A1cE7e60Dad373",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "L2FFBBridge",
-      "address": "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
+      "name": "L2WETHBridge",
+      "address": "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
       "type": "Contract",
-      "template": "facet/L2ERC20Bridge",
       "sourceHashes": [
-        "0x06ae9715fb784184e109392e0c2013c69faaf598b8cbbc6debf154cef8d2d305"
+        "0x0ae2befecd05c40f439454b1c6b4a3173f71da052548e4f04bb99ab7470eb332"
       ],
       "proxyType": "immutable",
-      "description": "L2ERC20Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
-      "sinceTimestamp": 1753123547,
-      "sinceBlock": 1606584,
+      "sinceTimestamp": 1753397075,
+      "sinceBlock": 1629378,
       "values": {
         "$immutable": true,
-        "aliasedL1Bridge": "facet:0x8a119BE75ef97e17B2832Ce349A1cE7e60Dad373",
+        "aliasedL1Bridge": "facet:0x24e31988F08997D20822D247A5015C4D13104099",
         "decimals": 18,
-        "l1Bridge": "facet:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
+        "l1Bridge": "facet:0x13D21988F08997d20822d247A5015C4D13102F88",
         "MESSAGE_PASSER": "facet:0x4200000000000000000000000000000000000016",
-        "name": "Facet Fun Bucks",
-        "symbol": "FFB",
-        "totalSupply": 1000000000000000
+        "name": "Albatross WETH",
+        "symbol": "AWETH",
+        "totalSupply": 999999999999999
       },
       "implementationNames": {
-        "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4": "L2ERC20Bridge"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+        "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850": "L2Bridge"
+      }
     },
     {
       "address": "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -165,8 +162,9 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
-    "facet:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4": [
+    "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850": [
       "constructor(string name_, string symbol_, address _l1Bridge)",
+      "error InvalidL1Bridge()",
       "error InvalidWithdrawalAmount()",
       "error UnauthorizedBridge()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -223,9 +221,8 @@
     ]
   },
   "usedTemplates": {
-    "facet/L2ERC20Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0x00296c6bd4985d3dbe68f2cdedc5a0af0956386929168e6ef13e1e067328cf07"
+  "permissionsConfigHash": "0x26e8a839935851f14b1d85b2be3d40b9d377e28bfa8755a55fad6dd3b37c2591"
 }

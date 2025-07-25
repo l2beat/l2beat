@@ -1,8 +1,8 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22988341,
-  "configHash": "0x09f0a4367624f12666fd05f583768b04c3d004f4a64fbebeabec2d2d4af2912a",
+  "blockNumber": 22994787,
+  "configHash": "0x8edb146a6c9e8bc22130a882d7aad0859a22690df4f1993b4cf350c773273cd8",
   "entries": [
     {
       "name": "Inbox",
@@ -66,6 +66,28 @@
       },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "name": "L1ETHBridge",
+      "address": "eth:0x13D21988F08997d20822d247A5015C4D13102F88",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1753397063,
+      "sinceBlock": 22992074,
+      "values": {
+        "$immutable": true,
+        "l2Bridge": "eth:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
+        "owner": "eth:0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "rollup": "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D",
+        "withdrawalDelay": 0
+      },
+      "implementationNames": {
+        "eth:0x13D21988F08997d20822d247A5015C4D13102F88": "L1Bridge"
       }
     },
     {
@@ -226,29 +248,9 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1ETHBridge",
-      "address": "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262",
-      "type": "Contract",
-      "template": "facet/L1ETHBridge",
-      "sourceHashes": [
-        "0x3a64ad01421d13d01bcda2dccfa9afde7ed6dad28ed7471ada57175a7637e8bb"
-      ],
-      "proxyType": "immutable",
-      "description": "L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
-      "sinceTimestamp": 1753123535,
-      "sinceBlock": 22969441,
-      "values": {
-        "$immutable": true,
-        "l2Bridge": "eth:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
-        "owner": "eth:0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "rollup": "eth:0xd0E3721bba691d3735b0827edBe893789cA1486D",
-        "withdrawalDelay": 0
-      },
-      "implementationNames": {
-        "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262": "L1ETHBridge"
-      },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "address": "eth:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "L1StandardBridge",
@@ -281,11 +283,6 @@
         "eth:0x77764Bdf2B52C4B2635A73927945541B65DF74E9": "PausedL1StandardBridge"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "eth:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Facet Multisig",
@@ -407,7 +404,7 @@
           "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
           1604382
         ],
-        "getProposalsLength": 12,
+        "getProposalsLength": 16,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
@@ -551,6 +548,54 @@
       "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
       "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
+    "eth:0x13D21988F08997d20822d247A5015C4D13102F88": [
+      "constructor(address _rollup)",
+      "error ContentLengthMismatch()",
+      "error EmptyItem()",
+      "error InvalidDataRemainder()",
+      "error InvalidDepositAmount()",
+      "error InvalidHeader()",
+      "error InvalidOutputRoot()",
+      "error InvalidWithdrawalProof()",
+      "error L2BridgeAlreadySet()",
+      "error L2BridgeNotSet()",
+      "error ProposalNotCanonical()",
+      "error RootBlacklisted()",
+      "error UnexpectedList()",
+      "error UnexpectedString()",
+      "error WithdrawalAlreadyFinalized()",
+      "error WithdrawalAlreadyProven()",
+      "error WithdrawalDelayNotMet()",
+      "error WithdrawalNotProven()",
+      "event DepositInitiated(address indexed from, address indexed to, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event RollupUpdated(address indexed oldRollup, address indexed newRollup)",
+      "event RootBlacklistStatusChanged(bytes32 indexed root, bool blacklisted)",
+      "event Unpaused(address account)",
+      "event WithdrawalDelayUpdated(uint256 oldDelay, uint256 newDelay)",
+      "event WithdrawalFinalized(address indexed to, uint256 amount, uint256 nonce)",
+      "event WithdrawalProven(address indexed rollup, address indexed to, uint256 amount, uint256 nonce, uint256 proposalId)",
+      "function finalizeWithdrawal(address to, uint256 amount, uint256 nonce)",
+      "function finalized(bytes32) view returns (bool)",
+      "function initiateDeposit() payable",
+      "function l2Bridge() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proveWithdrawal(address to, uint256 amount, uint256 nonce, uint256 proposalId, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) rootProof, bytes[] withdrawalProof)",
+      "function proven(bytes32, address) view returns (uint32 proposalId, uint32 provenAt)",
+      "function renounceOwnership()",
+      "function rollup() view returns (address)",
+      "function rootBlacklisted(bytes32) view returns (bool)",
+      "function setL2Bridge(address _l2Bridge)",
+      "function setRollup(address _rollup)",
+      "function setRootBlacklisted(bytes32 root, bool blacklisted)",
+      "function setWithdrawalDelay(uint256 _withdrawalDelay)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function withdrawalDelay() view returns (uint256)"
+    ],
     "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA": [
       "event AddressSet(string indexed name, address newAddress, address oldAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -664,54 +709,6 @@
       "function systemConfig() view returns (address)",
       "function version() view returns (string)",
       "function weth() view returns (address)"
-    ],
-    "eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262": [
-      "constructor(address _rollup)",
-      "error ContentLengthMismatch()",
-      "error EmptyItem()",
-      "error InvalidDataRemainder()",
-      "error InvalidDepositAmount()",
-      "error InvalidHeader()",
-      "error InvalidOutputRoot()",
-      "error InvalidWithdrawalProof()",
-      "error L2BridgeAlreadySet()",
-      "error L2BridgeNotSet()",
-      "error ProposalNotCanonical()",
-      "error RootBlacklisted()",
-      "error UnexpectedList()",
-      "error UnexpectedString()",
-      "error WithdrawalAlreadyFinalized()",
-      "error WithdrawalAlreadyProven()",
-      "error WithdrawalDelayNotMet()",
-      "error WithdrawalNotProven()",
-      "event DepositInitiated(address indexed from, address indexed to, uint256 amount)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RollupUpdated(address indexed oldRollup, address indexed newRollup)",
-      "event RootBlacklistStatusChanged(bytes32 indexed root, bool blacklisted)",
-      "event Unpaused(address account)",
-      "event WithdrawalDelayUpdated(uint256 oldDelay, uint256 newDelay)",
-      "event WithdrawalFinalized(address indexed to, uint256 amount, uint256 nonce)",
-      "event WithdrawalProven(address indexed rollup, address indexed to, uint256 amount, uint256 nonce, uint256 proposalId)",
-      "function finalizeWithdrawal(address to, uint256 amount, uint256 nonce)",
-      "function finalized(bytes32) view returns (bool)",
-      "function initiateDeposit() payable",
-      "function l2Bridge() view returns (address)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proveWithdrawal(address to, uint256 amount, uint256 nonce, uint256 proposalId, tuple(bytes32 version, bytes32 stateRoot, bytes32 messagePasserStorageRoot, bytes32 latestBlockhash) rootProof, bytes[] withdrawalProof)",
-      "function proven(bytes32, address) view returns (uint32 proposalId, uint32 provenAt)",
-      "function renounceOwnership()",
-      "function rollup() view returns (address)",
-      "function rootBlacklisted(bytes32) view returns (bool)",
-      "function setL2Bridge(address _l2Bridge)",
-      "function setRollup(address _rollup)",
-      "function setRootBlacklisted(bytes32 root, bool blacklisted)",
-      "function setWithdrawalDelay(uint256 _withdrawalDelay)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function withdrawalDelay() view returns (uint256)"
     ],
     "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909": [
       "constructor(address _owner)",
@@ -893,7 +890,6 @@
     "facet/FacetEtherBridge": "0xbb9993b8f35798795519db980c5342ad5d79a1fa8975ca041dfa3b6910c8b229",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "facet/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/Rollup": "0x5f90d5f1f797bc179e7cefece5f58747e38c3404441d81b1a653d6f6ab628163",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -902,5 +898,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x00296c6bd4985d3dbe68f2cdedc5a0af0956386929168e6ef13e1e067328cf07"
+  "permissionsConfigHash": "0x26e8a839935851f14b1d85b2be3d40b9d377e28bfa8755a55fad6dd3b37c2591"
 }

@@ -45,7 +45,7 @@ export const facet: ScalingProject = {
     ],
     notInScope: [
       'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1ETHBridge)',
-      'Bridged token compatibility with other DeFi applications e.g., Facet Fun Bucks (FFB)',
+      'Bridged token compatibility with other DeFi applications e.g., Albatross WETH (AWETH)',
       'The soundness of the ZK proof system of Rollup',
       'Upgradability of the external bridge contracts including the fast bridge (FacetEtherBridgeV6)',
     ],
@@ -174,7 +174,7 @@ export const facet: ScalingProject = {
         description: 'Fast bridge contract.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x79009BE75Ef97e17b2832CE349a1CE7e60dac262'),
+        address: EthereumAddress('0x13D21988F08997d20822d247A5015C4D13102F88'),
         tokens: ['ETH'],
         description: 'Escrow for ETH bridge.',
       }),
@@ -197,7 +197,7 @@ export const facet: ScalingProject = {
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     },
-    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
       FALLBACK_TIMEOUT_SECS,
     ),
   },
@@ -241,11 +241,11 @@ export const facet: ScalingProject = {
         references: [
           {
             title: 'L1 ETH Bridge - Etherscan',
-            url: 'https://etherscan.io/address/0x79009BE75Ef97e17b2832CE349a1CE7e60dac262',
+            url: 'https://etherscan.io/address/0x13D21988F08997d20822d247A5015C4D13102F88',
           },
           {
-            title: 'L2 ETH (FFB) Bridge - Facet Explorer',
-            url: 'https://explorer.facet.org/address/0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4',
+            title: 'L2 ETH (AWETH) Bridge - Facet Explorer',
+            url: 'https://explorer.facet.org/address/0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850',
           },
           {
             title: 'FacetEtherBridgeV6 - Etherscan',

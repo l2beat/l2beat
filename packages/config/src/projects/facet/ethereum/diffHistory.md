@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd562f58cf3721296c04249a0b4e95c4d076285a8
+Generated with discovered.json: 0x428677916aec0822952cd427dc459db6ba7e91b2
 
-# Diff at Thu, 24 Jul 2025 10:11:49 GMT:
+# Diff at Fri, 25 Jul 2025 07:51:16 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 22367347
-- current block number: 22988341
+- comparing to: main@7a4cc0fa28e50e7f953dabb7af07b31dabe5250d block: 22367347
+- current block number: 22994787
 
 ## Description
 
@@ -13,30 +13,24 @@ Bridge version discovery.
 ## Watched changes
 
 ```diff
-    contract L1ETHBridge (0x79009BE75Ef97e17b2832CE349a1CE7e60dac262) {
-    +++ description: L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
+    contract L1ETHBridge (0x13D21988F08997d20822d247A5015C4D13102F88) {
+    +++ description: None
       type:
 -        "EOA"
 +        "Contract"
       proxyType:
 -        "EOA"
 +        "immutable"
-      template:
-+        "facet/L1ETHBridge"
       sourceHashes:
-+        ["0x3a64ad01421d13d01bcda2dccfa9afde7ed6dad28ed7471ada57175a7637e8bb"]
-      description:
-+        "L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
++        ["0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68"]
       sinceTimestamp:
-+        1753123535
++        1753397063
       sinceBlock:
-+        22969441
++        22992074
       values:
-+        {"$immutable":true,"l2Bridge":"eth:0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D","withdrawalDelay":0}
++        {"$immutable":true,"l2Bridge":"eth:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D","withdrawalDelay":0}
       implementationNames:
-+        {"eth:0x79009BE75Ef97e17b2832CE349a1CE7e60dac262":"L1ETHBridge"}
-      category:
-+        {"name":"Canonical Bridges","priority":2}
++        {"eth:0x13D21988F08997d20822d247A5015C4D13102F88":"L1Bridge"}
     }
 ```
 
@@ -68,7 +62,7 @@ Bridge version discovery.
       sinceBlock:
 +        22969440
       values:
-+        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":12,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
++        {"$immutable":true,"AGG_VKEY":"0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc","anchorL2BlockNumber":1604382,"anchorProposalId":0,"anchorRoot":"0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7","canonicalProposalFor":[],"canonicalProposalIdFor":[],"CHALLENGER_BOND":"5000000000000000000","computeL2Timestamp":[],"FALLBACK_TIMEOUT_SECS":1209600,"getAnchorRoot":["0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",1604382],"getProposalsLength":16,"isInFallbackWindow":[],"L2_BLOCK_TIME":12,"L2_START_TIMESTAMP":1753097123,"l2BlockAge":[],"MAX_CHALLENGE_SECS":604800,"MAX_PROVE_SECS":259200,"owner":"eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525","PROPOSAL_INTERVAL":1800,"PROPOSER_BOND":1000000000000000,"RANGE_VKEY_COMMITMENT":"0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93","renouncedOwner":"eth:0xdeaddeaddeaddeaddeaddeaddeaddeaddead0001","ROLLUP_CONFIG_HASH":"0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c","sequencerInbox":"eth:0x00000000000000000000000000000000000face7","VERIFIER":"eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66","version":"1.0.0","whitelistedProposers":["eth:0x615452db5467849689E98a8C5C242A96cF768a94"]}
       implementationNames:
 +        {"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D":"Rollup"}
       category:
@@ -97,12 +91,12 @@ Bridge version discovery.
 ## Source code changes
 
 ```diff
-.../projects/facet/ethereum/.flat/L1ETHBridge.sol  | 2511 ++++++++++++++++++++
+.../projects/facet/ethereum/.flat/L1ETHBridge.sol  | 2517 ++++++++++++++++++++
  .../src/projects/facet/ethereum/.flat/Rollup.sol   | 1199 ++++++++++
  ...:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459.sol | 1396 +++++++++++
  ...:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5.sol |  602 +++++
  .../facet/ethereum/.flat/SP1VerifierGateway.sol    |  231 ++
- 5 files changed, 5939 insertions(+)
+ 5 files changed, 5945 insertions(+)
 ```
 
 ## Config/verification related changes

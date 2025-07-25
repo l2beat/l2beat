@@ -551,6 +551,18 @@ export function PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK(
   }
 }
 
+export function PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
+  delay: number,
+): TableReadyValue {
+  const delayString = formatSeconds(delay)
+  return {
+    value: 'Self propose',
+    description: `Only the whitelisted proposers can propose state roots for recent blocks. Anyone can propose for L2 blocks that are older than ${delayString}.`,
+    sentiment: 'good',
+    orderHint: delay,
+  }
+}
+
 export const PROPOSER_SELF_PROPOSE_ZK: TableReadyValue = {
   value: 'Self propose',
   description:
@@ -781,6 +793,7 @@ export const RISK_VIEW = {
   PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
   PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED_ZK,
+  PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY,
   PROPOSER_SELF_PROPOSE_ZK,
   PROPOSER_SELF_PROPOSE_ROOTS,
   PROPOSER_POS,

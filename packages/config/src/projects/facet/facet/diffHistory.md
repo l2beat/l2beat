@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc1e9adfd5616447665ad0a034f9df34bd11bfafc
+Generated with discovered.json: 0x6a3d713f69a01569af19ab377adea12aad0ab382
 
-# Diff at Thu, 24 Jul 2025 10:11:50 GMT:
+# Diff at Fri, 25 Jul 2025 07:51:16 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 1625610
+- current block number: 1632110
 
 ## Description
 
@@ -25,6 +25,6 @@ Bridge version discovery.
 
 ```diff
 +   Status: CREATED
-    contract L2FFBBridge (0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4)
-    +++ description: L2ERC20Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.
+    contract L2WETHBridge (0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850)
+    +++ description: None
 ```
