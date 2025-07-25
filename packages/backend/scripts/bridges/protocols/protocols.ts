@@ -6,6 +6,7 @@ import { ACROSS } from './decoders/across'
 import { AGGLAYER } from './decoders/agglayer'
 import { CCTPV1 } from './decoders/cctpv1'
 import { CCTPV2 } from './decoders/cctpv2'
+import { HYPERLANE } from './decoders/hyperlane'
 import { LAYERZEROV1 } from './decoders/layerzerov1'
 import { LAYERZEROV2 } from './decoders/layerzerov2'
 import { STARGATE } from './decoders/stargate'
@@ -26,4 +27,5 @@ export const PROTOCOLS: Protocol[] = [
   LAYERZEROV2,
   AGGLAYER,
   STARGATE,
+  HYPERLANE,
 ]
