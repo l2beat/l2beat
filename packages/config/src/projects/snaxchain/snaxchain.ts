@@ -12,7 +12,7 @@ export const snaxchain: ScalingProject = opStackL2({
   capability: 'universal',
   addedAt: UnixTime(1740099913),
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'SNAXchain',
     slug: 'snaxchain',

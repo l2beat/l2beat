@@ -175,6 +175,25 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-BTRST",
+      "priceId": "braintrust",
+      "symbol": "BTRST",
+      "name": "BTRST",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18100/large/braintrust.PNG?1696517605",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1631664000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-BUIDL",
       "priceId": "blackrock-usd-institutional-digital-liquidity-fund",
       "symbol": "BUIDL",
@@ -243,6 +262,25 @@
         "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
         "decimals": 18,
         "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-COW",
+      "priceId": "cow-protocol",
+      "symbol": "COW",
+      "name": "CoW Protocol Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/24384/large/CoW-token_logo.png?1719524382",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1648425600
       },
       "category": "other",
       "source": "canonical",
@@ -496,7 +534,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "optimism-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -512,15 +550,16 @@
             "chain": "ethereum",
             "escrowAddress": "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
             "decimals": 18,
-            "sinceTimestamp": 1685377379
+            "sinceTimestamp": 1685377379,
+            "untilTimestamp": 1753379243
           },
           {
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+            "escrowAddress": "0x322b47Ff1FA8D5611F761e3E275C45B71b294D43",
             "decimals": 18,
-            "sinceTimestamp": 1624401464
+            "sinceTimestamp": 1753379243
           }
         ]
       },
