@@ -1,8 +1,8 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22994787,
-  "configHash": "0x8edb146a6c9e8bc22130a882d7aad0859a22690df4f1993b4cf350c773273cd8",
+  "blockNumber": 22995043,
+  "configHash": "0x7546b81e53a87f82c6f5807621ee32e69327b559c8b0e53200dcc6922b71e873",
   "entries": [
     {
       "name": "Inbox",
@@ -72,10 +72,12 @@
       "name": "L1ETHBridge",
       "address": "eth:0x13D21988F08997d20822d247A5015C4D13102F88",
       "type": "Contract",
+      "template": "facet/L1ETHBridge",
       "sourceHashes": [
         "0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68"
       ],
       "proxyType": "immutable",
+      "description": "L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.",
       "sinceTimestamp": 1753397063,
       "sinceBlock": 22992074,
       "values": {
@@ -88,7 +90,8 @@
       },
       "implementationNames": {
         "eth:0x13D21988F08997d20822d247A5015C4D13102F88": "L1Bridge"
-      }
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
       "address": "eth:0x1673540243E793B0e77C038D4a88448efF524DcE",
@@ -262,7 +265,7 @@
         "0x9060db4f3f7bf996f9a1db86c049a15d8a68dff34b2e9bdd31e9e53ba3e79c8f"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. ",
+      "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
       "sinceTimestamp": 1733855519,
       "sinceBlock": 21373913,
       "values": {
@@ -386,7 +389,7 @@
         "0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e"
       ],
       "proxyType": "immutable",
-      "description": "Rollup contract for Facet. This is the core contract that manages the transaction ordering, the state of the rollup and its proof system.",
+      "description": "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.",
       "sinceTimestamp": 1753123523,
       "sinceBlock": 22969440,
       "values": {
@@ -435,33 +438,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "EthscriptionsSafeModule",
-      "address": "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE",
-      "type": "Contract",
-      "template": "facet/EthscriptionsSafeModule",
-      "sourceHashes": [
-        "0x3b42bbbb2e985d16af9ccbee812a73e53882232fc47dab8cf43369b5b853df33"
-      ],
-      "proxyType": "immutable",
-      "description": "Module that allows the Safe to interact with Ethscriptions.",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1697832707,
-      "sinceBlock": 18393837,
-      "values": {
-        "$immutable": true,
-        "ethscriptionsProxyAddress": "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095"
-      },
-      "implementationNames": {
-        "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": "EthscriptionsSafeModule"
-      }
-    },
-    {
       "address": "eth:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
       "type": "EOA",
       "proxyType": "EOA"
@@ -499,23 +475,6 @@
       },
       "implementationNames": {
         "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C": "ProxyAdmin"
-      }
-    },
-    {
-      "name": "EthscriptionsSafeProxy",
-      "address": "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095",
-      "type": "Contract",
-      "template": "facet/EthscriptionsSafeProxy",
-      "sourceHashes": [
-        "0x09dadea0389245a8882bad041f0349cda9669a53f590677017514fdbe7ec0c8a"
-      ],
-      "proxyType": "immutable",
-      "description": "Helper of the Safe Module that allows to send Ethscriptions transactions.",
-      "sinceTimestamp": 1697832623,
-      "sinceBlock": 18393830,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095": "EthscriptionsSafeProxy"
       }
     }
   ],
@@ -850,11 +809,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": [
-      "function createEthscription(address to, string dataURI)",
-      "function ethscriptionsProxyAddress() view returns (address)",
-      "function transferEthscription(address to, bytes32 ethscriptionId)"
-    ],
     "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -875,21 +829,13 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
-    ],
-    "eth:0xeEd444Fc821b866b002f30f502C53e88E15d5095": [
-      "constructor()",
-      "event ethscriptions_protocol_CreateEthscription(address indexed initialOwner, string contentURI)",
-      "event ethscriptions_protocol_TransferEthscription(address indexed recipient, bytes32 indexed ethscriptionId)",
-      "function createEthscription(address to, string dataURI)",
-      "function transferEthscription(address to, bytes32 ethscriptionId)"
     ]
   },
   "usedTemplates": {
-    "facet/EthscriptionsSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
-    "facet/EthscriptionsSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/FacetEtherBridge": "0xbb9993b8f35798795519db980c5342ad5d79a1fa8975ca041dfa3b6910c8b229",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/L1ETHBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "facet/Rollup": "0x5f90d5f1f797bc179e7cefece5f58747e38c3404441d81b1a653d6f6ab628163",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -898,5 +844,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x26e8a839935851f14b1d85b2be3d40b9d377e28bfa8755a55fad6dd3b37c2591"
+  "permissionsConfigHash": "0xfd5faa62759edcfbbeda0e7cad382d4242eb1185f80a889dd7b774cbfaa41a88"
 }

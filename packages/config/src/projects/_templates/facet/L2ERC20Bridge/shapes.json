@@ -4,5 +4,11 @@
     "address": "0xB1f7976A7d4072c776D06A0c38ab6FbD85972FD4",
     "chain": "facet",
     "blockNumber": 1622097
+  },
+  "L2ERC20Bridge2": {
+    "hash": "0x0ae2befecd05c40f439454b1c6b4a3173f71da052548e4f04bb99ab7470eb332",
+    "address": "0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
+    "chain": "facet",
+    "blockNumber": 1632336
   }
 }

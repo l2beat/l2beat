@@ -22,6 +22,15 @@
   "overrides": {
     "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C": {
       "ignoreMethods": ["initCodeHash"]
+    },
+    "eth:0xDB866fD9241cd32851Df760c1Ec536f3199B22cE": {
+      "ignoreDiscovery": true
+    },
+    "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001": {
+      "ignoreDiscovery": true
+    },
+    "facet:0x4200000000000000000000000000000000000018": {
+      "ignoreDiscovery": true
     }
   }
 }

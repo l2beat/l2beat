@@ -47,7 +47,7 @@ export const facet: ScalingProject = {
       'Ability to deposit, spend, and withdraw ETH from any bridge other than the selected bridge (L1ETHBridge)',
       'Bridged token compatibility with other DeFi applications e.g., Albatross WETH (AWETH)',
       'The soundness of the ZK proof system of Rollup',
-      'Upgradability of the external bridge contracts including the fast bridge (FacetEtherBridgeV6)',
+      'Upgradability of the external bridge contracts including the FacetEtherBridgeV6 bridge',
     ],
   },
   stage: getStage(
@@ -234,7 +234,7 @@ export const facet: ScalingProject = {
         risks: [
           {
             category: 'Funds can be lost if',
-            text: 'the fast bridge EOA operator signs an invalid withdrawal.',
+            text: 'the FacetEtherBridgeV6 EOA operator signs an invalid withdrawal.',
             isCritical: true,
           },
         ],
@@ -283,7 +283,7 @@ export const facet: ScalingProject = {
       {
         title: 'Validity proofs',
         description:
-          "The system uses Succinct's SP1 zkVM and Prover Network to generate zero-knowledge proofs that verify L2 state transitions. Submitting a validity proof can settle disputes in a single transaction.",
+          "The system uses Succinct's SP1 zkVM and Prover Network to generate zero-knowledge proofs that verify L2 state transitions. Anyone can submit a validity proof through the proveBlock() function of the Rollup contract to bypass the optimistic flow and settle an anchor block. Submitting a validity proof during a challenge can settle disputes in a single transaction.",
         references: [
           {
             title: 'Facet ZK Fault Proofs - GitHub Repository',

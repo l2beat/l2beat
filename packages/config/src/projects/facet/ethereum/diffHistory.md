@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x428677916aec0822952cd427dc459db6ba7e91b2
+Generated with discovered.json: 0xeca708c73fdeb14c348df9d65afce23cb7288d7f
 
-# Diff at Fri, 25 Jul 2025 07:51:16 GMT:
+# Diff at Fri, 25 Jul 2025 08:43:06 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@7a4cc0fa28e50e7f953dabb7af07b31dabe5250d block: 22367347
-- current block number: 22994787
+- current block number: 22995043
 
 ## Description
 
@@ -14,15 +14,19 @@ Bridge version discovery.
 
 ```diff
     contract L1ETHBridge (0x13D21988F08997d20822d247A5015C4D13102F88) {
-    +++ description: None
+    +++ description: L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1.
       type:
 -        "EOA"
 +        "Contract"
       proxyType:
 -        "EOA"
 +        "immutable"
+      template:
++        "facet/L1ETHBridge"
       sourceHashes:
 +        ["0x69944b23a896634033db21c6cc3f25d885368fb5c81ff579eb5433bafb47fc68"]
+      description:
++        "L1ETHBridge is an ETH bridge built on top of Rollup contract. It is the selected canonical bridge for this risk analysis. It used to bridge ETH from L1 to L2. Note that the token received on L2 has a different ticker/symbol than the token sent on L1."
       sinceTimestamp:
 +        1753397063
       sinceBlock:
@@ -31,6 +35,8 @@ Bridge version discovery.
 +        {"$immutable":true,"l2Bridge":"eth:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850","owner":"eth:0x0000000000000000000000000000000000000000","paused":false,"rollup":"eth:0xd0E3721bba691d3735b0827edBe893789cA1486D","withdrawalDelay":0}
       implementationNames:
 +        {"eth:0x13D21988F08997d20822d247A5015C4D13102F88":"L1Bridge"}
+      category:
++        {"name":"Canonical Bridges","priority":2}
     }
 ```
 
@@ -44,7 +50,7 @@ Bridge version discovery.
 
 ```diff
     contract Rollup (0xd0E3721bba691d3735b0827edBe893789cA1486D) {
-    +++ description: Rollup contract for Facet. This is the core contract that manages the transaction ordering, the state of the rollup and its proof system.
+    +++ description: Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system.
       type:
 -        "EOA"
 +        "Contract"
@@ -56,7 +62,7 @@ Bridge version discovery.
       sourceHashes:
 +        ["0x10b46b3a5fd93432baa3a1ae6ca022b0295206b71e75b9d5ded7d050ff31c12e"]
       description:
-+        "Rollup contract for Facet. This is the core contract that manages the transaction ordering, the state of the rollup and its proof system."
++        "Rollup contract for Facet. This is the core contract that manages the state of the rollup and its proof system."
       sinceTimestamp:
 +        1753123523
       sinceBlock:
@@ -124,10 +130,10 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 
 ```diff
     contract L1StandardBridge (0x8F75466D69a52EF53C7363F38834bEfC027A2909) {
-    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. 
+    +++ description: Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.
       description:
 -        "The main entry point to deposit ERC20 tokens from host chain to this chain."
-+        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. "
++        "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw."
       values.messenger:
 -        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
       values.MESSENGER:
@@ -180,6 +186,12 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 ```
 
 ```diff
+-   Status: DELETED
+    contract EthscriptionsSafeModule (0xDB866fD9241cd32851Df760c1Ec536f3199B22cE)
+    +++ description: Module that allows the Safe to interact with Ethscriptions.
+```
+
+```diff
     contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C) {
     +++ description: None
       directlyReceivedPermissions.1:
@@ -199,6 +211,12 @@ discovery. Values are for block 22367347 (main branch discovery), not current.
 -   Status: DELETED
     contract SuperchainConfig (0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59)
     +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract EthscriptionsSafeProxy (0xeEd444Fc821b866b002f30f502C53e88E15d5095)
+    +++ description: Helper of the Safe Module that allows to send Ethscriptions transactions.
 ```
 
 Generated with discovered.json: 0x37d75473b3d42a6c61e9b66fa480f51a19feafdb

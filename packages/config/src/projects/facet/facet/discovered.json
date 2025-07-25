@@ -1,14 +1,9 @@
 {
   "name": "facet",
   "chain": "facet",
-  "blockNumber": 1632110,
-  "configHash": "0x5260779af4fcad7397001ec410b79146179b6a2345b03f21b0e4baa9a4059e29",
+  "blockNumber": 1632369,
+  "configHash": "0xce1cb87ca6e803ab2a84cbd24281055907bad31dcbb01fccd16c3caae04f39ec",
   "entries": [
-    {
-      "address": "facet:0x0000000000000000000000000000000000000000",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "address": "facet:0x13D21988F08997d20822d247A5015C4D13102F88",
       "type": "EOA",
@@ -48,51 +43,15 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "ProxyAdmin",
-      "address": "facet:0x4200000000000000000000000000000000000018",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0xdb44b7e73254e0314f233ca790b4d44a2f9e3cebc019945c0ef84b9e3579c77a",
-        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "facet:0x4200000000000000000000000000000000000016",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "facet:0x4200000000000000000000000000000000000018",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1733844551,
-      "sinceBlock": 0,
-      "values": {
-        "$admin": "facet:0x4200000000000000000000000000000000000018",
-        "$implementation": "facet:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "addressManager": "facet:0x0000000000000000000000000000000000000000",
-        "isUpgrading": false,
-        "owner": "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001"
-      },
-      "implementationNames": {
-        "facet:0x4200000000000000000000000000000000000018": "Proxy",
-        "facet:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
-      }
-    },
-    {
       "name": "L2WETHBridge",
       "address": "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850",
       "type": "Contract",
+      "template": "facet/L2ERC20Bridge",
       "sourceHashes": [
         "0x0ae2befecd05c40f439454b1c6b4a3173f71da052548e4f04bb99ab7470eb332"
       ],
       "proxyType": "immutable",
+      "description": "L2ERC20Bridge is an ERC20 minter counterpart to an L1 bridge. This contract is used to mint new ERC20 tokens on the L2 once a token deposit is made on the L1. Note that the token received on L2 could have a different ticker/symbol than the token sent on L1.",
       "sinceTimestamp": 1753397075,
       "sinceBlock": 1629378,
       "values": {
@@ -107,52 +66,12 @@
       },
       "implementationNames": {
         "facet:0x85e725E5b7E42f3377cB3A1Fdd8a5Ee6350d3850": "L2Bridge"
-      }
-    },
-    {
-      "address": "facet:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "facet:0x4200000000000000000000000000000000000016",
-          "role": "admin",
-          "via": [
-            { "address": "facet:0x4200000000000000000000000000000000000018" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "facet:0x4200000000000000000000000000000000000018",
-          "role": "admin",
-          "via": [
-            { "address": "facet:0x4200000000000000000000000000000000000018" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "facet:0x4200000000000000000000000000000000000018",
-          "role": ".owner"
-        }
-      ]
+      },
+      "category": { "name": "Canonical Bridges", "priority": 2 }
     }
   ],
   "abis": {
     "facet:0x4200000000000000000000000000000000000016": [
-      "constructor(address _admin)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address)",
-      "function changeAdmin(address _admin)",
-      "function implementation() returns (address)",
-      "function upgradeTo(address _implementation)",
-      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "facet:0x4200000000000000000000000000000000000018": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
@@ -197,32 +116,11 @@
       "function messageNonce() view returns (uint256)",
       "function sentMessages(bytes32) view returns (bool)",
       "function version() view returns (string)"
-    ],
-    "facet:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
-      "constructor(address _owner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function addressManager() view returns (address)",
-      "function changeProxyAdmin(address _proxy, address _newAdmin)",
-      "function getProxyAdmin(address _proxy) view returns (address)",
-      "function getProxyImplementation(address _proxy) view returns (address)",
-      "function implementationName(address) view returns (string)",
-      "function isUpgrading() view returns (bool)",
-      "function owner() view returns (address)",
-      "function proxyType(address) view returns (uint8)",
-      "function renounceOwnership()",
-      "function setAddress(string _name, address _address)",
-      "function setAddressManager(address _address)",
-      "function setImplementationName(address _address, string _name)",
-      "function setProxyType(address _address, uint8 _type)",
-      "function setUpgrading(bool _upgrading)",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address _proxy, address _implementation)",
-      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ]
   },
   "usedTemplates": {
-    "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "facet/L2ERC20Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/L2ToL1MessagePasser": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x26e8a839935851f14b1d85b2be3d40b9d377e28bfa8755a55fad6dd3b37c2591"
+  "permissionsConfigHash": "0xfd5faa62759edcfbbeda0e7cad382d4242eb1185f80a889dd7b774cbfaa41a88"
 }
