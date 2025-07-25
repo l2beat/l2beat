@@ -327,11 +327,14 @@ async function getLargestPosters(
         ]
       }
 
-      if (sovereignProjectsNamesMap.has(largestPoster.projectId)) {
+      const sovereignProject = sovereignProjectsNamesMap.get(
+        largestPoster.projectId,
+      )
+      if (sovereignProject) {
         return [
           daLayer,
           {
-            name: sovereignProjectsNamesMap.get(largestPoster.projectId),
+            name: sovereignProject,
             slug: undefined,
             ...largestPoster,
           },
