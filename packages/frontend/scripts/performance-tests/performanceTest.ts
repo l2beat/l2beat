@@ -3,8 +3,19 @@ import path from 'path'
 import { formatBytes } from './formatBytes'
 import { pages, projectPages } from './pages'
 
-const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
-// const BASE_URL = 'http://localhost:3000'
+// const BASE_URL = 'https://fe-rewrite-a882664d4be9.herokuapp.com'
+const BASE_URL = 'http://localhost:3000'
+
+// Parse CLI arguments for filtering
+const args = process.argv.slice(2)
+let filter: string | undefined
+for (let i = 0; i < args.length; i++) {
+  const [key, value] = args.slice(i, i + 2)
+  if (key === '-f' && value) {
+    filter = value.toLowerCase()
+    break
+  }
+}
 
 const results: {
   mainPages: Record<
@@ -44,6 +55,11 @@ const results: {
 
 main().catch(console.error)
 
+function filterPage(page: string): boolean {
+  if (!filter) return true
+  return page.toLowerCase().includes(filter)
+}
+
 async function main() {
   console.log('Starting performance test...')
   for (let i = 0; i < 10; i++) {
@@ -51,7 +67,9 @@ async function main() {
   }
   console.log('Finished warming up website...')
 
-  for (const page of pages) {
+  // Filter main pages if filter is set
+  const filteredPages = pages.filter(filterPage)
+  for (const page of filteredPages) {
     console.log(`Testing ${page}...`)
     const { duration, size } = await testPage(page)
     results.mainPages[page] = {
@@ -60,15 +78,18 @@ async function main() {
     }
   }
   for (const [type, pages] of Object.entries(projectPages)) {
+    // Filter project pages if filter is set
+    const filteredProjectPages = pages.filter(filterPage)
     const typeResult: { page: string; duration: number; size: number }[] = []
-    for (const page of pages) {
+    for (const page of filteredProjectPages) {
       console.log(`Testing ${page}...`)
       const { size, duration } = await testPage(page)
       typeResult.push({ page, duration, size })
     }
     const firstResult = typeResult[0]
     if (!firstResult) {
-      throw new Error('No results found')
+      // If no results after filtering, skip this type
+      continue
     }
     const minDuration = typeResult.reduce(
       (min, curr) => (curr.duration < min.duration ? curr : min),
@@ -122,14 +143,18 @@ async function main() {
 }
 
 async function testPage(page: string) {
-  const response = await fetch(`${BASE_URL}${page}`)
+  const start = process.hrtime.bigint()
 
-  const duration = response.headers.get('metrics-execution-time')
-  const size = response.headers.get('metrics-data-size')
+  const response = await fetch(`${BASE_URL}${page}`)
+  const end = process.hrtime.bigint()
+  const durationMs = Number(end - start) / 1_000_000
+  const contentLength = response.headers.get('Content-Length')
 
   return {
-    duration: duration ? Number.parseFloat(duration) : Number.POSITIVE_INFINITY,
-    size: size ? Number.parseInt(size) : Number.POSITIVE_INFINITY,
+    duration: durationMs,
+    size: contentLength
+      ? Number.parseInt(contentLength)
+      : Number.POSITIVE_INFINITY,
   }
 }
 

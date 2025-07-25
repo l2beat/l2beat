@@ -13,30 +13,12 @@ export async function getEcosystemProjectData(
   const helpers = getSsrHelpers()
   const [appLayoutProps, ecosystem] = await Promise.all([
     getAppLayoutProps(),
-    getEcosystemEntry(slug),
+    getEcosystemEntry(slug, helpers),
   ])
 
   if (!ecosystem) {
     return undefined
   }
-
-  await Promise.all([
-    helpers.tvs.chart.prefetch({
-      range: { type: '1y' },
-      excludeAssociatedTokens: false,
-      filter: {
-        type: 'projects',
-        projectIds: ecosystem.liveProjects.map((project) => project.id),
-      },
-    }),
-    helpers.activity.chart.prefetch({
-      range: { type: '1y' },
-      filter: {
-        type: 'projects',
-        projectIds: ecosystem.liveProjects.map((project) => project.id),
-      },
-    }),
-  ])
 
   return {
     head: {

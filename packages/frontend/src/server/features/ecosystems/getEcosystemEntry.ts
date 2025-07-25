@@ -11,6 +11,7 @@ import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import { getCollection } from '~/content/getCollection'
 import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/EcosystemGovernanceLinks'
 import { ps } from '~/server/projects'
+import type { SsrHelpers } from '~/trpc/server'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getImageParams } from '~/utils/project/getImageParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -93,6 +94,7 @@ export interface EcosystemProjectEntry extends ScalingSummaryEntry {
 
 export async function getEcosystemEntry(
   slug: string,
+  helpers: SsrHelpers,
 ): Promise<EcosystemEntry | undefined> {
   const ecosystem = await ps.getProject({
     slug,
@@ -131,30 +133,50 @@ export async function getEcosystemEntry(
     }),
   ])
 
-  const [
-    projectsChangeReport,
-    tvs,
-    projectsActivity,
-    projectsOngoingAnomalies,
-  ] = await Promise.all([
-    getProjectsChangeReport(),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    getActivityLatestUops(allScalingProjects),
-    getApprovedOngoingAnomalies(),
-  ])
-
   const ecosystemProjects = projects.filter(
     (p) => p.ecosystemInfo.id === ecosystem.id,
-  )
-  const allScalingProjectsUops = allScalingProjects.reduce(
-    (acc, curr) =>
-      acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
-    0,
   )
 
   const [upcomingProjects, liveProjects] = partition(
     ecosystemProjects.filter((p) => !p.archivedAt),
     (p) => p.isUpcoming,
+  )
+
+  const [
+    projectsChangeReport,
+    tvs,
+    projectsActivity,
+    projectsOngoingAnomalies,
+    blobsData,
+    token,
+  ] = await Promise.all([
+    getProjectsChangeReport(),
+    get7dTvsBreakdown({ type: 'layer2' }),
+    getActivityLatestUops(allScalingProjects),
+    getApprovedOngoingAnomalies(),
+    getBlobsData(liveProjects),
+    getEcosystemToken(ecosystem, liveProjects),
+    helpers.tvs.chart.prefetch({
+      range: { type: '1y' },
+      excludeAssociatedTokens: false,
+      filter: {
+        type: 'projects',
+        projectIds: liveProjects.map((project) => project.id),
+      },
+    }),
+    helpers.activity.chart.prefetch({
+      range: { type: '1y' },
+      filter: {
+        type: 'projects',
+        projectIds: liveProjects.map((project) => project.id),
+      },
+    }),
+  ])
+
+  const allScalingProjectsUops = allScalingProjects.reduce(
+    (acc, curr) =>
+      acc + (projectsActivity[curr.id.toString()]?.pastDayUops ?? 0),
+    0,
   )
 
   return {
@@ -178,9 +200,9 @@ export async function getEcosystemEntry(
     tvsByStage: getTvsByStage(liveProjects, tvs),
     tvsByTokenType: getTvsByTokenType(liveProjects, tvs),
     projectsByDaLayer: getProjectsByDaLayer(liveProjects),
-    blobsData: await getBlobsData(liveProjects),
+    blobsData,
     projectsByRaas: getProjectsByRaas(liveProjects),
-    token: await getEcosystemToken(ecosystem, liveProjects),
+    token,
     projectsChartData: getEcosystemProjectsChartData(
       liveProjects,
       allScalingProjects.length,

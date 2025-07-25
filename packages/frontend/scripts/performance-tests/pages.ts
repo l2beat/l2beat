@@ -58,4 +58,10 @@ export const projectPages: Record<string, string[]> = {
     '/zk-catalog/zksync-era',
     '/zk-catalog/zkcandy',
   ],
+  ecosystems: [
+    '/ecosystems/arbitrum-orbit',
+    '/ecosystems/superchain',
+    '/ecosystems/agglayer',
+    '/ecosystems/the-elastic-network',
+  ],
 }
