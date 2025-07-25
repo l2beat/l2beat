@@ -15,6 +15,9 @@
     }
   },
   "fields": {
+    "superRootsActive": {
+      "severity": "HIGH"
+    },
     "respectedGameType": {
       "severity": "HIGH"
     },
