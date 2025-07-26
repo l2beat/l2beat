@@ -204,14 +204,17 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 - `pnpm tvs:generate` - regenerate TVS config from latest inputs (check --help for available
   options)
 - `pnpm tvs:execute` - executes TVS with latest config (check --help for available options)
-- `pnpm tvs:calculate-ids` - calculates IDS for amounts and prices. Examples:
+- `pnpm tvs:calculate-ids` - calculates IDs for amounts and prices. Examples:
 ```bash
 pnpm tvs:calculate-ids --projects=unichain,arbitrum
 ```
 ```bash
 pnpm tvs:calculate-ids --tokens=unichain-ETH,unichain-USDC
 ```
-
+- `pnpm tvs:translate-id` - find out which config corresponds to given ID. Examples:
+```bash
+pnpm pnpm tvs:translate-id 5da09aa91cbd
+```
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 
 ## Maintenance endpoints
