@@ -30,6 +30,8 @@
     "dev": "pnpm build:dependencies && pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
     "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
+    "tvs:calculate-ids": "ts-node ./scripts/tvs/calculate-ids.ts",
+    "tvs:translate-id": "ts-node ./scripts/tvs/translate-id.ts",
     "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
     "bridges:cli": "ts-node ./scripts/bridges/cli.ts"
   },
