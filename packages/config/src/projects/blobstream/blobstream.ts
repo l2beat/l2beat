@@ -66,8 +66,7 @@ export const blobstream: BaseProject = {
        Once a proving request is received, the off-chain prover generates the proof and relays it to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
   
        Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
-        By default, Blobstream on Ethereum is updated by the Succinct operator at a regular cadence of 4 hour.
-        For Blobstream on Arbitrum and Base, the update interval is 1 hour.
+        By default, Blobstream is updated by the Succinct operator at a regular cadence of 1 hour. Note that the update interval can vary across chains.
       `,
       references: [
         {
