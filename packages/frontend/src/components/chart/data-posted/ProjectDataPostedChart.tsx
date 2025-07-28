@@ -17,7 +17,7 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
   const [timeRange, setTimeRange] = useState<DataPostedTimeRange>(defaultRange)
 
   const { data, isLoading } = api.da.scalingProjectChart.useQuery({
-    range: { type: timeRange },
+    range: timeRange,
     projectId,
   })
 

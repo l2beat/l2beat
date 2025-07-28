@@ -10,7 +10,7 @@ export async function getDataPostedSection(
 
   const range = project.archivedAt ? 'max' : '1y'
   const data = await helpers.da.scalingProjectChart.fetch({
-    range: { type: range },
+    range,
     projectId: project.id,
   })
 

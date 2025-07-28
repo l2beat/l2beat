@@ -32,6 +32,14 @@ export function ProjectDataPostedChartStats({
       >
         {data?.avgPerDay ? formatBytes(data.avgPerDay) : undefined}
       </ChartStatsItem>
+      <ChartStatsItem
+        label="Avg size per L2 UOP"
+        tooltip="The average posted data size of a L2 user operation for the selected time period."
+        isLoading={isLoading}
+        className="max-md:h-7"
+      >
+        {data?.postedPerUop ? formatBytes(data.postedPerUop) : undefined}
+      </ChartStatsItem>
     </ChartStats>
   )
 }
