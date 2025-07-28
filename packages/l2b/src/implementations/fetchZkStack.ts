@@ -308,8 +308,8 @@ export class ZkStackDataFetcher {
   ): Promise<T> {
     try {
       return await contractCall()
-    } catch (_error) {
-      console.warn(errorMessage)
+    } catch (error) {
+      console.warn(`${errorMessage}: ${error instanceof Error ? error.message : String(error)}`)
       return errorValue
     }
   }
