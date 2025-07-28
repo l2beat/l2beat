@@ -19,8 +19,9 @@ export function transformTransfersQueryResult(
   return queryResults.flatMap((r) => {
     const matchingConfigs = configs.filter(
       (t) =>
-        t.properties.params.from === r.from_address &&
-        t.properties.params.to === r.to_address,
+        (t.properties.params.from
+          ? t.properties.params.from === r.from_address
+          : true) && t.properties.params.to === r.to_address,
     )
 
     assert(

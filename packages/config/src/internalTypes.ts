@@ -208,7 +208,7 @@ interface FunctionCall {
 
 interface Transfer {
   formula: 'transfer'
-  from: EthereumAddress
+  from?: EthereumAddress
   to: EthereumAddress
   /** Inclusive */
   sinceTimestamp: UnixTime

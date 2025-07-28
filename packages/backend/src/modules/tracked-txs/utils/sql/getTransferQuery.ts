@@ -3,7 +3,7 @@ import { type EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
 
 export function getTransferQuery(
-  transfersConfig: { from: EthereumAddress; to: EthereumAddress }[],
+  transfersConfig: { from?: EthereumAddress; to: EthereumAddress }[],
   from: UnixTime,
   to: UnixTime,
 ): BigQueryClientQuery {
@@ -11,7 +11,7 @@ export function getTransferQuery(
     UnixTime.toDate(from).toISOString(),
     UnixTime.toDate(to).toISOString(),
     ...transfersConfig.flatMap((c) => [
-      c.from.toLowerCase(),
+      ...(c.from ? [c.from.toLowerCase()] : []),
       c.to.toLowerCase(),
     ]),
     UnixTime.toDate(from).toISOString(),
@@ -45,7 +45,11 @@ export function getTransferQuery(
       AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${transfersConfig
-          .map(() => '(traces.from_address = ? AND traces.to_address = ?)')
+          .map((tc) =>
+            tc.from
+              ? '(traces.from_address = ? AND traces.to_address = ?)'
+              : '(traces.to_address = ?)',
+          )
           .join(' OR ')}
       )
     WHERE
