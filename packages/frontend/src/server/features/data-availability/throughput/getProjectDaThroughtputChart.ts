@@ -54,17 +54,15 @@ export async function getProjectDaThroughputChart(
     now: adjustedTarget,
   })
 
-  const throughput = (
-    await (params.includeScalingOnly
-      ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-          [params.projectId],
-          [from, adjustedTarget],
-        )
-      : db.dataAvailability.getByProjectIdsAndTimeRange(
-          [params.projectId],
-          [from, adjustedTarget],
-        ))
-  ).filter((r) => r.timestamp < 1750000000)
+  const throughput = await (params.includeScalingOnly
+    ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+        [params.projectId],
+        [from, adjustedTarget],
+      )
+    : db.dataAvailability.getByProjectIdsAndTimeRange(
+        [params.projectId],
+        [from, adjustedTarget],
+      ))
 
   if (throughput.length === 0) {
     return undefined

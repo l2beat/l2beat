@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
-import { Area, AreaChart } from 'recharts'
+import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -46,6 +46,16 @@ const chartMeta = {
     color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
+  posted: {
+    label: 'Data posted',
+    color: 'var(--chart-emerald)',
+    indicatorType: { shape: 'line' },
+  },
+  estimatedPosted: {
+    label: 'Data posted (not synced)',
+    color: 'var(--chart-emerald)',
+    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+  },
 } satisfies ChartMeta
 
 interface CostsChartDataPoint {
@@ -54,6 +64,7 @@ interface CostsChartDataPoint {
   blobs: number | null
   compute: number | null
   overhead: number | null
+  posted?: number | null
 }
 
 interface Props {
@@ -63,6 +74,7 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   range: CostsTimeRange
+  showDataPosted: boolean
   hasBlobs: boolean
   tickCount?: number
   className?: string
@@ -76,6 +88,7 @@ export function CostsChart({
   milestones,
   className,
   range,
+  showDataPosted,
   tickCount,
   hasBlobs,
 }: Props) {
@@ -104,6 +117,16 @@ export function CostsChart({
       color: 'var(--chart-stacked-purple)',
       indicatorType: { shape: 'square' },
     },
+    posted: {
+      label: 'Data posted',
+      color: 'var(--chart-emerald)',
+      indicatorType: { shape: 'line' },
+    },
+    estimatedPosted: {
+      label: 'Data posted (estimated)',
+      color: 'var(--chart-emerald)',
+      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+    },
   } satisfies ChartMeta
 
   const resolution = rangeToResolution(range)
@@ -116,9 +139,10 @@ export function CostsChart({
       milestones={milestones}
       className={className}
     >
-      <AreaChart data={data} margin={{ top: 20 }}>
+      <ComposedChart data={data} margin={{ top: 20 }}>
         <ChartLegend content={<ChartLegendContent reverse />} />
         <Area
+          yAxisId="left"
           dataKey="overhead"
           fill={chartMeta.overhead.color}
           fillOpacity={1}
@@ -129,6 +153,7 @@ export function CostsChart({
           isAnimationActive={false}
         />
         <Area
+          yAxisId="left"
           dataKey="compute"
           fill={chartMeta.compute.color}
           fillOpacity={1}
@@ -140,6 +165,7 @@ export function CostsChart({
         />
         {chartMeta.blobs && (
           <Area
+            yAxisId="left"
             dataKey="blobs"
             fill={chartMeta.blobs.color}
             fillOpacity={1}
@@ -151,6 +177,7 @@ export function CostsChart({
           />
         )}
         <Area
+          yAxisId="left"
           dataKey="calldata"
           fill={chartMeta.calldata.color}
           fillOpacity={1}
@@ -160,10 +187,51 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
+        {showDataPosted && (
+          <Line
+            yAxisId="right"
+            dataKey="posted"
+            strokeWidth={2}
+            stroke={chartMeta.posted.color}
+            dot={false}
+            isAnimationActive={false}
+          />
+        )}
+        {showDataPosted && (
+          <Line
+            yAxisId="right"
+            dataKey="estimatedPosted"
+            strokeWidth={2}
+            stroke={chartMeta.estimatedPosted.color}
+            strokeDasharray={
+              chartMeta.estimatedPosted.indicatorType.strokeDasharray
+            }
+            dot={false}
+            isAnimationActive={false}
+            legendType="none"
+          />
+        )}
+        {showDataPosted && (
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickFormatter={(value: number) => formatBytes(value)}
+            tickLine={false}
+            axisLine={false}
+            mirror
+            tickCount={tickCount ?? 3}
+            dy={-10}
+            tick={{
+              width: 100,
+            }}
+          />
+        )}
+
         {getCommonChartComponents({
           data,
           isLoading,
           yAxis: {
+            yAxisId: 'left',
             tickFormatter: (value: number) =>
               unit === 'gas'
                 ? formatNumber(value)
@@ -176,7 +244,7 @@ export function CostsChart({
           content={<CustomTooltip unit={unit} resolution={resolution} />}
           filterNull={false}
         />
-      </AreaChart>
+      </ComposedChart>
     </ChartContainer>
   )
 }
@@ -197,14 +265,14 @@ function CustomTooltip({
     return <ChartTooltipNoDataState timestamp={label} />
 
   const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndNotSynced =
-    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
+  const hasPostedAndEstimated =
+    dataKeys.includes('posted') && dataKeys.includes('estimatedPosted')
   const filteredPayload = payload.filter(
-    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
+    (p) => !hasPostedAndEstimated || p.name !== 'estimatedPosted',
   )
   const reversedPayload = [...filteredPayload].reverse()
   const total = payload.reduce((acc, curr) => {
-    if (curr.name === 'posted' || curr.name === 'notSyncedPosted') {
+    if (curr.name === 'posted' || curr.name === 'estimatedPosted') {
       return acc
     }
     return acc + (curr?.value ?? 0)
@@ -227,6 +295,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
+            console.log(entry)
             if (
               entry.value === undefined ||
               entry.value === null ||
@@ -249,7 +318,7 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.name === 'posted' || entry.name === 'notSyncedPosted'
+                  {entry.name === 'posted' || entry.name === 'estimatedPosted'
                     ? formatBytes(entry.value)
                     : formatCostValue(entry.value, unit, 'total')}
                 </span>
