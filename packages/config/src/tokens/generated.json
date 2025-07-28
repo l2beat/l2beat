@@ -14679,6 +14679,78 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Jito Staked SOL",
+      "coingeckoId": "jito-staked-sol",
+      "address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
+      "symbol": "JitoSOL",
+      "decimals": 18,
+      "deploymentTimestamp": 1750409841,
+      "coingeckoListingTimestamp": 1667260800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28046/large/JitoSOL-200.png?1696527060",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1750956642,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Solana (Universal)",
+      "coingeckoId": "wrapped-solana-universal",
+      "address": "0x9B8Df6E244526ab5F6e6400d331DB28C8fdDdb55",
+      "symbol": "uSOL",
+      "decimals": 18,
+      "deploymentTimestamp": 1749138957,
+      "coingeckoListingTimestamp": 1724976000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39987/large/UA-SOL_1.png?1725027946",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Sui (Universal)",
+      "coingeckoId": "wrapped-sui-universal",
+      "address": "0xb0505e5a99abd03d94a1169e638B78EDfEd26ea4",
+      "symbol": "uSUI",
+      "decimals": 18,
+      "deploymentTimestamp": 1749138998,
+      "coingeckoListingTimestamp": 1727827200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50482/large/UA-SUI-PAD.png?1727888681",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Vault Bridge ETH",
       "coingeckoId": "ethereum",
       "address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",

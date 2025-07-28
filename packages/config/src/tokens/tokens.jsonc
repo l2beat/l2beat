@@ -7322,6 +7322,48 @@
   ],
   "katana": [
     {
+      "symbol": "uSUI",
+      "address": "0xb0505e5a99abd03d94a1169e638B78EDfEd26ea4",
+      "coingeckoId": "wrapped-sui-universal",
+      "source": "native",
+      "supply": "totalSupply" // circulating supply is global, > totalSupply
+    },
+    {
+      "symbol": "uSOL",
+      "address": "0x9B8Df6E244526ab5F6e6400d331DB28C8fdDdb55",
+      "source": "native",
+      "supply": "totalSupply" // circulating supply is global, > totalSupply
+    },
+    {
+      "symbol": "JitoSOL",
+      "address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
+      "coingeckoId": "jito-staked-sol",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LBTC",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "vbUSDC",
       "category": "stablecoin",
       "coingeckoId": "usd-coin",
