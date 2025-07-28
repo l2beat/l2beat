@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x243efbcd07ed35eaa355595e302172bd3d2b4219
+
+# Diff at Mon, 28 Jul 2025 07:27:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 1846362
+- current block number: 2044435
+
+## Description
+
+Safe verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1846362 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8) {
+    +++ description: None
+      name:
+-        ""
++        "GnosisSafeL2"
+      unverified:
+-        true
+      values.domainSeparator:
++        "0xfeb14725916df3e8c12da42b211e3398ceddd12e47bfd3596eae526b73460ae6"
+      values.getChainId:
++        25327
+      values.VERSION:
++        "1.3.0"
+      implementationNames.everclear:0xac7599880cB5b5eCaF416BEE57C606f15DA5beB8:
+-        ""
++        "GnosisSafeProxy"
+      implementationNames.everclear:0xfb1bffC9d739B8D520DaF37dF666da4C687191EA:
+-        ""
++        "GnosisSafeL2"
+      template:
++        "GnosisSafe"
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"]
+    }
+```
+
 Generated with discovered.json: 0x660a9dadcd19db99cf6578bb09d1bf7ab4607e5d
 
 # Diff at Mon, 14 Jul 2025 12:46:54 GMT:

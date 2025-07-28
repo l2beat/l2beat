@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "zircuit",
-  "blockNumber": 15364203,
+  "blockNumber": 16875771,
   "configHash": "0x127004c822d62f183c8278cd5ab897a2d75c2988addb86ca14e4ffd3e27762c9",
   "entries": [
     {
@@ -39,21 +39,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 602997202,
+        "basefee": 294515603,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x860409be6049dd06c3bfe74926a7a552c3277fdd865315938507dfb5731814cc",
+        "hash": "0x0acc928251b1f6dcdad1a042f1be37ab222eeed394619e6908a57a99301cf5ae",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22765716,
+        "number": 23016159,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 0,
-        "timestamp": 1750664615,
+        "timestamp": 1753687751,
         "version": "1.3.0"
       },
       "implementationNames": {
