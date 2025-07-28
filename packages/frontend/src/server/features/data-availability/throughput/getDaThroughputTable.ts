@@ -147,8 +147,13 @@ function getPastDayData(
   )
 
   const currentTotalPosted = Number(lastRecord.totalSize)
-  const previousTotalPosted = previousRecord ? Number(previousRecord.totalSize) : 0
-  const change = calculatePercentageChange(currentTotalPosted, previousTotalPosted)
+  const previousTotalPosted = previousRecord
+    ? Number(previousRecord.totalSize)
+    : 0
+  const change = calculatePercentageChange(
+    currentTotalPosted,
+    previousTotalPosted,
+  )
 
   return {
     totalPosted: currentTotalPosted,
