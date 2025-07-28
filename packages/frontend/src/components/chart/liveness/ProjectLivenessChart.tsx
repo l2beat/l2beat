@@ -68,7 +68,7 @@ export function ProjectLivenessChart({
   return (
     <section className="flex flex-col">
       <ProjectChartTimeRange range={chartRange} />
-      <ChartControlsWrapper className="mt-4 mb-2 flex-wrap-reverse">
+      <ChartControlsWrapper className="flex-wrap-reverse">
         <LivenessChartSubtypeControls
           subtype={subtype}
           setSubtype={setSubtype}
@@ -87,6 +87,7 @@ export function ProjectLivenessChart({
         lastValidTimestamp={lastValidTimestamp}
         anyAnomalyLive={anyAnomalyLive}
         tickCount={4}
+        className="mt-4 mb-2"
       />
       <LivenessChartStats
         timeRange={timeRange}
