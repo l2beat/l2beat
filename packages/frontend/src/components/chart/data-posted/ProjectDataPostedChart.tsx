@@ -46,7 +46,7 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
   const chartRange = getChartRange(chartData)
 
   return (
-    <section className="flex flex-col">
+    <div className="flex flex-col">
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <DataPostedTimeRangeControls
@@ -67,6 +67,6 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
         isLoading={isLoading}
         range={timeRange}
       />
-    </section>
+    </div>
   )
 }
