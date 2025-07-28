@@ -239,7 +239,7 @@ export const metis: ScalingProject = {
         references: [
           {
             title: 'StateCommitmentChain - Etherscan source code',
-            url: 'https://etherscan.io/address/0xe6e2dff51b039c8eff0b21880e2fb008af10b365#code',
+            url: 'https://etherscan.io/address/0x49A4D7ae835eA21c919B363fa88614b61d7985E7#code',
           },
         ],
       },
