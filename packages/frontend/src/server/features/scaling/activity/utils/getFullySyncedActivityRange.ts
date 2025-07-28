@@ -1,6 +1,5 @@
 import type { StringWithAutocomplete } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import type { TimeRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
@@ -13,7 +12,7 @@ export function getFullySyncedActivityRange(
   range:
     | { type: StringWithAutocomplete<TimeRange> }
     | { type: 'custom'; from: number; to: number },
-): [UnixTime, UnixTime] {
+): [UnixTime | null, UnixTime] {
   if (range.type === 'custom') {
     const { from, to } = range as { from: number; to: number }
     return [from, to]
@@ -22,7 +21,6 @@ export function getFullySyncedActivityRange(
   const end = UnixTime.toStartOf(UnixTime.now(), 'day')
   const days = rangeToDays(range)
 
-  const start =
-    days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.activity
+  const start = days !== null ? end - days * UnixTime.DAY : null
   return [start, end - 1]
 }
