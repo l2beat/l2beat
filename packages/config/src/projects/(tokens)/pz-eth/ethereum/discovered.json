@@ -1,7 +1,7 @@
 {
   "name": "pz-eth",
   "chain": "ethereum",
-  "blockNumber": 22945156,
+  "blockNumber": 23016548,
   "configHash": "0x269f54fe8438545e6578858c4f80e2fd2c19048c0ef788573ba80cbf34dc1410",
   "entries": [
     {
@@ -88,8 +88,8 @@
         "subvaultsCount": 1,
         "symbioticAdapter": "eth:0x99D02C680f33ee693a2fa6bCf77DC8654313ecFe",
         "symbol": "pzETH",
-        "totalAssets": "11052525752069207151627",
-        "totalSupply": "11052525748681775146169",
+        "totalAssets": "10544910436405361016812",
+        "totalSupply": "10544910433173505429274",
         "withdrawalPause": false,
         "withdrawalStrategy": "eth:0x3aA61E6196fb3eb1170E578ad924898624f54ad6"
       },

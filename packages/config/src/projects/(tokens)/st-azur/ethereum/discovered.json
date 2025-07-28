@@ -1,7 +1,7 @@
 {
   "name": "st-azur",
   "chain": "ethereum",
-  "blockNumber": 22945159,
+  "blockNumber": 23016549,
   "configHash": "0xb1796eaf72ec8b28c23ebb221dd7a05972bc446a0ccac3411d7f655490694269",
   "entries": [
     {
@@ -47,17 +47,17 @@
         },
         "$upgradeCount": 2,
         "decimals": 18,
-        "exchangeRate": "1077442374975216915",
+        "exchangeRate": "1077494498221775027",
         "incentiveEndsAt": 1752844811,
         "incentiveStartedAt": 1750252811,
         "name": "Staked $AZUR",
-        "nextWithdrawalRequestId": 488,
+        "nextWithdrawalRequestId": 492,
         "owner": "eth:0x80cB7c007D448aF0822E7b7b2459012cdfb5A200",
         "reward": "241004000000000000000000",
         "rewardRate": "92979938271604938271604938271604938",
         "symbol": "stAZUR",
-        "totalRequestedAmount": "3519011053223579759547347",
-        "totalSupply": "25451940292709442821442780",
+        "totalRequestedAmount": "3615177277931764806373607",
+        "totalSupply": "24987023175066452793625054",
         "underlying": "eth:0x9E6be44cC1236eEf7e1f197418592D363BedCd5A",
         "withdrawalDelay": 1209600
       },
