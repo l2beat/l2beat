@@ -10,7 +10,7 @@ Generated with discovered.json: 0x6702f0ddf492ec4ba9754a8ebcba2c1f6603b950
 
 New owner proposed.
 
-archive disco (this is conenct - legacy which is long archived).
+archive disco (this is connect - legacy which is long archived).
 
 ## Watched changes
 
