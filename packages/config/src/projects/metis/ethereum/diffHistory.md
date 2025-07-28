@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x74bcc988241ae0e2bafd7c2b66d15c7df36c74ba
+Generated with discovered.json: 0x88a9fbfbdd9cba52bdda7c78eac937eb40a45ace
 
-# Diff at Thu, 24 Jul 2025 14:45:19 GMT:
+# Diff at Mon, 28 Jul 2025 17:23:17 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@7a4cc0fa28e50e7f953dabb7af07b31dabe5250d block: 22774371
-- current block number: 22989692
+- comparing to: main@2c26a3acc54ed5596db035d8504bd1cec71d3bfb block: 22774371
+- current block number: 23019103
 
 ## Description
 
@@ -163,19 +163,19 @@ Upgraded the proof system, new flow:
 +        "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7"
       values.getLastSequencerTimestamp:
 -        1750767395
-+        1753364471
++        1753720883
       values.getLastSequencerTimestampByChainId:
 -        1750767395
 +        [0,0,0,0,0]
       values.getTotalBatches:
 -        29820
-+        30673
++        30789
       values.getTotalBatchesByChainId:
 -        29820
 +        [0,0,0,0,0]
       values.getTotalElements:
 -        20704198
-+        20881127
++        20904047
       values.getTotalElementsByChainId:
 -        20704198
 +        [0,0,0,0,0]

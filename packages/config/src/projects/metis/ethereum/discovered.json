@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22989692,
+  "blockNumber": 23019103,
   "configHash": "0xdd1f1fe2866bd38e9a86575374215cb7f4f5e57f683311fe14e9971cf0821807",
   "entries": [
     {
@@ -93,7 +93,7 @@
         "owner": "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "eth:0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "357687739827157556858631",
+        "totalLocked": "357494310353175705449291",
         "totalRewardsLiquidated": "47118960036956478876180"
       },
       "implementationNames": {
@@ -122,10 +122,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000688237f700013e9ee7",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000688237f700013e9ee7",
-        "length": 30673,
-        "lengthByChainId": 30673,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006887a83300013ef86f",
+        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006887a83300013ef86f",
+        "length": 30789,
+        "lengthByChainId": 30789,
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -489,8 +489,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 4195,
-        "getQueueLength": 40479,
+        "getNumPendingQueueElements": 4209,
+        "getQueueLength": 40493,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -768,11 +768,11 @@
         "earliestDisputedBlockNumber": 0,
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1753364471,
+        "getLastSequencerTimestamp": 1753720883,
         "getLastSequencerTimestampByChainId": [0, 0, 0, 0, 0],
-        "getTotalBatches": 30673,
+        "getTotalBatches": 30789,
         "getTotalBatchesByChainId": [0, 0, 0, 0, 0],
-        "getTotalElements": 20881127,
+        "getTotalElements": 20904047,
         "getTotalElementsByChainId": [0, 0, 0, 0, 0],
         "libAddressManager": "eth:0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -888,7 +888,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "18906360220000000",
-        "currentBatch": 141,
+        "currentBatch": 142,
         "escrow": "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "eth:0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
