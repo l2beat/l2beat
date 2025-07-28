@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd4a89d21027aa004f2e8f5f771e60f0c4e3e0d3a
+Generated with discovered.json: 0x73bc43bc80d6c9e963de42d8d2eecc23329bcec5
 
-# Diff at Mon, 28 Jul 2025 05:58:18 GMT:
+# Diff at Mon, 28 Jul 2025 07:20:44 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22975751
@@ -23,19 +23,23 @@ Op stack gov upgrade: standard SuperchainConfig is not used and OpFoundationOper
     +++ description: None
       receivedPermissions.0:
 -        {"permission":"challenge","from":"eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59","role":".challenger"}
-      receivedPermissions.1:
--        {"permission":"challenge","from":"eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59","role":".CHALLENGER"}
+      receivedPermissions.1.role:
+-        ".CHALLENGER"
++        ".challenger"
+      receivedPermissions.1.from:
+-        "eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59"
++        "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84"
       receivedPermissions.3:
 -        {"permission":"guard","from":"eth:0x9C93982cb4861311179aE216d1B7fD61232DE1f0","role":".guardian"}
       receivedPermissions.4:
 -        {"permission":"guard","from":"eth:0x9C93982cb4861311179aE216d1B7fD61232DE1f0","role":".GUARDIAN"}
-      receivedPermissions.2:
+      receivedPermissions.3:
 +        {"permission":"interact","from":"eth:0xf8f9625a95b8fCbED76d1De537B71035997E44c8","description":"can pull funds from the contract in case of emergency.","role":".owner"}
-      receivedPermissions.4:
+      receivedPermissions.5:
 +        {"permission":"upgrade","from":"eth:0x0225304877a2C700f8f03BC50344467FCf8271BF","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
-      receivedPermissions.11:
-+        {"permission":"upgrade","from":"eth:0xEe136B6087070d35D98b1bb1B33C3a00D907F0c1","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
       receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0xEe136B6087070d35D98b1bb1B33C3a00D907F0c1","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
+      receivedPermissions.13:
 +        {"permission":"upgrade","from":"eth:0xf8f9625a95b8fCbED76d1De537B71035997E44c8","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
       receivedPermissions.14:
 -        {"permission":"upgrade","from":"eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59","role":"admin","via":[{"address":"eth:0xA6b2b6B6E621482aF877F304D46B94123a942Ae9"}]}
@@ -181,8 +185,14 @@ Op stack gov upgrade: standard SuperchainConfig is not used and OpFoundationOper
 ```diff
     EOA  (0xb6E2Eee22b684f6AAb2083097F7E874994bA930e) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59","role":".proposer"},{"permission":"propose","from":"eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59","role":".PROPOSER"}]
+      receivedPermissions.0:
+-        {"permission":"propose","from":"eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59","role":".proposer"}
+      receivedPermissions.1.role:
+-        ".PROPOSER"
++        ".proposer"
+      receivedPermissions.1.from:
+-        "eth:0xffB004874CbBF8692B5f397B602f4B8a630aeD59"
++        "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84"
     }
 ```
 

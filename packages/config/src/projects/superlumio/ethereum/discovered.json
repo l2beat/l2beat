@@ -2,7 +2,7 @@
   "name": "superlumio",
   "chain": "ethereum",
   "blockNumber": 23015705,
-  "configHash": "0x50352e45cbec9e3ea4010ab41632b22acf50d4df015cf22c5c296ea066fc4b05",
+  "configHash": "0x9fe3a517404bd8cda40479bb70659e7fc40cc332967167aa9d7f6dce09356671",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -135,6 +135,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC",
@@ -818,7 +823,14 @@
     {
       "address": "eth:0xb6E2Eee22b684f6AAb2083097F7E874994bA930e",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "eth:0x542102Bb35C32ADa5D72cB791295d97574A71C84",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -917,7 +929,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1753174283,
       "sinceBlock": 22973647,
       "values": {
@@ -1858,5 +1870,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x3325ae34bde6070eb467f8af16e12620715d4cb052fec43e2be46a84f5ff9674"
+  "permissionsConfigHash": "0x9fbacd8a3e089d29529fbf66e682b5044dac670c89d48e7f4d9927ffdd8b57f4"
 }
