@@ -52,8 +52,9 @@ export class Decoder {
               {
                 input: {
                   interface:
-                    'Transaction with logs ./scripts/bridges/types/TransactionWithLogs.ts',
-                  hash: transaction.hash,
+                    'DecoderInput ./scripts/bridges/types/DecoderInput.ts',
+                  log: logToViemLog(log),
+                  transactionHash: transaction.hash,
                   blockNumber: block.number,
                   blockTimestamp: block.timestamp,
                   logs: `Array<${(logsByTx[transaction.hash] ?? []).length}>`,
