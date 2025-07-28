@@ -1,5 +1,5 @@
 import type { TokenValueRecord } from '@l2beat/database'
-import { assert, TokenId, UnixTime } from '@l2beat/shared-pure'
+import { TokenId, UnixTime } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -20,7 +20,16 @@ export const TokenTvsChartParams = z.object({
 
 export type TokenTvsChartParams = z.infer<typeof TokenTvsChartParams>
 
-type TokenTvsChart = [timestamp: number, amount: number, usdValue: number][]
+type TokenTvsChartPoint = [
+  timestamp: number,
+  amount: number | null,
+  usdValue: number | null,
+]
+
+type TokenTvsChartData = {
+  chart: TokenTvsChartPoint[]
+  syncedUntil: number
+}
 
 /**
  * A function that computes values for chart of the token's TVS over time.
@@ -29,7 +38,7 @@ type TokenTvsChart = [timestamp: number, amount: number, usdValue: number][]
 export async function getTokenTvsChart({
   range,
   token,
-}: TokenTvsChartParams): Promise<TokenTvsChart> {
+}: TokenTvsChartParams): Promise<TokenTvsChartData> {
   if (env.MOCK) {
     return getMockTokenTvsChartData({ range, token })
   }
@@ -57,22 +66,33 @@ export async function getTokenTvsChart({
 
   const minTimestamp = tokenValues[0]?.timestamp
   if (!minTimestamp) {
-    return []
+    return {
+      chart: [],
+      syncedUntil: 0,
+    }
   }
 
   const timestamps = generateTimestamps([minTimestamp, to], resolution)
 
-  const data: [number, number, number][] = []
+  const data: TokenTvsChartPoint[] = []
+  let syncedUntil = 0
   for (const timestamp of timestamps) {
     const value = tokenValuesByTimestamp[timestamp]
-    assert(value !== undefined, 'No value')
-    data.push([timestamp, value.amount, value.value])
+    data.push([timestamp, value?.amount ?? null, value?.value ?? null])
+    if (value !== undefined) {
+      syncedUntil = timestamp
+    }
   }
 
-  return data
+  return {
+    chart: data,
+    syncedUntil,
+  }
 }
 
-function getMockTokenTvsChartData(params: TokenTvsChartParams): TokenTvsChart {
+function getMockTokenTvsChartData(
+  params: TokenTvsChartParams,
+): TokenTvsChartData {
   const resolution = rangeToResolution({ type: params.range })
   const [from, to] = getRangeWithMax({ type: params.range }, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [
@@ -81,5 +101,8 @@ function getMockTokenTvsChartData(params: TokenTvsChartParams): TokenTvsChart {
   ]
   const timestamps = generateTimestamps(adjustedRange, resolution)
 
-  return timestamps.map((timestamp) => [timestamp, 30000, 50000])
+  return {
+    chart: timestamps.map((timestamp) => [timestamp, 30000, 50000]),
+    syncedUntil: to,
+  }
 }

@@ -39,7 +39,6 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartUnit } from '../types'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
 
 interface Props {
@@ -92,15 +91,13 @@ export function ProjectTokenChart({
   } satisfies ChartMeta
 
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, amount, usdValue]) => ({
+    return data?.chart.map(([timestamp, amount, usdValue]) => ({
       timestamp,
       value: unit === 'usd' ? usdValue : amount,
     }))
   }, [data, unit])
 
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
-
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   return (
     <section>
@@ -143,7 +140,7 @@ export function ProjectTokenChart({
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
               tickCount: 4,
             },
-            syncedUntil: lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip
             filterNull={false}
