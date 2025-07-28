@@ -80,14 +80,14 @@ function getDaThroughputEntry(
   scalingOnlyData: ThroughputTableData['scalingOnlyData'][string] | undefined,
 ): DaThroughputEntry | undefined {
   const bridge = bridges.find((x) => x.daBridge.daLayer === project.id)
-  const notSyncedStatus = data?.syncedUntil
+  const syncWarning = data?.syncedUntil
     ? getThroughputSyncWarning(UnixTime(data.syncedUntil), {
         pastDaySynced: true,
       })
     : undefined
   const href = `/data-availability/projects/${project.slug}/${bridge ? bridge.slug : 'no-bridge'}`
   return {
-    ...getCommonDaEntry({ project, href, syncWarning: notSyncedStatus }),
+    ...getCommonDaEntry({ project, href, syncWarning }),
     finality: project.daLayer.finality
       ? formatSeconds(project.daLayer.finality, {
           fullUnit: true,
@@ -95,6 +95,6 @@ function getDaThroughputEntry(
       : undefined,
     data,
     scalingOnlyData,
-    isSynced: !notSyncedStatus,
+    isSynced: !syncWarning,
   }
 }

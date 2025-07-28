@@ -1,7 +1,7 @@
-export function NotSyncedPatternDef() {
+export function NoDataPatternDef() {
   return (
     <pattern
-      id="notSyncedFill"
+      id="noDataFill"
       patternUnits="userSpaceOnUse"
       width="20"
       height="20"

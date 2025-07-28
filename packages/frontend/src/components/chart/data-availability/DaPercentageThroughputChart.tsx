@@ -8,7 +8,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -133,7 +133,7 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={label} />
+    return <ChartTooltipNoDataState timestamp={label} />
 
   const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 

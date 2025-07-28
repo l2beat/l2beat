@@ -127,7 +127,7 @@ export function ActivityCustomTooltip({
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {entry.value === null
-                    ? 'Not synced'
+                    ? 'No data'
                     : formatActivityCount(entry.value)}
                 </span>
               </div>

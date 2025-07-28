@@ -22,17 +22,14 @@ export function getThroughputSyncWarning(
   }
 
   if (opts?.shorter) {
-    return `Throughput data is not synced since ${formatTimestamp(syncedUntil, {
+    return `No throughput data since ${formatTimestamp(syncedUntil, {
       mode: 'datetime',
       longMonthName: true,
     })}.`
   }
 
-  return `Throughput data for this item is not synced since ${formatTimestamp(
-    syncedUntil,
-    {
-      mode: 'datetime',
-      longMonthName: true,
-    },
-  )}.`
+  return `No throughput data since ${formatTimestamp(syncedUntil, {
+    mode: 'datetime',
+    longMonthName: true,
+  })}.`
 }

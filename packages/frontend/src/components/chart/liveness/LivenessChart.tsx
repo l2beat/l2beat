@@ -11,10 +11,10 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
-import { NotSyncedPatternDef } from '~/components/core/chart/defs/NotSyncedPatternDef'
+import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -107,7 +107,7 @@ export function LivenessChart({
         {lastValidTimestamp && (
           <ReferenceArea
             x1={lastValidTimestamp}
-            fill={anyAnomalyLive ? 'var(--negative)' : 'url(#notSyncedFill)'}
+            fill={anyAnomalyLive ? 'var(--negative)' : 'url(#noDataFill)'}
             fillOpacity={anyAnomalyLive ? 0.2 : undefined}
           />
         )}
@@ -123,7 +123,7 @@ export function LivenessChart({
         <defs>
           <PinkFillGradientDef id="fillRange" />
           <PinkStrokeGradientDef id="strokeRange" />
-          <NotSyncedPatternDef />
+          <NoDataPatternDef />
         </defs>
       </AreaChart>
     </ChartContainer>
@@ -143,7 +143,7 @@ export function LivenessCustomTooltip({
   if (!active || !payload || typeof timestamp !== 'number') return null
 
   if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={timestamp} />
+    return <ChartTooltipNoDataState timestamp={timestamp} />
 
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
@@ -155,7 +155,7 @@ export function LivenessCustomTooltip({
   if (!range?.value || !avg?.value) {
     content = (
       <div className="mt-2 font-medium text-label-value-16">
-        {anyAnomalyLive ? getTooltipContent(subtype) : 'Not synced data'}
+        {anyAnomalyLive ? getTooltipContent(subtype) : 'No data'}
       </div>
     )
   } else {

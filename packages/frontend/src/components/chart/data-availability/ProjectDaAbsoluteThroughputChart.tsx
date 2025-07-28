@@ -9,7 +9,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -142,7 +142,7 @@ export function ProjectDaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
-          syncedUntil
+          syncedUntil,
         })}
       </AreaChart>
     </ChartContainer>
@@ -159,7 +159,7 @@ export function ProjectDaThroughputCustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={label} />
+    return <ChartTooltipNoDataState timestamp={label} />
 
   return (
     <ChartTooltipWrapper>
@@ -189,7 +189,7 @@ export function ProjectDaThroughputCustomTooltip({
               {entry.value === null &&
               configEntry.label === 'Actual data size' ? (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                  Not synced
+                  No data
                 </span>
               ) : (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">

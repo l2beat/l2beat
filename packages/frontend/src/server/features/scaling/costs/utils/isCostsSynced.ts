@@ -10,11 +10,8 @@ export function getCostsSyncWarning(syncedUntil: UnixTime): string | undefined {
     return undefined
   }
 
-  return `Costs data for this item is not synced since ${formatTimestamp(
-    syncedUntil,
-    {
-      mode: 'datetime',
-      longMonthName: true,
-    },
-  )}.`
+  return `No costs data since ${formatTimestamp(syncedUntil, {
+    mode: 'datetime',
+    longMonthName: true,
+  })}.`
 }

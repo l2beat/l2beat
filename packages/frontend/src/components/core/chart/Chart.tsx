@@ -186,7 +186,7 @@ function ChartTooltipWrapper({ children }: { children: React.ReactNode }) {
   return <div className={tooltipContentVariants()}>{children}</div>
 }
 
-function ChartTooltipNotSyncedState({
+function ChartTooltipNoDataState({
   children,
   timestamp,
 }: {
@@ -202,9 +202,7 @@ function ChartTooltipNotSyncedState({
       {children ? (
         children
       ) : (
-        <div className="mt-2 font-medium text-label-value-16">
-          Not synced data
-        </div>
+        <div className="mt-2 font-medium text-label-value-16">No data</div>
       )}
     </ChartTooltipWrapper>
   )
@@ -312,6 +310,6 @@ export {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipWrapper,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   SimpleChartContainer,
 }

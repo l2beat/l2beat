@@ -6,7 +6,7 @@ import {
   type YAxisProps,
 } from 'recharts'
 import type { ScaleType } from 'recharts/types/util/types'
-import { NotSyncedPatternDef } from '../defs/NotSyncedPatternDef'
+import { NoDataPatternDef } from '../defs/NoDataPatternDef'
 import { getXAxisProps } from './getXAxisProps'
 export interface CommonChartComponentsProps<
   T extends {
@@ -57,12 +57,12 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       <ReferenceArea
         key="last-valid-timestamp"
         x1={lastSyncedTimestamp}
-        fill="url(#notSyncedFill)"
+        fill="url(#noDataFill)"
       />
     ),
     lastSyncedTimestamp && (
       <defs key="not-synced-defs">
-        <NotSyncedPatternDef />
+        <NoDataPatternDef />
       </defs>
     ),
   ]

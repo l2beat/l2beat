@@ -9,7 +9,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -164,7 +164,7 @@ export function ActivityCustomTooltip({
   if (!active || !payload || typeof timestamp !== 'number') return null
 
   if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={timestamp} />
+    return <ChartTooltipNoDataState timestamp={timestamp} />
 
   return (
     <ChartTooltipWrapper>
@@ -203,7 +203,7 @@ export function ActivityCustomTooltip({
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {entry.value === null
-                    ? 'Not synced'
+                    ? 'No data'
                     : formatActivityCount(entry.value)}
                 </span>
               </div>
@@ -240,7 +240,7 @@ export function ActivityCustomTooltip({
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {entry.value === null
-                    ? 'Not synced'
+                    ? 'No data'
                     : formatInteger(entry.value * UnixTime.DAY)}
                 </span>
               </div>

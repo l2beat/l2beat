@@ -8,7 +8,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -152,7 +152,7 @@ function CustomTooltip({
   if (!active || !payload || typeof label !== 'number') return null
 
   if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={label} />
+    return <ChartTooltipNoDataState timestamp={label} />
 
   const validPayload = payload.filter((p) => p.type !== 'none')
   const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)

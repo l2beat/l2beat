@@ -1,15 +1,11 @@
 import { ClockIcon } from '~/icons/Clock'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '../core/tooltip/Tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from './core/tooltip/Tooltip'
 
 interface Props {
   content: string
 }
 
-export function NotSyncedIcon({ content }: Props) {
+export function NoDataIcon({ content }: Props) {
   if (!content) {
     return null
   }

@@ -10,7 +10,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -175,7 +175,7 @@ function CustomTooltip({
   })
 
   if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={label} />
+    return <ChartTooltipNoDataState timestamp={label} />
 
   return (
     <ChartTooltipWrapper>
