@@ -94,9 +94,16 @@ export async function getScalingProjectDaThroughputChart(
   const days = Math.round((chartAdjustedTo - minTimestamp) / UnixTime.DAY)
   const avgPerDay = total / days
 
-  const uopsCount = activityRecords.reduce((acc, record) => {
-    return acc + (record.uopsCount ?? record.count)
-  }, 0)
+  const throughputTimestamps = throughput.map((r) => r.timestamp)
+  const uopsCount = activityRecords
+    .filter(
+      (r) =>
+        r.timestamp >= Math.min(...throughputTimestamps) &&
+        r.timestamp <= Math.max(...throughputTimestamps),
+    )
+    .reduce((acc, record) => {
+      return acc + (record.uopsCount ?? record.count)
+    }, 0)
 
   return {
     chart,
