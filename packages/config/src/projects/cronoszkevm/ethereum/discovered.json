@@ -1,7 +1,7 @@
 {
   "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 22593193,
+  "timestamp": 1748579591,
   "configHash": "0xbd00fe935cc527dbe1d1d5559da4c1267da52bd870b5ebe115f42bc435b60c41",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -1231,5 +1231,6 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "ethereum": 22593193 },
   "permissionsConfigHash": "0x477f27f31a8ca0a63f3d710bb60adaccfe8524b385aa258f44298bb68734920a"
 }

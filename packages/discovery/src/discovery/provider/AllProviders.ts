@@ -6,7 +6,7 @@ import {
   type HttpClient,
   RpcClient,
 } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import type { DiscoveryChainConfig } from '../../config/types'
 import { getExplorerClient } from '../../utils/IEtherscanClient'
@@ -119,7 +119,91 @@ export class AllProviders {
     )
   }
 
-  get(chain: string, blockNumber: number): IProvider {
+  async get(chain: string, timestamp: UnixTime): Promise<IProvider> {
+    const batchingAndCachingProvider = this.getBatchingAndCachingProvider(chain)
+    const stateless = HighLevelProvider.createStateless(
+      this,
+      batchingAndCachingProvider,
+      chain,
+    )
+
+    const blockNumber = await stateless.getBlockNumberAtOrBefore(timestamp)
+    return this.getImplementation(
+      chain,
+      batchingAndCachingProvider,
+      timestamp,
+      blockNumber,
+    )
+  }
+
+  async getByBlockNumber(
+    chain: string,
+    blockNumber: number,
+  ): Promise<IProvider> {
+    const batchingAndCachingProvider = this.getBatchingAndCachingProvider(chain)
+    const stateless = HighLevelProvider.createStateless(
+      this,
+      batchingAndCachingProvider,
+      chain,
+    )
+
+    const block = await stateless.getBlock(blockNumber)
+    assert(
+      block !== undefined,
+      `Could not find block ${blockNumber} @ ${chain}`,
+    )
+    const timestamp = block.timestamp
+
+    return this.getImplementation(
+      chain,
+      batchingAndCachingProvider,
+      timestamp,
+      blockNumber,
+    )
+  }
+
+  private getImplementation(
+    chain: string,
+    batchingAndCachingProvider: BatchingAndCachingProvider,
+    timestamp: UnixTime,
+    blockNumber: number,
+  ): IProvider {
+    const chainKey = `${chain}:${timestamp}`
+    const provider =
+      this.highLevelProviders.get(chainKey) ??
+      new HighLevelProvider(
+        this,
+        batchingAndCachingProvider,
+        chain,
+        timestamp,
+        blockNumber,
+      )
+    this.highLevelProviders.set(chainKey, provider)
+
+    return provider
+  }
+
+  getStats(chain: string): AllProviderStats {
+    const highLevelMeasurements = [...this.highLevelProviders.keys()]
+      .filter((key) => key.startsWith(chain))
+      .map(
+        (key) => this.highLevelProviders.get(key)?.stats ?? new ProviderStats(),
+      )
+      .reduce((a, b) => ProviderStats.add(a, b), new ProviderStats())
+
+    return {
+      highLevelMeasurements,
+      cacheMeasurements:
+        this.batchingAndCachingProviders.get(chain)?.stats ??
+        new ProviderStats(),
+      lowLevelMeasurements:
+        this.lowLevelProviders.get(chain)?.stats ?? new ProviderStats(),
+    }
+  }
+
+  private getBatchingAndCachingProvider(
+    chain: string,
+  ): BatchingAndCachingProvider {
     const config = this.config.get(chain)
     assert(
       config !== undefined,
@@ -159,36 +243,6 @@ export class AllProviders {
         this.logger,
       )
     this.batchingAndCachingProviders.set(chain, batchingAndCachingProvider)
-
-    const chainKey = `${chain}:${blockNumber}`
-    const provider =
-      this.highLevelProviders.get(chainKey) ??
-      new HighLevelProvider(
-        this,
-        batchingAndCachingProvider,
-        chain,
-        blockNumber,
-      )
-    this.highLevelProviders.set(chainKey, provider)
-
-    return provider
-  }
-
-  getStats(chain: string): AllProviderStats {
-    const highLevelMeasurements = [...this.highLevelProviders.keys()]
-      .filter((key) => key.startsWith(chain))
-      .map(
-        (key) => this.highLevelProviders.get(key)?.stats ?? new ProviderStats(),
-      )
-      .reduce((a, b) => ProviderStats.add(a, b), new ProviderStats())
-
-    return {
-      highLevelMeasurements,
-      cacheMeasurements:
-        this.batchingAndCachingProviders.get(chain)?.stats ??
-        new ProviderStats(),
-      lowLevelMeasurements:
-        this.lowLevelProviders.get(chain)?.stats ?? new ProviderStats(),
-    }
+    return batchingAndCachingProvider
   }
 }

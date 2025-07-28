@@ -1,7 +1,7 @@
 {
   "name": "pulseChain",
   "chain": "ethereum",
-  "blockNumber": 22431228,
+  "timestamp": 1746614171,
   "configHash": "0x643d816fd4afddc582434b3f719c553b4b9983833e44219a1d8b779f111949dd",
   "entries": [
     {
@@ -563,5 +563,6 @@
   "usedTemplates": {
     "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019"
   },
+  "usedBlockNumbers": { "ethereum": 22431228 },
   "permissionsConfigHash": "0xe6ef5c2ab20a89ebeba4453204abe6823850236b3544ca6fe741bf5f676be58d"
 }

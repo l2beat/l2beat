@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 22987703,
+  "timestamp": 1753344203,
   "configHash": "0xa3f5fab42fdca700b3ed644ffbe8811fa8b155de393bc799f86dbddca698e2a8",
   "entries": [
     {
@@ -4578,5 +4578,6 @@
     "orbitstack/Timelock": "0xeaf0991ebe464d6bb8f93bff88d69db8d55c9b58d68eed9e71d6f74f223d351c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
+  "usedBlockNumbers": { "ethereum": 22987703 },
   "permissionsConfigHash": "0x1e25ebcd221245ebb9d532b9e76a58d21be9190c5117436782b40057cf5ef507"
 }

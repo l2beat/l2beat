@@ -1,7 +1,7 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 22823822,
+  "timestamp": 1751366039,
   "configHash": "0x6232bdf23a62c00206bc3b8354cd26626b15d39f7c31e5e9cdcbb52a5b852e5b",
   "entries": [
     {
@@ -1644,5 +1644,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22823822 },
   "permissionsConfigHash": "0x272479ef8c94762e42d5328525de637e725424f6fbcfa13faf9c144e25cc9b97"
 }

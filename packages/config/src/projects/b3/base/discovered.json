@@ -1,7 +1,7 @@
 {
   "name": "b3",
   "chain": "base",
-  "blockNumber": 30222921,
+  "timestamp": 1747235189,
   "configHash": "0x73feee572630cf7f218a930e1690e757dbc101addc7139038b35a37068740d00",
   "entries": [
     {
@@ -1167,5 +1167,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "base": 30222921 },
   "permissionsConfigHash": "0x52ce94813b4c6fbdb3ec4131ba1ba7f4d87fef7b8f5bcf1ea7c31cce7c84e4fc"
 }

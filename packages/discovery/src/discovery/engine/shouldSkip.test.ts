@@ -30,7 +30,7 @@ describe(shouldSkip.name, () => {
       readDiscovery: () => ({
         name: 'SharedFoo',
         chain: 'ethereum',
-        blockNumber: 1234,
+        timestamp: 1234,
         entries: [
           {
             type: 'Contract',
@@ -44,6 +44,7 @@ describe(shouldSkip.name, () => {
         configHash: Hash256.random(),
         version: 123,
         usedTemplates: {},
+        usedBlockNumbers: {},
         shapeFilesHash: Hash256.random(),
       }),
     })

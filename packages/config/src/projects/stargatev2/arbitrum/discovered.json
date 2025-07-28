@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "arbitrum",
-  "blockNumber": 345508178,
+  "timestamp": 1749464077,
   "configHash": "0xd9168e9e1725b7b04252281153b846e61dcaa71965be7f46643c6b352c742b3f",
   "entries": [
     {
@@ -571,5 +571,6 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
+  "usedBlockNumbers": { "arbitrum": 345508179 },
   "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

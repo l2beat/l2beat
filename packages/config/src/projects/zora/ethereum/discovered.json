@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 23015724,
+  "timestamp": 1753682507,
   "configHash": "0xf46df692d7d99e1d4030893a7dd23a3d9e7eff2a367368187dd030898e1c3b22",
   "entries": [
     {
@@ -2465,5 +2465,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 23015724 },
   "permissionsConfigHash": "0xca917b2326986087444e3b115348bda0f5c7a6358ab9acefef6a37ffc4ae954d"
 }
