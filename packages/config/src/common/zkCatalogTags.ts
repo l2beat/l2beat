@@ -37,7 +37,7 @@ export const zkCatalogTags = [
     type: ZkCatalogTagType.STARK,
     name: 'PIL-STARK',
     description:
-      'zkVM STARK proving system that works with Polynomial Identity Langugae (PIL) developed by Polygon Zero team.',
+      'zkVM STARK proving system that works with Polynomial Identity Language (PIL) developed by Polygon Zero team.',
   },
   {
     id: 'Stone',

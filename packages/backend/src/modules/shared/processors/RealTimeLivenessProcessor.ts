@@ -73,8 +73,9 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       const selector = tx.data.slice(0, 10)
       const matchingTransfers = this.transfers.filter(
         (c) =>
-          c.params.from.toLowerCase() === tx.from?.toLowerCase() &&
-          c.params.to.toLowerCase() === tx.to?.toLowerCase(),
+          (c.params.from
+            ? c.params.from.toLowerCase() === tx.from?.toLowerCase()
+            : true) && c.params.to.toLowerCase() === tx.to?.toLowerCase(),
       )
 
       const matchingCalls = this.functionCalls.filter(

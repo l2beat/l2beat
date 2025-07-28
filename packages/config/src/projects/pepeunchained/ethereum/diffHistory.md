@@ -1,3 +1,170 @@
+Generated with discovered.json: 0x554baabc60bbc03558a20d7dcea2527239c4c80c
+
+# Diff at Mon, 28 Jul 2025 05:55:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22895944
+- current block number: 23015685
+
+## Description
+
+Op stack gov upgrade: standard SuperchainConfig is not used and OpFoundationOperationsSafe is now the direct guardian.
+
+disco archived since project is archived.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
+-   Status: DELETED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.2:
+-        {"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","role":".deputyGuardian","condition":"if not revoked by the Security Council"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       |  152 ---
+ .../AddressManager.sol}                            |    0
+ .../DeputyGuardianModule.sol => /dev/null          |  156 ---
+ .../DeputyPauseModule.sol => /dev/null             | 1338 --------------------
+ .../.flat@22895944/LivenessGuard.sol => /dev/null  |  582 ---------
+ .../.flat@22895944/LivenessModule.sol => /dev/null |  258 ----
+ .../GnosisSafe.sol => /dev/null                    |  953 --------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../GnosisSafe.sol => /dev/null                    |  953 --------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../GnosisSafe.sol => /dev/null                    |  953 --------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../SuperchainConfig}/Proxy.p.sol                  |    0
+ .../SuperchainConfig}/SuperchainConfig.sol         |    0
+ .../Proxy.p.sol => /dev/null                       |  200 ---
+ .../SuperchainConfig.sol => /dev/null              |  477 -------
+ .../SuperchainProxyAdmin.sol => /dev/null          |  298 -----
+ .../GnosisSafe.sol => /dev/null                    |  953 --------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ 19 files changed, 7413 deletions(-)
+```
+
+Generated with discovered.json: 0x82dc9d2cb9707b909cc2df1aa6715eb56c83d093
+
+# Diff at Fri, 25 Jul 2025 13:52:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22895944
+- current block number: 22895944
+
+## Description
+
+templatize op upgrade 16 contracts
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22895944 (main branch discovery), not current.
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      template:
++        "gnosisSafeModules/LivenessGuard"
+      description:
++        "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.via.1.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+      receivedPermissions.1.via.1.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+      receivedPermissions.2.via.3.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+      directlyReceivedPermissions.0.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+    }
+```
+
 Generated with discovered.json: 0x0a42d4c1adff4473ee4430e01f8c7e02a320e30c
 
 # Diff at Mon, 14 Jul 2025 12:45:55 GMT:

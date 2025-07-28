@@ -308,16 +308,29 @@ function opStackCommon(
         },
       ),
       escrows: [
-        templateVars.discovery.getEscrowDetails({
-          includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(portal.address),
-          tokens: optimismPortalTokens,
-          premintedTokens: templateVars.optimismPortalPremintedTokens,
-          description: `Main entry point for users depositing ${optimismPortalTokens.join(
-            ', ',
-          )}.`,
-          ...upgradeability,
-        }),
+        migratedToLockbox(templateVars)
+          ? templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: ChainSpecificAddress.address(
+                templateVars.discovery.getContract('ETHLockbox').address,
+              ),
+              tokens: optimismPortalTokens,
+              premintedTokens: templateVars.optimismPortalPremintedTokens,
+              description: `Main escrow for users depositing ${optimismPortalTokens.join(
+                ', ',
+              )}.`,
+              ...upgradeability,
+            })
+          : templateVars.discovery.getEscrowDetails({
+              includeInTotal: type === 'layer2',
+              address: ChainSpecificAddress.address(portal.address),
+              tokens: optimismPortalTokens,
+              premintedTokens: templateVars.optimismPortalPremintedTokens,
+              description: `Main entry point for users depositing ${optimismPortalTokens.join(
+                ', ',
+              )}.`,
+              ...upgradeability,
+            }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
           address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
@@ -944,14 +957,20 @@ function computedStage(
         fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
-        principle: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: fraudProofType === 'Kailua',
+        principle:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
+        usersHave7DaysToExit:
+          fraudProofType === 'Permissionless' &&
+          (templateVars.hasProperSecurityCouncil ?? false),
+        usersCanExitWithoutCooperation:
+          fraudProofType === 'Permissionless' || fraudProofType === 'Kailua',
         securityCouncilProperlySetUp:
           templateVars.hasProperSecurityCouncil ?? null,
       },
       stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
+        proofSystemOverriddenOnlyInCaseOfABug:
+          fraudProofType === 'None' ? null : false,
         fraudProofSystemIsPermissionless: fraudProofMapping[fraudProofType],
         delayWith30DExitWindow: false,
       },
@@ -1536,6 +1555,10 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {
   return templateVars.discovery.hasContract('SuperchainConfig')
+}
+
+function migratedToLockbox(templateVars: OpStackConfigCommon): boolean {
+  return templateVars.discovery.hasContract('ETHLockbox')
 }
 
 function hostChainDAProvider(hostChain: ScalingProject): DAProvider {

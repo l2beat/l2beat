@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "AnchorStateRegistry",
+  "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the {{ RespectedGameString }}.",
+  "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
+  "ignoreRelatives": ["anchorGame"],
+  "types": {
+    "DisputeGameMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": "FaultDisputeGame",
+        "1": "PermissionedDisputeGame",
+        "1337": "KailuaGame"
+      }
+    }
+  },
+  "fields": {
+    "respectedGameType": {
+      "severity": "HIGH"
+    },
+    "RespectedGameString": {
+      "handler": {
+        "type": "call",
+        "method": "respectedGameType",
+        "args": []
+      },
+      "edit": ["format", "DisputeGameMap"]
+    }
+  }
+}

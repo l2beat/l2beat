@@ -38,8 +38,16 @@ export const bob: ScalingProject = opStackL2({
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
+      title: 'Proof System Intervention',
+      url: 'https://app.blocksec.com/explorer/tx/eth/0xa065f636adfc7cdf08007ee81303028fa4daf291279a75a5ae1d3a975acce806?line=7',
+      date: '2025-07-17T00:00:00Z',
+      description:
+        'A state root proposal is manually resolved after changing the finalization config.',
+      type: 'incident',
+    },
+    {
       title: 'OP Kailua Upgrade',
-      url: 'https://x.com/build_on_bob/status/1904569635434799524',
+      url: 'https://x.com/build_on_bob/status/1948369793796689925',
       date: '2025-07-17T00:00:00Z',
       description:
         'BOB returns to the rollup section by using a hybrid zk fault proof system.',

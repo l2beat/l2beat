@@ -2,7 +2,7 @@
   "name": "eurs",
   "chain": "ethereum",
   "blockNumber": 22945155,
-  "configHash": "0xa98e10eec82633ee3732c3c2c19775b655763bdadab3e9683a067fc10172b223",
+  "configHash": "0xb81d8c40404aa4d34ab469d789613267174c537ce4cfe2c77b552a9d5893cf24",
   "entries": [
     {
       "name": "EURSToken",
@@ -12,6 +12,7 @@
         "0xf79815a7227d23a793e9e15c9e6f5dcdac105c2c8025ec498f9e54f4bb9ee2f2"
       ],
       "proxyType": "immutable",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1529686012,
       "sinceBlock": 5835251,
       "values": {

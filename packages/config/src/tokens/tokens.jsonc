@@ -1742,6 +1742,7 @@
     },
     {
       "symbol": "sUSDe",
+      "category": "stablecoin",
       "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
     },
     {
@@ -4053,6 +4054,7 @@
       "symbol": "sUSDz",
       "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
       "source": "external",
+      "category": "stablecoin",
       "coingeckoId": "anzen-staked-usdz",
       "supply": "totalSupply",
       "bridgedUsing": {
@@ -6489,6 +6491,52 @@
   ],
   "soneium": [
     {
+      "symbol": "wstUSR",
+      "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
+      "coingeckoId": "resolv-wstusr",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "RLP",
+      "address": "0x35533f54740F1F1aA4179E57bA37039dfa16868B",
+      "coingeckoId": "resolv-rlp",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USR",
+      "address": "0xb1b385542B6E80F77B94393Ba8342c3Af699f15c",
+      "coingeckoId": "resolv-usr",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "oUSDT",
       "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
       "category": "stablecoin",
@@ -6917,7 +6965,7 @@
   ],
   "morph": [
     {
-      "symbol": "USDa",
+      "symbol": "USDa", // avalon
       "coingeckoId": "usda-2",
       "address": "0xff12470a969Dd362EB6595FFB44C82c959Fe9ACc",
       "category": "stablecoin",
@@ -6933,7 +6981,7 @@
       }
     },
     {
-      "symbol": "sUSDa",
+      "symbol": "sUSDa", // avalon
       "coingeckoId": "susda",
       "address": "0x2840F9d9f96321435Ab0f977E7FDBf32EA8b304f",
       "category": "stablecoin",
@@ -7321,6 +7369,48 @@
     }
   ],
   "katana": [
+    {
+      "symbol": "uSUI",
+      "address": "0xb0505e5a99abd03d94a1169e638B78EDfEd26ea4",
+      "coingeckoId": "wrapped-sui-universal",
+      "source": "native",
+      "supply": "totalSupply" // circulating supply is global, > totalSupply
+    },
+    {
+      "symbol": "uSOL",
+      "address": "0x9B8Df6E244526ab5F6e6400d331DB28C8fdDdb55",
+      "source": "native",
+      "supply": "totalSupply" // circulating supply is global, > totalSupply
+    },
+    {
+      "symbol": "JitoSOL",
+      "address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
+      "coingeckoId": "jito-staked-sol",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LBTC",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "vbUSDC",
       "category": "stablecoin",

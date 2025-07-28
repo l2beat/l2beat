@@ -1,6 +1,7 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 import {
@@ -28,7 +29,7 @@ const ABI = parseAbi([
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
-): Message | undefined {
+): Partial<{ message: Message; asset: Asset }> | undefined {
   for (const log of transaction.logs) {
     const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
     if (!network) continue
@@ -63,15 +64,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'outbound',
-        protocol: LAYERZEROV1.name,
-        origin: chain.shortName,
-        destination: destination ?? decodedPacket.dstChainId.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'Packet',
-        matchingId: packetId,
+        message: {
+          direction: 'outbound',
+          protocol: LAYERZEROV1.name,
+          origin: chain.shortName,
+          destination: destination ?? decodedPacket.dstChainId.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'Packet',
+          matchingId: packetId,
+        },
       }
     }
 
@@ -103,15 +105,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'inbound',
-        protocol: LAYERZEROV1.name,
-        origin: origin ?? data.args.srcChainId.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketReceived',
-        matchingId: packetId,
+        message: {
+          direction: 'inbound',
+          protocol: LAYERZEROV1.name,
+          origin: origin ?? data.args.srcChainId.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'PacketReceived',
+          matchingId: packetId,
+        },
       }
     }
 
@@ -146,15 +149,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'outbound',
-        protocol: LAYERZEROV1.name,
-        origin: chain.shortName,
-        destination: destination ?? decodedPacket.header.dstEid.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketSent',
-        matchingId: guid,
+        message: {
+          direction: 'outbound',
+          protocol: LAYERZEROV1.name,
+          origin: chain.shortName,
+          destination: destination ?? decodedPacket.header.dstEid.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'PacketSent',
+          matchingId: guid,
+        },
       }
     }
 
@@ -186,15 +190,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'inbound',
-        protocol: LAYERZEROV1.name,
-        origin: origin ?? data.args.origin.srcEid.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketDelivered',
-        matchingId: packetId,
+        message: {
+          direction: 'inbound',
+          protocol: LAYERZEROV1.name,
+          origin: origin ?? data.args.origin.srcEid.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'PacketDelivered',
+          matchingId: packetId,
+        },
       }
     }
   }

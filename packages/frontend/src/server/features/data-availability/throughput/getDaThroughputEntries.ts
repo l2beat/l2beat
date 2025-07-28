@@ -54,10 +54,11 @@ interface DaThroughputEntryData {
         avgThroughputPerSecond: number
         avgCapacityUtilization: number
         totalPosted: number
+        change: number
         largestPoster:
           | {
               name: string
-              href: string
+              href?: string
               percentage: number
               totalPosted: number
             }

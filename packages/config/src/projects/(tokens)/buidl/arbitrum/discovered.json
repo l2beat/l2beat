@@ -2,7 +2,7 @@
   "name": "buidl",
   "chain": "arbitrum",
   "blockNumber": 358948247,
-  "configHash": "0xaded8e19ea86a025b723e125d53eb9a9e90c6ea680f899cdab101df4ea1beec0",
+  "configHash": "0x2fe51bb3beee3d291f87c0894b147bdf4e3fc5ad5066a4c64b4dbab86118ff34",
   "entries": [
     {
       "name": "DSToken",
@@ -13,6 +13,7 @@
         "0x4da147a21f4ffb7200fcf55538dd6f35ace4e4b02cf21ea11b4a76328af14581"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1730729689,
       "sinceBlock": 270969308,
       "values": {

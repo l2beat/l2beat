@@ -2,6 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { readTemplateFile, writeTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
+import { formatJson } from '../common/formatJson'
+import { removeJSONTrailingCommas } from '../common/removeJSONTrailingCommas'
 import { ActionNeededState } from '../components/ActionNeededState'
 import { ErrorState } from '../components/ErrorState'
 import { EditorView } from '../components/editor/EditorView'
@@ -33,20 +35,31 @@ export function TemplatePanel() {
   const saveTemplate = useMutation({
     mutationFn: async (content: string) => {
       if (!template) {
-        return
+        return content
       }
+
       await writeTemplateFile(template, content)
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['projects', project, 'template', template],
+        queryKey: ['projects', project, 'template', template, selectedAddress],
       })
     },
   })
 
+  const onSaveCallback = (content: string): string => {
+    try {
+      content = formatJson(JSON.parse(removeJSONTrailingCommas(content)))
+    } catch {}
+
+    saveTemplate.mutate(content)
+
+    return content
+  }
+
   const files = useMemo(
     () => getTemplateFiles(templateResponse, selectedAddress),
-    [templateResponse, selectedAddress],
+    [templateResponse.data, selectedAddress],
   )
 
   if (projectResponse.isError) {
@@ -65,7 +78,7 @@ export function TemplatePanel() {
     <EditorView
       editorId="template-panel"
       files={files}
-      callbacks={{ onSave: saveTemplate.mutate }}
+      callbacks={{ onSave: onSaveCallback }}
     />
   )
 }

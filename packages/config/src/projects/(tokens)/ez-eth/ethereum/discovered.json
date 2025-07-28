@@ -2,7 +2,7 @@
   "name": "ez-eth",
   "chain": "ethereum",
   "blockNumber": 22945156,
-  "configHash": "0xe30bc5ba56c8f075844fec74576df3ccbfa57e666a43fd2fdf9e2c48bce6d1e4",
+  "configHash": "0x6a2a186bdefced57f1a4eddf659226ea6298d93bc8c492b014d090048ebe34e6",
   "entries": [
     {
       "name": "EzEthToken",
@@ -13,6 +13,7 @@
         "0xa8e9f180ef81d5b199440aa49bc0e39c74dd551d29934400210f55f5ec3c10f6"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
       "sinceTimestamp": 1701811163,
       "sinceBlock": 18722779,
       "values": {

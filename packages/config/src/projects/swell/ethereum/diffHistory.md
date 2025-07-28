@@ -1,3 +1,208 @@
+Generated with discovered.json: 0x423671c8eb8412faf592c834bd9b605917e42fe6
+
+# Diff at Mon, 28 Jul 2025 06:01:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22795737
+- current block number: 23015719
+
+## Description
+
+Op stack gov upgrade: SuperchainConfig with pause expiry and DeputyPausModule. See optimism diffHistory for details.
+
+## Watched changes
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
++        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x1380Cc0E11Bfe6b5b399D97995a6B3D158Ed61a6","role":".challenger","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"eth:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the SuperchainConfig's `pause()` function"}]}
+      receivedPermissions.1.via.3.address:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
+      receivedPermissions.1.via.2:
+-        {"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}
+      receivedPermissions.1.via.1:
+-        {"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}
+      directlyReceivedPermissions.0.from:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      template:
+-        "opstack/SuperchainConfig"
++        "opstack/SuperchainConfig_expiry"
+      sourceHashes.1:
+-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
++        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
+      description:
+-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched."
+      values.$implementation:
+-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
++        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
+      values.$pastUpgrades.4:
++        ["2025-07-24T17:47:23.000Z","0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.GUARDIAN_SLOT:
+-        "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68"
+      values.PAUSED_SLOT:
+-        "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6"
+      values.version:
+-        "1.2.0"
++        "2.3.0"
+      values.initVersion:
++        2
+      values.pauseExpiry:
++        7884000
+      values.pauseExpiryFmt:
++        "91d 6h"
+      values.proxyAdmin:
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      values.proxyAdminOwner:
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      implementationNames.eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7:
+-        "SuperchainConfig"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
++        "SuperchainConfig"
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","role":".deputyGuardian","condition":"if not revoked by the Security Council"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754)
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+```
+
+## Source code changes
+
+```diff
+.../DeputyGuardianModule.sol => /dev/null          | 156 -------
+ .../DeputyPauseModule.sol                          |  87 ++--
+ .../SuperchainConfig/SuperchainConfig.sol          | 487 ++++++++++++++++-----
+ 3 files changed, 395 insertions(+), 335 deletions(-)
+```
+
+Generated with discovered.json: 0x7a561932b5ce613571365ff906281a6b0e9a3309
+
+# Diff at Fri, 25 Jul 2025 13:52:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@85b717d6efe0c0a7691beb49532a0ce49bb7634a block: 22795737
+- current block number: 22795737
+
+## Description
+
+templatize op upgrade 16 contracts
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22795737 (main branch discovery), not current.
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+      template:
++        "gnosisSafeModules/LivenessGuard"
+      description:
++        "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.via.1.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+      receivedPermissions.1.via.3.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+      directlyReceivedPermissions.0.condition:
+-        "though restricted to the global pause function"
++        "though restricted to the SuperchainConfig's `pause()` function"
+    }
+```
+
+Generated with discovered.json: 0x8938c0b96c38e489dddf0d08507eca8128344d31
+
+# Diff at Thu, 24 Jul 2025 16:48:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22795737
+- current block number: 22795737
+
+## Description
+
+set dispute game impl changes to high severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22795737 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0x758E0EE66102816F5C3Ec9ECc1188860fbb87812) {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      fieldMeta.respectedGameType:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x87690676786cDc8cCA75A472e483AF7C8F2f0F57) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xb4d106a941d21d43984047d4246210fac54fef1d
 
 # Diff at Tue, 22 Jul 2025 14:11:50 GMT:
@@ -4376,7 +4581,7 @@ discovery. Values are for block 20985756 (main branch discovery), not current.
 ```diff
 -   Status: DELETED
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90)
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
 ```
 
 ```diff
@@ -4417,11 +4622,11 @@ discovery. Values are for block 20985756 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       descriptions:
--        ["Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"]
+-        ["Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem"]
       description:
-+        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"
++        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem"
     }
 ```
 
@@ -4441,7 +4646,7 @@ Generated with discovered.json: 0x3548a172928f0df4e9b68a8a9ed5bc2ac911e55e
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       values.$members.6:
 -        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
       values.$members.5:
@@ -4472,7 +4677,7 @@ One new signer added to SwellMultisig.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       values.$members.6:
 +        "0x5b27b9279251904AaF2127463eeFf91E0037F725"
       values.$members.5:
@@ -4519,7 +4724,7 @@ discovery. Values are for block 20016207 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       sourceHashes:
 +        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
     }
@@ -4569,7 +4774,7 @@ discovery. Values are for block 20016207 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       values.$multisigThreshold:
 -        "4 of 6 (67%)"
       values.getOwners:
@@ -4605,7 +4810,7 @@ discovery. Values are for block 20016207 (main branch discovery), not current.
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
       fieldMeta:
 +        {"nonce":{"severity":"MEDIUM","description":"Watch out for txs concerning the prelaunch vault and swell L2 launch"}}
     }
@@ -4627,7 +4832,7 @@ A timelock transaction is queued by the SwellMultisig to support the Lyra-associ
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
 +++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
 +++ severity: MEDIUM
       values.nonce:
@@ -4683,7 +4888,7 @@ A timelock transaction is queued to whitelist (`supportToken(address,(bool,bool)
 
 ```diff
     contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
-    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin functions in the swell ecosystem
 +++ description: Watch out for txs concerning the prelaunch vault and swell L2 launch
 +++ severity: MEDIUM
       values.nonce:

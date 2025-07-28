@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5e2c5b6419247d7e815eedb67cb5acf279a2af96
+
+# Diff at Thu, 24 Jul 2025 16:55:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22988752
+- current block number: 22988752
+
+## Description
+
+config: set dispute game impl changes to high severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22988752 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xb4ffe8a242a8b05c153c4f7d3aeab0d2f3bf1d2c
 
 # Diff at Thu, 24 Jul 2025 11:38:32 GMT:
