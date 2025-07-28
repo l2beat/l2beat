@@ -1,7 +1,7 @@
 {
   "name": "mint",
   "chain": "ethereum",
-  "timestamp": 1753457471,
+  "blockNumber": 22997066,
   "configHash": "0x79d88bcc595a9c8234566956548939847fb8f38d24cd43a8b907d3398e087f5d",
   "entries": [
     {
@@ -1870,6 +1870,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22997066 },
   "permissionsConfigHash": "0x37f73b5606dfbc27cf80b41135101694ab359fdf985f9f90c762bb1d780c627b"
 }

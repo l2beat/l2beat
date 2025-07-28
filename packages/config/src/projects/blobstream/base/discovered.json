@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "timestamp": 1752069681,
+  "blockNumber": 32640167,
   "configHash": "0x9297dadeee4bf38237e4e3d2399ee72cf549b29435dbe3c9edd81f1036e8f9a5",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -312,6 +312,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71"
   },
-  "usedBlockNumbers": { "base": 32640167 },
   "permissionsConfigHash": "0xae8e7b71029b6720c7deb37a4d87c1d694da0a15e6dd2de5dbde3720c6d6b0c6"
 }

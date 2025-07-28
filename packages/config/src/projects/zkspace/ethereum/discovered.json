@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
   "chain": "ethereum",
-  "timestamp": 1722503255,
+  "blockNumber": 20432700,
   "configHash": "0x202d56eda7e4cc2a2198596969c7ab68ef73f269172656aa4e7589f1d8991f24",
   "entries": [
     {
@@ -852,6 +852,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 20432700 },
   "permissionsConfigHash": "0x042d97e67869af4c9d17a23c88a330096263a8c3af131f8abc0d9496a5bb8fd9"
 }

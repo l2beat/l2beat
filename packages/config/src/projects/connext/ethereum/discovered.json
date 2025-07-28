@@ -1,7 +1,7 @@
 {
   "name": "connext",
   "chain": "ethereum",
-  "timestamp": 1753682687,
+  "blockNumber": 23015739,
   "configHash": "0xd8d81b28c10298af4a2c3702c9be6c5f39006e29f44e6b74f315711a3b1884b3",
   "entries": [
     {
@@ -126,6 +126,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 23015739 },
   "permissionsConfigHash": "0x7d50df971908a9164c834454f24eb4da5a6846ba6d16e0be5e79372a9202752e"
 }

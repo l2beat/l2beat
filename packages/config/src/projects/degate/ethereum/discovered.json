@@ -1,7 +1,7 @@
 {
   "name": "degate",
   "chain": "ethereum",
-  "timestamp": 1704441323,
+  "blockNumber": 18939731,
   "configHash": "0xba74eb5d0f3184d48c8ee208826a584848f9b6725337c86a9134e04e796a497e",
   "entries": [
     {
@@ -522,6 +522,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 18939731 },
   "permissionsConfigHash": "0x4d728ab6390a5eddd34182c87850044a8083c3a19a96c045392d51e569896550"
 }

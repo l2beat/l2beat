@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "timestamp": 1753434851,
+  "blockNumber": 22995199,
   "configHash": "0xef5818563fa17e0e17995738e90b93df4cf05c9152ee2f8c631030fdc8a8464e",
   "entries": [
     {
@@ -395,7 +395,7 @@
       "values": {
         "$immutable": true,
         "safe": "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "3d 18h",
+        "timeSinceLastL2beatInteraction": "23h 40m",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -3330,6 +3330,5 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig_pauseId": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
-  "usedBlockNumbers": { "ethereum": 22995199 },
   "permissionsConfigHash": "0xfc7324cf0a41696042b2e29721a0a677e3bd452e3999a888011ecca405d3408e"
 }

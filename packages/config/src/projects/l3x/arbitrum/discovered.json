@@ -1,7 +1,7 @@
 {
   "name": "l3x",
   "chain": "arbitrum",
-  "timestamp": 1734957965,
+  "blockNumber": 287771362,
   "configHash": "0x9d8d838aaa04715e948196b0203b9154a266f72694ae384ee8ce90ec34bac259",
   "entries": [
     {
@@ -1538,6 +1538,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 287771364 },
   "permissionsConfigHash": "0x4b6b37ccf85f6eadfa178e3b561418a824a164a12f5762c0d4043037ac76fbf6"
 }

@@ -1,4 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import { assert, ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { RLP } from 'ethers/lib/utils'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
@@ -67,7 +67,9 @@ export async function checkForEigenDA(
 async function getConfirmedBatchHeaderHashes(
   provider: IProvider,
 ): Promise<string[]> {
-  const ethereumProvider = await provider.switchChain('ethereum')
+  const blockToSwitch = await getEthereumBlock(provider)
+
+  const ethereumProvider = provider.switchChain('ethereum', blockToSwitch)
 
   const logs = await ethereumProvider.getEvents(
     EIGEN_DA_CONSTANTS.EIGEN_AVS,
@@ -76,6 +78,31 @@ async function getConfirmedBatchHeaderHashes(
   )
 
   return logs.map((log) => log.event.batchHeaderHash.toLowerCase())
+}
+
+async function getEthereumBlock(provider: IProvider) {
+  if (provider.chain === 'ethereum') {
+    return provider.blockNumber
+  }
+
+  const currentBlock = await provider.getBlock(provider.blockNumber)
+  assert(currentBlock, 'Current block is undefined')
+
+  const timestamp = UnixTime(currentBlock.timestamp)
+
+  // We need to switch to ethereum to get the block number.
+  // Eigen AVS lives there.
+  // Yet we need to pass 'some' block number to the provider to perform the switch.
+  // Can't do. You get the idea. That's why we pass 0. It doesn't matter.
+  const ethereumProvider = provider.switchChain('ethereum', 0)
+
+  const correspondingEthereumBlock = await ethereumProvider.raw(
+    `optimism_eigen_cross_chain_translate_${provider.blockNumber}_${provider.chain}`,
+    ({ etherscanClient }) =>
+      etherscanClient.getBlockNumberAtOrBefore(timestamp),
+  )
+
+  return correspondingEthereumBlock
 }
 
 function extractBlobBatchHeaderHash(decoded: EigenDaBlobInfo): string {

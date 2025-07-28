@@ -106,8 +106,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -115,8 +115,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -124,8 +124,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
@@ -180,7 +180,7 @@ describe(UpdateDiffer.name, () => {
         mockObject<ConfigReader>({
           readDiscovery: mockFn().returns({
             ...mockProject,
-            timestamp: 2,
+            blockNumber: 2,
           }),
         }),
         mockObject<Database>({
@@ -188,7 +188,7 @@ describe(UpdateDiffer.name, () => {
           updateDiff: updateDiffRepository,
         }),
         mockObject<DiscoveryOutputCache>({
-          get: mockFn().returns({ entries: [], timestamp: 1 }),
+          get: mockFn().returns({ entries: [], blockNumber: 1 }),
         }),
         Logger.SILENT,
       )
@@ -247,8 +247,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -293,8 +293,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -354,8 +354,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
-          diffBaseTimestamp: 123,
-          diffHeadTimestamp: 456,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -411,12 +411,11 @@ const COMMITTED: EntryParameters[] = [
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
   chain: 'ethereum',
-  timestamp: 1,
+  blockNumber: 1,
   configHash: Hash256.random(),
   entries: COMMITTED,
   abis: {},
   usedTemplates: {},
-  usedBlockNumbers: {},
 }
 
 function mockContract(name: string, address: EthereumAddress): EntryParameters {

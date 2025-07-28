@@ -1,7 +1,7 @@
 {
   "name": "treasure",
   "chain": "ethereum",
-  "timestamp": 1748579639,
+  "blockNumber": 22593197,
   "configHash": "0x224ae1fa0b692c2a31aea451fb3436fd0b6d89f98654c3355ed119257c5ba8d2",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -965,6 +965,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22593197 },
   "permissionsConfigHash": "0xdbcf141ac9788834273c44f5e73ce8d3f45b2a12b23621dc13e4cda3049e2de8"
 }

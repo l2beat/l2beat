@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "timestamp": 1753681907,
+  "blockNumber": 23015674,
   "configHash": "0xbf52d99d8336c0508df4eaa3b9815b3d2c131da419543d0ba1b0308724e0b35c",
   "entries": [
     {
@@ -2491,6 +2491,5 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23015674 },
   "permissionsConfigHash": "0xa45a3e04a6cd209b5bbf838c57a3c0f3123ec38a502639763e353e9e0bb42350"
 }

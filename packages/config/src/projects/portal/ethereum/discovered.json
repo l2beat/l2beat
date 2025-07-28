@@ -1,7 +1,7 @@
 {
   "name": "portal",
   "chain": "ethereum",
-  "timestamp": 1751871251,
+  "blockNumber": 22865659,
   "configHash": "0x4c606f7f91dae9bd2af43f36289e1568c6a668618232f8cb2a0ed1c315bb6df1",
   "entries": [
     {
@@ -920,6 +920,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 22865659 },
   "permissionsConfigHash": "0x110d3d19d4d9b3a1243e4fb8b9007a902d41e73fce8c1013b157d79ceb9839e8"
 }

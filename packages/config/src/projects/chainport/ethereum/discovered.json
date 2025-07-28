@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "timestamp": 1752574031,
+  "blockNumber": 22923880,
   "configHash": "0x9fee6ec3389cb38404996e0ff856178487520e6646787b60996bb62527439496",
   "entries": [
     {
@@ -385,6 +385,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22923880 },
   "permissionsConfigHash": "0x26fc2f185492ee222a5639023d7f34b0c8c8bc5ebbbce7c96f409161d004433b"
 }

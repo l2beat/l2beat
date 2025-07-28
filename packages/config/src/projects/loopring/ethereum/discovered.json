@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "timestamp": 1751871011,
+  "blockNumber": 22865639,
   "configHash": "0xaf5bcd8c886cb30f1ad7d1dd612d976978d10df1f24d6b09429184ec1b62bd81",
   "entries": [
     {
@@ -1018,6 +1018,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22865639 },
   "permissionsConfigHash": "0x48723498bf833781da58066d446c8d8f4e013f88da7aea83f45e0feee781a3c1"
 }

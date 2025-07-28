@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "base",
-  "timestamp": 1749466411,
+  "blockNumber": 31338532,
   "configHash": "0x5e785129684f1569c775f27f5e1ebc6616a5b1664d010d6e1f75e5ab3dd33ade",
   "entries": [
     {
@@ -1298,6 +1298,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "usedBlockNumbers": { "base": 31338532 },
   "permissionsConfigHash": "0x77af3f112a35c9e1dce52235664cbfa3aade70108a61f1780d9892ccf82bf95f"
 }

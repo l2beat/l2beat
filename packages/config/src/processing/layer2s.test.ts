@@ -303,7 +303,7 @@ describe('layer2s', () => {
   describe('references', () => {
     for (const layer2 of layer2s) {
       it(`${layer2.id.toString()}`, () => {
-        const chains = Object.keys(layer2.discoveryInfo.timestampPerChain)
+        const chains = Object.keys(layer2.discoveryInfo.blockNumberPerChain)
         const discoveryAddresses = new Set(
           chains
             .flatMap((chain) =>

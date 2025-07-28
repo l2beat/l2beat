@@ -1,17 +1,16 @@
 import { type DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
-import type { UnixTime } from '@l2beat/shared-pure'
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
 export function diffToMessage(
   name: string,
   diffs: DiscoveryDiff[],
-  timestamp: number,
+  blockNumber: number,
   chain: string,
   dependents: string[],
   nonce?: number,
   trackedTxsAffected?: boolean,
 ): string {
-  const header = getHeader(name, chain, timestamp, nonce)
+  const header = getHeader(name, chain, blockNumber, nonce)
   const dependentsMessage = getDependentsMessage(dependents)
   const trackedTxsMessage = trackedTxsAffected
     ? getTrackedTxsMessage()
@@ -29,7 +28,7 @@ export function diffToMessage(
 function getHeader(
   name: string,
   chain: string,
-  timestamp: UnixTime,
+  blockNumber: number,
   nonce?: number,
 ) {
   name = wrapBoldAndItalic(name)
@@ -37,7 +36,9 @@ function getHeader(
   if (nonce === undefined) {
     return `${name} | detected changes on chain: ${chain}`
   }
-  return `Changes: ${name}:${chain} at timestamp ${timestamp}`
+  return `> ${formatNonce(
+    nonce,
+  )} (block_number=${blockNumber})\n\n${name} | detected changes on chain: ${chain}`
 }
 
 function getDependentsMessage(dependents: string[]) {

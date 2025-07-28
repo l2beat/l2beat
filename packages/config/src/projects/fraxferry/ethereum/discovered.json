@@ -1,7 +1,7 @@
 {
   "name": "fraxferry",
   "chain": "ethereum",
-  "timestamp": 1753200647,
+  "blockNumber": 22975821,
   "configHash": "0xb3d00ec4f57508fa8441af7fe83d3ac427a399f20dff0658b9058bfc06eae352",
   "entries": [
     {
@@ -6389,6 +6389,5 @@
     "fraxferry/Fraxferry": "0x9ebfaba04ae0d6b918fb5fe7bbc0a365c4f600308e283b921f955d7acafb8bd6",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22975821 },
   "permissionsConfigHash": "0xeef27d52f02cd1c0b03f6ce178a24da4a618f2509c0b8ea1e8e4206949bcdf8c"
 }

@@ -47,7 +47,7 @@ async function getPastUpgrades(
       })
       assert(implementation !== undefined)
 
-      const providerAtBlock = await provider.switchBlock(l.blockNumber)
+      const providerAtBlock = provider.switchBlock(l.blockNumber)
       const oldFork = await providerAtBlock.callMethod<EthereumAddress>(
         address,
         'function oldFork() view returns (address)',

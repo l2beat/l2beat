@@ -1,6 +1,5 @@
 import {
   type Hash256,
-  type UnixTime,
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
@@ -12,19 +11,17 @@ import type { EntryParameters, StructureOutput } from './types'
 
 export function getStructureOutput(
   config: StructureConfig,
-  timestamp: UnixTime,
-  usedBlockNumbers: Record<string, number>,
+  blockNumber: number,
   results: Analysis[],
 ): StructureOutput {
   return withoutUndefinedKeys({
     name: config.name,
     chain: config.chain,
-    timestamp,
+    blockNumber,
     configHash: hashJsonStable(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
-    usedBlockNumbers,
   })
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "beamer-bridge-v2",
   "chain": "ethereum",
-  "timestamp": 1711614839,
+  "blockNumber": 19531448,
   "configHash": "0xe592f702bb286a1f059457783d2fc1dfc1ba5e48a92c13eac115f1fb5021b3b2",
   "entries": [
     {
@@ -346,6 +346,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 19531448 },
   "permissionsConfigHash": "0x6723a8fad6a445100b211694b8bd07d2322544283fa287388a5ac9ff15534d5d"
 }

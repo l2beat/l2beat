@@ -10,22 +10,15 @@ import {
 import { readFileSync } from 'fs'
 import { rimraf } from 'rimraf'
 
-export type Timing =
-  | { blockNumber: number; timing?: undefined }
-  | { timestamp: number; blockNumber?: undefined }
-
 export async function rediscoverStructureOnBlock(
   projectName: string,
   chain: string,
-  timing: Timing,
+  blockNumber: number,
   saveSources = false,
   overwriteCache = false,
 ): Promise<DiscoveryOutput> {
-  const timePoint =
-    timing.blockNumber !== undefined ? timing.blockNumber : timing.timestamp
-
   process.stdout.write(
-    `Rediscovering ${projectName} on ${chain} at ${timePoint}... `,
+    `Rediscovering ${projectName} on ${chain} at block ${blockNumber}... `,
   )
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
@@ -39,10 +32,10 @@ export async function rediscoverStructureOnBlock(
     {
       project: projectName,
       chain: getChainConfig(chain),
-      ...timing,
-      sourcesFolder: `.code@${timePoint}`,
-      flatSourcesFolder: `.flat@${timePoint}`,
-      discoveryFilename: `discovered@${timePoint}.json`,
+      blockNumber: blockNumber,
+      sourcesFolder: `.code@${blockNumber}`,
+      flatSourcesFolder: `.flat@${blockNumber}`,
+      discoveryFilename: `discovered@${blockNumber}.json`,
       saveSources,
       overwriteCache,
     },
@@ -50,13 +43,13 @@ export async function rediscoverStructureOnBlock(
     Logger.SILENT,
   )
   const prevDiscoveryFile = readFileSync(
-    `${discoveryFolder}/discovered@${timePoint}.json`,
+    `${discoveryFolder}/discovered@${blockNumber}.json`,
     'utf-8',
   )
   const prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
 
   // Remove discovered@... file, we don't need it
-  await rimraf(`${discoveryFolder}/discovered@${timePoint}.json`)
+  await rimraf(`${discoveryFolder}/discovered@${blockNumber}.json`)
   process.stdout.write('done\n')
   return prevDiscovery
 }

@@ -1,7 +1,7 @@
 {
   "name": "lasernet",
   "chain": "ethereum",
-  "timestamp": 1752589271,
+  "blockNumber": 22925142,
   "configHash": "0x985d92af05fee24e094f8b7cc2069db35ef290097ee5a110b5ce20950681944a",
   "entries": [
     {
@@ -1744,6 +1744,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22925142 },
   "permissionsConfigHash": "0x0faa3933906393da136693c2f5a165d89afc0299e9ade8c47be76d5ad864fabc"
 }

@@ -1,7 +1,7 @@
 {
   "name": "redstone",
   "chain": "ethereum",
-  "timestamp": 1743924215,
+  "blockNumber": 22208357,
   "configHash": "0x2c7d17685a1e99cfa4086c058685cd3b56009e131d4c6c86283bde0878a3ba5d",
   "entries": [
     {
@@ -1181,6 +1181,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22208357 },
   "permissionsConfigHash": "0x8695e00b0c80683e7c43510dfef3c588f3aea80b45679b8849a8529a6c99350a"
 }

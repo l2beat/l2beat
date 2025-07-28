@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
   "chain": "ethereum",
-  "timestamp": 1729849619,
+  "blockNumber": 21041827,
   "configHash": "0xc4dd622c1486bebc1893aa133166b91d2700338b448104a058a4828aafeb3e94",
   "entries": [
     {
@@ -504,6 +504,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21041827 },
   "permissionsConfigHash": "0xdde65204cb9d8fc8c55a382da0c9589d3825b26737a5f9e4fc3bc039616d2895"
 }

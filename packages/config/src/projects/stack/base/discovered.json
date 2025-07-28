@@ -1,7 +1,7 @@
 {
   "name": "stack",
   "chain": "base",
-  "timestamp": 1748585791,
+  "blockNumber": 30898222,
   "configHash": "0x4122f72716c23b50cff452e33ed15befa517101d6a2e24b2d69000c280b494ef",
   "entries": [
     {
@@ -803,6 +803,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 30898222 },
   "permissionsConfigHash": "0x0760f5f57bdf64988e61d95a23e00cb832c4f9bb4f52b0d76880b16726f11d8b"
 }

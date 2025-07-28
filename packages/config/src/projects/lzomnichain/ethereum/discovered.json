@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "timestamp": 1752073991,
+  "blockNumber": 22882445,
   "configHash": "0xb6229c3f0fc7fb9a00c26c5e53f736356d05c9b91cb5e7c42a89d867b8d82ae1",
   "entries": [
     {
@@ -3580,6 +3580,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
-  "usedBlockNumbers": { "ethereum": 22882445 },
   "permissionsConfigHash": "0x675177be01bc53b099944b60d990da6330ddf0b8233e5b228d23068d26487c5d"
 }

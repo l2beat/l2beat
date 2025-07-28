@@ -129,7 +129,7 @@ export function getProject(
           }
         })
         .sort(orderAddressEntries),
-      blockNumber: discovery.usedBlockNumbers[chain],
+      blockNumber: discovery.blockNumber,
     } satisfies ApiProjectChain
     response.entries.push(chainInfo)
   }

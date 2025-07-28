@@ -121,7 +121,7 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
     return await Promise.all(
       parsed.map(async (entry) =>
         this.decodeCall(
-          await provider.switchBlock(entry.blockNumber),
+          provider.switchBlock(entry.blockNumber),
           this.extractCallFromResult(entry.parsedLog.args),
         ),
       ),

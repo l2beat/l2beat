@@ -1,4 +1,4 @@
-import { type UnixTime, withoutUndefinedKeys } from '@l2beat/shared-pure'
+import { withoutUndefinedKeys } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -16,15 +16,13 @@ import type {
 export function toDiscoveryOutput(
   templateService: TemplateService,
   config: ConfigRegistry,
-  timestamp: UnixTime,
-  usedBlockNumbers: Record<string, number>,
+  blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
   const discovery = toRawDiscoveryOutput(
     templateService,
     config,
-    timestamp,
-    usedBlockNumbers,
+    blockNumber,
     results,
   )
 
@@ -40,16 +38,10 @@ export function toDiscoveryOutput(
 export function toRawDiscoveryOutput(
   templateService: TemplateService,
   config: ConfigRegistry,
-  timestamp: UnixTime,
-  usedBlockNumbers: Record<string, number>,
+  blockNumber: number,
   results: Analysis[],
 ): DiscoveryOutput {
-  const structure = getStructureOutput(
-    config.structure,
-    timestamp,
-    usedBlockNumbers,
-    results,
-  )
+  const structure = getStructureOutput(config.structure, blockNumber, results)
   const colorized = colorize(config.color, structure, templateService)
 
   return withoutUndefinedKeys(combineStructureAndColor(structure, colorized))

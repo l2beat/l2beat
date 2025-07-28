@@ -2,7 +2,7 @@ import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
-import type { DiscoveryTimestamps } from '../modelling/modelPermissions'
+import type { DiscoveryBlockNumbers } from '../modelling/modelPermissions'
 
 export type ContractValue =
   | string
@@ -14,29 +14,25 @@ export type ContractValue =
 export interface StructureOutput {
   name: string
   chain: string
-  blockNumber?: number
-  timestamp: number
+  blockNumber: number
   entries: StructureEntry[]
   abis: Record<string, string[]>
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
-  usedBlockNumbers: Record<string, number>
 }
 
 export interface DiscoveryOutput {
   name: string
   chain: string
-  blockNumber?: number
-  timestamp: number
+  blockNumber: number
   entries: EntryParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
-  usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
-  dependentDiscoveries?: DiscoveryTimestamps
+  dependentDiscoveries?: DiscoveryBlockNumbers
 }
 
 export interface DiscoveryCustomType {
@@ -134,5 +130,5 @@ export type PermissionsOutput = {
     isFinal: boolean
     role?: string
   }[]
-  dependentTimestamps: DiscoveryTimestamps
+  dependentBlockNumbers: DiscoveryBlockNumbers
 }

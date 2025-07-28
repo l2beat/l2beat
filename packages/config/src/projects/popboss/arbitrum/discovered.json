@@ -1,7 +1,7 @@
 {
   "name": "popboss",
   "chain": "arbitrum",
-  "timestamp": 1752237555,
+  "blockNumber": 356574016,
   "configHash": "0x1b6c73cc86a51f72592c3873b8004a3d8fa502313e11a5ff5a19c77bf46db0ad",
   "entries": [
     {
@@ -1900,6 +1900,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 356574016 },
   "permissionsConfigHash": "0xaf8587aaa7d26353609fd8c6cc9889acb4164e4f32105d3402e672cb31c3f02f"
 }

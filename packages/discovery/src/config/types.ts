@@ -11,7 +11,6 @@ export interface DiscoveryModuleConfig {
   readonly verboseTemplatization?: boolean
   readonly saveSources?: boolean
   readonly blockNumber?: number
-  readonly timestamp?: number
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string

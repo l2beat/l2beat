@@ -1,7 +1,7 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "timestamp": 1752570563,
+  "blockNumber": 22923592,
   "configHash": "0xc91df13e5601fab608c3535bf1e3834fb512d29e80f1476eb6540d8400e43e99",
   "entries": [
     {
@@ -2604,6 +2604,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22923592 },
   "permissionsConfigHash": "0x41c4b771f234d22f8c1921b000170983a3e133cd2fbf65ae954d2f6620b7d63b"
 }

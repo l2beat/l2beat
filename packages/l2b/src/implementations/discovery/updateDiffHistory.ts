@@ -30,10 +30,7 @@ import path, { relative } from 'path'
 import { rimraf } from 'rimraf'
 import { getPlainLogger } from '../common/getPlainLogger'
 import { updateDiffHistoryHash } from './hashing'
-import {
-  rediscoverStructureOnBlock,
-  type Timing,
-} from './rediscoverStructureOnBlock'
+import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -90,21 +87,13 @@ export async function updateDiffHistoryForChain(
   let codeDiff
   let configRelatedDiff
 
-  // TDDO(radomski): Use timestamp after the merge
-  if (
-    (discoveryFromMainBranch?.blockNumber ?? 0) >
-    (curDiscovery.blockNumber ?? Number.MAX_SAFE_INTEGER)
-  ) {
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) > curDiscovery.blockNumber) {
     throw new Error(
       `Main branch discovery block number (${discoveryFromMainBranch?.blockNumber}) is higher than current discovery block number (${curDiscovery.blockNumber})`,
     )
   }
 
-  // TDDO(radomski): Use timestamp after the merge
-  if (
-    (discoveryFromMainBranch?.blockNumber ?? 0) <
-    (curDiscovery.blockNumber ?? discoveryFromMainBranch?.blockNumber ?? 0)
-  ) {
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
     const rerun = await performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       discoveryFolder,
       discoveryFromMainBranch,
@@ -160,8 +149,8 @@ export async function updateDiffHistoryForChain(
   const anyDiffs = diff.length > 0 || configRelatedDiff.length > 0
   if (!diffHistoryExists || anyDiffs) {
     const newHistoryEntry = generateDiffHistoryMarkdown(
-      discoveryFromMainBranch?.timestamp,
-      curDiscovery.timestamp,
+      discoveryFromMainBranch?.blockNumber,
+      curDiscovery.blockNumber,
       diff,
       configRelatedDiff,
       mainBranchHash,
@@ -237,26 +226,14 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       : [{ project: projectName, chain }]
 
   for (const dependency of dependencies) {
-    // TODO(radomski): Remove the duplication after the PR containg this code is merged
-    let timestamp =
-      discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
-        dependency.chain
-      ]?.timestamp
-
     let blockNumber =
       discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
         dependency.chain
       ]?.blockNumber
-
     if (dependency.project === projectName && dependency.chain === chain) {
       blockNumber = discoveryFromMainBranch.blockNumber
     }
-
-    if (dependency.project === projectName && dependency.chain === chain) {
-      timestamp = discoveryFromMainBranch.timestamp
-    }
-
-    if (timestamp === undefined && blockNumber === undefined) {
+    if (blockNumber === undefined) {
       // We rediscover on the past block number, but with current configs and dependencies.
       // Those dependencies might not have been referenced in the old discovery.
       // In that case we don't fail - the diff will show all those "added".
@@ -265,11 +242,10 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       )
       continue
     }
-
     const prevStructure = await rediscoverStructureOnBlock(
       dependency.project,
       dependency.chain,
-      { blockNumber, timestamp } as Timing,
+      blockNumber,
       saveSources,
       overwriteCache,
     )
@@ -407,8 +383,8 @@ function getGitUser(logger: Logger): { name: string; email: string } {
 }
 
 function generateDiffHistoryMarkdown(
-  timestampFromMainBranchDiscovery: number | undefined,
-  timestamp: number,
+  blockNumberFromMainBranchDiscovery: number | undefined,
+  curBlockNumber: number,
   diffs: DiscoveryDiff[],
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
@@ -424,12 +400,12 @@ function generateDiffHistoryMarkdown(
   result.push('')
   const { name, email } = getGitUser(logger)
   result.push(`- author: ${name} (<${email}>)`)
-  if (timestampFromMainBranchDiscovery !== undefined) {
+  if (blockNumberFromMainBranchDiscovery !== undefined) {
     result.push(
-      `- comparing to: ${mainBranch}@${mainBranchHash} block: ${timestampFromMainBranchDiscovery}`,
+      `- comparing to: ${mainBranch}@${mainBranchHash} block: ${blockNumberFromMainBranchDiscovery}`,
     )
   }
-  result.push(`- current timestamp: ${timestamp}`)
+  result.push(`- current block number: ${curBlockNumber}`)
   result.push('')
   result.push('## Description')
   if (description) {
@@ -438,7 +414,7 @@ function generateDiffHistoryMarkdown(
     result.push('')
   } else {
     result.push('')
-    if ((timestampFromMainBranchDiscovery ?? timestamp) !== timestamp) {
+    if ((blockNumberFromMainBranchDiscovery ?? 0) !== curBlockNumber) {
       result.push(
         'Provide description of changes. This section will be preserved.',
       )
@@ -451,7 +427,7 @@ function generateDiffHistoryMarkdown(
   }
 
   if (diffs.length > 0) {
-    if (timestampFromMainBranchDiscovery === undefined) {
+    if (blockNumberFromMainBranchDiscovery === undefined) {
       result.push('## Initial discovery')
     } else {
       result.push('## Watched changes')
@@ -471,13 +447,13 @@ function generateDiffHistoryMarkdown(
   }
 
   if (configRelatedDiff.length > 0) {
-    assert(timestampFromMainBranchDiscovery !== undefined)
+    assert(blockNumberFromMainBranchDiscovery !== undefined)
     result.push('## Config/verification related changes')
     result.push('')
     result.push(
       `Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block ${timestampFromMainBranchDiscovery} (main branch discovery), not current.`,
+discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
     result.push(discoveryDiffToMarkdown(configRelatedDiff))

@@ -81,11 +81,11 @@ export const DiscoverCommandArgs = {
     description:
       'file name to use instead of the discovered.json, does not change the output path',
   }),
-  timestamp: option({
+  blockNumber: option({
     type: optional(number),
-    long: 'timestamp',
-    short: 'd',
-    description: 'the timestamp on which the discovery will be performed',
+    long: 'block-number',
+    short: 'b',
+    description: 'the block number on which the discovery will be performed',
   }),
   overwriteCache: flag({
     type: boolean,

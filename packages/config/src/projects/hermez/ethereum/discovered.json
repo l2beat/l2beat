@@ -1,7 +1,7 @@
 {
   "name": "hermez",
   "chain": "ethereum",
-  "timestamp": 1738736459,
+  "blockNumber": 21778467,
   "configHash": "0x458eebbf678700cee77247bb66418a7e82b9309e50e7d3e07400827d4937642e",
   "entries": [
     {
@@ -670,6 +670,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21778467 },
   "permissionsConfigHash": "0x61e48a613dd50299f57b955c6be6b33644854bb063115c37418fd49874b31b24"
 }
