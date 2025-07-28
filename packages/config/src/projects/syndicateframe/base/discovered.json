@@ -1,7 +1,7 @@
 {
   "name": "syndicateframe",
   "chain": "base",
-  "timestamp": 1747235251,
+  "blockNumber": 30222952,
   "configHash": "0x4f0879c98acbc57144d909fd20901a1e158170245dc4fb9001abb6bfdc2ee8db",
   "entries": [
     {
@@ -769,6 +769,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 30222952 },
   "permissionsConfigHash": "0xdd63edda1ced7fc4ed380bbaed291dffa36e7fae0caea68f94a752dfe6cc0e4c"
 }

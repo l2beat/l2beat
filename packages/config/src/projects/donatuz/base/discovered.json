@@ -1,7 +1,7 @@
 {
   "name": "donatuz",
   "chain": "base",
-  "timestamp": 1752577633,
+  "blockNumber": 32894143,
   "configHash": "0xd3327d23f139bba032ff9c51bb5f1cc5a7e0c6cc739aa211b805ea5684ec93b8",
   "entries": [
     {
@@ -803,6 +803,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 32894143 },
   "permissionsConfigHash": "0x4253bcaa16d3cd5134eb9f979fee23bc3da784af97ed6075f75af5b1b444f3ee"
 }

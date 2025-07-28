@@ -1,7 +1,7 @@
 {
   "name": "xchain",
   "chain": "ethereum",
-  "timestamp": 1752237071,
+  "blockNumber": 22895951,
   "configHash": "0xf781c3d5a2d654aa25420b4b84b55e5f27ade8437b81b1a45d4455a6aed0a3b1",
   "entries": [
     {
@@ -1762,6 +1762,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22895951 },
   "permissionsConfigHash": "0x6deb009a528fe9739e9c57f4213c54f0cfcb51214f88559859693404541c8465"
 }

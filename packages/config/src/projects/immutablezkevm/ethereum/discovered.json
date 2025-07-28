@@ -1,7 +1,7 @@
 {
   "name": "immutablezkevm",
   "chain": "ethereum",
-  "timestamp": 1741355351,
+  "blockNumber": 21995404,
   "configHash": "0xc0e6b0cc2054b0b0fd156ea800acebe693156573652f80d92b64bcd45a268a11",
   "entries": [
     {
@@ -600,6 +600,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 21995404 },
   "permissionsConfigHash": "0x59426f1f1c86ea3d0a6c40b140684d5636469729c539f42d3ec52050fa74960b"
 }

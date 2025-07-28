@@ -1,7 +1,7 @@
 {
   "name": "near",
   "chain": "ethereum",
-  "timestamp": 1746523487,
+  "blockNumber": 22423754,
   "configHash": "0x502d767939615de5b4719aee37a7b05276c0ac6fe22d1b09ef495c7ca4944b09",
   "entries": [
     {
@@ -300,6 +300,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22423754 },
   "permissionsConfigHash": "0xd31262ff8f3a3c7571455b90024c9dc6b5d2ac1554a1c6657e8364408d501793"
 }

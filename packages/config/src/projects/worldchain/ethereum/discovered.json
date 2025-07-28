@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "timestamp": 1753681775,
+  "blockNumber": 23015663,
   "configHash": "0x2d0ecd1924b8861c720f371a00f25df90a1a85a2aff5c10554a12da2375c88fa",
   "entries": [
     {
@@ -2442,6 +2442,5 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 23015663 },
   "permissionsConfigHash": "0x32e6ca9d6d55b265d3cdb8a1619d444d9bf564c6ba8182e149ef12e2ab5dc537"
 }

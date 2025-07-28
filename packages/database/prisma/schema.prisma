@@ -132,6 +132,7 @@ model RealTimeLiveness {
 
 model UpdateMonitor {
   projectId         String    @db.VarChar(255)
+  blockNumber       Int
   timestamp         DateTime? @db.Timestamp(6)
   discoveryJsonBlob Json
   configHash        String    @default("") @db.VarChar(255)
@@ -145,21 +146,22 @@ model UpdateNotifier {
   createdAt    DateTime @default(now()) @db.Timestamp(6)
   updatedAt    DateTime @default(now()) @db.Timestamp(6)
   projectId    String   @db.VarChar(255)
-  timestamp    DateTime @default(now()) @db.Timestamp(6)
+  blockNumber  Int
   diffJsonBlob Json
   chainId      Int      @default(1)
 
-  @@index([timestamp])
+  @@index([blockNumber])
   @@index([projectId])
 }
 
 model UpdateMessage {
-  projectId String   @db.VarChar(255)
-  chain     String   @db.VarChar(255)
-  timestamp DateTime @db.Timestamp(6)
-  message   String   @db.Text
+  projectId   String   @db.VarChar(255)
+  chain       String   @db.VarChar(255)
+  blockNumber Int
+  timestamp   DateTime @db.Timestamp(6)
+  message     String   @db.Text
 
-  @@id([projectId, chain, timestamp])
+  @@id([projectId, chain, blockNumber])
 }
 
 model VerifierStatus {
@@ -215,10 +217,10 @@ model AnomalyStats {
 }
 
 model FlatSources {
-  projectId   String   @db.VarChar(255)
+  projectId   String @db.VarChar(255)
   chainId     Int
-  timestamp   DateTime @default(now()) @db.Timestamp(6)
-  contentHash String   @db.VarChar(255)
+  blockNumber Int
+  contentHash String @db.VarChar(255)
   flat        Json
 
   @@id([projectId, chainId])
@@ -289,13 +291,13 @@ model ProjectValue {
 }
 
 model UpdateDiff {
-  projectId         String   @db.VarChar(255)
-  chain             String   @db.VarChar(255)
-  address           String   @db.VarChar(255)
-  type              String   @db.VarChar(255)
-  timestamp         DateTime @db.Timestamp(6)
-  diffBaseTimestamp DateTime @default(now()) @db.Timestamp(6)
-  diffHeadTimestamp DateTime @default(now()) @db.Timestamp(6)
+  projectId           String   @db.VarChar(255)
+  chain               String   @db.VarChar(255)
+  address             String   @db.VarChar(255)
+  type                String   @db.VarChar(255)
+  timestamp           DateTime @db.Timestamp(6)
+  diffBaseBlockNumber Int      @default(2147483647)
+  diffHeadBlockNumber Int      @default(2147483647)
 
   @@unique([projectId, address, type, chain])
 }

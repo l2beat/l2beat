@@ -14,8 +14,8 @@ export interface UpdateDiffRecord {
   address: string
   projectId: string
   timestamp: UnixTime
-  diffBaseTimestamp: number
-  diffHeadTimestamp: number
+  diffBaseBlockNumber: number
+  diffHeadBlockNumber: number
 }
 
 export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
@@ -25,8 +25,8 @@ export function toRow(record: UpdateDiffRecord): Insertable<UpdateDiff> {
     address: record.address,
     type: record.type,
     timestamp: UnixTime.toDate(record.timestamp),
-    diffBaseTimestamp: UnixTime.toDate(record.diffBaseTimestamp),
-    diffHeadTimestamp: UnixTime.toDate(record.diffHeadTimestamp),
+    diffBaseBlockNumber: record.diffBaseBlockNumber,
+    diffHeadBlockNumber: record.diffHeadBlockNumber,
   }
 }
 
@@ -37,7 +37,7 @@ export function toRecord(row: Selectable<UpdateDiff>): UpdateDiffRecord {
     address: row.address,
     type: row.type as UpdateDiffType,
     timestamp: UnixTime.fromDate(row.timestamp),
-    diffBaseTimestamp: UnixTime.fromDate(row.diffBaseTimestamp),
-    diffHeadTimestamp: UnixTime.fromDate(row.diffHeadTimestamp),
+    diffBaseBlockNumber: row.diffBaseBlockNumber,
+    diffHeadBlockNumber: row.diffHeadBlockNumber,
   }
 }

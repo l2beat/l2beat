@@ -19,7 +19,7 @@ import {
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert, UnixTime, withoutUndefinedKeys } from '@l2beat/shared-pure'
+import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
@@ -53,13 +53,13 @@ export class DiscoveryRunner {
   private async discover(
     projectName: string,
     projectChain: string,
-    discoveryTimestamp: number,
-    dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
+    discoveryBlockNumber: number,
+    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers,
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     logger.info(
-      `Attempting discovery of ${projectName} on ${projectChain} at timestamp ${discoveryTimestamp}`,
+      `Attempting discovery of ${projectName} on ${projectChain} at block ${discoveryBlockNumber}`,
     )
 
     const discoveryPaths = getDiscoveryPaths()
@@ -83,11 +83,11 @@ export class DiscoveryRunner {
       toDiscover.push({ project: projectName, chain: projectChain })
     }
 
-    if (dependentDiscoveries !== 'useCurrentTimestamp') {
+    if (dependentDiscoveries !== 'useCurrentBlockNumber') {
       // Always default the discovery of current project to discoveryBlockNumber
       dependentDiscoveries[projectName] ??= {}
       dependentDiscoveries[projectName][projectChain] ??= {
-        timestamp: discoveryTimestamp,
+        blockNumber: discoveryBlockNumber,
       }
     }
 
@@ -133,21 +133,23 @@ export class DiscoveryRunner {
 
   private async discoverMany(
     toDiscover: { project: string; chain: string }[],
-    dependentDiscoveries: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
+    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers,
     configReader: ConfigReader,
     logger: Logger,
   ) {
     const discoveries = new DiscoveryRegistry()
     for (const dependency of toDiscover) {
-      let dependencyTimestamp
-      if (dependentDiscoveries === 'useCurrentTimestamp') {
-        dependencyTimestamp = UnixTime.now()
+      let dependencyBlockNumber
+      if (dependentDiscoveries === 'useCurrentBlockNumber') {
+        dependencyBlockNumber = await this.allProviders.getLatestBlockNumber(
+          dependency.chain,
+        )
       } else {
-        dependencyTimestamp =
+        dependencyBlockNumber =
           dependentDiscoveries?.[dependency.project]?.[dependency.chain]
-            ?.timestamp
+            ?.blockNumber
 
-        if (dependencyTimestamp === undefined) {
+        if (dependencyBlockNumber === undefined) {
           // We rediscover on the past block number, but with current configs and dependencies.
           // Those dependencies might not have been referenced in the old discovery.
           // In that case we don't fail - the diff will show all those "added".
@@ -162,12 +164,12 @@ export class DiscoveryRunner {
         dependency.project,
         dependency.chain,
       )
-      const provider = await this.allProviders.get(
+      const provider = this.allProviders.get(
         dependency.chain,
-        dependencyTimestamp,
+        dependencyBlockNumber,
       )
       logger.info(
-        `Discovering ${dependencyConfig.name} on ${dependencyConfig.chain} at timestamp ${dependencyTimestamp}`,
+        `Discovering ${dependencyConfig.name} on ${dependencyConfig.chain} at block ${provider.blockNumber}`,
       )
       const analysis = await this.discoveryEngine.discover(
         provider,
@@ -176,8 +178,7 @@ export class DiscoveryRunner {
       const discovery = toRawDiscoveryOutput(
         this.templateService,
         dependencyConfig,
-        dependencyTimestamp,
-        { [dependencyConfig.chain]: provider.blockNumber },
+        dependencyBlockNumber,
         analysis,
       )
       discoveries.set(dependency.project, dependency.chain, discovery, analysis)
@@ -187,11 +188,11 @@ export class DiscoveryRunner {
 
   async discoverWithRetry(
     config: ConfigRegistry,
-    timestamp: UnixTime,
+    blockNumber: number,
     logger: Logger,
     maxRetries = MAX_RETRIES,
     delayMs = RETRY_DELAY_MS,
-    dependentDiscoveries?: 'useCurrentTimestamp' | DiscoveryBlockNumbers,
+    dependentDiscoveries?: 'useCurrentBlockNumber' | DiscoveryBlockNumbers,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     let result: DiscoveryRunResult | undefined = undefined
@@ -202,7 +203,7 @@ export class DiscoveryRunner {
         result = await this.discover(
           config.name,
           config.chain,
-          timestamp,
+          blockNumber,
           dependentDiscoveries ?? {},
           logger,
           configReader,

@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "timestamp": 1752069683,
+  "blockNumber": 22882089,
   "configHash": "0xbca68a810f3d03277b83dccc6fb721d0e892bfb0378c2dbd461c186ae72ddafd",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -306,6 +306,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71"
   },
-  "usedBlockNumbers": { "ethereum": 22882089 },
   "permissionsConfigHash": "0xae8e7b71029b6720c7deb37a4d87c1d694da0a15e6dd2de5dbde3720c6d6b0c6"
 }

@@ -1,7 +1,7 @@
 {
   "name": "zkswap",
   "chain": "ethereum",
-  "timestamp": 1751872967,
+  "blockNumber": 22865800,
   "configHash": "0xeaa7a7cea5067e18818444a3f5c346a08427db6d98dbc8ebe04a3720b961648c",
   "entries": [
     {
@@ -486,6 +486,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 22865800 },
   "permissionsConfigHash": "0x616d6a39aa7fee1f83459e31c8d98a8060971fd356d0ef44575777396baeb8d7"
 }

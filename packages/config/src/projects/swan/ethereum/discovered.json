@@ -1,7 +1,7 @@
 {
   "name": "swan",
   "chain": "ethereum",
-  "timestamp": 1722265907,
+  "blockNumber": 20413034,
   "configHash": "0x0737645a7de4ab15e080eabf7f6f4d34b4b594f0b645e02f8d66579f0fd35d44",
   "entries": [
     {
@@ -1070,6 +1070,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 20413034 },
   "permissionsConfigHash": "0x57bef1712833a1d481c2a83abd9d1722d9f5118a57c9d9e85956f0e91800619f"
 }

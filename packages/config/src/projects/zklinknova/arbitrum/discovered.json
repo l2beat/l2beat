@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "arbitrum",
-  "timestamp": 1741680796,
+  "blockNumber": 314504547,
   "configHash": "0xc4a6971771520331d9d533156ae9380443328bdbed7fbdfd6e714d2428114bf5",
   "entries": [
     {
@@ -510,6 +510,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "usedBlockNumbers": { "arbitrum": 314504550 },
   "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
 }

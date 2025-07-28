@@ -1,7 +1,7 @@
 {
   "name": "winr",
   "chain": "arbitrum",
-  "timestamp": 1752237572,
+  "blockNumber": 356574084,
   "configHash": "0xbe2156269140e6d06951268c7df9b94f32f63e344396b682d240a42b8f520baa",
   "entries": [
     {
@@ -2047,6 +2047,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "arbitrum": 356574084 },
   "permissionsConfigHash": "0x7cb27758af743209d35f41499caf280201f4412ae958d9ed9d1c36cd81c0d703"
 }

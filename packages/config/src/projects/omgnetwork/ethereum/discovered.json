@@ -1,7 +1,7 @@
 {
   "name": "omgnetwork",
   "chain": "ethereum",
-  "timestamp": 1670682767,
+  "blockNumber": 16154924,
   "configHash": "0x5c6e3612d6fbbc2d391da134d17aa994b9d19270909742215e73869ef18f8e43",
   "entries": [
     {
@@ -269,6 +269,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 16154924 },
   "permissionsConfigHash": "0xeae31ff1c613313baa60f84e4157dd6b730cf51dae613ee0d1ea3d681b14e0e7"
 }

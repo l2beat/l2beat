@@ -1,7 +1,7 @@
 {
   "name": "automata",
   "chain": "ethereum",
-  "timestamp": 1743923255,
+  "blockNumber": 22208279,
   "configHash": "0xb8155e2037746878979ad340c4a37fd5a5e829847090531ad1be2b4e9dc24d85",
   "entries": [
     {
@@ -1333,6 +1333,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22208279 },
   "permissionsConfigHash": "0x872afb272dab8e402e36e9b1f21ac8e4678738399847acb8174aa92bd331f0a6"
 }

@@ -1,7 +1,7 @@
 {
   "name": "hashkey",
   "chain": "ethereum",
-  "timestamp": 1744353755,
+  "blockNumber": 22243976,
   "configHash": "0x18bb13b44a161e2a05fe1161a1998e7a75d412ac19a9fb52a4e53a3ac4cf411a",
   "entries": [
     {
@@ -2015,6 +2015,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22243976 },
   "permissionsConfigHash": "0xa968c377f990bdd3cdfe633474f88a7843bcfbc1521ce500caf1dd01e18ed235"
 }

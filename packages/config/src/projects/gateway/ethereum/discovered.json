@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "chain": "ethereum",
-  "timestamp": 1751365391,
+  "blockNumber": 22823769,
   "configHash": "0x38b53ab405b1f257e0d15de14ea5119b34d1d19312b0925929b5b708242ff5e9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -982,6 +982,5 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 22823769 },
   "permissionsConfigHash": "0x1da03f124bf820e9e22a3342cc8437ad577818017e0db1b7910056748b6494ea"
 }

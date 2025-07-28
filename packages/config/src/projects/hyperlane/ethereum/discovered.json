@@ -1,7 +1,7 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "timestamp": 1753093127,
+  "blockNumber": 22966922,
   "configHash": "0xaa940923a72d73071a770a8ce3bbd379921abd0ad1de4783d6a5a7e977830f5c",
   "entries": [
     {
@@ -1569,6 +1569,5 @@
     "hyperlane/PausableIsm": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "usedBlockNumbers": { "ethereum": 22966922 },
   "permissionsConfigHash": "0x63d699ec2a52dbeae5921c49f947a124f139e4ca9697de65c158a05c293c0ef9"
 }

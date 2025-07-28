@@ -1,7 +1,7 @@
 {
   "name": "ham",
   "chain": "base",
-  "timestamp": 1747293411,
+  "blockNumber": 30252032,
   "configHash": "0x4e62d4076af22d10db760b0ef0da971cafcfefbf94b60bf4f50e34d29676002a",
   "entries": [
     {
@@ -1111,6 +1111,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "base": 30252032 },
   "permissionsConfigHash": "0x48f34782792c8868070bd4c02b45718cc1163b32814668456c680fc5271f85db"
 }

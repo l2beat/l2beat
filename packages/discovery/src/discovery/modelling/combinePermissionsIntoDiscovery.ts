@@ -5,7 +5,7 @@ import type {
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
-import type { DiscoveryTimestamps } from './modelPermissions'
+import type { DiscoveryBlockNumbers } from './modelPermissions'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
@@ -67,20 +67,20 @@ export function combinePermissionsIntoDiscovery(
   }
 
   if (!options.skipDependentDiscoveries) {
-    const timestampsWithoutCurProj: DiscoveryTimestamps = {}
+    const blockNumbersWithoutCurProj: DiscoveryBlockNumbers = {}
     for (const [project, chains] of Object.entries(
-      permissionsOutput.dependentTimestamps,
+      permissionsOutput.dependentBlockNumbers,
     )) {
-      for (const [chain, timestamp] of Object.entries(chains)) {
+      for (const [chain, blockNumber] of Object.entries(chains)) {
         if (!(project === discovery.name && chain === discovery.chain)) {
-          timestampsWithoutCurProj[project] ??= {}
-          timestampsWithoutCurProj[project][chain] = timestamp
+          blockNumbersWithoutCurProj[project] ??= {}
+          blockNumbersWithoutCurProj[project][chain] = blockNumber
         }
       }
     }
-    discovery.dependentDiscoveries = isEmpty(timestampsWithoutCurProj)
+    discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
       ? undefined // remove entry if there are no dependent discoveries
-      : timestampsWithoutCurProj
+      : blockNumbersWithoutCurProj
   }
 }
 

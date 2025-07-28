@@ -124,7 +124,7 @@ function mockRecord(diff: DiscoveryDiff[]): UpdateNotifierRecord {
     createdAt: UnixTime.now() - 30 * UnixTime.MINUTE,
     updatedAt: UnixTime.now() - 30 * UnixTime.MINUTE,
     projectId: 'project',
-    timestamp: 24392345,
+    blockNumber: 24392345,
     diff: diff,
     chainId: ChainId.ETHEREUM,
   }

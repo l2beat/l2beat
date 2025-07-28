@@ -239,18 +239,6 @@ export class LowLevelProvider {
     }, ProviderMeasurement.GET_BLOCKNUMBER)
   }
 
-  getBlockNumberAtOrBeforeExplorer(timestamp: UnixTime): Promise<number> {
-    return this.measure(() => {
-      return rpcWithRetries(
-        async () => {
-          return await this.etherscanClient.getBlockNumberAtOrBefore(timestamp)
-        },
-        this.logger,
-        'getBlockNumberAtOrBefore',
-      )
-    }, ProviderMeasurement.GET_BLOCK_NUMBER_AT_OR_BEFORE)
-  }
-
   async getBlobs(txHash: string): Promise<BlobsInBlock> {
     assert(
       this.blobClient,

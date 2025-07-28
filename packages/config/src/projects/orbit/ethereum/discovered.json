@@ -1,7 +1,7 @@
 {
   "name": "orbit",
   "chain": "ethereum",
-  "timestamp": 1726838111,
+  "blockNumber": 20792032,
   "configHash": "0xa539b15642f949bbfc16a4dd059c24e2ba9ecebc1f5af4be9e463361b86d7604",
   "entries": [
     {
@@ -520,6 +520,5 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 20792032 },
   "permissionsConfigHash": "0x07b23d51a6489fef2e8124fe8ca329bd28eeed53030d84b97a94a78fc75372ea"
 }

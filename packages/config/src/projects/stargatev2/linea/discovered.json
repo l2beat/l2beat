@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "linea",
-  "timestamp": 1749464091,
+  "blockNumber": 19822366,
   "configHash": "0x96d1b4c545555531fdb0bd244fc1e09ac1c1965e704e07ebe92b782c3af59968",
   "entries": [
     {
@@ -296,6 +296,5 @@
   "usedTemplates": {
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "usedBlockNumbers": { "linea": 19822366 },
   "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

@@ -1,7 +1,7 @@
 {
   "name": "hyphen",
   "chain": "ethereum",
-  "timestamp": 1718953583,
+  "blockNumber": 20138492,
   "configHash": "0x60651ab584b05c9bd852207bbbe15d8abcb6cdcd4e49e86617f025353c46e95f",
   "entries": [
     {
@@ -431,6 +431,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 20138492 },
   "permissionsConfigHash": "0xa21ac72e602973feb1689213d93c046d2079bab67b37e7828f3d08512a34a057"
 }

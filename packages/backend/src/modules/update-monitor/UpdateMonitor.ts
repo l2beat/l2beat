@@ -144,6 +144,9 @@ export class UpdateMonitor {
     errorCount.set(0)
     // #endregion
 
+    // TODO: get block number based on clock time
+    const blockNumber = await runner.getBlockNumber()
+
     const projectConfigs = this.configReader.readAllDiscoveredConfigsForChain(
       runner.chain,
     )
@@ -151,6 +154,7 @@ export class UpdateMonitor {
     this.logger.info('Chain update started', {
       chain: runner.chain,
       projects: projectConfigs.length,
+      blockNumber,
       timestamp: timestamp,
       date: UnixTime.toDate(timestamp).toISOString(),
     })
@@ -174,13 +178,14 @@ export class UpdateMonitor {
       this.logger.info('Project update started', {
         chain: runner.chain,
         project: projectConfig.name,
+        currentBlock: blockNumber,
       })
 
       const projectFinished = projectGauge.startTimer({
         project: `${runner.chain}:${projectConfig.name}`,
       })
       try {
-        await this.updateProject(runner, projectConfig, timestamp)
+        await this.updateProject(runner, projectConfig, blockNumber, timestamp)
       } catch (error) {
         this.logger.error(
           `[chain: ${runner.chain}] Failed to update project [${projectConfig.name}]`,
@@ -207,6 +212,7 @@ export class UpdateMonitor {
       end: chainUpdateEnd,
       duration: chainUpdateEnd - chainUpdateStart,
       chain: runner.chain,
+      blockNumber,
       timestamp: timestamp,
       date: UnixTime.toDate(timestamp).toISOString(),
     })
@@ -215,6 +221,7 @@ export class UpdateMonitor {
   private async updateProject(
     runner: DiscoveryRunner,
     projectConfig: ConfigRegistry,
+    blockNumber: number,
     timestamp: UnixTime,
   ) {
     const previousDiscovery = await this.getPreviousDiscovery(
@@ -224,11 +231,11 @@ export class UpdateMonitor {
 
     const { discovery } = await runner.discoverWithRetry(
       projectConfig,
-      timestamp,
+      blockNumber,
       this.logger,
       undefined,
       undefined,
-      'useCurrentTimestamp', // this is for dependent discoveries
+      'useCurrentBlockNumber', // this is for dependent discoveries
     )
 
     if (!previousDiscovery || !discovery) return
@@ -259,6 +266,7 @@ export class UpdateMonitor {
       diff,
       discovery,
       projectConfig,
+      blockNumber,
       runner.chain,
       timestamp,
     )
@@ -267,6 +275,7 @@ export class UpdateMonitor {
       projectId: projectConfig.name,
       chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
       timestamp,
+      blockNumber,
       discovery,
       configHash: hashJsonStable(projectConfig.structure),
     })
@@ -312,8 +321,9 @@ export class UpdateMonitor {
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
 
-    const flatSourceTimestamp = flatSourceEntry?.timestamp ?? 0
-    const onDiskDiscoveryChanged = diskDiscovery.timestamp > flatSourceTimestamp
+    const flatSourceBlockNumber = flatSourceEntry?.blockNumber ?? 0
+    const onDiskDiscoveryChanged =
+      diskDiscovery.blockNumber > flatSourceBlockNumber
     const onDiskConfigChanged =
       databaseEntry?.configHash !== hashJsonStable(projectConfig.structure)
 
@@ -329,7 +339,7 @@ export class UpdateMonitor {
 
     const { discovery, flatSources } = await runner.discoverWithRetry(
       projectConfig,
-      previousDiscovery.timestamp,
+      previousDiscovery.blockNumber,
       this.logger,
       undefined,
       undefined,
@@ -350,7 +360,7 @@ export class UpdateMonitor {
       await this.db.flatSources.upsert({
         projectId: projectConfig.name,
         chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
-        timestamp: previousDiscovery.timestamp,
+        blockNumber: previousDiscovery.blockNumber,
         contentHash: hashJson(sortObjectByKeys(flatSources)),
         flat: flatSources,
       })
@@ -363,6 +373,7 @@ export class UpdateMonitor {
     diff: DiscoveryDiff[],
     discovery: DiscoveryOutput,
     projectConfig: ConfigRegistry,
+    blockNumber: number,
     chain: string,
     timestamp: UnixTime,
   ) {
@@ -384,6 +395,7 @@ export class UpdateMonitor {
     await this.updateNotifier.handleUpdate(
       projectConfig.name,
       diff,
+      blockNumber,
       ChainId(this.chainConverter.toChainId(chain)),
       dependents,
       unknownEntries,

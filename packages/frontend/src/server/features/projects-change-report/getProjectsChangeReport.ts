@@ -50,9 +50,10 @@ async function getProjectsChangeReportWithFns() {
     // if all inputs used to create them are older than the block number we
     // used to build the project information.
     const activeDiffs = diffs.filter((diff) => {
-      const baseTimestamp = project?.discoveryInfo.timestampPerChain[diff.chain]
-      if (baseTimestamp === undefined) return true
-      const isDiffActive = baseTimestamp <= diff.diffBaseTimestamp
+      const baseBlockNumber =
+        project?.discoveryInfo.blockNumberPerChain[diff.chain]
+      if (baseBlockNumber === undefined) return true
+      const isDiffActive = baseBlockNumber <= diff.diffBaseBlockNumber
       return isDiffActive
     })
 

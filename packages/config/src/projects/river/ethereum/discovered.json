@@ -1,7 +1,7 @@
 {
   "name": "river",
   "chain": "ethereum",
-  "timestamp": 1739873519,
+  "blockNumber": 21872580,
   "configHash": "0xa52ac3fb999b01b2430c03112425756d40665d9a3c1489d9d49a9d3642a39eca",
   "entries": [
     {
@@ -1083,6 +1083,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 21872580 },
   "permissionsConfigHash": "0xd3ae9dc03e9f7a00a0df2e8154c29adad11fb4dee67907bba4e59c69ccb28e1c"
 }

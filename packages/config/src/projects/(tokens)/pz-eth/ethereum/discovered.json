@@ -1,7 +1,7 @@
 {
   "name": "pz-eth",
   "chain": "ethereum",
-  "timestamp": 1753693907,
+  "blockNumber": 23016671,
   "configHash": "0x1807806c5a159322dca421896a559f15ad39c98bba3019e12b65c6521f41e505",
   "entries": [
     {
@@ -253,6 +253,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 23016671 },
   "permissionsConfigHash": "0xbf114edc6af3389d5f7f3b26d336ff9cea7f92b840f3b415fdd459adc0891132"
 }

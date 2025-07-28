@@ -51,6 +51,7 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
+    blockNumber: number,
     chainId: ChainId,
     dependents: string[],
     unknownContracts: EthereumAddress[],
@@ -60,7 +61,7 @@ export class UpdateNotifier {
     await this.db.updateNotifier.insert({
       projectId: name,
       diff,
-      timestamp: timestamp,
+      blockNumber: blockNumber,
       chainId: chainId,
     })
 
@@ -91,7 +92,7 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      timestamp,
+      blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
       nonce,
@@ -111,7 +112,7 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      timestamp,
+      blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
       undefined,
@@ -123,6 +124,7 @@ export class UpdateNotifier {
     await this.updateMessagesService.storeAndPrune({
       projectId: name,
       chain: this.chainConverter.toName(chainId),
+      blockNumber,
       message: filteredWebMessage,
       timestamp,
     })

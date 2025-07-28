@@ -1,7 +1,7 @@
 {
   "name": "buidl",
   "chain": "arbitrum",
-  "timestamp": 1752830492,
+  "blockNumber": 358948247,
   "configHash": "0x2fe51bb3beee3d291f87c0894b147bdf4e3fc5ad5066a4c64b4dbab86118ff34",
   "entries": [
     {
@@ -204,6 +204,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "arbitrum": 358948249 },
   "permissionsConfigHash": "0xf0603d8ef61478ca7a44794b8dac43959228882ef6aecd40dbe7ebbe65d064c8"
 }

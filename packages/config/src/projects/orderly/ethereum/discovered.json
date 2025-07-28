@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "timestamp": 1753457111,
+  "blockNumber": 22997036,
   "configHash": "0x874adf29d88302df122769d22bfa9a87b0dabb3b81a35b703f6d8dacc180cd5c",
   "entries": [
     {
@@ -1870,6 +1870,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22997036 },
   "permissionsConfigHash": "0x68fc09ca56c70cb5503bb4e843b40045335eddf8a6a8af2fb6aa53e30bec849f"
 }

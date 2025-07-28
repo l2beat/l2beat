@@ -1,5 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
@@ -7,8 +7,6 @@ import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransac
 const RETRYABLE_TICKET_MAGIC = ChainSpecificAddress(
   'eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C',
 )
-
-type Thenable<T> = PromiseLike<T> | T
 
 describe(ArbitrumScheduledTransactionsHandler.name, () => {
   it('returns validators from the traces that add and remove them', async () => {
@@ -34,21 +32,15 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       remappings: [],
     })
     handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
-    const provider = mockObject<Thenable<IProvider>>({
+    const provider = mockObject<IProvider>({
       chain: 'ethereum',
       getLogs: async () => EXAMPLE_LOGS,
       getSource: mockGetMetadata,
-      then: undefined,
-      switchChain: async () => {
-        return new Promise((resolve) => resolve(provider))
-      },
     })
+    provider.switchChain = mockFn().returns(provider) as any
 
     const contractAddress = ChainSpecificAddress.random()
-    const response = await handler.execute(
-      provider as IProvider,
-      contractAddress,
-    )
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'scheduledTransactions',

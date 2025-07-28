@@ -1,7 +1,7 @@
 {
   "name": "ternoa",
   "chain": "ethereum",
-  "timestamp": 1750776023,
+  "blockNumber": 22774947,
   "configHash": "0xba4f4a912409eb0784e9ccca6daafb8d07b3bee9fd6fbdca81e82de6fc68ecb3",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
@@ -404,6 +404,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22774947 },
   "permissionsConfigHash": "0xda2e078b950454d7b408e15826d9a565ab8a8a27e2e41b287ac8886d755a3275"
 }

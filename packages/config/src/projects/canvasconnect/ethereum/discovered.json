@@ -1,7 +1,7 @@
 {
   "name": "canvasconnect",
   "chain": "ethereum",
-  "timestamp": 1715171555,
+  "blockNumber": 19825363,
   "configHash": "0xa3318c16f80656d4addb99cf424905d9f116f7e43f93238bd34f9acf45590107",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -684,6 +684,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "usedBlockNumbers": { "ethereum": 19825363 },
   "permissionsConfigHash": "0x6a09402ff75a0733ca544b49412ab5077a455798a1c296b8c89866e080e8ee60"
 }

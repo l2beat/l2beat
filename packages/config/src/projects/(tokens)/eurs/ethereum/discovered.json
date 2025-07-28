@@ -1,7 +1,7 @@
 {
   "name": "eurs",
   "chain": "ethereum",
-  "timestamp": 1752830495,
+  "blockNumber": 22945155,
   "configHash": "0xb81d8c40404aa4d34ab469d789613267174c537ce4cfe2c77b552a9d5893cf24",
   "entries": [
     {
@@ -82,6 +82,5 @@
     ]
   },
   "usedTemplates": {},
-  "usedBlockNumbers": { "ethereum": 22945155 },
   "permissionsConfigHash": "0xf1b8adc215ec05b286e3042b2a2321c497962dac11ab48c5b60c78207be2f052"
 }

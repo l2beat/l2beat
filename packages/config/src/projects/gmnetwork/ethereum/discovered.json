@@ -1,7 +1,7 @@
 {
   "name": "gmnetwork",
   "chain": "ethereum",
-  "timestamp": 1743924767,
+  "blockNumber": 22208402,
   "configHash": "0xdfce14c2f37c08e150f3a10fb5cfe6e60b97ea4e1e8172d22a78815c150c0ff9",
   "entries": [
     {
@@ -1201,6 +1201,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "usedBlockNumbers": { "ethereum": 22208402 },
   "permissionsConfigHash": "0xe70b42958e75965ae47934eaaa547e42885db6430ff7f2581acbc8ff43a110e4"
 }
