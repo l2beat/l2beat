@@ -1,7 +1,7 @@
 import { sql } from 'kysely'
 import type { DatabaseClient } from '../kysely'
 
-export async function getTablesSizes(
+export async function getDatabaseStats(
   db: DatabaseClient,
 ): Promise<{ tableName: string; sizeInBytes: number }[]> {
   const tableSizes = await sql<{
