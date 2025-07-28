@@ -6,7 +6,7 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
   type Hash256,
-  UnixTime,
+  type UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -20,6 +20,7 @@ import { ProviderMeasurement, ProviderStats } from './Stats'
 
 interface AllProviders {
   get(chain: string, timestamp: UnixTime): Promise<IProvider>
+  getByBlockNumber(chain: string, blockNumber: number): Promise<IProvider>
 }
 
 export class HighLevelProvider implements IProvider {
@@ -41,12 +42,8 @@ export class HighLevelProvider implements IProvider {
     return new HighLevelProvider(allProviders, provider, chain, 0, 0)
   }
 
-  async switchBlock(blockNumber: number): Promise<IProvider> {
-    const block = await this.getBlock(blockNumber)
-    assert(block !== undefined, `Could not find block ${blockNumber}`)
-    const blockTimestamp = UnixTime(block.timestamp)
-
-    return this.allProviders.get(this.chain, blockTimestamp)
+  switchBlock(blockNumber: number): Promise<IProvider> {
+    return this.allProviders.getByBlockNumber(this.chain, blockNumber)
   }
 
   switchChain(
