@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x845731553be21a7c4b5dea360d578d80895550f4
+
+# Diff at Mon, 28 Jul 2025 07:13:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22924125
+- current block number: 23016078
+
+## Description
+
+upgrade for the RollupManager scheduled: https://disco.l2beat.com/diff/eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab/eth:0x42B9fF0644741e3353162678596e7D6aA6a13240
+- add support for migrating stateTransition chains to PP or ALGateway.
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.34:
++        {"target":"eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"eth:0x42B9fF0644741e3353162678596e7D6aA6a13240","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
 Generated with discovered.json: 0x52d99349bd40d59269f905d1a317477b42afa292
 
 # Diff at Tue, 22 Jul 2025 13:43:05 GMT:

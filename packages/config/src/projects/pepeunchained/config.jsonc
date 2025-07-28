@@ -3,7 +3,7 @@
   "name": "pepeunchained",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x384e3AE4D5efC9471201039b555EAe496b2A7240"],
-  "names": {},
+  "archived": true,
   "overrides": {
     "eth:0x4e0371A2fCCf4CCC68217134bADa77914b50B7DD": {
       "ignoreDiscovery": true

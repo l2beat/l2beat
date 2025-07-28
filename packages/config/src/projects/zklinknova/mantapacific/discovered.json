@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantapacific",
-  "blockNumber": 4745686,
+  "blockNumber": 5946384,
   "configHash": "0x01130c806553efa3aa5adf297c386ad60dd38352573855ea3723bb8ddab375fa",
   "entries": [
     {
@@ -81,7 +81,11 @@
       "name": "MantaOwner",
       "address": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
       "type": "Contract",
-      "unverified": true,
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -110,6 +114,7 @@
           "role": ".owner"
         }
       ],
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710253339,
       "sinceBlock": 1602938,
       "values": {
@@ -126,12 +131,16 @@
           "manta:0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
         ],
         "$threshold": 5,
+        "domainSeparator": "0x18545ad9a8a62c02c41b6d1d5de3b7341bc049e1fd253978d8d7e6ec7faecfa1",
+        "getChainId": 169,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "5 of 8 (63%)"
+        "multisigThreshold": "5 of 8 (63%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3": "",
-        "manta:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": ""
+        "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3": "GnosisSafeProxy",
+        "manta:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
     {
@@ -219,12 +228,12 @@
         "getGateway": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 50873,
+        "getTotalBatchesExecuted": 69385,
         "getTotalPriorityTxs": 6709,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "paused": true,
-        "totalBatchesExecuted": 50873,
+        "totalBatchesExecuted": 69385,
         "totalPriorityTxs": 6709,
         "totalSyncedPriorityTxs": 6709,
         "totalValidatorForwardFee": "3322174073621656292",
@@ -307,6 +316,56 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "manta:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -358,6 +417,9 @@
       "function l2TokenAddress(address _l1Token) view returns (address)",
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
+    ],
+    "manta:0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3": [
+      "constructor(address _singleton)"
     ],
     "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": [
       "constructor(address implementation, bytes _data) payable",
@@ -454,8 +516,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb8d05cf7178d9d52ec51987ae809f1297e20fe9412d460ff7b11d2ecd6bd2b2c"
+  "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
 }

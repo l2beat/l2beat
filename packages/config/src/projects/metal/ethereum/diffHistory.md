@@ -1,3 +1,131 @@
+Generated with discovered.json: 0xd2b683711c8e57c5c88d342cd17d9c8e2ee5e5a6
+
+# Diff at Mon, 28 Jul 2025 05:51:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22895941
+- current block number: 23015672
+
+## Description
+
+Op stack gov upgrade: SuperchainConfig with pause expiry and DeputyPausModule. See optimism diffHistory for details.
+
+## Watched changes
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      values.GnosisSafe_modules.0:
+-        "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
++        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C)
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"challenge","from":"eth:0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D","role":".challenger","via":[{"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"eth:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the SuperchainConfig's `pause()` function"}]}
+      receivedPermissions.1.via.3.address:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
+      receivedPermissions.1.via.2:
+-        {"address":"eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"}
+      receivedPermissions.1.via.1:
+-        {"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}
+      directlyReceivedPermissions.0.from:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+      template:
+-        "opstack/SuperchainConfig"
++        "opstack/SuperchainConfig_expiry"
+      sourceHashes.1:
+-        "0x03dba37173051b02bc81487e181c791bcf1aef664c249e5d035f11f488bdd686"
++        "0x5a0e73c7d129cc83e1c387b55df0141890c02d2cb4111b8a1b6376d737d88f6b"
+      description:
+-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
++        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched."
+      values.$implementation:
+-        "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7"
++        "eth:0xCe28685EB204186b557133766eCA00334EB441E4"
+      values.$pastUpgrades.4:
++        ["2025-07-24T17:47:23.000Z","0x46acdce174c8d83ebe2f208d8c76c867e75617483d64c3e407f69ae2f9868716",["eth:0xCe28685EB204186b557133766eCA00334EB441E4"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.GUARDIAN_SLOT:
+-        "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68"
+      values.PAUSED_SLOT:
+-        "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6"
+      values.version:
+-        "1.2.0"
++        "2.3.0"
+      values.initVersion:
++        2
+      values.pauseExpiry:
++        7884000
+      values.pauseExpiryFmt:
++        "91d 6h"
+      values.proxyAdmin:
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      values.proxyAdminOwner:
++        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+      implementationNames.eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7:
+-        "SuperchainConfig"
+      implementationNames.eth:0xCe28685EB204186b557133766eCA00334EB441E4:
++        "SuperchainConfig"
+      fieldMeta:
++        {"paused":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.getModules.0:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      values.GnosisSafe_modules.0:
+-        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.1:
+-        {"permission":"guard","from":"eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","role":".deputyGuardian","condition":"if not revoked by the Security Council"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B)
+    +++ description: allows the eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract DeputyPauseModule (0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754)
+    +++ description: Allows eth:0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+```
+
+## Source code changes
+
+```diff
+.../DeputyGuardianModule.sol => /dev/null          | 156 -------
+ .../DeputyPauseModule.sol                          |  87 ++--
+ .../SuperchainConfig/SuperchainConfig.sol          | 487 ++++++++++++++++-----
+ 3 files changed, 395 insertions(+), 335 deletions(-)
+```
+
 Generated with discovered.json: 0xdf8a3cf5f364ea158589bef0f1ba16b4fa5a1a85
 
 # Diff at Fri, 25 Jul 2025 13:51:50 GMT:
