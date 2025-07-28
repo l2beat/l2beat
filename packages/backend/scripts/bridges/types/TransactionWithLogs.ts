@@ -7,3 +7,11 @@ export type TransactionWithLogs = {
   blockTimestamp: UnixTime
   logs: Log[]
 }
+
+export type DecoderInput = {
+  log: Log
+  blockNumber: number
+  blockTimestamp: UnixTime
+  transactionHash: string
+  transactionLogs: Log[]
+}

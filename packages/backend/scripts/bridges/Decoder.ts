@@ -35,17 +35,20 @@ export class Decoder {
       this.logger.info(`Running decoder for ${protocol}`)
       for (const transaction of block.transactions) {
         assert(transaction.hash)
-        const decoded = decoder(chain, {
-          hash: transaction.hash,
-          blockNumber: block.number,
-          blockTimestamp: block.timestamp,
-          logs: (logsByTx[transaction.hash] ?? []).map(logToViemLog),
-        })
-        if (decoded) {
-          if (decoded.message) {
-            messages.push(decoded.message)
+        for (const log of logsByTx[transaction.hash] ?? []) {
+          const decoded = decoder(chain, {
+            log: logToViemLog(log),
+            transactionHash: transaction.hash,
+            blockNumber: block.number,
+            blockTimestamp: block.timestamp,
+            transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+              logToViemLog,
+            ),
+          })
+          if (decoded?.type === 'message') {
+            messages.push(decoded)
             this.logger.info(
-              `MESSAGE ${decoded.message.direction} (${decoded.message.type})`,
+              `MESSAGE ${decoded.direction} (${decoded.customType})`,
               {
                 input: {
                   interface:
@@ -58,16 +61,16 @@ export class Decoder {
                 output: {
                   interface:
                     'OUTPUT: Message ./scripts/bridges/types/Message.ts',
-                  ...decoded.message,
+                  ...decoded,
                 },
               },
             )
           }
 
-          if (decoded.asset) {
-            assets.push(decoded.asset)
+          if (decoded?.type === 'asset') {
+            assets.push(decoded)
             this.logger.info(
-              `ASSET ${decoded.asset.direction} (${decoded.asset.type})`,
+              `ASSET ${decoded.direction} (${decoded.customType})`,
               {
                 input: {
                   interface:
@@ -79,7 +82,7 @@ export class Decoder {
                 },
                 output: {
                   interface: 'OUTPUT: Asset ./scripts/bridges/types/Asset.ts',
-                  ...decoded.asset,
+                  ...decoded,
                 },
               },
             )
