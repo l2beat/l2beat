@@ -165,7 +165,7 @@ export const publicSystemsColumns = [
     },
     meta: {
       tooltip:
-        'The total amount of data posted to the layer over the past day.',
+        'The total amount of data posted to the layer over the past day, displayed along with the percentage change compared to 1D ago.',
     },
   }),
   columnHelper.display({
