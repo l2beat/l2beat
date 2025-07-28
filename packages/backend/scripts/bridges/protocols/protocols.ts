@@ -1,7 +1,9 @@
 import type { Chain } from '../chains'
 import type { Asset } from '../types/Asset'
+import type { DecoderInput } from '../types/DecoderInput'
 import type { Message } from '../types/Message'
-import type { DecoderInput } from '../types/TransactionWithLogs'
+import { ACROSS } from './decoders/across'
+import { AGGLAYER } from './decoders/agglayer'
 import { DEBRIDGE } from './decoders/debridge'
 
 export interface Protocol {
@@ -10,12 +12,12 @@ export interface Protocol {
 }
 
 export const PROTOCOLS: Protocol[] = [
-  // ACROSS,
+  ACROSS,
   // CCTPV1,
   // CCTPV2,
   // LAYERZEROV1,
   // LAYERZEROV2,
-  // AGGLAYER,
+  AGGLAYER,
   // STARGATE,
   // HYPERLANE,
   DEBRIDGE,
