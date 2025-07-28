@@ -1,8 +1,8 @@
 {
   "name": "st-azur",
   "chain": "ethereum",
-  "blockNumber": 23016549,
-  "configHash": "0xb1796eaf72ec8b28c23ebb221dd7a05972bc446a0ccac3411d7f655490694269",
+  "blockNumber": 23016672,
+  "configHash": "0x5c9be412fcc91f3de9509c8293d0580a97627c842c00ea1257b0955163d68ddd",
   "entries": [
     {
       "name": "RewardPoolV2",
@@ -13,7 +13,14 @@
         "0xa9291fc66798387bc6d07d6a47cc5d1573c07d5fa0464919eba895291a9a995a"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "ignoreInWatchMode": [
+        "clock",
+        "totalIssued",
+        "totalSupply",
+        "totalRequestedAmount",
+        "nextWithdrawalRequestId",
+        "exchangeRate"
+      ],
       "sinceTimestamp": 1723579643,
       "sinceBlock": 20521985,
       "values": {
