@@ -16,8 +16,9 @@ export function getHasTrackedContractChanged(
         return addressesChanged.includes(config.params.address)
       case 'transfer':
         return (
-          addressesChanged.includes(config.params.from) ||
-          addressesChanged.includes(config.params.to)
+          (config.params.from
+            ? addressesChanged.includes(config.params.from)
+            : false) || addressesChanged.includes(config.params.to)
         )
     }
   })

@@ -30,7 +30,7 @@ export function createTrackedTxId(
       input.push(trackedTxConfig.params.chainId)
       break
     case 'transfer':
-      input.push(trackedTxConfig.params.from)
+      if (trackedTxConfig.params.from) input.push(trackedTxConfig.params.from)
       input.push(trackedTxConfig.params.to)
       break
   }
