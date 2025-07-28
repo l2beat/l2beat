@@ -177,6 +177,7 @@ export class DiscoveryRunner {
         this.templateService,
         dependencyConfig,
         dependencyTimestamp,
+        { [dependencyConfig.chain]: provider.blockNumber },
         analysis,
       )
       discoveries.set(dependency.project, dependency.chain, discovery, analysis)

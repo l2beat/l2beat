@@ -59,7 +59,7 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
           {`${props.entry.project} on ${props.entry.chain}`}
         </button>
         <span className="whitespace-nowrap text-coffee-400 text-xs italic group-hover:text-coffee-200">
-          @ {props.entry.timestamp}
+          @ {props.entry.blockNumber}
         </span>
       </div>
       {open && (

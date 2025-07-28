@@ -59,6 +59,7 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   ],
   abis: {},
   usedTemplates: {},
+  usedBlockNumbers: {},
 }
 
 const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
@@ -76,6 +77,7 @@ const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
   ],
   abis: {},
   usedTemplates: {},
+  usedBlockNumbers: {},
 }
 
 const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
@@ -92,6 +94,7 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   ],
   abis: {},
   usedTemplates: {},
+  usedBlockNumbers: {},
 }
 
 const flatSourcesRepository = mockObject<Database['flatSources']>({
@@ -1037,6 +1040,7 @@ const mockProject: DiscoveryOutput = {
   entries: COMMITTED,
   abis: {},
   usedTemplates: {},
+  usedBlockNumbers: {},
 }
 
 function mockContract(name: string, address: EthereumAddress): EntryParameters {

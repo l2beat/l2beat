@@ -17,12 +17,14 @@ export function toDiscoveryOutput(
   templateService: TemplateService,
   config: ConfigRegistry,
   timestamp: UnixTime,
+  usedBlockNumbers: Record<string, number>,
   results: Analysis[],
 ): DiscoveryOutput {
   const discovery = toRawDiscoveryOutput(
     templateService,
     config,
     timestamp,
+    usedBlockNumbers,
     results,
   )
 
@@ -39,9 +41,15 @@ export function toRawDiscoveryOutput(
   templateService: TemplateService,
   config: ConfigRegistry,
   timestamp: UnixTime,
+  usedBlockNumbers: Record<string, number>,
   results: Analysis[],
 ): DiscoveryOutput {
-  const structure = getStructureOutput(config.structure, timestamp, results)
+  const structure = getStructureOutput(
+    config.structure,
+    timestamp,
+    usedBlockNumbers,
+    results,
+  )
   const colorized = colorize(config.color, structure, templateService)
 
   return withoutUndefinedKeys(combineStructureAndColor(structure, colorized))

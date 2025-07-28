@@ -16,7 +16,7 @@ interface TemplateDialogProps {
   addresses: string[]
   project: string
   chain: string
-  timestamp: number
+  blockNumber: number
 }
 
 export const TemplateDialog = {
@@ -79,7 +79,7 @@ function TemplateDialogTrigger({
 function TemplateDialogBody({
   addresses,
   chain,
-  timestamp,
+  blockNumber,
 }: TemplateDialogProps) {
   const queryClient = useQueryClient()
   const { step, setStep, formData, setFormData } = useTemplateDialogContext()
@@ -99,7 +99,7 @@ function TemplateDialogBody({
       if (!templateId || !fileName) {
         return Promise.resolve()
       }
-      return createShape(chain, addresses, timestamp, templateId, fileName)
+      return createShape(chain, addresses, blockNumber, templateId, fileName)
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['templates'] })

@@ -47,6 +47,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
         entries: [],
         abis: {},
         usedTemplates: {},
+        usedBlockNumbers: {},
       },
       configHash: CONFIG_HASH,
     }
@@ -73,6 +74,7 @@ function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
       entries: [],
       abis: {},
       usedTemplates: {},
+      usedBlockNumbers: {},
     },
     configHash: CONFIG_HASH,
     ...params,

@@ -37,7 +37,7 @@ export const SingleDiscoveryCommand = command({
     })
     const http = new HttpClient()
 
-    const { result, timestamp } = await discover(
+    const { result, timestamp, usedBlockNumbers } = await discover(
       paths,
       chainConfigs,
       projectConfig,
@@ -52,10 +52,17 @@ export const SingleDiscoveryCommand = command({
 
     await rimraf(rootFolder)
 
-    await saveDiscoveryResult(result, projectConfig, timestamp, Logger.INFO, {
-      paths: { ...paths, discovery: rootFolder },
-      templatesFolder,
-    })
+    await saveDiscoveryResult(
+      result,
+      projectConfig,
+      timestamp,
+      usedBlockNumbers,
+      Logger.INFO,
+      {
+        paths: { ...paths, discovery: rootFolder },
+        templatesFolder,
+      },
+    )
 
     logger.info(
       'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',

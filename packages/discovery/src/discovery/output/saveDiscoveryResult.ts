@@ -39,6 +39,7 @@ export async function saveDiscoveryResult(
   results: Analysis[],
   config: ConfigRegistry,
   timestamp: UnixTime,
+  usedBlockNumbers: Record<string, number>,
   logger: Logger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
@@ -56,6 +57,7 @@ export async function saveDiscoveryResult(
     templateService,
     config,
     timestamp,
+    usedBlockNumbers,
     results,
   )
 
