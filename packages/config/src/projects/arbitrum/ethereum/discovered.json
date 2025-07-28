@@ -4975,6 +4975,6 @@
   },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7",
   "dependentDiscoveries": {
-    "arbitrum": { "arbitrum": { "blockNumber": 360431469 } }
+    "arbitrum": { "arbitrum": { "timestamp": 1753200796 } }
   }
 }
