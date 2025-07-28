@@ -28,5 +28,6 @@
   ],
   "abis": {},
   "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 21594621 },
   "permissionsConfigHash": "0x0aa50c370c07bd98c8cceea6993c0e367de7507a5c3840404525c0a3929efefe"
 }

@@ -324,5 +324,6 @@
     "tokens/EUTBL": "0x81f0a4ba908b50bd6aeb98ad11d5d6a3e2983f1ae5079341231489456a5b84f8",
     "tokens/PermissionManager": "0x68a32dbe1505111ca8a93551d5ccd78d16a6aa3a631c6206c804f4ae8b405767"
   },
+  "usedBlockNumbers": { "arbitrum": 362381040 },
   "permissionsConfigHash": "0x39cdc97ea0a7da958785647edddc899c2882e1cb68140385c57fa36f8ea0ff17"
 }

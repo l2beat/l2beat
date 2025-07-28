@@ -137,5 +137,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "arbitrum": 358948576 },
   "permissionsConfigHash": "0xd067c445cd74713df85f8897c7294426a2df8417b4c512c45817474ba22fff9a"
 }

@@ -308,5 +308,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
+  "usedBlockNumbers": { "zircuit": 16875771 },
   "permissionsConfigHash": "0xcd1b0abf9f22461ff80d58e65eddf15d64a125913c047f2c8e3e33080ede0ecf"
 }

@@ -746,5 +746,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Vector": "0x0d84ef33171173950df0aa38b6204925027638e1f67ed495360805f9f3186402"
   },
+  "usedBlockNumbers": { "ethereum": 22882091 },
   "permissionsConfigHash": "0xb0a78dc66bac32e379731421ac5ab77aad20f651374661719bb5545826f85a98"
 }

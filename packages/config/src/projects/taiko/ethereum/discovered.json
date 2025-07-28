@@ -4751,5 +4751,6 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
+  "usedBlockNumbers": { "ethereum": 22923197 },
   "permissionsConfigHash": "0x925f17378be9d61c776e81f6d282a5ce19782956fe5f6d6c4acf7847ae2adf3e"
 }

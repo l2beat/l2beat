@@ -3912,5 +3912,6 @@
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
+  "usedBlockNumbers": { "ethereum": 22988752 },
   "permissionsConfigHash": "0x0a95f83ef2eeaaeb1fe3cef69570b2eb1cacf4f42010ccd0512b654df9a76859"
 }

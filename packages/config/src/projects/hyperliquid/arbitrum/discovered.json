@@ -325,5 +325,6 @@
   "usedTemplates": {
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
+  "usedBlockNumbers": { "arbitrum": 343418957 },
   "permissionsConfigHash": "0xeb6b96c02c6088d31aff9534024005d56b92d7ae18d98115580bdd5b3d00f5de"
 }

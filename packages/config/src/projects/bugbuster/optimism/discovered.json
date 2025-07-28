@@ -178,5 +178,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "optimism": 125928338 },
   "permissionsConfigHash": "0x41d0ab9148f634eb8d9281c1d31dacff8a28921a7e693c68fc0ede56a0ea6be3"
 }
