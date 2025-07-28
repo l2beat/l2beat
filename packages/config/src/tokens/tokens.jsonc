@@ -6489,6 +6489,52 @@
   ],
   "soneium": [
     {
+      "symbol": "wstUSR",
+      "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
+      "coingeckoId": "resolv-wstusr",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "RLP",
+      "address": "0x35533f54740F1F1aA4179E57bA37039dfa16868B",
+      "coingeckoId": "resolv-rlp",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USR",
+      "address": "0xb1b385542B6E80F77B94393Ba8342c3Af699f15c",
+      "coingeckoId": "resolv-usr",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "oUSDT",
       "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
       "category": "stablecoin",
