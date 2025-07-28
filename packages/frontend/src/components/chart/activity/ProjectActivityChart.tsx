@@ -2,7 +2,6 @@ import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { NotSyncedBanner } from '~/components/not-synced/NotSyncedBanner'
 import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
@@ -138,7 +137,6 @@ export function ProjectActivityChart({
           <RadioGroupItem value="lin">LIN</RadioGroupItem>
         </RadioGroup>
       </div>
-      {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
     </section>
   )
 }

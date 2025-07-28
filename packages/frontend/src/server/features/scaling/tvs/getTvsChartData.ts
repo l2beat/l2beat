@@ -92,31 +92,41 @@ export async function getTvsChart({
     ),
   ])
 
-  const chart = getChartData(values, ethPrices)
-  const syncedUntil = chart.findLast(
-    (v) => v[1] !== null || v[2] !== null || v[3] !== null,
-  )?.[0]
-  assert(syncedUntil, 'No synced until timestamp found')
-
-  return { chart, syncedUntil }
+  return getChartData(values, ethPrices)
 }
 
 function getChartData(
   values: SummedTvsValues[],
   ethPrices: Record<number, number>,
-): TvsChartDataPoint[] {
-  return values.map((value) => {
+): TvsChartData {
+  let syncedUntil = 0
+  const chart: TvsChartDataPoint[] = []
+
+  for (const value of values) {
     const ethPrice = ethPrices[value.timestamp]
     assert(ethPrice, 'No ETH price for ' + value.timestamp)
 
-    return [
+    chart.push([
       value.timestamp,
       value.native,
       value.canonical,
       value.external,
       ethPrice,
-    ] as const
-  })
+    ] as const)
+
+    if (
+      value.native !== null ||
+      value.canonical !== null ||
+      value.external !== null
+    ) {
+      syncedUntil = value.timestamp
+    }
+  }
+
+  return {
+    chart,
+    syncedUntil,
+  }
 }
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
