@@ -13,6 +13,7 @@ import type { EntryParameters, StructureOutput } from './types'
 export function getStructureOutput(
   config: StructureConfig,
   timestamp: UnixTime,
+  usedBlockNumbers: Record<string, number>,
   results: Analysis[],
 ): StructureOutput {
   return withoutUndefinedKeys({
@@ -23,6 +24,7 @@ export function getStructureOutput(
     sharedModules: undefinedIfEmpty(config.sharedModules),
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
+    usedBlockNumbers,
   })
 }
 

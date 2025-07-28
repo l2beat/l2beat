@@ -44,6 +44,7 @@ describe(shouldSkip.name, () => {
         configHash: Hash256.random(),
         version: 123,
         usedTemplates: {},
+        usedBlockNumbers: {},
         shapeFilesHash: Hash256.random(),
       }),
     })

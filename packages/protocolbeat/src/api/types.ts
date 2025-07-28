@@ -43,7 +43,7 @@ export interface ApiProjectChain {
   initialContracts: ApiProjectContract[]
   discoveredContracts: ApiProjectContract[]
   eoas: ApiAddressEntry[]
-  timestamp: number
+  blockNumber: number
 }
 
 export type ApiListTemplatesResponse = string[]

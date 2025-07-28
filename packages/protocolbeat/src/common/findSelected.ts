@@ -13,7 +13,7 @@ export function findSelected(
         return {
           ...contract,
           chain: chain.chain,
-          timestamp: chain.timestamp,
+          blockNumber: chain.blockNumber,
         }
       }
     }
@@ -22,7 +22,7 @@ export function findSelected(
         return {
           ...contract,
           chain: chain.chain,
-          timestamp: chain.timestamp,
+          blockNumber: chain.blockNumber,
         }
       }
     }
@@ -31,7 +31,7 @@ export function findSelected(
         return {
           ...eoa,
           chain: chain.chain,
-          timestamp: chain.timestamp,
+          blockNumber: chain.blockNumber,
         }
       }
     }

@@ -59,7 +59,7 @@ export async function runDiscovery(
 
   const timestampDate = await getTimestamp(configReader, config)
 
-  const { result, timestamp, providerStats } = await discover(
+  const { result, timestamp, usedBlockNumbers, providerStats } = await discover(
     paths,
     chainConfigs,
     projectConfig,
@@ -71,18 +71,25 @@ export async function runDiscovery(
 
   const templatesFolder = path.join(paths.discovery, TEMPLATES_PATH)
 
-  await saveDiscoveryResult(result, projectConfig, timestamp, logger, {
-    paths,
-    sourcesFolder: config.sourcesFolder,
-    flatSourcesFolder: config.flatSourcesFolder,
-    discoveryFilename: config.discoveryFilename,
-    saveSources: config.saveSources,
-    templatesFolder,
-    projectDiscoveryFolder: configReader.getProjectChainPath(
-      projectConfig.structure.name,
-      projectConfig.structure.chain,
-    ),
-  })
+  await saveDiscoveryResult(
+    result,
+    projectConfig,
+    timestamp,
+    usedBlockNumbers,
+    logger,
+    {
+      paths,
+      sourcesFolder: config.sourcesFolder,
+      flatSourcesFolder: config.flatSourcesFolder,
+      discoveryFilename: config.discoveryFilename,
+      saveSources: config.saveSources,
+      templatesFolder,
+      projectDiscoveryFolder: configReader.getProjectChainPath(
+        projectConfig.structure.name,
+        projectConfig.structure.chain,
+      ),
+    },
+  )
 
   // TODO(radomski): This is a disaster from the point of view of separation of
   // concerns. We should agree on what even is a shared module and how to
@@ -166,7 +173,7 @@ async function justDiscover(
   overwriteCache: boolean,
   logger: Logger,
 ): Promise<DiscoveryOutput> {
-  const { result, timestamp } = await discover(
+  const { result, timestamp, usedBlockNumbers } = await discover(
     paths,
     chainConfigs,
     config,
@@ -177,7 +184,13 @@ async function justDiscover(
   )
 
   const templateService = new TemplateService(paths.discovery)
-  return toDiscoveryOutput(templateService, config, timestamp, result)
+  return toDiscoveryOutput(
+    templateService,
+    config,
+    timestamp,
+    usedBlockNumbers,
+    result,
+  )
 }
 
 export async function discover(
@@ -191,6 +204,7 @@ export async function discover(
 ): Promise<{
   result: Analysis[]
   timestamp: UnixTime
+  usedBlockNumbers: Record<string, number>
   providerStats: AllProviderStats
 }> {
   const sqliteCache = new SQLiteCache(paths.cache)
@@ -213,6 +227,7 @@ export async function discover(
   return {
     result: await discoveryEngine.discover(provider, config.structure),
     timestamp,
+    usedBlockNumbers: { [chain]: provider.blockNumber },
     providerStats: allProviders.getStats(chain),
   }
 }

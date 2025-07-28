@@ -21,6 +21,7 @@ export interface StructureOutput {
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
+  usedBlockNumbers: Record<string, number>
 }
 
 export interface DiscoveryOutput {
@@ -33,6 +34,7 @@ export interface DiscoveryOutput {
   configHash: Hash256
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
+  usedBlockNumbers: Record<string, number>
   permissionsConfigHash?: Hash256
   dependentDiscoveries?: DiscoveryTimestamps
 }

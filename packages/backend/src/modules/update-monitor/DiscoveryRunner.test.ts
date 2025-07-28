@@ -16,6 +16,7 @@ type Thenable<T> = PromiseLike<T> | T
 describe(DiscoveryRunner.name, () => {
   const MOCK_PROVIDER = mockObject<Thenable<IProvider>>({
     timestamp: 123,
+    blockNumber: 123,
     then: undefined,
   }) as MockObject<IProvider>
 

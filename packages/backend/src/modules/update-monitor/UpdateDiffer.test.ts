@@ -416,6 +416,7 @@ const mockProject: DiscoveryOutput = {
   entries: COMMITTED,
   abis: {},
   usedTemplates: {},
+  usedBlockNumbers: {},
 }
 
 function mockContract(name: string, address: EthereumAddress): EntryParameters {

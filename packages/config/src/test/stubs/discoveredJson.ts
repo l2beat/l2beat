@@ -4,7 +4,6 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-
 export const contractStub: EntryParameters = {
   type: 'Contract',
   name: 'MockedContract',
@@ -109,4 +108,5 @@ export const discoveredJsonStub: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.random(),
   usedTemplates: {},
+  usedBlockNumbers: {},
 }
