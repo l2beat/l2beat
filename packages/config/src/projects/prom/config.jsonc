@@ -1,5 +1,8 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "prom",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "initialAddresses": [
+    "eth:0x19Cc29954A602761aa3180cd0A33752DcBF4c290"
+  ],
 }
