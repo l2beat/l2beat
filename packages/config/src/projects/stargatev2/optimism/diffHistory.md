@@ -417,7 +417,7 @@ Generated with discovered.json: 0x6c1efd0b8352484276f7aee323d18962af735f0a
 
 ## Description
 
-Deficit config adjustements affecting fee calculation.
+Deficit config adjustments affecting fee calculation.
 
 ## Watched changes
 
