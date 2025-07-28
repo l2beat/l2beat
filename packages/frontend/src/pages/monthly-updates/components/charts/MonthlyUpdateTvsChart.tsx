@@ -3,7 +3,6 @@ import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
-import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -48,7 +47,7 @@ export function MonthlyUpdateTvsChart({
     },
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external]) => {
       const total =
         native !== null && canonical !== null && external !== null
@@ -75,8 +74,6 @@ export function MonthlyUpdateTvsChart({
       },
     } satisfies ChartMeta
   }, [type])
-
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   const stats = getStats(chartData, allScalingProjectsTvs)
   const range = getChartRange(chartData)
@@ -115,7 +112,7 @@ export function MonthlyUpdateTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, 'usd'),
             },
-            lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip
             filterNull={false}

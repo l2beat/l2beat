@@ -58,7 +58,6 @@ interface Props {
   type: ActivityChartType
   projectName?: string
   className?: string
-  lastValidTimestamp: number | undefined
   tickCount?: number
 }
 
@@ -73,7 +72,6 @@ export function ActivityChart({
   metric,
   projectName,
   className,
-  lastValidTimestamp,
   tickCount,
 }: Props) {
   const chartMeta = {
@@ -127,12 +125,9 @@ export function ActivityChart({
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
             tickCount,
           },
-          lastValidTimestamp,
+          syncedUntil,
         })}
-        <ChartTooltip
-          filterNull={false}
-          content={<ActivityCustomTooltip syncedUntil={syncedUntil} />}
-        />
+        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <defs>
           {type === 'Rollups' && (
             <>
@@ -164,8 +159,7 @@ export function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
@@ -187,7 +181,6 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
-              entry.value === null ||
               entry.type === 'none'
             )
               return null
@@ -209,7 +202,7 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
+                  {entry.value === null
                     ? 'Not synced'
                     : formatActivityCount(entry.value)}
                 </span>
@@ -225,7 +218,6 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
-              entry.value === null ||
               entry.type === 'none'
             )
               return null
@@ -247,7 +239,7 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
+                  {entry.value === null
                     ? 'Not synced'
                     : formatInteger(entry.value * UnixTime.DAY)}
                 </span>

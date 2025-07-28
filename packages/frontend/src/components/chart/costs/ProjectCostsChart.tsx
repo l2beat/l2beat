@@ -9,7 +9,6 @@ import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
 import { cn } from '~/utils/cn'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { CostsChart } from './CostsChart'
 import { CostsChartTimeRangeControls } from './CostsChartTimeRangeControls'
 import { ProjectCostsChartStats } from './ProjectCostsChartStats'
@@ -81,11 +80,6 @@ export function ProjectCostsChart({
     )
   }, [data, unit])
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data?.chart),
-    [data?.chart],
-  )
-
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
@@ -101,7 +95,7 @@ export function ProjectCostsChart({
       </div>
       <CostsChart
         data={chartData}
-        lastValidTimestamp={lastValidTimestamp}
+        syncedUntil={data?.syncedUntil}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}

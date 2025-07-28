@@ -102,7 +102,7 @@ export function LivenessChart({
             tickCount,
           },
           // We want to show custom ReferenceArea for this chart
-          lastValidTimestamp: undefined,
+          syncedUntil: undefined,
         })}
         {lastValidTimestamp && (
           <ReferenceArea

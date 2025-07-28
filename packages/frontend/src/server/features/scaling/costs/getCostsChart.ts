@@ -1,5 +1,5 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -34,6 +34,7 @@ export type CostsChartDataPoint = [
 export type CostsChartData = {
   chart: CostsChartDataPoint[]
   hasBlobs: boolean
+  syncedUntil: UnixTime
 }
 
 /**
@@ -54,7 +55,7 @@ export async function getCostsChart({
   const db = getDb()
   const projects = await getCostsProjects(filter)
   if (projects.length === 0) {
-    return { chart: [], hasBlobs: false }
+    return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
   const resolution = rangeToResolution(timeRange)
   const [from, to] = getRangeWithMax({ type: timeRange }, resolution)
@@ -65,7 +66,7 @@ export async function getCostsChart({
   )
 
   if (data.length === 0) {
-    return { chart: [], hasBlobs: false }
+    return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
 
   const summedByTimestamp = sumByTimestamp(data, resolution)
@@ -114,7 +115,11 @@ export async function getCostsChart({
       entry.blobsGasUsd ?? blobsFallback,
     ] as const
   })
-  return { chart, hasBlobs: blobsTimestamp !== undefined }
+
+  const syncedUntil = data.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
+
+  return { chart, hasBlobs: blobsTimestamp !== undefined, syncedUntil }
 }
 
 function getMockCostsChartData({
@@ -145,6 +150,8 @@ function getMockCostsChartData({
       500,
     ]),
     hasBlobs: true,
+    // biome-ignore lint/style/noNonNullAssertion: it's there
+    syncedUntil: timestamps.at(-1)!,
   }
 }
 

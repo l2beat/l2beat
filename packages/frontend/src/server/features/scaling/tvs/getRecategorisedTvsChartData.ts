@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
@@ -26,12 +27,17 @@ export type RecategorisedTvsChartDataParams = v.infer<
   typeof RecategorisedTvsChartDataParams
 >
 
-export type RecategorisedTvsChartData = [
+type RecategorisedTvsChartDataPoint = [
   timestamp: number,
   rollups: number | null,
   validiumsAndOptimiums: number | null,
   others: number | null,
-][]
+]
+
+export type RecategorisedTvsChartData = {
+  chart: RecategorisedTvsChartDataPoint[]
+  syncedUntil: number
+}
 
 /**
  * A function that computes values for chart data of the TVS over time.
@@ -54,7 +60,10 @@ export async function getRecategorisedTvsChart({
   })
 
   if (tvsProjects.length === 0) {
-    return []
+    return {
+      chart: [],
+      syncedUntil: 0,
+    }
   }
 
   const groupedByType = groupBy(tvsProjects, (p) => p.category)
@@ -70,14 +79,27 @@ export async function getRecategorisedTvsChart({
       getSummedTvsValues(others, { type: range }, 'SUMMARY'),
     ])
 
-  return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
+  const chart = getChartData(
+    rollupValues,
+    validiumAndOptimiumsValues,
+    othersValues,
+  )
+  const syncedUntil = chart.findLast(
+    ([_, r, v, o]) => r !== null || v !== null || o !== null,
+  )?.[0]
+  assert(syncedUntil, 'No synced until timestamp found')
+
+  return {
+    chart,
+    syncedUntil,
+  }
 }
 
 function getChartData(
   rollupsValues: SummedTvsValues[],
   validiumAndOptimiumsValues: SummedTvsValues[],
   othersValues: SummedTvsValues[],
-): RecategorisedTvsChartData {
+): RecategorisedTvsChartDataPoint[] {
   const rolupsGroupedByTimestamp = groupBy(rollupsValues, (v) => v.timestamp)
   const validiumAndOptimiumsGroupedByTimestamp = groupBy(
     validiumAndOptimiumsValues,
@@ -138,7 +160,10 @@ function getMockTvsChartData({
     resolution,
   )
 
-  return timestamps.map((timestamp) => {
-    return [timestamp, 3000, 2000, 1000]
-  })
+  return {
+    chart: timestamps.map((timestamp) => {
+      return [timestamp, 3000, 2000, 1000]
+    }),
+    syncedUntil: 0,
+  }
 }

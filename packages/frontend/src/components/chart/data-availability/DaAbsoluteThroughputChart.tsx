@@ -104,7 +104,7 @@ export function DaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 3,
           },
-          lastValidTimestamp,
+          syncedUntil: lastValidTimestamp,
         })}
         <ChartTooltip
           filterNull={false}

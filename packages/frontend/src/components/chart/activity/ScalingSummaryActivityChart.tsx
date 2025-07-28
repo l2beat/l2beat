@@ -37,7 +37,6 @@ import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 
 interface Props {
   timeRange: ActivityTimeRange
@@ -92,11 +91,6 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
     )
   }, [data])
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data?.data),
-    [data?.data],
-  )
-
   return (
     <section className="flex flex-col gap-4">
       <Header stats={stats} />
@@ -139,7 +133,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             yAxis: {
               unit: ' UOPS',
             },
-            lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
         </AreaChart>
       </ChartContainer>

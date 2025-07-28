@@ -17,7 +17,6 @@ import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { CostsChart } from './CostsChart'
 import { CostsChartTimeRangeControls } from './CostsChartTimeRangeControls'
 
@@ -102,11 +101,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
     )
   }, [data, unit])
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data?.chart),
-    [data?.chart],
-  )
-
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
@@ -114,7 +108,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
       <Header chartRange={chartRange} />
       <CostsChart
         data={chartData}
-        lastValidTimestamp={lastValidTimestamp}
+        syncedUntil={data?.syncedUntil}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}

@@ -155,7 +155,7 @@ export async function getBridgesProjectEntry(
 
   const sections: ProjectDetailsSection[] = []
 
-  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData)) {
+  if (!project.isUpcoming && !isTvsChartDataEmpty(tvsChartData.chart)) {
     sections.push({
       type: 'TvsSection',
       props: {

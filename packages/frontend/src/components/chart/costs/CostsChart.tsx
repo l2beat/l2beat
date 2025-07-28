@@ -58,7 +58,7 @@ interface CostsChartDataPoint {
 
 interface Props {
   data: CostsChartDataPoint[] | undefined
-  lastValidTimestamp: number | undefined
+  syncedUntil: number | undefined
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
@@ -70,7 +70,7 @@ interface Props {
 
 export function CostsChart({
   data,
-  lastValidTimestamp,
+  syncedUntil,
   unit,
   isLoading,
   milestones,
@@ -170,7 +170,7 @@ export function CostsChart({
                 : formatCurrency(value, unit),
             tickCount,
           },
-          lastValidTimestamp,
+          syncedUntil,
         })}
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}

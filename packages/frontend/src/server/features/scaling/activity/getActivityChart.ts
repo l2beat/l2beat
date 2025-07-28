@@ -60,7 +60,7 @@ export async function getActivityChart({
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project
-  let adjustedRange = getFullySyncedActivityRange(range)
+  const adjustedRange = getFullySyncedActivityRange(range)
   const entries = await db.activity.getByProjectsAndTimeRange(
     projects,
     adjustedRange,
@@ -73,11 +73,12 @@ export async function getActivityChart({
   // ...but if we are looking at a single project, we check the last day we have data for,
   // and use that as the cutoff.
   if (isSingleProject) {
-    const lastProjectEntry = entries.findLast((entry) => entry.projectId)
+    const lastProjectEntry = entries.findLast(
+      (entry) => entry.projectId !== ProjectId.ETHEREUM,
+    )
     if (lastProjectEntry) {
       syncedUntil = lastProjectEntry.timestamp
       syncWarning = getActivitySyncWarning(syncedUntil)
-      adjustedRange = [adjustedRange[0], lastProjectEntry.timestamp]
     }
   }
 
@@ -100,7 +101,7 @@ export async function getActivityChart({
     number | null,
   ][] = timestamps.map((timestamp) => {
     const entry = aggregatedEntries[timestamp]
-    if (!entry || entry.uopsCount === null || entry.count === null) {
+    if (!entry) {
       return [timestamp, null, null, null, null]
     }
     return [

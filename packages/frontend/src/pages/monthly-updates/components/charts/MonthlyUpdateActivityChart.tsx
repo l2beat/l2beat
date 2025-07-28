@@ -2,7 +2,6 @@ import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
 import { AreaChart, type TooltipProps } from 'recharts'
-import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -70,11 +69,6 @@ export function MonthlyUpdateActivityChart({
     [data?.data],
   )
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data?.data),
-    [data?.data],
-  )
-
   const stats = getStats(chartData, allScalingProjectsUops)
   const range = getChartRange(chartData)
 
@@ -105,7 +99,7 @@ export function MonthlyUpdateActivityChart({
               scale: 'lin',
               unit: ' UOPS',
             },
-            lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip filterNull={false} content={<CustomTooltip />} />
           <defs>

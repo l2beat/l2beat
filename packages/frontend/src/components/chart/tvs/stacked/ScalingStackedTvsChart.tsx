@@ -12,7 +12,6 @@ import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../../core/chart/ChartControlsWrapper'
 import { getChartRange } from '../../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartUnit } from '../../types'
-import { getLastValidTimestamp } from '../../utils/getLastValidTimestamp'
 import { TvsChartHeader } from '../TvsChartHeader'
 import { TvsChartTimeRangeControls } from '../TvsChartTimeRangeControls'
 import { StackedTvsChart } from './StackedTvsChart'
@@ -52,7 +51,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
 
   const chartData = useMemo(
     () =>
-      data?.map(([timestamp, native, canonical, external, ethPrice]) => {
+      data?.chart.map(([timestamp, native, canonical, external, ethPrice]) => {
         const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
@@ -63,7 +62,6 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
       }),
     [data, unit],
   )
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
   const chartRange = getChartRange(chartData)
   const stats = getStats(chartData)
 
@@ -82,7 +80,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
-        lastValidTimestamp={lastValidTimestamp}
+        syncedUntil={data?.syncedUntil}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>

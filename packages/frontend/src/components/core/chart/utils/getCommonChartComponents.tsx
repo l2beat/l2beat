@@ -16,7 +16,7 @@ export interface CommonChartComponentsProps<
   data: T[] | undefined
   yAxis?: Omit<YAxisProps, 'scale' | 'tick'> & { scale?: 'log' | 'lin' }
   isLoading: boolean | undefined
-  lastValidTimestamp: number | undefined
+  syncedUntil: number | undefined
 }
 
 // Recharts 2.x does not support wrapping its components, so to solve it we need to return an array of components
@@ -25,9 +25,11 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
   data,
   yAxis,
   isLoading,
-  lastValidTimestamp,
+  syncedUntil,
 }: CommonChartComponentsProps<T>) {
   const { scale, tickCount, ...rest } = yAxis ?? {}
+  const lastSyncedTimestamp =
+    syncedUntil && data?.findLast((d) => d.timestamp < syncedUntil)?.timestamp
 
   return [
     <CartesianGrid
@@ -51,14 +53,14 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       {...rest}
     />,
     <XAxis key="x-axis" {...getXAxisProps(data)} />,
-    lastValidTimestamp && (
+    lastSyncedTimestamp && (
       <ReferenceArea
         key="last-valid-timestamp"
-        x1={lastValidTimestamp}
+        x1={lastSyncedTimestamp}
         fill="url(#notSyncedFill)"
       />
     ),
-    lastValidTimestamp && (
+    lastSyncedTimestamp && (
       <defs key="not-synced-defs">
         <NotSyncedPatternDef />
       </defs>

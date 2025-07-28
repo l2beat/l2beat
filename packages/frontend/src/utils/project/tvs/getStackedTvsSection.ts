@@ -14,7 +14,7 @@ export async function getStackedTvsSection(
     excludeAssociatedTokens: false,
   })
 
-  if (isTvsChartDataEmpty(data)) {
+  if (isTvsChartDataEmpty(data.chart)) {
     return undefined
   }
 

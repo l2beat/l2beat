@@ -37,7 +37,6 @@ import { api } from '~/trpc/React'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../types'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 
 const chartMeta = {
   rollups: {
@@ -76,18 +75,18 @@ export function ScalingSummaryTvsChart({
   })
 
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, rollups, validiumsAndOptimiums, others]) => {
-      return {
-        timestamp,
-        rollups,
-        validiumsAndOptimiums,
-        others,
-      }
-    })
+    return data?.chart.map(
+      ([timestamp, rollups, validiumsAndOptimiums, others]) => {
+        return {
+          timestamp,
+          rollups,
+          validiumsAndOptimiums,
+          others,
+        }
+      },
+    )
   }, [data])
   const stats = getStats(chartData)
-
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   return (
     <section className="flex flex-col gap-4">
@@ -136,7 +135,7 @@ export function ScalingSummaryTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
-            lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>

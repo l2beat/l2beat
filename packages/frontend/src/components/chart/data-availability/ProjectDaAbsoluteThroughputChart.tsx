@@ -21,12 +21,11 @@ import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
   number,
-  number,
+  number | null,
   number | null,
   number | null,
 ]
@@ -65,7 +64,7 @@ export function ProjectDaAbsoluteThroughputChart({
       ([timestamp, value, target, max]) => {
         return {
           timestamp,
-          project: value / denominator,
+          project: value ? value / denominator : null,
           projectTarget: target ? target / denominator : null,
           projectMax: max ? max / denominator : null,
         }
@@ -74,11 +73,6 @@ export function ProjectDaAbsoluteThroughputChart({
   }, [dataWithConfiguredThroughputs, denominator])
 
   const projectChartMeta = getProjectChartMeta(projectId)
-
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(dataWithConfiguredThroughputs),
-    [dataWithConfiguredThroughputs],
-  )
 
   return (
     <ChartContainer
@@ -139,12 +133,7 @@ export function ProjectDaAbsoluteThroughputChart({
         )}
         <ChartTooltip
           filterNull={false}
-          content={
-            <ProjectDaThroughputCustomTooltip
-              unit={unit}
-              syncedUntil={syncedUntil}
-            />
-          }
+          content={<ProjectDaThroughputCustomTooltip unit={unit} />}
         />
         {getCommonChartComponents({
           data: chartData,
@@ -153,7 +142,7 @@ export function ProjectDaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
-          lastValidTimestamp,
+          syncedUntil: syncedUntil,
         })}
       </AreaChart>
     </ChartContainer>
@@ -165,8 +154,7 @@ export function ProjectDaThroughputCustomTooltip({
   payload,
   label,
   unit,
-  syncedUntil,
-}: TooltipProps<number, string> & { unit: string; syncedUntil?: UnixTime }) {
+}: TooltipProps<number, string> & { unit: string }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -184,8 +172,6 @@ export function ProjectDaThroughputCustomTooltip({
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 
-          const isSynced = syncedUntil && label <= syncedUntil
-
           return (
             <div
               key={index}
@@ -200,7 +186,8 @@ export function ProjectDaThroughputCustomTooltip({
                   {configEntry.label}
                 </span>
               </div>
-              {!isSynced && configEntry.label === 'Actual data size' ? (
+              {entry.value === null &&
+              configEntry.label === 'Actual data size' ? (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   Not synced
                 </span>

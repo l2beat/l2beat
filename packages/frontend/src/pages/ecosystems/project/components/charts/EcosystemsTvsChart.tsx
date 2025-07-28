@@ -5,7 +5,6 @@ import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
-import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -56,7 +55,7 @@ export function EcosystemsTvsChart({
     },
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
       const total =
         native !== null && canonical !== null && external !== null
@@ -69,8 +68,6 @@ export function EcosystemsTvsChart({
       }
     },
   )
-
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
 
   const chartMeta = useMemo(() => {
     return {
@@ -119,7 +116,7 @@ export function EcosystemsTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
-            lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
           <ChartLegend content={<ChartLegendContent />} />

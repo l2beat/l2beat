@@ -86,7 +86,7 @@ export function EcosystemsProjectsChart({
             yAxis: {
               tickCount: 2,
             },
-            lastValidTimestamp: undefined,
+            syncedUntil: undefined,
           })}
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>

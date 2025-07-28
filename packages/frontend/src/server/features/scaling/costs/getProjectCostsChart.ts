@@ -34,6 +34,7 @@ export type ProjectCostsChartResponse = CostsChartData & {
         perL2Uop: Stats<number | null> | undefined
       }
     | undefined
+  syncedUntil: UnixTime
 }
 
 export async function getProjectCostsChart(
@@ -53,6 +54,7 @@ export async function getProjectCostsChart(
       chart: [],
       hasBlobs: false,
       stats: undefined,
+      syncedUntil: Number.POSITIVE_INFINITY,
     }
   }
 
@@ -70,6 +72,7 @@ export async function getProjectCostsChart(
   return {
     ...chartData,
     stats: { total, perL2Uop },
+    syncedUntil: chartData.syncedUntil,
   }
 }
 

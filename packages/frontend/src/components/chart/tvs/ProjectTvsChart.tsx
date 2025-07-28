@@ -11,7 +11,6 @@ import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import { TokenCombobox } from '../../TokenCombobox'
 import type { ChartUnit } from '../types'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { ProjectTokenChart } from './ProjectTokenChart'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
@@ -97,7 +96,7 @@ function DefaultChart({
     excludeAssociatedTokens: false,
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
       const total =
         native !== null && canonical !== null && external !== null
@@ -111,7 +110,6 @@ function DefaultChart({
     },
   )
 
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
@@ -128,7 +126,7 @@ function DefaultChart({
         data={chartData}
         unit={unit}
         isLoading={isLoading}
-        lastValidTimestamp={lastValidTimestamp}
+        syncedUntil={data?.syncedUntil}
         milestones={milestones}
         tickCount={4}
       />

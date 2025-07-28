@@ -149,7 +149,7 @@ export function DaThroughputByProjectChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
-          lastValidTimestamp: undefined,
+          syncedUntil: undefined,
         })}
         <ChartTooltip
           filterNull={false}

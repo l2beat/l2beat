@@ -14,7 +14,6 @@ import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ProjectChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import type { ChartScale } from '../types'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { ActivityChart } from './ActivityChart'
 import { ActivityRatioChart } from './ActivityRatioChart'
 import { getChartType } from './utils/getChartType'
@@ -79,11 +78,6 @@ export function ProjectActivityChart({
     }))
   }, [chart?.data])
 
-  const notSyncedTimestamps = useMemo(
-    () => getLastValidTimestamp(chart?.data),
-    [chart?.data],
-  )
-
   const chartRange = getChartRange(chartData)
 
   return (
@@ -106,13 +100,12 @@ export function ProjectActivityChart({
         syncedUntil={chart?.syncedUntil}
         className="mt-4 mb-2"
         type={type}
-        lastValidTimestamp={notSyncedTimestamps}
         projectName={projectName}
         tickCount={4}
       />
       <ActivityRatioChart
         data={ratioData}
-        lastValidTimestamp={notSyncedTimestamps}
+        syncedUntil={chart?.syncedUntil}
         isLoading={isLoading}
         className="mb-2"
       />

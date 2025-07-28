@@ -10,7 +10,6 @@ import { getChartRange } from '../../core/chart/utils/getChartRangeFromColumns'
 import { Skeleton } from '../../core/Skeleton'
 import { PercentChange } from '../../PercentChange'
 import type { ChartUnit } from '../types'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import type { TvsChartDataPoint } from './TvsChart'
 import { TvsChart } from './TvsChart'
 import { TvsChartTimeRangeControls } from './TvsChartTimeRangeControls'
@@ -30,7 +29,7 @@ export function BridgesTvsChart() {
     excludeAssociatedTokens: false,
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
       const total =
         native !== null && canonical !== null && external !== null
@@ -43,7 +42,6 @@ export function BridgesTvsChart() {
       }
     },
   )
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
   const stats = getStats(chartData)
 
@@ -61,7 +59,7 @@ export function BridgesTvsChart() {
         data={chartData}
         unit={unit}
         milestones={undefined}
-        lastValidTimestamp={lastValidTimestamp}
+        syncedUntil={data?.syncedUntil}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit} />

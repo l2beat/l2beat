@@ -97,7 +97,7 @@ export function DaPercentageThroughputChart({
             // And allow data overflow to avoid Y Axis labels being off
             allowDataOverflow: true,
           },
-          lastValidTimestamp: undefined,
+          syncedUntil: undefined,
         })}
         <ChartTooltip
           filterNull={false}

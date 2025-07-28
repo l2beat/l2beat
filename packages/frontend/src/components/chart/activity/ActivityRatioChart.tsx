@@ -8,7 +8,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNotSyncedState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -25,7 +24,7 @@ interface ActivityRatioChartDataPoint {
 
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
-  lastValidTimestamp: number | undefined
+  syncedUntil: number | undefined
   isLoading: boolean
   className?: string
 }
@@ -33,8 +32,8 @@ interface Props {
 export function ActivityRatioChart({
   data,
   isLoading,
+  syncedUntil,
   className,
-  lastValidTimestamp,
 }: Props) {
   const chartMeta = {
     ratio: {
@@ -72,13 +71,10 @@ export function ActivityRatioChart({
             tickFormatter: (value) => `${round(value, 2)}x`,
             domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
           },
-          lastValidTimestamp,
+          syncedUntil,
         })}
 
-        <ChartTooltip
-          filterNull={false}
-          content={<ActivityCustomTooltip syncedUntil={undefined} />}
-        />
+        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <defs>
           <EmeraldFillGradientDef id="fillRatio" />
@@ -92,13 +88,9 @@ export function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
-
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNotSyncedState timestamp={timestamp} />
 
   return (
     <ChartTooltipWrapper>
@@ -113,7 +105,6 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
-              entry.value === null ||
               entry.type === 'none'
             )
               return null
@@ -135,7 +126,7 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
+                  {entry.value === null
                     ? 'Not synced'
                     : formatActivityCount(entry.value)}
                 </span>

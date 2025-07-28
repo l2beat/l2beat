@@ -27,7 +27,7 @@ export interface StackedTvsChartDataPoint {
 
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
-  lastValidTimestamp: number | undefined
+  syncedUntil: number | undefined
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
@@ -55,7 +55,7 @@ const chartMeta = {
 
 export function StackedTvsChart({
   data,
-  lastValidTimestamp,
+  syncedUntil,
   milestones,
   unit,
   isLoading,
@@ -105,7 +105,7 @@ export function StackedTvsChart({
             tickCount,
           },
           isLoading,
-          lastValidTimestamp,
+          syncedUntil,
         })}
         <ChartTooltip
           content={<CustomTooltip unit={unit} />}

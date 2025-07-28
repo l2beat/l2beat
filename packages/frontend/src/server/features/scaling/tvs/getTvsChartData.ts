@@ -41,7 +41,10 @@ type TvsChartDataPoint = [
   external: number | null,
   ethPrice: number,
 ]
-export type TvsChartData = TvsChartDataPoint[]
+export type TvsChartData = {
+  chart: TvsChartDataPoint[]
+  syncedUntil: number
+}
 
 /**
  * @returns {
@@ -74,7 +77,7 @@ export async function getTvsChart({
     withoutArchivedAndUpcoming: forSummary,
   })
   if (tvsProjects.length === 0) {
-    return []
+    return { chart: [], syncedUntil: 0 }
   }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
@@ -88,7 +91,14 @@ export async function getTvsChart({
           : 'SUMMARY',
     ),
   ])
-  return getChartData(values, ethPrices)
+
+  const chart = getChartData(values, ethPrices)
+  const syncedUntil = chart.findLast(
+    (v) => v[1] !== null || v[2] !== null || v[3] !== null,
+  )?.[0]
+  assert(syncedUntil, 'No synced until timestamp found')
+
+  return { chart, syncedUntil }
 }
 
 function getChartData(
@@ -121,7 +131,10 @@ function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
     resolution,
   )
 
-  return timestamps.map((timestamp) => {
-    return [timestamp, 3000, 2000, 1000, 1200]
-  })
+  return {
+    chart: timestamps.map((timestamp) => {
+      return [timestamp, 3000, 2000, 1000, 1200]
+    }),
+    syncedUntil: timestamps[timestamps.length - 1] ?? 0,
+  }
 }

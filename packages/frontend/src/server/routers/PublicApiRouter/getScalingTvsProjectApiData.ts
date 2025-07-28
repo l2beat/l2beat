@@ -31,7 +31,7 @@ export async function getScalingTvsProjectApiData({
     excludeAssociatedTokens,
   })
 
-  const pointsWithData = data.filter(
+  const pointsWithData = data.chart.filter(
     ([_, native, canonical, external]) =>
       native !== null && canonical !== null && external !== null,
   ) as [number, number, number, number, number][]
@@ -55,13 +55,15 @@ export async function getScalingTvsProjectApiData({
       ethValue,
       chart: {
         types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
-        data: data.map(([timestamp, native, canonical, external, ethPrice]) => [
-          timestamp,
-          native,
-          canonical,
-          external,
-          ethPrice,
-        ]),
+        data: data.chart.map(
+          ([timestamp, native, canonical, external, ethPrice]) => [
+            timestamp,
+            native,
+            canonical,
+            external,
+            ethPrice,
+          ],
+        ),
       },
     },
   } as const

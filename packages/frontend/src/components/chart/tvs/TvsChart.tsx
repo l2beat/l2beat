@@ -29,7 +29,7 @@ interface Props {
   data: TvsChartDataPoint[] | undefined
   unit: ChartUnit
   isLoading: boolean
-  lastValidTimestamp: number | undefined
+  syncedUntil: number | undefined
   milestones: Milestone[] | undefined
   tickCount?: number
 }
@@ -39,7 +39,7 @@ export function TvsChart({
   unit,
   isLoading,
   milestones,
-  lastValidTimestamp,
+  syncedUntil,
   tickCount,
 }: Props) {
   const chartMeta = {
@@ -77,7 +77,7 @@ export function TvsChart({
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
           },
-          lastValidTimestamp,
+          syncedUntil,
         })}
         <ChartTooltip
           filterNull={false}

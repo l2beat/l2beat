@@ -143,7 +143,7 @@ export function ProjectTokenChart({
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
               tickCount: 4,
             },
-            lastValidTimestamp,
+            syncedUntil: lastValidTimestamp,
           })}
           <ChartTooltip
             filterNull={false}

@@ -3,7 +3,6 @@ import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
-import { getLastValidTimestamp } from '~/components/chart/utils/getLastValidTimestamp'
 import { Checkbox } from '~/components/core/Checkbox'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
@@ -96,11 +95,6 @@ export function EcosystemsActivityChart({
     [data?.data],
   )
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(data?.data),
-    [data?.data],
-  )
-
   const stats = getStats(chartData, allScalingProjectsUops)
   const range = getChartRange(chartData)
 
@@ -137,11 +131,9 @@ export function EcosystemsActivityChart({
               scale: 'lin',
               unit: ' UOPS',
             },
-            lastValidTimestamp,
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip
-            content={<ActivityCustomTooltip syncedUntil={undefined} />}
-          />
+          <ChartTooltip content={<ActivityCustomTooltip />} />
           <defs>
             <CustomFillGradientDef
               id="fillProjects"
