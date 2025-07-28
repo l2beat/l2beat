@@ -1,7 +1,6 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 22823822,
   "timestamp": 1751366039,
   "configHash": "0x6232bdf23a62c00206bc3b8354cd26626b15d39f7c31e5e9cdcbb52a5b852e5b",
   "entries": [

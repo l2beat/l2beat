@@ -1,7 +1,6 @@
 {
   "name": "ink",
   "chain": "ethereum",
-  "blockNumber": 22996536,
   "timestamp": 1753451063,
   "configHash": "0xd2d601ecaa5927fca86f27a05c099c5ab802d9b6786de610b6daebcd7c301d3d",
   "entries": [

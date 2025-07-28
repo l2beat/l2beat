@@ -1,7 +1,6 @@
 {
   "name": "celo",
   "chain": "ethereum",
-  "blockNumber": 23015667,
   "timestamp": 1753681823,
   "configHash": "0xeeed83b3877122cbd550eb55112860fc19192fbbffb98b29ad73b5f6588a9a65",
   "entries": [

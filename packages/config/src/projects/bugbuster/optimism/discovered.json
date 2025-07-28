@@ -1,7 +1,6 @@
 {
   "name": "bugbuster",
   "chain": "optimism",
-  "blockNumber": 125928338,
   "timestamp": 1727455453,
   "configHash": "0xc0bb35c5230440f3eb2df2dabf46966e8f245b7484e438d41d16ff7f8a37670d",
   "entries": [

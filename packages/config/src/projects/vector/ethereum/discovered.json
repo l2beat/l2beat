@@ -1,7 +1,6 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22882091,
   "timestamp": 1752069707,
   "configHash": "0xbebcf5305772e67f02c40649c761d43c7cc1551844667770ab517b1085779d2d",
   "sharedModules": ["shared-sp1"],

@@ -1,7 +1,6 @@
 {
   "name": "astarzkevm",
   "chain": "ethereum",
-  "blockNumber": 20325048,
   "timestamp": 1721204831,
   "configHash": "0x7c02619ccca9055e90a843b480b141b4efc30ca1bbaa4f461a1e54e4fa0380e5",
   "sharedModules": ["shared-polygon-cdk"],

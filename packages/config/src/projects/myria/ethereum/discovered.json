@@ -1,7 +1,6 @@
 {
   "name": "myria",
   "chain": "ethereum",
-  "blockNumber": 21981354,
   "timestamp": 1741185779,
   "configHash": "0x4eeb74c3ea111c1e1ab9ffd01f0a45bd9d5f7f9567413b537bf2990c417177a4",
   "sharedModules": ["shared-sharp-verifier"],

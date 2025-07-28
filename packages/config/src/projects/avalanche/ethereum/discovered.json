@@ -1,7 +1,6 @@
 {
   "name": "avalanche",
   "chain": "ethereum",
-  "blockNumber": 22430762,
   "timestamp": 1746608387,
   "configHash": "0x1994d66987d6dc04380eb493a11ae6915946b7a16c3bbd4a006a03b17f09d12a",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "b3",
   "chain": "base",
-  "blockNumber": 30222921,
   "timestamp": 1747235189,
   "configHash": "0x73feee572630cf7f218a930e1690e757dbc101addc7139038b35a37068740d00",
   "entries": [

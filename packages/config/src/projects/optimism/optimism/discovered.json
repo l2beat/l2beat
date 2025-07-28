@@ -1,7 +1,6 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 135717996,
   "timestamp": 1747034769,
   "configHash": "0xcb34b03eecbbbfc6e16e1df0fdd30add161c814264c015e6e4b9e077bcc2411a",
   "entries": [

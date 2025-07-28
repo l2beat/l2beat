@@ -1,7 +1,6 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 360431469,
   "timestamp": 1753200796,
   "configHash": "0x6612e345d3fa27e6079fc85e49c9e86f16a6f48e24524f1223b3d0a6d0719cab",
   "entries": [

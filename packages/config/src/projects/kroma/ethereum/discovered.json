@@ -1,7 +1,6 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22924020,
   "timestamp": 1752575723,
   "configHash": "0x706fdf8e78b75599cef4c3696b25378fedc8a7137b53b4facbd531d666cafcaa",
   "sharedModules": ["shared-sp1"],

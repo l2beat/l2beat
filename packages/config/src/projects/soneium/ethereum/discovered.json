@@ -1,7 +1,6 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 22996539,
   "timestamp": 1753451099,
   "configHash": "0x9306ed85d952d5b58fcb423be6146585728eee8d4284998e851335e59b22b4fa",
   "entries": [

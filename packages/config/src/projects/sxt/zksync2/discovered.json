@@ -1,7 +1,6 @@
 {
   "name": "sxt",
   "chain": "zksync2",
-  "blockNumber": 60986372,
   "timestamp": 1748359690,
   "configHash": "0xff4a32ee830bbc7008f4baa6a394ad9ed1fe4957861a7a6400938fc83571e1ec",
   "sharedModules": ["shared-zk-stack"],

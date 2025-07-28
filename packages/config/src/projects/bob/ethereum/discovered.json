@@ -1,7 +1,6 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22990276,
   "timestamp": 1753375355,
   "configHash": "0x8783151623484da48be1f986ab9d83b4d14444d4dfb527f2e4e37f6663edc3b3",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "hibachi",
   "chain": "arbitrum",
-  "blockNumber": 362381319,
   "timestamp": 1753687629,
   "configHash": "0x4e1db2bd50baa98b17b8b4b24a341d32486bacc73d51a2caa4287450de89c6f6",
   "entries": [

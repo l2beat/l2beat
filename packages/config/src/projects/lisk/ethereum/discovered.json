@@ -1,7 +1,6 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 23015671,
   "timestamp": 1753681871,
   "configHash": "0x705ec7d73243e0b465bd2849937304a64f3224af76d7bf64a6c924fc762fc299",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "inevm",
   "chain": "arbitrum",
-  "blockNumber": 360432096,
   "timestamp": 1753200951,
   "configHash": "0x6237bbd91beba6b7cc65aebad4d342e4deba21809f07627796a52aed5c3a6274",
   "entries": [

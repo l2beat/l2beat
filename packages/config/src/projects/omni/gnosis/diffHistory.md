@@ -1,10 +1,9 @@
-Generated with discovered.json: 0x45482421b449dcba61f2d5d43c0999b8797285bd
+Generated with discovered.json: 0x88fa998c12e634aca1a6cf1dff79c992838c8ed4
 
-# Diff at Mon, 28 Jul 2025 11:34:47 GMT:
+# Diff at Mon, 28 Jul 2025 12:01:11 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@b2629bdbf9d02381a1ff50ef691715151614fc63 block: 40494132
-- current block number: 40494132
+- current timestamp: 1749466920
 
 ## Description
 
@@ -14,7 +13,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 40494132 (main branch discovery), not current.
+discovery. Values are for block 1749466920 (main branch discovery), not current.
 
 ```diff
     contract Yaru (0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5) {

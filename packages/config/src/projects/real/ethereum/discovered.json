@@ -1,7 +1,6 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 22923592,
   "timestamp": 1752570563,
   "configHash": "0xc91df13e5601fab608c3535bf1e3834fb512d29e80f1476eb6540d8400e43e99",
   "entries": [

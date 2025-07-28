@@ -1,7 +1,6 @@
 {
   "name": "tokens",
   "chain": "ethereum",
-  "blockNumber": 23016120,
   "timestamp": 1753687259,
   "configHash": "0x6747f3dd9c2f562234b45787469abea1ac04b017d037d0eaff12ae3de215e868",
   "entries": [

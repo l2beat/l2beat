@@ -1,7 +1,6 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 40494132,
   "timestamp": 1749466920,
   "configHash": "0x371d8b32076639b4b43e89defc75544fd9ca4e42d870063c710aa6a309609e9b",
   "entries": [

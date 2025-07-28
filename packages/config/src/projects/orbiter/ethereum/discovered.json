@@ -1,7 +1,6 @@
 {
   "name": "orbiter",
   "chain": "ethereum",
-  "blockNumber": 21322840,
   "timestamp": 1733239295,
   "configHash": "0x78c13092631280f3415ea84f57c179d4bc23f6319cffd7647347a3ef8ce9e465",
   "entries": [
