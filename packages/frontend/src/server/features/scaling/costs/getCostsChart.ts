@@ -78,25 +78,30 @@ export async function getCostsChart({
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
 
+  const syncedUntil = Array.from(summedByTimestamp.keys()).at(-1)
+  assert(syncedUntil, 'syncedUntil is undefined')
+
   const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
+    const isSynced = syncedUntil && timestamp <= syncedUntil
     const blobsFallback =
       blobsTimestamp && timestamp >= blobsTimestamp ? 0 : null
     if (!entry) {
+      const value = isSynced ? 0 : null
       return [
         timestamp,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
       ] as const
     }
     return [
@@ -115,9 +120,6 @@ export async function getCostsChart({
       entry.blobsGasUsd ?? blobsFallback,
     ] as const
   })
-
-  const syncedUntil = data.at(-1)?.timestamp
-  assert(syncedUntil, 'syncedUntil is undefined')
 
   return { chart, hasBlobs: blobsTimestamp !== undefined, syncedUntil }
 }
