@@ -29,7 +29,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
 }: CommonChartComponentsProps<T>) {
   const { scale, tickCount, ...rest } = yAxis ?? {}
   const lastSyncedTimestamp =
-    syncedUntil && data?.findLast((d) => d.timestamp < syncedUntil)?.timestamp
+    syncedUntil && data?.findLast((d) => d.timestamp <= syncedUntil)?.timestamp
 
   return [
     <CartesianGrid
