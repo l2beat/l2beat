@@ -2,6 +2,7 @@
   "name": "pepeunchained",
   "chain": "ethereum",
   "blockNumber": 23015685,
+  "timestamp": 1753682039,
   "configHash": "0xdac8bd1693cf52071dc0c1bca9e2b5cf445d4e4a676c22c03ea13bc2be548e55",
   "entries": [
     {

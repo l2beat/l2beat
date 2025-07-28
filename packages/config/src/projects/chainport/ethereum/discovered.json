@@ -2,6 +2,7 @@
   "name": "chainport",
   "chain": "ethereum",
   "blockNumber": 22923880,
+  "timestamp": 1752574031,
   "configHash": "0x9fee6ec3389cb38404996e0ff856178487520e6646787b60996bb62527439496",
   "entries": [
     {

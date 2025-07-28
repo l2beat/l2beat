@@ -2,6 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 22767866,
+  "timestamp": 1750690607,
   "configHash": "0x54d2e6114c3aa4f7b2ca9c0dce971da09c854f859b5896a9bc88815177e4dab8",
   "entries": [
     {

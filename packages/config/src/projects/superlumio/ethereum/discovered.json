@@ -2,6 +2,7 @@
   "name": "superlumio",
   "chain": "ethereum",
   "blockNumber": 23015705,
+  "timestamp": 1753682279,
   "configHash": "0x9fe3a517404bd8cda40479bb70659e7fc40cc332967167aa9d7f6dce09356671",
   "entries": [
     {

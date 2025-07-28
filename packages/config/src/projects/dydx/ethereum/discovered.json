@@ -2,6 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
+  "timestamp": 1733483111,
   "configHash": "0x4f7a9bfc3a9022ee27d5be5046c1250470be059d5048d9acc6ef6e1f27b7db9a",
   "entries": [
     {

@@ -2,6 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 23015702,
+  "timestamp": 1753682243,
   "configHash": "0x18e200935ad40a34323977a17000ef9a7631363d6f42def2539d488b0dd61c5c",
   "entries": [
     {

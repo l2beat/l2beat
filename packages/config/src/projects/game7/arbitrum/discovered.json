@@ -1,7 +1,8 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 357933310,
+  "blockNumber": 357933313,
+  "timestamp": 1752577237,
   "configHash": "0x7443156a4582c9abd1764d474cd071666254f20366f00604ee5fa89bc80bc682",
   "entries": [
     {

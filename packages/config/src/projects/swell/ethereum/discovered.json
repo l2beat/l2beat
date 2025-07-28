@@ -2,6 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "blockNumber": 23015719,
+  "timestamp": 1753682447,
   "configHash": "0x158fff82a569053b7072fa62ed113d55bd2eaf5295792a9f6d3a91d870b2f849",
   "entries": [
     {

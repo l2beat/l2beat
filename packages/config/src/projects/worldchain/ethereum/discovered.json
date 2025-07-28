@@ -2,6 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 23015663,
+  "timestamp": 1753681775,
   "configHash": "0x2d0ecd1924b8861c720f371a00f25df90a1a85a2aff5c10554a12da2375c88fa",
   "entries": [
     {

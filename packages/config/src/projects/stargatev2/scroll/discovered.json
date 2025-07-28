@@ -2,6 +2,7 @@
   "name": "stargatev2",
   "chain": "scroll",
   "blockNumber": 16325944,
+  "timestamp": 1749464070,
   "configHash": "0xedb12b9eac272860df81f99f9e3a9320c19cc3b21a70c7cfdc8d9e27ee67074e",
   "entries": [
     {

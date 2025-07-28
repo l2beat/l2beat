@@ -2,6 +2,7 @@
   "name": "st-azur",
   "chain": "ethereum",
   "blockNumber": 23016672,
+  "timestamp": 1753693931,
   "configHash": "0x5c9be412fcc91f3de9509c8293d0580a97627c842c00ea1257b0955163d68ddd",
   "entries": [
     {

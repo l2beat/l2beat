@@ -2,6 +2,7 @@
   "name": "superseed",
   "chain": "ethereum",
   "blockNumber": 22997468,
+  "timestamp": 1753462307,
   "configHash": "0xc195c5322a085a25086f1dc3e1d1babfb69509f00ad9fa997f5578911dda74b4",
   "entries": [
     {

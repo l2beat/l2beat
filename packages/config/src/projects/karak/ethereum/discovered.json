@@ -2,6 +2,7 @@
   "name": "karak",
   "chain": "ethereum",
   "blockNumber": 20920155,
+  "timestamp": 1728382019,
   "configHash": "0x5129436290518f120fcfc8762cdf52e066b5ee640496ccf7198ba68396445ed0",
   "entries": [
     {

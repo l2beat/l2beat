@@ -2,6 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 22824302,
+  "timestamp": 1751371847,
   "configHash": "0xc807cc6270de924758b0b5cb51e51313a7a9d3c2878e3e351cb6de86939a2557",
   "entries": [
     {
