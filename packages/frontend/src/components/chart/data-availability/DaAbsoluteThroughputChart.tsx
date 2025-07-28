@@ -21,7 +21,6 @@ import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/g
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import { formatTimestamp } from '~/utils/dates'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { getDaDataParams } from './getDaDataParams'
 import { getDaChartMeta } from './meta'
 
@@ -53,15 +52,18 @@ export function DaAbsoluteThroughputChart({
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
       return {
         timestamp,
-        ethereum: ethereum / denominator,
-        celestia: celestia / denominator,
-        avail: avail / denominator,
-        eigenda: eigenda / denominator,
+        ethereum: ethereum !== null ? ethereum / denominator : null,
+        celestia: celestia !== null ? celestia / denominator : null,
+        avail: avail !== null ? avail / denominator : null,
+        eigenda: eigenda !== null ? eigenda / denominator : null,
       }
     })
   }, [data, denominator])
 
-  const lastValidTimestamp = useMemo(() => getLastValidTimestamp(data), [data])
+  const syncedUntil = useMemo(
+    () => Math.max(...Object.values(syncStatus ?? {})),
+    [syncStatus],
+  )
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -104,7 +106,7 @@ export function DaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 3,
           },
-          syncedUntil: lastValidTimestamp,
+          syncedUntil,
         })}
         <ChartTooltip
           filterNull={false}

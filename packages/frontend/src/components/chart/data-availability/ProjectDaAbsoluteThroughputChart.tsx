@@ -142,7 +142,7 @@ export function ProjectDaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
-          syncedUntil: syncedUntil,
+          syncedUntil
         })}
       </AreaChart>
     </ChartContainer>

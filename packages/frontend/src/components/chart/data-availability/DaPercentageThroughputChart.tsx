@@ -34,25 +34,31 @@ export function DaPercentageThroughputChart({
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
-      const total = ethereum + celestia + avail + eigenda
+      const total =
+        (ethereum ?? 0) + (celestia ?? 0) + (avail ?? 0) + (eigenda ?? 0)
       if (total === 0) {
         return {
           timestamp: timestamp,
-          ethereum: 0,
-          celestia: 0,
-          avail: 0,
-          eigenda: 0,
+          ethereum: ethereum !== null ? 0 : null,
+          celestia: celestia !== null ? 0 : null,
+          avail: avail !== null ? 0 : null,
+          eigenda: eigenda !== null ? 0 : null,
         }
       }
       return {
         timestamp: timestamp,
-        ethereum: round((ethereum / total) * 100, 2),
-        celestia: round((celestia / total) * 100, 2),
-        avail: round((avail / total) * 100, 2),
-        eigenda: round((eigenda / total) * 100, 2),
+        ethereum: ethereum !== null ? round((ethereum / total) * 100, 2) : null,
+        celestia: celestia !== null ? round((celestia / total) * 100, 2) : null,
+        avail: avail !== null ? round((avail / total) * 100, 2) : null,
+        eigenda: eigenda !== null ? round((eigenda / total) * 100, 2) : null,
       }
     })
   }, [data])
+
+  const syncedUntil = useMemo(
+    () => Math.max(...Object.values(syncStatus ?? {})),
+    [syncStatus],
+  )
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -97,7 +103,7 @@ export function DaPercentageThroughputChart({
             // And allow data overflow to avoid Y Axis labels being off
             allowDataOverflow: true,
           },
-          syncedUntil: undefined,
+          syncedUntil,
         })}
         <ChartTooltip
           filterNull={false}

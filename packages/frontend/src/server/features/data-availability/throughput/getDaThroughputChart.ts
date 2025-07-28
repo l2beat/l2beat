@@ -19,10 +19,10 @@ export type DaThroughputChart = {
 
 export type DaThroughputDataPoint = [
   timestamp: number,
-  ethereum: number,
-  celestia: number,
-  avail: number,
-  eigenda: number,
+  ethereum: number | null,
+  celestia: number | null,
+  avail: number | null,
+  eigenda: number | null,
 ]
 
 export const DaThroughputChartParams = v.object({
@@ -99,10 +99,10 @@ export async function getDaThroughputChart({
 
     return [
       timestamp,
-      layerValues.ethereum ?? 0,
-      layerValues.celestia ?? 0,
-      layerValues.avail ?? 0,
-      layerValues.eigenda ?? 0,
+      layerValues.ethereum ?? null,
+      layerValues.celestia ?? null,
+      layerValues.avail ?? null,
+      layerValues.eigenda ?? null,
     ]
   })
   return {

@@ -12,10 +12,15 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
-export type DaThroughputChartDataByChart = [
+type DaThroughputChartDataPoint = [
   timestamp: number,
-  values: Record<string, number>,
-][]
+  values: Record<string, number> | null,
+]
+
+export type DaThroughputChartDataByChart = {
+  chart: DaThroughputChartDataPoint[]
+  syncedUntil: number
+}
 
 export const DaThroughputChartByProjectParams = v.object({
   range: DaThroughputTimeRange,
@@ -47,7 +52,10 @@ const getDaThroughputChartByProjectData = async (
     ps.getProjects({}),
   ])
   if (throughput.length === 0) {
-    return []
+    return {
+      chart: [],
+      syncedUntil: 0,
+    }
   }
   const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
@@ -66,7 +74,21 @@ const getDaThroughputChartByProjectData = async (
     [minTimestamp, chartAdjustedTo],
     resolution,
   )
-  return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
+
+  const chart: DaThroughputChartDataPoint[] = []
+  let syncedUntil = 0
+  for (const timestamp of timestamps) {
+    const values = grouped[timestamp] ?? null
+    chart.push([timestamp, values])
+    if (values !== null) {
+      syncedUntil = timestamp
+    }
+  }
+
+  return {
+    chart,
+    syncedUntil,
+  }
 }
 
 function groupByTimestampAndProjectId(
@@ -140,18 +162,21 @@ function getMockDaThroughputChartByProjectData({
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return timestamps.map((timestamp) => {
-    const values = {
-      base: Math.random() * 900_000_000 + 90_000_000,
-      optimism: Math.random() * 900_000_000 + 90_000_000,
-      arbitrum: Math.random() * 900_000_000 + 90_000_000,
-      polygon: Math.random() * 900_000_000 + 90_000_000,
-      zkSync: Math.random() * 900_000_000 + 90_000_000,
-      zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
-      gnosis: Math.random() * 900_000_000 + 90_000_000,
-      linea: Math.random() * 900_000_000 + 90_000_000,
-    }
+  return {
+    chart: timestamps.map((timestamp) => {
+      const values = {
+        base: Math.random() * 900_000_000 + 90_000_000,
+        optimism: Math.random() * 900_000_000 + 90_000_000,
+        arbitrum: Math.random() * 900_000_000 + 90_000_000,
+        polygon: Math.random() * 900_000_000 + 90_000_000,
+        zkSync: Math.random() * 900_000_000 + 90_000_000,
+        zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
+        gnosis: Math.random() * 900_000_000 + 90_000_000,
+        linea: Math.random() * 900_000_000 + 90_000_000,
+      }
 
-    return [timestamp, values]
-  })
+      return [timestamp, values]
+    }),
+    syncedUntil: to,
+  }
 }

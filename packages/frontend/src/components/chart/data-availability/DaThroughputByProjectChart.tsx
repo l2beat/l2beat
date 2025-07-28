@@ -47,9 +47,9 @@ export function DaThroughputByProjectChart({
   const max = useMemo(() => {
     return data
       ? Math.max(
-          ...data.map(([_, values]) =>
+          ...data.chart.map(([_, values]) =>
             sum(
-              Object.entries(values).map(([project, value]) => {
+              Object.entries(values ?? {}).map(([project, value]) => {
                 if (!projectsToShow.includes(project)) return 0
                 return value
               }),
@@ -85,14 +85,14 @@ export function DaThroughputByProjectChart({
       return []
     }
 
-    const lastProjectsDataTimestamp = data?.findLast(([_, values]) => {
-      return Object.entries(values).some(
+    const lastProjectsDataTimestamp = data?.chart.findLast(([_, values]) => {
+      return Object.entries(values ?? {}).some(
         ([name, value]) => name !== 'Unknown' && value > 0,
       )
     })?.[0]
 
     return (
-      data?.map(([timestamp, values]) => {
+      data?.chart.map(([timestamp, values]) => {
         // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to cut the chart to the last project data timestamp
         if (
           daLayer === 'eigenda' &&
@@ -106,7 +106,7 @@ export function DaThroughputByProjectChart({
         return {
           timestamp,
           ...Object.fromEntries(
-            Object.entries(values)
+            Object.entries(values ?? {})
               .map(([key, value]) => {
                 if (!projectsToShow.includes(key)) return
                 return [key, value / denominator] as const
@@ -149,7 +149,7 @@ export function DaThroughputByProjectChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
-          syncedUntil: undefined,
+          syncedUntil: data?.syncedUntil,
         })}
         <ChartTooltip
           filterNull={false}
