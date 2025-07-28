@@ -168,7 +168,10 @@ export function getCodePaths(
 
     const name =
       similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
-    const root = join(paths.discovery, discovery.name, chain, '.flat')
+    const root = join(
+      configReader.getProjectChainPath(discovery.name, chain),
+      '.flat',
+    )
 
     if (!hasImplementations) {
       return {

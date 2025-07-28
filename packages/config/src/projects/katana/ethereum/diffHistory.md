@@ -1,14 +1,42 @@
-Generated with discovered.json: 0xf370dba86ca4db0d9eb43d587c8a79f3c4dd0b76
+Generated with discovered.json: 0x5e2c5b6419247d7e815eedb67cb5acf279a2af96
 
-# Diff at Thu, 24 Jul 2025 08:40:30 GMT:
+# Diff at Thu, 24 Jul 2025 16:55:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e68e856ed444c9f5c0e702b0c18473a575f2e74a block: 22966867
-- current block number: 22987846
+- comparing to: main@a3f740c0fd51a5745c45d8f349ab01f4f33f7770 block: 22988752
+- current block number: 22988752
+
+## Description
+
+config: set dispute game impl changes to high severity.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22988752 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      fieldMeta:
++        {"gameImpls":{"severity":"HIGH"},"game1337":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xb4ffe8a242a8b05c153c4f7d3aeab0d2f3bf1d2c
+
+# Diff at Thu, 24 Jul 2025 11:38:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 22966867
+- current block number: 22988752
 
 ## Description
 
 Upgrade op stack contracts to known versions. The only abberant contract is the new OptiPortal2, which, like the old one, [disallows deposited transactions](https://disco.l2beat.com/diff/eth:0xB443Da3e07052204A02d630a8933dAc05a0d6fB4/eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc).
+
+Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
 
 ## Watched changes
 
@@ -82,14 +110,10 @@ Upgrade op stack contracts to known versions. The only abberant contract is the 
 
 ```diff
     contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
-    +++ description: None
-      template:
--        "opstack/OptimismPortal2_noForce"
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
       sourceHashes.1:
 -        "0x1e6e48895b45b98acfe8b9c9f4568d3662e2932d82019f4ea721e2f7b57a58fc"
 +        "0x9cf3cb8a68c82a3a8328495d5f019daa51e9098a69b69ee8e349e3058b789338"
-      description:
--        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
       values.$implementation:
 -        "eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb"
 +        "eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc"
@@ -102,23 +126,13 @@ Upgrade op stack contracts to known versions. The only abberant contract is the 
       values.$upgradeCount:
 -        2
 +        5
-      values.balance:
--        0
-      values.RespectedGameString:
--        "PermissionedDisputeGame"
       values.version:
 -        "3.11.0-beta.6"
 +        "3.14.0"
-      fieldMeta:
--        {"paused":{"severity":"HIGH","description":"Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."}}
       implementationNames.eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb:
 -        "OptimismPortal2"
       implementationNames.eth:0x51c852eC17062FB229A117Cb8abCBc7Eb171D5Bc:
 +        "OptimismPortal2"
-      usedTypes:
--        [{"typeCaster":"Mapping","arg":{"0":"FaultDisputeGame","1":"PermissionedDisputeGame"}}]
-      category:
--        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -358,6 +372,20 @@ Upgrade op stack contracts to known versions. The only abberant contract is the 
  .../SuperchainConfig/SuperchainConfig.sol          |    8 +-
  .../SystemConfig/SystemConfig.sol                  | 1439 +--------------
  13 files changed, 3410 insertions(+), 3404 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22966867 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.game1337:
++        "eth:0x0000000000000000000000000000000000000000"
+    }
 ```
 
 Generated with discovered.json: 0xcc3793504351cb584ce330874f8995ff7b6bac5e

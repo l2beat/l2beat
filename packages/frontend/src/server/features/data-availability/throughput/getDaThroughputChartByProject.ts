@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import partition from 'lodash/partition'
 import { env } from '~/env'
@@ -47,9 +47,13 @@ const getDaThroughputChartByProjectData = async (
   const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
-  const [throughput, allProjects] = await Promise.all([
+  const [throughput, allProjects, daLayer] = await Promise.all([
     db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], [from, to]),
     ps.getProjects({}),
+    ps.getProject({
+      id: params.daLayer as ProjectId,
+      select: ['daLayer'],
+    }),
   ])
   if (throughput.length === 0) {
     return {
@@ -57,10 +61,19 @@ const getDaThroughputChartByProjectData = async (
       syncedUntil: 0,
     }
   }
+
+  const sovereignProjects = new Map(
+    daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => [
+      p.projectId,
+      p.name,
+    ]) ?? [],
+  )
+
   const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
     allProjects,
     resolution,
+    sovereignProjects,
   )
 
   const chartAdjustedTo =
@@ -95,6 +108,7 @@ function groupByTimestampAndProjectId(
   records: DataAvailabilityRecord[],
   allProjects: Project[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
+  sovereignProjects: Map<ProjectId, string>,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
@@ -107,14 +121,19 @@ function groupByTimestampAndProjectId(
     projectRecords,
     resolution,
   )
+
   for (const record of summedProjectsByDay) {
     const timestamp = record.timestamp
     const value = record.totalSize
-    const project = allProjects.find((p) => p.id === record.projectId)
-    assert(project, `Project ${record.projectId} not found`)
+
+    const projectName =
+      allProjects.find((p) => p.id === record.projectId)?.name ??
+      sovereignProjects.get(record.projectId as ProjectId)
+    assert(projectName, `Project ${record.projectId} not found`)
+
     result[timestamp] = {
       ...result[timestamp],
-      [project.name]: Number(value),
+      [projectName]: Number(value),
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
   }

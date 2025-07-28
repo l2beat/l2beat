@@ -203,6 +203,7 @@
         "version": "3.10.0"
       },
       "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
@@ -215,7 +216,11 @@
       "usedTypes": [
         {
           "typeCaster": "Mapping",
-          "arg": { "0": "FaultDisputeGame", "1": "PermissionedDisputeGame" }
+          "arg": {
+            "0": "FaultDisputeGame",
+            "1": "PermissionedDisputeGame",
+            "1337": "KailuaGame"
+          }
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
@@ -224,10 +229,12 @@
       "name": "LivenessGuard",
       "address": "eth:0x24424336F04440b1c28685a38303aC33C9D14a25",
       "type": "Contract",
+      "template": "gnosisSafeModules/LivenessGuard",
       "sourceHashes": [
         "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
       ],
       "proxyType": "immutable",
+      "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -266,7 +273,7 @@
             { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
             }
           ]
         },
@@ -283,7 +290,7 @@
             { "address": "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A" },
             {
               "address": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
-              "condition": "though restricted to the global pause function"
+              "condition": "though restricted to the SuperchainConfig's `pause()` function"
             }
           ]
         }
@@ -293,7 +300,7 @@
           "permission": "act",
           "from": "eth:0x126a736B18E0a64fBA19D421647A530E327E112C",
           "role": ".deputy",
-          "condition": "though restricted to the global pause function"
+          "condition": "though restricted to the SuperchainConfig's `pause()` function"
         }
       ]
     },
@@ -1230,6 +1237,7 @@
           ]
         ],
         "$upgradeCount": 1,
+        "game1337": "eth:0x0000000000000000000000000000000000000000",
         "gameCount": 56,
         "gameImpls": [
           "eth:0x0000000000000000000000000000000000000000",
@@ -1242,6 +1250,10 @@
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "permissionedGamesTotal": 56,
         "version": "1.0.0"
+      },
+      "fieldMeta": {
+        "gameImpls": { "severity": "HIGH" },
+        "game1337": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xB0F15106fa1e473Ddb39790f197275BC979Aa37e": "Proxy",
@@ -2499,22 +2511,23 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "gnosisSafeModules/DeputyGuardianModule": "0x8da514975752668828a2c5aa3ed0719bbaac8af5a7835f307de80580ac13ea27",
+    "gnosisSafeModules/LivenessGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
     "opstack/DeputyPauseModule": "0xe46d6b875d0718adfa6f3783ee2f33a13279377fe7a4db0cc72891b0bce55e9a",
-    "opstack/DisputeGameFactory": "0x67f69b090ef8ef37890cb4e7c28b9ee1844641f6c4eb75ff15cba998839606ed",
+    "opstack/DisputeGameFactory": "0xdec1700fd03bf991ef19b9aa3b5f992abf853de33e6ebae19b785a8d72b37356",
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
+    "opstack/OptimismPortal2": "0x33b53e7ec24fad0aacaa78e8233cee4af1f8ea9f611f988f864b2fbe70e371b0",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x6a40972a765272137192e2886728a6ae43ab33a630c28e2dcb5355eef1586d07"
+  "permissionsConfigHash": "0xcf221bf3687c44986d75d08f004c4c3171eab1f11ffa7f5367e644c4099dffa8"
 }

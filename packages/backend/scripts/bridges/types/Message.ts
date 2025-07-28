@@ -10,8 +10,6 @@ export interface Message {
   destination: string
   /** Timestamp of the block in which transaction was included */
   blockTimestamp: UnixTime
-  /** Number of the block in which transaction was included */
-  blockNumber: number
   /** Transaction hash of a transaction in which event was emitted */
   txHash: string
   /** Custom property to differentiate between events from the same bridge */

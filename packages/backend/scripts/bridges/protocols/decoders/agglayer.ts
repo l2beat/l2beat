@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 import {
@@ -21,7 +22,7 @@ const ABI = parseAbi([
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
-): Message | undefined {
+): Partial<{ message: Message; asset: Asset }> | undefined {
   for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
@@ -52,15 +53,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'outbound',
-        protocol: AGGLAYER.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.destinationNetwork.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'BridgeEvent',
-        matchingId: transferId,
+        message: {
+          direction: 'outbound',
+          protocol: AGGLAYER.name,
+          origin: chain.shortName,
+          destination: destination ?? data.args.destinationNetwork.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'BridgeEvent',
+          matchingId: transferId,
+        },
       }
     }
 
@@ -91,15 +93,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'inbound',
-        protocol: AGGLAYER.name,
-        origin: origin ?? data.args.originNetwork.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'ClaimEvent',
-        matchingId: transferId,
+        message: {
+          direction: 'inbound',
+          protocol: AGGLAYER.name,
+          origin: origin ?? data.args.originNetwork.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'ClaimEvent',
+          matchingId: transferId,
+        },
       }
     }
   }

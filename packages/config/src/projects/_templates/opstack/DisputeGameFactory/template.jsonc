@@ -6,9 +6,18 @@
   "ignoreMethods": ["gameAtIndex"],
   "fields": {
     "gameImpls": {
+      "severity": "HIGH",
       "handler": {
         "type": "array",
         "length": 5
+      }
+    },
+    "game1337": {
+      "severity": "HIGH",
+      "handler": {
+        "type": "call",
+        "method": "gameImpls",
+        "args": [1337]
       }
     },
     "initBonds": {

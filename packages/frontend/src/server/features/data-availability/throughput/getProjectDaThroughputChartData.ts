@@ -19,7 +19,7 @@ export type ProjectDaThroughputChartData = {
           name: string
           percentage: number
           totalPosted: number
-          href: string
+          href: string | undefined
         }
       | undefined
     totalPosted: number | undefined

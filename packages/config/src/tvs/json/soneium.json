@@ -29,7 +29,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "soneium-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",
@@ -51,9 +51,9 @@
             "type": "balanceOfEscrow",
             "address": "native",
             "chain": "ethereum",
-            "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+            "escrowAddress": "0x67B4de6FfA66EF201Ea6099A89cA397D56622E31",
             "decimals": 18,
-            "sinceTimestamp": 1733134751
+            "sinceTimestamp": 1753380095
           }
         ]
       },

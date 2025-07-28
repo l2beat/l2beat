@@ -36,8 +36,10 @@ export function EditorView(props: Props) {
       if (activeFile) {
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
-            props.callbacks?.onSave?.(content)
+            const result = props.callbacks?.onSave?.(content)
             setDirtyFile(activeFile.id, false)
+            activeFile.content = result ?? content
+            return activeFile.content
           })
 
           editor.onChange((content) => {

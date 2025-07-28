@@ -3,6 +3,7 @@ import type {
   BlobClient,
   BlobsInBlock,
   CelestiaApiClient,
+  CoingeckoClient,
 } from '@l2beat/shared'
 import {
   assert,
@@ -36,6 +37,7 @@ export class LowLevelProvider {
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanClient: IEtherscanClient,
+    private readonly coingeckoClient: CoingeckoClient,
     private readonly celestiaApiClient?: CelestiaApiClient,
     private readonly blobClient?: BlobClient,
     private readonly logger: Logger = Logger.SILENT,
@@ -48,6 +50,7 @@ export class LowLevelProvider {
       etherscanClient: this.etherscanClient,
       blobClient: this.blobClient,
       celestiaApiClient: this.celestiaApiClient,
+      coingeckoClient: this.coingeckoClient,
     }
   }
 

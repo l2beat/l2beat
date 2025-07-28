@@ -6,5 +6,16 @@
     "eth:0x08Dea366F26C25a08C8D1C3568ad07d1e587136d",
     "eth:0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22"
   ],
-  "names": { "eth:0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8": "LyraMultisig" }
+  "names": { "eth:0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8": "LyraMultisig" },
+  "overrides": {
+    "eth:0x87DAFf495b5F6c4f79CEeAAF85f1Ef3df3B30d21": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x35844639E3e674C484180C650EfD2170433Df71c": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }

@@ -36,6 +36,10 @@ import {
   EIP2535FacetHandlerDefinition,
 } from './EIP2535FacetHandler'
 import {
+  ERC20DataDefinition,
+  ERC20DataHandler,
+} from './ERC20DataHandler/ERC20DataHandler'
+import {
   EventCountHandler,
   EventCountHandlerDefinition,
 } from './EventCountHandler'
@@ -119,6 +123,7 @@ export const UserHandlerDefinition = v.union([
   ZKsyncEraValidatorsHandlerDefinition,
   OrbitPostsBlobsDefinition,
   PolygonCDKScheduledTransactionsHandlerDefinition,
+  ERC20DataDefinition,
 ])
 
 export function getUserHandler(
@@ -179,5 +184,7 @@ export function getUserHandler(
       return new OrbitPostsBlobsHandler(field, definition)
     case 'polygoncdkScheduledTransactions':
       return new PolygonCDKScheduledTransactionHandler(field, abi)
+    case 'ERC20Data':
+      return new ERC20DataHandler(field, definition)
   }
 }

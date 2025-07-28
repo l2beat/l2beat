@@ -2,7 +2,7 @@ import type { Database } from '@l2beat/database'
 import { compiledToSqlQuery, createDatabase } from '@l2beat/database'
 import type { LogEvent } from 'kysely'
 import { env } from '~/env'
-import { createLogger } from './utils/logger'
+import { getLogger } from './utils/logger'
 
 let db: Database | undefined
 
@@ -76,11 +76,11 @@ function pool() {
 }
 
 function makeLogger() {
-  const appLogger = createLogger().for('Database')
+  const logger = getLogger().for('Database')
 
   return (event: LogEvent) => {
     if (event.level === 'error') {
-      appLogger.error('Query failed', {
+      logger.error('Query failed', {
         durationMs: event.queryDurationMillis,
         error: event.error,
         sql: compiledToSqlQuery(event.query),
@@ -92,7 +92,7 @@ function makeLogger() {
           : {}),
       })
     } else {
-      appLogger.info('Query executed', {
+      logger.info('Query executed', {
         durationMs: event.queryDurationMillis,
         sql: compiledToSqlQuery(event.query),
         ...(env.NODE_ENV === 'production'
