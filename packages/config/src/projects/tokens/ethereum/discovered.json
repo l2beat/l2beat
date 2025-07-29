@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "ethereum",
-  "timestamp": 1753687259,
+  "timestamp": 1753687577,
   "configHash": "0x6747f3dd9c2f562234b45787469abea1ac04b017d037d0eaff12ae3de215e868",
   "entries": [
     {
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xd67f210000000000",
-        "get_deposit_root": "0x5ff8785f9bde5e9058bbe98ec77b9b5143ebc0fe91a3a54d77a930553b73f9d3"
+        "get_deposit_count": "0xd97f210000000000",
+        "get_deposit_root": "0x15d4671044ecd5daeb4f99e857596818441872a6033d4b5feb8f3a6baa4d890f"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -536,7 +536,7 @@
           "genesisTime": 1606824023
         },
         "getContractVersion": 4,
-        "getCurrentEpochId": 382456,
+        "getCurrentEpochId": 382457,
         "getCurrentFrame": {
           "frameEpochId": 382275,
           "frameStartTime": 1753617623,
@@ -1072,7 +1072,7 @@
         "stEthPerToken": "1209351397544642190",
         "symbol": "wstETH",
         "tokensPerStEth": "826889522789083179",
-        "totalSupply": "3248443995307212528580076"
+        "totalSupply": "3248443384263227267408528"
       },
       "implementationNames": {
         "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -1338,8 +1338,8 @@
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
         "getLastFinalizedRequestId": 87442,
-        "getLastRequestId": 89117,
-        "getLockedEtherAmount": "25170990635515715820271",
+        "getLastRequestId": 89119,
+        "getLockedEtherAmount": "25170197665664465699894",
         "getNFTDescriptorAddress": "eth:0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -1358,8 +1358,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "eth:0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 1675,
-        "unfinalizedStETH": "143947872366328790086011",
+        "unfinalizedRequestNumber": 1677,
+        "unfinalizedStETH": "143949857195759629607584",
         "WSTETH": "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -1588,7 +1588,7 @@
           "beaconValidators": 398269,
           "beaconBalance": "8977159521026308000000000"
         },
-        "getBufferedEther": "2051056872634722364695",
+        "getBufferedEther": "2052453869154636031688",
         "getContractVersion": 2,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
@@ -1610,11 +1610,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149999989890000000000000",
-          "prevStakeBlockNumber": 23016113
+          "prevStakeLimit": "149999979500000000000000",
+          "prevStakeBlockNumber": 23016139
         },
-        "getTotalPooledEther": "8979210577898942722364695",
-        "getTotalShares": "7424815149781544541997570",
+        "getTotalPooledEther": "8979211974895462636031688",
+        "getTotalShares": "7424816304943330231419601",
         "getTreasury": "eth:0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -1631,7 +1631,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "8979210577898942722364695",
+        "totalSupply": "8979211974895462636031688",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -5163,6 +5163,6 @@
     "tokens/SimpleMultisig": "0x73e5a8496e19740524ebce826192ac009f1f6f859bb8266c5ded33163da586b8",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "usedBlockNumbers": { "ethereum": 23016120 },
+  "usedBlockNumbers": { "ethereum": 23016144 },
   "permissionsConfigHash": "0x39cdc97ea0a7da958785647edddc899c2882e1cb68140385c57fa36f8ea0ff17"
 }

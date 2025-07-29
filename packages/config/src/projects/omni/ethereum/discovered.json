@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "timestamp": 1749025523,
+  "timestamp": 1749466920,
   "configHash": "0x88938a2c9d7af8afcb80ee249bc3c8dbdce0ff9adb3baba1105eaa6470301458",
   "entries": [
     {
@@ -277,10 +277,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9978796962063355965170087",
+        "maxAvailablePerTx": "9963555522999972528549986",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 805,
+        "nonce": 869,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -1666,6 +1666,6 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22630069 },
+  "usedBlockNumbers": { "ethereum": 22666591 },
   "permissionsConfigHash": "0x052d6352604ac6ec6fb5a8a880a86ca59f07a26158fc68cb68187136537e8d03"
 }

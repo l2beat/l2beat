@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "linea",
-  "timestamp": 1749464091,
+  "timestamp": 1752074075,
   "configHash": "0x96d1b4c545555531fdb0bd244fc1e09ac1c1965e704e07ebe92b782c3af59968",
   "entries": [
     {
@@ -94,14 +94,14 @@
         "lpToken": "linea:0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "linea:0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
-        "plannerFee": "744435200452200093",
-        "poolBalance": "12890250200000000000000",
+        "plannerFee": "974494019006773240",
+        "poolBalance": "7986123073000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "linea:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 34463176,
-        "tvl": "1535580780000000000000"
+        "treasuryFee": 34809414,
+        "tvl": "1320849244000000000000"
       },
       "implementationNames": {
         "linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": "StargatePoolNative"
@@ -296,6 +296,6 @@
   "usedTemplates": {
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "usedBlockNumbers": { "linea": 19822366 },
+  "usedBlockNumbers": { "linea": 20715271 },
   "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
 }

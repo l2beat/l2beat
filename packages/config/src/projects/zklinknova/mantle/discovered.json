@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "timestamp": 1750248258,
+  "timestamp": 1753687799,
   "configHash": "0x35b675ae4426b0f1014d5722364f88a9d855577528eaebc441ea2a6b08870c26",
   "entries": [
     {
@@ -206,11 +206,11 @@
         "getGateway": "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 65195,
+        "getTotalBatchesExecuted": 69385,
         "getTotalPriorityTxs": 880,
         "owner": "mantle:0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": true,
-        "totalBatchesExecuted": 65195,
+        "totalBatchesExecuted": 69385,
         "totalPriorityTxs": 880,
         "totalSyncedPriorityTxs": 880,
         "totalValidatorForwardFee": "1145994696585755653058",
@@ -522,6 +522,6 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "usedBlockNumbers": { "mantle": 81058973 },
+  "usedBlockNumbers": { "mantle": 82778743 },
   "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
 }
