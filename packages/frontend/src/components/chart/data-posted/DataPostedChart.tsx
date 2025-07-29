@@ -1,12 +1,13 @@
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart, Line } from 'recharts'
+import { Area, ComposedChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -19,12 +20,12 @@ import { formatBytes } from '~/utils/number-format/formatBytes'
 interface DataPostedChartDataPoint {
   timestamp: number
   posted: number | null
-  estimatedPosted: number | null
 }
 
 interface Props {
   data: DataPostedChartDataPoint[] | undefined
   isLoading: boolean
+  syncedUntil: number | undefined
   className?: string
   tickCount?: number
 }
@@ -32,6 +33,7 @@ interface Props {
 export function DataPostedChart({
   data,
   isLoading,
+  syncedUntil,
   className,
   tickCount,
 }: Props) {
@@ -42,11 +44,6 @@ export function DataPostedChart({
       indicatorType: {
         shape: 'line',
       },
-    },
-    estimatedPosted: {
-      label: 'Data posted (estimated)',
-      color: 'var(--chart-emerald)',
-      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
 
@@ -68,17 +65,6 @@ export function DataPostedChart({
           isAnimationActive={false}
           dot={false}
         />
-        <Line
-          dataKey="estimatedPosted"
-          strokeWidth={2}
-          stroke={chartMeta.estimatedPosted.color}
-          strokeDasharray={
-            chartMeta.estimatedPosted.indicatorType.strokeDasharray
-          }
-          dot={false}
-          isAnimationActive={false}
-          legendType="none"
-        />
         {getCommonChartComponents({
           data,
           isLoading,
@@ -86,10 +72,12 @@ export function DataPostedChart({
             tickCount,
             tickFormatter: (value: number) => formatBytes(value),
           },
-          // There is always some data because of the estimation
-          syncedUntil: undefined,
+          syncedUntil,
         })}
-        <ChartTooltip content={<DataPostedCustomTooltip />} />
+        <ChartTooltip
+          content={<DataPostedCustomTooltip />}
+          filterNull={false}
+        />
         <defs>
           <EmeraldFillGradientDef id="fillPosted" />
         </defs>
@@ -106,12 +94,10 @@ export function DataPostedCustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
-  const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndEstimated =
-    dataKeys.includes('posted') && dataKeys.includes('estimatedPosted')
-  const filteredPayload = payload.filter(
-    (p) => !hasPostedAndEstimated || p.name !== 'estimatedPosted',
-  )
+  if (payload.every((p) => p.value === null)) {
+    return <ChartTooltipNoDataState timestamp={timestamp} />
+  }
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -121,7 +107,7 @@ export function DataPostedCustomTooltip({
           })}
         </div>
         <div className="flex flex-col gap-2">
-          {filteredPayload.map((entry) => {
+          {payload.map((entry) => {
             if (
               entry.name === undefined ||
               entry.value === undefined ||

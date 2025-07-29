@@ -16,8 +16,6 @@ export type CostsTimeRange = v.infer<typeof CostsTimeRange>
 
 /**
  * Returns a range of days that are fully synced.
- *
- * Fully synced means that the day is synced to the midnight. Current day is not included.
  */
 export function getFullySyncedCostsRange(
   range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
