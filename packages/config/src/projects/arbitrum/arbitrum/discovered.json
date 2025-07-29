@@ -3710,6 +3710,6 @@
   },
   "permissionsConfigHash": "0x0e3a96573f6dda655fde4a405cadf690cca538f209eecbf98238792d66b040a7",
   "dependentDiscoveries": {
-    "arbitrum": { "ethereum": { "blockNumber": 22966759 } }
+    "arbitrum": { "ethereum": { "timestamp": 1753091171 } }
   }
 }
