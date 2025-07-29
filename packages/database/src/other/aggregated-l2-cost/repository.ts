@@ -94,7 +94,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
         'in',
         projectIds.map((p) => p.toString()),
       )
-      .where('timestamp', '<', UnixTime.toDate(to))
+      .where('timestamp', '<=', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {

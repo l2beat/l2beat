@@ -29,14 +29,20 @@ export function getFullySyncedCostsRange(
 
   const resolution = rangeToResolution(range.type)
 
-  const end = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'hourly'
-      ? 'hour'
+  const end =
+    UnixTime.toStartOf(
+      UnixTime.now(),
+      resolution === 'hourly'
+        ? 'hour'
+        : resolution === 'sixHourly'
+          ? 'six hours'
+          : 'day',
+    ) -
+    (resolution === 'hourly'
+      ? UnixTime.HOUR
       : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'day',
-  )
+        ? UnixTime.HOUR * 6
+        : UnixTime.DAY)
   const days = rangeToDays(range)
 
   const start = days !== null ? end - days * UnixTime.DAY : null
