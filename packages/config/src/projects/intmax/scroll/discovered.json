@@ -2,7 +2,7 @@
   "name": "intmax",
   "chain": "scroll",
   "blockNumber": 17789248,
-  "configHash": "0xb6c01e371cc0c29698fcc97efa8b943285a1e27f8767459920bc02bc115206e2",
+  "configHash": "0xbf5228d93d76a9815248f29132efc51f9d8b74a0bcb55653e1b01db58d64d062",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -54,13 +54,6 @@
           ]
         ],
         "$upgradeCount": 1,
-        "blockHashes": [
-          "0x4c31b986e463b14e7defe40aa79c4a6479cfdf134fde381d7ea90711d5fbfea2",
-          "0xa820dce8c6d46000c2af76b636b3c4844285ebcbc005ab526b931cd665a97ae0",
-          "0x2e8ab247422df881e07c85c9fa2b650019d8b0663ce08f79c03042e390e0ca7d",
-          "0xb9beecc76942d249159f33472144552a30d013d146686009ac21f0e7304cfea9",
-          "0x5106f24917a2488d6100c1eb21adec5e6328260643abcb47f3af3f098e013cce"
-        ],
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
         "depositIndex": 5631,
         "depositTreeRoot": "0x1d39bd6a415380590e8c40d2668b99ccac62a37a305e89ce3592630a5fea2b44",
@@ -70,19 +63,16 @@
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "lastProcessedDepositId": 5631,
-        "liquidity": "scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+        "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": {
-        "blockHashes": "Processing error occurred.",
-        "proxiableUUID": "Processing error occurred."
-      },
       "implementationNames": {
         "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e": "ERC1967Proxy",
         "scr:0xF34299210fB8505232649e9BEa14a84DD75e746b": "Rollup"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "scr:0x1eB7d5898A9b3dCB8145e37B564ef00bC4cB794D",
@@ -125,7 +115,7 @@
         "getCurrentPeriod": 38,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "liquidity": "scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+        "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "nullifierNonce": 1636,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
@@ -133,11 +123,11 @@
         "rollup": "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5": "ERC1967Proxy",
         "scr:0x1899bF9D0e40Dd1bB6C3CCF2123A0Bd1DE0F0548": "Claim"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "address": "scr:0x2EAB2633c6180Ec592fB7A22EDAF323ccA51F85A",
@@ -174,7 +164,6 @@
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af": "ERC1967Proxy",
         "scr:0x8305Ca6756b0edb49ed9503C1Cf39Cb64a00b955": "Contribution"
@@ -212,18 +201,18 @@
         "getDirectWithdrawalTokenIndices": [0, 1, 2, 3],
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "liquidity": "scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+        "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "rollup": "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "withdrawalVerifier": "scr:0x1858C9e118DbBc70b15Be40BE3fc1EbB062f5734"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449": "ERC1967Proxy",
         "scr:0xDFC6EB6642FEAF99629c6629b2f7dC7eB9F1a0A3": "Withdrawal"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "ChainPrefix", "arg": { "prefix": "eth" } }]
     },
     {
       "name": "INTMAX Multisig 2",
@@ -236,6 +225,18 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
+          "description": "can update the verifier address.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449",
+          "description": "can update the verifier address and the list of tokens that can be withdrawn automatically, in contrast to those that have to be actively claimed.",
+          "role": ".owner"
+        },
         {
           "permission": "upgrade",
           "from": "scr:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
@@ -302,47 +303,6 @@
       "address": "scr:0xdb0948Ba83610ef1Bc7a2863c16a257B6bF5f6A7",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "BlockBuilderReward",
-      "address": "scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf1c7ccbaddf6a9f343712e275a10966a39a5c6182c3e52e1b25813a488bffd8e"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1745233121,
-      "sinceBlock": 14888647,
-      "values": {
-        "$immutable": true,
-        "contribution": "scr:0x0000000000000000000000000000000000000000",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getReward": [
-          [false, 0],
-          [false, 0],
-          [false, 0],
-          [false, 0],
-          [false, 0]
-        ],
-        "intmaxToken": "scr:0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
-        "REWARD_MANAGER_ROLE": "0x0f51adb3f49e4a9bbb17b3783f025995eaf8c24be2c8eefff214bdfda05ef94d",
-        "totalRewards": [
-          [false, 0],
-          [false, 0],
-          [false, 0],
-          [false, 0],
-          [false, 0]
-        ],
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "errors": {
-        "getReward": "Processing error occurred.",
-        "totalRewards": "Processing error occurred."
-      },
-      "implementationNames": {
-        "scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3": "BlockBuilderReward"
-      }
     }
   ],
   "abis": {
@@ -659,60 +619,14 @@
       "function transferOwnership(address newOwner)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function withdrawPenaltyFee(address to)"
-    ],
-    "scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3": [
-      "constructor()",
-      "error AccessControlBadConfirmation()",
-      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
-      "error AddressEmptyCode(address target)",
-      "error AddressZero()",
-      "error AlreadyClaimed()",
-      "error AlreadySetReward()",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedCall()",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error NotSetReward()",
-      "error PeriodNotEnded()",
-      "error RewardTooLarge()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event Claimed(uint256 indexed periodNumber, address indexed user, uint256 amount)",
-      "event Initialized(uint64 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event SetReward(uint256 indexed periodNumber, uint256 amount)",
-      "event Upgraded(address indexed implementation)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function REWARD_MANAGER_ROLE() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function claimReward(uint256 periodNumber)",
-      "function claimed(uint256, address) view returns (bool)",
-      "function contribution() view returns (address)",
-      "function getClaimableReward(uint256 periodNumber, address user) view returns (uint256)",
-      "function getReward(uint256 periodNumber) view returns (bool, uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(address _admin, address _rewardManager, address _contribution, address _intmaxToken)",
-      "function intmaxToken() view returns (address)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceRole(bytes32 role, address callerConfirmation)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setReward(uint256 periodNumber, uint256 amount)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function totalRewards(uint256) view returns (bool isSet, uint248 amount)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "intmax/Claim": "0xd95cbb375a904111a39d325b5240debea5483796f1532caeca626faddf0a1356",
-    "intmax/Contribution": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "intmax/Rollup": "0xd95cbb375a904111a39d325b5240debea5483796f1532caeca626faddf0a1356",
-    "intmax/Withdrawal": "0xd95cbb375a904111a39d325b5240debea5483796f1532caeca626faddf0a1356"
+    "intmax/Claim": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7",
+    "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "intmax/Rollup": "0x368a94c919529ff9268ca20c0ea75a0cf1c3e1b49f449c9746aeb09917b6f584",
+    "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "permissionsConfigHash": "0xa0562beb9e98542988b4d787a376d39e407f1379e50cd6f7f6245719cf23251d"
+  "permissionsConfigHash": "0x0889077d40e266474dd26688430873a7ba94a61291052e5add8dcf9dcff39517"
 }

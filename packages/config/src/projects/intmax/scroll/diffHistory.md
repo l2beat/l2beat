@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2b99c758eadd7a2e42a254e536705807f78e9a24
+Generated with discovered.json: 0x69887b3fd0f8138c4724542a5ca1c0340c6f67c3
 
-# Diff at Tue, 29 Jul 2025 10:30:44 GMT:
+# Diff at Tue, 29 Jul 2025 12:17:25 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 17789248
@@ -50,11 +50,5 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ClaimPlonkVerifier (0xaBA5fD516B665C12d7577Db36831474ac16aEe0a)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BlockBuilderReward (0xF65e73aAc9182e353600a916a6c7681F810f79C3)
     +++ description: None
 ```

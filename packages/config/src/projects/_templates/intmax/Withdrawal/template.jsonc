@@ -1,4 +1,16 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["l2ScrollMessenger"]
+  "ignoreRelatives": ["l2ScrollMessenger"],
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "liquidity": { "edit": ["format", "EthereumAddress"] },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the verifier address and the list of tokens that can be withdrawn automatically, in contrast to those that have to be actively claimed."
+        }
+      ]
+    }
+  }
 }
