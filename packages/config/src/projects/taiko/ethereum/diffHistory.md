@@ -1,3 +1,76 @@
+Generated with discovered.json: 0xc46764fed78b3a945d64debc9616f2dcf30acc79
+
+# Diff at Tue, 29 Jul 2025 09:34:22 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@05d0f9814b6e7f88bbab083b132a005c063f7d1e block: 22923197
+- current block number: 23023931
+
+## Description
+
+Updated RISC0 Groth16 verifier version for Taiko batch proofs.
+
+## Watched changes
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.0.address:
+-        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0x0000000000000000000000000000000000000000"
+      values.namedAddresses.1.address:
+-        "eth:0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "eth:0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      sourceHashes.1:
+-        "0xbf2f7f196a5a1b3990b49d6d86c282eedd22259e4e1c970138b25b38cced4ac6"
++        "0xd24723da846efa982924d892e9d3e52d38b6d85eab9d8e2f0a298ff07d18d994"
+      values.$implementation:
+-        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
+      values.$pastUpgrades.2:
++        ["2025-07-24T03:56:11.000Z","0x95d0cfffe42dc984ce8b24104a28d1083100ab638bb4fe396d1a145c17460db9",["eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.impl:
+-        "eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
++        "eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614"
+      values.riscoGroth16Verifier:
+-        "eth:0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
++        "eth:0x34Eda8BfFb539AeC33078819847B36D221c6641c"
+      implementationNames.eth:0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be:
+-        "TaikoRisc0Verifier"
+      implementationNames.eth:0x3dEF88e306E449c6Abf9AaD8038C95d11Bb0b614:
++        "Risc0Verifier"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.1.0).
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0x34Eda8BfFb539AeC33078819847B36D221c6641c)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
+```
+
+## Source code changes
+
+```diff
+.../Risc0VerifierGateway/Risc0Verifier.sol}        | 80 ++++++++++++++++++++--
+ .../RiscZeroGroth16Verifier.sol                    |  7 +-
+ 2 files changed, 78 insertions(+), 9 deletions(-)
+```
+
 Generated with discovered.json: 0x25328d8657ce654b01aac3364901b8042e569bbc
 
 # Diff at Tue, 22 Jul 2025 15:40:05 GMT:
