@@ -1,0 +1,28 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreMethods": ["getTxCreatedAt", "getTxHash", "txCreatedAt", "txHash"],
+  "ignoreInWatchMode": ["txNonce", "queueNonce"],
+  "description": "A simple Safe module for that can queue and execute transactions as {{target}} after a delay of currently {{txCooldownFmt}}, if registered as a module there.",
+  "fields": {
+    "txCooldownFmt": {
+      "handler": { "type": "call", "method": "txCooldown", "args": [] },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target."
+        }
+      ]
+    },
+    "ZodiacModule_modules": {
+      "permissions": [
+        {
+          "type": "act",
+          "delay": "{{txCooldown}}"
+        }
+      ]
+    }
+  }
+}

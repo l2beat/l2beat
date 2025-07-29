@@ -61,6 +61,10 @@ export async function runDiscovery(
     discoveryFilename: config.discoveryFilename,
     saveSources: config.saveSources,
     templatesFolder,
+    projectDiscoveryFolder: configReader.getProjectChainPath(
+      projectConfig.structure.name,
+      projectConfig.structure.chain,
+    ),
   })
 
   // TODO(radomski): This is a disaster from the point of view of separation of
@@ -73,7 +77,7 @@ export async function runDiscovery(
     const backrefConfigs = allConfigs
       .filter((c) => c.structure.sharedModules.includes(config.project))
       .map((c) => c.structure)
-    printSharedModuleInfo(backrefConfigs)
+    printSharedModuleInfo(logger, backrefConfigs)
   }
 
   if (config.printStats) {

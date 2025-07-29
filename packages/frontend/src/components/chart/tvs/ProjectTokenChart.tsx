@@ -19,7 +19,7 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
@@ -98,7 +98,7 @@ export function ProjectTokenChart({
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section>
+    <div>
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <TvsChartTimeRangeControls
@@ -136,6 +136,7 @@ export function ProjectTokenChart({
             yAxis: {
               tickFormatter: (value: number) =>
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
+              tickCount: 4,
             },
           })}
           <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
@@ -162,7 +163,7 @@ export function ProjectTokenChart({
           </div>
         )}
       </div>
-    </section>
+    </div>
   )
 }
 

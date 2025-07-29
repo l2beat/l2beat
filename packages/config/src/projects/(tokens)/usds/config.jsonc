@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "usds",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": ["eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F"],
+  "overrides": {
+    "eth:0xdC035D45d973E3EC169d2276DDab16f1e407384F": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": { "category": "stablecoin" }
+          }
+        }
+      }
+    }
+  }
+}

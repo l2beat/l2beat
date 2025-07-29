@@ -60,9 +60,9 @@ const cmd = command({
 
     const start = Date.now()
 
-    const timestampForTvs =
-      args.timestamp ??
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+    const timestampForTvs = args.timestamp
+      ? UnixTime.toStartOf(args.timestamp, 'hour')
+      : UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
     logger.info(
       `Using timestamp ${timestampForTvs.toString()} (${new Date(timestampForTvs * 1000).toUTCString()})`,
@@ -236,6 +236,9 @@ function calculateBreakdown(
       ether: 0,
       stablecoin: 0,
       other: 0,
+      btc: 0,
+      rwaPublic: 0,
+      rwaRestricted: 0,
       associated: 0,
     },
   }
@@ -287,14 +290,23 @@ function calculateBreakdown(
         tvsBreakdown.category.stablecoin += token.valueForProject
         break
       case 'other':
-        if (tokenConfig.isAssociated) {
-          tvsBreakdown.category.associated += token.valueForProject
-        } else {
-          tvsBreakdown.category.other += token.valueForProject
-        }
+        tvsBreakdown.category.other += token.valueForProject
+        break
+      case 'btc':
+        tvsBreakdown.category.btc += token.valueForProject
+        break
+      case 'rwaPublic':
+        tvsBreakdown.category.rwaPublic += token.valueForProject
+        break
+      case 'rwaRestricted':
+        tvsBreakdown.category.rwaRestricted += token.valueForProject
         break
       default:
         throw new Error(`Unknown source ${tokenConfig.source}`)
+    }
+
+    if (tokenConfig.isAssociated) {
+      tvsBreakdown.category.associated += token.valueForProject
     }
   }
 
@@ -402,6 +414,27 @@ function calculateBreakdown(
           ((tvsBreakdown.category.stablecoin / tvsBreakdown.tvs) * 100).toFixed(
             2,
           ) + '%',
+      },
+      btc: {
+        value: toDollarString(tvsBreakdown.category.btc),
+        percentage:
+          ((tvsBreakdown.category.btc / tvsBreakdown.tvs) * 100).toFixed(2) +
+          '%',
+      },
+      rwaPublic: {
+        value: toDollarString(tvsBreakdown.category.rwaPublic),
+        percentage:
+          ((tvsBreakdown.category.rwaPublic / tvsBreakdown.tvs) * 100).toFixed(
+            2,
+          ) + '%',
+      },
+      rwaRestricted: {
+        value: toDollarString(tvsBreakdown.category.rwaRestricted),
+        percentage:
+          (
+            (tvsBreakdown.category.rwaRestricted / tvsBreakdown.tvs) *
+            100
+          ).toFixed(2) + '%',
       },
       other: {
         value: toDollarString(tvsBreakdown.category.other),

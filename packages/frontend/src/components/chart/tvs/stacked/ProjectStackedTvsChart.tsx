@@ -118,7 +118,7 @@ function DefaultChart({
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section className="flex flex-col">
+    <div className="flex flex-col">
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <TvsChartTimeRangeControls
@@ -132,6 +132,7 @@ function DefaultChart({
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
+        tickCount={4}
         className="mt-4 mb-2"
       />
       <div className="flex flex-wrap items-center justify-between gap-1">
@@ -151,6 +152,6 @@ function DefaultChart({
           </div>
         )}
       </div>
-    </section>
+    </div>
   )
 }

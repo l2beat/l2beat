@@ -27,12 +27,6 @@ const sequencerInbox = ChainSpecificAddress.address(
     'sequencerInbox',
   ),
 )
-const sequencerAddress = ChainSpecificAddress.address(
-  discovery.getContractValue<ChainSpecificAddress>(
-    'SystemConfig',
-    'batcherHash',
-  ),
-)
 
 const daChallengeWindow = formatSeconds(
   discovery.getContractValue<number>(
@@ -121,7 +115,6 @@ export const funki: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: sequencerAddress,
         to: sequencerInbox,
         sinceTimestamp: UnixTime(1743854015),
       },

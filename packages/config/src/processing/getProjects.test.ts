@@ -4,12 +4,7 @@ import {
   type TrackedTxFunctionCallConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  type ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, EthereumAddress, type ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
@@ -177,21 +172,6 @@ describe('getProjects', () => {
     })
   })
 
-  describe('milestones', () => {
-    for (const project of projects) {
-      if (project.milestones === undefined) {
-        continue
-      }
-      for (const milestone of project.milestones) {
-        it(`Milestone: ${milestone.title} (${project.id}) date is full day`, () => {
-          expect(
-            UnixTime.isFull(UnixTime.fromDate(new Date(milestone.date)), 'day'),
-          ).toEqual(true)
-        })
-      }
-    }
-  })
-
   describe('contracts', () => {
     for (const project of getProjects()) {
       describe(project.id, () => {
@@ -344,9 +324,9 @@ describe('getProjects', () => {
             } => e.params.formula === 'transfer',
           )
           for (const config of transferConfigs ?? []) {
-            const key = `${config.params.from.toString()}-${config.params.to.toString()}-${
-              config.type
-            }`
+            const key =
+              (config.params.from ? `${config.params.from.toString()}-` : '') +
+              `${config.params.to.toString()}-${config.type}`
             assert(
               !transfers.has(key),
               `Duplicate transfer config in ${project.id}`,

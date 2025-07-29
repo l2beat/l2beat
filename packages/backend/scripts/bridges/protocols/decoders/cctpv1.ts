@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
@@ -9,10 +10,16 @@ export const CCTPV1 = {
   decoder: decoder,
 }
 
+const ABI = parseAbi([
+  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
+  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
+  'event MintAndWithdraw(address indexed mintRecipient,uint256 amount,address indexed mintToken)',
+])
+
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
-): Message | undefined {
+): Partial<{ message: Message; asset: Asset }> | undefined {
   for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
@@ -37,15 +44,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'outbound',
-        protocol: CCTPV1.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.destinationDomain.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'DepositForBurn',
-        matchingId: idFor(bridge.domain, data.args.nonce),
+        message: {
+          direction: 'outbound',
+          protocol: CCTPV1.name,
+          origin: chain.shortName,
+          destination: destination ?? data.args.destinationDomain.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'DepositForBurn',
+          matchingId: idFor(bridge.domain, data.args.nonce),
+        },
       }
     }
 
@@ -66,27 +74,22 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'inbound',
-        protocol: CCTPV1.name,
-        origin: origin ?? data.args.sourceDomain.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'MessageReceived',
-        matchingId: idFor(data.args.sourceDomain, data.args.nonce),
+        message: {
+          direction: 'inbound',
+          protocol: CCTPV1.name,
+          origin: origin ?? data.args.sourceDomain.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'MessageReceived',
+          matchingId: idFor(data.args.sourceDomain, data.args.nonce),
+        },
       }
     }
   }
 
   return undefined
 }
-
-const ABI = parseAbi([
-  'event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)',
-  'event MessageReceived(address indexed caller, uint32 sourceDomain, uint64 indexed nonce, bytes32 sender, bytes messageBody)',
-  'event MintAndWithdraw(address indexed mintRecipient,uint256 amount,address indexed mintToken)',
-])
 
 const BRIDGES = [
   {

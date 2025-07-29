@@ -108,7 +108,7 @@ function Sidebar({
       <div className="relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear" />
       <div
         className={cn(
-          'fixed inset-y-0 left-0 z-10 hidden h-svh w-(--sidebar-width) duration-200 ease-linear md:flex',
+          'fixed inset-y-0 left-0 hidden h-svh w-(--sidebar-width) duration-200 ease-linear md:flex',
           className,
         )}
         {...props}

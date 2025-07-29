@@ -65,8 +65,17 @@ export function createSharedModule(
 
   logger = logger.for('SharedModule')
 
-  const start = () => {
+  const start = async () => {
     logger.info('Starting...')
+
+    const stats = await db.stats()
+    for (const stat of stats) {
+      logger.metric('Database table size', {
+        table: stat.tableName,
+        sizeInBytes: stat.sizeInBytes,
+      })
+    }
+
     eventIndexer.start()
     blockIndexer.start()
     anomaliesNotifier?.start()

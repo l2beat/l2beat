@@ -14,7 +14,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import { formatTimestamp } from '~/utils/dates'
@@ -26,7 +26,7 @@ interface Props {
   data: DaThroughputChartDataByChart | undefined
   isLoading: boolean
   projectsToShow: string[]
-  customColors: Record<string, string>
+  customColors: Record<string, string> | undefined
   milestones: Milestone[]
 }
 
@@ -70,7 +70,7 @@ export function DaThroughputByProjectChart({
             project === 'Unknown'
               ? 'var(--secondary)'
               : // biome-ignore lint/style/noNonNullAssertion: we know it's there
-                (customColors[project] ?? colors[colorIndex++]!),
+                (customColors?.[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
         }
       }
@@ -146,7 +146,7 @@ export function DaThroughputByProjectChart({
           isLoading,
           yAxis: {
             unit: ` ${unit}`,
-            tickCount: 3,
+            tickCount: 4,
           },
         })}
         <ChartTooltip content={<CustomTooltip denominator={denominator} />} />

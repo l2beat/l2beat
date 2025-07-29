@@ -8,6 +8,7 @@ import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { cn } from '~/utils/cn'
 import { formatBytes } from '~/utils/number-format/formatBytes'
+import { rangeToLabel } from '~/utils/project/rangeToLabel'
 
 export function ProjectCostsChartStats({
   range,
@@ -19,7 +20,7 @@ export function ProjectCostsChartStats({
   range: CostsTimeRange
   unit: CostsUnit
   isLoading: boolean
-  data: ProjectCostsChartResponse
+  data: ProjectCostsChartResponse | undefined
   hasPostedData?: boolean
 }) {
   const elements = compact([
@@ -94,25 +95,6 @@ export function ProjectCostsChartStats({
       ))}
     </ChartStats>
   )
-}
-
-function rangeToLabel(range: Exclude<CostsTimeRange, 'max'>) {
-  switch (range) {
-    case '1d':
-      return 'Past day'
-    case '7d':
-      return '7 days'
-    case '30d':
-      return '30 days'
-    case '90d':
-      return '90 days'
-    case '180d':
-      return '180 days'
-    case '1y':
-      return '1 year'
-    default:
-      assertUnreachable(range)
-  }
 }
 
 function unitToLabel(unit: CostsUnit) {

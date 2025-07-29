@@ -47,10 +47,16 @@ function isFlatCodeCurrent(
 ): boolean {
   const chain = ChainSpecificAddress.longChain(address)
 
+  const discovery = configReader.readDiscovery(project, chain)
+  const discoveries = [
+    discovery,
+    ...(discovery.sharedModules ?? []).map((module) =>
+      configReader.readDiscovery(module, chain),
+    ),
+  ]
   const discoHashes =
-    configReader
-      .readDiscovery(project, chain)
-      .entries.find((e) => e.address === address)?.sourceHashes ?? []
+    discoveries.flatMap((d) => d.entries).find((e) => e.address === address)
+      ?.sourceHashes ?? []
 
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
@@ -162,7 +168,10 @@ export function getCodePaths(
 
     const name =
       similar.length > 1 ? `${entry.name}-${entry.address}` : `${entry.name}`
-    const root = join(paths.discovery, discovery.name, chain, '.flat')
+    const root = join(
+      configReader.getProjectChainPath(discovery.name, chain),
+      '.flat',
+    )
 
     if (!hasImplementations) {
       return {

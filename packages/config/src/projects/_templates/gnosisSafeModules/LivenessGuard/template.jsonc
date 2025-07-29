@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners."
+}

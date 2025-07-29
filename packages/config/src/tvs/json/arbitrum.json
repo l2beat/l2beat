@@ -1945,7 +1945,7 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
-      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
@@ -2739,6 +2739,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-HYPER",
+      "priceId": "hyperlane",
+      "symbol": "HYPER",
+      "name": "Hyperlane",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55298/large/Hyperlane.png?1745248900",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "hyperlane",
+        "decimals": 18,
+        "sinceTimestamp": 1745280000,
+        "address": "0xC9d23ED2ADB0f551369946BD377f8644cE1ca5c4",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -3876,6 +3895,25 @@
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
         "sinceTimestamp": 1631750400
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-PC-1",
+      "priceId": "pentagon-chain",
+      "symbol": "PC",
+      "name": "PentagonChain",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66638/large/pentagon-chain-token-fcp.png?1750094674",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1750032000
       },
       "category": "other",
       "source": "canonical",
@@ -5352,6 +5390,25 @@
     {
       "mode": "auto",
       "id": "arbitrum-T-1",
+      "priceId": "talos-2",
+      "symbol": "T",
+      "name": "Talos",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67570/large/talos.jpg?1753181426",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "talos-2",
+        "decimals": 9,
+        "sinceTimestamp": 1753142400,
+        "address": "0x30a538eFFD91ACeFb1b12CE9Bc0074eD18c9dFc9",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-T-2",
       "priceId": "threshold-network-token",
       "symbol": "T",
       "name": "Threshold Network Token",

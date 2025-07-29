@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "st-azur",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": ["eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB"],
+  "overrides": {
+    "eth:0x67f3228fD58f5A26D93a5dd0c6989b69c95618eB": {
+      "ignoreMethods": ["calculateWithdrawalAmount", "withdrawalRequests"],
+      "ignoreInWatchMode": [
+        "clock",
+        "totalIssued",
+        "totalSupply",
+        "totalRequestedAmount",
+        "nextWithdrawalRequestId",
+        "exchangeRate"
+      ],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": {
+              "coingeckoId": "azuro-protocol" // the staked version is not on CG
+            }
+          }
+        }
+      }
+    }
+  }
+}

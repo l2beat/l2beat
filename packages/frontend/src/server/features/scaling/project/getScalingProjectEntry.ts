@@ -1,6 +1,6 @@
 import type {
   Project,
-  ProjectColors,
+  ProjectCustomColors,
   ProjectScalingCategory,
   ProjectScalingStage,
   ReasonForBeingInOther,
@@ -20,6 +20,7 @@ import { getContractsSection } from '~/utils/project/contracts-and-permissions/g
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
 import { getCostsSection } from '~/utils/project/costs/getCostsSection'
+import { getDataPostedSection } from '~/utils/project/data-posted/getDataPostedSection'
 import { getBadgeWithParamsAndLink } from '~/utils/project/getBadgeWithParams'
 import { getDiagramParams } from '~/utils/project/getDiagramParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
@@ -56,7 +57,12 @@ export interface ProjectScalingEntry {
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
-  colors: ProjectColors | undefined
+  colors:
+    | {
+        project: ProjectCustomColors | undefined
+        ecosystem: ProjectCustomColors | undefined
+      }
+    | undefined
   underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
@@ -126,7 +132,9 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
     | 'colors'
+    | 'ecosystemColors'
     | 'discoveryInfo'
+    | 'daTrackingConfig'
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
@@ -141,6 +149,7 @@ export async function getScalingProjectEntry(
     stackedTvsSection,
     activitySection,
     costsSection,
+    dataPostedSection,
   ] = await Promise.all([
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
@@ -153,6 +162,9 @@ export async function getScalingProjectEntry(
     getActivitySection(helpers, project),
     project.scalingInfo.layer === 'layer2'
       ? getCostsSection(helpers, project)
+      : undefined,
+    project.scalingInfo.layer === 'layer2'
+      ? getDataPostedSection(helpers, project)
       : undefined,
   ])
 
@@ -219,6 +231,7 @@ export async function getScalingProjectEntry(
   }
 
   const changes = projectsChangeReport.getChanges(project.id)
+
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
@@ -232,7 +245,12 @@ export async function getScalingProjectEntry(
     archivedAt: project.archivedAt,
     isUpcoming: !!project.isUpcoming,
     isAppchain: project.scalingInfo.capability === 'appchain',
-    colors: env.CLIENT_SIDE_PARTNERS ? project.colors : undefined,
+    colors: env.CLIENT_SIDE_PARTNERS
+      ? {
+          project: project.colors,
+          ecosystem: project.ecosystemColors,
+        }
+      : undefined,
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project),
@@ -327,6 +345,19 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         ...costsSection,
+      },
+    })
+  }
+
+  if (dataPostedSection) {
+    sections.push({
+      type: 'DataPostedSection',
+      props: {
+        id: 'data-posted',
+        title: 'Data posted',
+        projectId: project.id,
+        milestones: sortedMilestones,
+        ...dataPostedSection,
       },
     })
   }

@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22924125,
+  "blockNumber": 23016078,
   "configHash": "0xcee9321ed44f6cfb59a7e064314b44ea975c59e3e33a59b19eb4de36ced4aee9",
   "entries": [
     {
@@ -79,8 +79,6 @@
         "aggchainVKeys": {
           "0x00040001": [
             {
-              "0": "0x00040001",
-              "1": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f",
               "selector": "0x00040001",
               "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
             }
@@ -92,9 +90,6 @@
         "routes": {
           "0x00000004": [
             {
-              "0": "0x00000004",
-              "1": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-              "2": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30",
               "selector": "0x00000004",
               "verifier": "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
               "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
@@ -372,7 +367,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 83,
+        "nonce": 84,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -420,7 +415,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x803a15cd5d09f55a22af9f45ef003f9b4bdfa55788093fd690bdb12b1e83ae36",
+        "getRoot": "0x646629db50ce6a92279a83e093eab39b67bd63bc07499b35976f3e61089a5b36",
         "getWrappedTokenBridgeImplementation": "eth:0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -651,10 +646,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x5b54bc97a1190fbe9d4c1ed111359c02e1747217ecf68b037fea88068ab21239",
+        "getRollupExitRoot": "0x97a8f34a35a75d2d23820b7cef46649e1ce6dfb15879dc9f16465e146cf268ef",
         "globalExitRootManager": "eth:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1752576635,
+        "lastAggregationTimestamp": 1753686563,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "eth:0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -941,8 +936,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 775364,
-        "totalVerifiedBatches": 774868,
+        "totalSequencedBatches": 784062,
+        "totalVerifiedBatches": 783569,
         "trustedAggregatorAC": [
           "eth:0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "eth:0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -1022,9 +1017,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 61655,
+        "depositCount": 63167,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0xae18621cfbc4b059574a9fe2d8d91ba0afca587e011053912c8a6875773cfa02",
+        "getRoot": "0x96483f419b9a9e712ce50aa250209055f12512df363e00d491f07a650db4a32d",
         "rollupManager": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -1681,6 +1676,18 @@
               "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
               "description": "Type: aggchainFEP",
               "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "eth:0x42B9fF0644741e3353162678596e7D6aA6a13240",
+              "data": {}
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"

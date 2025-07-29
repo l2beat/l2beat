@@ -74,7 +74,7 @@ export function ProjectActivityChart({
   const chartRange = getChartRange(chartData)
 
   return (
-    <section className="flex flex-col">
+    <div className="flex flex-col">
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <ActivityTimeRangeControls
@@ -94,6 +94,7 @@ export function ProjectActivityChart({
         className="mt-4 mb-2"
         type={type}
         projectName={projectName}
+        tickCount={4}
       />
       <ActivityRatioChart
         data={ratioData}
@@ -130,6 +131,6 @@ export function ProjectActivityChart({
         </RadioGroup>
       </div>
       {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
-    </section>
+    </div>
   )
 }

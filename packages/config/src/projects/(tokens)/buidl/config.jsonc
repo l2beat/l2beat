@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "buidl",
+  "import": ["../../globalConfig.jsonc"],
+  "maxDepth": 0,
+  "initialAddresses": ["arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872"],
+  "overrides": {
+    "arb1:0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872": {
+      "ignoreMethods": ["getDSService", "proxiableUUID"],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": {
+              "source": "native",
+              "supply": "totalSupply" // minted by operators on each chain
+            }
+          }
+        }
+      }
+    }
+  }
+}

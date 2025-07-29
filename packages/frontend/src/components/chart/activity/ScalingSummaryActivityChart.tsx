@@ -23,8 +23,8 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
+import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -88,7 +88,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
   }, [data])
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Header stats={stats} />
       <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
         <AreaChart data={chartData} margin={{ top: 20 }}>
@@ -132,7 +132,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
           })}
         </AreaChart>
       </ChartContainer>
-    </section>
+    </div>
   )
 }
 

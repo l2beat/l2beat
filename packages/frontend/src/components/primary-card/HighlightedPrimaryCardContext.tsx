@@ -24,21 +24,33 @@ export function HighlightedPrimaryCardProvider({
   children,
   defaultValue,
 }: HighlightedPrimaryCardProviderProps) {
-  const [highlightedId, setHighlightedId] = useState(defaultValue)
+  const [highlightedId, setHighlightedId] = useState<string | undefined>(
+    defaultValue,
+  )
 
   const handleHashChange = useCallback(() => {
     const hash = window.location.hash
     if (!hash) return
 
-    const element = document.querySelector(hash)
+    let selector: string
+    try {
+      selector = decodeURIComponent(hash)
+    } catch {
+      return
+    }
+
+    let element: Element | null = null
+    try {
+      element = document.querySelector(selector)
+    } catch {
+      // Invalid selector, ignore
+      return
+    }
     if (!element) return
 
-    const parentPrimaryCard = Array.from(
-      document.querySelectorAll('.primary-card'),
-    ).find((card) => card !== element && card.contains(element))
-
-    const toHighlight = parentPrimaryCard ?? element
-    setHighlightedId(toHighlight.id)
+    // Find the closest parent with .primary-card, or use the element itself
+    const parentPrimaryCard = element.closest('.primary-card')
+    setHighlightedId(parentPrimaryCard?.id ?? element.id)
   }, [])
 
   useEffect(handleHashChange, [])

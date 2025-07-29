@@ -396,8 +396,9 @@ export async function canTrackedTxsBeAffected(
         return contractAddresses.includes(config.params.address.toString())
       case 'transfer':
         return (
-          contractAddresses.includes(config.params.from.toString()) ||
-          contractAddresses.includes(config.params.to.toString())
+          (config.params.from
+            ? contractAddresses.includes(config.params.from.toString())
+            : false) || contractAddresses.includes(config.params.to.toString())
         )
     }
   })

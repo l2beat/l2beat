@@ -29,6 +29,9 @@ export class ProjectValueRepository extends BaseRepository {
             native: eb.ref('excluded.native'),
             ether: eb.ref('excluded.ether'),
             stablecoin: eb.ref('excluded.stablecoin'),
+            btc: eb.ref('excluded.btc'),
+            rwaRestricted: eb.ref('excluded.rwaRestricted'),
+            rwaPublic: eb.ref('excluded.rwaPublic'),
             other: eb.ref('excluded.other'),
             associated: eb.ref('excluded.associated'),
           })),
@@ -102,6 +105,13 @@ export class ProjectValueRepository extends BaseRepository {
         eb.fn
           .sum<number>((qb) => qb.cast('associated', 'double precision'))
           .as('associated'),
+        eb.fn.sum<number>((qb) => qb.cast('btc', 'double precision')).as('btc'),
+        eb.fn
+          .sum<number>((qb) => qb.cast('rwaRestricted', 'double precision'))
+          .as('rwaRestricted'),
+        eb.fn
+          .sum<number>((qb) => qb.cast('rwaPublic', 'double precision'))
+          .as('rwaPublic'),
       ])
       .where('type', '=', type)
       .where('project', 'in', projects)

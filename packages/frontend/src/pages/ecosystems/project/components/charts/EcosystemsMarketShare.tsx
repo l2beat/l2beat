@@ -11,7 +11,7 @@ export function EcosystemsMarketShare({
   }
 
   return (
-    <div className="font-medium text-(--ecosystem-primary) text-xs">
+    <div className="font-medium text-branding-primary text-xs">
       {formatPercent(marketShare)} scaling market share
     </div>
   )

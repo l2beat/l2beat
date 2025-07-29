@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "w",
+  "import": ["../../globalConfig.jsonc"],
+  "initialAddresses": [
+    "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+    "base:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91"
+  ],
+  "maxDepth:": 0,
+  "overrides": {
+    "arb1:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": {
+      "ignoreMethods": ["getPastTotalSupply", "proxiableUUID"],
+      "ignoreRelatives": ["$admin", "defaultAdmin", "owner"],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": {
+              "source": "external",
+              "supply": "totalSupply",
+              "bridgedUsing": {
+                "bridges": [
+                  {
+                    "name": "Wormhole",
+                    "slug": "portal"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "base:0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91": {
+      "ignoreMethods": ["getPastTotalSupply", "proxiableUUID"],
+      "ignoreRelatives": ["$admin", "defaultAdmin", "owner"],
+      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "fields": {
+        "$tokenData": {
+          "handler": {
+            "type": "ERC20Data",
+            "overrides": {
+              "source": "external",
+              "supply": "totalSupply",
+              "bridgedUsing": {
+                "bridges": [
+                  {
+                    "name": "Wormhole",
+                    "slug": "portal"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

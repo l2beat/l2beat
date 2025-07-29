@@ -23,6 +23,7 @@ import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsB
 import { EcosystemToken } from './components/widgets/EcosystemToken'
 import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
 import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
+import { EcosystemUpdateLink } from './components/widgets/EcosystemUpdateLink'
 
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
@@ -48,7 +49,7 @@ export function EcosystemProjectPage({
                 'ecosystem-spacing': '0.75rem',
               }}
             />
-            <div className="-z-1 -translate-y-1/2 absolute top-44 right-[20%] h-[400vh] w-screen translate-x-1/2 bg-radial-[closest-side] from-(--ecosystem-primary) via-(--ecosystem-secondary) via-25% to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw-15rem)]" />
+            <div className="-z-1 -translate-y-1/2 absolute top-44 right-[20%] h-[400vh] w-screen translate-x-1/2 bg-radial-[closest-side] from-branding-primary via-25% via-branding-secondary to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw-15rem)]" />
             <div>
               <EcosystemPageHeader
                 logo={ecosystem.logo}
@@ -140,6 +141,10 @@ export function EcosystemProjectPage({
                     ecosystem.images.delegateToL2BEAT
                   }
                   className="col-span-12 lg:col-span-8"
+                />
+                <EcosystemUpdateLink
+                  className="col-span-12"
+                  href={ecosystem.links.ecosystemUpdate}
                 />
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />

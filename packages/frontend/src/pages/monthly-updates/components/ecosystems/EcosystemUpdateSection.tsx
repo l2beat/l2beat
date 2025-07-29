@@ -16,7 +16,7 @@ interface Props {
 export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
   return (
     <ProjectUpdateSection
-      name={ecosystem.name}
+      id={ecosystem.id}
       colors={ecosystem.colors}
       bannerImg={ecosystem.bannerImg}
     >

@@ -3,5 +3,15 @@
   "name": "aevo",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x4082C9647c098a6493fb499EaE63b5ce3259c574"],
-  "names": {}
+  "overrides": {
+    "eth:0x0c0105334a50Db16B51B2911C9956539753A2CF8": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x7326889874BBFE3fE6364BE73f0FFcDBD3dC827C": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }

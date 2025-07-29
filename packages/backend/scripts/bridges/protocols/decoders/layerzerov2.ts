@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 import { createLayerZeroGuid, decodePacket } from '../../utils/layerzero'
@@ -10,10 +11,15 @@ export const LAYERZEROV2 = {
   decoder: decoder,
 }
 
+const ABI = parseAbi([
+  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
+  'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
+])
+
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
-): Message | undefined {
+): Partial<{ message: Message; asset: Asset }> | undefined {
   for (const log of transaction.logs) {
     const endpoint = ENDPOINTS.find((b) => b.chainShortName === chain.shortName)
 
@@ -38,7 +44,7 @@ function decoder(
       }
 
       const destination = ENDPOINTS.find(
-        (b) => b.chainId === packet.header.dstEid,
+        (b) => b.eid === packet.header.dstEid,
       )?.chainShortName
 
       const guid = createLayerZeroGuid(
@@ -50,15 +56,16 @@ function decoder(
       )
 
       return {
-        direction: 'outbound',
-        protocol: LAYERZEROV2.name,
-        origin: chain.shortName,
-        destination: destination ?? packet.header.dstEid.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketSent',
-        matchingId: guid,
+        message: {
+          direction: 'outbound',
+          protocol: LAYERZEROV2.name,
+          origin: chain.shortName,
+          destination: destination ?? packet.header.dstEid.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'PacketSent',
+          matchingId: guid,
+        },
       }
     }
 
@@ -87,26 +94,22 @@ function decoder(
       )
 
       return {
-        direction: 'inbound',
-        protocol: LAYERZEROV2.name,
-        origin: origin ?? data.args.origin.srcEid.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'PacketDelivered',
-        matchingId: guid,
+        message: {
+          direction: 'inbound',
+          protocol: LAYERZEROV2.name,
+          origin: origin ?? data.args.origin.srcEid.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'PacketDelivered',
+          matchingId: guid,
+        },
       }
     }
   }
 
   return undefined
 }
-
-const ABI = parseAbi([
-  'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
-  'event PacketDelivered((uint32 srcEid,bytes32 sender, uint64 nonce) origin, address receiver)',
-])
 
 const ENDPOINTS = [
   {

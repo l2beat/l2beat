@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
+import type { Asset } from '../../types/Asset'
 import type { Message } from '../../types/Message'
 import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
@@ -9,10 +10,15 @@ export const ACROSS = {
   decoder: decoder,
 }
 
+const ABI = parseAbi([
+  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
+  'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
+])
+
 function decoder(
   chain: Chain,
   transaction: TransactionWithLogs,
-): Message | undefined {
+): Partial<{ message: Message; asset: Asset }> | undefined {
   for (const log of transaction.logs) {
     const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
@@ -35,15 +41,16 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'outbound',
-        protocol: ACROSS.name,
-        origin: chain.shortName,
-        destination: destination ?? data.args.destinationChainId.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'FundsDeposited',
-        matchingId: data.args.depositId.toString(),
+        message: {
+          direction: 'outbound',
+          protocol: ACROSS.name,
+          origin: chain.shortName,
+          destination: destination ?? data.args.destinationChainId.toString(),
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'FundsDeposited',
+          matchingId: data.args.depositId.toString(),
+        },
       }
     }
 
@@ -64,26 +71,22 @@ function decoder(
       )?.chainShortName
 
       return {
-        direction: 'inbound',
-        protocol: ACROSS.name,
-        origin: origin ?? data.args.originChainId.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        blockNumber: transaction.blockNumber,
-        txHash: transaction.hash,
-        type: 'FilledRelay',
-        matchingId: data.args.depositId.toString(),
+        message: {
+          direction: 'inbound',
+          protocol: ACROSS.name,
+          origin: origin ?? data.args.originChainId.toString(),
+          destination: chain.shortName,
+          blockTimestamp: transaction.blockTimestamp,
+          txHash: transaction.hash,
+          type: 'FilledRelay',
+          matchingId: data.args.depositId.toString(),
+        },
       }
     }
   }
 
   return undefined
 }
-
-const ABI = parseAbi([
-  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
-  'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
-])
 
 const BRIDGES = [
   {

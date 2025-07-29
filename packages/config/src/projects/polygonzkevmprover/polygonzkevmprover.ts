@@ -9,6 +9,13 @@ export const polygonzkevmprover: BaseProject = {
   name: 'Polygon zkEVM Prover',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   display: {
     description:
       'Polygon zkEVM prover originally built by Polygon Zero team to prove state transition of Polygon zkEVM chain.',

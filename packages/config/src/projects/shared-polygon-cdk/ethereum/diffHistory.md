@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x845731553be21a7c4b5dea360d578d80895550f4
+
+# Diff at Mon, 28 Jul 2025 07:13:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22924125
+- current block number: 23016078
+
+## Description
+
+upgrade for the RollupManager scheduled: https://disco.l2beat.com/diff/eth:0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab/eth:0x42B9fF0644741e3353162678596e7D6aA6a13240
+- add support for migrating stateTransition chains to PP or ALGateway.
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.34:
++        {"target":"eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"eth:0x42B9fF0644741e3353162678596e7D6aA6a13240","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+    }
+```
+
+Generated with discovered.json: 0x52d99349bd40d59269f905d1a317477b42afa292
+
+# Diff at Tue, 22 Jul 2025 13:43:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@7cd20806e60337bd7514921d95610ad265cb6ec1 block: 22924125
+- current block number: 22924125
+
+## Description
+
+Event handler fix
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22924125 (main branch discovery), not current.
+
+```diff
+    contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      values.aggchainVKeys.0x00040001.0.1:
+-        "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
+      values.aggchainVKeys.0x00040001.0.0:
+-        "0x00040001"
+      values.routes.0x00000004.0.2:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.routes.0x00000004.0.1:
+-        "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.routes.0x00000004.0.0:
+-        "0x00000004"
+    }
+```
+
 Generated with discovered.json: 0x1106a4bc16487320b6098c10b595e5e2f8f7d4a9
 
 # Diff at Tue, 15 Jul 2025 10:57:28 GMT:

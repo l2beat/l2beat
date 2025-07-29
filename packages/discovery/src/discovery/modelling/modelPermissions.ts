@@ -14,6 +14,7 @@ import { type ClingoFact, parseClingoFact } from './clingoparser'
 import {
   generateClingoFromModelLp,
   generateClingoFromPermissionsConfig,
+  getProjectSpecificModelLp,
 } from './generateClingo'
 import { KnowledgeBase } from './KnowledgeBase'
 import { ModelIdRegistry } from './ModelIdRegistry'
@@ -234,6 +235,7 @@ export function generateClingoForDiscoveries(
     const config = configReader.readConfig(project, chain)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
+      configReader,
       discovery,
       templateService,
     )
@@ -245,6 +247,7 @@ export function generateClingoForDiscoveries(
 
 export function generateClingoForProjectOnChain(
   config: PermissionsConfig,
+  configReader: ConfigReader,
   discovery: DiscoveryOutput,
   templateService: TemplateService,
 ) {
@@ -252,6 +255,15 @@ export function generateClingoForProjectOnChain(
 
   const shortChain = getChainShortName(discovery.chain)
   const addressToNameMap = buildAddressToNameMap(discovery.entries)
+
+  const projectSpecificModelLp = getProjectSpecificModelLp(
+    discovery.name,
+    discovery.chain,
+    configReader,
+  )
+  if (projectSpecificModelLp) {
+    generatedClingo.push(projectSpecificModelLp)
+  }
 
   discovery.entries
     .sort((a, b) => a.address.localeCompare(b.address))
