@@ -2,9 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
-import { createLayerZeroGuid, decodePacket } from '../../utils/layerzero'
 
 export const STARGATE = {
   name: 'stargate',
@@ -21,67 +20,29 @@ const ABI = parseAbi([
 
 function decoder(
   chain: Chain,
-  transaction: TransactionWithLogs,
-): Partial<{ message: Message; asset: Asset }> | undefined {
-  let message: Message | undefined = undefined
-  let asset: Asset | undefined = undefined
+  input: DecoderInput,
+): Message | Asset | undefined {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
 
-  for (const log of transaction.logs) {
-    const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
+  if (!network) return undefined
 
-    if (!network) continue
+  if (
+    EthereumAddress(input.log.address) === network.lzEndpoint &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
+  ) {
+    const oftSentLog = input.transactionLogs.find(
+      (l) =>
+        EthereumAddress(l.address) === network.stargatePoolUsdc &&
+        l.topics[0] ===
+          encodeEventTopics({ abi: ABI, eventName: 'OFTSent' })[0],
+    )
 
-    if (
-      EthereumAddress(log.address) === network.lzEndpoint &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
-    ) {
+    if (oftSentLog) {
       const data = decodeEventLog({
         abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'PacketSent',
-      })
-
-      const packet = decodePacket(data.args.encodedPayload)
-      if (!packet) {
-        console.error(`Failed to decode packet (tx ${transaction.hash})`)
-        continue
-      }
-
-      const destination = NETWORKS.find(
-        (b) => b.eid === packet.header.dstEid,
-      )?.chainShortName
-
-      const guid = createLayerZeroGuid(
-        packet.header.nonce,
-        packet.header.srcEid,
-        packet.header.sender,
-        packet.header.dstEid,
-        packet.header.receiver,
-      )
-
-      message = {
-        direction: 'outbound',
-        protocol: STARGATE.messagingLayer,
-        origin: chain.shortName,
-        destination: destination ?? packet.header.dstEid.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        txHash: transaction.hash,
-        type: 'PacketSent',
-        matchingId: guid,
-      }
-      continue
-    }
-
-    if (
-      EthereumAddress(log.address) === network.stargatePoolUsdc &&
-      log.topics[0] === encodeEventTopics({ abi: ABI, eventName: 'OFTSent' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
+        data: oftSentLog.data,
+        topics: oftSentLog.topics,
         eventName: 'OFTSent',
       })
 
@@ -89,67 +50,40 @@ function decoder(
         (b) => b.eid === data.args.dstEid,
       )?.chainShortName
 
-      asset = {
+      return {
+        type: 'asset',
         direction: 'outbound',
         application: STARGATE.name,
         origin: chain.shortName,
         destination: destination ?? data.args.dstEid.toString(),
-        blockTimestamp: transaction.blockTimestamp,
-        txHash: transaction.hash,
-        type: 'OFTSent',
+        blockTimestamp: input.blockTimestamp,
+        txHash: input.transactionHash,
+        customType: 'OFTSent',
         matchingId: data.args.guid,
         amount: data.args.amountSentLD,
         token: network.usdc,
+        messageProtocol: 'layerzerov2',
+        messageId: data.args.guid,
       }
-      continue
     }
+  }
 
-    if (
-      EthereumAddress(log.address) === network.lzEndpoint &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
-    ) {
+  if (
+    EthereumAddress(input.log.address) === network.lzEndpoint &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
+  ) {
+    const oftReceivedLog = input.transactionLogs.find(
+      (l) =>
+        EthereumAddress(l.address) === network.stargatePoolUsdc &&
+        l.topics[0] ===
+          encodeEventTopics({ abi: ABI, eventName: 'OFTReceived' })[0],
+    )
+    if (oftReceivedLog) {
       const data = decodeEventLog({
         abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'PacketDelivered',
-      })
-
-      const origin = NETWORKS.find(
-        (c) => c.eid === data.args.origin.srcEid,
-      )?.chainShortName
-
-      const guid = createLayerZeroGuid(
-        data.args.origin.nonce,
-        data.args.origin.srcEid,
-        data.args.origin.sender,
-        network.eid,
-        data.args.receiver,
-      )
-
-      message = {
-        direction: 'inbound',
-        protocol: STARGATE.messagingLayer,
-        origin: origin ?? data.args.origin.srcEid.toString(),
-        destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        txHash: transaction.hash,
-        type: 'PacketDelivered',
-        matchingId: guid,
-      }
-      continue
-    }
-
-    if (
-      EthereumAddress(log.address) === network.stargatePoolUsdc &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'OFTReceived' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
+        data: oftReceivedLog.data,
+        topics: oftReceivedLog.topics,
         eventName: 'OFTReceived',
       })
 
@@ -157,24 +91,22 @@ function decoder(
         (c) => c.eid === data.args.srcEid,
       )?.chainShortName
 
-      asset = {
+      return {
+        type: 'asset',
         direction: 'inbound',
         application: STARGATE.name,
         origin: origin ?? data.args.srcEid.toString(),
         destination: chain.shortName,
-        blockTimestamp: transaction.blockTimestamp,
-        txHash: transaction.hash,
-        type: 'OFTReceived',
+        blockTimestamp: input.blockTimestamp,
+        txHash: input.transactionHash,
+        customType: 'OFTReceived',
         matchingId: data.args.guid,
         amount: data.args.amountReceivedLD,
         token: network.usdc,
+        messageProtocol: 'layerzerov2',
+        messageId: data.args.guid,
       }
-      continue
     }
-  }
-
-  if (message && asset) {
-    return { message, asset }
   }
 
   return undefined
