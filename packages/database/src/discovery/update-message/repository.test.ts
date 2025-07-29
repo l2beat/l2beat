@@ -17,6 +17,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     const message2 = record({
       chain: 'arbitrum',
       blockNumber: 100,
+      timestamp: 100,
     })
 
     await repository.upsert(message1)

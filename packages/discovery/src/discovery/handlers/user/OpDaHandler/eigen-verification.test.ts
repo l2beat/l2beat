@@ -91,7 +91,7 @@ describe(checkForEigenDA.name, () => {
 
     const switchableProvider = mockObject<IProvider>({
       ...baseProviderMock,
-      switchChain: () => baseProviderMock,
+      switchChain: async () => baseProviderMock,
     })
 
     const isUsingEigenDA = await checkForEigenDA(

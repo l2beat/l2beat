@@ -106,8 +106,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
-          diffBaseBlockNumber: 123,
-          diffHeadBlockNumber: 456,
+          diffBaseTimestamp: 123,
+          diffHeadTimestamp: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -115,8 +115,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
-          diffBaseBlockNumber: 123,
-          diffHeadBlockNumber: 456,
+          diffBaseTimestamp: 123,
+          diffHeadTimestamp: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -124,8 +124,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
-          diffBaseBlockNumber: 123,
-          diffHeadBlockNumber: 456,
+          diffBaseTimestamp: 123,
+          diffHeadTimestamp: 456,
         },
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
@@ -247,8 +247,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
-          diffBaseBlockNumber: 123,
-          diffHeadBlockNumber: 456,
+          diffBaseTimestamp: 123,
+          diffHeadTimestamp: 456,
         },
       ])
     })
@@ -293,8 +293,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
-          diffBaseBlockNumber: 123,
-          diffHeadBlockNumber: 456,
+          diffBaseTimestamp: 123,
+          diffHeadTimestamp: 456,
         },
       ])
     })
@@ -354,8 +354,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
-          diffBaseBlockNumber: 123,
-          diffHeadBlockNumber: 456,
+          diffBaseTimestamp: 123,
+          diffHeadTimestamp: 456,
         },
       ])
     })
@@ -411,7 +411,7 @@ const COMMITTED: EntryParameters[] = [
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
   chain: 'ethereum',
-  blockNumber: 1,
+  timestamp: 1,
   configHash: Hash256.random(),
   entries: COMMITTED,
   abis: {},
