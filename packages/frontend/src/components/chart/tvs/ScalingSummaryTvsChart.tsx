@@ -28,7 +28,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -159,54 +158,52 @@ function CustomTooltip({
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <ChartTooltipWrapper>
-      <div className={tooltipContentVariants()}>
-        <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
-          <div className="mb-3 font-medium text-label-value-14 text-secondary">
-            {isFullDay
-              ? formatTimestamp(label, { longMonthName: true })
-              : formatTimestamp(label, {
-                  longMonthName: true,
-                  mode: 'datetime',
-                })}
-          </div>
-          <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
-            <span className="[@media(min-width:600px)]:hidden">Total</span>
-            <span className="hidden [@media(min-width:600px)]:inline">
-              Total value secured
-            </span>
-            <span className="text-primary">{formatCurrency(total, 'usd')}</span>
-          </div>
-          <HorizontalSeparator />
-          <div className="mt-2 flex flex-col gap-2">
-            {payload.map((entry) => {
-              if (
-                entry.value === undefined ||
-                entry.value === null ||
-                entry.type === 'none'
-              )
-                return null
-              const config = chartMeta[entry.name as keyof typeof chartMeta]
-              return (
-                <div
-                  key={entry.name}
-                  className="flex items-center justify-between gap-x-1"
-                >
-                  <span className="flex items-center gap-1">
-                    <ChartDataIndicator
-                      backgroundColor={config.color}
-                      type={config.indicatorType}
-                    />
-                    <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                      {config.label}
-                    </span>
+      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
+        <div className="mb-3 font-medium text-label-value-14 text-secondary">
+          {isFullDay
+            ? formatTimestamp(label, { longMonthName: true })
+            : formatTimestamp(label, {
+                longMonthName: true,
+                mode: 'datetime',
+              })}
+        </div>
+        <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
+          <span className="[@media(min-width:600px)]:hidden">Total</span>
+          <span className="hidden [@media(min-width:600px)]:inline">
+            Total value secured
+          </span>
+          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
+        </div>
+        <HorizontalSeparator />
+        <div className="mt-2 flex flex-col gap-2">
+          {payload.map((entry) => {
+            if (
+              entry.value === undefined ||
+              entry.value === null ||
+              entry.type === 'none'
+            )
+              return null
+            const config = chartMeta[entry.name as keyof typeof chartMeta]
+            return (
+              <div
+                key={entry.name}
+                className="flex items-center justify-between gap-x-1"
+              >
+                <span className="flex items-center gap-1">
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
+                  />
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+                    {config.label}
                   </span>
-                  <span className="whitespace-nowrap font-medium text-label-value-15">
-                    {formatCurrency(entry.value, 'usd')}
-                  </span>
-                </div>
-              )
-            })}
-          </div>
+                </span>
+                <span className="whitespace-nowrap font-medium text-label-value-15">
+                  {formatCurrency(entry.value, 'usd')}
+                </span>
+              </div>
+            )
+          })}
         </div>
       </div>
     </ChartTooltipWrapper>
