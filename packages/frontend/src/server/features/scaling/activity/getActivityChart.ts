@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
@@ -8,7 +8,10 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
-import { getActivitySyncWarning } from './utils/isActivitySynced'
+import {
+  getActivitySyncWarning,
+  isActivitySynced,
+} from './utils/isActivitySynced'
 import {
   ActivityProjectFilter,
   createActivityProjectsFilter,
@@ -30,14 +33,16 @@ export const ActivityChartParams = v.object({
   ]),
 })
 
+type ActivityChartDataPoint = [
+  timestamp: number,
+  projectsTxCount: number | null,
+  ethereumTxCount: number | null,
+  projectsUopsCount: number | null,
+  ethereumUopsCount: number | null,
+]
+
 export type ActivityChartData = {
-  data: [
-    timestamp: number,
-    projectsTxCount: number | null,
-    ethereumTxCount: number | null,
-    projectsUopsCount: number | null,
-    ethereumUopsCount: number | null,
-  ][]
+  data: ActivityChartDataPoint[]
   syncWarning: string | undefined
   syncedUntil: UnixTime
 }
@@ -88,18 +93,13 @@ export async function getActivityChart({
   }
 
   const startTimestamp = Math.min(...Object.keys(aggregatedEntries).map(Number))
-  const timestamps = generateTimestamps(
-    [UnixTime(startTimestamp), adjustedRange[1]],
-    'daily',
-  )
+  const endTimestamp = isActivitySynced(syncedUntil)
+    ? syncedUntil
+    : adjustedRange[1]
 
-  const data: [
-    number,
-    number | null,
-    number | null,
-    number | null,
-    number | null,
-  ][] = timestamps.map((timestamp) => {
+  const timestamps = generateTimestamps([startTimestamp, endTimestamp], 'daily')
+
+  const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = aggregatedEntries[timestamp]
     if (!entry) {
       return [timestamp, null, null, null, null]
