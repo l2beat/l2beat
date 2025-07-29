@@ -352,7 +352,6 @@ export class UpdateMonitor {
         projectId: projectConfig.name,
         chainId: ChainId(this.chainConverter.toChainId(runner.chain)),
         timestamp: previousDiscovery.timestamp,
-        blockNumber: 0,
         contentHash: hashJson(sortObjectByKeys(flatSources)),
         flat: flatSources,
       })
