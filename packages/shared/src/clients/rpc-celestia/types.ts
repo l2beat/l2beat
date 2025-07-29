@@ -13,19 +13,6 @@ export const CelestiaBlockResponse = v.object({
   result: CelestiaBlock,
 })
 
-const CelestiaLogs = v.array(
-  v.object({
-    events: v.array(
-      v.object({
-        type: v.string(),
-        attributes: v.array(
-          v.object({ key: v.string(), value: v.string().optional() }),
-        ),
-      }),
-    ),
-  }),
-)
-
 export type CelestiaBlockResult = v.infer<typeof CelestiaBlockResult>
 const CelestiaBlockResult = v.object({
   height: v.string(),
@@ -33,14 +20,14 @@ const CelestiaBlockResult = v.object({
     v.null(),
     v.array(
       v.object({
-        log: v.unknown().transform((val) => {
-          let array = []
-          try {
-            array = JSON.parse(String(val))
-          } catch {}
-
-          return CelestiaLogs.parse(array)
-        }),
+        events: v.array(
+          v.object({
+            type: v.string(),
+            attributes: v.array(
+              v.object({ key: v.string(), value: v.string().optional() }),
+            ),
+          }),
+        ),
       }),
     ),
   ]),
