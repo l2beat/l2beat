@@ -1,21 +1,18 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { BADGES } from '../../common/badges'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { AnytrustDAC } from '../../templates/anytrust-template'
-import { orbitStackL2 } from '../../templates/orbitStack'
+import { underReviewL2 } from '../../templates/underReview'
 
-const discovery = new ProjectDiscovery('sischain')
-
-export const sischain: ScalingProject = orbitStackL2({
+export const sischain: ScalingProject = underReviewL2({
+  id: ProjectId('sischain'),
   addedAt: UnixTime(1753778036),
   capability: 'universal',
-  additionalBadges: [BADGES.RaaS.Caldera, BADGES.Stack.Nitro],
   display: {
     name: 'SIS Chain',
     slug: 'sischain',
     description:
       'The SIS Chain is purpose-built for cross-chain activity – with fast execution, simple tooling, and native token utility at its core.',
+    category: 'ZK Rollup',
+    purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
       websites: ['https://symbiosis.finance'],
@@ -26,7 +23,7 @@ export const sischain: ScalingProject = orbitStackL2({
         'https://x.com/symbiosis_fi',
         'https://t.me/symbiosis_finance',
         'https://discord.com/invite/ymbRx6ADvR',
-        'https://linkedin.com/company/symbiosis-finance'
+        'https://linkedin.com/company/symbiosis-finance',
       ],
     },
   },
@@ -46,9 +43,4 @@ export const sischain: ScalingProject = orbitStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  customDa: AnytrustDAC({ discovery }),
-  discovery,
-  bridge: discovery.getContract('Bridge'),
-  rollupProxy: discovery.getContract('RollupProxy'),
-  sequencerInbox: discovery.getContract('SequencerInbox'),
 })
