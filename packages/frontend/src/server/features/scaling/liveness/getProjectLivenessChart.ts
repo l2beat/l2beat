@@ -12,6 +12,7 @@ import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
+import { isLivenessSynced } from './utils/isLivenessSynced'
 
 export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams
@@ -45,12 +46,8 @@ export async function getProjectLivenessChart({
   }
 
   const db = getDb()
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
-
   const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: target,
-  })
+  const [from, to] = getRangeWithMax({ type: range }, resolution)
 
   const [livenessProject] = await ps.getProjects({
     ids: [ProjectId(projectId)],
@@ -105,9 +102,19 @@ export async function getProjectLivenessChart({
   const startTimestamp = Math.min(
     ...Object.keys(groupedByResolution).map(Number),
   )
-  const timestamps = generateTimestamps([startTimestamp, to], resolution, {
-    addTarget: true,
-  })
+  const lastTimestamp = Math.max(
+    ...Object.keys(groupedByResolution).map(Number),
+  )
+
+  const adjustedTo = isLivenessSynced(lastTimestamp) ? lastTimestamp : to
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedTo],
+    resolution,
+    {
+      addTarget: true,
+    },
+  )
 
   const data: [number, number | null, number | null, number | null][] =
     timestamps.map((timestamp) => {
