@@ -117,9 +117,9 @@ export const intmax: ScalingProject = {
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: {
-      value: 'Self-custodied',
+      value: 'Self custodied',
       description:
-        'All data required for payments and withdrawals is self-custodied by users.',
+        'All data required for payments and withdrawals is self custodied by users.',
       sentiment: 'good',
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
