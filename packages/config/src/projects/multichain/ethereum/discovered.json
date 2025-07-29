@@ -1,7 +1,6 @@
 {
   "name": "multichain",
   "chain": "ethereum",
-  "blockNumber": 21322825,
   "timestamp": 1733239115,
   "configHash": "0x8140325b08c8afbd7d4ff7aa005de5132e5ce76fc05308f14f84993c39cec2df",
   "entries": [

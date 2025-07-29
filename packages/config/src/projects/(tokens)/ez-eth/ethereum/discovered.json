@@ -1,7 +1,6 @@
 {
   "name": "ez-eth",
   "chain": "ethereum",
-  "blockNumber": 22945156,
   "timestamp": 1752830507,
   "configHash": "0x6a2a186bdefced57f1a4eddf659226ea6298d93bc8c492b014d090048ebe34e6",
   "entries": [

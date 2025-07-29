@@ -1,7 +1,6 @@
 {
   "name": "lens",
   "chain": "zksync2",
-  "blockNumber": 54952331,
   "timestamp": 1738324245,
   "configHash": "0x9786ec937b4b23b8d7ef56eda9e7aafa054a2a7d30c98732539eb9247e52f787",
   "sharedModules": ["shared-zk-stack"],

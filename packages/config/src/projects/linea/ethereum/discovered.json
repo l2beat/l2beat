@@ -1,7 +1,6 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 23015753,
   "timestamp": 1753682855,
   "configHash": "0x05298ee2849cf50750a14ce653425c692151101b6a24c0d120f1ec3e468edaaa",
   "entries": [

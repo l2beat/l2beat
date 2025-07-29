@@ -1,7 +1,6 @@
 {
   "name": "cronoszkevm",
   "chain": "zksync2",
-  "blockNumber": 54952349,
   "timestamp": 1738324264,
   "configHash": "0x217e2e27d5526e9c56b2238fd81a67981c7ca9e6d2a77710c6df9ddcaf72475b",
   "sharedModules": ["shared-zk-stack"],

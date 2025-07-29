@@ -1,7 +1,6 @@
 {
   "name": "debridge",
   "chain": "ethereum",
-  "blockNumber": 22966882,
   "timestamp": 1753092647,
   "configHash": "0xe251156abc78df2f9ac8459c95dcb41b505c4bd9c2866225d24414a8191ae626",
   "entries": [

@@ -1,7 +1,6 @@
 {
   "name": "treasure",
   "chain": "ethereum",
-  "blockNumber": 22593197,
   "timestamp": 1748579639,
   "configHash": "0x224ae1fa0b692c2a31aea451fb3436fd0b6d89f98654c3355ed119257c5ba8d2",
   "sharedModules": ["shared-zk-stack"],

@@ -1,7 +1,6 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 61100811,
   "timestamp": 1748591870,
   "configHash": "0x15a8f52bcee55126ce6f8cfcfd20620eefcb0e4d2d27a1aabdaa4edd5a891082",
   "entries": [

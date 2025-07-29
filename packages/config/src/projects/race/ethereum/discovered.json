@@ -1,7 +1,6 @@
 {
   "name": "race",
   "chain": "ethereum",
-  "blockNumber": 22346290,
   "timestamp": 1745587139,
   "configHash": "0x3bc6b88129e77f47e9a332480fd6510de19e26568362b6cd95f8e9f9713a17ae",
   "entries": [

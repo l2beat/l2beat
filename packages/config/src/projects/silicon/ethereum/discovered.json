@@ -1,7 +1,6 @@
 {
   "name": "silicon",
   "chain": "ethereum",
-  "blockNumber": 22975146,
   "timestamp": 1753192487,
   "configHash": "0xe5320468f59d85bc317f39d62364cb9e98d82ed47d87ab57b3b0b086b4b0332c",
   "sharedModules": ["shared-polygon-cdk"],

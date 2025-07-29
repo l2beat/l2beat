@@ -1,7 +1,6 @@
 {
   "name": "corn",
   "chain": "ethereum",
-  "blockNumber": 22975813,
   "timestamp": 1753200551,
   "configHash": "0x3dc9138defb6cac015c8613208dd5b76030b857584b7b2a7273f836a82c9329e",
   "entries": [

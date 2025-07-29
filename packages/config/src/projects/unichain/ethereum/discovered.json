@@ -1,7 +1,6 @@
 {
   "name": "unichain",
   "chain": "ethereum",
-  "blockNumber": 22996546,
   "timestamp": 1753451183,
   "configHash": "0xdc905eb1d472f94b8221a5bf6e6b85f51a85ace024524ec6ffb8f1231b97dbc7",
   "entries": [

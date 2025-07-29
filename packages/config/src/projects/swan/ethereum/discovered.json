@@ -1,7 +1,6 @@
 {
   "name": "swan",
   "chain": "ethereum",
-  "blockNumber": 20413034,
   "timestamp": 1722265907,
   "configHash": "0x0737645a7de4ab15e080eabf7f6f4d34b4b594f0b645e02f8d66579f0fd35d44",
   "entries": [

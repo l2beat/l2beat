@@ -1,7 +1,6 @@
 {
   "name": "blessnet",
   "chain": "arbitrum",
-  "blockNumber": 360431941,
   "timestamp": 1753200912,
   "configHash": "0x5545d7a496d31c5f47300f33721f190b309be99aaeebc91f66dbd950d2fa91f4",
   "entries": [

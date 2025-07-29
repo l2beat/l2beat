@@ -1,7 +1,6 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 23015672,
   "timestamp": 1753681883,
   "configHash": "0xc42e3e5766f8f42aaab2faaf6c6d9ebe2622179cf824db0cd55627d6abee3cfb",
   "entries": [

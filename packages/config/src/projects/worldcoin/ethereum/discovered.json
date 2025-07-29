@@ -1,7 +1,6 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 22438006,
   "timestamp": 1746697391,
   "configHash": "0x3c7bbda1173be3db76da7abbbb3b7cc3c8d669c8b7ea41245601a9ac8d6a0c26",
   "entries": [

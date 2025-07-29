@@ -1,7 +1,6 @@
 {
   "name": "apex",
   "chain": "ethereum",
-  "blockNumber": 22975778,
   "timestamp": 1753200107,
   "configHash": "0x177dc7c50b4415b6b5337180cb11a9e8f244a54920224112b5f2920ffce66251",
   "sharedModules": ["shared-sharp-verifier"],

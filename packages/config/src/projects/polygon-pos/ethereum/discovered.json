@@ -1,7 +1,6 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 22924075,
   "timestamp": 1752576395,
   "configHash": "0x54abf86db2c1f85ed39017441fa8a3885742264878fb8a1a24a4aa33170b447c",
   "entries": [
