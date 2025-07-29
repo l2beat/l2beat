@@ -24,7 +24,6 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -187,43 +186,41 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className={tooltipContentVariants()}>
-        <div className="flex min-w-28 flex-col gap-1">
-          <div className="mb-1 font-medium text-label-value-14 text-secondary">
-            {formatTimestamp(label, { longMonthName: true })}
-          </div>
-          <div className="flex flex-col gap-2">
-            {payload.map((entry) => {
-              if (
-                entry.name === undefined ||
-                entry.value === undefined ||
-                entry.value === null
-              )
-                return null
-              const config = meta[entry.name]
-              assert(config, 'No config')
+      <div className="flex min-w-28 flex-col gap-1">
+        <div className="mb-1 font-medium text-label-value-14 text-secondary">
+          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        </div>
+        <div className="flex flex-col gap-2">
+          {payload.map((entry) => {
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.value === null
+            )
+              return null
+            const config = meta[entry.name]
+            assert(config, 'No config')
 
-              return (
-                <div
-                  key={entry.name}
-                  className="flex items-center justify-between gap-x-1"
-                >
-                  <span className="flex items-center gap-1">
-                    <ChartDataIndicator
-                      backgroundColor={config.color}
-                      type={config.indicatorType}
-                    />
-                    <span className="w-20 font-medium text-label-value-14 sm:w-fit">
-                      {config.label}
-                    </span>
+            return (
+              <div
+                key={entry.name}
+                className="flex items-center justify-between gap-x-1"
+              >
+                <span className="flex items-center gap-1">
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
+                  />
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
+                    {config.label}
                   </span>
-                  <span className="whitespace-nowrap font-medium text-label-value-15">
-                    {formatCurrency(entry.value, unit)}
-                  </span>
-                </div>
-              )
-            })}
-          </div>
+                </span>
+                <span className="whitespace-nowrap font-medium text-label-value-15">
+                  {formatCurrency(entry.value, unit)}
+                </span>
+              </div>
+            )
+          })}
         </div>
       </div>
     </ChartTooltipWrapper>

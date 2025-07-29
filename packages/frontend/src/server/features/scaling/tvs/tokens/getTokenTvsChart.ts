@@ -5,7 +5,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getRangeWithMax } from '~/utils/range/range'
-import { getTvsTargetTimestamp } from '../utils/getTvsTargetTimestamp'
+import { isTvsSynced } from '../utils/isTvsSynced'
 import { rangeToResolution, TvsChartRange } from '../utils/range'
 
 const TokenParams = z.object({
@@ -44,12 +44,9 @@ export async function getTokenTvsChart({
   }
 
   const db = getDb()
-  const targetTimestamp = getTvsTargetTimestamp()
   const resolution = rangeToResolution({ type: range })
 
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: targetTimestamp,
-  })
+  const [from, to] = getRangeWithMax({ type: range }, resolution)
 
   const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
     token.tokenId,
@@ -72,7 +69,11 @@ export async function getTokenTvsChart({
     }
   }
 
-  const timestamps = generateTimestamps([minTimestamp, to], resolution)
+  const lastTimestamp = Math.max(
+    ...Object.keys(tokenValuesByTimestamp).map(Number),
+  )
+  const adjustedTo = isTvsSynced(lastTimestamp) ? lastTimestamp : to
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 
   const data: TokenTvsChartPoint[] = []
   let syncedUntil = 0
