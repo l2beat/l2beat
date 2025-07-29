@@ -8,6 +8,7 @@
     "strategies",
     "getRestakeableStrategies"
   ],
+  "ignoreMethods": ["deployedPolicyIDs", "strategies"],
   "fields": {
     "intmaxThreshold": {
       "handler": {

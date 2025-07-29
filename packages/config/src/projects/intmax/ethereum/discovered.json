@@ -41,7 +41,6 @@
         "owner": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "errors": { "proxiableUUID": "Processing error occurred." },
       "implementationNames": {
         "eth:0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E": "ERC1967Proxy",
         "eth:0xef082Ff43805B93Ed375Fd47A964Fe136cCB9021": "PredicatePermitter"
@@ -438,13 +437,6 @@
         "aggregator": "eth:0x38f6001e8ac11240f903CBa56aFF72A1425ae371",
         "avsDirectory": "eth:0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "delegationManager": "eth:0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
-        "deployedPolicyIDs": [
-          "x-sanctions-example-policy",
-          "x-example-033f2ab1377d3510",
-          "x-aleo-6571f4121bd9fe5d",
-          "x-aleo-55814530df7fc3cf",
-          "x-aleo-6a52de9724a6e8f2"
-        ],
         "getDeployedPolicies": [
           "x-sanctions-example-policy",
           "x-example-033f2ab1377d3510",
@@ -544,18 +536,7 @@
           "sg_aleo_13c287f941c26253"
         ],
         "stakeRegistry": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
-        "strategies": [
-          "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
-          "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D",
-          "eth:0x1BeE69b7dFFfA4E2d53C2a2Df135C388AD25dCD2",
-          "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
-          "eth:0x93c4b944D05dfe6df7645A86cd2206016c51564D"
-        ],
         "thresholdStake": 0
-      },
-      "errors": {
-        "deployedPolicyIDs": "Processing error occurred.",
-        "strategies": "Processing error occurred."
       },
       "implementationNames": {
         "eth:0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2": "TransparentUpgradeableProxy",
@@ -1006,11 +987,11 @@
     ]
   },
   "usedTemplates": {
-    "eigenlayer/PredicateServiceManager": "0x6753b6b7cf5497277a61bdc89b4a7c99bea16d5054b759b994e558e7171f8095",
+    "eigenlayer/PredicateServiceManager": "0xab8cdaa1cd6ce6003cf49746a5682bb5f3e224c6dbc43d244929cbb43e98051a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "intmax/Liquidity": "0xe5ffb6917a22917649f7ad0021caa73eaa31df72f1b181e9eaf16b7d0817ef2e",
-    "intmax/PredicatePermitter": "0x33396fee97bccfbb708b7f91fe3bfe8a6c5a58a64b0383c5b81bc5e963468927"
+    "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
   "permissionsConfigHash": "0x0889077d40e266474dd26688430873a7ba94a61291052e5add8dcf9dcff39517"
 }
