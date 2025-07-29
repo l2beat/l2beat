@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
@@ -10,7 +10,6 @@ import {
   type SummedTvsValues,
 } from './utils/getSummedTvsValues'
 import { getTvsProjects } from './utils/getTvsProjects'
-import { getTvsTargetTimestamp } from './utils/getTvsTargetTimestamp'
 import {
   createTvsProjectsFilter,
   TvsProjectFilter,
@@ -39,7 +38,7 @@ type TvsChartDataPoint = [
   native: number | null,
   canonical: number | null,
   external: number | null,
-  ethPrice: number,
+  ethPrice: number | null,
 ]
 export type TvsChartData = {
   chart: TvsChartDataPoint[]
@@ -103,6 +102,15 @@ function getChartData(
   const chart: TvsChartDataPoint[] = []
 
   for (const value of values) {
+    if (
+      value.native === null &&
+      value.canonical === null &&
+      value.external === null
+    ) {
+      chart.push([value.timestamp, null, null, null, null] as const)
+      continue
+    }
+
     const ethPrice = ethPrices[value.timestamp]
     assert(ethPrice, 'No ETH price for ' + value.timestamp)
 
@@ -114,13 +122,7 @@ function getChartData(
       ethPrice,
     ] as const)
 
-    if (
-      value.native !== null ||
-      value.canonical !== null ||
-      value.external !== null
-    ) {
-      syncedUntil = value.timestamp
-    }
+    syncedUntil = value.timestamp
   }
 
   return {
@@ -131,7 +133,7 @@ function getChartData(
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
-  const target = getTvsTargetTimestamp()
+  const target = UnixTime.toStartOf(UnixTime.now(), 'hour')
   const adjustedTarget = range.type === 'custom' ? range.to : target
   const [from, to] = getRangeWithMax(range, resolution, {
     now: adjustedTarget,

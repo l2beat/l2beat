@@ -108,9 +108,18 @@ function DefaultChart({
         const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
-          native: native !== null ? native / divider : null,
-          canonical: canonical !== null ? canonical / divider : null,
-          external: external !== null ? external / divider : null,
+          native:
+            native !== null && divider !== null && divider !== 0
+              ? native / divider
+              : null,
+          canonical:
+            canonical !== null && divider !== null && divider !== 0
+              ? canonical / divider
+              : null,
+          external:
+            external !== null && divider !== null && divider !== 0
+              ? external / divider
+              : null,
         }
       }),
     [data, unit],

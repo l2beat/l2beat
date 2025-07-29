@@ -38,7 +38,10 @@ export function BridgesTvsChart() {
       const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: total !== null ? total / divider : null,
+        value:
+          total !== null && divider !== null && divider !== 0
+            ? total / divider
+            : null,
       }
     },
   )
