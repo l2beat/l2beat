@@ -80,7 +80,6 @@ import { hypr } from '../projects/hypr/hypr'
 import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
-import { intmax } from '../projects/intmax/intmax'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -304,7 +303,6 @@ export const layer2s: ScalingProject[] = [
   immutablex,
   immutablezkevm,
   ink,
-  intmax,
   karak,
   katana,
   kinto,
