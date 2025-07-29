@@ -183,6 +183,8 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
         diffBaseTimestamp,
         diffHeadTimestamp,
       })
@@ -195,6 +197,8 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
         diffBaseTimestamp,
         diffHeadTimestamp,
       })
@@ -207,6 +211,8 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
         diffBaseTimestamp,
         diffHeadTimestamp,
       })
@@ -219,6 +225,8 @@ export class UpdateDiffer {
         address,
         chain,
         timestamp,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
         diffBaseTimestamp,
         diffHeadTimestamp,
       })

@@ -59,6 +59,7 @@ export class UpdateNotifier {
     const nonce = await this.getInternalMessageNonce()
     await this.db.updateNotifier.insert({
       projectId: name,
+      blockNumber: 0,
       diff,
       timestamp: timestamp,
       chainId: chainId,
@@ -125,6 +126,7 @@ export class UpdateNotifier {
       chain: this.chainConverter.toName(chainId),
       message: filteredWebMessage,
       timestamp,
+      blockNumber: 0,
     })
 
     this.logger.info('Updates detected, notification sent [PUBLIC]', {

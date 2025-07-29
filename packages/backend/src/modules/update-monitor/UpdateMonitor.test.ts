@@ -1028,6 +1028,7 @@ const mockRecord: UpdateMonitorRecord = {
   projectId: 'name',
   chainId: ChainId.ETHEREUM,
   timestamp: 1,
+  blockNumber: 0,
   configHash: Hash256.random(),
   discovery: DISCOVERY_RESULT,
 }
