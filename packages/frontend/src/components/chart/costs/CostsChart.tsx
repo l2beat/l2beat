@@ -52,7 +52,7 @@ const chartMeta = {
     indicatorType: { shape: 'line' },
   },
   estimatedPosted: {
-    label: 'Data posted (not synced)',
+    label: 'Data posted (estimated)',
     color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line', strokeDasharray: '3 3' },
   },

@@ -44,15 +44,9 @@ export async function getScalingProjectDaThroughputChart(
   const resolution = rangeToResolution({ type: params.range })
   const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
 
-  const [from, to] = getRangeWithMax(
-    {
-      type: params.range,
-    },
-    resolution,
-    {
-      now: target,
-    },
-  )
+  const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
+    now: target,
+  })
 
   const [throughput, activityRecords] = await Promise.all([
     db.dataAvailability.getByProjectIdsAndTimeRange(

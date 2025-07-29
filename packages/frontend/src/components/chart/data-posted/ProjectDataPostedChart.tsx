@@ -33,7 +33,7 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
       return {
         timestamp,
         posted,
-        notSyncedPosted:
+        estimatedPosted:
           !allDataPostedSynced &&
           lastDataPosted &&
           timestamp >= lastDataPosted[0]
@@ -58,7 +58,6 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
       <DataPostedChart
         data={chartData}
         isLoading={isLoading}
-        syncedUntil={data?.syncedUntil}
         className="mt-4 mb-2"
         tickCount={4}
       />

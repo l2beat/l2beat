@@ -19,11 +19,11 @@ import { formatBytes } from '~/utils/number-format/formatBytes'
 interface DataPostedChartDataPoint {
   timestamp: number
   posted: number | null
+  estimatedPosted: number | null
 }
 
 interface Props {
   data: DataPostedChartDataPoint[] | undefined
-  syncedUntil: number | undefined
   isLoading: boolean
   className?: string
   tickCount?: number
@@ -31,7 +31,6 @@ interface Props {
 
 export function DataPostedChart({
   data,
-  syncedUntil,
   isLoading,
   className,
   tickCount,
@@ -44,8 +43,8 @@ export function DataPostedChart({
         shape: 'line',
       },
     },
-    notSyncedPosted: {
-      label: 'Data posted (not synced)',
+    estimatedPosted: {
+      label: 'Data posted (estimated)',
       color: 'var(--chart-emerald)',
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
@@ -70,11 +69,11 @@ export function DataPostedChart({
           dot={false}
         />
         <Line
-          dataKey="notSyncedPosted"
+          dataKey="estimatedPosted"
           strokeWidth={2}
-          stroke={chartMeta.notSyncedPosted.color}
+          stroke={chartMeta.estimatedPosted.color}
           strokeDasharray={
-            chartMeta.notSyncedPosted.indicatorType.strokeDasharray
+            chartMeta.estimatedPosted.indicatorType.strokeDasharray
           }
           dot={false}
           isAnimationActive={false}
@@ -87,10 +86,10 @@ export function DataPostedChart({
             tickCount,
             tickFormatter: (value: number) => formatBytes(value),
           },
+          // There is always some data because of the estimation
+          syncedUntil: undefined,
         })}
-        <ChartTooltip
-          content={<DataPostedCustomTooltip syncedUntil={syncedUntil} />}
-        />
+        <ChartTooltip content={<DataPostedCustomTooltip />} />
         <defs>
           <EmeraldFillGradientDef id="fillPosted" />
         </defs>
@@ -103,16 +102,15 @@ export function DataPostedCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
   const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndNotSynced =
-    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
+  const hasPostedAndEstimated =
+    dataKeys.includes('posted') && dataKeys.includes('estimatedPosted')
   const filteredPayload = payload.filter(
-    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
+    (p) => !hasPostedAndEstimated || p.name !== 'estimatedPosted',
   )
   return (
     <ChartTooltipWrapper>
