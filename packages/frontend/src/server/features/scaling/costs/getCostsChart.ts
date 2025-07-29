@@ -3,11 +3,16 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRange, getRangeWithMax } from '~/utils/range/range'
+import { getRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
-import { CostsTimeRange, rangeToResolution } from './utils/range'
+import { isCostsSynced } from './utils/isCostsSynced'
+import {
+  CostsTimeRange,
+  getFullySyncedCostsRange,
+  rangeToResolution,
+} from './utils/range'
 
 export const CostsChartParams = v.object({
   range: CostsTimeRange,
@@ -58,7 +63,7 @@ export async function getCostsChart({
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
   const resolution = rangeToResolution(timeRange)
-  const [from, to] = getRangeWithMax({ type: timeRange }, resolution)
+  const [from, to] = getFullySyncedCostsRange({ type: timeRange })
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
@@ -70,16 +75,16 @@ export async function getCostsChart({
   }
 
   const summedByTimestamp = sumByTimestamp(data, resolution)
-
   const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
-
-  const timestamps = generateTimestamps([minTimestamp, to], resolution)
   const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
-
   const syncedUntil = Array.from(summedByTimestamp.keys()).at(-1)
   assert(syncedUntil, 'syncedUntil is undefined')
+
+  const adjustedTo = isCostsSynced(syncedUntil) ? syncedUntil : to
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 
   const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)

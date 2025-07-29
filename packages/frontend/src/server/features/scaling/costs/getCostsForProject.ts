@@ -17,7 +17,7 @@ export async function getCostsForProject(
   }
 
   const db = getDb()
-  const fullySyncedRange = getFullySyncedCostsRange(timeRange)
+  const fullySyncedRange = getFullySyncedCostsRange({ type: timeRange })
 
   const project = await ps.getProject({
     id: ProjectId(projectId),

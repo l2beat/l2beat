@@ -86,8 +86,11 @@ export async function getProjectCostsChart(
             ? 'six hours'
             : 'hour',
       )
-      const posted = timestampedDaData[dailyTimestamp]
-      return [...cost, posted ?? null]
+      const posted =
+        dailyTimestamp <= costsChart.syncedUntil
+          ? (timestampedDaData[dailyTimestamp] ?? null)
+          : null
+      return [...cost, posted]
     },
   )
 

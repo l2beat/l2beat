@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
+import type { TimeRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const CostsTimeRange = v.union([
@@ -20,15 +21,28 @@ export type CostsTimeRange = v.infer<typeof CostsTimeRange>
  * Fully synced means that the day is synced to the midnight. Current day is not included.
  */
 export function getFullySyncedCostsRange(
-  range: CostsTimeRange,
+  range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
 ): [UnixTime, UnixTime] {
-  const days = rangeToDays({ type: range })
+  if (range.type === 'custom') {
+    const { from, to } = range as { from: number; to: number }
+    return [from, to]
+  }
 
-  const startOfDay = UnixTime.toStartOf(UnixTime.now(), 'day')
+  const resolution = rangeToResolution(range.type)
 
-  const end = startOfDay
-  const start = days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.costs
-  return [start, end]
+  const end = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'hourly'
+      ? 'hour'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'day',
+  )
+  const days = rangeToDays(range)
+
+  const start =
+    days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.activity
+  return [start, end - 1]
 }
 
 export type CostsResolution = ReturnType<typeof rangeToResolution>

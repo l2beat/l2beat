@@ -55,6 +55,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
     <XAxis key="x-axis" {...getXAxisProps(data)} />,
     lastSyncedTimestamp && (
       <ReferenceArea
+        yAxisId={yAxis?.yAxisId}
         key="last-valid-timestamp"
         x1={lastSyncedTimestamp}
         fill="url(#noDataFill)"
