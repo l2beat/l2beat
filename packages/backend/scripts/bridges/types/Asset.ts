@@ -2,8 +2,14 @@ import type { UnixTime } from '@l2beat/shared-pure'
 
 export interface Asset {
   type: 'asset'
-  direction: 'inbound' | 'outbound'
   application: string
+  amount: bigint
+  token: string
+  messageProtocol?: string
+  messageId?: string
+
+  // #region common
+  direction: 'inbound' | 'outbound'
   /** Short name of the origin chain */
   origin: string
   /** Short name of the destination chain */
@@ -16,6 +22,5 @@ export interface Asset {
   customType?: string
   /** Custom id used (by given protocol) to identify other part of the transfer */
   matchingId?: string
-  amount: bigint
-  token: string
+  // #endregion
 }

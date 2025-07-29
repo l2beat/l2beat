@@ -9,6 +9,8 @@ import { CCTPV2 } from './decoders/cctpv2'
 import { DEBRIDGE } from './decoders/debridge'
 import { HYPERLANE } from './decoders/hyperlane'
 import { LAYERZEROV1 } from './decoders/layerzerov1'
+import { LAYERZEROV2 } from './decoders/layerzerov2'
+import { STARGATE } from './decoders/stargate'
 
 export interface Protocol {
   name: string
@@ -20,9 +22,9 @@ export const PROTOCOLS: Protocol[] = [
   CCTPV1,
   CCTPV2,
   LAYERZEROV1,
-  // LAYERZEROV2,
+  LAYERZEROV2,
   AGGLAYER,
-  // STARGATE,
+  STARGATE,
   HYPERLANE,
   DEBRIDGE,
 ]
