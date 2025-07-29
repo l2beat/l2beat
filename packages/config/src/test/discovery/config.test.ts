@@ -38,6 +38,7 @@ export const onChainProjects: string[] = [
   'gateway',
   'hibachi',
   'opcm16',
+  'tradable',
   ...configReader.getProjectsInGroup('tokens'),
 ]
 

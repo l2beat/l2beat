@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "tradable",
+  "import": ["../globalConfig.jsonc"],
+  // Uncomment to prevent deal discovery - which is a loooot
+  // "maxDepth": 0,
+  "initialAddresses": ["zksync:0x0ff03b6c9d30cbc4926c5773e7c72dfffd868809"], // Deal Factory ,
+  "overrides": {
+    "zksync:0x0ff03b6c9d30cbc4926c5773e7c72dfffd868809": {
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "$dealsDeployed": {
+          "handler": {
+            "type": "tradable"
+          }
+        }
+      }
+    },
+    "zksync:0x0000000000000000000000000000000000000000": {
+      "ignoreDiscovery": true
+    }
+  }
+}
