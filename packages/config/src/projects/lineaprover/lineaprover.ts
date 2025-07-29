@@ -42,7 +42,7 @@ export const lineaprover: BaseProject = {
         ZK_CATALOG_TAGS.curve['BLS12-377'],
         ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.curve['BW6-761'],
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: '',

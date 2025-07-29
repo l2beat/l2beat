@@ -36,14 +36,14 @@ export const risc0: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.RISC0,
         ZK_CATALOG_TAGS.ISA.RISCV,
-        ZK_CATALOG_TAGS.Arithmetization.AIR,
+        // ZK_CATALOG_TAGS.Arithmetization.AIR,
         ZK_CATALOG_TAGS.Field.BabyBear,
       ],
       finalWrap: [
         ZK_CATALOG_TAGS.Groth16.Snarkjs,
         ZK_CATALOG_TAGS.curve.BN254,
-        ZK_CATALOG_TAGS.Arithmetization.R1CS,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.Arithmetization.R1CS,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: '',

@@ -30,8 +30,8 @@ export const zksyncprover: BaseProject = {
     techStack: {
       finalWrap: [
         ZK_CATALOG_TAGS.Plonk.Zksync,
-        ZK_CATALOG_TAGS.Arithmetization.R1CS,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.Arithmetization.R1CS,
+        // ZK_CATALOG_TAGS.PCS.KZG,
         ZK_CATALOG_TAGS.curve.BN254,
       ],
     },
