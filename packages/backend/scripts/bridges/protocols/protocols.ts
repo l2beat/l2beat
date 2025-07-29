@@ -4,7 +4,11 @@ import type { DecoderInput } from '../types/DecoderInput'
 import type { Message } from '../types/Message'
 import { ACROSS } from './decoders/across'
 import { AGGLAYER } from './decoders/agglayer'
+import { CCTPV1 } from './decoders/cctpv1'
+import { CCTPV2 } from './decoders/cctpv2'
 import { DEBRIDGE } from './decoders/debridge'
+import { HYPERLANE } from './decoders/hyperlane'
+import { LAYERZEROV1 } from './decoders/layerzerov1'
 
 export interface Protocol {
   name: string
@@ -13,12 +17,12 @@ export interface Protocol {
 
 export const PROTOCOLS: Protocol[] = [
   ACROSS,
-  // CCTPV1,
-  // CCTPV2,
-  // LAYERZEROV1,
+  CCTPV1,
+  CCTPV2,
+  LAYERZEROV1,
   // LAYERZEROV2,
   AGGLAYER,
   // STARGATE,
-  // HYPERLANE,
+  HYPERLANE,
   DEBRIDGE,
 ]
