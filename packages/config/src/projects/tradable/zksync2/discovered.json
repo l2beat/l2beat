@@ -1,7 +1,7 @@
 {
   "name": "tradable",
   "chain": "zksync2",
-  "timestamp": 1753806123,
+  "timestamp": 1753806898,
   "configHash": "0xc7759e325097682e489d88eeb338fb00e5893b32b005eb84af801da03b9fcb1f",
   "entries": [
     {
@@ -1472,6 +1472,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
       "values": {
@@ -1496,7 +1497,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1571,6 +1572,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
       "values": {
@@ -1605,11 +1607,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66878/large/tradable.jpg?1750921608",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2002,6 +2004,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
       "values": {
@@ -2036,11 +2039,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66800/large/tradable.jpg?1750576495",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2289,6 +2292,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
       "values": {
@@ -2313,7 +2317,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2759,6 +2763,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
       "values": {
@@ -2783,7 +2788,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2847,6 +2852,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
       "values": {
@@ -2871,7 +2877,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -3880,6 +3886,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
       "values": {
@@ -3914,11 +3921,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66791/large/tradable.jpg?1750576168",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4000,6 +4007,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
       "values": {
@@ -4024,7 +4032,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4079,6 +4087,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
       "values": {
@@ -4103,7 +4112,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4189,6 +4198,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
       "values": {
@@ -4213,7 +4223,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4352,6 +4362,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
       "values": {
@@ -4386,11 +4397,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66795/large/tradable.jpg?1750576365",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4509,6 +4520,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
       "values": {
@@ -4543,11 +4555,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66879/large/tradable.jpg?1750921826",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4610,6 +4622,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
       "values": {
@@ -4644,11 +4657,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66881/large/tradable.jpg?1750921901",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4765,6 +4778,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
       "values": {
@@ -4799,11 +4813,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66796/large/tradable.jpg?1750576421",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5272,6 +5286,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
       "values": {
@@ -5306,11 +5321,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66954/large/tradable.jpg?1751254449",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5712,6 +5727,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
       "values": {
@@ -5736,7 +5752,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6316,6 +6332,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
       "values": {
@@ -6340,7 +6357,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6415,6 +6432,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
       "values": {
@@ -6449,11 +6467,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66798/large/tradable.jpg?1750576460",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -7323,6 +7341,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
       "values": {
@@ -7357,11 +7376,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66792/large/tradable.jpg?1750576200",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -8944,6 +8963,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
       "values": {
@@ -8968,7 +8988,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9049,6 +9069,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
       "values": {
@@ -9083,11 +9104,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66799/large/tradable.jpg?1750576475",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10120,6 +10141,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
       "values": {
@@ -10144,7 +10166,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10198,6 +10220,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
       "values": {
@@ -10222,7 +10245,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10516,6 +10539,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
       "values": {
@@ -10550,11 +10574,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10661,6 +10685,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
       "values": {
@@ -10695,11 +10720,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66797/large/tradable.jpg?1750576441",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10806,6 +10831,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
       "values": {
@@ -10830,7 +10856,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11670,6 +11696,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
       "values": {
@@ -11694,7 +11721,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12239,6 +12266,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
       "values": {
@@ -12273,11 +12301,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66793/large/tradable.jpg?1750576283",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12368,6 +12396,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
       "values": {
@@ -12392,7 +12421,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12870,6 +12899,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
       "values": {
@@ -12904,11 +12934,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66880/large/tradable.jpg?1750921859",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13058,6 +13088,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
       "values": {
@@ -13082,7 +13113,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13503,6 +13534,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
       "values": {
@@ -13537,11 +13569,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66593/large/tradable.jpg?1749883324",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13619,6 +13651,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
       "values": {
@@ -13653,11 +13686,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66794/large/tradable.jpg?1750576332",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13759,6 +13792,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
       "values": {
@@ -13783,7 +13817,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14109,6 +14143,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
       "values": {
@@ -14133,7 +14168,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [],
@@ -14175,6 +14210,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
       "values": {
@@ -14209,11 +14245,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66590/large/tradable.jpg?1749832358",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14782,6 +14818,7 @@
       "unverified": true,
       "template": "tradable/Deal",
       "proxyType": "Beacon proxy",
+      "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
       "values": {
@@ -14816,11 +14853,11 @@
           "category": "other",
           "iconUrl": "https://coin-images.coingecko.com/coins/images/66877/large/tradable.jpg?1750921571",
           "chainId": 324,
-          "supply": "totalSupply",
+          "supply": "circulatingSupply",
           "source": "native"
         },
         "$upgradeCount": 3,
-        "clock": 1753806120,
+        "clock": 1753806895,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15562,11 +15599,11 @@
   },
   "usedTemplates": {
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
-    "tradable/Deal": "0x3240dfd274ff5a43cf385196eb4e0e8380220ad2b5b1f28faaa1e49edf7957c6",
+    "tradable/Deal": "0xcbb8cecb1477d66664197a26f8f9315f9307f6a24be7707a4a44e2d95fda8950",
     "tradable/DealFactory": "0x13fd0cff678ebb587a9343fbe172798446b3bde4a86b9ac81c5f8641b28cfcf5",
     "tradable/DealManager": "0x48838ef8da5e8218b480b5b04b5c299da88b0a75ef95f3bf6789513e381cc20d",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 63502512 },
+  "usedBlockNumbers": { "zksync2": 63502865 },
   "permissionsConfigHash": "0x6f2c739f3547c57f2344fce5c9e463f22810561408caaae59bc9bd0e8e4845a8"
 }

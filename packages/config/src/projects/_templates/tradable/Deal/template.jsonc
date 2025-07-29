@@ -7,7 +7,7 @@
         "type": "ERC20Data",
         "overrides": {
           "source": "native",
-          "supply": "totalSupply"
+          "supply": "circulatingSupply"
           // "category": "RWA"
         }
       }
