@@ -2,7 +2,7 @@ import type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -60,6 +60,34 @@ export async function getDaThroughputChart({
     throughput,
     resolution,
   )
+
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValueFromDBTimestamp = throughput.findLast(
+      (p) => p.daLayer === layer,
+    )?.timestamp
+    const lastGroupedValueTimestamp = Number(
+      Object.entries(grouped).findLast(
+        ([_, values]) => values[layer] && values[layer] > 0,
+      )?.[0],
+    )
+
+    assert(
+      lastGroupedValueTimestamp && lastValueFromDBTimestamp,
+      'lastGroupedValueTimestamp is undefined',
+    )
+
+    const lastGroupedEndTimestamp =
+      lastGroupedValueTimestamp +
+      (resolution === 'daily'
+        ? 23 * UnixTime.HOUR
+        : resolution === 'sixHourly'
+          ? 5 * UnixTime.HOUR
+          : 0)
+
+    if (lastValueFromDBTimestamp < lastGroupedEndTimestamp) {
+      delete grouped[lastGroupedValueTimestamp]?.[layer]
+    }
+  }
 
   const lastDataForLayers: Record<
     string,
