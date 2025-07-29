@@ -101,6 +101,17 @@ export class TemplateService {
     sources: ContractSources,
     address: ChainSpecificAddress,
   ): string[] {
+    // !TODO: Temp patch until we merge ability to match templates even is proxy is not verified
+    if (
+      sources.sources.length === 2 &&
+      sources.sources[0]?.source.isVerified === false &&
+      sources.sources[1]?.source.isVerified === true
+    ) {
+      // biome-ignore lint/style/noNonNullAssertion: pray it's there
+      const sourceHash = Hash256(sources.sources[1]?.hash!)
+      return this.findMatchingTemplatesByHash(sourceHash, address)
+    }
+
     if (!sources.isVerified) {
       return []
     }
