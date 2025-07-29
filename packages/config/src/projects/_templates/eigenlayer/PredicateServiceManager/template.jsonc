@@ -13,9 +13,7 @@
       "handler": {
         "type": "call",
         "method": "policyIdToThreshold",
-        "args": [
-          "x-intmax-42efa3d6c0609ea6"
-        ]
+        "args": ["x-intmax-42efa3d6c0609ea6"]
       }
     },
     "permissionedOperators": {

@@ -1,7 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreMethods": [
-    "l1ScrollMessenger", "getDepositData", "getDepositDataHash", "proxiableUUID"
+    "l1ScrollMessenger",
+    "getDepositData",
+    "getDepositDataHash",
+    "proxiableUUID"
   ],
   "fields": {
     "accessControl": {

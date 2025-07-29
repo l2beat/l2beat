@@ -1,9 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import type { ScalingProject } from '../../internalTypes'
-import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  DA_MODES,
+  OPERATOR,
+  RISK_VIEW,
+} from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
+import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('intmax')
 
@@ -46,41 +52,78 @@ export const intmax: ScalingProject = {
   technology: {
     dataAvailability: {
       name: 'All data required for payments is self-custodied by users.',
-      description: 'INTMAX uses a self-custodied data availability model where users maintain their own "balance proofs" to allow for private payments. These balance proofs are computed using data received from aggregators when depositing or initiating a transfer, and from payment senders when receiving funds. The protocol ensures that all data has been made available by requiring users to sign off blocks that contain their deposits or outgoing transfers. Users would not accept payments if they have not received the necessary balance proof from the sender.',
+      description:
+        'INTMAX uses a self-custodied data availability model where users maintain their own "balance proofs" to allow for private payments. These balance proofs are computed using data received from aggregators when depositing or initiating a transfer, and from payment senders when receiving funds. The protocol ensures that all data has been made available by requiring users to sign off blocks that contain their deposits or outgoing transfers. Users would not accept payments if they have not received the necessary balance proof from the sender.',
       references: [
         {
           title: 'INTMAX Whitepaper',
           url: 'https://eprint.iacr.org/2023/1082.pdf',
-        }
+        },
       ],
       risks: [
         {
           category: 'Funds can be lost if',
           text: 'users lose the self-custodied data required to prove their balance.',
-        }
-      ]
+        },
+      ],
     },
-    operator: {},
-    exitMechanisms: {},
-    stateValidation: {},
-    otherConsiderations: {}
-  }
+    operator: {
+      ...OPERATOR.DECENTRALIZED_OPERATOR,
+      references: [
+        {
+          title: 'INTMAX Block Builder - INTMAX docs',
+          url: 'https://intmax-wallet.gitbook.io/intmax-developers-hub/intmax-block-builder',
+        },
+      ],
+    },
+    exitMechanisms: [
+      {
+        name: 'Users can autonomously exit their funds.',
+        description:
+          'Users can autonomously exit by providing a ZK proof of sufficient balance. This requires keeping track of all funds received and sent.',
+        risks: [],
+        references: [
+          {
+            title: 'Withdrawal aggregator - Github repository',
+            url: 'https://github.com/InternetMaximalism/intmax2-withdrawal-aggregator',
+          },
+        ],
+      },
+    ],
+  },
+  stateValidation: {
+    description:
+      "INTMAX uses validity proofs to ensure that users cannot withdraw more than they have. For every transfer made, a ZK proof is required to prove the amount that has been transferred to be subtracted from the sender's balance. If the user does not provide the proof, the balance is considered zero. For received funds, the user must provide the corresponding balance proofs as well, but if the sender has not provided the proof, the user can still withdraw the remaining balance.",
+    categories: [
+      {
+        title: 'ZK Circuits',
+        description:
+          'The source code of the circuits can be found [here](https://github.com/InternetMaximalism/intmax2-zkp).',
+        references: [
+          {
+            title: 'INTMAX Whitepaper',
+            url: 'https://eprint.iacr.org/2023/1082.pdf',
+          },
+          {
+            title: 'intmax2-zkp - Github repository',
+            url: 'https://github.com/InternetMaximalism/intmax2-zkp',
+          },
+        ],
+      },
+    ],
+  },
+
   riskView: {
-    stateValidation: {
-      value: '',
-    },
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: {
-      value: '',
+      value: 'self-custodied',
+      description:
+        'All data required for payments and withdrawals is self-custodied by users.',
+      sentiment: 'good',
     },
-    exitWindow: {
-      value: '',
-    },
-    sequencerFailure: {
-      value: '',
-    },
-    proposerFailure: {
-      value: '',
-    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   stage: getStage(
     {
@@ -111,11 +154,11 @@ export const intmax: ScalingProject = {
   discoveryInfo: getDiscoveryInfo([discovery]),
   contracts: {
     addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts()
+      [discovery.chain]: discovery.getDiscoveredContracts(),
     },
-    risks: []
+    risks: [],
   },
   permissions: {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
-  }
+  },
 }
