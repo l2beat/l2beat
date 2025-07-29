@@ -4,8 +4,7 @@ import { type FlatSourcesRecord, toRecord, toRow } from './entity'
 
 export class FlatSourcesRepository extends BaseRepository {
   async upsert(record: FlatSourcesRecord): Promise<void> {
-    const { projectId, chainId, blockNumber, timestamp, contentHash, flat } =
-      record
+    const { projectId, chainId, timestamp, contentHash, flat } = record
 
     await this.transaction(async () => {
       const existing = await this.db
@@ -19,7 +18,7 @@ export class FlatSourcesRepository extends BaseRepository {
       if (existing) {
         const hashChanged = Hash256(existing.contentHash) !== contentHash
         const update = toRow(
-          { projectId, chainId, blockNumber, timestamp, contentHash },
+          { projectId, chainId, timestamp, contentHash },
           hashChanged ? flat : undefined,
         )
         await this.db
@@ -31,12 +30,7 @@ export class FlatSourcesRepository extends BaseRepository {
       } else {
         await this.db
           .insertInto('FlatSources')
-          .values(
-            toRow(
-              { projectId, chainId, blockNumber, timestamp, contentHash },
-              flat,
-            ),
-          )
+          .values(toRow({ projectId, chainId, timestamp, contentHash }, flat))
           .execute()
       }
     })

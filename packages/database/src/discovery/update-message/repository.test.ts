@@ -16,7 +16,6 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     const message1 = record()
     const message2 = record({
       chain: 'arbitrum',
-      blockNumber: 100,
       timestamp: 100,
     })
 
@@ -32,7 +31,6 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     const message: UpdateMessageRecord = {
       projectId: 'project',
       chain: 'ethereum',
-      blockNumber: 1,
       timestamp: 0,
       message: 'Initial message',
     }
@@ -72,7 +70,6 @@ function record(params?: Partial<UpdateMessageRecord>): UpdateMessageRecord {
   return {
     projectId: 'project',
     chain: 'ethereum',
-    blockNumber: 1,
     timestamp: 0,
     message: 'Test message',
     ...params,

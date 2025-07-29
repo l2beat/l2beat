@@ -15,11 +15,8 @@ export class UpdateMessageRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb
-            .columns(['projectId', 'chain', 'blockNumber'])
-            .doUpdateSet((eb) => ({
-              timestamp: eb.ref('excluded.timestamp'),
-              message: eb.ref('excluded.message'),
-            })),
+            .columns(['projectId', 'chain', 'timestamp'])
+            .doUpdateSet((eb) => ({ message: eb.ref('excluded.message') })),
         )
         .execute()
     })
