@@ -41,7 +41,7 @@ export function getFullySyncedDaThroughputRange(
   const days = rangeToDays(range)
 
   const start = days !== null ? end - days * UnixTime.DAY : null
-  return [start, end - 1]
+  return [start, end]
 }
 
 export function rangeToResolution(

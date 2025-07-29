@@ -55,10 +55,7 @@ export function DaPercentageThroughputChart({
     })
   }, [data])
 
-  const syncedUntil = useMemo(
-    () => Math.max(...Object.values(syncStatus ?? {})),
-    [syncStatus],
-  )
+  const syncedUntil = Math.max(...Object.values(syncStatus ?? {}))
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>

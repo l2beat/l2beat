@@ -6,11 +6,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import {
+  DaThroughputTimeRange,
+  getFullySyncedDaThroughputRange,
+  rangeToResolution,
+} from './utils/range'
 
 export type DaThroughputChart = {
   data: DaThroughputDataPoint[]
@@ -40,9 +44,7 @@ export async function getDaThroughputChart({
   }
   const db = getDb()
   const resolution = rangeToResolution({ type: range })
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
-  })
+  const [from, to] = getFullySyncedDaThroughputRange({ type: range })
   const throughput = includeScalingOnly
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
@@ -78,10 +80,10 @@ export async function getDaThroughputChart({
     }
   }
 
-  const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
-    resolution,
-  )
+  // TODO: figure out why is second parameter needed
+  const adjustedTo = isThroughputSynced(maxTimestamp, false) ? maxTimestamp : to
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
   const data: DaThroughputDataPoint[] = timestamps.map((timestamp) => {
     const timestampValues = grouped[timestamp] ?? {}
 

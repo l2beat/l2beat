@@ -67,7 +67,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .selectFrom('DataAvailability')
       .selectAll()
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
