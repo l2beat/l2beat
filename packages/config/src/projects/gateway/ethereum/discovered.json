@@ -1,8 +1,8 @@
 {
   "name": "gateway",
   "chain": "ethereum",
-  "timestamp": 1753795944,
-  "configHash": "0xe54b7ab36f64bdcc9843565a6a126b9e31ca6ebfc9d0575c03829b7af9cae5e2",
+  "timestamp": 1753798657,
+  "configHash": "0x38b53ab405b1f257e0d15de14ea5119b34d1d19312b0925929b5b708242ff5e9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -358,8 +358,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
-        "getPriorityTreeRoot": "0x9249c5b13d6ae13a792395e1e9b0dcdf5b9470b20136a9a3082b1eacb08cf0d2",
+        "getPriorityQueueSize": 8,
+        "getPriorityTreeRoot": "0xb8528c0245f1c021f0cf0773c35adb4e4dd1d349b4e3b54c1c72ad04d7e38553",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
@@ -368,11 +368,11 @@
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
         "getTotalBatchesCommitted": 454,
         "getTotalBatchesExecuted": 452,
-        "getTotalBatchesVerified": 453,
+        "getTotalBatchesVerified": 454,
         "getTotalBlocksCommitted": 454,
         "getTotalBlocksExecuted": 452,
-        "getTotalBlocksVerified": 453,
-        "getTotalPriorityTxs": 136,
+        "getTotalBlocksVerified": 454,
+        "getTotalPriorityTxs": 137,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -982,6 +982,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23025111 },
-  "permissionsConfigHash": "0xdc7c14442c7ca85a85103ebbf9a27ef9e3fb7275e7c828f79359a567e2efa108"
+  "usedBlockNumbers": { "ethereum": 23025333 },
+  "permissionsConfigHash": "0x1da03f124bf820e9e22a3342cc8437ad577818017e0db1b7910056748b6494ea"
 }
