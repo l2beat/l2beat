@@ -35,7 +35,8 @@ export const superseed: ScalingProject = opStackL2({
   },
   associatedTokens: ['SUPR'],
   isNodeAvailable: true,
-  nodeSourceLink: 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
   stateDerivation: DERIVATION.OPSTACK('SUPERSEED'),
   chainConfig: {
     name: 'superseed',
