@@ -2,8 +2,9 @@ import type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -61,11 +62,22 @@ export async function getDaThroughputChart({
     resolution,
   )
 
-  const lastDataForLayers = processGroupedValuesAndGetLastDataForLayers(
-    throughput,
-    grouped,
-    resolution,
-  )
+  const lastDataForLayers: Record<
+    string,
+    { timestamp: number; value: number }
+  > = {}
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValue = Object.entries(grouped).findLast(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    if (lastValue) {
+      const [timestamp, value] = lastValue
+      lastDataForLayers[layer] = {
+        timestamp: Number(timestamp),
+        value: value[layer] ?? 0,
+      }
+    }
+  }
 
   const timestamps = generateTimestamps(
     [minTimestamp, maxTimestamp],
@@ -112,27 +124,44 @@ export function groupByTimestampAndDaLayerId(
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
-  for (const record of records) {
-    const timestamp = UnixTime.toStartOf(
-      record.timestamp,
+
+  const grouped = groupBy(records, (r) =>
+    UnixTime.toStartOf(
+      r.timestamp,
       resolution === 'daily'
         ? 'day'
         : resolution === 'sixHourly'
           ? 'six hours'
           : 'hour',
-    )
-    const daLayerId = record.daLayer
-    const value = record.totalSize
-    if (!result[timestamp]) {
-      result[timestamp] = {}
+    ),
+  )
+
+  const expectedLength =
+    resolution === 'daily' ? 24 : resolution === 'sixHourly' ? 6 : 1
+
+  for (const [timestamp, records] of Object.entries(grouped)) {
+    const unixTimestamp = Number(timestamp)
+    const groupedByDaLayer = groupBy(records, (r) => r.daLayer)
+
+    for (const [daLayerId, daLayerRecords] of Object.entries(
+      groupedByDaLayer,
+    )) {
+      if (daLayerRecords.length !== expectedLength) {
+        continue
+      }
+
+      const value = daLayerRecords.reduce((acc, r) => acc + r.totalSize, 0n)
+
+      if (!result[unixTimestamp]) {
+        result[unixTimestamp] = {}
+      }
+      if (!result[unixTimestamp][daLayerId]) {
+        result[unixTimestamp][daLayerId] = Number(value)
+      }
     }
-    if (!result[timestamp][daLayerId]) {
-      result[timestamp][daLayerId] = Number(value)
-    } else {
-      result[timestamp][daLayerId] += Number(value)
-    }
-    minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
+
+    minTimestamp = Math.min(minTimestamp, unixTimestamp)
+    maxTimestamp = Math.max(maxTimestamp, unixTimestamp)
   }
 
   return {
@@ -140,61 +169,6 @@ export function groupByTimestampAndDaLayerId(
     minTimestamp: UnixTime(minTimestamp),
     maxTimestamp: UnixTime(maxTimestamp),
   }
-}
-
-function processGroupedValuesAndGetLastDataForLayers(
-  throughput: ProjectsSummedDataAvailabilityRecord[],
-  grouped: Record<number, Record<string, number>>,
-  resolution: 'hourly' | 'sixHourly' | 'daily',
-) {
-  const lastDataForLayers: Record<
-    string,
-    { timestamp: number; value: number }
-  > = {}
-
-  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
-    // Find last timestamp from DB and from grouped values
-    const lastValueFromDBTimestamp = throughput.findLast(
-      (p) => p.daLayer === layer,
-    )?.timestamp
-    const lastGroupedValueTimestamp = Number(
-      Object.entries(grouped).findLast(
-        ([_, values]) => values[layer] && values[layer] > 0,
-      )?.[0],
-    )
-
-    assert(
-      lastGroupedValueTimestamp && lastValueFromDBTimestamp,
-      'lastGroupedValueTimestamp is undefined',
-    )
-
-    // Calculate end timestamp of the last grouped value
-    const lastGroupedEndTimestamp =
-      lastGroupedValueTimestamp +
-      (resolution === 'daily'
-        ? 23 * UnixTime.HOUR
-        : resolution === 'sixHourly'
-          ? 5 * UnixTime.HOUR
-          : 0)
-
-    // If the last value from DB is before the end of the last grouped value, delete the grouped value as it is not full
-    if (lastValueFromDBTimestamp < lastGroupedEndTimestamp) {
-      delete grouped[lastGroupedValueTimestamp]?.[layer]
-    }
-
-    // Build lastDataForLayers using the valid grouped values
-    const lastValue = Object.entries(grouped).findLast(
-      ([_, values]) => values[layer] && values[layer] > 0,
-    )
-    if (lastValue) {
-      const [timestamp, value] = lastValue
-      lastDataForLayers[layer] = {
-        timestamp: Number(timestamp),
-        value: value[layer] ?? 0,
-      }
-    }
-  }
-  return lastDataForLayers
 }
 
 function getMockDaThroughputChartData({
