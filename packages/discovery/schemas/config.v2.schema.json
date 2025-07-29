@@ -651,6 +651,11 @@
                               }
                             },
                             "required": ["type"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": { "type": { "const": "tradable" } },
+                            "required": ["type"]
                           }
                         ]
                       },
