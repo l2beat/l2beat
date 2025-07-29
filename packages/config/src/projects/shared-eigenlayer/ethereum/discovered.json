@@ -1,8 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 23023980,
-  "timestamp": 1748273831,
+  "timestamp": 1753797465,
   "configHash": "0xe9b3ea091613579f148b4a656378dd43274ef2d6feb0e8ac7c261107fdef750e",
   "entries": [
     {
@@ -25,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x4882210000000000",
-        "get_deposit_root": "0x78c84af80eea38432928af39fa93907ac54e3f61d70ed11b7c9a8fbe48eee060"
+        "get_deposit_count": "0x4983210000000000",
+        "get_deposit_root": "0x5908e45b3c4d97b8dcb06c63ab26630a5edb1f573d4bcda12b612f5ceda00bfb"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -1404,7 +1403,7 @@
         "sharesToUnderlying": [0, 1, 2, 3, 4],
         "sharesToUnderlyingView": [0, 1, 2, 3, 4],
         "strategyManager": "eth:0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "417165651779812079547393280",
+        "totalShares": "417164970331664732346201631",
         "underlyingToken": "eth:0x83E9115d334D248Ce39a6f36144aEaB5b3456e75",
         "underlyingToShares": [0, 1, 2, 3, 4],
         "underlyingToSharesView": [0, 1, 2, 3, 4],
@@ -3444,6 +3443,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22567898 },
-  "permissionsConfigHash": "0x2eb5e7c06635581ae2aa4e68d0f4e0f934ef01c7d477944e463fe776ac4d0921"
+  "usedBlockNumbers": { "ethereum": 23025234 },
+  "permissionsConfigHash": "0xa6773d049fd0745e20fc555f8e3a75b2593dae7706acbf222abdd5ae94910cea"
 }

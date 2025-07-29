@@ -1,16 +1,20 @@
-Generated with discovered.json: 0x0054fba815af273e3482e308bb2bbe242548fd2e
+Generated with discovered.json: 0xafaedd5e1dcc96518442a53979fa32b643882676
 
-# Diff at Tue, 29 Jul 2025 09:44:19 GMT:
+# Diff at Tue, 29 Jul 2025 13:57:53 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@afb62a3d48dfe64f3d2d7760794a91da7379cf4b block: 22567898
-- current block number: 23023980
+- comparing to: main@985826fe73e93650e4402d9ab61540358802d73e block: 1748273831
+- current timestamp: 1753797465
 
 ## Description
 
 Provide description of changes. This section will be preserved.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1748273831 (main branch discovery), not current.
 
 ```diff
 -   Status: DELETED
@@ -258,25 +262,6 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract Safe (0xfD636E8EB3839cE82A58936b795043Da7DB0c734)
     +++ description: None
-```
-
-## Source code changes
-
-```diff
-.../AllocationManager/AllocationManager.sol        |  561 ++++---
- .../DelegationManager/DelegationManager.sol        |  169 +-
- .../EIGEN token/Eigen.sol                          |  250 ++-
- .../{.flat@22567898 => .flat}/EigenPod.sol         |  504 ++++--
- .../EigenPodManager/EigenPodManager.sol            |   69 +-
- .../Safe.sol                                       |    0
- .../SafeProxy.p.sol                                |    0
- .../Safe.sol                                       | 1088 +++++++++++++
- .../SafeProxy.p.sol                                |   37 +
- .../{.flat@22567898 => .flat}/StrategyBase.sol     |   55 +-
- .../StrategyManager/StrategyManager.sol            | 1237 +++++++++------
- .../.flat/bEIGEN-Strategy/EigenStrategy.sol        | 1621 ++++++++++++++++++++
- .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++
- 13 files changed, 5367 insertions(+), 953 deletions(-)
 ```
 
 Generated with discovered.json: 0x5d8401e3ec9c713e1502f80b6eaf3ae7b4030ff4
