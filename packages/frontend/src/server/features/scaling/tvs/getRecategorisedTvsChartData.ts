@@ -2,7 +2,6 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -154,10 +153,7 @@ function getMockTvsChartData({
   const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: target,
   })
-  const timestamps = generateTimestamps(
-    [from ?? MIN_TIMESTAMPS.tvs, to],
-    resolution,
-  )
+  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {
     chart: timestamps.map((timestamp) => {

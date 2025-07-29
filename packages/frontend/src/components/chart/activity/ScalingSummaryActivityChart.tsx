@@ -92,7 +92,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
   }, [data])
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Header stats={stats} />
       <ChartContainer meta={chartMeta} data={chartData} isLoading={isLoading}>
         <AreaChart data={chartData} margin={{ top: 20 }}>
@@ -137,7 +137,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
           })}
         </AreaChart>
       </ChartContainer>
-    </section>
+    </div>
   )
 }
 

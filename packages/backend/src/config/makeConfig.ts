@@ -83,7 +83,7 @@ export async function makeConfig(
         },
     coingeckoApiKey: env.string('COINGECKO_API_KEY'),
     api: {
-      port: env.integer('PORT', isLocal ? 3000 : undefined),
+      port: env.integer('PORT', isLocal ? 3001 : undefined),
       cache: {
         tvs: flags.isEnabled('cache', 'tvs'),
         liveness: flags.isEnabled('cache', 'liveness'),

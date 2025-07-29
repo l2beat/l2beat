@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xb3654d7b9d986792b20d89dbf027ef857816aaab
+
+# Diff at Mon, 28 Jul 2025 06:07:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 22823842
+- current block number: 23015750
+
+## Description
+
+ms member added.
+
+## Watched changes
+
+```diff
+    contract EigenLayerRewardsInitiatorMultisig (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$members.0:
++        "eth:0xc201C95e809292c6ad242F4bbD8B342AD06571FB"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xfb4596b9bb5c3943a91023214543137831d1612a
 
 # Diff at Mon, 14 Jul 2025 12:45:00 GMT:

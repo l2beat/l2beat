@@ -49,7 +49,7 @@ export function BridgesTvsChart() {
   const stats = getStats(chartData)
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <BridgesChartHeader
         unit={unit}
         value={stats?.total}
@@ -71,7 +71,7 @@ export function BridgesTvsChart() {
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-    </section>
+    </div>
   )
 }
 

@@ -102,7 +102,7 @@ export function ScalingActivityChart({
   const chartRange = getChartRange(chartData)
 
   return (
-    <section className="flex flex-col">
+    <div className="flex flex-col">
       <ActivityChartHeader
         stats={stats}
         range={chartRange}
@@ -134,7 +134,7 @@ export function ScalingActivityChart({
         setTimeRange={setTimeRange}
         metric={metric}
       />
-    </section>
+    </div>
   )
 }
 

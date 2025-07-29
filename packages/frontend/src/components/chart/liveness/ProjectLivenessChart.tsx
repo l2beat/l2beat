@@ -66,7 +66,7 @@ export function ProjectLivenessChart({
   const chartRange = getChartRange(chartData)
 
   return (
-    <section className="flex flex-col">
+    <div className="flex flex-col">
       <ProjectChartTimeRange range={chartRange} />
       <ChartControlsWrapper className="flex-wrap-reverse">
         <LivenessChartSubtypeControls
@@ -98,6 +98,6 @@ export function ProjectLivenessChart({
         hasTrackedContractsChanged={hasTrackedContractsChanged}
         isArchived={isArchived}
       />
-    </section>
+    </div>
   )
 }

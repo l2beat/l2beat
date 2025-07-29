@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import type { TimeRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
@@ -22,7 +21,7 @@ export type CostsTimeRange = v.infer<typeof CostsTimeRange>
  */
 export function getFullySyncedCostsRange(
   range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
-): [UnixTime, UnixTime] {
+): [UnixTime | null, UnixTime] {
   if (range.type === 'custom') {
     const { from, to } = range as { from: number; to: number }
     return [from, to]
@@ -40,9 +39,8 @@ export function getFullySyncedCostsRange(
   )
   const days = rangeToDays(range)
 
-  const start =
-    days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.activity
-  return [start, end - 1]
+  const start = days !== null ? end - days * UnixTime.DAY : null
+  return [start, end]
 }
 
 export type CostsResolution = ReturnType<typeof rangeToResolution>

@@ -88,7 +88,7 @@ export function ScalingSummaryTvsChart({
   const stats = getStats(chartData)
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <Header
         total={stats?.total}
         change={stats?.change}
@@ -139,7 +139,7 @@ export function ScalingSummaryTvsChart({
           <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
       </ChartContainer>
-    </section>
+    </div>
   )
 }
 

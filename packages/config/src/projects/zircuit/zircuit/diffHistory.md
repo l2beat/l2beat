@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x70f8632da8170e1150d1fe2afc9ab2b709d970a8
+
+# Diff at Mon, 28 Jul 2025 07:29:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8e540d8d4e2ea097e63a067c52194d1bf06f9b4a block: 15364203
+- current block number: 16875771
+
+## Description
+
+L2 fee changes.
+
+## Watched changes
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.basefee:
+-        602997202
++        294515603
+      values.hash:
+-        "0x860409be6049dd06c3bfe74926a7a552c3277fdd865315938507dfb5731814cc"
++        "0x0acc928251b1f6dcdad1a042f1be37ab222eeed394619e6908a57a99301cf5ae"
+      values.number:
+-        22765716
++        23016159
+      values.timestamp:
+-        1750664615
++        1753687751
+    }
+```
+
 Generated with discovered.json: 0xbe1c0bf13bbb959e2231e3043e80b7581c02f432
 
 # Diff at Mon, 14 Jul 2025 12:47:15 GMT:

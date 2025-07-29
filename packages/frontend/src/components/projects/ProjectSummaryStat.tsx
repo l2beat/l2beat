@@ -21,14 +21,12 @@ export function ProjectSummaryStat(props: ProjectSummaryStatProps) {
   return (
     <li
       className={cn(
-        'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
+        'flex max-md:items-center max-md:justify-between md:flex-col md:gap-3',
         props.className,
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <Comp
-          className={'text-nowrap font-medium text-paragraph-12 text-secondary'}
-        >
+        <Comp className="text-nowrap font-medium text-paragraph-12 text-secondary">
           {props.title}
         </Comp>
         {props.tooltip && (

@@ -104,7 +104,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section>
+    <div>
       <Header chartRange={chartRange} />
       <CostsChart
         data={chartData}
@@ -128,7 +128,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
           metric={metric}
         />
       </ChartControlsWrapper>
-    </section>
+    </div>
   )
 }
 

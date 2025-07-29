@@ -88,7 +88,8 @@ export async function getProjectDaThroughputChart(
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, grouped[timestamp] ?? null]
+      const posted = timestamp <= syncedUntil ? (grouped[timestamp] ?? 0) : null
+      return [timestamp, posted]
     }),
     range: [minTimestamp, chartAdjustedTo],
     syncedUntil,

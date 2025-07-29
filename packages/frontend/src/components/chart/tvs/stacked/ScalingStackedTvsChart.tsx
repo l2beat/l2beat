@@ -75,7 +75,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   const stats = getStats(chartData)
 
   return (
-    <section>
+    <div>
       <TvsChartHeader
         unit={unit}
         value={stats?.total}
@@ -106,7 +106,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
           setTimeRange={setTimeRange}
         />
       </ChartControlsWrapper>
-    </section>
+    </div>
   )
 }
 

@@ -46,7 +46,7 @@ export interface TrackedTxFunctionCallConfig {
 
 export interface TrackedTxTransferConfig {
   formula: 'transfer'
-  from: EthereumAddress
+  from?: EthereumAddress
   to: EthereumAddress
 }
 

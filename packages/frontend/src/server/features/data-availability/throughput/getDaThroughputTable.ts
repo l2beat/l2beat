@@ -7,6 +7,7 @@ import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
@@ -81,6 +82,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
             (v) => v.daLayer === daLayer.id,
           )?.timestamp
           const lastRecord = values[daLayer.id]?.at(-1)
+          const previousRecord = values[daLayer.id]?.at(-2)
 
           const latestThroughput = daLayer.daLayer.throughput
             ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -104,6 +106,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
               pastDayData: lastRecord
                 ? getPastDayData(
                     lastRecord,
+                    previousRecord,
                     largestPoster,
                     maxThroughputPerSecond,
                   )
@@ -124,6 +127,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
 
 function getPastDayData(
   lastRecord: Omit<DataAvailabilityRecord, 'configurationId'>,
+  previousRecord: Omit<DataAvailabilityRecord, 'configurationId'> | undefined,
   largestPoster:
     | {
         readonly timestamp: UnixTime
@@ -142,8 +146,18 @@ function getPastDayData(
     2,
   )
 
+  const currentTotalPosted = Number(lastRecord.totalSize)
+  const previousTotalPosted = previousRecord
+    ? Number(previousRecord.totalSize)
+    : 0
+  const change = calculatePercentageChange(
+    currentTotalPosted,
+    previousTotalPosted,
+  )
+
   return {
-    totalPosted: Number(lastRecord.totalSize),
+    totalPosted: currentTotalPosted,
+    change,
     avgThroughputPerSecond,
     avgCapacityUtilization,
     largestPoster: largestPoster
@@ -188,6 +202,7 @@ function getMockDaThroughputTableData(
                 },
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
+                change: 0.15,
                 avgThroughputPerSecond: 100000,
               },
               maxThroughputPerSecond: 400000,
@@ -205,6 +220,7 @@ function getMockDaThroughputTableData(
               pastDayData: {
                 avgCapacityUtilization: 48,
                 totalPosted: 20312412,
+                change: -0.08,
                 largestPoster: {
                   name: 'Base',
                   percentage: 40,

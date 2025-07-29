@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
@@ -144,25 +145,30 @@ export const publicSystemsColumns = [
   }),
   columnHelper.accessor((e) => e.data?.pastDayData?.totalPosted, {
     header: 'past day\ntotal data posted',
-    cell: (ctx) => (
-      <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-        <TableValueCell
-          emptyMode="upcoming"
-          value={
-            ctx.row.original.data?.pastDayData?.totalPosted
-              ? {
-                  value: formatBytes(
-                    ctx.row.original.data.pastDayData?.totalPosted,
-                  ),
-                }
-              : undefined
-          }
-        />
-      </SyncStatusWrapper>
-    ),
+    cell: (ctx) => {
+      const data = ctx.row.original.data?.pastDayData
+      if (!data?.totalPosted) {
+        return (
+          <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+            <TableValueCell emptyMode="upcoming" value={undefined} />
+          </SyncStatusWrapper>
+        )
+      }
+
+      return (
+        <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+          <ValueWithPercentageChange
+            change={data.change}
+            className="font-medium text-xs md:text-sm"
+          >
+            {formatBytes(data.totalPosted)}
+          </ValueWithPercentageChange>
+        </SyncStatusWrapper>
+      )
+    },
     meta: {
       tooltip:
-        'The total amount of data posted to the layer over the past day.',
+        'The total amount of data posted to the layer over the past day, displayed along with the percentage change compared to 1D ago.',
     },
   }),
   columnHelper.display({

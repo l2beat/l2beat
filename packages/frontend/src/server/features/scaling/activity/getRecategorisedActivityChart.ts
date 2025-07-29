@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -127,10 +126,7 @@ function getMockRecategorisedActivityChart(
   timeRange: ActivityTimeRange,
 ): RecategorisedActivityChartData {
   const [from, to] = getRangeWithMax({ type: timeRange }, 'daily')
-  const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? MIN_TIMESTAMPS.activity,
-    to,
-  ]
+  const adjustedRange: [UnixTime, UnixTime] = [from ?? 1590883200, to]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {

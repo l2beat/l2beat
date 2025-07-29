@@ -1,5 +1,6 @@
 name: Migrate DB
 on:
+  workflow_dispatch: {}
   push:
     paths:
       - packages/database/prisma/migrations/**

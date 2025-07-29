@@ -116,7 +116,7 @@ function DefaultChart({
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <TvsChartTimeRangeControls
@@ -143,6 +143,6 @@ function DefaultChart({
           />
         )}
       </TvsChartUnitControls>
-    </section>
+    </div>
   )
 }

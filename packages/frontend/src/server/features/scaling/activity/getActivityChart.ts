@@ -1,6 +1,5 @@
 import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -124,7 +123,7 @@ function getMockActivityChart({
 }: ActivityChartParams): ActivityChartData {
   const [from, to] = getRangeWithMax(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    range.type === 'custom' ? range.from : (from ?? MIN_TIMESTAMPS.activity),
+    range.type === 'custom' ? range.from : (from ?? 1590883200),
     range.type === 'custom' ? range.to : to,
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
