@@ -1,7 +1,7 @@
 {
   "name": "tradable",
   "chain": "zksync2",
-  "timestamp": 1753805557,
+  "timestamp": 1753806123,
   "configHash": "0xc7759e325097682e489d88eeb338fb00e5893b32b005eb84af801da03b9fcb1f",
   "entries": [
     {
@@ -1496,7 +1496,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -1553,6 +1553,7 @@
         "totalSupply": 25384124630001,
         "yieldGenerationStart": 1742406445
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x137d6a6DbfE6d6a44529c75d5209c6d0cE8f0c01": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -1593,8 +1594,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000077",
+          "coingeckoId": "tradable-singapore-fintech-ssl",
+          "address": "zksync:0x18012CB9e1478EF458C8c996F99b8DcEcA60795c",
+          "symbol": "PC0000077",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618862,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66878/large/tradable.jpg?1750921608",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2010,8 +2025,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000019",
+          "coingeckoId": "tradable-north-america-pos-lender-sstn",
+          "address": "zksync:0x1F179A51Ab46252f469733DFcbD9115090A91f03",
+          "symbol": "PC0000019",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618829,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66800/large/tradable.jpg?1750576495",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2284,7 +2313,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2374,6 +2403,7 @@
         "totalSupply": 95900000000000,
         "yieldGenerationStart": 1736532095
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x272795908e2d66E00E4766F40a4310783039b7b5": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -2753,7 +2783,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2799,6 +2829,7 @@
         "totalSupply": 20529231440000,
         "yieldGenerationStart": 1753493388
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x35DF60D92706C5C53364061F3C316Fc86007Abeb": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -2840,7 +2871,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -2925,6 +2956,7 @@
         "totalSupply": 4771690000000,
         "yieldGenerationStart": 1731684018
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x3765bBe18749c30Cb5589c13de8A0DEb7F16A683": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -3871,8 +3903,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000101",
+          "coingeckoId": "na-post-settlement-legal-financing-receivables",
+          "address": "zksync:0x3D19625Bb8E4B52Ac4ca28ecec2B5E243ae2EE81",
+          "symbol": "PC0000101",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618680,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66791/large/tradable.jpg?1750576168",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -3978,7 +4024,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4015,6 +4061,7 @@
         "totalSupply": 14820555890002,
         "yieldGenerationStart": 1747937551
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x3Ebd6CCb9ba03fEC57Db59344126e69080361A52": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -4056,7 +4103,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4114,6 +4161,7 @@
         "totalSupply": 99156663000000,
         "yieldGenerationStart": 1753493186
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x464aE5c4FcBa8Bab8D004C6b5Bd0F71d16Fb767e": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -4165,7 +4213,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4222,6 +4270,7 @@
         "totalSupply": 21600000000000,
         "yieldGenerationStart": 1742406693
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x4C22Fc4Abc099871245d7C47919d5D443Acb7957": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -4326,8 +4375,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000111",
+          "coingeckoId": "tradable-latam-charge-card-ssn",
+          "address": "zksync:0x53ACd3c88Ec04b8E22B8EF768EC4d928153d892E",
+          "symbol": "PC0000111",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618756,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66795/large/tradable.jpg?1750576365",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4469,8 +4532,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000113",
+          "coingeckoId": "tradable-na-residential-real-estate-backed-credit-card-sstn",
+          "address": "zksync:0x5556fE72eb021f97D39ba704f3674f1731e1AcC4",
+          "symbol": "PC0000113",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618852,
+          "coingeckoListingTimestamp": 1752537600,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66879/large/tradable.jpg?1750921826",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4556,8 +4633,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000061",
+          "coingeckoId": "na-music-royalties-sstl",
+          "address": "zksync:0x5895024c953bee18D5F026bfcf6259bb2d79E12D",
+          "symbol": "PC0000061",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618906,
+          "coingeckoListingTimestamp": 1752537600,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66881/large/tradable.jpg?1750921901",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -4697,8 +4788,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000097",
+          "coingeckoId": "tradable-latam-fintech-sstn",
+          "address": "zksync:0x5aBe0a2ead1357F70E73F5b60E227dF64A54ddD5",
+          "symbol": "PC0000097",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618744,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66796/large/tradable.jpg?1750576421",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5190,8 +5295,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000023",
+          "coingeckoId": "tradable-singapore-fintech-ssl-2",
+          "address": "zksync:0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d",
+          "symbol": "PC0000023",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618928,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66954/large/tradable.jpg?1751254449",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5617,7 +5736,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -5670,6 +5789,7 @@
         "totalSupply": 102500000000000,
         "yieldGenerationStart": 1731945301
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x641d9B8d290F759B75F7C30eDcD96C38BD26afD4": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -6220,7 +6340,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -6277,6 +6397,7 @@
         "totalSupply": 47450000000000,
         "yieldGenerationStart": 1741302122
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x6bFCBf08B0Ef6F64aD090C0CeCbCde4Ee3e94Fa5": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -6317,8 +6438,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000033",
+          "coingeckoId": "tradable-apac-diversified-finance-provider-sstn",
+          "address": "zksync:0x6FF4fAfD8D604614c704a5936D9146C0af19BD1E",
+          "symbol": "PC0000033",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618842,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66798/large/tradable.jpg?1750576460",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -7211,8 +7346,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000037",
+          "coingeckoId": "na-fintech-nonprime-lender-sstn",
+          "address": "zksync:0x83547Ba6B1992F70aE7203dE4E95bB74B37cA3Ec",
+          "symbol": "PC0000037",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618734,
+          "coingeckoListingTimestamp": 1752537600,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66792/large/tradable.jpg?1750576200",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -8819,7 +8968,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -8872,6 +9021,7 @@
         "totalSupply": 3792083320000,
         "yieldGenerationStart": 1731945231
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0x9eFB5486cF0B5a166d477cA87340f38Df72106e9": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -8922,8 +9072,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000081",
+          "coingeckoId": "tradable-na-legal-receivables-ssl",
+          "address": "zksync:0xA4b3dC5433EcAbDd1498cA7f3f4d890b185C0B0A",
+          "symbol": "PC0000081",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618917,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66799/large/tradable.jpg?1750576475",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -9980,7 +10144,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10021,6 +10185,7 @@
         "totalSupply": 0,
         "yieldGenerationStart": 0
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xA81E09C906400a83A0d1e78b55b0D540f129641e": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -10057,7 +10222,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10160,6 +10325,7 @@
         "totalSupply": 168877161000000,
         "yieldGenerationStart": 1736532058
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xa8f8EA0a2Ca288a3a758ea700b10Cd38d8c68721": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -10373,8 +10539,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000031",
+          "coingeckoId": "tradable-na-rent-financing-platform-sstn",
+          "address": "zksync:0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
+          "symbol": "PC0000031",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618722,
+          "coingeckoListingTimestamp": 1748476800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10504,8 +10684,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000023",
+          "coingeckoId": "tradable-na-neobank-sstl",
+          "address": "zksync:0xAE0d8cad4cE522538AE34386c319C7ccD11FE428",
+          "symbol": "PC0000023",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618949,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66797/large/tradable.jpg?1750576441",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10636,7 +10830,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -10748,6 +10942,7 @@
         "totalSupply": 42951867113397,
         "yieldGenerationStart": 1731944590
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xaEdf168200D55050A05284b27e15fe8fd3793dD9": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -11499,7 +11694,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -11553,6 +11748,7 @@
         "totalSupply": 7500000000000,
         "yieldGenerationStart": 1731945116
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xB2F300352d2B573Bc85dbEdA2e2A1E29EEE99454": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -12066,8 +12262,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000027",
+          "coingeckoId": "tradable-latam-bnpl-sstn",
+          "address": "zksync:0xC629D9E3d1A4325DBfAff85D5a61Da956cc5e32b",
+          "symbol": "PC0000027",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618766,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66793/large/tradable.jpg?1750576283",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12182,7 +12392,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12245,6 +12455,7 @@
         "totalSupply": 78964740000000,
         "yieldGenerationStart": 1753492879
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xCb352cF5A099772BC36f82A87c95a945CB4d1852": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -12682,8 +12893,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000015",
+          "coingeckoId": "tradable-na-third-party-online-merchant-sstn",
+          "address": "zksync:0xd8916e15D351DC728414e99A4883c72010eE11f8",
+          "symbol": "PC0000015",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618700,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66880/large/tradable.jpg?1750921859",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12857,7 +13082,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -12904,6 +13129,7 @@
         "totalSupply": 53000000000000,
         "yieldGenerationStart": 1731945254
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xDb48396Bb882330A45C13DC832759BE0D1214F7F": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -13300,8 +13526,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0016245",
+          "coingeckoId": "na-capital-as-a-service-sstn",
+          "address": "zksync:0xe3D53AdDadb3F87ADC38B4192171aAf5A07A3738",
+          "symbol": "PC0016245",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618691,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66593/large/tradable.jpg?1749883324",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13402,8 +13642,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000049",
+          "coingeckoId": "tradable-eu-latam-pos-financing-sstl",
+          "address": "zksync:0xe53dBcEf6F700536a912c51CAEa4D0E2bE2b1388",
+          "symbol": "PC0000049",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618938,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66794/large/tradable.jpg?1750576332",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13529,7 +13783,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -13608,6 +13862,7 @@
         "totalSupply": 48200000000000,
         "yieldGenerationStart": 1731944865
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xEabc5A71f7ee291Cdd9881e823B2421Dcf10Cc0F": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -13878,7 +14133,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [],
@@ -13897,6 +14152,7 @@
         "totalSupply": 0,
         "yieldGenerationStart": 0
       },
+      "errors": { "$tokenData": "Processing error occurred." },
       "implementationNames": {
         "zksync:0xeF81EDc585D4e01E335d15988361b1cae1E4583a": "",
         "zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67": "Deal"
@@ -13942,8 +14198,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000089",
+          "coingeckoId": "latam-residential-sstl",
+          "address": "zksync:0xfB3fCCdD38A96C3f769c62E578323f22c3BFCbEc",
+          "symbol": "PC0000089",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618884,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66590/large/tradable.jpg?1749832358",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -14535,8 +14805,22 @@
             ["zksync:0x85774B6c4a2F72315050084eFa3b982dF5a7ea67"]
           ]
         ],
+        "$tokenData": {
+          "name": "Private Credit Direct Deal0000085",
+          "coingeckoId": "tradable-latam-middle-market-lender-sstl",
+          "address": "zksync:0xfeAfDE23fb2364896C297c3Fa6628f04601a035b",
+          "symbol": "PC0000085",
+          "decimals": 6,
+          "deploymentTimestamp": 1731618873,
+          "coingeckoListingTimestamp": 1751500800,
+          "category": "other",
+          "iconUrl": "https://coin-images.coingecko.com/coins/images/66877/large/tradable.jpg?1750921571",
+          "chainId": 324,
+          "supply": "totalSupply",
+          "source": "native"
+        },
         "$upgradeCount": 3,
-        "clock": 1753805554,
+        "clock": 1753806120,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 6,
         "eligibleAccounts": [
@@ -15278,11 +15562,11 @@
   },
   "usedTemplates": {
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
-    "tradable/Deal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "tradable/Deal": "0x3240dfd274ff5a43cf385196eb4e0e8380220ad2b5b1f28faaa1e49edf7957c6",
     "tradable/DealFactory": "0x13fd0cff678ebb587a9343fbe172798446b3bde4a86b9ac81c5f8641b28cfcf5",
     "tradable/DealManager": "0x48838ef8da5e8218b480b5b04b5c299da88b0a75ef95f3bf6789513e381cc20d",
     "tradable/DealRegistry": "0x80492a8b01b07c7eb3c5cebc3a4c692ef4abb2da9faf34b0d838d7d21d76e23f"
   },
-  "usedBlockNumbers": { "zksync2": 63502226 },
+  "usedBlockNumbers": { "zksync2": 63502512 },
   "permissionsConfigHash": "0x6f2c739f3547c57f2344fce5c9e463f22810561408caaae59bc9bd0e8e4845a8"
 }
