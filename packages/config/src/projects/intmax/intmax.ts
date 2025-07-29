@@ -51,7 +51,7 @@ export const intmax: ScalingProject = {
   },
   technology: {
     dataAvailability: {
-      name: 'All data required for payments is self-custodied by users.',
+      name: 'All data required for payments is self-custodied by users',
       description:
         'INTMAX uses a self-custodied data availability model where users maintain their own "balance proofs" to allow for private payments. These balance proofs are computed using data received from aggregators when depositing or initiating a transfer, and from payment senders when receiving funds. The protocol ensures that all data has been made available by requiring users to sign off blocks that contain their deposits or outgoing transfers. Users would not accept payments if they have not received the necessary balance proof from the sender.',
       references: [
@@ -116,7 +116,7 @@ export const intmax: ScalingProject = {
   riskView: {
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: {
-      value: 'self-custodied',
+      value: 'Self-custodied',
       description:
         'All data required for payments and withdrawals is self-custodied by users.',
       sentiment: 'good',
