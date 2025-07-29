@@ -9,6 +9,14 @@ pnpm bridges:cli <protocol> <chain> <block> <chain> <block>
 
 ## Examples
 
+### Across
+```bash
+pnpm bridges:cli across ethereum 23025199 base 33503830
+```
+```bash
+pnpm bridges:cli across arbitrum 362819685 ethereum 23025205
+```
+
 ### LayerZero V1
 ``` bash
 pnpm bridges:cli layerzerov1 ethereum 22970814 arbitrum 360189207

@@ -40,15 +40,19 @@ function decoder(
     )?.chainShortName
 
     return {
-      type: 'message',
+      type: 'asset',
       direction: 'outbound',
-      protocol: ACROSS.name,
+      application: ACROSS.name,
       origin: chain.shortName,
       destination: destination ?? data.args.destinationChainId.toString(),
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
       customType: 'FundsDeposited',
       matchingId: data.args.depositId.toString(),
+      amount: data.args.inputAmount,
+      token: data.args.inputToken,
+      // messageProtocol?: string
+      // messageId?: string
     }
   }
 
@@ -69,15 +73,19 @@ function decoder(
     )?.chainShortName
 
     return {
-      type: 'message',
+      type: 'asset',
       direction: 'inbound',
-      protocol: ACROSS.name,
+      application: ACROSS.name,
       origin: origin ?? data.args.originChainId.toString(),
       destination: chain.shortName,
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
       customType: 'FilledRelay',
       matchingId: data.args.depositId.toString(),
+      amount: data.args.outputAmount,
+      token: data.args.outputToken,
+      // messageProtocol?: string
+      // messageId?: string
     }
   }
 
