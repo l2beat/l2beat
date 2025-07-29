@@ -175,117 +175,249 @@ export const celestia: BaseProject = {
       {
         projectId: ProjectId('battle-for-blockchain'),
         name: 'Battle for Blockchain',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 5047670, namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg=' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5047670,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAKzFLTn1xOipecg=',
+          },
+        ],
       },
       {
         projectId: ProjectId('civitia'),
         name: 'Civitia',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 4492300, namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAEwLOhV+kOUlUq4=' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 4492300,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAEwLOhV+kOUlUq4=',
+          },
+        ],
       },
       {
         projectId: ProjectId('clique'),
         name: 'Clique',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 1034505, namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAARQV7t6sd4A=' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 1034505,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAARQV7t6sd4A=',
+          },
+        ],
       },
       {
         projectId: ProjectId('echelon'),
         name: 'Echelon',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 5659637, namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAItyY42OaTC/skE=' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5659637,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAItyY42OaTC/skE=',
+          },
+        ],
       },
       {
         projectId: ProjectId('echos'),
         name: 'Echos',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 2733153, namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAA/cZMN1XLG8=' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 2733153,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAA/cZMN1XLG8=',
+          },
+        ],
       },
       {
         projectId: ProjectId('embr-fun'),
         name: 'Embr.fun',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 5954601, namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMbONmnisjTDz4I=' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5954601,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMbONmnisjTDz4I=',
+          },
+        ],
       },
       {
         projectId: ProjectId('flame'),
         name: 'Flame',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 2658920,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAL2dxfeNrJ+tg6Y=',
+          },
+        ],
       },
       {
         projectId: ProjectId('flynet'),
         name: 'Flynet',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5188001,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAACyPE7Ql9zwA=',
+          },
+        ],
       },
       {
         projectId: ProjectId('forma'),
         name: 'Forma',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 1504062,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAKKnitomrCy/HoY=',
+          },
+        ],
       },
       {
         projectId: ProjectId('foundation-network'),
         name: 'Foundation Network',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 3667737,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAN/xAxpagCrjLVQ=',
+          },
+        ],
       },
       {
         projectId: ProjectId('hibachi'),
         name: 'Hibachi',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5979823,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAABoaWJhY2hpLXM=',
+          },
+          {
+            type: 'celestia',
+            sinceBlock: 5981133,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhpYmFjaGk=',
+          },
+        ],
       },
       {
         projectId: ProjectId('ing'),
         name: 'ING',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5945453,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAALdhUSKgKHU0Zx0=',
+          },
+        ],
       },
       {
         projectId: ProjectId('inertia'),
         name: 'Inertia',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5941532,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAEg2If2QGyq4ZRQ=',
+          },
+        ],
       },
       {
         projectId: ProjectId('intergaze'),
         name: 'Intergaze',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5748411,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAIoZCJNLh1XvOZA=',
+          },
+        ],
       },
       {
         projectId: ProjectId('milkyway'),
         name: 'Milkyway',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5298640,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAB2AZsEwLd1LLHk=',
+          },
+        ],
       },
       {
         projectId: ProjectId('onchain'),
         name: 'Onchain',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
-      },
-      {
-        projectId: ProjectId('pepe-unchained'),
-        name: 'Pepe Unchained',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 1496058,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABNfLrOLSCTY=',
+          },
+        ],
       },
       {
         projectId: ProjectId('perennial'),
         name: 'Perennial',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 3886561,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAaToZYrE0tA=',
+          },
+        ],
       },
       {
         projectId: ProjectId('rave'),
         name: 'Rave',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5645296,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAF45zaUciayEPXE=',
+          },
+        ],
       },
       {
         projectId: ProjectId('rena'),
         name: 'Rena',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5775045,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAMxohfftlR5t59s=',
+          },
+        ],
       },
       {
         projectId: ProjectId('rivalz-network'),
         name: 'Rivalz Network',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 4932528,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAMJ/xGlNMdE=',
+          },
+        ],
       },
       {
         projectId: ProjectId('yominet'),
         name: 'Yominet',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5966190,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAFjh+OUc/ORU/0o=',
+          },
+        ],
       },
       {
         projectId: ProjectId('zaar'),
         name: 'Zaar',
-        daTrackingConfig: [{ type: 'celestia', sinceBlock: 0, namespace: '' }],
+        daTrackingConfig: [
+          {
+            type: 'celestia',
+            sinceBlock: 5587852,
+            namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAM8NBxiaOQwFwQc=',
+          },
+        ],
       },
     ],
   },
