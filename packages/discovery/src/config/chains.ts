@@ -345,7 +345,7 @@ export const chains: ChainConfig[] = [
     shortName: 'gateway',
     multicall: undefined,
     explorer: {
-      type: 'etherscan',
+      type: 'routescan',
       url: 'https://block-explorer-api.era-gateway-mainnet.zksync.dev/api',
     },
   },
