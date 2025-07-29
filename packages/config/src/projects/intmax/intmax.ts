@@ -10,12 +10,14 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { scroll } from '../scroll/scroll'
 
 const discovery = new ProjectDiscovery('intmax')
 const scrollDiscovery = new ProjectDiscovery('intmax', 'scroll')
 
 export const intmax: ScalingProject = {
-  type: 'layer2',
+  type: 'layer3',
+  hostChain: ProjectId('scroll'),
   id: ProjectId('intmax'),
   capability: 'universal',
   addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
@@ -138,6 +140,18 @@ export const intmax: ScalingProject = {
     },
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_ZK(),
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
+  },
+  stackedRiskView: {
+    stateValidation: RISK_VIEW.STATE_ZKP_SN,
+    dataAvailability: {
+      value: 'Self custodied',
+      description:
+        'All data required for payments and withdrawals is self custodied by users.',
+      sentiment: 'good',
+    },
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 0),
+    sequencerFailure: scroll.riskView.sequencerFailure,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
   },
   stage: getStage(
