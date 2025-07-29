@@ -11,8 +11,8 @@ export const DEBRIDGE = {
 }
 
 const ABI = parseAbi([
-  'event CreatedOrder((uint64,bytes,uint256 giveChainId,bytes,uint256,uint256,bytes,uint256,bytes,bytes,bytes,bytes,bytes,bytes) order,bytes32 orderId, bytes affiliateFee, uint256 nativeFixFee, uint256 percentFee, uint32 referralCode, bytes metadata)',
-  'event FulfilledOrder((uint64,bytes,uint256 giveChainId,bytes,uint256,uint256,bytes,uint256,bytes,bytes,bytes,bytes,bytes,bytes) order, bytes32 orderId, address sender, address unlockAuthority)',
+  'event CreatedOrder((uint64 makerOrderNonce,bytes makerSrc,uint256 giveChainId,bytes giveTokenAddress,uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externallCall) order,bytes32 orderId, bytes affiliateFee, uint256 nativeFixFee, uint256 percentFee, uint32 referralCode, bytes metadata)',
+  'event FulfilledOrder((uint64 makerOrderNonce,bytes makerSrc,uint256 giveChainId,bytes giveTokenAddress,uint256 giveAmount, uint256 takeChainId, bytes takeTokenAddress, uint256 takeAmount, bytes receiverDst, bytes givePatchAuthoritySrc, bytes orderAuthorityAddressDst, bytes allowedTakerDst, bytes allowedCancelBeneficiarySrc, bytes externallCall) order, bytes32 orderId, address sender, address unlockAuthority)',
   'event Sent(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, bytes receiver, uint256 nonce, uint256 indexed chainIdTo, uint32 referralCode, (uint256,uint256,uint256,bool,bool) feeParams, bytes autoParams, address nativeSender)',
   'event Claimed(bytes32 submissionId, bytes32 indexed debridgeId, uint256 amount, address indexed receiver, uint256 nonce, uint256 indexed chainIdFrom, bytes autoParams, bool isNativeToken)',
 ])
@@ -38,19 +38,23 @@ function decoder(
     })
 
     const destination = NETWORKS.find(
-      (b) => b.chainId === +data.args.order[5].toString(),
+      (b) => b.chainId === +data.args.order.takeChainId.toString(),
     )?.chainShortName
 
     return {
-      type: 'message',
+      type: 'asset',
       direction: 'outbound',
-      protocol: DEBRIDGE.name,
+      application: DEBRIDGE.name,
       origin: chain.shortName,
-      destination: destination ?? data.args.order[5].toString(),
+      destination: destination ?? data.args.order.takeChainId.toString(),
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
       customType: 'CreatedOrder',
       matchingId: data.args.orderId,
+      amount: data.args.order.giveAmount,
+      token: data.args.order.giveTokenAddress,
+      messageProtocol: DEBRIDGE.name,
+      // messageId: string
     }
   }
 
@@ -67,19 +71,23 @@ function decoder(
     })
 
     const origin = NETWORKS.find(
-      (c) => c.chainId === +data.args.order[2].toString(),
+      (c) => c.chainId === +data.args.order.giveChainId.toString(),
     )?.chainShortName
 
     return {
-      type: 'message',
+      type: 'asset',
       direction: 'inbound',
-      protocol: DEBRIDGE.name,
-      origin: origin ?? data.args.order[2].toString(),
+      application: DEBRIDGE.name,
+      origin: origin ?? data.args.order.giveChainId.toString(),
       destination: chain.shortName,
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
       customType: 'FulfilledOrder',
       matchingId: data.args.orderId,
+      amount: data.args.order.takeAmount,
+      token: data.args.order.takeTokenAddress,
+      messageProtocol: DEBRIDGE.name,
+      // messageId: string
     }
   }
 
