@@ -62,7 +62,7 @@ export class UpdateDiffer {
       return
     }
 
-    if (onDiskDiscovery.blockNumber > latestDiscovery.blockNumber) {
+    if (onDiskDiscovery.timestamp > latestDiscovery.timestamp) {
       this.logger.info(
         'On disk discovery is newer than latest discovery. Skipping.',
         {
@@ -92,8 +92,8 @@ export class UpdateDiffer {
     ]
 
     const diff = diffDiscovery(onDiskContracts, latestContracts)
-    const diffBaseBlockNumber = onDiskDiscovery.blockNumber
-    const diffHeadBlockNumber = latestDiscovery.blockNumber
+    const diffBaseTimestamp = onDiskDiscovery.timestamp
+    const diffHeadTimestamp = latestDiscovery.timestamp
 
     const updateDiffs = this.getUpdateDiffs(
       diff,
@@ -101,8 +101,8 @@ export class UpdateDiffer {
       projectId,
       chain,
       timestamp,
-      diffBaseBlockNumber,
-      diffHeadBlockNumber,
+      diffBaseTimestamp,
+      diffHeadTimestamp,
     )
 
     if (updateDiffs.length === 0) {
@@ -132,8 +132,8 @@ export class UpdateDiffer {
     projectId: string,
     chain: string,
     timestamp: UnixTime,
-    diffBaseBlockNumber: number,
-    diffHeadBlockNumber: number,
+    diffBaseTimestamp: number,
+    diffHeadTimestamp: number,
   ) {
     const implementationChanges = diff.filter((discoveryDiff) =>
       discoveryDiff.diff?.some(
@@ -183,8 +183,10 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
-        diffBaseBlockNumber,
-        diffHeadBlockNumber,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
+        diffBaseTimestamp,
+        diffHeadTimestamp,
       })
     }
 
@@ -195,8 +197,10 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
-        diffBaseBlockNumber,
-        diffHeadBlockNumber,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
+        diffBaseTimestamp,
+        diffHeadTimestamp,
       })
     }
 
@@ -207,8 +211,10 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
-        diffBaseBlockNumber,
-        diffHeadBlockNumber,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
+        diffBaseTimestamp,
+        diffHeadTimestamp,
       })
     }
 
@@ -219,8 +225,10 @@ export class UpdateDiffer {
         address,
         chain,
         timestamp,
-        diffBaseBlockNumber,
-        diffHeadBlockNumber,
+        diffBaseBlockNumber: 0,
+        diffHeadBlockNumber: 0,
+        diffBaseTimestamp,
+        diffHeadTimestamp,
       })
     }
 

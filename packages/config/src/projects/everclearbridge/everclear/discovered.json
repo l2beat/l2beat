@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 2044435,
+  "timestamp": 1753687645,
   "configHash": "0xfb294695ab9535a4096f9afe1ca82c872710e9a4e4bbc79d170117e33b3a3413",
   "entries": [
     {
@@ -756,5 +756,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "everclear": 2044435 },
   "permissionsConfigHash": "0x1efa5fa1b02859f115192edb25c16a8e516f34dbcd0ec06a4fbd2b8b0118d368"
 }

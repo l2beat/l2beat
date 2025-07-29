@@ -9,6 +9,7 @@ export interface UpdateNotifierRecord {
   updatedAt: UnixTime
   projectId: string
   blockNumber: number
+  timestamp: UnixTime
   diff: DiscoveryDiff[]
   chainId: ChainId
 }
@@ -19,6 +20,7 @@ export function toRow(
   return {
     projectId: record.projectId,
     blockNumber: record.blockNumber,
+    timestamp: UnixTime.toDate(record.timestamp),
     diffJsonBlob: JSON.stringify(record.diff),
     chainId: +record.chainId,
   }
@@ -33,6 +35,7 @@ export function toRecord(
     updatedAt: UnixTime.fromDate(row.updatedAt),
     projectId: row.projectId,
     blockNumber: row.blockNumber,
+    timestamp: UnixTime.fromDate(row.timestamp),
     diff: row.diffJsonBlob as unknown as DiscoveryDiff[],
     chainId: ChainId(row.chainId),
   }

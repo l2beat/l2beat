@@ -1,7 +1,7 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22990276,
+  "timestamp": 1753375355,
   "configHash": "0x8783151623484da48be1f986ab9d83b4d14444d4dfb527f2e4e37f6663edc3b3",
   "entries": [
     {
@@ -2741,5 +2741,6 @@
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
+  "usedBlockNumbers": { "ethereum": 22990276 },
   "permissionsConfigHash": "0x596235e46c466ad522122116ceeef108189417ddf9be09f53c4e8769b4364b9a"
 }

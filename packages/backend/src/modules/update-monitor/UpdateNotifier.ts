@@ -51,7 +51,6 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    blockNumber: number,
     chainId: ChainId,
     dependents: string[],
     unknownContracts: EthereumAddress[],
@@ -60,8 +59,9 @@ export class UpdateNotifier {
     const nonce = await this.getInternalMessageNonce()
     await this.db.updateNotifier.insert({
       projectId: name,
+      blockNumber: 0,
       diff,
-      blockNumber: blockNumber,
+      timestamp: timestamp,
       chainId: chainId,
     })
 
@@ -92,7 +92,7 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      blockNumber,
+      timestamp,
       this.chainConverter.toName(chainId),
       dependents,
       nonce,
@@ -112,7 +112,7 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      blockNumber,
+      timestamp,
       this.chainConverter.toName(chainId),
       dependents,
       undefined,
@@ -124,9 +124,9 @@ export class UpdateNotifier {
     await this.updateMessagesService.storeAndPrune({
       projectId: name,
       chain: this.chainConverter.toName(chainId),
-      blockNumber,
       message: filteredWebMessage,
       timestamp,
+      blockNumber: 0,
     })
 
     this.logger.info('Updates detected, notification sent [PUBLIC]', {

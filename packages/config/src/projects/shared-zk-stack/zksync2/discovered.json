@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 61100811,
+  "timestamp": 1748591870,
   "configHash": "0x15a8f52bcee55126ce6f8cfcfd20620eefcb0e4d2d27a1aabdaa4edd5a891082",
   "entries": [
     {
@@ -1776,5 +1776,6 @@
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
+  "usedBlockNumbers": { "zksync2": 61100811 },
   "permissionsConfigHash": "0x4991c6c2a3bdc0383e57439df53ba4a6803cf1917c0cbdc0bd343427890a53ef"
 }

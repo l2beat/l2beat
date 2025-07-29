@@ -17,6 +17,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     const message2 = record({
       chain: 'arbitrum',
       blockNumber: 100,
+      timestamp: 100,
     })
 
     await repository.upsert(message1)
@@ -24,7 +25,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
 
     const result = await repository.getAll()
 
-    expect(result).toEqual([message1, message2])
+    expect(result).toEqual([message2, message1])
   })
 
   it('can upsert messages', async () => {

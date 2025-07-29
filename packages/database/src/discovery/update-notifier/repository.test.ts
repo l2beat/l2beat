@@ -92,6 +92,7 @@ function mockRecord(
   return {
     projectId,
     blockNumber: -1,
+    timestamp: -1,
     diff: [
       {
         name: 'Contract',

@@ -1,7 +1,7 @@
 {
   "name": "grvt",
   "chain": "ethereum",
-  "blockNumber": 22896028,
+  "timestamp": 1752238019,
   "configHash": "0x8616f90b3a67e2ac935c08dc89f6025993ab315107470c089cf2d3c053b9f124",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -1413,5 +1413,6 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "ethereum": 22896028 },
   "permissionsConfigHash": "0x38f648c85e6e2d9528c19df5ae5daacecad94f2448d7b6959ab85e4c231235c9"
 }

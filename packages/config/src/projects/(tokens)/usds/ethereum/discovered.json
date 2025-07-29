@@ -1,7 +1,7 @@
 {
   "name": "usds",
   "chain": "ethereum",
-  "blockNumber": 22945160,
+  "timestamp": 1752830555,
   "configHash": "0xf315ceeb3c0b36e05dbb79206249c02ff28f6a514e2ce90869ab20eb556e9a1a",
   "entries": [
     {
@@ -110,5 +110,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 22945160 },
   "permissionsConfigHash": "0x5205dc96e8dbf0f049f36c160f3166e9a47683bc14df7b0432a6f4db8676ff2d"
 }
