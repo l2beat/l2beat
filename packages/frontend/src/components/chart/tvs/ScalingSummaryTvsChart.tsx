@@ -158,7 +158,7 @@ function CustomTooltip({
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
+      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })
