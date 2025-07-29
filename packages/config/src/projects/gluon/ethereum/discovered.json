@@ -698,5 +698,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 21686363 },
   "permissionsConfigHash": "0x54e009699bc683f838619d10a8c9de53e9e6bc24424a4883e68258b97730a053"
 }

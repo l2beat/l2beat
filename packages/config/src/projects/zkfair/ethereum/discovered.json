@@ -818,5 +818,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 22322978 },
   "permissionsConfigHash": "0xc15a25658aeb35728660afb29e4c4c5d8e5145add9b1e7fb05df9b03f74ba657"
 }

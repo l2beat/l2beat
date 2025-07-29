@@ -962,5 +962,6 @@
     "opstack/OptimismPortal_PGN_withdraw": "0x679c99335c290bd13a96713a84fb56b973eb0939f0a19e98ad2ea7829a234742",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22895948 },
   "permissionsConfigHash": "0xb5c913c6a24be463972e6bffe062ca5e8f263815b379cb3ce1bb0116fa44f40c"
 }

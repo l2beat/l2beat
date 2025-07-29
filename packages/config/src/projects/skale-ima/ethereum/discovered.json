@@ -1263,5 +1263,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 21744185 },
   "permissionsConfigHash": "0xd8b37091887fca78350b4abd61c228921e75882b22102dfc00f1adc2eee83dc8"
 }

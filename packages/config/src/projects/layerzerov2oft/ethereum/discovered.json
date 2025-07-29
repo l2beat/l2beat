@@ -3703,5 +3703,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "layerzero/OneSigMultisig": "0xc11771171058a9b7b769e672624ae0e1bc69bd278173d8b2fd0260d666354861"
   },
+  "usedBlockNumbers": { "ethereum": 22882451 },
   "permissionsConfigHash": "0xc90c2bf4cee0f08ecbfa21c04ee5078fefcbda2709ea6d4533da241d0083aaaa"
 }

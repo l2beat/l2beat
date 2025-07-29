@@ -1183,5 +1183,6 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
+  "usedBlockNumbers": { "ink": 19600718 },
   "permissionsConfigHash": "0x0328573278406238bf49a1d37798462b4f440b8688203997b3b87d11020d85a1"
 }

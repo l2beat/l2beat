@@ -1101,5 +1101,6 @@
     "tokens/Lido/EVMScriptRegistry": "0x1aa84beab6ea9134fd6d07ba52f9382adc5aa46e9c4b38cb3ed5200978909460",
     "tokens/Lido/MiniMeToken": "0x4477605aa619c192084296dec31b5dc3ef87585bb125619bf0732705aa9b8500"
   },
+  "usedBlockNumbers": { "ethereum": 20420398 },
   "permissionsConfigHash": "0x1d732b2c5f233d9b1ef2cec5a4c93813fe4f6845e1c19c99a7ffb9569ccc263e"
 }

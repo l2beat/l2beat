@@ -7,5 +7,6 @@
   "entries": [],
   "abis": {},
   "usedTemplates": {},
+  "usedBlockNumbers": { "zksync2": 54952372 },
   "permissionsConfigHash": "0x21c28f16a8982420f231712548d1c03b9988bb87e7622919d30aae4f06c86ed5"
 }

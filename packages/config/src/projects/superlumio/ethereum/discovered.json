@@ -1870,5 +1870,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 23015705 },
   "permissionsConfigHash": "0x9fbacd8a3e089d29529fbf66e682b5044dac670c89d48e7f4d9927ffdd8b57f4"
 }

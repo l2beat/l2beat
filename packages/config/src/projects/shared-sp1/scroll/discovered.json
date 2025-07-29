@@ -250,5 +250,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
+  "usedBlockNumbers": { "scroll": 17075744 },
   "permissionsConfigHash": "0xdc2deb6f7087a92eb180fce5107eb4f47fcf970b11072b4b4fcdb9b6d6b8a416"
 }

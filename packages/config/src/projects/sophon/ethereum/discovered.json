@@ -1321,5 +1321,6 @@
     "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
+  "usedBlockNumbers": { "ethereum": 22865710 },
   "permissionsConfigHash": "0xb62281c4c0ccc90c8737e33d0e0246799f642f025f7b2710149ce521797cc5ad"
 }

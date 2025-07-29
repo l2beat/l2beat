@@ -6389,5 +6389,6 @@
     "fraxferry/Fraxferry": "0x9ebfaba04ae0d6b918fb5fe7bbc0a365c4f600308e283b921f955d7acafb8bd6",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 22975821 },
   "permissionsConfigHash": "0xeef27d52f02cd1c0b03f6ce178a24da4a618f2509c0b8ea1e8e4206949bcdf8c"
 }

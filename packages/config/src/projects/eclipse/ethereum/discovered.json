@@ -1087,5 +1087,6 @@
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 22868281 },
   "permissionsConfigHash": "0xc2072cb9dee1810a11bcb06b388ed2584dbd44450e99e5467f2b9fbe8f4d29f6"
 }
