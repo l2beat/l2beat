@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreInWatchMode": ["clock"],
   "fields": {
     "$tokenData": {
@@ -7,8 +7,8 @@
         "type": "ERC20Data",
         "overrides": {
           "source": "native",
-          "supply": "circulatingSupply"
-          // "category": "RWA"
+          "supply": "circulatingSupply",
+          "category": "rwaRestricted"
         }
       }
     }
