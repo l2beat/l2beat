@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 import {
   createAgglayerTransferId,
   decodeGlobalIndex,
@@ -21,89 +21,85 @@ const ABI = parseAbi([
 
 function decoder(
   chain: Chain,
-  transaction: TransactionWithLogs,
-): Partial<{ message: Message; asset: Asset }> | undefined {
-  for (const log of transaction.logs) {
-    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+  input: DecoderInput,
+): Message | Asset | undefined {
+  const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
 
-    if (!bridge || EthereumAddress(log.address) !== bridge.address) continue
+  if (!bridge) return undefined
 
-    if (
-      EthereumAddress(log.address) === bridge.address &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'BridgeEvent' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'BridgeEvent',
-      })
+  if (
+    EthereumAddress(input.log.address) === bridge.address &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'BridgeEvent' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'BridgeEvent',
+    })
 
-      const transferId = createAgglayerTransferId(
-        BigInt(data.args.originNetwork),
-        data.args.originAddress,
-        data.args.destinationAddress,
-        data.args.amount,
-        BigInt(data.args.depositCount),
-      )
+    const transferId = createAgglayerTransferId(
+      BigInt(data.args.originNetwork),
+      data.args.originAddress,
+      data.args.destinationAddress,
+      data.args.amount,
+      BigInt(data.args.depositCount),
+    )
 
-      const destination = BRIDGES.find(
-        (b) => b.chainId === data.args.destinationNetwork,
-      )?.chainShortName
+    const destination = BRIDGES.find(
+      (b) => b.chainId === data.args.destinationNetwork,
+    )?.chainShortName
 
-      return {
-        message: {
-          direction: 'outbound',
-          protocol: AGGLAYER.name,
-          origin: chain.shortName,
-          destination: destination ?? data.args.destinationNetwork.toString(),
-          blockTimestamp: transaction.blockTimestamp,
-          txHash: transaction.hash,
-          type: 'BridgeEvent',
-          matchingId: transferId,
-        },
-      }
+    return {
+      type: 'message',
+      direction: 'outbound',
+      protocol: AGGLAYER.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.destinationNetwork.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'BridgeEvent',
+      matchingId: transferId,
     }
+  }
 
-    if (
-      EthereumAddress(log.address) === bridge.address &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'ClaimEvent' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'ClaimEvent',
-      })
+  if (
+    EthereumAddress(input.log.address) === bridge.address &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'ClaimEvent' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'ClaimEvent',
+    })
 
-      const globalIndexDecoded = decodeGlobalIndex(data.args.globalIndex)
+    const globalIndexDecoded = decodeGlobalIndex(data.args.globalIndex)
 
-      const transferId = createAgglayerTransferId(
-        BigInt(data.args.originNetwork),
-        data.args.originAddress,
-        data.args.destinationAddress,
-        data.args.amount,
-        globalIndexDecoded.localRootIndex,
-      )
+    const transferId = createAgglayerTransferId(
+      BigInt(data.args.originNetwork),
+      data.args.originAddress,
+      data.args.destinationAddress,
+      data.args.amount,
+      globalIndexDecoded.localRootIndex,
+    )
 
-      const origin = BRIDGES.find(
-        (c) => c.chainId === data.args.originNetwork,
-      )?.chainShortName
+    const origin = BRIDGES.find(
+      (c) => c.chainId === data.args.originNetwork,
+    )?.chainShortName
 
-      return {
-        message: {
-          direction: 'inbound',
-          protocol: AGGLAYER.name,
-          origin: origin ?? data.args.originNetwork.toString(),
-          destination: chain.shortName,
-          blockTimestamp: transaction.blockTimestamp,
-          txHash: transaction.hash,
-          type: 'ClaimEvent',
-          matchingId: transferId,
-        },
-      }
+    return {
+      type: 'message',
+      direction: 'inbound',
+      protocol: AGGLAYER.name,
+      origin: origin ?? data.args.originNetwork.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'ClaimEvent',
+      matchingId: transferId,
     }
   }
 
