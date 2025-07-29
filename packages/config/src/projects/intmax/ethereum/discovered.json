@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "blockNumber": 22972987,
+  "blockNumber": 23023892,
   "configHash": "0xbf0659f19789bac0da54b122c2d13248089f74740c069898ebbcf845a28f9063",
   "entries": [
     {
@@ -134,7 +134,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 4,
+        "getCurrentPeriod": 5,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -352,8 +352,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 4445,
-        "getLastRelayedDepositId": 4445,
+        "getLastDepositId": 5635,
+        "getLastRelayedDepositId": 5631,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -431,7 +431,8 @@
           "x-test-prod",
           "x-temp-001",
           "x-temp-002",
-          "x-test-prod-001"
+          "x-test-prod-001",
+          "x-trm-template"
         ],
         "getRestakeableStrategies": [
           "eth:0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",

@@ -78,7 +78,7 @@ export const intmax: ScalingProject = {
     },
     exitMechanisms: [
       {
-        name: 'Users can autonomously exit their funds.',
+        name: 'Users can autonomously exit their funds',
         description:
           'Users can autonomously exit by providing a ZK proof of sufficient balance. This requires keeping track of all funds received and sent.',
         risks: [],
