@@ -2,6 +2,7 @@
   "name": "ink",
   "chain": "ink",
   "blockNumber": 19600718,
+  "timestamp": 1753099129,
   "configHash": "0xfdc50e0778d45fc82c11edae6753f8ef8050be79a7b1a1eb6b85d20682c4aa95",
   "entries": [
     {

@@ -1,7 +1,8 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "blockNumber": 356573977,
+  "blockNumber": 356573980,
+  "timestamp": 1752237546,
   "configHash": "0xdb712ae345998b121ac8049c80c72bf97128c8e871ec8b22a0f5260c38de6ee1",
   "entries": [
     {

@@ -2,6 +2,7 @@
   "name": "aevo",
   "chain": "ethereum",
   "blockNumber": 22994605,
+  "timestamp": 1753427663,
   "configHash": "0xa6de6852a614d97bf5b0bca081828f25f2fafe3afeb016f285e6ddd7c05f2ddd",
   "entries": [
     {

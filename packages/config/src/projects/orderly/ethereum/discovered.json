@@ -2,6 +2,7 @@
   "name": "orderly",
   "chain": "ethereum",
   "blockNumber": 22997036,
+  "timestamp": 1753457111,
   "configHash": "0x874adf29d88302df122769d22bfa9a87b0dabb3b81a35b703f6d8dacc180cd5c",
   "entries": [
     {

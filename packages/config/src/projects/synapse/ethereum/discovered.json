@@ -2,6 +2,7 @@
   "name": "synapse",
   "chain": "ethereum",
   "blockNumber": 21387773,
+  "timestamp": 1734022739,
   "configHash": "0x2a6c34014eb5118e3b502cae1270fb3801fbc1d3f5ec15738334e49400d0fb3c",
   "entries": [
     {

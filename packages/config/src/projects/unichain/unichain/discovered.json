@@ -2,6 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 17837889,
+  "timestamp": 1748586248,
   "configHash": "0x0a0b1f66fb22eb36ea46a12431a609e640a61da77ef962382aa8e39b4048df9d",
   "entries": [
     {

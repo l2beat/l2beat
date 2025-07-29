@@ -2,6 +2,7 @@
   "name": "shibarium",
   "chain": "ethereum",
   "blockNumber": 22337733,
+  "timestamp": 1745483963,
   "configHash": "0xf76302ecce99b3f23569540b0ddb5495393577853fb2ade6811f9cb9dd82a9c9",
   "entries": [
     {

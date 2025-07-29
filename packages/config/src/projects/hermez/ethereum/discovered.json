@@ -2,6 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21778467,
+  "timestamp": 1738736459,
   "configHash": "0x458eebbf678700cee77247bb66418a7e82b9309e50e7d3e07400827d4937642e",
   "entries": [
     {

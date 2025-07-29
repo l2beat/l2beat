@@ -2,6 +2,7 @@
   "name": "hop",
   "chain": "ethereum",
   "blockNumber": 19531595,
+  "timestamp": 1711616603,
   "configHash": "0xca72e1d9dba4fd93d568355fd67908ae86a6e525a8b6ad4855c4b9e9de2b7686",
   "entries": [
     {
