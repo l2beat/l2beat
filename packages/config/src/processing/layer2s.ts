@@ -171,6 +171,7 @@ import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
 import { silicon } from '../projects/silicon/silicon'
 import { singularityfinance } from '../projects/singularityfinance/singularityfinance'
+import { sischain } from '../projects/sischain/sischain'
 import { skatechain } from '../projects/skatechain/skatechain'
 import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
@@ -396,6 +397,7 @@ export const layer2s: ScalingProject[] = [
   shibarium,
   silicon,
   singularityfinance,
+  sischain,
   skatechain,
   snaxchain,
   solo,
