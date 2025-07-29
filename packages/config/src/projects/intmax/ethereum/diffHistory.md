@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x406f8c4802708b40b4c7c5ed132a7b5ec4d14fea
+Generated with discovered.json: 0xf4765171676969dbe47546ff10ff86154ad8c1a7
 
-# Diff at Tue, 29 Jul 2025 12:25:48 GMT:
+# Diff at Tue, 29 Jul 2025 13:08:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 23024236
+- current block number: 23024991
 
 ## Description
 
@@ -43,7 +43,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Predicate Multisig (0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea)
+    contract INTMAX Multisig 3 (0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea)
     +++ description: None
 ```
 

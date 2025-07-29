@@ -91,6 +91,19 @@ export const intmax: ScalingProject = {
         ],
       },
     ],
+    otherConsiderations: [
+      {
+        name: 'Deposits are gated by Predicate AVS (AML)',
+        description: 'Deposits must be signed by a Predicate AVS operator to ensure compliance with Anti-Money Laundering (AML) regulations. When a user is onboarded, it cannot be then blocked from using the system.',
+        risks: [],
+        references: [
+          {
+            title: 'Predicate docs',
+            url: 'https://docs.predicate.io/essentials/introduction'
+          }
+        ]
+      }
+    ]
   },
   stateValidation: {
     description:

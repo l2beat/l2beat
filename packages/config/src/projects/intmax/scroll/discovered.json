@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "scroll",
-  "blockNumber": 17789248,
+  "blockNumber": 17802565,
   "configHash": "0xbf5228d93d76a9815248f29132efc51f9d8b74a0bcb55653e1b01db58d64d062",
   "entries": [
     {
@@ -55,14 +55,14 @@
         ],
         "$upgradeCount": 1,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 5631,
-        "depositTreeRoot": "0x1d39bd6a415380590e8c40d2668b99ccac62a37a305e89ce3592630a5fea2b44",
+        "depositIndex": 5668,
+        "depositTreeRoot": "0xdcb07b092b2b6eb4189657b85daf614ea1b7f3172a520c5158948e0601d411ee",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 5778,
+        "getLatestBlockNumber": 5813,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 5631,
+        "lastProcessedDepositId": 5668,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
@@ -628,5 +628,5 @@
     "intmax/Rollup": "0x368a94c919529ff9268ca20c0ea75a0cf1c3e1b49f449c9746aeb09917b6f584",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "permissionsConfigHash": "0x0889077d40e266474dd26688430873a7ba94a61291052e5add8dcf9dcff39517"
+  "permissionsConfigHash": "0xa9c4371e7d3151c5ec311189a06988d7ef8ac80c40c45c8ed004c0c902535268"
 }

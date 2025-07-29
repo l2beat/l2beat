@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "blockNumber": 23024236,
+  "blockNumber": 23024991,
   "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
   "entries": [
     {
@@ -275,7 +275,7 @@
       ]
     },
     {
-      "name": "Predicate Multisig",
+      "name": "INTMAX Multisig 3",
       "address": "eth:0xe147e23753505e2C83b5f9ef229a9B7e7B3F50Ea",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -367,8 +367,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 5644,
-        "getLastRelayedDepositId": 5644,
+        "getLastDepositId": 5670,
+        "getLastRelayedDepositId": 5670,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -993,5 +993,5 @@
     "intmax/Liquidity": "0xe5ffb6917a22917649f7ad0021caa73eaa31df72f1b181e9eaf16b7d0817ef2e",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "permissionsConfigHash": "0x0889077d40e266474dd26688430873a7ba94a61291052e5add8dcf9dcff39517"
+  "permissionsConfigHash": "0xa9c4371e7d3151c5ec311189a06988d7ef8ac80c40c45c8ed004c0c902535268"
 }
