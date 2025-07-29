@@ -1,7 +1,7 @@
 {
   "name": "wonder",
   "chain": "ethereum",
-  "blockNumber": 22865742,
+  "timestamp": 1751872259,
   "configHash": "0x1a8ab712656bacdba403e0a447b614f099927aa26a647771149c786f93b94187",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -1052,5 +1052,6 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "ethereum": 22865742 },
   "permissionsConfigHash": "0x593ff248811aad3469764c7f7eeb1130e2c2d2019176fb02e55e778041110a33"
 }

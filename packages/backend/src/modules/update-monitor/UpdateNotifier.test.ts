@@ -22,7 +22,7 @@ import {
   UpdateNotifier,
 } from './UpdateNotifier'
 
-const BLOCK = 123
+const TIMESTAMP = UnixTime.now()
 
 describe(UpdateNotifier.name, () => {
   const chainConverter = new ChainConverter([
@@ -79,20 +79,17 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
-        UnixTime.now(),
+        TIMESTAMP,
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-          '> #0000 (block_number=123)',
-          '',
-          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Changes: ***project-a***:***ethereum*** at timestamp ${TIMESTAMP}\`\`\`diff`,
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
           '      A:',
@@ -121,7 +118,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -178,20 +175,17 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
-        UnixTime.now(),
+        TIMESTAMP,
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-          '> #0000 (block_number=123)',
-          '',
-          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Changes: ***project-a***:***ethereum*** at timestamp ${TIMESTAMP}\`\`\`diff`,
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
           '+++ description: This should never be equal to two',
@@ -224,7 +218,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -275,22 +269,19 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
-        UnixTime.now(),
+        TIMESTAMP,
       )
 
       const internalMessage = [
-        '> #0000 (block_number=123)',
-        '',
-        '***project-a*** | detected changes on chain: ***ethereum***```diff',
+        `Changes: ***project-a***:***ethereum*** at timestamp ${TIMESTAMP}\`\`\`diff`,
         `    contract Contract (${address.toString()}) {`,
         '    +++ description: None',
         '      A:',
         `-        ${'A'.repeat(1000)}`,
-        `+        ${'B'.repeat(756)}... (message too long)`,
+        `+        ${'B'.repeat(780)}... (message too long)`,
         '```',
       ].join('\n')
 
@@ -321,7 +312,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -369,20 +360,17 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
-        UnixTime.now(),
+        TIMESTAMP,
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-          '> #0000 (block_number=123)',
-          '',
-          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Changes: ***project-a***:***ethereum*** at timestamp ${TIMESTAMP}\`\`\`diff`,
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
           '      errors:',
@@ -396,7 +384,7 @@ describe(UpdateNotifier.name, () => {
       expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectId: project,
         diff: changes,
-        blockNumber: BLOCK,
+        timestamp: TIMESTAMP,
         chainId: ChainId.ETHEREUM,
       })
     })
@@ -466,11 +454,10 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
-        UnixTime.now(),
+        TIMESTAMP,
       )
 
       expect(mockProjectService.getProject).toHaveBeenCalledWith({
@@ -482,9 +469,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-          '> #0000 (block_number=123)',
-          '',
-          '***project-a*** | detected changes on chain: ***ethereum***',
+          `Changes: ***project-a***:***ethereum*** at timestamp ${TIMESTAMP}`,
           '*Tracked transactions might be affected.*```diff',
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
@@ -577,11 +562,10 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        BLOCK,
         ChainId.ETHEREUM,
         dependents,
         [],
-        UnixTime.now(),
+        TIMESTAMP,
       )
 
       expect(mockProjectService.getProject).toHaveBeenCalledWith({
@@ -594,9 +578,7 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-          '> #0000 (block_number=123)',
-          '',
-          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Changes: ***project-a***:***ethereum*** at timestamp ${TIMESTAMP}\`\`\`diff`,
           `    contract Contract (${address.toString()}) {`,
           '    +++ description: None',
           '      A:',
@@ -656,8 +638,7 @@ describe(UpdateNotifier.name, () => {
           },
         ],
       }
-      const timestamp =
-        UnixTime.toStartOf(UnixTime.now(), 'day') + 6 * UnixTime.HOUR
+      const timestamp = UnixTime.toStartOf(TIMESTAMP, 'day') + 6 * UnixTime.HOUR
       const headers = ['Project', 'Chain', 'High', 'Low', '???']
       const rows = [
         ['project-b', 'optimism', '3', '', '4'],

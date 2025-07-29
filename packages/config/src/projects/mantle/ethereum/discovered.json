@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 22273219,
+  "timestamp": 1744706039,
   "configHash": "0x02afdfa21898c7decd7f727bc2bdee8b34c5c740bde86aa64c8a037fa4997f50",
   "entries": [
     {
@@ -1218,5 +1218,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22273219 },
   "permissionsConfigHash": "0x71dab5e968205d6e6437d6c333a20fc3b2dfbd77dff2f44dc6061338a532dfd6"
 }

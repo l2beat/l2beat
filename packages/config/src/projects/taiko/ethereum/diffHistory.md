@@ -1,16 +1,20 @@
-Generated with discovered.json: 0xc46764fed78b3a945d64debc9616f2dcf30acc79
+Generated with discovered.json: 0x28d2529708b2356dbbabf80805e933dd64d654fd
 
-# Diff at Tue, 29 Jul 2025 09:34:22 GMT:
+# Diff at Tue, 29 Jul 2025 13:42:27 GMT:
 
 - author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- comparing to: main@05d0f9814b6e7f88bbab083b132a005c063f7d1e block: 22923197
-- current block number: 23023931
+- comparing to: main@985826fe73e93650e4402d9ab61540358802d73e block: 1752565811
+- current timestamp: 1753796542
 
 ## Description
 
 Updated RISC0 Groth16 verifier version for Taiko batch proofs.
 
-## Watched changes
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752565811 (main branch discovery), not current.
 
 ```diff
     contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
@@ -63,15 +67,7 @@ Updated RISC0 Groth16 verifier version for Taiko batch proofs.
     +++ description: Verifier contract for RISC Zero Groth16 proofs (version 2.2.0).
 ```
 
-## Source code changes
-
-```diff
-.../Risc0VerifierGateway/Risc0Verifier.sol}        | 80 ++++++++++++++++++++--
- .../RiscZeroGroth16Verifier.sol                    |  7 +-
- 2 files changed, 78 insertions(+), 9 deletions(-)
-```
-
-Generated with discovered.json: 0x25328d8657ce654b01aac3364901b8042e569bbc
+Generated with discovered.json: 0xa14d0b5804b0b13aa300d9e4913b17ccbac8a1c6
 
 # Diff at Tue, 22 Jul 2025 15:40:05 GMT:
 

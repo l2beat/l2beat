@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 23015750,
+  "timestamp": 1753682819,
   "configHash": "0xead13b0edc4ff271ca3478ad43811e797ff83b354c6b0a78be870cd64d35d0f1",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -1915,5 +1915,6 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 23015750 },
   "permissionsConfigHash": "0x3133c70e8471ddec92eb09f56446ad8b4b3436368779e592a662333aefe2ce57"
 }

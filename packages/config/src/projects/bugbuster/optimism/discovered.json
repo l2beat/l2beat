@@ -1,7 +1,7 @@
 {
   "name": "bugbuster",
   "chain": "optimism",
-  "blockNumber": 125928338,
+  "timestamp": 1727455453,
   "configHash": "0xc0bb35c5230440f3eb2df2dabf46966e8f245b7484e438d41d16ff7f8a37670d",
   "entries": [
     {
@@ -178,5 +178,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "optimism": 125928338 },
   "permissionsConfigHash": "0x41d0ab9148f634eb8d9281c1d31dacff8a28921a7e693c68fc0ede56a0ea6be3"
 }

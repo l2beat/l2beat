@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 22425701,
+  "timestamp": 1746547031,
   "configHash": "0x176c0f74fa0df8fc8c94ac5f0e662a2aaa971aff6e4363132886bc8dead0fd80",
   "entries": [
     {
@@ -1984,5 +1984,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "ethereum": 22425701 },
   "permissionsConfigHash": "0x7f4f2d6d5f777978b36530605b530e3099d0b682cc8c5235638e210adab0bff6"
 }
