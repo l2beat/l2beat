@@ -1,7 +1,7 @@
 {
   "name": "cyber",
   "chain": "ethereum",
-  "blockNumber": 22208300,
+  "timestamp": 1743923519,
   "configHash": "0x8c4f304a8903ee57b42293710e3fb550edc38a2d761bd02d4b7e98b39903cb14",
   "entries": [
     {
@@ -1313,5 +1313,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22208300 },
   "permissionsConfigHash": "0xe25ac4e25b3770c35b1d895bdbe9160c3b17d3d35bceb7e650a0ebe2bd46b041"
 }

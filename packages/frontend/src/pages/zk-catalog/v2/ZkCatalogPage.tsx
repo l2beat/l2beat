@@ -1,4 +1,6 @@
 import { CustomLink } from '~/components/link/CustomLink'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import { TableFilters } from '~/components/table/filters/TableFilters'
 import { env } from '~/env'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
@@ -20,7 +22,12 @@ export function ZkCatalogPage({ ...props }: Props) {
           <WorkInProgressNotice />
         ) : (
           <>
-            <ZkCatalogTable entries={props.entries} />
+            <TableFilterContextProvider>
+              <div className="mb-4">
+                <TableFilters entries={props.entries} />
+              </div>
+              <ZkCatalogTable entries={props.entries} />
+            </TableFilterContextProvider>
             <p className="mt-2 text-balance text-center text-paragraph-15 text-secondary">
               We appreciate your patience as we work to improve your experience.
               <br />

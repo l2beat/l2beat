@@ -1,7 +1,7 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 360432231,
+  "timestamp": 1753200985,
   "configHash": "0x134add4c53b3931ed14197a3f07acc2a55e7281aea1ef287961b4158c1c813b6",
   "entries": [
     {
@@ -2199,5 +2199,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "arbitrum": 360432232 },
   "permissionsConfigHash": "0xd0363ac2cf1b1b0b640d8681ee00c9498654ee340b620f19cc33e518fda7ee63"
 }

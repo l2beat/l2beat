@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 21628437,
+  "timestamp": 1736926655,
   "configHash": "0x1346c24bad531e3a5fb79ec43ac207e9be1d813471b30b34497992f61af71ff7",
   "entries": [
     {
@@ -996,5 +996,6 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
+  "usedBlockNumbers": { "ethereum": 21628437 },
   "permissionsConfigHash": "0x608f2f69275f3da0b810339f9fa5c9696f9f363fe6cc9a88193b8802fc601ec5"
 }

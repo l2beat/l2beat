@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 23019202,
+  "timestamp": 1753724531,
   "configHash": "0xdd1f1fe2866bd38e9a86575374215cb7f4f5e57f683311fe14e9971cf0821807",
   "entries": [
     {
@@ -2210,5 +2210,6 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
+  "usedBlockNumbers": { "ethereum": 23019202 },
   "permissionsConfigHash": "0xaaf7ba4b39d2388b1e495ad10bd97da36cbc593827056d41ed60e5f0905a20dd"
 }

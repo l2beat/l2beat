@@ -1,7 +1,7 @@
 {
   "name": "fuel",
   "chain": "ethereum",
-  "blockNumber": 21630407,
+  "timestamp": 1736950439,
   "configHash": "0x95b68e6fde20dde4ddb8fd8b2c485733a021261d94ad1b51e206b62e1ff623e2",
   "entries": [
     {
@@ -721,5 +721,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 21630407 },
   "permissionsConfigHash": "0x249a14f839a028ce3e5363b221379ea81c58d5c79e3aa91364a04d00491ec342"
 }

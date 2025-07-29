@@ -1,9 +1,10 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { Log } from 'viem'
 
-export type TransactionWithLogs = {
-  hash: string
+export type DecoderInput = {
+  log: Log
   blockNumber: number
   blockTimestamp: UnixTime
-  logs: Log[]
+  transactionHash: string
+  transactionLogs: Log[]
 }

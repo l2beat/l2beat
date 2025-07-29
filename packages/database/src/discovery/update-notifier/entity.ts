@@ -8,7 +8,7 @@ export interface UpdateNotifierRecord {
   createdAt: UnixTime
   updatedAt: UnixTime
   projectId: string
-  blockNumber: number
+  timestamp: UnixTime
   diff: DiscoveryDiff[]
   chainId: ChainId
 }
@@ -18,7 +18,7 @@ export function toRow(
 ): Insertable<Omit<UpdateNotifier, 'id' | 'created_at' | 'updated_at'>> {
   return {
     projectId: record.projectId,
-    blockNumber: record.blockNumber,
+    timestamp: UnixTime.toDate(record.timestamp),
     diffJsonBlob: JSON.stringify(record.diff),
     chainId: +record.chainId,
   }
@@ -32,7 +32,7 @@ export function toRecord(
     createdAt: UnixTime.fromDate(row.createdAt),
     updatedAt: UnixTime.fromDate(row.updatedAt),
     projectId: row.projectId,
-    blockNumber: row.blockNumber,
+    timestamp: UnixTime.fromDate(row.timestamp),
     diff: row.diffJsonBlob as unknown as DiscoveryDiff[],
     chainId: ChainId(row.chainId),
   }

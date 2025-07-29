@@ -1,7 +1,7 @@
 {
   "name": "muster",
   "chain": "arbitrum",
-  "blockNumber": 360996679,
+  "timestamp": 1753341899,
   "configHash": "0x60fd5cffc0e20abff4a93a767cd9888845facfa5fe930c995ba8d25a1c5ae8e7",
   "entries": [
     {
@@ -1471,5 +1471,6 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
+  "usedBlockNumbers": { "arbitrum": 360996679 },
   "permissionsConfigHash": "0x2361e49c1136bbd9470e34e82e30f1b1b8a40c8c49754cc091236821643df723"
 }
