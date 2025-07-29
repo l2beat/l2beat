@@ -12,6 +12,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('intmax')
+const scrollDiscovery = new ProjectDiscovery('intmax', 'scroll')
 
 export const intmax: ScalingProject = {
   type: 'layer2',
@@ -151,14 +152,16 @@ export const intmax: ScalingProject = {
       rollupNodeLink: 'https://github.com/InternetMaximalism/intmax2-node',
     },
   ),
-  discoveryInfo: getDiscoveryInfo([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery, scrollDiscovery]),
   contracts: {
     addresses: {
       [discovery.chain]: discovery.getDiscoveredContracts(),
+      [scrollDiscovery.chain]: scrollDiscovery.getDiscoveredContracts(),
     },
     risks: [],
   },
   permissions: {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
+    [scrollDiscovery.chain]: scrollDiscovery.getDiscoveredPermissions(),
   },
 }

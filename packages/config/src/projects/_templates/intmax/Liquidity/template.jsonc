@@ -15,6 +15,14 @@
           "0x738128fe393bef1bcd8a524796fff40618b938cd467c71fcf37850ab0ba4f7d7": "WITHDRAWAL"
         }
       }
+    },
+    "amlPermitter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approves deposits through AML checks."
+        }
+      ]
     }
   }
 }

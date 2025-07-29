@@ -20,13 +20,18 @@
       "handler": {
         "type": "event",
         "select": "operators",
-        "add": {
-          "event": "PermissionedOperatorsAdded"
-        },
-        "remove": {
-          "event": "PermissionedOperatorsRemoved"
-        }
+        "add": { "event": "PermissionedOperatorsAdded" },
+        "remove": { "event": "PermissionedOperatorsRemoved" }
       }
+    },
+    "operators": {
+      "handler": {
+        "type": "event",
+        "select": "operator",
+        "add": { "event": "OperatorRegistered" },
+        "remove": { "event": "OperatorRemoved" }
+      },
+      "permissions": [{ "type": "act" }]
     }
   }
 }
