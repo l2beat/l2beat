@@ -4,6 +4,7 @@ import type { Chain } from '../../chains'
 import type { Asset } from '../../types/Asset'
 import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
+import { extractAddressFromPadded } from '../../utils/viem'
 
 export const ACROSS = {
   name: 'across',
@@ -50,7 +51,7 @@ function decoder(
       customType: 'FundsDeposited',
       matchingId: data.args.depositId.toString(),
       amount: data.args.inputAmount,
-      token: data.args.inputToken,
+      token: extractAddressFromPadded(data.args.inputToken),
       // messageProtocol?: string
       // messageId?: string
     }
@@ -83,7 +84,7 @@ function decoder(
       customType: 'FilledRelay',
       matchingId: data.args.depositId.toString(),
       amount: data.args.outputAmount,
-      token: data.args.outputToken,
+      token: extractAddressFromPadded(data.args.outputToken),
       // messageProtocol?: string
       // messageId?: string
     }

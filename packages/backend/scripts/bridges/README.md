@@ -17,6 +17,14 @@ pnpm bridges:cli across ethereum 23025199 base 33503830
 pnpm bridges:cli across arbitrum 362819685 ethereum 23025205
 ```
 
+### AggLayer
+``` bash
+pnpm bridges:cli agglayer ethereum 22980710 polygonzkevm 24133897
+```
+``` bash
+pnpm bridges:cli agglayer ethereum 22980856 katana 6519624
+```
+
 ### LayerZero V1
 ``` bash
 pnpm bridges:cli layerzerov1 ethereum 22970814 arbitrum 360189207
@@ -28,13 +36,7 @@ pnpm bridges:cli layerzerov1 ethereum 22969147 arbitrum 360108534
 pnpm bridges:cli layerzerov1 ethereum 22956392 arbitrum 359491994
 ```
 
-### AggLayer
-``` bash
-pnpm bridges:cli agglayer ethereum 22980710 polygonzkevm 24133897
-```
-``` bash
-pnpm bridges:cli agglayer ethereum 22980856 katana 6519624
-```
+
 
 ### Stargate
 ``` bash

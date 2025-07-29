@@ -1,5 +1,12 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
+import type { RpcClient } from '@l2beat/shared'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  decodeEventLog,
+  encodeEventTopics,
+  encodeFunctionData,
+  type Hex,
+  parseAbi,
+} from 'viem'
 import type { Chain } from '../../chains'
 import type { Asset } from '../../types/Asset'
 import type { DecoderInput } from '../../types/DecoderInput'
@@ -8,6 +15,7 @@ import {
   createAgglayerTransferId,
   decodeGlobalIndex,
 } from '../../utils/agglayer'
+import { extractAddressFromPadded } from '../../utils/viem'
 
 export const AGGLAYER = {
   name: 'agglayer',
@@ -17,18 +25,20 @@ export const AGGLAYER = {
 const ABI = parseAbi([
   'event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)',
   'event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)',
+  'function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)',
 ])
 
-function decoder(
+async function decoder(
   chain: Chain,
   input: DecoderInput,
-): Message | Asset | undefined {
-  const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+  rpc?: RpcClient,
+): Promise<Message | Asset | undefined> {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
 
-  if (!bridge) return undefined
+  if (!network) return undefined
 
   if (
-    EthereumAddress(input.log.address) === bridge.address &&
+    EthereumAddress(input.log.address) === network.address &&
     input.log.topics[0] ===
       encodeEventTopics({ abi: ABI, eventName: 'BridgeEvent' })[0]
   ) {
@@ -47,25 +57,29 @@ function decoder(
       BigInt(data.args.depositCount),
     )
 
-    const destination = BRIDGES.find(
+    const destination = NETWORKS.find(
       (b) => b.chainId === data.args.destinationNetwork,
     )?.chainShortName
 
     return {
-      type: 'message',
+      type: 'asset',
       direction: 'outbound',
-      protocol: AGGLAYER.name,
+      application: AGGLAYER.name,
       origin: chain.shortName,
       destination: destination ?? data.args.destinationNetwork.toString(),
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
       customType: 'BridgeEvent',
       matchingId: transferId,
+      amount: data.args.amount,
+      token: data.args.originAddress,
+      // messageProtocol?: string
+      // messageId?: string
     }
   }
 
   if (
-    EthereumAddress(input.log.address) === bridge.address &&
+    EthereumAddress(input.log.address) === network.address &&
     input.log.topics[0] ===
       encodeEventTopics({ abi: ABI, eventName: 'ClaimEvent' })[0]
   ) {
@@ -86,27 +100,50 @@ function decoder(
       globalIndexDecoded.localRootIndex,
     )
 
-    const origin = BRIDGES.find(
+    const origin = NETWORKS.find(
       (c) => c.chainId === data.args.originNetwork,
     )?.chainShortName
 
+    assert(rpc)
+    const tokenWrappedAddress = await rpc.call(
+      {
+        to: network.address,
+        data: Bytes.fromHex(
+          encodeFunctionData({
+            abi: ABI,
+            functionName: 'getTokenWrappedAddress',
+            args: [data.args.originNetwork, data.args.originAddress],
+          }),
+        ),
+      },
+      input.blockNumber,
+    )
+
+    const token = extractAddressFromPadded(
+      tokenWrappedAddress.toString() as Hex,
+    )
+
     return {
-      type: 'message',
+      type: 'asset',
       direction: 'inbound',
-      protocol: AGGLAYER.name,
+      application: AGGLAYER.name,
       origin: origin ?? data.args.originNetwork.toString(),
       destination: chain.shortName,
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
       customType: 'ClaimEvent',
       matchingId: transferId,
+      amount: data.args.amount,
+      token: token,
+      // messageProtocol?: string
+      // messageId?: string
     }
   }
 
   return undefined
 }
 
-const BRIDGES = [
+const NETWORKS = [
   {
     chainId: 0,
     chainShortName: 'eth',
