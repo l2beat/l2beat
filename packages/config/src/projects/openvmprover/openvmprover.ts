@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const openvmprover: BaseProject = {
   id: ProjectId('openvmprover'),
   slug: 'openvmprover',
-  name: 'OpenVM Prover',
+  name: 'Scroll',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-21')),
   statuses: {

@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const lineaprover: BaseProject = {
   id: ProjectId('lineaprover'),
   slug: 'lineaprover',
-  name: 'Linea prover',
+  name: 'Linea',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {

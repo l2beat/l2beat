@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const loopringprover: BaseProject = {
   id: ProjectId('loopringprover'),
   slug: 'loopringprover',
-  name: 'Loopring Prover',
+  name: 'Loopring',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
   statuses: {

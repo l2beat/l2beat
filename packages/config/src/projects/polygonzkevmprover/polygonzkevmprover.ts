@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const polygonzkevmprover: BaseProject = {
   id: ProjectId('polygonzkevmprover'),
   slug: 'polygonzkevmprover',
-  name: 'Polygon zkEVM Prover',
+  name: 'Polygon zkEVM',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {
