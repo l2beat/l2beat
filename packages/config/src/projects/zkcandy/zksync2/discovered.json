@@ -1,12 +1,12 @@
 {
   "name": "zkcandy",
   "chain": "zksync2",
-  "timestamp": 1738324264,
+  "timestamp": 1752577115,
   "configHash": "0xab37ff87868547817bf100403f3d706218f1baef6149260cbdd769d62977c1ea",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
   "usedTemplates": {},
-  "usedBlockNumbers": { "zksync2": 54952349 },
+  "usedBlockNumbers": { "zksync2": 62890925 },
   "permissionsConfigHash": "0x0aee4fff20dbf71ea57cf8d39e79864d5358121c1fac35d47559338cb13b9bc9"
 }

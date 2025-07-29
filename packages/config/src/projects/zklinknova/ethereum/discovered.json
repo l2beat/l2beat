@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "ethereum",
-  "timestamp": 1741680767,
+  "timestamp": 1753687799,
   "configHash": "0xb7c0b6e6c5ff1722154d2e266dd651ea054534de170e0b79faaffcd6f45a401d",
   "entries": [
     {
@@ -263,15 +263,15 @@
         "getGateway": "eth:0x83Bc7394738A7A084081aF22EEC0051908c0055c",
         "getGovernor": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 50873,
-        "getTotalPriorityTxs": 27651,
+        "getTotalBatchesExecuted": 69385,
+        "getTotalPriorityTxs": 27789,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "eth:0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "paused": false,
-        "totalBatchesExecuted": 50873,
-        "totalPriorityTxs": 27651,
-        "totalSyncedPriorityTxs": 27651,
-        "totalValidatorForwardFee": "15167745375852006583",
+        "totalBatchesExecuted": 69385,
+        "totalPriorityTxs": 27789,
+        "totalSyncedPriorityTxs": 27789,
+        "totalValidatorForwardFee": "15237756954603764016",
         "totalValidatorForwardFeeWithdrawn": "15001078380274813514",
         "txGasPrice": 40000000000
       },
@@ -1259,6 +1259,6 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "usedBlockNumbers": { "ethereum": 22022360 },
+  "usedBlockNumbers": { "ethereum": 23016163 },
   "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
 }
