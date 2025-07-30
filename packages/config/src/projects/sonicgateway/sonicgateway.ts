@@ -1,6 +1,6 @@
 import {
   assert,
-  EthereumAddress,
+  ChainSpecificAddress,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -65,7 +65,9 @@ export const sonicgateway: Bridge = {
     associatedTokens: ['FTM'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20'),
+        address: ChainSpecificAddress(
+          'eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20',
+        ),
         tokens: [
           'FTM',
           'USDT',

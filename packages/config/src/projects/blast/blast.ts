@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ESCROW, EXITS, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -95,7 +99,9 @@ export const blast: ScalingProject = opStackL2({
   genesisTimestamp: UnixTime(1708825259), //First sequencer transaction
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),
+      address: ChainSpecificAddress(
+        'eth:0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d',
+      ),
       name: 'Pre-launch Blast Vault',
       description:
         'Pre-launch Blast Vault that keeps stETH. Funds from this Vault can be migrated to Blast bridge.',
@@ -103,7 +109,9 @@ export const blast: ScalingProject = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x98078db053902644191f93988341E31289E1C8FE'),
+      address: ChainSpecificAddress(
+        'eth:0x98078db053902644191f93988341E31289E1C8FE',
+      ),
       name: 'Interest-bearing ETH Vault',
       tokens: ['ETH', 'stETH'],
       ...ESCROW.CANONICAL_EXTERNAL,

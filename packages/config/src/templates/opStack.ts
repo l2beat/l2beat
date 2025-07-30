@@ -311,9 +311,7 @@ function opStackCommon(
         migratedToLockbox(templateVars)
           ? templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(
-                templateVars.discovery.getContract('ETHLockbox').address,
-              ),
+              address: templateVars.discovery.getContract('ETHLockbox').address,
               tokens: optimismPortalTokens,
               premintedTokens: templateVars.optimismPortalPremintedTokens,
               description: `Main escrow for users depositing ${optimismPortalTokens.join(
@@ -323,7 +321,7 @@ function opStackCommon(
             })
           : templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(portal.address),
+              address: portal.address,
               tokens: optimismPortalTokens,
               premintedTokens: templateVars.optimismPortalPremintedTokens,
               description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -333,7 +331,7 @@ function opStackCommon(
             }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
+          address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,

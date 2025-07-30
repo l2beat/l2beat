@@ -51,14 +51,18 @@ export const base: ScalingProject = opStackL2({
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+      address: ChainSpecificAddress(
+        'eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3'),
+      address: ChainSpecificAddress(
+        'eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3',
+      ),
       tokens: ['USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

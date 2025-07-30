@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { CONTRACTS, DA_BRIDGES, DA_LAYERS, DA_MODES } from '../../common'
 import { BADGES } from '../../common/badges'
 import { EXITS } from '../../common/exits'
@@ -84,7 +89,9 @@ export const termstructure: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x09E01425780094a9754B2bd8A3298f73ce837CF9'),
+        address: ChainSpecificAddress(
+          'eth:0x09E01425780094a9754B2bd8A3298f73ce837CF9',
+        ),
         sinceTimestamp: UnixTime(1716263903),
         tokens: '*',
       }),

@@ -1,9 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -47,7 +42,9 @@ export const nearomni: Bridge = {
     associatedTokens: ['AURORA', 'NEAR'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xe00c629aFaCCb0510995A2B95560E446A24c85B9'),
+        address: ChainSpecificAddress(
+          'eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9',
+        ),
         tokens: '*',
         description:
           'Main escrow for all tokens bridged from Ethereum via Near Omni Bridge to other chains.',

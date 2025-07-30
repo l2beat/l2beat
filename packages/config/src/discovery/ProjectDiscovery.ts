@@ -6,14 +6,12 @@ import type {
 } from '@l2beat/discovery'
 import {
   ConfigReader,
-  getChainShortName,
   getDiscoveryPaths,
   RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
   type LegacyTokenBridgedUsing,
   notUndefined,
   UnixTime,
@@ -147,7 +145,7 @@ export class ProjectDiscovery {
     untilTimestamp,
     sharedEscrow,
   }: {
-    address: EthereumAddress
+    address: ChainSpecificAddress
     name?: string
     description?: string
     sinceTimestamp?: UnixTime
@@ -166,11 +164,7 @@ export class ProjectDiscovery {
     untilTimestamp?: UnixTime
     sharedEscrow?: SharedEscrow
   }): ProjectEscrow {
-    const chainSpecificAddress = ChainSpecificAddress.from(
-      getChainShortName(this.chain),
-      address,
-    )
-    const contractRaw = this.getContract(chainSpecificAddress.toString())
+    const contractRaw = this.getContract(address.toString())
     const timestamp = sinceTimestamp ?? contractRaw.sinceTimestamp
     assert(
       timestamp !== undefined,
@@ -183,11 +177,11 @@ export class ProjectDiscovery {
       upgradableBy,
     }
 
-    const contract = this.getContractDetails(chainSpecificAddress, options)
+    const contract = this.getContractDetails(address, options)
 
-    const chain = ChainSpecificAddress.longChain(chainSpecificAddress)
+    const chain = ChainSpecificAddress.longChain(address)
     return {
-      address: address,
+      address: ChainSpecificAddress.address(address),
       sinceTimestamp: UnixTime(timestamp),
       tokens,
       excludedTokens,
