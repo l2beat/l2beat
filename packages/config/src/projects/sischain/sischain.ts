@@ -11,7 +11,7 @@ export const sischain: ScalingProject = underReviewL2({
     slug: 'sischain',
     description:
       'The SIS Chain is purpose-built for cross-chain activity – with fast execution, simple tooling, and native token utility at its core.',
-    category: 'ZK Rollup',
+    category: 'Optimistic Rollup',
     purposes: ['Universal'],
     stacks: ['Arbitrum'],
     links: {
