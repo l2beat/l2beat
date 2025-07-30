@@ -30,6 +30,7 @@ import { hook } from '../projects/hook/hook'
 import { huddle01 } from '../projects/huddle01/huddle01'
 import { hyperagi } from '../projects/hyperagi/hyperagi'
 import { inevm } from '../projects/inevm/inevm'
+import { intmax } from '../projects/intmax/intmax'
 import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
 import { mindchain } from '../projects/mindchain/mindchain'
@@ -92,6 +93,7 @@ export const layer3s: ScalingProject[] = [
   geist,
   gridy,
   inevm,
+  intmax,
   ham,
   henez,
   huddle01,

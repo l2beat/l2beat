@@ -1,5 +1,11 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "intmax",
-  "import": ["../globalConfig.jsonc"]
+  "import": ["../globalConfig.jsonc"],
+  "maxAddresses": 200,
+  "initialAddresses": [
+    "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+    "scr:0x22ac649b3229eC099C32D790e9e46FbA2CE6C9A5",
+    "scr:0x86B06D2604D9A6f9760E8f691F86d5B2a7C9c449"
+  ]
 }
