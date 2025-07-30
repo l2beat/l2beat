@@ -168,7 +168,7 @@ To receive the original locked token back, a user would have to return to the ma
           url: 'https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F1#L30',
         },
         {
-          title: 'L2Beat Blog: Circumventing Layer Zero',
+          title: 'L2BEAT Blog: Circumventing Layer Zero',
           url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
         },
       ],

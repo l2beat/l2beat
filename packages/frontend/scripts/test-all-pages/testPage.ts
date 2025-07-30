@@ -19,7 +19,7 @@ export async function testPage(url: string): Promise<Result> {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'User-Agent': 'L2Beat-Test/1.0',
+        'User-Agent': 'L2BEAT-Test/1.0',
       },
       // Add timeout to prevent hanging requests
       signal: AbortSignal.timeout(30000), // 30 second timeout
