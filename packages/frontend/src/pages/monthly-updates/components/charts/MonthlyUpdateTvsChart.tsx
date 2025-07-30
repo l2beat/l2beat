@@ -116,7 +116,7 @@ export function MonthlyUpdateTvsChart({
           })}
           <ChartTooltip
             filterNull={false}
-            content={<TvsCustomTooltip unit={'usd'} fullDate />}
+            content={<TvsCustomTooltip unit="usd" />}
           />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
