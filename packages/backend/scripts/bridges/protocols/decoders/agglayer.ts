@@ -14,6 +14,7 @@ import type { Message } from '../../types/Message'
 import {
   createAgglayerTransferId,
   decodeGlobalIndex,
+  isAssetBridging,
 } from '../../utils/agglayer'
 import { extractAddressFromPadded } from '../../utils/viem'
 
@@ -49,6 +50,10 @@ async function decoder(
       eventName: 'BridgeEvent',
     })
 
+    if (!isAssetBridging(BigInt(data.args.leafType))) {
+      return undefined
+    }
+
     const transferId = createAgglayerTransferId(
       BigInt(data.args.originNetwork),
       data.args.originAddress,
@@ -61,6 +66,17 @@ async function decoder(
       (b) => b.chainId === data.args.destinationNetwork,
     )?.chainShortName
 
+    const token =
+      data.args.originNetwork === network.chainId
+        ? data.args.originAddress
+        : await getTokenWrappedAddress(
+            rpc,
+            network.address,
+            data.args.originNetwork,
+            data.args.originAddress,
+            input,
+          )
+
     return {
       type: 'asset',
       direction: 'outbound',
@@ -72,7 +88,7 @@ async function decoder(
       customType: 'BridgeEvent',
       matchingId: transferId,
       amount: data.args.amount,
-      token: data.args.originAddress,
+      token: token,
       // messageProtocol?: string
       // messageId?: string
     }
@@ -100,28 +116,23 @@ async function decoder(
       globalIndexDecoded.localRootIndex,
     )
 
-    const origin = NETWORKS.find(
-      (c) => c.chainId === data.args.originNetwork,
-    )?.chainShortName
+    const origin = globalIndexDecoded.mainnetFlag
+      ? 'eth'
+      : NETWORKS.find(
+          // Rollup Index is equal to Rollup ID - 1
+          (c) => c.chainId - 1 === Number(globalIndexDecoded.rollupIndex),
+        )?.chainShortName
 
-    assert(rpc)
-    const tokenWrappedAddress = await rpc.call(
-      {
-        to: network.address,
-        data: Bytes.fromHex(
-          encodeFunctionData({
-            abi: ABI,
-            functionName: 'getTokenWrappedAddress',
-            args: [data.args.originNetwork, data.args.originAddress],
-          }),
-        ),
-      },
-      input.blockNumber,
-    )
-
-    const token = extractAddressFromPadded(
-      tokenWrappedAddress.toString() as Hex,
-    )
+    const token =
+      data.args.originNetwork === network.chainId
+        ? data.args.originAddress
+        : await getTokenWrappedAddress(
+            rpc,
+            network.address,
+            data.args.originNetwork,
+            data.args.originAddress,
+            input,
+          )
 
     return {
       type: 'asset',
@@ -160,3 +171,28 @@ const NETWORKS = [
     address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
   },
 ]
+async function getTokenWrappedAddress(
+  rpc: RpcClient | undefined,
+  bridge: EthereumAddress,
+  originNetwork: number,
+  originAddress: `0x${string}`,
+  input: DecoderInput,
+) {
+  assert(rpc)
+  const tokenWrappedAddress = await rpc.call(
+    {
+      to: bridge,
+      data: Bytes.fromHex(
+        encodeFunctionData({
+          abi: ABI,
+          functionName: 'getTokenWrappedAddress',
+          args: [originNetwork, originAddress],
+        }),
+      ),
+    },
+    input.blockNumber,
+  )
+
+  const token = extractAddressFromPadded(tokenWrappedAddress.toString() as Hex)
+  return token
+}

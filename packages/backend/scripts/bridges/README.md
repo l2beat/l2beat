@@ -24,6 +24,9 @@ pnpm bridges:cli agglayer ethereum 22980710 polygonzkevm 24133897
 ``` bash
 pnpm bridges:cli agglayer ethereum 22980856 katana 6519624
 ```
+```bash
+pnpm bridges:cli agglayer katana 5380874 ethereum 22914279
+```
 
 ### LayerZero V1
 ``` bash

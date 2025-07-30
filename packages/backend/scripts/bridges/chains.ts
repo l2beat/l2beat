@@ -121,6 +121,6 @@ export const CHAINS: Chain[] = [
     rpcCallsPerMinute: 120,
     getTxUrl: (hash: string) => `https://explorer.katanarpc.com/tx/${hash}`,
     getAddressUrl: (hash: string) =>
-      `https://explorer.katanarpc.com/tx/${hash}`,
+      `https://explorer.katanarpc.com/address/${hash}`,
   },
 ]

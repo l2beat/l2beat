@@ -51,3 +51,7 @@ export function decodeGlobalIndex(globalIndex: bigint) {
     localRootIndex,
   }
 }
+
+export function isAssetBridging(leafType: bigint): boolean {
+  return leafType === AGGLAYER_CONSTANTS.LEAF_TYPE.ASSET
+}
