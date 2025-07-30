@@ -160,7 +160,7 @@ describe(CelestiaRpcClient.name, () => {
 
   describe(CelestiaRpcClient.prototype.getBlockResult.name, () => {
     it('returns block result', async () => {
-      const mockLogs = [
+      const mockResults = [
         {
           events: [
             {
@@ -180,11 +180,7 @@ describe(CelestiaRpcClient.name, () => {
         fetch: async () => ({
           result: {
             height: '100',
-            txs_results: [
-              {
-                log: JSON.stringify(mockLogs),
-              },
-            ],
+            txs_results: mockResults,
           },
         }),
       })
@@ -194,11 +190,7 @@ describe(CelestiaRpcClient.name, () => {
 
       expect(result).toEqual({
         height: '100',
-        txs_results: [
-          {
-            log: mockLogs,
-          },
-        ],
+        txs_results: mockResults,
       })
       expect(http.fetch).toHaveBeenOnlyCalledWith(
         'API_URL/block_results?height=100',

@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 22480922,
+  "timestamp": 1747219823,
   "configHash": "0xad3be60e230b5768eb1f949c76372e4616cf705ea8f882c0d90968455c9d7519",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -4298,5 +4298,6 @@
     "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b"
   },
+  "usedBlockNumbers": { "ethereum": 22480922 },
   "permissionsConfigHash": "0xf63f109dd14704ed5b2cdad81f8ec5b5aa661bc58387a1a2696b07b689c420a9"
 }

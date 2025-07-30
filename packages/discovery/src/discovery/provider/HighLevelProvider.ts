@@ -6,6 +6,7 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
   type Hash256,
+  type UnixTime,
 } from '@l2beat/shared-pure'
 import { type providers, utils } from 'ethers'
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -14,10 +15,12 @@ import { isRevert } from '../utils/isRevert'
 import type { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { DebugTransactionCallResponse } from './DebugTransactionTrace'
 import type { ContractDeployment, IProvider, RawProviders } from './IProvider'
+import type { IStatelessProvider } from './IStatelessProvider'
 import { ProviderMeasurement, ProviderStats } from './Stats'
 
 interface AllProviders {
-  get(chain: string, blockNumber: number): IProvider
+  get(chain: string, timestamp: UnixTime): Promise<IProvider>
+  getByBlockNumber(chain: string, blockNumber: number): Promise<IProvider>
 }
 
 export class HighLevelProvider implements IProvider {
@@ -27,14 +30,27 @@ export class HighLevelProvider implements IProvider {
     private readonly allProviders: AllProviders,
     private readonly provider: BatchingAndCachingProvider,
     readonly chain: string,
+    readonly timestamp: UnixTime,
     readonly blockNumber: number,
   ) {}
-  switchBlock(blockNumber: number): IProvider {
-    return this.allProviders.get(this.chain, blockNumber)
+
+  static createStateless(
+    allProviders: AllProviders,
+    provider: BatchingAndCachingProvider,
+    chain: string,
+  ): IStatelessProvider {
+    return new HighLevelProvider(allProviders, provider, chain, 0, 0)
   }
 
-  switchChain(chain: string, blockNumber: number): IProvider {
-    return this.allProviders.get(chain, blockNumber)
+  switchBlock(blockNumber: number): Promise<IProvider> {
+    return this.allProviders.getByBlockNumber(this.chain, blockNumber)
+  }
+
+  switchChain(
+    chain: string,
+    timestamp: UnixTime | undefined = undefined,
+  ): Promise<IProvider> {
+    return this.allProviders.get(chain, timestamp ?? this.timestamp)
   }
 
   raw<T>(
@@ -253,6 +269,14 @@ export class HighLevelProvider implements IProvider {
     const result = await this.provider.getBlock(blockNumber)
     duration += performance.now()
     this.stats.mark(ProviderMeasurement.GET_BLOCK, duration)
+    return result
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    let duration = -performance.now()
+    const result = await this.provider.getBlockNumberAtOrBefore(timestamp)
+    duration += performance.now()
+    this.stats.mark(ProviderMeasurement.GET_BLOCK_NUMBER_AT_OR_BEFORE, duration)
     return result
   }
 

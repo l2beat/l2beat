@@ -3,7 +3,6 @@ import { type json, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import type { Hex } from 'viem'
-import type { TransactionWithLogs } from '../types/TransactionWithLogs'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -40,10 +39,7 @@ export class EnvioClient extends ClientCore {
     super($)
   }
 
-  async getTransactionsWithLogs(
-    fromBlock: number,
-    toBlock: number,
-  ): Promise<TransactionWithLogs[]> {
+  async getTransactionsWithLogs(fromBlock: number, toBlock: number) {
     // https://docs.envio.dev/docs/HyperSync/hypersync-query#response-structure
     const query = {
       // The block to start the query from

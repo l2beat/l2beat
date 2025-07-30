@@ -8,11 +8,17 @@ import {
   ProviderStats,
   type TemplateService,
 } from '@l2beat/discovery'
-import { expect, mockFn, mockObject } from 'earl'
+import { expect, type MockObject, mockFn, mockObject } from 'earl'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
+type Thenable<T> = PromiseLike<T> | T
+
 describe(DiscoveryRunner.name, () => {
-  const MOCK_PROVIDER = mockObject<IProvider>({ blockNumber: 123 })
+  const MOCK_PROVIDER = mockObject<Thenable<IProvider>>({
+    timestamp: 123,
+    blockNumber: 123,
+    then: undefined,
+  }) as MockObject<IProvider>
 
   describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
     it('does not modify the source config', async () => {
@@ -20,7 +26,7 @@ describe(DiscoveryRunner.name, () => {
       const sourceConfig: ConfigRegistry = getMockConfig()
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
-          get: () => MOCK_PROVIDER,
+          get: mockFn().resolvesTo(MOCK_PROVIDER),
           getStats: () => ({
             highLevelMeasurements: new ProviderStats(),
             cacheMeasurements: new ProviderStats(),
@@ -50,7 +56,7 @@ describe(DiscoveryRunner.name, () => {
         modelCrossChainPermissions: true,
       })
       const allProvidersMock = mockObject<AllProviders>({
-        get: () => MOCK_PROVIDER,
+        get: mockFn().resolvesTo(MOCK_PROVIDER),
         getStats: () => ({
           highLevelMeasurements: new ProviderStats(),
           cacheMeasurements: new ProviderStats(),
@@ -69,7 +75,7 @@ describe(DiscoveryRunner.name, () => {
         Logger.SILENT,
         1,
         10,
-        { 'project-a': { arbitrum: { blockNumber: 123 } } },
+        { 'project-a': { arbitrum: { timestamp: 123 } } },
         getMockConfigReader({ modelCrossChainPermissions: true }),
       )
 
@@ -101,7 +107,7 @@ describe(DiscoveryRunner.name, () => {
         })
         const runner = new DiscoveryRunner(
           mockObject<AllProviders>({
-            get: () => MOCK_PROVIDER,
+            get: mockFn().resolvesTo(MOCK_PROVIDER),
             getStats: () => ({
               highLevelMeasurements: new ProviderStats(),
               cacheMeasurements: new ProviderStats(),
@@ -135,7 +141,7 @@ describe(DiscoveryRunner.name, () => {
         })
         const runner = new DiscoveryRunner(
           mockObject<AllProviders>({
-            get: () => MOCK_PROVIDER,
+            get: mockFn().resolvesTo(MOCK_PROVIDER),
             getStats: () => ({
               highLevelMeasurements: new ProviderStats(),
               cacheMeasurements: new ProviderStats(),

@@ -1,7 +1,7 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22924020,
+  "timestamp": 1752575723,
   "configHash": "0x706fdf8e78b75599cef4c3696b25378fedc8a7137b53b4facbd531d666cafcaa",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -2420,5 +2420,6 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22924020 },
   "permissionsConfigHash": "0x92d1e934c04f64479fd41b8837603fefda4f91b86f1a248a216e7ac2f5171576"
 }

@@ -274,4 +274,17 @@ describe('discovery config.jsonc', () => {
       )
     }
   }).timeout(10000)
+
+  describe('every chain in a project has the same timestamp', () => {
+    const projects = configReader.readAllDiscoveredProjects()
+    for (const { project, chains } of projects) {
+      it(`${project}`, () => {
+        const timestamps = chains.map(
+          (c) => configReader.readDiscovery(project, c).timestamp,
+        )
+
+        expect(timestamps.every((t) => t === timestamps[0])).toEqual(true)
+      })
+    }
+  })
 })

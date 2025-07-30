@@ -2,8 +2,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { Chain } from '../../chains'
 import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
 
 export const CCTPV1 = {
   name: 'cctpv1',
@@ -18,80 +18,76 @@ const ABI = parseAbi([
 
 function decoder(
   chain: Chain,
-  transaction: TransactionWithLogs,
-): Partial<{ message: Message; asset: Asset }> | undefined {
-  for (const log of transaction.logs) {
-    const bridge = BRIDGES.find((b) => b.chainShortName === chain.shortName)
+  input: DecoderInput,
+): Message | Asset | undefined {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
 
-    if (!bridge) {
-      continue
+  if (!network) {
+    return undefined
+  }
+
+  if (
+    EthereumAddress(input.log.address) === network.tokenMessenger &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'DepositForBurn',
+    })
+
+    const destination = NETWORKS.find(
+      (b) => b.domain === data.args.destinationDomain,
+    )?.chainShortName
+
+    return {
+      type: 'message',
+      direction: 'outbound',
+      protocol: CCTPV1.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.destinationDomain.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'DepositForBurn',
+      matchingId: idFor(network.domain, data.args.nonce),
     }
+  }
 
-    if (
-      EthereumAddress(log.address) === bridge.tokenMessenger &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'DepositForBurn' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'DepositForBurn',
-      })
+  if (
+    EthereumAddress(input.log.address) === network.messageTransmitter &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'MessageReceived',
+    })
 
-      const destination = BRIDGES.find(
-        (b) => b.domain === data.args.destinationDomain,
-      )?.chainShortName
+    const origin = NETWORKS.find(
+      (b) => b.domain === data.args.sourceDomain,
+    )?.chainShortName
 
-      return {
-        message: {
-          direction: 'outbound',
-          protocol: CCTPV1.name,
-          origin: chain.shortName,
-          destination: destination ?? data.args.destinationDomain.toString(),
-          blockTimestamp: transaction.blockTimestamp,
-          txHash: transaction.hash,
-          type: 'DepositForBurn',
-          matchingId: idFor(bridge.domain, data.args.nonce),
-        },
-      }
-    }
-
-    if (
-      EthereumAddress(log.address) === bridge.messageTransmitter &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'MessageReceived' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'MessageReceived',
-      })
-
-      const origin = BRIDGES.find(
-        (b) => b.domain === data.args.sourceDomain,
-      )?.chainShortName
-
-      return {
-        message: {
-          direction: 'inbound',
-          protocol: CCTPV1.name,
-          origin: origin ?? data.args.sourceDomain.toString(),
-          destination: chain.shortName,
-          blockTimestamp: transaction.blockTimestamp,
-          txHash: transaction.hash,
-          type: 'MessageReceived',
-          matchingId: idFor(data.args.sourceDomain, data.args.nonce),
-        },
-      }
+    return {
+      type: 'message',
+      direction: 'inbound',
+      protocol: CCTPV1.name,
+      origin: origin ?? data.args.sourceDomain.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'MessageReceived',
+      matchingId: idFor(data.args.sourceDomain, data.args.nonce),
     }
   }
 
   return undefined
 }
 
-const BRIDGES = [
+const NETWORKS = [
   {
     domain: 0,
     chainShortName: 'eth',
