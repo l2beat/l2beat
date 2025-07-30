@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xc360942414a9e947f8a511483c5c831cc2c954b8
+
+# Diff at Wed, 30 Jul 2025 11:52:37 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@fcb3491a2dac890d7d36ba1453e1feaeb3e13fec block: 1753687645
+- current timestamp: 1753687645
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+Source hash of implementation was added to EverclearSpokeV4 (previously it
+wasn't added because proxy is not verified).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687645 (main branch discovery), not current.
+
+```diff
+    contract EverclearSpokeV4 (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      sourceHashes:
++        [null,"0x45c33a33554c896aa6b125b932ea82f27e4c3bca281ad0d8c5c36a077a762bda"]
+    }
+```
+
 Generated with discovered.json: 0x42a639700a1018b01a5f46e1b7ae8fab74f57f12
 
 # Diff at Mon, 14 Jul 2025 12:46:54 GMT:

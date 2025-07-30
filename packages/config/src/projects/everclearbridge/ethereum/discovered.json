@@ -168,6 +168,10 @@
       "address": "eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
       "type": "Contract",
       "unverified": true,
+      "sourceHashes": [
+        null,
+        "0x45c33a33554c896aa6b125b932ea82f27e4c3bca281ad0d8c5c36a077a762bda"
+      ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["intentQueue", "nonce"],
       "sinceTimestamp": 1726462859,
