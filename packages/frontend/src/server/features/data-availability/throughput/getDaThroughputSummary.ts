@@ -30,18 +30,14 @@ const getDaThroughputSummaryData = async (
   const db = getDb()
   const to = params.to ?? UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - 7 * UnixTime.DAY
-  const throughput = await db.dataAvailability.getByDaLayersAndTimeRange(
-    THROUGHPUT_ENABLED_DA_LAYERS,
-    [from, to],
-  )
-
-  const scalingOnlyRecords = throughput.filter((r) => r.daLayer !== r.projectId)
-  if (scalingOnlyRecords.length === 0) {
-    return undefined
-  }
+  const throughput =
+    await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+      THROUGHPUT_ENABLED_DA_LAYERS,
+      [from, to],
+    )
 
   const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
-    scalingOnlyRecords,
+    throughput,
     'daily',
   )
 
