@@ -5306,6 +5306,12 @@
   ],
   "zksync2": [
     {
+      "symbol": "PC0000031", // RWA
+      "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "BCAP", // RWA
       "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
       "source": "native",

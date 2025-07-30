@@ -42,7 +42,7 @@ export function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
 
   const tokensDiscoveryProjects = configReader.getProjectsInGroup('tokens')
 
-  for (const tokenDiscovery of tokensDiscoveryProjects.concat('tradable')) {
+  for (const tokenDiscovery of tokensDiscoveryProjects) {
     const chainsSupportedByToken =
       configReader.readAllDiscoveredChainsForProject(tokenDiscovery)
 

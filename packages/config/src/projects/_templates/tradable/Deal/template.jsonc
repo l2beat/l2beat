@@ -2,15 +2,15 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreInWatchMode": ["clock"],
   "fields": {
-    "$tokenData": {
-      "handler": {
-        "type": "ERC20Data",
-        "overrides": {
-          "source": "native",
-          "supply": "circulatingSupply",
-          "category": "rwaRestricted"
-        }
-      }
-    }
+    // "$tokenData": {
+    //   "handler": {
+    //     "type": "ERC20Data",
+    //     "overrides": {
+    //       "source": "native",
+    //       "supply": "circulatingSupply",
+    //       "category": "rwaRestricted"
+    //     }
+    //   }
+    // }
   }
 }

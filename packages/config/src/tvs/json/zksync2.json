@@ -402,24 +402,6 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-DIA-1",
-      "priceId": "dia-data",
-      "symbol": "DIA",
-      "name": "DIAToken",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xa9114787910204c696C1C438f52A7cE7cC9F8bd7",
-        "chain": "zksync2",
-        "decimals": 18,
-        "sinceTimestamp": 1739109131
-      }
-    },
-    {
-      "mode": "auto",
       "id": "zksync2-ELON-1",
       "priceId": "dogelon-mars",
       "symbol": "ELON",
@@ -496,7 +478,7 @@
       "priceId": "renzo-restaked-eth",
       "symbol": "ezETH",
       "name": "Renzo Restaked ETH",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
       "category": "ether",
       "source": "canonical",
       "isAssociated": false,
@@ -1105,8 +1087,7 @@
         "address": "0x16895e45a73d2DfA36e07eD08008618fED423600",
         "chain": "zksync2",
         "decimals": 18,
-        "sinceTimestamp": 1739109131,
-        "untilTimestamp": 1753797600
+        "sinceTimestamp": 1739109131
       }
     },
     {
@@ -1144,25 +1125,6 @@
         "decimals": 18,
         "sinceTimestamp": 1739109131
       }
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-PC0000023-1",
-      "priceId": "tradable-singapore-fintech-ssl-2",
-      "symbol": "PC0000023",
-      "name": "Private Credit Direct Deal0000023",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/66954/large/tradable.jpg?1751254449",
-      "amount": {
-        "type": "circulatingSupply",
-        "apiId": "tradable-singapore-fintech-ssl-2",
-        "decimals": 6,
-        "sinceTimestamp": 1751500800,
-        "address": "0x5C8c39E167C604B036afd3FBB65426f9fe78Ce6d",
-        "chain": "zksync2"
-      },
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -1322,24 +1284,6 @@
       "amount": {
         "type": "totalSupply",
         "address": "0x1CF8553Da5a75C20cdC33532cb19Ef7E3bFFf5BC",
-        "chain": "zksync2",
-        "decimals": 18,
-        "sinceTimestamp": 1739109131
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-RSC-1",
-      "priceId": "researchcoin",
-      "symbol": "RSC",
-      "name": "ResearchCoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/28146/large/RH_BOTTLE_CLEAN_Aug_2024_1.png?1732742001",
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false,
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xaBECe6D924E003816BCe65D9Bd20655303d0abc6",
         "chain": "zksync2",
         "decimals": 18,
         "sinceTimestamp": 1739109131
