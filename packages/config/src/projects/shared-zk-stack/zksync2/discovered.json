@@ -1777,5 +1777,5 @@
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
   "usedBlockNumbers": { "zksync2": 63303444 },
-  "permissionsConfigHash": "0x4991c6c2a3bdc0383e57439df53ba4a6803cf1917c0cbdc0bd343427890a53ef"
+  "permissionsConfigHash": "0xb9682dc846f3016fdfa1695a55bb04416ea59a7f27a20fc52d7a78970bc9736d"
 }

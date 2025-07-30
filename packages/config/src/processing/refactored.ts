@@ -6,6 +6,7 @@ import { celestia } from '../projects/celestia/celestia'
 import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { ethereum } from '../projects/ethereum/ethereum'
+import { gateway } from '../projects/gateway/gateway'
 import { gnosis } from '../projects/gnosis/gnosis'
 import { lineaprover } from '../projects/lineaprover/lineaprover'
 import { loopringprover } from '../projects/loopringprover/loopringprover'
@@ -64,4 +65,5 @@ export const refactored: BaseProject[] = [
   // chains
   bsc,
   gnosis,
+  gateway,
 ]
