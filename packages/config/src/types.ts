@@ -755,6 +755,7 @@ export interface ProjectZkCatalogInfo {
     usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
+    description?: string
   }[]
 }
 
