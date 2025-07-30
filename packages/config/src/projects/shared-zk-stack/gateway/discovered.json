@@ -1,0 +1,11 @@
+{
+  "name": "shared-zk-stack",
+  "chain": "gateway",
+  "timestamp": 1752238019,
+  "configHash": "0xe9227307dcbd01183bf5489443e39101b5683c3f64e51e93099f65cc7b1bf35e",
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {},
+  "usedBlockNumbers": { "gateway": 62725402 },
+  "permissionsConfigHash": "0xb9682dc846f3016fdfa1695a55bb04416ea59a7f27a20fc52d7a78970bc9736d"
+}
