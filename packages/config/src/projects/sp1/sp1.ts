@@ -40,7 +40,7 @@ export const sp1: BaseProject = {
         ZK_CATALOG_TAGS.Plonk.Gnark,
         ZK_CATALOG_TAGS.Groth16.Gnark,
         ZK_CATALOG_TAGS.curve.BN254,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: `
