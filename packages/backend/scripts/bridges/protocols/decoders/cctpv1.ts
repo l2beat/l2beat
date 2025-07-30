@@ -87,6 +87,7 @@ function decoder(
       topics: mintEvent.topics,
       eventName: 'MintAndWithdraw',
     })
+
     return {
       type: 'asset',
       direction: 'inbound',
