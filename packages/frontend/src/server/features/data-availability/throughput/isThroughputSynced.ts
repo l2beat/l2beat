@@ -9,7 +9,7 @@ export function isThroughputSynced(
     syncedUntil >=
     (pastDaySynced
       ? UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.HOUR
-      : UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR)
+      : UnixTime.toStartOf(UnixTime.now(), 'hour') - 6 * UnixTime.HOUR)
   )
 }
 

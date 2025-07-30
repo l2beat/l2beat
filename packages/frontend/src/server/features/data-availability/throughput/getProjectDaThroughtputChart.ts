@@ -3,11 +3,16 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import { isThroughputSynced } from './isThroughputSynced'
+import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
+import {
+  DaThroughputTimeRange,
+  getThroughputRange,
+  rangeToResolution,
+} from './utils/range'
 
 export type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
@@ -46,52 +51,45 @@ export async function getProjectDaThroughputChart(
 
   const db = getDb()
   const resolution = rangeToResolution(params.range)
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
-  const adjustedTarget =
-    params.range.type === 'custom' ? params.range.to : target
-
-  const [from, to] = getRangeWithMax(params.range, resolution, {
-    now: adjustedTarget,
-  })
+  const range = getThroughputRange(params.range)
 
   const throughput = await (params.includeScalingOnly
     ? db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         [params.projectId],
-        [from, adjustedTarget],
+        range,
       )
     : db.dataAvailability.getByProjectIdsAndTimeRange(
         [params.projectId],
-        [from, adjustedTarget],
+        range,
       ))
 
   if (throughput.length === 0) {
     return undefined
   }
 
-  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
-    throughput,
-    resolution,
-  )
-  const chartAdjustedTo =
-    resolution === 'hourly'
-      ? to - UnixTime.HOUR
-      : resolution === 'sixHourly'
-        ? to - UnixTime.HOUR * 6
-        : to - UnixTime.DAY
-
-  const timestamps = generateTimestamps(
-    [minTimestamp, chartAdjustedTo],
-    resolution,
-  )
   const syncedUntil = throughput.at(-1)?.timestamp
   assert(syncedUntil, 'syncedUntil is undefined')
 
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+    throughput,
+    resolution,
+  )
+
+  const expectedTo = getThroughputExpectedTimestamp(resolution)
+
+  const adjustedTo = isThroughputSynced(syncedUntil, false)
+    ? maxTimestamp
+    : expectedTo
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+
   return {
     chart: timestamps.map((timestamp) => {
-      const posted = timestamp <= syncedUntil ? (grouped[timestamp] ?? 0) : null
+      const posted =
+        timestamp <= maxTimestamp ? (grouped[timestamp] ?? 0) : null
       return [timestamp, posted]
     }),
-    range: [minTimestamp, chartAdjustedTo],
+    range: [minTimestamp, maxTimestamp],
     syncedUntil,
   }
 }
@@ -101,8 +99,22 @@ function groupByTimestampAndProjectId(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
+  let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, number> = {}
-  for (const record of records) {
+
+  const set = new Map<number, number>()
+
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
+  for (const record of fullySyncedRecords) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
       resolution === 'daily'
@@ -111,6 +123,7 @@ function groupByTimestampAndProjectId(
           ? 'six hours'
           : 'hour',
     )
+    set.set(timestamp, (set.get(timestamp) ?? 0) + 1)
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)
@@ -118,10 +131,23 @@ function groupByTimestampAndProjectId(
       result[timestamp] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
+
+  const incompleteTimestamps: [number, number][] = []
+  for (const [timestamp, count] of set.entries()) {
+    if (
+      count !==
+      (resolution === 'daily' ? 24 : resolution === 'sixHourly' ? 6 : 1)
+    )
+      incompleteTimestamps.push([timestamp, count])
+  }
+  console.log(JSON.stringify(incompleteTimestamps, null, 2))
+
   return {
     grouped: result,
     minTimestamp: UnixTime(minTimestamp),
+    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 

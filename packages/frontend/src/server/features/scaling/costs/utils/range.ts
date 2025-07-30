@@ -14,10 +14,7 @@ export const CostsTimeRange = v.union([
 ])
 export type CostsTimeRange = v.infer<typeof CostsTimeRange>
 
-/**
- * Returns a range of days that are fully synced.
- */
-export function getFullySyncedCostsRange(
+export function getCostsRange(
   range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
 ): [UnixTime | null, UnixTime] {
   if (range.type === 'custom') {
@@ -27,23 +24,21 @@ export function getFullySyncedCostsRange(
 
   const resolution = rangeToResolution(range.type)
 
-  const end =
-    UnixTime.toStartOf(
-      UnixTime.now(),
-      resolution === 'hourly'
-        ? 'hour'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'day',
-    ) -
-    (resolution === 'hourly'
-      ? UnixTime.HOUR
-      : resolution === 'sixHourly'
-        ? UnixTime.HOUR * 6
-        : UnixTime.DAY)
+  const end = UnixTime.toStartOf(UnixTime.now(), 'hour')
+
   const days = rangeToDays(range)
 
-  const start = days !== null ? end - days * UnixTime.DAY : null
+  const start =
+    days !== null
+      ? UnixTime.toStartOf(
+          end - days * UnixTime.DAY,
+          resolution === 'daily'
+            ? 'day'
+            : resolution === 'sixHourly'
+              ? 'six hours'
+              : 'hour',
+        )
+      : null
   return [start, end]
 }
 

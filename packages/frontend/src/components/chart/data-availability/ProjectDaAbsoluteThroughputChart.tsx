@@ -64,9 +64,9 @@ export function ProjectDaAbsoluteThroughputChart({
       ([timestamp, value, target, max]) => {
         return {
           timestamp,
-          project: value ? value / denominator : null,
-          projectTarget: target ? target / denominator : null,
-          projectMax: max ? max / denominator : null,
+          project: value !== null ? value / denominator : null,
+          projectTarget: target !== null ? target / denominator : null,
+          projectMax: max !== null ? max / denominator : null,
         }
       },
     )

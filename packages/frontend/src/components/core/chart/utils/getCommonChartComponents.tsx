@@ -15,6 +15,7 @@ export interface CommonChartComponentsProps<
 > {
   data: T[] | undefined
   yAxis?: Omit<YAxisProps, 'scale' | 'tick'> & { scale?: 'log' | 'lin' }
+  chartType?: 'bar' | 'line'
   isLoading: boolean | undefined
   syncedUntil: number | undefined
 }
@@ -25,11 +26,16 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
   data,
   yAxis,
   isLoading,
+  chartType = 'line',
   syncedUntil,
 }: CommonChartComponentsProps<T>) {
   const { scale, tickCount, ...rest } = yAxis ?? {}
   const lastSyncedTimestamp =
-    syncedUntil && data?.findLast((d) => d.timestamp <= syncedUntil)?.timestamp
+    syncedUntil &&
+    (chartType === 'line'
+      ? data?.findLast((d) => d.timestamp <= syncedUntil)
+      : data?.find((d) => d.timestamp > syncedUntil)
+    )?.timestamp
 
   return [
     <CartesianGrid

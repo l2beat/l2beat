@@ -5,7 +5,7 @@ import { ps } from '~/server/projects'
 import { getTrackedTxsProject } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsProjectResponse } from './types'
 import type { CostsTimeRange } from './utils/range'
-import { getFullySyncedCostsRange } from './utils/range'
+import { getCostsRange } from './utils/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProject(
@@ -17,7 +17,7 @@ export async function getCostsForProject(
   }
 
   const db = getDb()
-  const fullySyncedRange = getFullySyncedCostsRange({ type: timeRange })
+  const costsRange = getCostsRange({ type: timeRange })
 
   const project = await ps.getProject({
     id: ProjectId(projectId),
@@ -26,7 +26,7 @@ export async function getCostsForProject(
   if (!project) return undefined
   const [configurations, records] = await Promise.all([
     db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
-    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, fullySyncedRange),
+    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, costsRange),
   ])
 
   const trackedTxsProject = getTrackedTxsProject(

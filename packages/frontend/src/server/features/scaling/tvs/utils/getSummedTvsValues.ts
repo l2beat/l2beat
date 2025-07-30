@@ -30,16 +30,18 @@ export async function getSummedTvsValues(
 ): Promise<SummedTvsValues[]> {
   const db = getDb()
   const resolution = rangeToResolution(range)
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour')
-  const adjustedTarget = range.type === 'custom' ? range.to : target
+  const target =
+    range.type === 'custom'
+      ? range.to
+      : UnixTime.toStartOf(UnixTime.now(), 'hour')
   const [from] = getRangeWithMax(range, resolution, {
-    now: adjustedTarget,
+    now: target,
   })
   const [latest, valueRecords] = await Promise.all([
     db.tvsProjectValue.getLatestValues(type ?? 'SUMMARY', projectIds),
     db.tvsProjectValue.getSummedByTimestamp(projectIds, type ?? 'SUMMARY', [
       from,
-      adjustedTarget,
+      target,
     ]),
   ])
 
@@ -96,9 +98,9 @@ export async function getSummedTvsValues(
   const maxTimestamp = Math.max(...timestamps)
   const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
-  const to = isTvsSynced(maxTimestamp) ? maxTimestamp : target
+  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : target
 
-  return generateTimestamps([fromTimestamp, to], resolution, {
+  return generateTimestamps([fromTimestamp, adjustedTo], resolution, {
     addTarget: true,
   }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]

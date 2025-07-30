@@ -150,6 +150,7 @@ export function DaThroughputByProjectChart({
             tickCount: 4,
           },
           syncedUntil: data?.syncedUntil,
+          chartType: 'bar',
         })}
         <ChartTooltip
           filterNull={false}
@@ -174,7 +175,7 @@ function CustomTooltip({
     return (b.value ?? 0) - (a.value ?? 0)
   })
 
-  if (payload.every((p) => p.value === null))
+  if (payload.every((p) => p.value === null || p.value === undefined))
     return <ChartTooltipNoDataState timestamp={label} />
 
   return (

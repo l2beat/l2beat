@@ -4,7 +4,7 @@ import { getDb } from '~/server/database'
 import { getTrackedTxsProjects } from '../../utils/getTrackedTxsProjects'
 import type { LatestCostsResponse } from './types'
 import type { CostsTimeRange } from './utils/range'
-import { getFullySyncedCostsRange } from './utils/range'
+import { getCostsRange } from './utils/range'
 import { sumCostValues } from './utils/sumCostValues'
 
 export async function getCostsForProjects(
@@ -13,7 +13,7 @@ export async function getCostsForProjects(
 ) {
   const db = getDb()
   const response: LatestCostsResponse = {}
-  const range = getFullySyncedCostsRange({ type: timeRange })
+  const range = getCostsRange({ type: timeRange })
 
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',

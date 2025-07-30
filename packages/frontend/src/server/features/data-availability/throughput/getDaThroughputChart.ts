@@ -2,7 +2,7 @@ import type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -12,9 +12,10 @@ import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import {
   DaThroughputTimeRange,
-  getFullySyncedDaThroughputRange,
+  getThroughputRange,
   rangeToResolution,
 } from './utils/range'
+import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
 export type DaThroughputChart = {
   data: DaThroughputDataPoint[]
@@ -44,7 +45,7 @@ export async function getDaThroughputChart({
   }
   const db = getDb()
   const resolution = rangeToResolution({ type: range })
-  const [from, to] = getFullySyncedDaThroughputRange({ type: range })
+  const [from, to] = getThroughputRange({ type: range })
   const throughput = includeScalingOnly
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
@@ -58,6 +59,9 @@ export async function getDaThroughputChart({
   if (throughput.length === 0) {
     return { data: [] }
   }
+  const syncedUntil = throughput.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
+
   const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
     throughput,
     resolution,
@@ -80,8 +84,11 @@ export async function getDaThroughputChart({
     }
   }
 
-  // TODO: figure out why is second parameter needed
-  const adjustedTo = isThroughputSynced(maxTimestamp, false) ? maxTimestamp : to
+  const expectedTo = getThroughputExpectedTimestamp(resolution)
+
+  const adjustedTo = isThroughputSynced(syncedUntil, false)
+    ? maxTimestamp
+    : expectedTo
 
   const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
   const data: DaThroughputDataPoint[] = timestamps.map((timestamp) => {
@@ -125,7 +132,19 @@ export function groupByTimestampAndDaLayerId(
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
-  for (const record of records) {
+
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
+  for (const record of fullySyncedRecords) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
       resolution === 'daily'

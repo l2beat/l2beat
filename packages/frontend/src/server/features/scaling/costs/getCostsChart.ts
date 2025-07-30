@@ -8,11 +8,8 @@ import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
-import {
-  CostsTimeRange,
-  getFullySyncedCostsRange,
-  rangeToResolution,
-} from './utils/range'
+import { CostsTimeRange, getCostsRange, rangeToResolution } from './utils/range'
+import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 
 export const CostsChartParams = v.object({
   range: CostsTimeRange,
@@ -63,7 +60,7 @@ export async function getCostsChart({
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
   const resolution = rangeToResolution(timeRange)
-  const [from, to] = getFullySyncedCostsRange({ type: timeRange })
+  const [from, to] = getCostsRange({ type: timeRange })
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
@@ -74,21 +71,24 @@ export async function getCostsChart({
     return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
 
+  const syncedUntil = data.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
+
   const summedByTimestamp = sumByTimestamp(data, resolution)
   const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+  const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
   const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
     ([_, value]) => value.blobsGas !== null,
   )?.[0]
-  const syncedUntil = Array.from(summedByTimestamp.keys()).at(-1)
-  assert(syncedUntil, 'syncedUntil is undefined')
 
-  const adjustedTo = isCostsSynced(syncedUntil) ? syncedUntil : to
+  const expectedTo = getCostsExpectedTimestamp(resolution)
+  const adjustedTo = isCostsSynced(syncedUntil) ? maxTimestamp : expectedTo
 
   const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 
   const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
-    const isSynced = syncedUntil && timestamp <= syncedUntil
+    const isSynced = maxTimestamp && timestamp <= maxTimestamp
     const blobsFallback =
       blobsTimestamp && timestamp >= blobsTimestamp ? 0 : null
     if (!entry) {
@@ -126,7 +126,11 @@ export async function getCostsChart({
     ] as const
   })
 
-  return { chart, hasBlobs: blobsTimestamp !== undefined, syncedUntil }
+  return {
+    chart,
+    hasBlobs: blobsTimestamp !== undefined,
+    syncedUntil,
+  }
 }
 
 function getMockCostsChartData({
@@ -184,7 +188,19 @@ function sumByTimestamp(
     }
   >()
 
-  for (const record of records) {
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+
+  // Dismiss ranges that are not full
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
+  for (const record of fullySyncedRecords) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
       resolution === 'daily'

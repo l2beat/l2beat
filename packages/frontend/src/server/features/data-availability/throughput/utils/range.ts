@@ -18,7 +18,7 @@ export const DaThroughputTimeRange = v.enum(DaThroughputTimeRangeValues)
 /**
  * Returns a range of days that are fully synced.
  */
-export function getFullySyncedDaThroughputRange(
+export function getThroughputRange(
   range:
     | { type: DataPostedTimeRange }
     | { type: 'custom'; from: number; to: number },
@@ -28,19 +28,22 @@ export function getFullySyncedDaThroughputRange(
     return [from, to]
   }
 
-  const resolution = rangeToResolution({ type: range.type })
+  const resolution = rangeToResolution(range)
 
-  const end = UnixTime.toStartOf(
-    UnixTime.now(),
-    resolution === 'hourly'
-      ? 'hour'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'day',
-  )
+  const end = UnixTime.toStartOf(UnixTime.now(), 'hour')
   const days = rangeToDays(range)
 
-  const start = days !== null ? end - days * UnixTime.DAY : null
+  const start =
+    days !== null
+      ? UnixTime.toStartOf(
+          end - days * UnixTime.DAY,
+          resolution === 'daily'
+            ? 'day'
+            : resolution === 'sixHourly'
+              ? 'six hours'
+              : 'hour',
+        )
+      : null
   return [start, end]
 }
 
