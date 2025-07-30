@@ -54,9 +54,7 @@ export function processAnalysis(
           type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
-          sourceHashes: x.isVerified
-            ? recalculateSourceHashes(x.sourceBundles)
-            : undefined,
+          sourceHashes: recalculateSourceHashes(x.sourceBundles),
           proxyType: x.proxyType,
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp,

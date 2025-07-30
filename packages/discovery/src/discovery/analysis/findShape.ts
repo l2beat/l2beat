@@ -12,7 +12,7 @@ export function getShapeFromAnalyzedContract(
 ) {
   const { extendedTemplate } = entry
 
-  if (!extendedTemplate || !entry.isVerified) {
+  if (!extendedTemplate) {
     return
   }
 
