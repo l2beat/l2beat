@@ -1,8 +1,8 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -132,11 +132,7 @@ function getChartData(
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour')
-  const adjustedTarget = range.type === 'custom' ? range.to : target
-  const [from, to] = getRangeWithMax(range, resolution, {
-    now: adjustedTarget,
-  })
+  const [from, to] = getRange(range, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

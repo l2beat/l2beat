@@ -1,10 +1,10 @@
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getRange } from '~/utils/range/range'
 import {
   getSummedTvsValues,
   type SummedTvsValues,
@@ -149,10 +149,7 @@ function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
   const resolution = rangeToResolution({ type: range })
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour')
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: target,
-  })
+  const [from, to] = getRange({ type: range }, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

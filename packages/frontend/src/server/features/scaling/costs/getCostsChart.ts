@@ -6,10 +6,10 @@ import { getDb } from '~/server/database'
 import { getRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
+import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { isCostsSynced } from './utils/isCostsSynced'
 import { CostsTimeRange, getCostsRange, rangeToResolution } from './utils/range'
-import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 
 export const CostsChartParams = v.object({
   range: CostsTimeRange,
@@ -137,12 +137,12 @@ function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution(timeRange)
-  const range = getRange(
+  const [from, to] = getRange(
     timeRange === 'max' ? { type: '1y' } : { type: timeRange },
     resolution,
   )
 
-  const timestamps = generateTimestamps(range, resolution)
+  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {
     chart: timestamps.map((timestamp) => [

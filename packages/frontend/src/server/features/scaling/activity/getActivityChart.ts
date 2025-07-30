@@ -2,7 +2,7 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
@@ -121,7 +121,7 @@ export async function getActivityChart({
 function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
-  const [from, to] = getRangeWithMax(range, 'daily')
+  const [from, to] = getRange(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     range.type === 'custom' ? range.from : (from ?? 1590883200),
     range.type === 'custom' ? range.to : to,
