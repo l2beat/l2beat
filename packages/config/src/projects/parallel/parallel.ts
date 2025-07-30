@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -108,13 +112,17 @@ export const parallel: ScalingProject = orbitStackL2({
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d'),
+      address: ChainSpecificAddress(
+        'eth:0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d',
+      ),
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xa1c86E2362dba0525075622af6d5f739B1304D45'),
+      address: ChainSpecificAddress(
+        'eth:0xa1c86E2362dba0525075622af6d5f739B1304D45',
+      ),
       tokens: '*',
       source: 'external',
       description:

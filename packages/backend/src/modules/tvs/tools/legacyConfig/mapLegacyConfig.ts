@@ -203,7 +203,7 @@ export function createEscrowToken(
     category: legacyToken.category,
     source: escrow.source ?? 'canonical',
     isAssociated: associatedTokens.includes(legacyToken.symbol),
-    bridgedUsing: legacyToken.bridgedUsing,
+    bridgedUsing: escrow.bridgedUsing ?? legacyToken.bridgedUsing,
   }
 }
 

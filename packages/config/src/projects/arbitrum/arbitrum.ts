@@ -1,4 +1,9 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   ESCROW,
@@ -195,7 +200,9 @@ export const arbitrum: ScalingProject = orbitStackL2({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // Custom ERC20 Gateway
-      address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
+      address: ChainSpecificAddress(
+        'eth:0xcEe284F754E854890e311e3280b767F80797180d',
+      ),
       tokens: '*',
       ...ESCROW.CANONICAL_EXTERNAL,
       excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
@@ -206,7 +213,9 @@ export const arbitrum: ScalingProject = orbitStackL2({
     }),
     discovery.getEscrowDetails({
       // ERC20 Gateway
-      address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
+      address: ChainSpecificAddress(
+        'eth:0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+      ),
       tokens: '*',
       excludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'PEPE', 'rsETH'],
       premintedTokens: ['LOGX', 'AIUS', 'YBR', 'FFM'],
@@ -215,14 +224,18 @@ export const arbitrum: ScalingProject = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
+      address: ChainSpecificAddress(
+        'eth:0xA10c7CE4b876998858b1a9E12b10092229539400',
+      ),
       tokens: ['DAI', 'USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a'),
+      address: ChainSpecificAddress(
+        'eth:0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -230,7 +243,9 @@ export const arbitrum: ScalingProject = orbitStackL2({
     }),
     discovery.getEscrowDetails({
       // LPT L1 Escrow
-      address: EthereumAddress('0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A'),
+      address: ChainSpecificAddress(
+        'eth:0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A',
+      ),
       tokens: ['LPT'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description: 'LPT Vault for custom Livepeer Token Gateway.',

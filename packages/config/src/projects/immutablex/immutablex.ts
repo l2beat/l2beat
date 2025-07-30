@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -99,7 +99,9 @@ export const immutablex: ScalingProject = {
     associatedTokens: ['IMX'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x5FDCCA53617f4d2b9134B29090C87D01058e27e9'),
+        address: ChainSpecificAddress(
+          'eth:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
+        ),
         sinceTimestamp: UnixTime(1615389188),
         tokens: ['ETH', 'IMX', 'USDC', 'OMI'],
         description: 'Main StarkEx contract, used also as an escrow.',

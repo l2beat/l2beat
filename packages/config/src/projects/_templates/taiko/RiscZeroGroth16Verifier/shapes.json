@@ -16,5 +16,11 @@
     "address": "0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9",
     "chain": "ethereum",
     "blockNumber": 22975539
+  },
+  "RiscZeroGroth16Verifier_Taiko_v2_2_0": {
+    "hash": "0x02a47f0ba956127adc6a8d871b4444f762209c2d6f916b87162fcea4f9b9482b",
+    "address": "0x34Eda8BfFb539AeC33078819847B36D221c6641c",
+    "chain": "ethereum",
+    "blockNumber": 23023802
   }
 }

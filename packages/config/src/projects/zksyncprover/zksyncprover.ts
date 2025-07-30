@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const zksyncprover: BaseProject = {
   id: ProjectId('zksyncprover'),
   slug: 'zksyncprover',
-  name: 'ZKsync Lite Prover',
+  name: 'ZKsync Lite',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-23')),
   statuses: {
@@ -30,8 +30,8 @@ export const zksyncprover: BaseProject = {
     techStack: {
       finalWrap: [
         ZK_CATALOG_TAGS.Plonk.Zksync,
-        ZK_CATALOG_TAGS.Arithmetization.R1CS,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.Arithmetization.R1CS,
+        // ZK_CATALOG_TAGS.PCS.KZG,
         ZK_CATALOG_TAGS.curve.BN254,
       ],
     },

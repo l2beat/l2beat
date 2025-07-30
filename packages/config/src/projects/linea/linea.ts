@@ -1,6 +1,7 @@
 import {
   assert,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -119,12 +120,16 @@ export const linea: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xd19d4B5d358258f05D7B411E21A1460D11B0876F'),
+        address: ChainSpecificAddress(
+          'eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+        ),
         sinceTimestamp: UnixTime(1689159923),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319'),
+        address: ChainSpecificAddress(
+          'eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319',
+        ),
         sinceTimestamp: UnixTime(1691060675),
         excludedTokens: ['rsETH'],
         tokens: '*',

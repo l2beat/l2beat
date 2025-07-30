@@ -2,10 +2,11 @@ import type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
@@ -43,10 +44,20 @@ export async function getDaThroughputChart({
   const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
+  const daLayers = await ps.getProjects({
+    select: ['daLayer'],
+  })
+  const sovereignProjectsIds = daLayers
+    .flatMap((da) =>
+      da.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId),
+    )
+    .filter(notUndefined)
+
   const throughput = includeScalingOnly
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
         [from, to],
+        sovereignProjectsIds,
       )
     : await db.dataAvailability.getByProjectIdsAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
