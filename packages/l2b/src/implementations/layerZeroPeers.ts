@@ -244,7 +244,7 @@ const lzChainData: Record<
     name: 'Zircuit',
     eid: 30303,
     nativeId: 48900,
-    rpc: process.env.ZIRCUIT_RPC_URL || '', // No public RPC found
+    rpc: process.env.ZIRCUIT_RPC_URL || 'https://mainnet.zircuit.com',
   },
   bitlayer: {
     name: 'Bitlayer',
@@ -262,49 +262,49 @@ const lzChainData: Record<
     name: 'Movement',
     eid: 30325,
     nativeId: 3073,
-    rpc: process.env.MOVEMENT_RPC_URL || '', // No public RPC found
+    rpc: process.env.MOVEMENT_RPC_URL || 'https://movement.lava.build/',
   },
   corn: {
     name: 'Corn',
     eid: 30331,
     nativeId: 21000000,
-    rpc: process.env.CORN_RPC_URL || '', // No public RPC found
+    rpc: process.env.CORN_RPC_URL || 'https://mainnet.corn-rpc.com',
   },
   sonic: {
     name: 'Sonic',
     eid: 30332,
     nativeId: 146,
-    rpc: process.env.SONIC_RPC_URL || '', // No public RPC found
+    rpc: process.env.SONIC_RPC_URL || 'https://rpc.soniclabs.com',
   },
   berachain: {
     name: 'Berachain',
     eid: 30362,
     nativeId: 80094,
-    rpc: process.env.BERACHAIN_RPC_URL || '', // No public RPC found
+    rpc: process.env.BERACHAIN_RPC_URL || 'https://rpc.berachain.com',
   },
   nibiru: {
     name: 'Nibiru',
     eid: 30369,
     nativeId: 6900,
-    rpc: process.env.NIBIRU_RPC_URL || '', // No public RPC found
+    rpc: process.env.NIBIRU_RPC_URL || 'https://evm-rpc.nibiru.fi',
   },
   plume: {
     name: 'Plume',
     eid: 30370,
     nativeId: 98866,
-    rpc: process.env.PLUME_RPC_URL || '', // No public RPC found
+    rpc: process.env.PLUME_RPC_URL || 'https://rpc.plume.org',
   },
-unichain: {
+  unichain: {
     name: 'Unichain',
     eid: 30320,
     nativeId: 130,
-    rpc: process.env.UNICHAIN_RPC_URL || '',
+    rpc: process.env.UNICHAIN_RPC_URL || 'https://mainnet.unichain.org',
   },
   hyperliquid: {
     name: 'Hyperliquid',
     eid: 30367,
     nativeId: 999,
-    rpc: process.env.HYPERLIQUID_RPC_URL || '',
+    rpc: process.env.HYPERLIQUID_RPC_URL || 'https://rpc.hyperliquid.xyz/evm',
   },
 }
 
@@ -465,6 +465,7 @@ export async function getLayerZeroPeers(address: EthereumAddress) {
         ([chain, data]) => ({
           Chain: chain,
           Supply: parseFloat(data.formatted).toLocaleString(),
+          'L2 Address': data.address || 'N/A',
         }),
       )
       console.table(tableData)
@@ -705,9 +706,12 @@ export async function getOftDetails(
       mainnetSupply = await adaptedTokenContract.totalSupply()
     }
     let total = 0n
-    const breakdown: Record<string, bigint> = {}
+    const breakdown: Record<string, { supply: bigint; address: string }> = {}
     total += mainnetSupply
-    breakdown[mainChain.name] = mainnetSupply
+    breakdown[mainChain.name] = { 
+      supply: mainnetSupply, 
+      address: tokenAddress.toString() 
+    }
 
     const peerPromises = Object.values(lzChainData).map(async (peerChain) => {
       if (peerChain.nativeId === nativeChainId) return { type: 'skip', reason: 'same_chain' }
@@ -741,7 +745,12 @@ export async function getOftDetails(
             peerProvider,
           )
           const supply = await adaptedTokenContract.totalSupply()
-          return { type: 'success', name: peerChain.name, supply }
+          return { 
+            type: 'success', 
+            name: peerChain.name, 
+            supply, 
+            address: peerAddress 
+          }
         } else {
           return { type: 'skip', reason: 'no_peer_address' }
         }
@@ -766,7 +775,10 @@ export async function getOftDetails(
       if (result.type === 'success' && result.name) {
         stats.found++
         total += result.supply
-        breakdown[result.name] = result.supply
+        breakdown[result.name] = { 
+          supply: result.supply, 
+          address: result.address 
+        }
       } else if (result.type === 'skip') {
         stats[result.reason as keyof typeof stats]++
       }
@@ -779,16 +791,18 @@ export async function getOftDetails(
     }
 
     const formattedBreakdown = Object.entries(breakdown).reduce(
-      (acc, [name, rawSupply]) => {
+      (acc, [name, data]) => {
         acc[name] = {
-          formatted: ethers.utils.formatUnits(rawSupply, Number(decimals)),
+          formatted: ethers.utils.formatUnits(data.supply, Number(decimals)),
+          address: data.address,
         }
         return acc
       },
-      {} as Record<string, { formatted: string }>,
+      {} as Record<string, { address: string; formatted: string }>,
     )
 
     const totalSupply = {
+      raw: total,
       formatted: ethers.utils.formatUnits(total, Number(decimals)),
       decimals: Number(decimals),
     }
