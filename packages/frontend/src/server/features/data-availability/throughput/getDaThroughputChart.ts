@@ -4,7 +4,6 @@ import type {
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -124,44 +123,27 @@ export function groupByTimestampAndDaLayerId(
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
-
-  const grouped = groupBy(records, (r) =>
-    UnixTime.toStartOf(
-      r.timestamp,
+  for (const record of records) {
+    const timestamp = UnixTime.toStartOf(
+      record.timestamp,
       resolution === 'daily'
         ? 'day'
         : resolution === 'sixHourly'
           ? 'six hours'
           : 'hour',
-    ),
-  )
-
-  const expectedLength =
-    resolution === 'daily' ? 24 : resolution === 'sixHourly' ? 6 : 1
-
-  for (const [timestamp, records] of Object.entries(grouped)) {
-    const unixTimestamp = Number(timestamp)
-    const groupedByDaLayer = groupBy(records, (r) => r.daLayer)
-
-    for (const [daLayerId, daLayerRecords] of Object.entries(
-      groupedByDaLayer,
-    )) {
-      if (daLayerRecords.length !== expectedLength) {
-        continue
-      }
-
-      const value = daLayerRecords.reduce((acc, r) => acc + r.totalSize, 0n)
-
-      if (!result[unixTimestamp]) {
-        result[unixTimestamp] = {}
-      }
-      if (!result[unixTimestamp][daLayerId]) {
-        result[unixTimestamp][daLayerId] = Number(value)
-      }
-
-      minTimestamp = Math.min(minTimestamp, unixTimestamp)
-      maxTimestamp = Math.max(maxTimestamp, unixTimestamp)
+    )
+    const daLayerId = record.daLayer
+    const value = record.totalSize
+    if (!result[timestamp]) {
+      result[timestamp] = {}
     }
+    if (!result[timestamp][daLayerId]) {
+      result[timestamp][daLayerId] = Number(value)
+    } else {
+      result[timestamp][daLayerId] += Number(value)
+    }
+    minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   return {
