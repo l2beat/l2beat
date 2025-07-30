@@ -37,16 +37,19 @@ export function getRangeWithMax(
 ): [UnixTime | null, UnixTime] {
   const days = rangeToDays(range)
   const offset = opts?.offset ?? 0
-  const roundedNow = UnixTime.toStartOf(
-    opts?.now ?? UnixTime.now(),
-    resolution === 'hourly'
-      ? 'hour'
-      : resolution === 'sixHourly'
-        ? 'six hours'
-        : 'day',
-  )
+  const roundedNow = UnixTime.toStartOf(opts?.now ?? UnixTime.now(), 'hour')
 
-  const start = days !== null ? roundedNow - days * UnixTime.DAY + offset : null
+  const start =
+    days !== null
+      ? UnixTime.toStartOf(
+          roundedNow - days * UnixTime.DAY + offset,
+          resolution === 'daily'
+            ? 'day'
+            : resolution === 'sixHourly'
+              ? 'six hours'
+              : 'hour',
+        )
+      : null
   const end = roundedNow + offset
 
   return [start, end]

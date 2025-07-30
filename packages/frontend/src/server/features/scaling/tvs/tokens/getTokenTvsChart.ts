@@ -1,5 +1,5 @@
 import type { TokenValueRecord } from '@l2beat/database'
-import { TokenId, UnixTime } from '@l2beat/shared-pure'
+import { assert, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -54,6 +54,13 @@ export async function getTokenTvsChart({
     to,
   )
 
+  if (tokenValues.length === 0) {
+    return {
+      chart: [],
+      syncedUntil: 0,
+    }
+  }
+
   const tokenValuesByTimestamp = tokenValues.reduce<
     Record<UnixTime, TokenValueRecord>
   >((acc, value) => {
@@ -61,33 +68,31 @@ export async function getTokenTvsChart({
     return acc
   }, {})
 
-  const minTimestamp = tokenValues[0]?.timestamp
-  if (!minTimestamp) {
-    return {
-      chart: [],
-      syncedUntil: 0,
-    }
-  }
+  const minTimestamp = tokenValues.at(0)?.timestamp
+  assert(minTimestamp, 'minTimestamp is undefined')
 
-  const lastTimestamp = Math.max(
-    ...Object.keys(tokenValuesByTimestamp).map(Number),
+  const maxTimestamp = tokenValues.at(-1)?.timestamp
+  assert(maxTimestamp, 'maxTimestamp is undefined')
+
+  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
+
+  const timestamps = generateTimestamps(
+    [minTimestamp, adjustedTo],
+    resolution,
+    {
+      addTarget: true,
+    },
   )
-  const adjustedTo = isTvsSynced(lastTimestamp) ? lastTimestamp : to
-  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 
   const data: TokenTvsChartPoint[] = []
-  let syncedUntil = 0
   for (const timestamp of timestamps) {
     const value = tokenValuesByTimestamp[timestamp]
     data.push([timestamp, value?.amount ?? null, value?.value ?? null])
-    if (value !== undefined) {
-      syncedUntil = timestamp
-    }
   }
 
   return {
     chart: data,
-    syncedUntil,
+    syncedUntil: maxTimestamp,
   }
 }
 

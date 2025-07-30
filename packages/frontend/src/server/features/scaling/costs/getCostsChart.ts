@@ -88,7 +88,7 @@ export async function getCostsChart({
 
   const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
-    const isSynced = maxTimestamp && timestamp <= maxTimestamp
+    const isSynced = timestamp <= maxTimestamp
     const blobsFallback =
       blobsTimestamp && timestamp >= blobsTimestamp ? 0 : null
     if (!entry) {

@@ -10,12 +10,12 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
+import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 import {
   DaThroughputTimeRange,
   getThroughputRange,
   rangeToResolution,
 } from './utils/range'
-import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
 
 export type DaThroughputChart = {
   data: DaThroughputDataPoint[]
@@ -94,6 +94,8 @@ export async function getDaThroughputChart({
   const data: DaThroughputDataPoint[] = timestamps.map((timestamp) => {
     const timestampValues = grouped[timestamp] ?? {}
 
+    const isSynced = timestamp <= maxTimestamp
+
     const layerValues: Record<string, number | undefined> = {}
     for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
       const lastData = lastDataForLayers[layer]
@@ -106,12 +108,14 @@ export async function getDaThroughputChart({
       layerValues[layer] = lastData?.value
     }
 
+    const fallbackValue = isSynced ? 0 : null
+
     return [
       timestamp,
-      layerValues.ethereum ?? null,
-      layerValues.celestia ?? null,
-      layerValues.avail ?? null,
-      layerValues.eigenda ?? null,
+      layerValues.ethereum ?? fallbackValue,
+      layerValues.celestia ?? fallbackValue,
+      layerValues.avail ?? fallbackValue,
+      layerValues.eigenda ?? fallbackValue,
     ]
   })
   return {

@@ -133,7 +133,12 @@ function groupByTimestamp(
           ? 'six hours'
           : 'hour',
     )
-    result[timestamp] = Number(record.totalSize)
+    const value = record.totalSize
+    if (!result[timestamp]) {
+      result[timestamp] = Number(value)
+    } else {
+      result[timestamp] += Number(value)
+    }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }

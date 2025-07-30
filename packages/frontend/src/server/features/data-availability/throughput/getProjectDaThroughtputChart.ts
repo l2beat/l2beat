@@ -102,8 +102,6 @@ function groupByTimestampAndProjectId(
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, number> = {}
 
-  const set = new Map<number, number>()
-
   const offset = UnixTime.toStartOf(
     UnixTime.now(),
     resolution === 'daily'
@@ -123,7 +121,6 @@ function groupByTimestampAndProjectId(
           ? 'six hours'
           : 'hour',
     )
-    set.set(timestamp, (set.get(timestamp) ?? 0) + 1)
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)
@@ -133,16 +130,6 @@ function groupByTimestampAndProjectId(
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
-
-  const incompleteTimestamps: [number, number][] = []
-  for (const [timestamp, count] of set.entries()) {
-    if (
-      count !==
-      (resolution === 'daily' ? 24 : resolution === 'sixHourly' ? 6 : 1)
-    )
-      incompleteTimestamps.push([timestamp, count])
-  }
-  console.log(JSON.stringify(incompleteTimestamps, null, 2))
 
   return {
     grouped: result,

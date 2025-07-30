@@ -3,19 +3,16 @@ import { UnixTime } from '@l2beat/shared-pure/build/types/UnixTime'
 export function getThroughputExpectedTimestamp(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
-  return (
-    UnixTime.toStartOf(
-      UnixTime.now(),
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    ) -
-    (resolution === 'daily'
-      ? UnixTime.DAY
-      : resolution === 'sixHourly'
-        ? UnixTime.SIX_HOURS
-        : UnixTime.HOUR)
-  )
+  const unit: Record<typeof resolution, 'hour' | 'six hours' | 'day'> = {
+    hourly: 'hour',
+    sixHourly: 'six hours',
+    daily: 'day',
+  }
+  const span: Record<typeof resolution, number> = {
+    hourly: UnixTime.HOUR,
+    sixHourly: UnixTime.SIX_HOURS,
+    daily: UnixTime.DAY,
+  }
+
+  return UnixTime.toStartOf(UnixTime.now(), unit[resolution]) - span[resolution]
 }
