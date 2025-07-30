@@ -105,7 +105,7 @@ function MilestonesBase(props: {
                 />
               )}
               <Icon className="-left-8 absolute" />
-              <p className="font-bold text-lg leading-none">
+              <p className="font-bold text-base leading-none md:text-lg">
                 {milestone.title}
               </p>
               <p className="mt-1.5 font-medium text-secondary text-xs leading-none md:mt-1">
