@@ -4,5 +4,11 @@
     "address": "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4",
     "chain": "ethereum",
     "blockNumber": 22738909
+  },
+  "FaultProofLockingPool_2": {
+    "hash": "0x4e82791368b36a60ae6fc09aeb4023ce27c20f273f81bd9d6822056101d268ec",
+    "address": "0x1061528C33b8034952fb7355cC481e193b29FCa6",
+    "chain": "ethereum",
+    "blockNumber": 23019188
   }
 }

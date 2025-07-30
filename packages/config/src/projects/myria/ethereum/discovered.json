@@ -1,7 +1,7 @@
 {
   "name": "myria",
   "chain": "ethereum",
-  "blockNumber": 21981354,
+  "timestamp": 1741185779,
   "configHash": "0x4eeb74c3ea111c1e1ab9ffd01f0a45bd9d5f7f9567413b537bf2990c417177a4",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -688,5 +688,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
+  "usedBlockNumbers": { "ethereum": 21981354 },
   "permissionsConfigHash": "0x962ddafa82e70765aa0ba8a574a439bac0db16eee0c9f422a46736397a224628"
 }

@@ -1,7 +1,7 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 22994843,
+  "timestamp": 1753430543,
   "configHash": "0xedebc90f72a3d0e0a023eecc28f9918b5e551c5f2a2870c86ae12f65b8e4b73e",
   "entries": [
     {
@@ -1870,5 +1870,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22994843 },
   "permissionsConfigHash": "0xfaac04e3dcc13abee2f0694c2959b92c68bc9e0198d9ee66961ac69722f085cf"
 }

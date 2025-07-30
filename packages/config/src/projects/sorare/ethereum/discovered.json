@@ -1,7 +1,7 @@
 {
   "name": "sorare",
   "chain": "ethereum",
-  "blockNumber": 21981156,
+  "timestamp": 1741183403,
   "configHash": "0x9d76186d13df14d4de166d62acb8f1b662647701dddbe9d14040f15a6465f762",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
@@ -931,5 +931,6 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
+  "usedBlockNumbers": { "ethereum": 21981156 },
   "permissionsConfigHash": "0x7d9eead5c581c8c38167050b2f180289ca124d361cda04a3b19016cfd13b35f2"
 }

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -34,7 +34,10 @@ export const superseed: ScalingProject = opStackL2({
     },
   },
   associatedTokens: ['SUPR'],
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+  stateDerivation: DERIVATION.OPSTACK('SUPERSEED'),
   chainConfig: {
     name: 'superseed',
     coingeckoPlatform: 'superseed',

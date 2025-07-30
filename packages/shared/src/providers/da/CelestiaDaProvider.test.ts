@@ -54,33 +54,29 @@ function createMockRpcClient() {
       height: '100',
       txs_results: [
         {
-          log: [
+          events: [
             {
-              events: [
+              type: 'celestia.blob.v1.EventPayForBlobs',
+              attributes: [
                 {
-                  type: 'celestia.blob.v1.EventPayForBlobs',
-                  attributes: [
-                    {
-                      key: 'namespaces',
-                      value:
-                        blockNumber === 1
-                          ? '["namespace1", "namespace2"]'
-                          : '["namespace3", "namespace4"]',
-                    },
-                    {
-                      key: 'blob_sizes',
-                      value: blockNumber === 1 ? '[100, 200]' : '[300, 400]',
-                    },
-                  ],
+                  key: 'namespaces',
+                  value:
+                    blockNumber === 1
+                      ? '["namespace1", "namespace2"]'
+                      : '["namespace3", "namespace4"]',
                 },
                 {
-                  type: 'otherEvent',
-                  attributes: [
-                    {
-                      key: 'other-key',
-                      value: 'different-value',
-                    },
-                  ],
+                  key: 'blob_sizes',
+                  value: blockNumber === 1 ? '[100, 200]' : '[300, 400]',
+                },
+              ],
+            },
+            {
+              type: 'otherEvent',
+              attributes: [
+                {
+                  key: 'other-key',
+                  value: 'different-value',
                 },
               ],
             },

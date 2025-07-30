@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -40,7 +40,10 @@ export const polynomial: ScalingProject = opStackL2({
       },
     ],
   },
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+  stateDerivation: DERIVATION.OPSTACK('POLYNOMIAL'),
   genesisTimestamp: UnixTime(1718038307),
   milestones: [
     {
