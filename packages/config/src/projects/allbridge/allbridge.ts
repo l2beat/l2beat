@@ -44,19 +44,25 @@ export const allbridge: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xBBbD1BbB4f9b936C3604906D7592A644071dE884'),
+        address: ChainSpecificAddress(
+          'eth:0xBBbD1BbB4f9b936C3604906D7592A644071dE884',
+        ),
         sinceTimestamp: UnixTime(1636635220),
         tokens: '*',
         description: 'Lock-Mint token bridge',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D'),
+        address: ChainSpecificAddress(
+          'eth:0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D',
+        ),
         sinceTimestamp: UnixTime(1662596190),
         tokens: ['USDT'],
         description: 'USDT liquidity pool on Ethereum',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d'),
+        address: ChainSpecificAddress(
+          'eth:0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d',
+        ),
         sinceTimestamp: UnixTime(1669206935),
         tokens: ['USDC'],
         description: 'USDC liquidity pool on Ethereum',

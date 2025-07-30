@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -62,7 +62,9 @@ export const bugbuster: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x3ff5c7383f614256053c3f6b86a47ba974937299'),
+        address: ChainSpecificAddress(
+          'oeth:0x3ff5c7383f614256053c3f6b86a47ba974937299',
+        ),
         tokens: '*',
         description: 'DApp Contract storing bounties funds.',
       }),

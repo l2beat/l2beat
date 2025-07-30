@@ -1,5 +1,5 @@
 import {
-  EthereumAddress,
+  type ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -20,7 +20,7 @@ const onRamps = Object.values(
   discovery.getContractValue<Record<string, string>>('Router', 'onRamps'),
 )
 const allTokenPools = onRamps.flatMap((onRamp) =>
-  discovery.getContractValue<string[]>(onRamp, 'tokenPools'),
+  discovery.getContractValue<ChainSpecificAddress[]>(onRamp, 'tokenPools'),
 )
 const tokenPools = [...new Set(allTokenPools)]
 
@@ -104,7 +104,7 @@ export const transporter: Bridge = {
   config: {
     escrows: tokenPools.map((tokenPool) =>
       discovery.getEscrowDetails({
-        address: EthereumAddress(tokenPool),
+        address: tokenPool,
         tokens: '*',
       }),
     ),

@@ -122,20 +122,26 @@ export const kroma: ScalingProject = {
     associatedTokens: ['KRO'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x31F648572b67e60Ec6eb8E197E1848CC5F5558de'),
+        address: ChainSpecificAddress(
+          'eth:0x31F648572b67e60Ec6eb8E197E1848CC5F5558de',
+        ),
         sinceTimestamp: UnixTime(1693880555),
         tokens: ['ETH'],
         description: 'Main entry point for users depositing ETH.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x827962404D7104202C5aaa6b929115C8211d9596'),
+        address: ChainSpecificAddress(
+          'eth:0x827962404D7104202C5aaa6b929115C8211d9596',
+        ),
         sinceTimestamp: UnixTime(1693880555),
         tokens: '*',
         description:
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
+        address: ChainSpecificAddress(
+          'eth:0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e',
+        ),
         sinceTimestamp: UnixTime(1700122827),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,

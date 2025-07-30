@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -54,14 +58,18 @@ export const unichain: ScalingProject = opStackL2({
   isNodeAvailable: true,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877'),
+      address: ChainSpecificAddress(
+        'eth:0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A'),
+      address: ChainSpecificAddress(
+        'eth:0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A',
+      ),
       tokens: ['USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

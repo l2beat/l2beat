@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  type EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -52,7 +57,9 @@ export const hyperliquid: Bridge = {
     escrows: [
       discovery.getEscrowDetails({
         includeInTotal: false,
-        address: EthereumAddress('0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7'),
+        address: ChainSpecificAddress(
+          'arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7',
+        ),
         sinceTimestamp: UnixTime(1701389130),
         tokens: ['USDC'],
         description: 'Hyperliquid bridge escrow on Arbitrum.',

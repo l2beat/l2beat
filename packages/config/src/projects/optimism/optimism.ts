@@ -55,7 +55,9 @@ export const optimism: ScalingProject = opStackL2({
   nonTemplateExcludedTokens: ['rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+      address: ChainSpecificAddress(
+        'eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+      ),
       sinceTimestamp: UnixTime(1625675779),
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: ['DAI', 'USDS', 'sUSDS'],
@@ -64,7 +66,9 @@ export const optimism: ScalingProject = opStackL2({
     }),
     discovery.getEscrowDetails({
       // current SNX bridge escrow
-      address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+      address: ChainSpecificAddress(
+        'eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+      ),
       sinceTimestamp: UnixTime(1620680982),
       tokens: ['SNX'],
       ...ESCROW.CANONICAL_EXTERNAL,
@@ -89,7 +93,9 @@ export const optimism: ScalingProject = opStackL2({
       chain: 'ethereum',
     },
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+      address: ChainSpecificAddress(
+        'eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

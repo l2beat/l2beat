@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -104,7 +105,9 @@ export const cartesiprthoneypot: ScalingProject = {
     associatedTokens: ['CTSI'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c'),
+        address: ChainSpecificAddress(
+          'eth:0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c',
+        ),
         tokens: '*',
         description: 'Contract storing bounty funds.',
       }),
