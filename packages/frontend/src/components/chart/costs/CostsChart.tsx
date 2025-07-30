@@ -129,7 +129,7 @@ export function CostsChart({
     },
   } satisfies ChartMeta
 
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution({ type: range })
 
   return (
     <ChartContainer

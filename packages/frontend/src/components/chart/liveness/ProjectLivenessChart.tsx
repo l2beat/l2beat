@@ -67,18 +67,20 @@ export function ProjectLivenessChart({
 
   return (
     <div className="flex flex-col">
-      <ProjectChartTimeRange range={chartRange} />
-      <ChartControlsWrapper className="flex-wrap-reverse">
-        <LivenessChartSubtypeControls
-          subtype={subtype}
-          setSubtype={setSubtype}
-          configuredSubtypes={configuredSubtypes}
-        />
-        <LivenessChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-        />
-      </ChartControlsWrapper>
+      <div className="flex flex-col gap-1">
+        <ProjectChartTimeRange range={chartRange} />
+        <ChartControlsWrapper className="flex-wrap-reverse">
+          <LivenessChartSubtypeControls
+            subtype={subtype}
+            setSubtype={setSubtype}
+            configuredSubtypes={configuredSubtypes}
+          />
+          <LivenessChartTimeRangeControls
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
+      </div>
       <LivenessChart
         data={chartData}
         isLoading={isLoading}

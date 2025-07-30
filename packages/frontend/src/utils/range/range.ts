@@ -7,6 +7,9 @@ export type Resolution = 'hourly' | 'daily' | 'sixHourly'
 export function getRange(
   range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
   resolution: Resolution,
+  opts?: {
+    offset?: UnixTime
+  },
 ): [UnixTime | null, UnixTime] {
   if (range.type === 'custom') {
     const { from, to } = range
@@ -14,8 +17,9 @@ export function getRange(
   }
 
   const days = rangeToDays(range)
+  const offset = opts?.offset ?? 0
 
-  const end = UnixTime.toStartOf(UnixTime.now(), 'hour')
+  const end = UnixTime.toStartOf(UnixTime.now(), 'hour') + offset
   const start =
     days !== null
       ? UnixTime.toStartOf(

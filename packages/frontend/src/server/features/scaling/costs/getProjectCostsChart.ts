@@ -73,7 +73,7 @@ export async function getProjectCostsChart(
     ? getSummedUopsCount(activityRecords, throughputChart.range)
     : undefined
 
-  const resolution = rangeToResolution(params.range)
+  const resolution = rangeToResolution({ type: params.range })
 
   const timestampedDaData = Object.fromEntries(throughputChart?.chart ?? [])
   const chart: ProjectCostsChartResponse['chart'] = costsChart.chart.map(

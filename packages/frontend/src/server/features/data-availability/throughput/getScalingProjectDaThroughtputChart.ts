@@ -62,7 +62,6 @@ export async function getScalingProjectDaThroughputChart(
   )
 
   const expectedTo = getThroughputExpectedTimestamp(resolution)
-
   const adjustedTo = isThroughputSynced(syncedUntil, false)
     ? maxTimestamp
     : expectedTo
