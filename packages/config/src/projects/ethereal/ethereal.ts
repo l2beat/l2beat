@@ -23,7 +23,7 @@ export const ethereal: ScalingProject = upcomingL3({
         'https://discord.com/invite/etherealdex',
         'https://x.com/etherealdex',
         'https://mirror.xyz/0x71331A0991C312fcCF766c3Ca8F7a11c4f5F756B',
-    ],
+      ],
     },
   },
 })
