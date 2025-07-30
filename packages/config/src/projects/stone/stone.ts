@@ -69,9 +69,10 @@ export const stone: BaseProject = {
           ProjectId('sorare'),
           ProjectId('brine'),
         ],
+        description:
+          "Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier) in hex format '0x...'",
       },
       {
-        // Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)
         hash: '0xe12a7131035327b1f54cf3163d124b71da052535e71f64bbd9c2a460ec3a43f0',
         proofSystem: ZK_CATALOG_TAGS.STARK.Stone,
         knownDeployments: [
@@ -79,6 +80,8 @@ export const stone: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('dydx')],
+        description:
+          'Custom verifier ID: SHA256 hash of the address of the immutable verifier smart contract (GpsStatementVerifier)',
       },
     ],
   },
