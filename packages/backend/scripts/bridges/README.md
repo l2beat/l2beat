@@ -28,6 +28,14 @@ pnpm bridges:cli agglayer ethereum 22980856 katana 6519624
 pnpm bridges:cli agglayer katana 5380874 ethereum 22914279
 ```
 
+### CCTP v1
+```bash
+pnpm bridges:cli cctpv1 arbitrum 363107844 base 33540292
+```
+```bash
+pnpm bridges:cli cctpv1 base 33539279 ethereum 23031165
+```
+
 ### LayerZero V1
 ``` bash
 pnpm bridges:cli layerzerov1 ethereum 22970814 arbitrum 360189207
