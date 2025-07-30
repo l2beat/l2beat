@@ -2385,7 +2385,7 @@ Generated with discovered.json: 0x30615bb2b8a42cca9d35c7d162a672d0472a606f
 
 ## Description
 
-Token ProxyAdmin owner transfered to a timelock.
+Token ProxyAdmin owner transferred to a timelock.
 
 ## Watched changes
 
