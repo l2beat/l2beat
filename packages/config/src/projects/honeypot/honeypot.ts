@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   DA_BRIDGES,
@@ -100,7 +105,9 @@ export const honeypot: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
+        address: ChainSpecificAddress(
+          'eth:0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366',
+        ),
         tokens: '*',
         description: 'Contract storing bounty funds.',
       }),

@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -143,12 +144,16 @@ export const zkfair: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e'),
+        address: ChainSpecificAddress(
+          'eth:0xb10f60B4Ea978CA02aFBAC57fa84907e8439766e',
+        ),
         sinceTimestamp: UnixTime(1744292087),
         tokens: '*',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x9cb4706e20A18E59a48ffa7616d700A3891e1861'),
+        address: ChainSpecificAddress(
+          'eth:0x9cb4706e20A18E59a48ffa7616d700A3891e1861',
+        ),
         sinceTimestamp: UnixTime(1702879283),
         untilTimestamp: UnixTime(1744292087), // funds sweeped to EOA, then [resupplied to an unverified bridge escrow](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed)
         tokens: '*',

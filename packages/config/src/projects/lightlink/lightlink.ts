@@ -1,5 +1,5 @@
 import {
-  EthereumAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -96,12 +96,16 @@ export const lightlink: ScalingProject = {
     associatedTokens: ['LL'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE'),
+        address: ChainSpecificAddress(
+          'eth:0xB1Fb5A59A738c2df565d79572b0D6f348aE7cADE',
+        ),
         sinceTimestamp: UnixTime(1725540839),
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9'),
+        address: ChainSpecificAddress(
+          'eth:0x63105ee97bfb22dfe23033b3b14a4f8fed121ee9',
+        ),
         sinceTimestamp: UnixTime(1692185219),
         tokens: '*',
       }),

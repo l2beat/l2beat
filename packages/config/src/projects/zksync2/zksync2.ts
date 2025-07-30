@@ -108,7 +108,7 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       description:
         'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',
@@ -123,7 +123,9 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x41527B2d03844dB6b0945f25702cB958b6d55989'),
+      address: ChainSpecificAddress(
+        'eth:0x41527B2d03844dB6b0945f25702cB958b6d55989',
+      ),
       sinceTimestamp: UnixTime(1698058151),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
@@ -132,7 +134,9 @@ export const zksync2: ScalingProject = zkStackL2({
       upgradableBy: [{ name: 'Lido (Lido Agent)', delay: 'no' }],
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x32400084C286CF3E17e7B677ea9583e60a000324'),
+      address: ChainSpecificAddress(
+        'eth:0x32400084C286CF3E17e7B677ea9583e60a000324',
+      ),
       sinceTimestamp: UnixTime(1676268575),
       tokens: ['ETH'],
       description: 'Main rollup contract of ZKsync Era.',
@@ -140,7 +144,9 @@ export const zksync2: ScalingProject = zkStackL2({
       untilTimestamp: UnixTime(1717922458),
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063'),
+      address: ChainSpecificAddress(
+        'eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063',
+      ),
       sinceTimestamp: UnixTime(1676367083),
       tokens: '*',
       description:

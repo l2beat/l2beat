@@ -36,6 +36,7 @@ interface Props {
   projectId: ProjectId
   isLoading: boolean
   showMax: boolean
+  showTarget: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
 }
@@ -45,6 +46,7 @@ export function ProjectDaAbsoluteThroughputChart({
   isLoading,
   projectId,
   showMax,
+  showTarget,
   milestones,
   syncedUntil,
 }: Props) {
@@ -103,7 +105,7 @@ export function ProjectDaAbsoluteThroughputChart({
           isAnimationActive={false}
           dot={false}
         />
-        {showMax && (
+        {showTarget && (
           <Area
             dataKey="projectTarget"
             isAnimationActive={false}

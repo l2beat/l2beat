@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   FORCE_TRANSACTIONS,
   OPERATOR,
@@ -41,7 +41,9 @@ export const facet: ScalingProject = opStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x0000000000000b07ED001607f5263D85bf28Ce4C'),
+      address: ChainSpecificAddress(
+        'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
+      ),
       tokens: ['ETH'],
       description: 'Fast bridge contract.',
     }),

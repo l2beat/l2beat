@@ -25,4 +25,5 @@ export const EXPLORER_URLS: Record<string, string> = {
   unichain: 'https://uniscan.xyz/address',
   ink: 'https://explorer.inkonchain.com/address',
   everclear: 'https://scan.everclear.org/address',
+  gateway: 'https://gateway.explorer.zksync.io/address',
 }

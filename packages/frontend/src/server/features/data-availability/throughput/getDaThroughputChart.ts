@@ -2,10 +2,11 @@ import type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { isThroughputSynced } from './isThroughputSynced'
@@ -46,10 +47,20 @@ export async function getDaThroughputChart({
   const db = getDb()
   const resolution = rangeToResolution({ type: range })
   const [from, to] = getThroughputRange({ type: range })
+  const daLayers = await ps.getProjects({
+    select: ['daLayer'],
+  })
+  const sovereignProjectsIds = daLayers
+    .flatMap((da) =>
+      da.daLayer.sovereignProjectsTrackingConfig?.map((c) => c.projectId),
+    )
+    .filter(notUndefined)
+
   const throughput = includeScalingOnly
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
         [from, to],
+        sovereignProjectsIds,
       )
     : await db.dataAvailability.getByProjectIdsAndTimeRange(
         THROUGHPUT_ENABLED_DA_LAYERS,
