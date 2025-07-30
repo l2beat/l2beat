@@ -1,5 +1,6 @@
 import type { AggregatedLivenessRecord } from '@l2beat/database'
 import {
+  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -88,6 +89,9 @@ export async function getProjectLivenessChart({
     stats[to] = stats[from]
   }
 
+  const syncedUntil = chartEntries.at(-1)?.timestamp
+  assert(syncedUntil, 'No syncedUntil found')
+
   const groupedByResolution = groupBy(chartEntries, (e) =>
     UnixTime.toStartOf(
       e.timestamp,
@@ -106,23 +110,20 @@ export async function getProjectLivenessChart({
     ...Object.keys(groupedByResolution).map(Number),
   )
 
-  const adjustedTo = isLivenessSynced(lastTimestamp) ? lastTimestamp : to
+  const adjustedTo = isLivenessSynced(syncedUntil) ? lastTimestamp : to
 
   const timestamps = generateTimestamps(
     [startTimestamp, adjustedTo],
     resolution,
-    {
-      addTarget: true,
-    },
   )
 
   const data: [number, number | null, number | null, number | null][] =
     timestamps.map((timestamp) => {
-      const entry = groupedByResolution[timestamp]
-      if (!entry) {
+      const records = groupedByResolution[timestamp]
+      if (!records) {
         return [timestamp, null, null, null]
       }
-      const { min, max, avg } = calculateLivenessStats(entry)
+      const { min, max, avg } = calculateLivenessStats(records)
       return [timestamp, min, avg, max]
     })
   return {
