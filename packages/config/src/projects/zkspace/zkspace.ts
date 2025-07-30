@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -72,7 +73,9 @@ export const zkspace: ScalingProject = {
     associatedTokens: ['ZKS'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
+        address: ChainSpecificAddress(
+          'eth:0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+        ),
         sinceTimestamp: UnixTime(1639569183),
         tokens: '*',
       }),

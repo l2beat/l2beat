@@ -1,7 +1,6 @@
 import {
   assert,
   ChainSpecificAddress,
-  EthereumAddress,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -180,83 +179,115 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xc026395860Db2d07ee33e05fE50ed7bD583189C7'),
+        address: ChainSpecificAddress(
+          'eth:0xc026395860Db2d07ee33e05fE50ed7bD583189C7',
+        ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Ethereum.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x77b2043768d28E9C9aB44E1aBfC95944bcE57931'),
+        address: ChainSpecificAddress(
+          'eth:0x77b2043768d28E9C9aB44E1aBfC95944bcE57931',
+        ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Ethereum.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x933597a323Eb81cAe705C5bC29985172fd5A3973'),
+        address: ChainSpecificAddress(
+          'eth:0x933597a323Eb81cAe705C5bC29985172fd5A3973',
+        ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Ethereum.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3'),
+        address: ChainSpecificAddress(
+          'eth:0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3',
+        ),
         tokens: ['Metis'],
         description: 'Stargate liquidity pool for METIS on Ethereum.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D'),
+        address: ChainSpecificAddress(
+          'eth:0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D',
+        ),
         tokens: ['mETH'],
         description: 'Stargate liquidity pool for mETH on Ethereum.',
       }),
       // MULTICHAIN ESCROWS:
       discovery_arbitrum.getEscrowDetails({
-        address: EthereumAddress('0xe8CDF27AcD73a434D661C84887215F7598e7d0d3'),
+        address: ChainSpecificAddress(
+          'arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
+        ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Arbitrum.',
       }),
       discovery_arbitrum.getEscrowDetails({
-        address: EthereumAddress('0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0'),
+        address: ChainSpecificAddress(
+          'arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
+        ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Arbitrum.',
       }),
       discovery_arbitrum.getEscrowDetails({
-        address: EthereumAddress('0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F'),
+        address: ChainSpecificAddress(
+          'arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F',
+        ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Arbitrum.',
       }),
       discovery_optimism.getEscrowDetails({
-        address: EthereumAddress('0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0'),
+        address: ChainSpecificAddress(
+          'oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
+        ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Optimism.',
       }),
       discovery_optimism.getEscrowDetails({
-        address: EthereumAddress('0xe8CDF27AcD73a434D661C84887215F7598e7d0d3'),
+        address: ChainSpecificAddress(
+          'oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
+        ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Optimism.',
       }),
       discovery_optimism.getEscrowDetails({
-        address: EthereumAddress('0x19cFCE47eD54a88614648DC3f19A5980097007dD'),
+        address: ChainSpecificAddress(
+          'oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD',
+        ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Optimism.',
       }),
       discovery_base.getEscrowDetails({
-        address: EthereumAddress('0x27a16dc786820B16E5c9028b75B99F6f604b5d26'),
+        address: ChainSpecificAddress(
+          'base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
+        ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Base.',
       }),
       discovery_base.getEscrowDetails({
-        address: EthereumAddress('0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7'),
+        address: ChainSpecificAddress(
+          'base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7',
+        ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for USDC on Base.',
       }),
       discovery_scroll.getEscrowDetails({
-        address: EthereumAddress('0x3Fc69CC4A842838bCDC9499178740226062b14E4'),
+        address: ChainSpecificAddress(
+          'scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4',
+        ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Scroll.',
       }),
       discovery_scroll.getEscrowDetails({
-        address: EthereumAddress('0xC2b638Cb5042c1B3c5d5C969361fB50569840583'),
+        address: ChainSpecificAddress(
+          'scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583',
+        ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Scroll.',
       }),
       discovery_linea.getEscrowDetails({
-        address: EthereumAddress('0x81F6138153d473E8c5EcebD3DC8Cd4903506B075'),
+        address: ChainSpecificAddress(
+          'linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075',
+        ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Linea.',
       }),

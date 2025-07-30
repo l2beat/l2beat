@@ -32,7 +32,9 @@ export const FindUnusedShapes = command({
       for (const entry of discovery.entries) {
         if (entry.sourceHashes) {
           for (const hash of entry.sourceHashes) {
-            allSourceHashesUsed.add(hash)
+            if (hash !== undefined) {
+              allSourceHashesUsed.add(hash)
+            }
           }
         }
       }

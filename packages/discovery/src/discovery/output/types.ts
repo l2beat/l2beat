@@ -85,7 +85,7 @@ export type StructureEntry = {
   name?: string
   implementationNames?: Record<ChainSpecificAddress, string>
   template?: string
-  sourceHashes?: string[]
+  sourceHashes?: (string | undefined)[]
   unverified?: true
   sinceTimestamp?: number
   sinceBlock?: number

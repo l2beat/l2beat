@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import floor from 'lodash/floor'
 import {
   CONTRACTS,
@@ -62,15 +62,21 @@ export const shibarium: ScalingProject = {
     associatedTokens: ['SHIB', 'BONE', 'LEASH'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xc3897302aB4B42931cB4857050Fa60f53B775870'), // etherpredicate
+        address: ChainSpecificAddress(
+          'eth:0xc3897302aB4B42931cB4857050Fa60f53B775870',
+        ), // etherpredicate
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa'), // erc20predicate
+        address: ChainSpecificAddress(
+          'eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa',
+        ), // erc20predicate
         tokens: '*',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x885fcE983b6a01633f764325B8c3c5D31032C995'), // DepositManager
+        address: ChainSpecificAddress(
+          'eth:0x885fcE983b6a01633f764325B8c3c5D31032C995',
+        ), // DepositManager
         tokens: '*',
       }),
     ],

@@ -101,21 +101,6 @@ export class TemplateService {
     sources: ContractSources,
     address: ChainSpecificAddress,
   ): string[] {
-    // !TODO: Temp patch until we merge ability to match templates even is proxy is not verified
-    if (
-      sources.sources.length === 2 &&
-      sources.sources[0]?.source.isVerified === false &&
-      sources.sources[1]?.source.isVerified === true
-    ) {
-      // biome-ignore lint/style/noNonNullAssertion: pray it's there
-      const sourceHash = Hash256(sources.sources[1]?.hash!)
-      return this.findMatchingTemplatesByHash(sourceHash, address)
-    }
-
-    if (!sources.isVerified) {
-      return []
-    }
-
     const sourceHash = getHashForMatchingFromSources(sources.sources)
 
     if (sourceHash === undefined) {
@@ -359,7 +344,7 @@ export class TemplateService {
     chain: string,
     addresses: EthereumAddress[],
     fileName: string,
-    timestamp: number,
+    blockNumber: number,
     sources: ContractSource[],
   ): void {
     assert(this.exists(templateId), 'Template does not exist')
@@ -392,12 +377,7 @@ export class TemplateService {
       // biome-ignore lint/style/noNonNullAssertion: just checked
       address: addresses.length > 1 ? addresses : addresses[0]!,
       chain,
-      // TODO(radomski): This is a hack. We're going to distinguish
-      // between timestamps are block numbers by their sign. This will be
-      // fixed as we're going to migrate the shapes.json to use
-      // timestamps as well. But just so that we don't block things we're
-      // going to make this hack
-      blockNumber: -timestamp,
+      blockNumber,
     }
 
     const resolvedRootPath = path.join(this.rootPath, TEMPLATES_PATH)

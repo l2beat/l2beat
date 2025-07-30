@@ -1,5 +1,6 @@
 import {
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -155,43 +156,57 @@ export const scroll: ScalingProject = {
     associatedTokens: ['SCR'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9'),
+        address: ChainSpecificAddress(
+          'eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9',
+        ),
         tokens: '*',
         excludedTokens: ['rsETH'],
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367'),
+        address: ChainSpecificAddress(
+          'eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367',
+        ),
         tokens: ['ETH'],
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xb2b10a289A229415a124EFDeF310C10cb004B6ff'), // custom gateway
+        address: ChainSpecificAddress(
+          'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
+        ), // custom gateway
         tokens: '*',
         ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B'),
+        address: ChainSpecificAddress(
+          'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
+        ),
         tokens: ['USDC'],
         ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x67260A8B73C5B77B55c1805218A42A7A6F98F515'),
+        address: ChainSpecificAddress(
+          'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
+        ),
         tokens: ['DAI'],
         ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6625C6332c9F91F2D27c304E729B86db87A3f504'),
+        address: ChainSpecificAddress(
+          'eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504',
+        ),
         tokens: ['wstETH'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description:
           'Custom token escrow with third-party governance, using the canonical bridge only for messaging.',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
+        address: ChainSpecificAddress(
+          'eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a',
+        ),
         tokens: ['pufETH'],
         ...ESCROW.CANONICAL_EXTERNAL,
         description:

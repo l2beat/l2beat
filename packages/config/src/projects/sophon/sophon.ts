@@ -90,7 +90,7 @@ export const sophon: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: [
         'ETH',
         'USDT',

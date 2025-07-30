@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -36,7 +36,9 @@ export const alienx: ScalingProject = orbitStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D'),
+      address: ChainSpecificAddress(
+        'eth:0x5625d2a46fc582b3e6dE5288D9C5690B20EBdb8D',
+      ),
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',

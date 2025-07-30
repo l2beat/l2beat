@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -31,7 +31,9 @@ export const hibachi = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400'),
+        address: ChainSpecificAddress(
+          'arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400',
+        ),
         tokens: ['USDT0'],
       }),
     ],

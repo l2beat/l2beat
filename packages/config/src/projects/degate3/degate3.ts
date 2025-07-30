@@ -1,6 +1,7 @@
 import {
   assert,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -152,7 +153,9 @@ export const degate3: ScalingProject = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x54D7aE423Edb07282645e740C046B9373970a168'),
+        address: ChainSpecificAddress(
+          'eth:0x54D7aE423Edb07282645e740C046B9373970a168',
+        ),
         sinceTimestamp: UnixTime(1699746983),
         tokens: '*',
       }),
