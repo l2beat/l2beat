@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xc6fb11928c983ecb4906cf10b02a94a525a89bfa
+Generated with discovered.json: 0x9ab1c1fb62d8e60b99fb311bb854dd9bdfd80106
 
-# Diff at Wed, 30 Jul 2025 06:27:36 GMT:
+# Diff at Wed, 30 Jul 2025 12:46:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@c11674e843092eeb98a4895cd8d533c0c20b99f9 block: 1750835963
-- current timestamp: 1753853680
+- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1750835963
+- current timestamp: 1753879572
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+zksync era migrates to the gateway for settlement.
 
 ## Watched changes
 

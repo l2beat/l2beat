@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "timestamp": 1753853680,
+  "timestamp": 1753879572,
   "configHash": "0x82d1d15e59465bc5bb38692ccfbcf9caa7ed03d7c9c1808715b3ed7c7b2989da",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -451,8 +451,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 137,
-        "getPriorityTreeRoot": "0x3c94e1821a876a374cfb142047a67c3a49a99f67d19d6e1d790df5d53b072951",
+        "getPriorityQueueSize": 152,
+        "getPriorityTreeRoot": "0xb4c73a4bcedec484bd2e28b7009ec2829c40241ecfa68355d6fbbedd7a5c5cf5",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
@@ -465,7 +465,7 @@
         "getTotalBlocksCommitted": 501263,
         "getTotalBlocksExecuted": 501260,
         "getTotalBlocksVerified": 501263,
-        "getTotalPriorityTxs": 3278710,
+        "getTotalPriorityTxs": 3278725,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -1396,6 +1396,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23029886 },
+  "usedBlockNumbers": { "ethereum": 23032029 },
   "permissionsConfigHash": "0xb8aa724763da66abbc580a31e82ad158e19755f194b52d89e9876064062ec4a0"
 }
