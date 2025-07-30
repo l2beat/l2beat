@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const zircuitprover: BaseProject = {
   id: ProjectId('zircuitprover'),
   slug: 'zircuitprover',
-  name: 'Zircuit Prover',
+  name: 'Zircuit',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-21')),
   statuses: {

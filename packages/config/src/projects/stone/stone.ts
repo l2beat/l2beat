@@ -35,7 +35,7 @@ export const stone: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Stone,
         ZK_CATALOG_TAGS.ISA.CASM,
-        ZK_CATALOG_TAGS.Arithmetization.AIR,
+        // ZK_CATALOG_TAGS.Arithmetization.AIR,
         ZK_CATALOG_TAGS.Field.felt252,
       ],
     },
