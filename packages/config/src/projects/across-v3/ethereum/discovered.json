@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22867011,
+  "timestamp": 1751887607,
   "configHash": "0x49282a0e36b2ed47220313311018bfc4bbffd7c2bd90465ef3f81f692c81f2e2",
   "entries": [
     {
@@ -3577,5 +3577,6 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
+  "usedBlockNumbers": { "ethereum": 22867011 },
   "permissionsConfigHash": "0xae544a6719b016336ec257bdb8f989c8e124472cf200c1b27668cc49f55813a7"
 }

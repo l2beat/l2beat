@@ -46,5 +46,5 @@ export async function getProvider(
   )
   const blockNumber =
     await allProviders.getLatestBlockNumber(UNKNOWN_CHAIN_NAME)
-  return allProviders.get(UNKNOWN_CHAIN_NAME, blockNumber)
+  return allProviders.getByBlockNumber(UNKNOWN_CHAIN_NAME, blockNumber)
 }

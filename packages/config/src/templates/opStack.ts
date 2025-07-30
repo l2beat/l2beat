@@ -678,9 +678,11 @@ function getStateValidation(
               kailuaBond,
             )} ETH, that can be slashed if any proposal made by them is proven incorrect via a fault proof or a conflicting validity proof. The bond can be withdrawn once the proposer has no more pending proposals that need to be resolved and was not eliminated.
 
-Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals. A proposal asserts that the proposed state root constitutes a valid state transition from the referenced parent's state root. To simplify efficient zk fault proofs, each proposal also includes ${proposalOutputCount} intermediate state commitments that each span ${outputBlockSpan} L2 blocks. Proving any of them faulty eliminates the proposer and all their subsequent unresolved proposals, forfeits their bond, and disallows future proposals by the same address.
+Proposals consist of a state root and a reference to their parent and implicitly challenge any sibling proposals who have the same parent. A proposal asserts that the proposed state root constitutes a valid state transition from the parent's state root. To offer efficient zk fault proofs, each proposal must include ${proposalOutputCount} intermediate state commitments, each spanning ${outputBlockSpan} L2 blocks. 
 
-The **Vanguard** is a privileged actor who can always make the first child proposal on a new parent state root. This gives them an advantage on the optimistic clock. In the case that nobody makes a bonded counter proposal, or proves the validity of any other, or the fault of the Vanguard proposal, the Vanguard wins the tournament after ${formatSeconds(maxClockDuration)}. This privilege is valid for ${formatSeconds(vanguardAdvantage)}, after which anyone can make the first proposal. Sibling proposals made after the Vanguard's initial one are permissionless and extend the ${formatSeconds(maxClockDuration)} challenge period until sufficient ZK proofs are published to eliminate all but one.`,
+Proposals target sequential tournament epochs of currently ${proposalOutputCount} * ${outputBlockSpan} L2 blocks. A tournament with a resolved parent tournament, a single child- and no conflicting sibling proposals can be resolved after ${formatSeconds(maxClockDuration)}. 
+
+The **Vanguard** is a privileged actor who can always make the first child proposal on a parent state root. They can, in the worst case, delay each tournament for up to ${formatSeconds(vanguardAdvantage)} by not making this first proposal. Sibling proposals made after the Vanguard's initial one or after the ${formatSeconds(vanguardAdvantage)} vanguardAdvantage in each tournament are permissionless.`,
             references: [
               {
                 title: "'Sequencing' - Kailua Docs",
@@ -695,12 +697,16 @@ The **Vanguard** is a privileged actor who can always make the first child propo
           {
             title: 'Challenges',
             description: `
-In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other and the system only allows for one child to be resolved in the end. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods: 
-1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has passed before any conflicting proposals were made
-2. the proposal is proven correct with a full validity proof (eliminates all conflicting proposals)
-3. conflicting sibling proposals are proven faulty
+Any conflicting sibling proposals within a tournament that are made within the ${formatSeconds(maxClockDuration)} challenge period of a proposal they are challenging, delay resolving the tournament until sufficient ZK proofs are published to leave one single tournament survivor.
 
-A single remaining child can be 'resolved' and will be finalized and usable for withdrawals after an execution delay (time for the Guardian to manually blacklist malicious state roots) of ${formatSeconds(disputeGameFinalityDelaySeconds)}.`,
+In the tree of proposed state roots, each parent node can have multiple children. These children are indirectly challenging each other in a tournament, which can only be resolved if but a single child survives. A state root can be resolved if it is **the only remaining proposal** due to any combination of the following elimination methods: 
+1. the proposal's challenge period of ${formatSeconds(maxClockDuration)} has ended before a conflicting proposal was made
+2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
+3. a conflicting sibling proposal is proven faulty
+
+Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
+
+A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [
               {
                 url: 'https://risc0.github.io/kailua/design.html#disputes',

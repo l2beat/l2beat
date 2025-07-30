@@ -1,7 +1,7 @@
 {
   "name": "optopia",
   "chain": "ethereum",
-  "blockNumber": 22581193,
+  "timestamp": 1748434475,
   "configHash": "0xef9308cff2e18249517610eb4bb512dc0a2e514665937677135d94737967546d",
   "entries": [
     {
@@ -1025,5 +1025,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22581193 },
   "permissionsConfigHash": "0x423478a01d2a1653feb39344e48908eee0f7e47044b2a643de4689656c1677ad"
 }

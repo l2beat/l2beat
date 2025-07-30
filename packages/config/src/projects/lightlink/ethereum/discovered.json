@@ -1,7 +1,7 @@
 {
   "name": "lightlink",
   "chain": "ethereum",
-  "blockNumber": 22208513,
+  "timestamp": 1743926099,
   "configHash": "0x2033f8a75dc71ddb50adba75ab282061b8a1ba59381493dbe69232c64de152c3",
   "entries": [
     {
@@ -1161,5 +1161,6 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e"
   },
+  "usedBlockNumbers": { "ethereum": 22208513 },
   "permissionsConfigHash": "0xecbac8c07475b5265b0e0a867e362ca9eebeb47f5fc5c72409856a0693c9187a"
 }

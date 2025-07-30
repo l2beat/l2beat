@@ -1,7 +1,7 @@
 {
   "name": "sxnetwork",
   "chain": "ethereum",
-  "blockNumber": 22923598,
+  "timestamp": 1752570635,
   "configHash": "0x2be73f01a1a6d156882d7dd06ea40e4b37aae07d43d970a9c0bcf768d3c46174",
   "entries": [
     {
@@ -1895,5 +1895,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "ethereum": 22923598 },
   "permissionsConfigHash": "0xba06cc4477cd3666917e2aac5957799314bb2b673315e1bd03e269606baacfae"
 }

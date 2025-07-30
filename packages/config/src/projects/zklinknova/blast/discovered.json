@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "blast",
-  "blockNumber": 16435499,
+  "timestamp": 1753687799,
   "configHash": "0xa29f4d0d9703719aaa5d3587197aed2da1d488d8878fe0a48fef523f0d1db3b3",
   "entries": [
     {
@@ -69,12 +69,12 @@
         "getGateway": "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1",
         "getGovernor": "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 50873,
+        "getTotalBatchesExecuted": 69385,
         "getTotalPriorityTxs": 4672,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "blastmainnet:0x730200f698cc8Ff16C00F4E8520Fd780B916D50E",
         "paused": true,
-        "totalBatchesExecuted": 50873,
+        "totalBatchesExecuted": 69385,
         "totalPriorityTxs": 4672,
         "totalSyncedPriorityTxs": 4672,
         "totalValidatorForwardFee": "2450626711079120430",
@@ -507,5 +507,6 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
+  "usedBlockNumbers": { "blast": 22438992 },
   "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
 }

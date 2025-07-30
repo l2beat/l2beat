@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xd6e377b28da41a25abca72355a1b34bad971ab18
+Generated with discovered.json: 0x6ac178f2ddeffb6e5086681e2777b9463662a653
 
 # Diff at Mon, 14 Jul 2025 12:47:20 GMT:
 
@@ -1020,7 +1020,7 @@ Generated with discovered.json: 0xedbd057508280d9873d1196125e4fa0e7282bc84
 
 ## Description
 
-The governance (owner, admin roles) of the scroll contracts are transfered from an EOA to a new Multisig.
+The governance (owner, admin roles) of the scroll contracts are transferred from an EOA to a new Multisig.
 
 ## Watched changes
 

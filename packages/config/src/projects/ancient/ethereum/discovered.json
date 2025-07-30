@@ -1,7 +1,7 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 22994665,
+  "timestamp": 1753428383,
   "configHash": "0x8ed9dcfba38c53a9287a76666e5fdf25a49553308965f5788ecf30d8616a42be",
   "entries": [
     {
@@ -1909,5 +1909,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22994665 },
   "permissionsConfigHash": "0xd82c6ccb59a3493d59d58d29e93a8a4a54d2adc023f6ec9555d2f4be1af498dc"
 }

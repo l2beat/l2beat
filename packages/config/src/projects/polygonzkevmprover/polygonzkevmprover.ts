@@ -6,7 +6,7 @@ import type { BaseProject } from '../../types'
 export const polygonzkevmprover: BaseProject = {
   id: ProjectId('polygonzkevmprover'),
   slug: 'polygonzkevmprover',
-  name: 'Polygon zkEVM Prover',
+  name: 'Polygon zkEVM',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-18')),
   statuses: {
@@ -36,14 +36,14 @@ export const polygonzkevmprover: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK['PIL-STARK'],
         ZK_CATALOG_TAGS.ISA.ZkASM,
-        ZK_CATALOG_TAGS.Arithmetization.eAIR,
+        // ZK_CATALOG_TAGS.Arithmetization.eAIR,
         ZK_CATALOG_TAGS.Field.Goldilocks,
       ],
       finalWrap: [
         ZK_CATALOG_TAGS.Fflonk.Snarkjs,
         ZK_CATALOG_TAGS.curve.BN254,
-        ZK_CATALOG_TAGS.PCS.KZG,
-        ZK_CATALOG_TAGS.Arithmetization.R1CS,
+        // ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.Arithmetization.R1CS,
       ],
     },
     proofSystemInfo: '',

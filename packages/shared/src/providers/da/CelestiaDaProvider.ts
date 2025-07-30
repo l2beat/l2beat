@@ -31,7 +31,7 @@ export class CelestiaDaProvider implements DaBlobProvider {
     }
 
     const blobEvents = block.txs_results
-      .flatMap(({ log }) => log.flatMap(({ events }) => events))
+      .flatMap(({ events }) => events)
       .filter(({ type }) => type === 'celestia.blob.v1.EventPayForBlobs')
 
     const blobs: CelestiaBlob[] = blobEvents.flatMap((blobEvent) => {
