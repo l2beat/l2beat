@@ -20,6 +20,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618680,
       "sinceBlock": 48952941,
@@ -282,6 +286,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618949,
       "sinceBlock": 48953173,
@@ -633,6 +641,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1736528714,
       "sinceBlock": 53365728,
@@ -1017,6 +1029,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealFactory",
+      "sourceHashes": [
+        null,
+        "0x28dc06b466a9c164eac79b0424ad346c72c4646eb000b9c0370251aebca6de6c"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1731609509,
       "sinceBlock": 48944417,
@@ -1270,6 +1286,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618711,
       "sinceBlock": 48952964,
@@ -1471,6 +1491,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1741042761,
@@ -1570,6 +1594,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618862,
@@ -1708,6 +1736,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618787,
       "sinceBlock": 48953033,
@@ -1988,6 +2020,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618829,
@@ -2109,6 +2145,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618906,
       "sinceBlock": 48953132,
@@ -2178,6 +2218,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealRegistry",
+      "sourceHashes": [
+        null,
+        "0x5b6501eda78687f74c7786bd7e9970e57543f98ba88c1a3b4b5af2d0b5e68752"
+      ],
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1731609487,
       "sinceBlock": 48944395,
@@ -2262,6 +2306,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1736528714,
@@ -2419,6 +2467,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618938,
       "sinceBlock": 48953163,
@@ -2732,6 +2784,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1744144140,
@@ -2820,6 +2876,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618895,
@@ -2942,6 +3002,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618884,
       "sinceBlock": 48953111,
@@ -3423,6 +3487,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1736528949,
       "sinceBlock": 53365961,
@@ -3853,6 +3921,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618680,
@@ -3960,6 +4032,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1747927037,
@@ -4039,6 +4115,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1744144112,
@@ -4149,6 +4229,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1741042455,
@@ -4248,6 +4332,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618852,
       "sinceBlock": 48953087,
@@ -4312,6 +4400,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618756,
@@ -4456,6 +4548,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618852,
@@ -4544,6 +4640,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618906,
@@ -4622,6 +4722,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618809,
       "sinceBlock": 48953047,
@@ -4686,6 +4790,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618744,
@@ -4867,6 +4975,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618928,
       "sinceBlock": 48953154,
@@ -5180,6 +5292,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618928,
@@ -5322,6 +5438,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618766,
       "sinceBlock": 48953014,
@@ -5607,6 +5727,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618711,
@@ -5697,6 +5821,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618917,
       "sinceBlock": 48953143,
@@ -5982,6 +6110,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618895,
       "sinceBlock": 48953121,
@@ -6211,6 +6343,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1741042129,
@@ -6310,6 +6446,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618842,
@@ -6452,6 +6592,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618744,
       "sinceBlock": 48952992,
@@ -6971,6 +7115,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1741042129,
       "sinceBlock": 56987839,
@@ -7205,6 +7353,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618734,
@@ -7304,6 +7456,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618797,
       "sinceBlock": 48953040,
@@ -7632,6 +7788,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1747927037,
       "sinceBlock": 60781371,
@@ -7777,6 +7937,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618734,
       "sinceBlock": 48952985,
@@ -7846,6 +8010,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1753198755,
       "sinceBlock": 63225178,
@@ -7910,6 +8078,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1753489414,
       "sinceBlock": 63374351,
@@ -8195,6 +8367,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618829,
       "sinceBlock": 48953067,
@@ -8429,6 +8605,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618842,
       "sinceBlock": 48953078,
@@ -8813,6 +8993,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618960,
@@ -8918,6 +9102,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618917,
@@ -9032,6 +9220,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1744144140,
       "sinceBlock": 58856904,
@@ -9238,6 +9430,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618756,
       "sinceBlock": 48953004,
@@ -9635,6 +9831,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618862,
       "sinceBlock": 48953095,
@@ -9976,6 +10176,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618809,
@@ -10054,6 +10258,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1736528949,
@@ -10194,6 +10402,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618819,
       "sinceBlock": 48953057,
@@ -10372,6 +10584,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618722,
@@ -10504,6 +10720,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618949,
@@ -10636,6 +10856,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618777,
@@ -10785,6 +11009,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618777,
       "sinceBlock": 48953025,
@@ -11238,6 +11466,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618691,
       "sinceBlock": 48952950,
@@ -11500,6 +11732,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618787,
@@ -11591,6 +11827,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618960,
       "sinceBlock": 48953183,
@@ -11807,6 +12047,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1744144112,
       "sinceBlock": 58856886,
@@ -12069,6 +12313,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618766,
@@ -12185,6 +12433,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1753489414,
@@ -12298,6 +12550,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618873,
       "sinceBlock": 48953104,
@@ -12687,6 +12943,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618700,
@@ -12862,6 +13122,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618819,
@@ -12946,6 +13210,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618722,
       "sinceBlock": 48952974,
@@ -13307,6 +13575,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618691,
@@ -13410,6 +13682,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618938,
@@ -13537,6 +13813,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618797,
@@ -13653,6 +13933,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1741042455,
       "sinceBlock": 56988065,
@@ -13887,6 +14171,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1753198755,
@@ -13953,6 +14241,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618884,
@@ -14117,6 +14409,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1731618700,
       "sinceBlock": 48952957,
@@ -14547,6 +14843,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/Deal",
+      "sourceHashes": [
+        null,
+        "0x9fc8c45ecee5ae2eb3c0527cc53c69f75da7ce1c9f6cf87086901c824040904f"
+      ],
       "proxyType": "Beacon proxy",
       "ignoreInWatchMode": ["clock"],
       "sinceTimestamp": 1731618873,
@@ -14684,6 +14984,10 @@
       "type": "Contract",
       "unverified": true,
       "template": "tradable/DealManager",
+      "sourceHashes": [
+        null,
+        "0x371dad45d00910e50db83caee5e6a0b6f36952a2abe6394a05768f6ea99aaeb0"
+      ],
       "proxyType": "Beacon proxy",
       "sinceTimestamp": 1741042761,
       "sinceBlock": 56988301,
