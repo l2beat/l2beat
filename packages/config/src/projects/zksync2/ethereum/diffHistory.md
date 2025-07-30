@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xc6fb11928c983ecb4906cf10b02a94a525a89bfa
+
+# Diff at Wed, 30 Jul 2025 06:27:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c11674e843092eeb98a4895cd8d533c0c20b99f9 block: 1750835963
+- current timestamp: 1753853680
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.getSettlementLayer:
+-        "eth:0x0000000000000000000000000000000000000000"
++        "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
+    }
+```
+
 Generated with discovered.json: 0x148f60fdf4e2c216eb4b02de6e6f5002798224ad
 
 # Diff at Mon, 14 Jul 2025 12:47:21 GMT:

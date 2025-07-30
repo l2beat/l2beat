@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "System contract implementing public L2->L1 messaging functionality. Part of the canonical bridge."
+}

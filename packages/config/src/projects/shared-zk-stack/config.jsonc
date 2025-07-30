@@ -13,7 +13,7 @@
     "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
   ],
   "names": {
-    "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": "EraAdminProxy",
+    "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": "EraChainAdminProxy",
     "eth:0x085b8B6407f150D62adB1EF926F7f304600ec714": "ProtocolTimelockController(L2->L1)",
     "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub",
 
