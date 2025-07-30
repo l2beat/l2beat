@@ -1418,5 +1418,7 @@
   "static/icons/zircuitprover.png": "285df9d1342aee46ed90ded52983e309",
   "static/icons/zksyncprover.png": "3d332c71daecb207ed4a78d7d3031e15",
   "static/meta-images/governance/publications/governance-review-62.png": "ae835a0f9ee76463d6a045d44c68aaf6",
-  "static/meta-images/scaling/projects/sischain/opengraph-image.png": "a99897033971d1259f2213fea507b95f"
+  "static/meta-images/scaling/projects/sischain/opengraph-image.png": "a99897033971d1259f2213fea507b95f",
+  "static/icons/ethereal.png": "221d9fab1ae060ff4f6d736b532738a6",
+  "static/meta-images/scaling/projects/ethereal/opengraph-image.png": "72df626106a7b5f9bbf173b7188bd9e6"
 }
