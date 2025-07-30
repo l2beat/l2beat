@@ -1,16 +1,24 @@
-import { assert, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
 import type { IProvider } from '../../../provider/IProvider'
 import type { Handler, HandlerResult } from '../../Handler'
 
-const abi = ['event DealDeployed(string id, address deal, address manager)']
+const abi = [
+  'event DealDeployed(string indexed id, address indexed deal, address indexed manager)',
+]
+const iface = new utils.Interface(abi)
+const topic0 = iface.getEventTopic('DealDeployed')
 
 export type TradableDefinition = v.infer<typeof TradableDefinition>
 export const TradableDefinition = v.strictObject({
   type: v.literal('tradable'),
 })
 
+/**
+ * I could've used EventHandler but
+ * indexed fields there are pretty wonky.
+ */
 export class TradableHandler implements Handler {
   readonly dependencies: string[] = []
 
@@ -20,9 +28,6 @@ export class TradableHandler implements Handler {
     provider: IProvider,
     dealFactory: ChainSpecificAddress,
   ): Promise<HandlerResult> {
-    const iface = new utils.Interface(abi)
-    const topic0 = iface.getEventTopic('DealDeployed')
-
     const logs = await provider.getLogs(dealFactory, [topic0])
 
     const chainShortName = ChainSpecificAddress.chain(dealFactory)
@@ -31,10 +36,10 @@ export class TradableHandler implements Handler {
       parseDealDeployed(log, chainShortName),
     )
 
-    return Promise.resolve({
+    return {
       field: this.field,
       value: dealsDeployed,
-    })
+    }
   }
 }
 
@@ -48,20 +53,11 @@ function parseDealDeployed(
   log: providers.Log,
   chainShortName: string,
 ): DealDeployed {
-  const [_, id, deal, manager] = log.topics
-
-  assert(id, 'id is required')
-  assert(deal, 'deal is required')
-  assert(manager, 'manager is required')
+  const [id, deal, manager] = iface.parseLog(log).args
 
   return {
-    id: Hash256(id),
-    deal: fieldToAddress(deal, chainShortName),
-    manager: fieldToAddress(manager, chainShortName),
+    id: Hash256(id.hash),
+    deal: ChainSpecificAddress.from(chainShortName, deal),
+    manager: ChainSpecificAddress.from(chainShortName, manager),
   }
-}
-
-function fieldToAddress(field: string, chainShortName: string) {
-  const address = `0x${field.slice(2 + 24)}`
-  return ChainSpecificAddress.from(chainShortName, address)
 }
