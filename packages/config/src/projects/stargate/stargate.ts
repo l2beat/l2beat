@@ -87,61 +87,81 @@ export const stargate: Bridge = {
     // from the pool factory: 0x06d538690af257da524f25d0cd52fd85b1c2173e. For Ether pool (SGETH) there is additional Escrow contract
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56'),
+        address: ChainSpecificAddress(
+          'eth:0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56',
+        ),
         sinceTimestamp: UnixTime(1647511732),
         tokens: ['USDC'],
         description: 'USDC Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x38EA452219524Bb87e18dE1C24D3bB59510BD783'),
+        address: ChainSpecificAddress(
+          'eth:0x38EA452219524Bb87e18dE1C24D3bB59510BD783',
+        ),
         sinceTimestamp: UnixTime(1647511732),
         tokens: ['USDT'],
         description: 'USDT Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x692953e758c3669290cb1677180c64183cEe374e'),
+        address: ChainSpecificAddress(
+          'eth:0x692953e758c3669290cb1677180c64183cEe374e',
+        ),
         sinceTimestamp: UnixTime(1656354769),
         tokens: ['USDD'],
         description: 'USDD Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d'),
+        address: ChainSpecificAddress(
+          'eth:0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d',
+        ),
         sinceTimestamp: UnixTime(1668459527),
         tokens: ['DAI'],
         description: 'DAI Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xfA0F307783AC21C39E939ACFF795e27b650F6e68'),
+        address: ChainSpecificAddress(
+          'eth:0xfA0F307783AC21C39E939ACFF795e27b650F6e68',
+        ),
         sinceTimestamp: UnixTime(1668459527),
         tokens: ['FRAX.legacy'],
         description: 'FRAX Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2'),
+        address: ChainSpecificAddress(
+          'eth:0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2',
+        ),
         sinceTimestamp: UnixTime(1668459587),
         tokens: ['LUSD'],
         description: 'LUSD Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xd8772edBF88bBa2667ed011542343b0eDDaCDa47'),
+        address: ChainSpecificAddress(
+          'eth:0xd8772edBF88bBa2667ed011542343b0eDDaCDa47',
+        ),
         sinceTimestamp: UnixTime(1673830559),
         tokens: ['Metis'],
         description: 'METIS Escrow',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d'),
+        address: ChainSpecificAddress(
+          'eth:0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d',
+        ),
         sinceTimestamp: UnixTime(1673830559),
         tokens: ['USDT'],
         description: 'USDT Pool 2',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09'),
+        address: ChainSpecificAddress(
+          'eth:0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09',
+        ),
         sinceTimestamp: UnixTime(1677032255),
         tokens: ['WOO'],
         description: 'WOO Pool',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xA572d137666DCbAdFA47C3fC41F15e90134C618c'),
+        address: ChainSpecificAddress(
+          'eth:0xA572d137666DCbAdFA47C3fC41F15e90134C618c',
+        ),
         sinceTimestamp: UnixTime(1677032255),
         tokens: ['mETH'],
         description: 'mETH Pool',

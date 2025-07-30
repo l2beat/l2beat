@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -52,26 +52,32 @@ export const hyperlane: Bridge = {
       discovery.getEscrowDetails({
         description:
           'Escrow for USDC that is bridged from Ethereum to Eclipse.',
-        address: EthereumAddress('0xe1De9910fe71cC216490AC7FCF019e13a34481D7'),
+        address: ChainSpecificAddress(
+          'eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7',
+        ),
         tokens: ['USDC'],
       }),
       // not on CG
       // discovery.getEscrowDetails({
       //   description:
       //     'Escrow for apxETH that is bridged from Ethereum to Eclipse.',
-      //   address: EthereumAddress('0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c'),
+      //   address: ChainSpecificAddress('eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c'),
       //   tokens: ['apxETH'],
       // }),
       discovery.getEscrowDetails({
         description:
           'Escrow for USDT that is bridged from Ethereum to Eclipse.',
-        address: EthereumAddress('0x647C621CEb36853Ef6A907E397Adf18568E70543'),
+        address: ChainSpecificAddress(
+          'eth:0x647C621CEb36853Ef6A907E397Adf18568E70543',
+        ),
         tokens: ['USDT'],
       }),
       discovery.getEscrowDetails({
         description:
           'Escrow for WBTC that is bridged from Ethereum to Eclipse.',
-        address: EthereumAddress('0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A'),
+        address: ChainSpecificAddress(
+          'eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A',
+        ),
         tokens: ['WBTC'],
       }),
       // not on CG
@@ -84,7 +90,9 @@ export const hyperlane: Bridge = {
       discovery.getEscrowDetails({
         description:
           'Escrow for weETHs that is bridged from Ethereum to Eclipse.',
-        address: EthereumAddress('0xef899e92DA472E014bE795Ecce948308958E25A2'),
+        address: ChainSpecificAddress(
+          'eth:0xef899e92DA472E014bE795Ecce948308958E25A2',
+        ),
         tokens: ['weETHs'],
       }),
     ],

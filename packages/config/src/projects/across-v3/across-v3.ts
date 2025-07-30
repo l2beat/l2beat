@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -52,12 +53,16 @@ export const acrossV3: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda'),
+        address: ChainSpecificAddress(
+          'eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda',
+        ),
         sinceTimestamp: UnixTime(1653124620),
         tokens: '*',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5'),
+        address: ChainSpecificAddress(
+          'eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5',
+        ),
         sinceTimestamp: UnixTime(1682355155),
         tokens: '*',
       }),

@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -59,7 +63,9 @@ export const superposition: ScalingProject = orbitStackL3({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x62bEd4b862254789825Cd6F2352aa2b76B16145e'), // standardGW
+      address: ChainSpecificAddress(
+        'arb1:0x62bEd4b862254789825Cd6F2352aa2b76B16145e',
+      ), // standardGW
       tokens: '*',
     }),
   ],

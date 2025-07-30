@@ -491,9 +491,7 @@ function orbitStackCommon(
           [
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(
-                templateVars.bridge.address,
-              ),
+              address: templateVars.bridge.address,
               tokens: trackedGasTokens ?? ['ETH'],
               description: trackedGasTokens
                 ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`

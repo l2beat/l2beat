@@ -311,9 +311,7 @@ function opStackCommon(
         migratedToLockbox(templateVars)
           ? templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(
-                templateVars.discovery.getContract('ETHLockbox').address,
-              ),
+              address: templateVars.discovery.getContract('ETHLockbox').address,
               tokens: optimismPortalTokens,
               premintedTokens: templateVars.optimismPortalPremintedTokens,
               description: `Main escrow for users depositing ${optimismPortalTokens.join(
@@ -323,7 +321,7 @@ function opStackCommon(
             })
           : templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(portal.address),
+              address: portal.address,
               tokens: optimismPortalTokens,
               premintedTokens: templateVars.optimismPortalPremintedTokens,
               description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -333,7 +331,7 @@ function opStackCommon(
             }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
+          address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -704,7 +702,7 @@ In the tree of proposed state roots, each parent node can have multiple children
 2. the proposal is proven correct with a full validity proof (invalidates all conflicting proposals)
 3. a conflicting sibling proposal is proven faulty
 
-Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transfered to an address chosen by the prover who caused the slashing.
+Proving any of the ${proposalOutputCount} intermediate state commitments in a proposal faulty invalidates the entire proposal. Proving a proposal valid invalidates all conflicting siblings. Pruning of a tournament's children happens strictly chronologically, which guarantees that the first faulty proposal of a given proposer is always pruned first. When pruned, an invalid proposal leads to the elimination of its proposer, which invalidates all their subsequent proposals, slashes their bond, and disallows future proposals by the same address. A slashed bond is transferred to an address chosen by the prover who caused the slashing.
 
 A single remaining child in a tournament can be 'resolved' and will be finalized and usable for withdrawals after an execution delay of ${formatSeconds(disputeGameFinalityDelaySeconds)} (time for the Guardian to manually blacklist malicious state roots).`,
             references: [

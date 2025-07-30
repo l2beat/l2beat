@@ -1,5 +1,5 @@
 import {
-  EthereumAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -101,7 +101,9 @@ export const reddioex: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xB62BcD40A24985f560b5a9745d478791d8F1945C'),
+        address: ChainSpecificAddress(
+          'eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C',
+        ),
         tokens: ['ETH', 'USDC', 'USDT'],
         description: 'Main StarkEx contract, used also as an escrow.',
       }),
