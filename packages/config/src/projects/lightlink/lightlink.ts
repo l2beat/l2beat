@@ -194,9 +194,7 @@ export const lightlink: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [...discovery.getDiscoveredContracts()],
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
   permissions: {

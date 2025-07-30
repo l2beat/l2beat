@@ -336,9 +336,7 @@ export const metis: ScalingProject = {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [

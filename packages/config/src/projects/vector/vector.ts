@@ -83,9 +83,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
     },
   },
   contracts: {
-    addresses: {
-      ethereum: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [
       {
         category: 'Funds can be lost if',

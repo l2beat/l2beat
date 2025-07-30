@@ -1020,7 +1020,7 @@ export class ProjectDiscovery {
     return result
   }
 
-  getDiscoveredContracts(): ProjectContract[] {
+  getDiscoveredContracts(): Record<string, ProjectContract[]> {
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
@@ -1051,7 +1051,7 @@ export class ProjectDiscovery {
       }
     })
 
-    return result
+    return { [this.chain]: result }
   }
 }
 

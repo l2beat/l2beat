@@ -140,9 +140,7 @@ export const shibarium: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {

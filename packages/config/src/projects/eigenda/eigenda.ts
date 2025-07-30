@@ -339,9 +339,7 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
     },
   },
   contracts: {
-    addresses: {
-      ethereum: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [
       {
         category: 'Funds can be lost if',
