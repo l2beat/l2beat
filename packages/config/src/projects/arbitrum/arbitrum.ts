@@ -136,6 +136,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://discord.gg/Arbitrum',
         'https://youtube.com/@Arbitrum',
         'https://t.me/arbitrum',
+        'https://forum.arbitrum.foundation',
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
