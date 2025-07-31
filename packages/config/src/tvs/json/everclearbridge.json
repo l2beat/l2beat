@@ -145,7 +145,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -222,7 +229,7 @@
         "escrowAddress": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
         "decimals": 6,
         "sinceTimestamp": 1726461429,
-        "untilTimestamp": 1748466000
+        "untilTimestamp": 1748325600
       },
       "valueForSummary": {
         "type": "value",
@@ -231,7 +238,7 @@
           "value": "0",
           "decimals": 0,
           "sinceTimestamp": 1726461429,
-          "untilTimestamp": 1748466000
+          "untilTimestamp": 1748325600
         },
         "priceId": "bridged-usdt"
       },

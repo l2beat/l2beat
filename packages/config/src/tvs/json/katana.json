@@ -172,7 +172,8 @@
         "address": "0x4DA795EDcd1bb95d6Cc8FD2CC01E57E211510f8f",
         "chain": "katana",
         "decimals": 18,
-        "sinceTimestamp": 1746742811
+        "sinceTimestamp": 1746742811,
+        "untilTimestamp": 1753794000
       }
     },
     {

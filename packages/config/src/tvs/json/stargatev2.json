@@ -143,58 +143,16 @@
       "name": "mETH",
       "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-            "chain": "ethereum",
-            "escrowAddress": "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
-            "decimals": 18,
-            "sinceTimestamp": 1716837323
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
-            "chain": "mantle",
-            "escrowAddress": "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1",
-            "decimals": 18,
-            "sinceTimestamp": 1716837026
-          }
-        ]
+        "type": "balanceOfEscrow",
+        "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+        "chain": "ethereum",
+        "escrowAddress": "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
+        "decimals": 18,
+        "sinceTimestamp": 1716837323
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false,
-      "valueForSummary": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "mantle-staked-ether",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-              "chain": "ethereum",
-              "escrowAddress": "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
-              "decimals": 18,
-              "sinceTimestamp": 1716837323
-            }
-          },
-          {
-            "type": "value",
-            "amount": {
-              "type": "const",
-              "value": "0",
-              "decimals": 0,
-              "sinceTimestamp": 1716837026
-            },
-            "priceId": "mantle-staked-ether"
-          }
-        ]
-      }
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -217,7 +175,7 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDC-1",
+      "id": "stargatev2-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -332,35 +290,6 @@
     },
     {
       "mode": "auto",
-      "id": "stargatev2-USDC-2",
-      "priceId": "mantle-bridged-usdc-mantle",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35296/large/USDC_Icon.png?1708082083",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
-        "chain": "mantle",
-        "escrowAddress": "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC",
-        "decimals": 6,
-        "sinceTimestamp": 1716837036
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716837036
-        },
-        "priceId": "mantle-bridged-usdc-mantle"
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "stargatev2-USDT-1",
       "priceId": "tether",
       "symbol": "USDT",
@@ -446,64 +375,6 @@
         "priceId": "bridged-usdt"
       },
       "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "stargatev2-USDT-3",
-      "priceId": "mantle-bridged-usdt-mantle",
-      "symbol": "USDT",
-      "name": "Tether USD",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/35069/large/logo.png?1707291114",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
-        "chain": "mantle",
-        "escrowAddress": "0xB715B85682B731dB9D5063187C450095c91C57FC",
-        "decimals": 6,
-        "sinceTimestamp": 1716837046
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716837046
-        },
-        "priceId": "mantle-bridged-usdt-mantle"
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "stargatev2-WETH",
-      "priceId": "wrapped-ether-mantle-bridge",
-      "symbol": "WETH",
-      "name": "Ether",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31013/large/wrapped-eth-mantle-bridge.png?1696529850",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-        "chain": "mantle",
-        "escrowAddress": "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463",
-        "decimals": 18,
-        "sinceTimestamp": 1716837014
-      },
-      "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1716837014
-        },
-        "priceId": "wrapped-ether-mantle-bridge"
-      },
-      "category": "ether",
       "source": "canonical",
       "isAssociated": false
     }
