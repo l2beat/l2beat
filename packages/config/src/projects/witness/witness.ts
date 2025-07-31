@@ -31,7 +31,7 @@ export const witness: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   archivedAt: UnixTime(1738022400), // 2025-01-28T00:00:00.000Z,
   discovery,
-  additionalBadges: [BADGES.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
     layer: DA_LAYERS.DAC,
