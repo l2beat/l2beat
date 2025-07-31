@@ -5,7 +5,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('deri', 'arbitrum')
+const discovery = new ProjectDiscovery('deri')
 
 export const deri = orbitStackL3({
   addedAt: UnixTime(1701958025), // 2023-12-07T14:07:05Z

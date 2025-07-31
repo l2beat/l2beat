@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('game7', 'arbitrum')
+const discovery = new ProjectDiscovery('game7')
 
 const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 

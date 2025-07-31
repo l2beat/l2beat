@@ -23,8 +23,7 @@ import {
 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('nova')
-const l2Discovery = new ProjectDiscovery('nova', 'nova')
-const discovery_arbitrum = new ProjectDiscovery('arbitrum', 'arbitrum') // needed for governance section
+const discovery_arbitrum = new ProjectDiscovery('arbitrum') // needed for governance section
 
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 const validatorAfkBlocks = discovery.getContractValue<number>(
@@ -183,9 +182,6 @@ export const nova: ScalingProject = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  additionalDiscoveries: {
-    nova: l2Discovery,
-  },
   nonTemplateRiskView: {
     exitWindow: RISK_VIEW.EXIT_WINDOW_NITRO(
       l2TimelockDelay,

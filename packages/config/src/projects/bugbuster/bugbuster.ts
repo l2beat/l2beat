@@ -17,7 +17,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('bugbuster', 'optimism')
+const discovery = new ProjectDiscovery('bugbuster')
 
 export const bugbuster: ScalingProject = {
   type: 'layer3',

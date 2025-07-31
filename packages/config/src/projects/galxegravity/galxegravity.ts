@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('galxegravity', 'ethereum')
+const discovery = new ProjectDiscovery('galxegravity')
 
 export const galxegravity: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719415787), // 2024-06-26T15:29:47Z

@@ -10,7 +10,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "zkLink",
+      "name": "ScrollzkLink",
       "address": "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
@@ -76,7 +76,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1ERC20Bridge",
+      "name": "ScrollL1ERC20Bridge",
       "address": "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
       "type": "Contract",
       "sourceHashes": [
@@ -492,5 +492,5 @@
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": { "scroll": 17695863 },
-  "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
+  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x162f3143581361e2b38c04b9ac8524c5a5fc3514
+
+# Diff at Thu, 31 Jul 2025 10:58:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumL1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585) {
+    +++ description: None
+      name:
+-        "L1ERC20Bridge"
++        "ArbitrumL1ERC20Bridge"
+    }
+```
+
+```diff
+    contract ArbitrumzkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A) {
+    +++ description: None
+      name:
+-        "zkLink"
++        "ArbitrumzkLink"
+    }
+```
+
 Generated with discovered.json: 0x78b7fa04c42b1767bb6c5a6f60f341f844ab7af6
 
 # Diff at Mon, 14 Jul 2025 12:47:20 GMT:
