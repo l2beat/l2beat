@@ -1,7 +1,7 @@
 {
   "name": "wonder",
   "chain": "ethereum",
-  "timestamp": 1751872259,
+  "timestamp": 1753944481,
   "configHash": "0x1a8ab712656bacdba403e0a447b614f099927aa26a647771149c786f93b94187",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -498,12 +498,12 @@
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 1545,
-        "getTotalBatchesExecuted": 1542,
-        "getTotalBatchesVerified": 1545,
-        "getTotalBlocksCommitted": 1545,
-        "getTotalBlocksExecuted": 1542,
-        "getTotalBlocksVerified": 1545,
+        "getTotalBatchesCommitted": 2085,
+        "getTotalBatchesExecuted": 2082,
+        "getTotalBatchesVerified": 2085,
+        "getTotalBlocksCommitted": 2085,
+        "getTotalBlocksExecuted": 2082,
+        "getTotalBlocksVerified": 2085,
         "getTotalPriorityTxs": 24,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
@@ -1045,13 +1045,13 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
+    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
     "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22865742 },
+  "usedBlockNumbers": { "ethereum": 23037397 },
   "permissionsConfigHash": "0x593ff248811aad3469764c7f7eeb1130e2c2d2019176fb02e55e778041110a33"
 }

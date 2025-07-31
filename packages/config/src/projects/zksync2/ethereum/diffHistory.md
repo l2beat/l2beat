@@ -1,14 +1,16 @@
-Generated with discovered.json: 0x9ab1c1fb62d8e60b99fb311bb854dd9bdfd80106
+Generated with discovered.json: 0xff8c6d361198316f72a316fdf7c70aaef7eef16f
 
-# Diff at Wed, 30 Jul 2025 12:46:17 GMT:
+# Diff at Thu, 31 Jul 2025 06:38:25 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1750835963
-- current timestamp: 1753879572
+- current timestamp: 1753943901
 
 ## Description
 
 zksync era migrates to the gateway for settlement.
+
+permissions and upgrades remain the same. tracked transactions are now updated to track the Gateway liveness on ethereum, which is at best an approximation of ZKsync Era and needs to be changed as soon as other chains migrate. for full liveness and preconf liveness we would need tracked transactions on the gateway.
 
 ## Watched changes
 

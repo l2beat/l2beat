@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x714b65dcabf894dcb57bf816c5c8ce3da271ab3e
+Generated with discovered.json: 0xd6794ce4ee785252ea930ad13635d97a3abd26a7
 
-# Diff at Wed, 30 Jul 2025 08:27:55 GMT:
+# Diff at Thu, 31 Jul 2025 06:41:22 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current timestamp: 1753850889
+- current timestamp: 1753944073
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Initial gateway L2 disco. Era fully uses L1 governance via l2 aliases.
 
 ## Initial discovery
 

@@ -7,10 +7,7 @@
     "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
 
     "zksync:0x76705327e682F2d96943280D99464Ab61219e34f",
-    "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89",
     "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-    "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb",
-    "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
   ],
   "names": {
     "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": "EraChainAdminProxy",
@@ -28,11 +25,6 @@
     "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": "ProtocolUpgradeHandler_l2Alias",
     "zksync:0x711ea620AB29f41AbC6596a15981e14ce58C97c9": "Guardians_l2Alias",
     "zksync:0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D": "ZKFoundationMultisig_l2Alias",
-    "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": "ProtocolTimelockController_deprecated",
-    "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor_deprecated",
-    "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": "GovOpsTimelockController_deprecated",
-    "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor_deprecated",
-    "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": "TokenTimelockController_deprecated",
     "zksync:0xe788e09324F8bb3cc64f009973693f751C33b999": "Guardians_l2Alias_deprecated",
     "zksync:0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8": "ProtocolUpgradeHandler_l2Alias_deprecated"
   },
@@ -73,11 +65,6 @@
     "eth:0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0": { "category": "spam" },
     "eth:0xCe7a3dFcc35602155809920Ff65e093aa726f6cf": { "category": "spam" },
 
-    "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8": { "category": "spam" },
-    "zksync:0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": { "category": "spam" },
-    "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19": { "category": "spam" },
-    "zksync:0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": { "category": "spam" },
-    "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6": { "category": "spam" },
     "zksync:0x76705327e682F2d96943280D99464Ab61219e34f": {
       "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least {{proposalThreshold_MTokens}}M ZK tokens are necessary to start a proposal and a {{currentQuorum_MTokens}}M quorum of voted tokens must be met to succeed."
     },

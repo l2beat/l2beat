@@ -1,4 +1,45 @@
-Generated with discovered.json: 0xb3a9b1f7871727dcd32d8fa65577ba180373643b
+Generated with discovered.json: 0x4b9e19932a5bec43ced845066d92427b1b1132fa
+
+# Diff at Thu, 31 Jul 2025 06:49:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1753346675
+- current timestamp: 1753944518
+
+## Description
+
+Era migrates to the Gateway! permissions stay the same and diagrams remain correct.
+
+config: renamed EraAdminProxy to EraChainAdminProxy to be consistent with the text and diagram.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations.0:
++        {"chainId":324,"assetId":"0x4322964cbd328346d5f59803d2974742a54a69e59fd8b8d4ca5c64773646bf7a","settlementLayerChainId":9075}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753346675 (main branch discovery), not current.
+
+```diff
+    contract EraChainAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      name:
+-        "EraAdminProxy"
++        "EraChainAdminProxy"
+    }
+```
+
+Generated with discovered.json: 0x1c13d236967dbeac2044df69780c308c7df5fbb6
 
 # Diff at Thu, 24 Jul 2025 08:45:45 GMT:
 

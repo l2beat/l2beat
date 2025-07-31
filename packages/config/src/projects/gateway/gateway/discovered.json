@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "chain": "gateway",
-  "timestamp": 1753850889,
+  "timestamp": 1753944073,
   "configHash": "0x6422933550e2b7efbd24b4ceec911e128308acc0baa51a26db6598c6b20d57cb",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -124,7 +124,7 @@
         "$immutable": true,
         "BRIDGE_HUB": "gateway:0x0000000000000000000000000000000000010002",
         "chainCount": 2,
-        "getAggregatedRoot": "0xa2ae0d4fa77e1fdf6fb993b28283265db738f8b4ac7a6638fbca8c2002eae390",
+        "getAggregatedRoot": "0x1efdc979c76a9e2208d0c0e633ddc43a7a675bbf6051a0e20fbc58aa8a716444",
         "getChainRoot": [],
         "sharedTree": { "_height": 1, "_leafNumber": 2 }
       },
@@ -585,7 +585,7 @@
           "gateway:0x595b8C88B9e5f3a4c596C3e81BE6e11D53Bb9200",
           "gateway:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 3278700,
+        "getFirstUnprocessedPriorityTx": 3278738,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -593,21 +593,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "gateway:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
-        "getPriorityTreeRoot": "0x7899c6a30fcf6f9086a2ef873358b884567d0083e5f41f616de4f5d13c2bfb80",
+        "getPriorityQueueSize": 14,
+        "getPriorityTreeRoot": "0x8739eb0921fae98b13cf44b34e032c3cbd8fb6728c37238682d11ae619ef6b34",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "gateway:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 501307,
-        "getTotalBatchesExecuted": 501306,
-        "getTotalBatchesVerified": 501307,
-        "getTotalBlocksCommitted": 501307,
-        "getTotalBlocksExecuted": 501306,
-        "getTotalBlocksVerified": 501307,
-        "getTotalPriorityTxs": 3278707,
+        "getTotalBatchesCommitted": 501335,
+        "getTotalBatchesExecuted": 501326,
+        "getTotalBatchesVerified": 501326,
+        "getTotalBlocksCommitted": 501335,
+        "getTotalBlocksExecuted": 501326,
+        "getTotalBlocksVerified": 501326,
+        "getTotalPriorityTxs": 3278752,
         "getTransactionFilterer": "gateway:0x0000000000000000000000000000000000000000",
         "getVerifier": "gateway:0xA7F2EDAcDcc54a9c711639eEe9d0b27C96F0F3B6",
         "getVerifierParams": {
@@ -1432,6 +1432,6 @@
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "gateway": 14855 },
+  "usedBlockNumbers": { "gateway": 15608 },
   "permissionsConfigHash": "0xc34cf1da9bc1977918bc23da4cd811fc3237b0d89c44fc291158f980fda082cb"
 }
