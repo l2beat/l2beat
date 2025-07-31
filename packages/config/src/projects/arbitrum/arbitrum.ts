@@ -112,7 +112,11 @@ export const arbitrum: ScalingProject = orbitStackL2({
     description:
       'Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.',
     links: {
-      websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
+      websites: [
+        'https://arbitrum.io/',
+        'https://arbitrum.foundation/',
+        'https://forum.arbitrum.foundation/',
+      ],
       bridges: ['https://bridge.arbitrum.io'],
       documentation: [
         'https://docs.arbitrum.io',
@@ -122,14 +126,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://arbiscan.io',
         'https://explorer.arbitrum.io/',
         'https://arbitrum.blockscout.com/',
-        'https://arbitrum.l2scan.co/',
       ],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
-        'https://github.com/OffchainLabs/arbitrum',
         'https://github.com/OffchainLabs/nitro',
-        'https://github.com/OffchainLabs/arb-os',
+        'https://github.com/OffchainLabs/nitro-contracts',
       ],
       socialMedia: [
         'https://twitter.com/arbitrum',
