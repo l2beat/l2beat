@@ -36,15 +36,19 @@ export class Decoder {
       for (const transaction of block.transactions) {
         assert(transaction.hash)
         for (const log of logsByTx[transaction.hash] ?? []) {
-          const decoded = decoder(chain, {
-            log: logToViemLog(log),
-            transactionHash: transaction.hash,
-            blockNumber: block.number,
-            blockTimestamp: block.timestamp,
-            transactionLogs: (logsByTx[transaction.hash] ?? []).map(
-              logToViemLog,
-            ),
-          })
+          const decoded = await decoder(
+            chain,
+            {
+              log: logToViemLog(log),
+              transactionHash: transaction.hash,
+              blockNumber: block.number,
+              blockTimestamp: block.timestamp,
+              transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+                logToViemLog,
+              ),
+            },
+            chain.rpc,
+          )
           if (decoded?.type === 'message') {
             messages.push(decoded)
             this.logger.info(
