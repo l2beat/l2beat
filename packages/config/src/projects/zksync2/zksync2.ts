@@ -14,38 +14,6 @@ import { zkStackL2 } from '../../templates/zkStack'
 const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
-const validatorsVTLold = () => {
-  // get validators added in the constructor args
-  const constructorArgsValis = discovery.getContractValue<{
-    _validators: string[]
-  }>('ValidatorTimelock3', 'constructorArgs')
-  // add the validators from events
-  const allValis = discovery
-    .getContractValue<string[]>('ValidatorTimelock3', 'validatorsVTLold')
-    .concat(constructorArgsValis._validators)
-  // dedup
-  return [...new Set(allValis)]
-}
-
-const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
-// Extract addresses from new validators and convert to lowercase for comparison
-const newValidatorAddresses = validatorsVTLnew.map((v) =>
-  v.address.toLowerCase(),
-)
-const oldValidators = validatorsVTLold()
-
-// Check if all old validators exist in new validators array
-const missingValidators = oldValidators.filter(
-  (oldValidator) => !newValidatorAddresses.includes(oldValidator.toLowerCase()),
-)
-
-assert(
-  missingValidators.length === 0,
-  `Some validators from old timelock are missing in new timelock: ${missingValidators.join(
-    ', ',
-  )}`,
-)
-
 const chainId = 324
 
 export const zksync2: ScalingProject = zkStackL2({

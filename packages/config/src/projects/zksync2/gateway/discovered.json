@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "gateway",
   "timestamp": 1753952494,
-  "configHash": "0x4dc826198bde24a4f15f66d9009db7facdbdd4c7e633131ce0695612c84f9f3e",
+  "configHash": "0xc4563a869cd76eb60dc26274f89a5a63b19fd12a31af52d7252f838599d38d54",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -1473,5 +1473,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "gateway": 15675 },
-  "permissionsConfigHash": "0x836dbd376120c9d761a28b11021db9910679f9fb46bff9c130651e9822b3be52"
+  "permissionsConfigHash": "0x9dd147919252bbd663e008c797d412e0a648017c1767eec66cc62d012b3b4100"
 }

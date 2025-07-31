@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4ddbfdc19eb7af3eeaf6d176911cb70920d2c336
+Generated with discovered.json: 0x5e52001897b583aa87904e31047a1c7fa4a03f46
 
-# Diff at Thu, 31 Jul 2025 09:13:19 GMT:
+# Diff at Thu, 31 Jul 2025 09:27:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1750835963
@@ -30,41 +30,38 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1750835963 (main branch discovery), not current.
 
 ```diff
-    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"validateZkStack","from":"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","role":".validatorsVTL"}]
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+```
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      template:
+-        "shared-zk-stack/Diamond"
++        "shared-zk-stack/Diamond_NotSettlementLayer"
+      values.validators:
+-        ["eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD","eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
     }
 ```
 
 ```diff
-    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"validateZkStack","from":"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","role":".validatorsVTL"}]
-    }
-```
-
-```diff
-    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+-   Status: DELETED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-      values.validatorsVTL:
--        ["eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
-      category.name:
--        "Spam"
-+        "Shared Infrastructure"
-      category.priority:
--        -1
-+        4
-    }
 ```
 
 ```diff
-    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+-   Status: DELETED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-      values.validatorsVTL:
--        ["eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2","eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD"]
-    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
 ```
 
 Generated with discovered.json: 0x148f60fdf4e2c216eb4b02de6e6f5002798224ad
