@@ -82,6 +82,7 @@ export const facet: ScalingProject = {
     slug: 'facet',
     description:
       'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
+    warning: 'External value warning',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
