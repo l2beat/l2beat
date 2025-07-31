@@ -4,7 +4,6 @@ import {
   decodeEventLog,
   encodeEventTopics,
   encodeFunctionData,
-  type Hex,
   parseAbi,
 } from 'viem'
 import type { Chain } from '../../chains'
@@ -216,6 +215,6 @@ async function getTokenWrappedAddress(
     blockNumber,
   )
 
-  const token = extractAddressFromPadded(tokenWrappedAddress.toString() as Hex)
+  const token = extractAddressFromPadded(tokenWrappedAddress.toString())
   return token
 }

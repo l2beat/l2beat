@@ -7,7 +7,6 @@ import type { Message } from '../../types/Message'
 
 export const STARGATE = {
   name: 'stargate',
-  messagingLayer: 'layerzerov2',
   decoder: decoder,
 }
 
@@ -62,8 +61,8 @@ function decoder(
         matchingId: data.args.guid,
         amount: data.args.amountSentLD,
         token: network.usdc,
-        messageProtocol: 'layerzerov2',
-        messageId: data.args.guid,
+        // messageProtocol: 'layerzerov2',
+        // messageId: data.args.guid,
       }
     }
   }
@@ -103,8 +102,8 @@ function decoder(
         matchingId: data.args.guid,
         amount: data.args.amountReceivedLD,
         token: network.usdc,
-        messageProtocol: 'layerzerov2',
-        messageId: data.args.guid,
+        // messageProtocol: 'layerzerov2',
+        // messageId: data.args.guid,
       }
     }
   }
