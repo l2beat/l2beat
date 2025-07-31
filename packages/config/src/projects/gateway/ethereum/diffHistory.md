@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x53e8d9e05596e17f89fbc30a042ff99ebe6027c0
+Generated with discovered.json: 0x857fcd32ab3681b55a1725a9174a9ace0befcfe9
 
-# Diff at Thu, 31 Jul 2025 15:00:33 GMT:
+# Diff at Thu, 31 Jul 2025 15:03:08 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1751365391
@@ -40,7 +40,7 @@ discovery. Values are for block 1751365391 (main branch discovery), not current.
     EOA  (0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE) {
     +++ description: None
       receivedPermissions.0.description:
-+        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators."
++        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators."
       receivedPermissions.0.permission:
 -        "validateZkStack"
 +        "interact"
@@ -51,7 +51,7 @@ discovery. Values are for block 1751365391 (main branch discovery), not current.
     EOA  (0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF) {
     +++ description: None
       receivedPermissions.0.description:
-+        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators."
++        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators."
       receivedPermissions.0.permission:
 -        "validateZkStack"
 +        "interact"

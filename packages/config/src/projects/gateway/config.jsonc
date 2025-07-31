@@ -32,7 +32,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators."
+              "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators."
             }
           ]
         }

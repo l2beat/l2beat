@@ -480,7 +480,7 @@
         {
           "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators.",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
           "role": ".validatorsVTL"
         }
       ]
@@ -493,7 +493,7 @@
         {
           "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators.",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators.",
           "role": ".validatorsVTL"
         }
       ]
@@ -985,5 +985,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23039725 },
-  "permissionsConfigHash": "0xa510f4d696154e42c32d0423cd9d6edf97318fc4c666552b84faba49a2c36c64"
+  "permissionsConfigHash": "0x851fd32130b5627e8a3128e6b9fb12041163446a2699a058346d1ac2774c5c08"
 }
