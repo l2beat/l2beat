@@ -242,6 +242,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
   const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
+
+  const settlesOnGateway =
+    templateVars.discovery.getContractValue<string>(
+      templateVars.diamondContract.name ?? 'ZKsync',
+      'getSettlementLayer',
+    ) === 'eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -267,7 +273,9 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       architectureImage:
         templateVars.daProvider !== undefined
           ? 'zkstack-validium'
-          : 'zkstack-rollup',
+          : settlesOnGateway
+            ? 'zkstack-rollup-gateway'
+            : 'zkstack-rollup',
       category: templateVars.reasonsForBeingOther
         ? 'Other'
         : daProvider !== undefined

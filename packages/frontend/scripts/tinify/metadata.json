@@ -583,7 +583,7 @@
   "static/images/upgrades-and-governance/op-mainnet.png": "935496940921504f97d91c58d0ec254b",
   "static/images/upgrades-and-governance/polygoncdk.png": "8c469024d5e1743f1314cad1f002f1a0",
   "static/images/upgrades-and-governance/starknet.png": "2ea37924f7ca891850fec13e659df928",
-  "static/images/upgrades-and-governance/zkstack.png": "2aea2034257305cdd29cf9a2a7005238",
+  "static/images/upgrades-and-governance/zkstack.png": "aed64289b5ecd66b796bc1c67272cbd5",
   "static/images/zk-catalog/semaphore-verification.png": "9e88ea75a615a45fe2ca64ee9a99e715",
   "static/images/zk-catalog/smtb-verification.png": "b7b9895004f19dff412647ec0626ceac",
   "static/logo.png": "33e2f7c80f1d33bc327620a4f2964161",
@@ -1421,5 +1421,6 @@
   "static/meta-images/scaling/projects/sischain/opengraph-image.png": "a99897033971d1259f2213fea507b95f",
   "static/icons/ethereal.png": "221d9fab1ae060ff4f6d736b532738a6",
   "static/meta-images/scaling/projects/ethereal/opengraph-image.png": "72df626106a7b5f9bbf173b7188bd9e6",
-  "static/icons/sischain.png": "d254c7a8ec519a841247e9a54d1a9879"
+  "static/icons/sischain.png": "d254c7a8ec519a841247e9a54d1a9879",
+  "static/images/architecture/zkstack-rollup-gateway.png": "88b79fd17668daf35fea3da194ba44a9"
 }
