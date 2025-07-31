@@ -133,7 +133,7 @@ export const hop: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('USDC Bridge'),
         discovery.getContractDetails('DAI Bridge'),
         discovery.getContractDetails('USDT Bridge'),
@@ -147,7 +147,7 @@ export const hop: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'Hop Multisig',

@@ -301,7 +301,7 @@ export const dydx: ScalingProject = {
   ),
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('StarkPerpetual', {
           description:
             'Main contract of dYdX exchange. Updates dYdX state and verifies its integrity using STARK Verifier. Allows users to deposit and withdraw tokens via normal and emergency modes.',
@@ -383,7 +383,7 @@ export const dydx: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         // TODO: detailed breakdown of permissions
         discovery.getPermissionDetails(

@@ -51,7 +51,7 @@ export const hychain: ScalingProject = orbitStackL2({
     ],
     gasTokens: ['TOPIA'],
   },
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

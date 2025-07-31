@@ -38,14 +38,14 @@ export function getPreview(
   const meta = getMeta(discoveries)
   projectChains.forEach((chain) => {
     const processor = new ProjectDiscovery(projectId, chain)
-    permissionsPerChain.push({
-      chain,
-      permissions: processor.getDiscoveredPermissions(),
-    })
-    contractsPerChain.push({
-      chain,
-      contracts: processor.getDiscoveredContracts(),
-    })
+    const wholePermissions = processor.getDiscoveredPermissions()
+    const wholeContracts = processor.getDiscoveredContracts()
+    for (const [chain, permissions] of Object.entries(wholePermissions)) {
+      permissionsPerChain.push({ chain, permissions })
+    }
+    for (const [chain, contracts] of Object.entries(wholeContracts)) {
+      contractsPerChain.push({ chain, contracts })
+    }
   })
 
   return {

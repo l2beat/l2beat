@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('donatuz', 'base')
 export const donatuz: ScalingProject = opStackL3({
   addedAt: UnixTime(1726497628), // 2024-09-16T14:40:28Z
   archivedAt: UnixTime(1751896254), // 2025-07-07T13:50:54Z
+  hostChain: 'base',
   discovery,
   daProvider: EIGENDA_DA_PROVIDER,
   additionalBadges: [

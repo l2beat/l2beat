@@ -18,6 +18,7 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
 import uniq from 'lodash/uniq'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -53,7 +54,7 @@ export class ProjectDiscovery {
 
   constructor(
     public readonly projectName: string,
-    public readonly chain: string = 'ethereum',
+    chain = 'ethereum',
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
@@ -75,8 +76,14 @@ export class ProjectDiscovery {
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
-  get timestamp(): number {
-    return this.discoveries.reduce((min, d) => Math.max(min, d.timestamp), 0)
+  get timestampPerChain(): Record<string, number> {
+    const grouped = groupBy(this.discoveries, (d) => d.chain)
+    return Object.fromEntries(
+      Object.entries(grouped).map(([chain, discovery]) => [
+        chain,
+        Math.max(...discovery.map((d) => d.timestamp)),
+      ]),
+    )
   }
 
   getName(address: ChainSpecificAddress): string {
@@ -868,7 +875,7 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): ProjectPermissions {
+  getDiscoveredPermissions(): Record<string, ProjectPermissions> {
     const permissionedContracts = this.permissionRegistry
       .getPermissionedContracts()
       .map((address) => this.getContractByAddress(address))
@@ -984,10 +991,29 @@ export class ProjectDiscovery {
       )
     })
 
-    return {
-      roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
-      actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
-    }
+    const rolesGrouped = groupBy(
+      roles.map((p) => ({ ...p, discoveryDrivenData: true })),
+      (p) => p.chain,
+    )
+    const actorsGrouped = groupBy(
+      actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+      (p) => p.chain,
+    )
+
+    const allChains = new Set([
+      ...Object.keys(rolesGrouped),
+      ...Object.keys(actorsGrouped),
+    ])
+
+    return Object.fromEntries(
+      Array.from(allChains).map((chain) => [
+        chain,
+        {
+          roles: rolesGrouped[chain] || [],
+          actors: actorsGrouped[chain] || [],
+        },
+      ]),
+    )
   }
 
   linkupActorsIntoAccounts(
@@ -1020,7 +1046,7 @@ export class ProjectDiscovery {
     return result
   }
 
-  getDiscoveredContracts(): ProjectContract[] {
+  getDiscoveredContracts(): Record<string, ProjectContract[]> {
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
@@ -1051,7 +1077,7 @@ export class ProjectDiscovery {
       }
     })
 
-    return result
+    return groupBy(result, (contract) => contract.chain)
   }
 }
 

@@ -333,7 +333,7 @@ To receive the original locked token back, a user would have to return to the ma
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'EndpointV2',
           'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
@@ -371,7 +371,7 @@ To receive the original locked token back, a user would have to return to the ma
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'LayerZero Multisig',

@@ -149,7 +149,7 @@ export const reddioex: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('StarkExchange'),
         discovery.getContractDetails(
           'DACommittee',
@@ -165,7 +165,7 @@ export const reddioex: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Governor',

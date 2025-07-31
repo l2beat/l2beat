@@ -67,5 +67,5 @@ export const alephzero: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

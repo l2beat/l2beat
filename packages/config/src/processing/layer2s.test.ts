@@ -1,4 +1,3 @@
-import { getChainShortName } from '@l2beat/discovery'
 import {
   assert,
   assertUnreachable,
@@ -96,10 +95,7 @@ describe('layer2s', () => {
               // try to resolve escrow by address
               // if it does not exist the assert will throw
               discovery.getContractByAddress(
-                ChainSpecificAddress.from(
-                  getChainShortName(discovery.chain),
-                  escrow.address,
-                ),
+                ChainSpecificAddress.from('eth', escrow.address),
               )
             })
           }
@@ -255,10 +251,7 @@ describe('layer2s', () => {
             const discovery = new ProjectDiscovery(project.id.toString())
             addresses.forEach((a) => {
               discovery.getContractByAddress(
-                ChainSpecificAddress.from(
-                  getChainShortName(discovery.chain),
-                  a,
-                ),
+                ChainSpecificAddress.from('eth', a),
               )
             })
           }

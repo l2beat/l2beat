@@ -9,6 +9,7 @@ const discovery = new ProjectDiscovery('winr', 'arbitrum')
 
 export const winr: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1734307200), // 2024-12-16T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],

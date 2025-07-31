@@ -110,7 +110,7 @@ export const nomad: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('HomeBeaconProxy', {
           description:
             'Optics Home. This contract is used to send x-chain messages, such as deposit requests. Messages are regularly signed by the Updater.',
@@ -143,7 +143,7 @@ export const nomad: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'Governor',

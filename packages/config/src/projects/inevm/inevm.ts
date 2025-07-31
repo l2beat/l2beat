@@ -67,11 +67,12 @@ export const inevm: ScalingProject = orbitStackL3({
     ],
     gasTokens: ['INJ'],
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

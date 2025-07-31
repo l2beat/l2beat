@@ -127,7 +127,7 @@ export const chainport: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'Vault6',
           'Escrow controlled by the Chainport Congress.',
@@ -145,7 +145,7 @@ export const chainport: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Congress members',

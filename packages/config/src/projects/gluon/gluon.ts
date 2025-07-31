@@ -120,7 +120,7 @@ export const gluon: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('Gluon'),
         discovery.getContractDetails('RegistryLogic'),
         discovery.getContractDetails('RegistryData'),
