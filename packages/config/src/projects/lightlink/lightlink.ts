@@ -145,7 +145,7 @@ export const lightlink: ScalingProject = {
   },
   stateValidation: {
     description:
-      'The project implements an incomplete and non-funcional proof system.',
+      'The project implements an incomplete and non-functional proof system.',
     categories: [
       {
         title: 'Challenges',
