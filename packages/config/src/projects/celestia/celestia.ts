@@ -200,7 +200,7 @@ export const celestia: BaseProject = {
         daTrackingConfig: [
           {
             type: 'celestia',
-            sinceBlock: 1034505,
+            sinceBlock: 3161819,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAARQV7t6sd4A=',
           },
         ],
@@ -222,7 +222,7 @@ export const celestia: BaseProject = {
         daTrackingConfig: [
           {
             type: 'celestia',
-            sinceBlock: 2733153,
+            sinceBlock: 3161819,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAA/cZMN1XLG8=',
           },
         ],
@@ -244,7 +244,7 @@ export const celestia: BaseProject = {
         daTrackingConfig: [
           {
             type: 'celestia',
-            sinceBlock: 2658920,
+            sinceBlock: 3161819,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAL2dxfeNrJ+tg6Y=',
           },
         ],
@@ -266,7 +266,7 @@ export const celestia: BaseProject = {
         daTrackingConfig: [
           {
             type: 'celestia',
-            sinceBlock: 1504062,
+            sinceBlock: 3161819,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAKKnitomrCy/HoY=',
           },
         ],
@@ -348,7 +348,7 @@ export const celestia: BaseProject = {
         daTrackingConfig: [
           {
             type: 'celestia',
-            sinceBlock: 1496058,
+            sinceBlock: 3161819,
             namespace: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAABNfLrOLSCTY=',
           },
         ],
