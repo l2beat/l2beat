@@ -29,8 +29,6 @@ export function getThroughputRange(
   })
 }
 
-// feature | projectId | expected | synced | latestData
-
 export function rangeToResolution(
   range:
     | { type: DaThroughputTimeRange | CostsTimeRange }
