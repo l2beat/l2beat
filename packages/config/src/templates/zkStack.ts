@@ -24,7 +24,7 @@ import { BADGES } from '../common/badges'
 import { formatExecutionDelay } from '../common/formatDelays'
 import { PROOFS } from '../common/proofSystems'
 import { getStage } from '../common/stages/getStage'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   Layer2TxConfig,
   ProjectScalingDisplay,
@@ -52,10 +52,6 @@ import type {
   TableReadyValue,
 } from '../types'
 import { getActivityConfig } from './activity'
-import {
-  generateDiscoveryDrivenContracts,
-  generateDiscoveryDrivenPermissions,
-} from './generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { mergeBadges, mergePermissions } from './utils'
 
@@ -128,7 +124,6 @@ export type Upgradeability = {
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
-  const discoveryShared = new ProjectDiscovery('shared-zk-stack')
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
@@ -137,20 +132,21 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     )
   }
 
-  const protVotingDelayS = discoveryShared.getContractValue<number>(
+  const protVotingDelayS = templateVars.discovery.getContractValue<number>(
     'ZkProtocolGovernor',
     'votingDelay',
   )
-  const protVotingPeriodS = discoveryShared.getContractValue<number>(
+  const protVotingPeriodS = templateVars.discovery.getContractValue<number>(
     'ZkProtocolGovernor',
     'votingPeriod',
   )
 
-  const protLateQuorumVoteExtensionS = discoveryShared.getContractValue<number>(
-    'ZkProtocolGovernor',
-    'lateQuorumVoteExtension',
-  )
-  const protTlMinDelayS = discoveryShared.getContractValue<number>(
+  const protLateQuorumVoteExtensionS =
+    templateVars.discovery.getContractValue<number>(
+      'ZkProtocolGovernor',
+      'lateQuorumVoteExtension',
+    )
+  const protTlMinDelayS = templateVars.discovery.getContractValue<number>(
     'ProtocolTimelockController',
     'getMinDelay',
   )
@@ -225,19 +221,18 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       'EXTEND_LEGAL_VETO_THRESHOLD',
     )
   const protocolStartProposalThresholdM =
-    discoveryShared.getContractValueBigInt(
+    templateVars.discovery.getContractValueBigInt(
       'ZkProtocolGovernor',
       'proposalThreshold',
     ) / 1000000000000000000000000n // result: M of tokens
   const protocolQuorumM =
-    discoveryShared.getContractValueBigInt(
+    templateVars.discovery.getContractValueBigInt(
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
   const scThresholdString = `${scMainThreshold}/${scMemberCount}`
   const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
-  const allDiscoveries = [templateVars.discovery, discoveryShared]
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -466,11 +461,11 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
       return description
     })(),
     permissions: mergePermissions(
-      generateDiscoveryDrivenPermissions(allDiscoveries),
+      templateVars.discovery.getDiscoveredPermissions(),
       templateVars.nonTemplatePermissions ?? {},
     ),
     contracts: {
-      addresses: generateDiscoveryDrivenContracts(allDiscoveries),
+      addresses: templateVars.discovery.getDiscoveredContracts(),
       risks: [
         CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
           // a bit hacky, but re-using the function from arbitrum (3 cases: standard (with or without extension by Guardians), emergency)
@@ -570,7 +565,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
-    discoveryInfo: getDiscoveryInfo(allDiscoveries),
+    discoveryInfo: getDiscoveryInfo([templateVars.discovery]),
   }
 }
 
