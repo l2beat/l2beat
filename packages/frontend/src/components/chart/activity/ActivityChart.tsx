@@ -9,7 +9,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -163,9 +162,6 @@ export function ActivityCustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={timestamp} />
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -178,12 +174,7 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.name === undefined || entry.type === 'none') return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -202,9 +193,9 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {entry.value === null
-                    ? 'No data'
-                    : formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )

@@ -8,7 +8,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -124,10 +123,15 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { unit: ChartUnit }) {
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
-  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const total = payload.reduce<number | null>((acc, curr) => {
+    if (curr.value === null || curr.value === undefined) {
+      return acc
+    }
+    if (acc === null) {
+      return curr?.value ?? null
+    }
+    return acc + curr.value
+  }, null)
   const reversedPayload = [...payload].reverse()
   return (
     <ChartTooltipWrapper>
@@ -140,17 +144,14 @@ function CustomTooltip({
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
           </span>
-          <span className="text-primary">{formatCurrency(total, unit)}</span>
+          <span className="text-primary">
+            {total !== null ? formatCurrency(total, unit) : 'No data'}
+          </span>
         </div>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
-            if (
-              entry.value === undefined ||
-              entry.value === null ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -167,7 +168,9 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, unit)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, unit)
+                    : 'No data'}
                 </span>
               </div>
             )

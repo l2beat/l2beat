@@ -7,7 +7,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -261,9 +260,6 @@ function CustomTooltip({
 }) {
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   const dataKeys = payload.map((p) => p.dataKey)
   const hasPostedAndEstimated =
     dataKeys.includes('posted') && dataKeys.includes('estimatedPosted')
@@ -271,12 +267,20 @@ function CustomTooltip({
     (p) => !hasPostedAndEstimated || p.name !== 'estimatedPosted',
   )
   const reversedPayload = [...filteredPayload].reverse()
-  const total = payload.reduce((acc, curr) => {
+  const total = payload.reduce<number | null>((acc, curr) => {
     if (curr.name === 'posted' || curr.name === 'estimatedPosted') {
       return acc
     }
-    return acc + (curr?.value ?? 0)
-  }, 0)
+    if (curr.value === null || curr.value === undefined) {
+      return acc
+    }
+
+    if (acc === null) {
+      return curr?.value ?? null
+    }
+
+    return acc + curr.value
+  }, null)
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
@@ -289,18 +293,13 @@ function CustomTooltip({
         <div className="flex w-full items-center justify-between gap-2 text-heading-16">
           <span>Total</span>
           <span className="whitespace-nowrap text-primary tabular-nums">
-            {formatCostValue(total, unit, 'total')}
+            {total !== null ? formatCostValue(total, unit, 'total') : 'No data'}
           </span>
         </div>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
-            if (
-              entry.value === undefined ||
-              entry.value === null ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -317,9 +316,12 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.name === 'posted' || entry.name === 'estimatedPosted'
-                    ? formatBytes(entry.value)
-                    : formatCostValue(entry.value, unit, 'total')}
+                  {entry.value !== null && entry.value !== undefined
+                    ? entry.name === 'posted' ||
+                      entry.name === 'estimatedPosted'
+                      ? formatBytes(entry.value)
+                      : formatCostValue(entry.value, unit, 'total')
+                    : 'No data'}
                 </span>
               </div>
             )

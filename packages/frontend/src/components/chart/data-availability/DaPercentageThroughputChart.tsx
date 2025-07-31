@@ -8,7 +8,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -130,9 +129,6 @@ function CustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 
   return (
@@ -167,7 +163,9 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)}%
+                {entry.value !== null && entry.value !== undefined
+                  ? `${isEstimated ? 'est. ' : ''} ${entry.value?.toFixed(2)}%`
+                  : 'No data'}
               </span>
             </div>
           )

@@ -11,7 +11,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
@@ -141,9 +140,6 @@ export function LivenessCustomTooltip({
   anyAnomalyLive: boolean
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
-
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={timestamp} />
 
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',

@@ -7,7 +7,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -94,10 +93,6 @@ export function DataPostedCustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
-  if (payload.every((p) => p.value === null)) {
-    return <ChartTooltipNoDataState timestamp={timestamp} />
-  }
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -108,12 +103,7 @@ export function DataPostedCustomTooltip({
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.name === undefined || entry.type === 'none') return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -132,7 +122,9 @@ export function DataPostedCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {formatBytes(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatBytes(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )

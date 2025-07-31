@@ -8,7 +8,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
@@ -149,9 +148,6 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -164,12 +160,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.value === undefined ||
-              entry.value === null ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -186,9 +177,9 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < label
-                    ? 'No data'
-                    : formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )

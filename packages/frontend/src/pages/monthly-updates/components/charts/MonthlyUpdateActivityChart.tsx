@@ -8,7 +8,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -155,9 +154,6 @@ export function CustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -167,13 +163,7 @@ export function CustomTooltip({
           })}
         </div>
         {payload.map((entry) => {
-          if (
-            entry.name === undefined ||
-            entry.value === undefined ||
-            entry.value === null ||
-            entry.type === 'none'
-          )
-            return null
+          if (entry.name === undefined || entry.type === 'none') return null
           const config = meta[entry.name]
           assert(config, 'No config')
 
@@ -190,7 +180,9 @@ export function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
               <div className="flex w-full items-center justify-between gap-2">
@@ -204,7 +196,9 @@ export function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {formatInteger(entry.value * UnixTime.DAY)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatInteger(entry.value * UnixTime.DAY)
+                    : 'No data'}
                 </span>
               </div>
             </div>

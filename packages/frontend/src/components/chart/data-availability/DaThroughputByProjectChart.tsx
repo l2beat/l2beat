@@ -10,7 +10,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -175,9 +174,6 @@ function CustomTooltip({
     return (b.value ?? 0) - (a.value ?? 0)
   })
 
-  if (payload.every((p) => p.value === null || p.value === undefined))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
@@ -208,7 +204,10 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formattedValue} {unit}
+                {entry.value !== null && entry.value !== undefined
+                  ? formattedValue
+                  : 'No data'}
+                {unit}
               </span>
             </div>
           )

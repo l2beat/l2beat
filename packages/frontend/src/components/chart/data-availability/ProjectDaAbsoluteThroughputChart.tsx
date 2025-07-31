@@ -9,7 +9,6 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -160,9 +159,6 @@ export function ProjectDaThroughputCustomTooltip({
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
@@ -188,7 +184,7 @@ export function ProjectDaThroughputCustomTooltip({
                   {configEntry.label}
                 </span>
               </div>
-              {entry.value === null &&
+              {(entry.value === null || entry.value === undefined) &&
               configEntry.label === 'Actual data size' ? (
                 <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   No data

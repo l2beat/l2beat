@@ -6,7 +6,6 @@ import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
   ChartTooltip,
-  ChartTooltipNoDataState,
   ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
@@ -97,9 +96,6 @@ export function TvsCustomTooltip({
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
-  if (payload.every((p) => p.value === null))
-    return <ChartTooltipNoDataState timestamp={label} />
-
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
@@ -111,12 +107,7 @@ export function TvsCustomTooltip({
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.value === null
-            )
-              return null
+            if (entry.name === undefined) return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -135,7 +126,9 @@ export function TvsCustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, unit)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, unit)
+                    : 'No data'}
                 </span>
               </div>
             )
