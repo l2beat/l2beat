@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x22c14d96088cec5184a36cda8c6f098666e9ab53
+Generated with discovered.json: 0x82cef85d1cbf3f50f7e250e1e760ef7398a79563
 
 # Diff at Mon, 14 Jul 2025 12:45:07 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x22c14d96088cec5184a36cda8c6f098666e9ab53
 
 ## Description
 
-Config related changes due to address prefixing and disco merge changes.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
