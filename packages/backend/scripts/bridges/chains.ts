@@ -39,8 +39,9 @@ export const CHAINS: Chain[] = [
     name: 'optimism',
     shortName: 'oeth',
     rpcCallsPerMinute: 120,
-    getTxUrl: (hash: string) => `https://arbiscan.io/tx/${hash}`,
-    getAddressUrl: (hash: string) => `https://arbiscan.io/address/${hash}`,
+    getTxUrl: (hash: string) => `https://optimistic.etherscan.io/tx/${hash}`,
+    getAddressUrl: (hash: string) =>
+      `https://optimistic.etherscan.io/address/${hash}`,
     envioUrl: 'https://optimism.hypersync.xyz/query', //🏅
     envioCallsPerMinute: 120,
     envioBatchSize: 2000,

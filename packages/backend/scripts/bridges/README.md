@@ -44,6 +44,17 @@ pnpm bridges:cli cctpv2 ethereum 23031281 base 33540613
 pnpm bridges:cli cctpv2 base 33540730 arbitrum 363115009
 ```
 
+### Hyperlane
+```bash
+pnpm bridges:cli hyperlane arbitrum 363163130 base 33546744
+```
+```bash
+pnpm bridges:cli hyperlane base 33547228 optimism 139142527
+```
+```bash
+pnpm bridges:cli hyperlane base 33576185 ethereum 23037172
+```
+
 ### DeBridge
 #### Orders
 ```bash
