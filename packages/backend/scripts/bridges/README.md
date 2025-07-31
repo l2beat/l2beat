@@ -97,3 +97,11 @@ pnpm bridges:cli stargate ethereum 22995640 arbitrum 361391483
 ``` bash
 pnpm bridges:cli stargate base 33245251 arbitrum 360748226
 ```
+
+### Wormhole Portal
+```bash
+pnpm bridges:cli wormhole-portal base 33582518 ethereum 23038332
+```
+```bash
+pnpm bridges:cli wormhole-portal ethereum 23026060 arbitrum 362865582
+```

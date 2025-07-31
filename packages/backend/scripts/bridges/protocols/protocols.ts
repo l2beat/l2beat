@@ -12,6 +12,7 @@ import { HYPERLANE } from './decoders/hyperlane'
 import { LAYERZEROV1 } from './decoders/layerzerov1'
 import { LAYERZEROV2 } from './decoders/layerzerov2'
 import { STARGATE } from './decoders/stargate'
+import { WORMHOLE_PORTAL } from './decoders/wormhole-portal'
 
 export interface Protocol {
   name: string
@@ -32,4 +33,5 @@ export const PROTOCOLS: Protocol[] = [
   STARGATE,
   HYPERLANE,
   DEBRIDGE,
+  WORMHOLE_PORTAL,
 ]
