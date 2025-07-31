@@ -13,7 +13,7 @@ const discovery = new ProjectDiscovery('stargatev2')
 
 const discoveredOAppOwners = [
   ...discovery.getPermissionedAccounts('CreditMessaging', 'owner'),
-  ...discovery.getPermissionedAccounts('TokenMessaging', 'owner'),
+  ...discovery.getPermissionedAccounts('TokenMessagingEthereum', 'owner'),
 ]
 const discoveredDelegates = [
   ...discovery.getPermissionedAccounts(
@@ -292,7 +292,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     addresses: {
       ethereum: [
         discovery.getContractDetails(
-          'TokenMessaging',
+          'TokenMessagingEthereum',
           "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
         ),
         discovery.getContractDetails(

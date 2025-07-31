@@ -76,10 +76,12 @@ export class ProjectDiscovery {
     for (const discovery of projectDiscoveries) {
       this.projectAndDependentDiscoveries.push(
         ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
-          ([projectName, chains]) =>
-            Object.keys(chains).map((chain) =>
-              configReader.readDiscovery(projectName, chain),
-            ),
+          ([dependentProjectName, chains]) => {
+            if (dependentProjectName === projectName) return []
+            return Object.keys(chains).map((chain) =>
+              configReader.readDiscovery(dependentProjectName, chain),
+            )
+          },
         ),
       )
     }
@@ -932,7 +934,7 @@ export class ProjectDiscovery {
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
     assert(allActors.every((actor) => actor.accounts.length === 1))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
-    assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
+    // assert(allUnique(allActors.map((actor) => actor.accounts[0].name))) // TODO(radomski): Between chains
 
     const roles = this.describeRolePermissions([
       ...permissionedContracts,

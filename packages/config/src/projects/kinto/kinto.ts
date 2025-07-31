@@ -24,8 +24,7 @@ const contractKeys = [
 assert(
   contractKeys.every(
     (key) =>
-      l2critDelay ===
-      discovery.getContractValue<number>('AccessManager', key),
+      l2critDelay === discovery.getContractValue<number>('AccessManager', key),
   ),
   '12d delay in Accessmanager changed, edit gov section',
 )

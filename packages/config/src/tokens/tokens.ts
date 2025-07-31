@@ -17,6 +17,7 @@ import {
   type LegacyToken,
   UnixTime,
 } from '@l2beat/shared-pure'
+import uniqBy from 'lodash/uniqBy'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ChainConfig } from '../types'
 import generated from './generated.json'
@@ -61,7 +62,7 @@ export function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
     }
   }
 
-  return tokens
+  return uniqBy(tokens, (t) => t.id)
 }
 
 function toToken(

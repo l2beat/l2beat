@@ -445,12 +445,12 @@ export const zklinknova: ScalingProject = {
   contracts: {
     addresses: {
       linea: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('LineaL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Linea to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...lineaUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('LineazkLink', {
           description:
             'Main contract of the system where blocks are committed, proven and executed. It syncs messages from secondary chains ("slow" path) and accepts "fast" forwarded requests from permissioned validators that are later cross-checked with the slow path. ETH coming from secondary chains are transferred and escrowed here. State roots are then synced back to the secondary chains.',
           ...lineaUpgradability,
@@ -476,12 +476,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       ethereum: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('EthereumL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Ethereum to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...ethereumUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('EthereumzkLink', {
           description:
             "Main messaging contract on Ethereum and ETH escrow. Outgoing messages (like deposits) are sent through the EthereumL2Gateway which ultimately makes use of Ethereum's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...ethereumUpgradability,
@@ -543,12 +543,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       optimism: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('OptimismL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from OP Mainnet to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...optimismUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('OptimismzkLink', {
           description:
             "Main messaging contract on OP Mainnet and ETH escrow. Outgoing messages (like deposits) are sent through the OptimismL2Gateway which ultimately makes use of OP Mainnet's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...optimismUpgradability,
@@ -560,12 +560,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       arbitrum: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('ArbitrumL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Arbitrum One to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...arbitrumUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('ArbitrumzkLink', {
           description:
             "Main messaging contract on Arbitrum One and ETH escrow. Outgoing messages (like deposits) are sent through the ArbitrumL2Gateway which ultimately makes use of Arbitrum One's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...arbitrumUpgradability,
@@ -577,12 +577,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       base: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('BaseL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Base to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...baseUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('BasezkLink', {
           description:
             "Main messaging contract on Base and ETH escrow. Outgoing messages (like deposits) are sent through the BaseL2Gateway which ultimately makes use of Base's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...baseUpgradability,
@@ -594,12 +594,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       mantapacific: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('MantaL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Manta Pacific to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...mantapacificUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('MantazkLink', {
           description:
             "Main messaging contract on Manta Pacific and ETH escrow. Outgoing messages (like deposits) are sent through the MantaPacificL2Gateway which ultimately makes use of Manta Pacific's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...mantapacificUpgradability,
@@ -611,12 +611,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       mantle: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('MantleL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Mantle to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...mantleUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('MantlezkLink', {
           description:
             "Main messaging contract on Mantle and ETH escrow. Outgoing messages (like deposits) are sent through the MantleL2Gateway which ultimately makes use of Mantle's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...mantleUpgradability,
@@ -628,12 +628,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       scroll: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('ScrollL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Scroll to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...scrollUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('ScrollzkLink', {
           description:
             "Main messaging contract on Scroll and ETH escrow. Outgoing messages (like deposits) are sent through the ScrollL2Gateway which ultimately makes use of Scroll's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...scrollUpgradability,
@@ -645,12 +645,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       blast: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('BlastL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Blast to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...blastUpgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('BlastzkLink', {
           description:
             "Main messaging contract on Blast and ETH escrow. Outgoing messages (like deposits) are sent through the BlastL2Gateway which ultimately makes use of Blast's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...blastUpgradability,
@@ -662,12 +662,12 @@ export const zklinknova: ScalingProject = {
         }),
       ],
       zksync2: [
-        discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('EraL1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from ZKsync Era to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...zksync2Upgradability,
         }),
-        discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('ErazkLink', {
           description:
             "Main messaging contract on ZKsync Era and ETH escrow. Outgoing messages (like deposits) are sent through the ZKsync2L2Gateway which ultimately makes use of ZKsync Era's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...zksync2Upgradability,
@@ -692,7 +692,7 @@ export const zklinknova: ScalingProject = {
         ),
         discovery.getPermissionDetails(
           'Validators',
-          discovery.getPermissionedAccounts('zkLink', 'validators'),
+          discovery.getPermissionedAccounts('LineazkLink', 'validators'),
           'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
         ),
       ],
@@ -741,10 +741,7 @@ export const zklinknova: ScalingProject = {
         ),
         discovery.getPermissionDetails(
           'MantaOwner',
-          discovery.getPermissionedAccounts(
-            'MantaProxyAdmin',
-            'owner',
-          ),
+          discovery.getPermissionedAccounts('MantaProxyAdmin', 'owner'),
           'Admin of the zkLink contract on Manta Pacific and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
         ),
       ],

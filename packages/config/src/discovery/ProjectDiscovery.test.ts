@@ -80,10 +80,7 @@ describe(ProjectDiscovery.name, () => {
   })
 
   it('reads configurations for different chainIds', () => {
-    const discovery = new ProjectDiscovery(
-      'ExampleProject',
-      configReader,
-    )
+    const discovery = new ProjectDiscovery('ExampleProject', configReader)
     const contract = discovery.getContract(contractStub.address.toString())
 
     expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
@@ -91,10 +88,7 @@ describe(ProjectDiscovery.name, () => {
 
   describe(ProjectDiscovery.prototype.getPermissionsByRole.name, () => {
     it('should find contracts and eoas by role', () => {
-      const discovery = new ProjectDiscovery(
-        'ExampleProject',
-        configReader,
-      )
+      const discovery = new ProjectDiscovery('ExampleProject', configReader)
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {
