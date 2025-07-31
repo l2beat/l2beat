@@ -20,6 +20,24 @@ export const agglayer: BaseProject = {
     primary: '#6C00F6',
     secondary: '#6C51F4',
   },
+  milestones: [
+    {
+      title: 'Agglayer v0.3 goes live – Multichain support',
+      url: 'https://x.com/Agglayer/status/1937204244559327391',
+      date: '2025-06-23T00:00:00Z',
+      description:
+        'Agglayer v0.3 Is Live: Lays Groundwork for non-CDK Chains to Securely join Agglayer, starting with Polygon PoS',
+      type: 'general',
+    },
+    {
+      title: 'Agglayer CDK goes Multistack',
+      url: 'https://x.com/Agglayer/status/1920114795333759063',
+      date: '2025-05-07T00:00:00Z',
+      description:
+        'Agglayer CDK (formerly Polygon CDK) goes multistack to unify Web3: Introducing the CDK OP Stack configuration, with native Agglayer connection',
+      type: 'general',
+    },
+  ],
   ecosystemConfig: {
     links: {
       buildOn: 'https://docs.agglayer.dev/',
