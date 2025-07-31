@@ -31,7 +31,7 @@ export interface TotalCellProps {
   tvsWarnings?: WarningWithSentiment[]
 }
 
-export function TotalCell(props: TotalCellProps) {
+export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
   const tvsWarnings = props.tvsWarnings ?? []
   const anyBadWarnings = tvsWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tvsWarnings.some((w) => w.sentiment === 'warning')

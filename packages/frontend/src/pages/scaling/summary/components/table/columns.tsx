@@ -21,7 +21,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import type { ScalingSummaryTableRow } from '../../utils/toTableRows'
-import { TotalCell } from './TotalCell'
+import { TotalCellWithTvsBreakdown } from './TotalCellWithTvsBreakdown'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -96,7 +96,7 @@ export const scalingSummaryColumns = [
         const value = ctx.row.original.tvs
 
         return (
-          <TotalCell
+          <TotalCellWithTvsBreakdown
             href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
             associatedTokenSymbols={value.associatedTokens}
             tvsWarnings={value.warnings}

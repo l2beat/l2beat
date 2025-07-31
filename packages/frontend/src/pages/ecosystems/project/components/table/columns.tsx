@@ -14,7 +14,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPer
 import { sortStages } from '~/components/table/sorting/sortStages'
 import { TableLink } from '~/components/table/TableLink'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
-import { TotalCell } from '~/pages/scaling/summary/components/table/TotalCell'
+import { TotalCellWithTvsBreakdown } from '~/pages/scaling/summary/components/table/TotalCellWithTvsBreakdown'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
@@ -105,7 +105,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
           const value = ctx.row.original.tvs
 
           return (
-            <TotalCell
+            <TotalCellWithTvsBreakdown
               href={`/scaling/tvs?tab=${ctx.row.original.tab}&highlight=${ctx.row.original.slug}`}
               associatedTokenSymbols={value.associatedTokens}
               tvsWarnings={value.warnings}
