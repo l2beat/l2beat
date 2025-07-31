@@ -92,30 +92,31 @@ export function DaThroughputByProjectChart({
 
     return (
       data?.chart.map(([timestamp, values]) => {
-        // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to cut the chart to the last project data timestamp
-        if (
-          daLayer === 'eigenda' &&
-          lastProjectsDataTimestamp &&
-          timestamp > lastProjectsDataTimestamp
-        ) {
-          return {
-            timestamp,
+        const isSynced =
+          lastProjectsDataTimestamp && timestamp <= lastProjectsDataTimestamp
+
+        const result: { timestamp: number; [key: string]: number | null } = {
+          timestamp,
+        }
+
+        for (const project of projectsToShow) {
+          const value = values?.[project]
+          if (value === undefined) {
+            result[project] = isSynced ? 0 : null
+          } else {
+            result[project] = value / denominator
           }
         }
-        return {
-          timestamp,
-          ...Object.fromEntries(
-            Object.entries(values ?? {})
-              .map(([key, value]) => {
-                if (!projectsToShow.includes(key)) return
-                return [key, value / denominator] as const
-              })
-              .filter((v) => v !== undefined),
-          ),
-        }
+
+        return result
       }) ?? []
     )
-  }, [data, projectsToShow, denominator, daLayer])
+  }, [data, projectsToShow, denominator])
+
+  const syncedUntil = chartData.findLast((r) => {
+    const [_, ...values] = Object.values(r)
+    return values.every((v) => v !== null)
+  })?.timestamp
 
   return (
     <ChartContainer
@@ -148,7 +149,7 @@ export function DaThroughputByProjectChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
-          syncedUntil: data?.syncedUntil,
+          syncedUntil,
           chartType: 'bar',
         })}
         <ChartTooltip

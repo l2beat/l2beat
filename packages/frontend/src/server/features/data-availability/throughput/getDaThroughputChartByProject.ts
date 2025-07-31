@@ -162,10 +162,14 @@ function groupByTimestampAndProjectId(
       0,
     )
 
-    result[timestamp] = {
-      ...result[timestamp],
-      ['Unknown']: Number(value) - restSummed,
+    if (result[timestamp]) {
+      result[timestamp]['Unknown'] = Number(value) - restSummed
+    } else {
+      result[timestamp] = {
+        ['Unknown']: Number(value) - restSummed,
+      }
     }
+
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
