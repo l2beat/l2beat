@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x70a831e35dc628d332d9e8b2b4b189ee301c52c9
+Generated with discovered.json: 0x5c4a0e3ca2554c876a4296c40dd026561b871556
 
 # Diff at Mon, 14 Jul 2025 12:45:24 GMT:
 
@@ -2385,7 +2385,7 @@ Generated with discovered.json: 0x30615bb2b8a42cca9d35c7d162a672d0472a606f
 
 ## Description
 
-Token ProxyAdmin owner transfered to a timelock.
+Token ProxyAdmin owner transferred to a timelock.
 
 ## Watched changes
 

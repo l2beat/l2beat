@@ -76,8 +76,10 @@ describe(checkForEigenDA.name, () => {
     ).not.toBeRejected()
   })
 
+  type Thenable<T> = PromiseLike<T> | T
+
   it('should return true if commitments have been confirmed', async () => {
-    const baseProviderMock = mockObject<IProvider>({
+    const switchableProvider = mockObject<Thenable<IProvider>>({
       chain: 'ethereum',
       blockNumber: 1,
       getEvents: async () =>
@@ -87,15 +89,14 @@ describe(checkForEigenDA.name, () => {
             batchHeaderHash: cbhh.blobBatchMetadata,
           },
         })),
-    })
-
-    const switchableProvider = mockObject<IProvider>({
-      ...baseProviderMock,
-      switchChain: () => baseProviderMock,
+      then: undefined,
+      switchChain: async () => {
+        return new Promise((resolve) => resolve(switchableProvider))
+      },
     })
 
     const isUsingEigenDA = await checkForEigenDA(
-      switchableProvider,
+      switchableProvider as IProvider,
       aevoSequencerTransactions,
     )
     expect(isUsingEigenDA).toEqual(true)

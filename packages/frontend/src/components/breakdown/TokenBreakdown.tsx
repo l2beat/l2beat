@@ -13,6 +13,7 @@ export interface TokenBreakdownProps {
   associated: number
   ether: number
   stablecoin: number
+  btc: number
   className?: string
 }
 
@@ -22,7 +23,8 @@ export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
 }
 
 export function TokenBreakdown(props: TokenBreakdownProps) {
-  const other = props.total - props.associated - props.ether - props.stablecoin
+  const other =
+    props.total - props.associated - props.ether - props.stablecoin - props.btc
   const values = [
     {
       value: props.associated,
@@ -30,9 +32,10 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
     },
     {
       value: props.ether,
-      className: 'dark:bg-green-200 bg-green-900',
+      className: 'bg-chart-ethereum',
     },
     { value: props.stablecoin, className: 'dark:bg-teal-400 bg-teal-500' },
+    { value: props.btc, className: 'bg-orange-400' },
     { value: other, className: 'bg-sky-600' },
   ]
 
@@ -46,10 +49,11 @@ export function TokenBreakdownTooltipContent({
   associated,
   ether,
   stablecoin,
+  btc,
   associatedTokenSymbols,
   tvsWarnings,
 }: TokenBreakdownTooltipContentProps) {
-  const other = total - associated - ether - stablecoin
+  const other = total - associated - ether - stablecoin - btc
   const values = [
     {
       title: languageJoin(associatedTokenSymbols) ?? 'Associated',
@@ -65,6 +69,11 @@ export function TokenBreakdownTooltipContent({
       title: 'Stablecoins',
       value: stablecoin,
       variant: 'stable' as const,
+    },
+    {
+      title: 'BTC & deriviatives',
+      value: btc,
+      variant: 'btc' as const,
     },
     { title: 'Other', value: other, variant: 'other' as const },
   ]

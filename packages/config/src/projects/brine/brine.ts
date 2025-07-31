@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -90,7 +90,9 @@ export const brine: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x1390f521A79BaBE99b69B37154D63D431da27A07'),
+        address: ChainSpecificAddress(
+          'eth:0x1390f521A79BaBE99b69B37154D63D431da27A07',
+        ),
         sinceTimestamp: UnixTime(1657453320),
         tokens: '*',
         description: "Main entry point for users' deposits.",

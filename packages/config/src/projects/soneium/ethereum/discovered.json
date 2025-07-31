@@ -1,7 +1,7 @@
 {
   "name": "soneium",
   "chain": "ethereum",
-  "blockNumber": 22996539,
+  "timestamp": 1753451099,
   "configHash": "0x9306ed85d952d5b58fcb423be6146585728eee8d4284998e851335e59b22b4fa",
   "entries": [
     {
@@ -3068,5 +3068,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig_pauseId": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
+  "usedBlockNumbers": { "ethereum": 22996539 },
   "permissionsConfigHash": "0x52c7ef12d76d086899bf9026300408b40ad990fa5503e195eddcff336932886c"
 }

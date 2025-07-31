@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -106,7 +107,9 @@ export const zksync: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xaBEA9132b05A70803a4E85094fD0e1800777fBEF'),
+        address: ChainSpecificAddress(
+          'eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
+        ),
         sinceTimestamp: UnixTime(1592218707),
         tokens: '*',
       }),

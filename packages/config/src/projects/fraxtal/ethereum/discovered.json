@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 22666214,
+  "timestamp": 1749462383,
   "configHash": "0xda61d694fb98d57913113725e133aee8e4c228c9c1c06ec63b32963c46c2d113",
   "entries": [
     {
@@ -1891,5 +1891,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 22666214 },
   "permissionsConfigHash": "0x4d0879f3523e97c8b39c993c1957b56543a86b6cd7bcfaa686ef8b888434fdbe"
 }

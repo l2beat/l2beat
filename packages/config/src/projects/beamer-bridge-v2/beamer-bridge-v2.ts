@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -42,9 +42,7 @@ export const beamerbridgev2: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress.address(
-          discovery.getContractDetails('EthereumRequestManager').address,
-        ),
+        address: discovery.getContractDetails('EthereumRequestManager').address,
         sinceTimestamp: UnixTime(1678964183),
         tokens: ['USDC', 'WETH', 'DAI', 'USDT'],
       }),

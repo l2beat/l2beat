@@ -22,7 +22,6 @@ export function ThroughputSectionChart({
   const [type, setType] = useState<'combined' | 'by-project'>('combined')
   const [range, setRange] = useState<DaThroughputTimeRange>('1y')
   const [selectedProjects, setSelectedProjects] = useState<string[]>()
-  const [showMax, setShowMax] = useState(true)
 
   return (
     <div>
@@ -46,8 +45,6 @@ export function ThroughputSectionChart({
           milestones={milestones}
           range={range}
           setRange={setRange}
-          showMax={showMax}
-          setShowMax={setShowMax}
         />
       ) : (
         <ThroughputSectionByProjectChart

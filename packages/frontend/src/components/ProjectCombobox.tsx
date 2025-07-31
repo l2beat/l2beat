@@ -39,6 +39,8 @@ export function ProjectCombobox({
     [projects, setProjects],
   )
 
+  const areAllSelected = projects.length === allProjects.length
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
@@ -55,9 +57,14 @@ export function ProjectCombobox({
         <Command>
           <CommandInput placeholder="Search for project...">
             <CommandInputActionButton
-              onClick={projects.length > 0 ? () => setProjects([]) : undefined}
+              className="whitespace-nowrap"
+              onClick={
+                areAllSelected
+                  ? () => setProjects([])
+                  : () => setProjects(allProjects)
+              }
             >
-              {projects.length > 0 ? 'Clear' : undefined}
+              {areAllSelected ? 'Clear' : 'Select all'}
             </CommandInputActionButton>
           </CommandInput>
           <CommandList>

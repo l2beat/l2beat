@@ -755,6 +755,7 @@ export interface ProjectZkCatalogInfo {
     usedBy: ProjectId[]
     verificationSteps?: string
     attesters?: ZkCatalogAttester[]
+    description?: string
   }[]
 }
 
@@ -1068,7 +1069,7 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
-  blockNumberPerChain: Record<string, number>
+  timestampPerChain: Record<string, number>
   hasDiscoUi: boolean
 }
 // #endregion

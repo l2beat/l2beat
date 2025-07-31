@@ -29,7 +29,7 @@ export function ProjectCostsChart({
 }: Props) {
   const [range, setRange] = useState<CostsTimeRange>(defaultRange)
   const [unit, setUnit] = useState<CostsUnit>('usd')
-  const [showDataPosted, setShowDataPosted] = useState(true)
+  const [showDataPosted, setShowDataPosted] = useState(false)
 
   const { data, isLoading } = api.costs.projectChart.useQuery({
     range,
@@ -83,7 +83,7 @@ export function ProjectCostsChart({
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted: posted ?? 0,
+          posted,
           notSyncedPosted:
             !allDataPostedSynced &&
             lastDataPosted &&

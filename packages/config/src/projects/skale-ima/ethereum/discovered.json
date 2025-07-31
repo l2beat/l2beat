@@ -1,7 +1,7 @@
 {
   "name": "skale-ima",
   "chain": "ethereum",
-  "blockNumber": 21744185,
+  "timestamp": 1738322567,
   "configHash": "0x21982f2aa824b78f09f1079e35e24e380d2a7f3355c6e97a257b040861871899",
   "entries": [
     {
@@ -1263,5 +1263,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
+  "usedBlockNumbers": { "ethereum": 21744185 },
   "permissionsConfigHash": "0xd8b37091887fca78350b4abd61c228921e75882b22102dfc00f1adc2eee83dc8"
 }

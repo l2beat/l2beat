@@ -8,7 +8,11 @@ import {
   getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
@@ -16,15 +20,10 @@ import { discoverAndUpdateDiffHistory } from '../implementations/discovery/disco
 
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
-// specify "all" as the chain namas the chain name.
+// specify "all" as the chain name.
 const { project: _, chain: __, ...remainingArgs } = DiscoverCommandArgs
 const args = {
   ...remainingArgs,
-  chainQuery: positional({
-    type: string,
-    displayName: 'chainQuery',
-    description: DiscoverCommandArgs.chain.description,
-  }),
   projectQuery: positional({
     type: string,
     displayName: 'projectQuery',
@@ -48,12 +47,12 @@ export const Discover = command({
   args,
   handler: async (args) => {
     const logger = getPlainLogger()
-    const projectsOnChain: Record<string, string[]> = resolveProjectsOnChain(
+    const projectsOnChain: Record<string, string[]> = resolveProjects(
       args.projectQuery,
-      args.chainQuery,
     )
 
     logProjectsToDiscover(projectsOnChain, logger)
+    const timestamp = getTimestamp(args)
 
     for (const chainName in projectsOnChain) {
       const chain = getChainConfig(chainName)
@@ -62,6 +61,7 @@ export const Discover = command({
           ...args,
           project,
           chain,
+          timestamp: timestamp ?? args.timestamp,
         }
 
         await discoverAndUpdateDiffHistory(config, {
@@ -91,7 +91,7 @@ function logProjectsToDiscover(
   }
 }
 
-function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
+function resolveProjects(projectQuery: string) {
   const result: Record<string, string[]> = {}
   const entries = configReader.readAllConfiguredProjects()
 
@@ -100,12 +100,7 @@ function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
     : projectPredicate
 
   for (const { project, chains } of entries) {
-    const chainsToCheck =
-      chainQuery === 'all'
-        ? chains
-        : chains.filter((chain) => chain === chainQuery)
-
-    const matchingChains = chainsToCheck.filter((chain) => {
+    const matchingChains = chains.filter((chain) => {
       const query = EthereumAddress.check(projectQuery)
         ? ChainSpecificAddress.from(getChainShortName(chain), projectQuery)
         : projectQuery
@@ -142,4 +137,23 @@ function addressPredicate(
   const discovery = configReader.readDiscovery(haystackProject, chain)
 
   return discovery.entries.find((c) => c.address === address) !== undefined
+}
+
+// TODO(radomski): This will not exist. In the future all of this information
+// will be stored in the discovery but since we're emulating having a single
+// discovered.json we have to do this trick.
+function getTimestamp(args: {
+  timestamp: number | undefined
+  dev: boolean
+  dryRun: boolean
+}): UnixTime | undefined {
+  if (
+    args.dev === false &&
+    args.dryRun === false &&
+    args.timestamp === undefined
+  ) {
+    return UnixTime.now()
+  }
+
+  return undefined
 }
