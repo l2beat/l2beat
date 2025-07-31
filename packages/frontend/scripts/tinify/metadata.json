@@ -1421,5 +1421,7 @@
   "static/meta-images/scaling/projects/sischain/opengraph-image.png": "a99897033971d1259f2213fea507b95f",
   "static/icons/ethereal.png": "221d9fab1ae060ff4f6d736b532738a6",
   "static/meta-images/scaling/projects/ethereal/opengraph-image.png": "72df626106a7b5f9bbf173b7188bd9e6",
-  "static/icons/sischain.png": "d254c7a8ec519a841247e9a54d1a9879"
+  "static/icons/sischain.png": "d254c7a8ec519a841247e9a54d1a9879",
+  "static/icons/hpp.png": "243e8b38170eebcce871b373ad7ef7ad",
+  "static/meta-images/scaling/projects/hpp/opengraph-image.png": "d31096ef9ac625e8fbacde2f2e349751"
 }
