@@ -45,5 +45,5 @@
     "shared-zk-stack/L1Messenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "gateway": 15826 },
-  "permissionsConfigHash": "0x34b5852f64bbca62d7123c0a81464ec3608b2d14994db730c039170544c80e0b"
+  "permissionsConfigHash": "0xa510f4d696154e42c32d0423cd9d6edf97318fc4c666552b84faba49a2c36c64"
 }

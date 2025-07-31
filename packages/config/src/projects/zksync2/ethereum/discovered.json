@@ -960,5 +960,5 @@
     "shared-zk-stack/Diamond_NotSettlementLayer": "0x30b60445419f8d3893ba4eb0b4a8d04ad751d7ec8882a4a4ab5f7276c730ff8f"
   },
   "usedBlockNumbers": { "ethereum": 23039721 },
-  "permissionsConfigHash": "0x235d91d7d6183c4da6ade6c3311a7de4cd13d69e70cb344c39a8be1f1025bbaa"
+  "permissionsConfigHash": "0xda51ad876d2585ba65e512021145e6a18565485032eb6777334f78cb362f131e"
 }
