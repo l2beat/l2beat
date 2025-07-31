@@ -9,7 +9,6 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
-import { getLastValidTimestamp } from '../utils/getLastValidTimestamp'
 import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
 import { LivenessChartStats } from './LivenessChartStats'
@@ -58,10 +57,16 @@ export function ProjectLivenessChart({
     })
   }, [chart?.data])
 
-  const lastValidTimestamp = useMemo(
-    () => getLastValidTimestamp(chart?.data),
-    [chart?.data],
-  )
+  const lastValidTimestamp = useMemo(() => {
+    if (!chart?.data) {
+      return undefined
+    }
+    const lastValidTimestamp = chart.data.findLast(([_, ...rest]) =>
+      rest.every((v) => v !== null),
+    )?.[0]
+
+    return lastValidTimestamp
+  }, [chart?.data])
 
   const chartRange = getChartRange(chartData)
 

@@ -128,6 +128,7 @@ export async function getProjectLivenessChart({
       const { min, max, avg } = calculateLivenessStats(records)
       return [timestamp, min, avg, max]
     })
+
   return {
     data,
     stats,
