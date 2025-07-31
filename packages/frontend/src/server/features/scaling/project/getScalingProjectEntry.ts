@@ -91,6 +91,7 @@ export interface ProjectScalingEntry {
           ether: number
           stablecoin: number
           associated: number
+          btc: number
         }
         warnings: WarningWithSentiment[]
         associatedTokens: string[]

@@ -231,7 +231,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',
@@ -240,21 +240,27 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
       },
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'),
+      address: ChainSpecificAddress(
+        'eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB',
+      ),
       tokens: ['USDC'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'),
+      address: ChainSpecificAddress(
+        'eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'),
+      address: ChainSpecificAddress(
+        'eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98',
+      ),
       tokens: ['DAI', 'sDAI'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

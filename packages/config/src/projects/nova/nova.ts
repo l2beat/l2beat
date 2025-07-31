@@ -1,4 +1,9 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
@@ -193,7 +198,9 @@ export const nova: ScalingProject = orbitStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
+      address: ChainSpecificAddress(
+        'eth:0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3',
+      ),
       sinceTimestamp: UnixTime(1659620187),
       tokens: ['DAI'],
       ...ESCROW.CANONICAL_EXTERNAL,
@@ -202,7 +209,9 @@ export const nova: ScalingProject = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf'),
+      address: ChainSpecificAddress(
+        'eth:0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf',
+      ),
       sinceTimestamp: UnixTime(1656305583),
       tokens: '*',
       description:
@@ -210,7 +219,9 @@ export const nova: ScalingProject = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
+      address: ChainSpecificAddress(
+        'eth:0x23122da8C581AA7E0d07A36Ff1f16F799650232f',
+      ),
       sinceTimestamp: UnixTime(1659620187),
       tokens: '*',
       ...ESCROW.CANONICAL_EXTERNAL,

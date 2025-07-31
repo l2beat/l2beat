@@ -22,6 +22,7 @@ export interface TotalCellProps {
         ether: number
         stablecoin: number
         associated: number
+        btc: number
       }
     | undefined
   associatedTokenSymbols: string[]
@@ -92,6 +93,7 @@ export function TotalCell(props: TotalCellProps) {
               associated={props.breakdown.associated}
               ether={props.breakdown.ether}
               stablecoin={props.breakdown.stablecoin}
+              btc={props.breakdown.btc}
               className="h-[3px] w-[180px]"
             />
           </div>
@@ -103,6 +105,7 @@ export function TotalCell(props: TotalCellProps) {
           associated={props.breakdown.associated}
           ether={props.breakdown.ether}
           stablecoin={props.breakdown.stablecoin}
+          btc={props.breakdown.btc}
           tvsWarnings={tvsWarnings}
           associatedTokenSymbols={props.associatedTokenSymbols}
         />

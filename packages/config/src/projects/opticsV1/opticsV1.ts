@@ -1,5 +1,5 @@
 import {
-  EthereumAddress,
+  ChainSpecificAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -36,7 +36,9 @@ export const opticsV1: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47'),
+        address: ChainSpecificAddress(
+          'eth:0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47',
+        ),
         tokens: '*',
       }),
     ],

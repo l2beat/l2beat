@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -140,7 +141,9 @@ export const dydx: ScalingProject = {
     associatedTokens: ['DYDX'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xD54f502e184B6B739d7D27a6410a67dc462D69c8'),
+        address: ChainSpecificAddress(
+          'eth:0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
+        ),
         sinceTimestamp: UnixTime(1613033682),
         tokens: ['USDC'],
         ...priorityExecutorUpgradeability,

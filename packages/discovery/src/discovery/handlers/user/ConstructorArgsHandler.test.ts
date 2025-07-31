@@ -84,7 +84,7 @@ describe(ConstructorArgsHandler.name, () => {
 
     it('falls back to extraction with block explorer if heuristic fails', async () => {
       /**
-       * You can achive the same result using:
+       * You can achieve the same result using:
        * @example
        * ```ts
        * const [ctorFragment] = new ethers.utils.Interface(sampleAbi).fragments
