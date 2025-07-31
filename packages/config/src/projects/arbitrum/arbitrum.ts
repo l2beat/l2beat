@@ -122,7 +122,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'https://arbiscan.io',
         'https://explorer.arbitrum.io/',
         'https://arbitrum.blockscout.com/',
-        'https://arbitrum.l2scan.co/',
       ],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
