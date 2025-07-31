@@ -31,4 +31,7 @@ export const EXPLORER_URLS: Record<string, string> = {
   everclear: 'https://scan.everclear.org',
   kinto: 'https://explorer.kinto.xyz',
   facet: 'https://explorer.facet.org',
+  gateway: 'https://gateway.explorer.zksync.io/address',
+  gnosis: 'https://gnosisscan.io/address',
+  zircuit: 'https://explorer.zircuit.com/address'
 }

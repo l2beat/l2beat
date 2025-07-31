@@ -22,5 +22,11 @@
     "address": "0xe8b013bEE7Bd603e2f0B4825638559d645A4C4CB",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "DisputeGameFactory_v1_2_0": {
+    "hash": "0x93342e3d1e616bd6c727a5f73b09c0811bdab764dc9ad7346278593fb66b3689",
+    "address": "0x33D1e8571a85a538ed3D5A4d88f46C112383439D",
+    "chain": "ethereum",
+    "blockNumber": 22995199
   }
 }

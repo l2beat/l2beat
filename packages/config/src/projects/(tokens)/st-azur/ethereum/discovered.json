@@ -1,8 +1,8 @@
 {
   "name": "st-azur",
   "chain": "ethereum",
-  "blockNumber": 22945159,
-  "configHash": "0xb1796eaf72ec8b28c23ebb221dd7a05972bc446a0ccac3411d7f655490694269",
+  "timestamp": 1753693931,
+  "configHash": "0x5c9be412fcc91f3de9509c8293d0580a97627c842c00ea1257b0955163d68ddd",
   "entries": [
     {
       "name": "RewardPoolV2",
@@ -13,7 +13,14 @@
         "0xa9291fc66798387bc6d07d6a47cc5d1573c07d5fa0464919eba895291a9a995a"
       ],
       "proxyType": "EIP1967 proxy",
-      "ignoreInWatchMode": ["clock", "totalIssued", "totalSupply"],
+      "ignoreInWatchMode": [
+        "clock",
+        "totalIssued",
+        "totalSupply",
+        "totalRequestedAmount",
+        "nextWithdrawalRequestId",
+        "exchangeRate"
+      ],
       "sinceTimestamp": 1723579643,
       "sinceBlock": 20521985,
       "values": {
@@ -47,17 +54,17 @@
         },
         "$upgradeCount": 2,
         "decimals": 18,
-        "exchangeRate": "1077442374975216915",
+        "exchangeRate": "1077494498221775027",
         "incentiveEndsAt": 1752844811,
         "incentiveStartedAt": 1750252811,
         "name": "Staked $AZUR",
-        "nextWithdrawalRequestId": 488,
+        "nextWithdrawalRequestId": 492,
         "owner": "eth:0x80cB7c007D448aF0822E7b7b2459012cdfb5A200",
         "reward": "241004000000000000000000",
         "rewardRate": "92979938271604938271604938271604938",
         "symbol": "stAZUR",
-        "totalRequestedAmount": "3519011053223579759547347",
-        "totalSupply": "25451940292709442821442780",
+        "totalRequestedAmount": "3615177277931764806373607",
+        "totalSupply": "24987023175066452793625054",
         "underlying": "eth:0x9E6be44cC1236eEf7e1f197418592D363BedCd5A",
         "withdrawalDelay": 1209600
       },
@@ -142,5 +149,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "ethereum": 23016672 },
   "permissionsConfigHash": "0xc4c127362212229a3cce7abdb28af548bbd6f3953967f5dd9b25af4324f21020"
 }

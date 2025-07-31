@@ -128,7 +128,7 @@ export const pNetwork: Bridge = {
 
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'ERC20 Vault V2',
           'Has special logic for handling inflation of PNT token.',
@@ -145,7 +145,7 @@ export const pNetwork: Bridge = {
   },
 
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'PNETWORK',

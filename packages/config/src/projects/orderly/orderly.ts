@@ -14,7 +14,7 @@ export const orderly: ScalingProject = opStackL2({
   additionalPurposes: ['Exchange'],
   discovery,
   reasonsForBeingOther: [
-    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
   ],
   display: {

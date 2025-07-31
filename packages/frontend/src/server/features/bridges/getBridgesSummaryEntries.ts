@@ -74,6 +74,7 @@ interface TvsData {
         ether: number
         stablecoin: number
         associated: number
+        btc: number
       }
     | undefined
   change: number | undefined

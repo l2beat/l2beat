@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import { solidityKeccak256 } from 'ethers/lib/utils'
 
 export const LAYERZERO_CONSTANTS = {
   PACKET_VERSION: 1,
@@ -96,22 +97,20 @@ export function createLayerZeroGuid(
   dstEid: number,
   receiver: string,
 ): string {
-  const nonceBytes = nonce.toString(16).padStart(16, '0')
+  const nonceBytes = '0x' + nonce.toString(16).padStart(16, '0')
 
-  const srcEidBytes = srcEid.toString(16).padStart(8, '0')
+  const srcEidBytes = '0x' + srcEid.toString(16).padStart(8, '0')
 
-  const senderBytes32 = normalizeAddress(sender).slice(2)
+  const senderBytes32 = '0x' + normalizeAddress(sender).slice(2)
 
-  const dstEidBytes = dstEid.toString(16).padStart(8, '0')
+  const dstEidBytes = '0x' + dstEid.toString(16).padStart(8, '0')
 
-  const receiverBytes32 = normalizeAddress(receiver).slice(2)
+  const receiverBytes32 = '0x' + normalizeAddress(receiver).slice(2)
 
-  const concatenated =
-    nonceBytes + srcEidBytes + senderBytes32 + dstEidBytes + receiverBytes32
-
-  const hash = createHash('sha256').update(concatenated, 'hex').digest('hex')
-
-  return '0x' + hash
+  return solidityKeccak256(
+    ['bytes', 'bytes', 'bytes', 'bytes', 'bytes'],
+    [nonceBytes, srcEidBytes, senderBytes32, dstEidBytes, receiverBytes32],
+  )
 }
 
 export function normalizeAddress(address: string): string {

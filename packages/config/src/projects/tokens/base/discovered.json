@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 32674389,
+  "timestamp": 1753687577,
   "configHash": "0x593213a3b90a8e6e3148ccfb62b67678dd08c3a79f8db6cc82ab1e51d88056d2",
   "entries": [
     {
@@ -319,7 +319,7 @@
           "base:0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
         ],
         "multisigThreshold": "2 of 9 (22%)",
-        "nonce": 257,
+        "nonce": 264,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -477,7 +477,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "base:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3729047181875425,
+        "totalSupply": 3696018810668433,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -652,7 +652,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 615339,
+        "nextAvailableNonce": 632818,
         "owner": "base:0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "base:0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -1482,5 +1482,6 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0xa0e7d8d9106e30543549214c7c718448837e4d435e7e4e391b43fc79f5beecb4"
+  "usedBlockNumbers": { "base": 33449115 },
+  "permissionsConfigHash": "0x39cdc97ea0a7da958785647edddc899c2882e1cb68140385c57fa36f8ea0ff17"
 }

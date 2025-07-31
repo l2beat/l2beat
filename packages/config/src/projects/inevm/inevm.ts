@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('inevm', 'arbitrum')
+const discovery = new ProjectDiscovery('inevm')
 
 export const inevm: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1709769600), // 2024-03-07
@@ -34,14 +34,18 @@ export const inevm: ScalingProject = orbitStackL3({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae'),
+      address: ChainSpecificAddress(
+        'arb1:0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae',
+      ),
       name: 'ERC20Gateway',
       description:
         'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',
       tokens: '*',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae'),
+      address: ChainSpecificAddress(
+        'arb1:0x173B8dd6960d8922DCF7eD29E245B1041Fcf71Ae',
+      ),
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
@@ -63,11 +67,12 @@ export const inevm: ScalingProject = orbitStackL3({
     ],
     gasTokens: ['INJ'],
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

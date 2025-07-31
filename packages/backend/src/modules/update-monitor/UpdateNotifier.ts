@@ -51,7 +51,6 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    blockNumber: number,
     chainId: ChainId,
     dependents: string[],
     unknownContracts: EthereumAddress[],
@@ -61,7 +60,7 @@ export class UpdateNotifier {
     await this.db.updateNotifier.insert({
       projectId: name,
       diff,
-      blockNumber: blockNumber,
+      timestamp: timestamp,
       chainId: chainId,
     })
 
@@ -92,7 +91,7 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      blockNumber,
+      timestamp,
       this.chainConverter.toName(chainId),
       dependents,
       nonce,
@@ -112,7 +111,7 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      blockNumber,
+      timestamp,
       this.chainConverter.toName(chainId),
       dependents,
       undefined,
@@ -124,7 +123,6 @@ export class UpdateNotifier {
     await this.updateMessagesService.storeAndPrune({
       projectId: name,
       chain: this.chainConverter.toName(chainId),
-      blockNumber,
       message: filteredWebMessage,
       timestamp,
     })
@@ -396,8 +394,9 @@ export async function canTrackedTxsBeAffected(
         return contractAddresses.includes(config.params.address.toString())
       case 'transfer':
         return (
-          contractAddresses.includes(config.params.from.toString()) ||
-          contractAddresses.includes(config.params.to.toString())
+          (config.params.from
+            ? contractAddresses.includes(config.params.from.toString())
+            : false) || contractAddresses.includes(config.params.to.toString())
         )
     }
   })

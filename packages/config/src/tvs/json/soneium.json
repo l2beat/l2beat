@@ -45,8 +45,7 @@
             "chain": "ethereum",
             "escrowAddress": "0x88e529A6ccd302c948689Cd5156C83D4614FAE92",
             "decimals": 18,
-            "sinceTimestamp": 1733134751,
-            "untilTimestamp": 1753380095
+            "sinceTimestamp": 1733134751
           },
           {
             "type": "balanceOfEscrow",
@@ -154,6 +153,32 @@
           {
             "name": "Chainlink CCIP",
             "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-RLP",
+      "priceId": "resolv-rlp",
+      "symbol": "RLP",
+      "name": "Resolv Liquidity Provider Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40017/large/orangeLogo..png?1725344586",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x35533f54740F1F1aA4179E57bA37039dfa16868B",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1750851847
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
           }
         ]
       }
@@ -414,6 +439,32 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-USR",
+      "priceId": "resolv-usr",
+      "symbol": "USR",
+      "name": "Resolv USD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb1b385542B6E80F77B94393Ba8342c3Af699f15c",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1750860741
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "soneium-vASTR",
       "priceId": "bifrost-voucher-astr",
       "symbol": "vASTR",
@@ -527,6 +578,32 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "soneium-wstUSR",
+      "priceId": "resolv-wstusr",
+      "symbol": "wstUSR",
+      "name": "Wrapped Staked USR",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
+        "chain": "soneium",
+        "decimals": 18,
+        "sinceTimestamp": 1750861045
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

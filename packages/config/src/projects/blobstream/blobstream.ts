@@ -13,9 +13,7 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
-const ethereumDiscovery = new ProjectDiscovery('blobstream')
-const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
-const baseDiscovery = new ProjectDiscovery('blobstream', 'base')
+const discovery = new ProjectDiscovery('blobstream')
 
 export const blobstream: BaseProject = {
   id: ProjectId('blobstream'),
@@ -66,8 +64,7 @@ export const blobstream: BaseProject = {
        Once a proving request is received, the off-chain prover generates the proof and relays it to Blobstream contract. The Blobstream contract verifies the proof with the corresponding verifier contract and, if successful, stores the data commitment in storage. <br /> 
   
        Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root.
-        By default, Blobstream on Ethereum is updated by the Succinct operator at a regular cadence of 4 hour.
-        For Blobstream on Arbitrum and Base, the update interval is 1 hour.
+        By default, Blobstream is updated by the Succinct operator at a regular cadence of 1 hour. Note that the update interval can vary across chains.
       `,
       references: [
         {
@@ -98,11 +95,7 @@ export const blobstream: BaseProject = {
     },
   },
   contracts: {
-    addresses: generateDiscoveryDrivenContracts([
-      ethereumDiscovery,
-      arbitrumDiscovery,
-      baseDiscovery,
-    ]),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -124,14 +117,6 @@ export const blobstream: BaseProject = {
       type: 'incident',
     },
   ],
-  permissions: generateDiscoveryDrivenPermissions([
-    ethereumDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-  ]),
-  discoveryInfo: getDiscoveryInfo([
-    ethereumDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-  ]),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

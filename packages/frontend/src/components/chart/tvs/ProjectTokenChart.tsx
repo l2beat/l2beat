@@ -98,7 +98,7 @@ export function ProjectTokenChart({
   const chartRange = useMemo(() => getChartRange(chartData), [chartData])
 
   return (
-    <section>
+    <div>
       <ChartControlsWrapper>
         <ProjectChartTimeRange range={chartRange} />
         <TvsChartTimeRangeControls
@@ -163,7 +163,7 @@ export function ProjectTokenChart({
           </div>
         )}
       </div>
-    </section>
+    </div>
   )
 }
 

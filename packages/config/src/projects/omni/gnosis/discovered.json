@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 40494132,
+  "timestamp": 1749466920,
   "configHash": "0x371d8b32076639b4b43e89defc75544fd9ca4e42d870063c710aa6a309609e9b",
   "entries": [
     {
@@ -683,7 +683,6 @@
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748854505,
       "sinceBlock": 40374619,
       "values": {
@@ -1625,5 +1624,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
+  "usedBlockNumbers": { "gnosis": 40494132 },
   "permissionsConfigHash": "0x052d6352604ac6ec6fb5a8a880a86ca59f07a26158fc68cb68187136537e8d03"
 }

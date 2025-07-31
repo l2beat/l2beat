@@ -5,7 +5,6 @@ import { command, number, positional, run, string } from 'cmd-ts'
 import { CHAINS, type Chain } from './chains'
 import { Decoder } from './Decoder'
 import { PROTOCOLS } from './protocols/protocols'
-import type { Message } from './types/Message'
 
 const args = {
   protocol: positional({
@@ -38,7 +37,7 @@ const cmd = command({
     const chains = setupChains(args, logger)
     const decoder = new Decoder(PROTOCOLS, chains, logger)
 
-    const messages: Message[] = await decoder.execute(args.protocol, [
+    const { messages, assets } = await decoder.execute(args.protocol, [
       {
         chain: args.chain1,
         block: args.block1,
@@ -49,23 +48,67 @@ const cmd = command({
       },
     ])
 
-    const outbound = messages.find((m) => m.direction === 'outbound')
-    assert(outbound, 'Outbound message not found, update decoder')
-    const inbound = messages.find(
-      (m) => m.direction === 'inbound' && m.matchingId === outbound?.matchingId,
-    )
-    assert(inbound, 'Inbound message not found, update decoder')
+    for (const outboundMessage of messages.filter(
+      (m) => m.direction === 'outbound',
+    )) {
+      const inboundMessage = messages.find(
+        (m) =>
+          m.direction === 'inbound' &&
+          m.matchingId === outboundMessage.matchingId,
+      )
+      if (!inboundMessage) {
+        continue
+      }
 
-    logger.info('Matching', {
-      latency: formatSeconds(inbound.blockTimestamp - outbound.blockTimestamp),
-      origin: chains
-        .find((c) => c.shortName === outbound.origin)
-        ?.getTxUrl(outbound.txHash),
-      destination: chains
-        .find((c) => c.shortName === inbound.destination)
-        ?.getTxUrl(inbound.txHash),
-      id: outbound.matchingId,
-    })
+      logger.info('Message matching', {
+        protocol: inboundMessage.protocol,
+        latency: formatSeconds(
+          inboundMessage.blockTimestamp - outboundMessage.blockTimestamp,
+        ),
+        origin: chains
+          .find((c) => c.shortName === outboundMessage.origin)
+          ?.getTxUrl(outboundMessage.txHash),
+        destination: chains
+          .find((c) => c.shortName === inboundMessage.destination)
+          ?.getTxUrl(inboundMessage.txHash),
+        id: outboundMessage.matchingId,
+      })
+    }
+
+    for (const outboundAsset of assets.filter(
+      (m) => m.direction === 'outbound',
+    )) {
+      const inboundAsset = assets.find(
+        (m) =>
+          m.direction === 'inbound' &&
+          m.matchingId === outboundAsset.matchingId,
+      )
+      if (!inboundAsset) {
+        continue
+      }
+
+      logger.info('Asset matching', {
+        application: inboundAsset.application,
+        amount: Number(outboundAsset.amount),
+        fee: Number(outboundAsset.amount - inboundAsset.amount),
+        latency: formatSeconds(
+          inboundAsset.blockTimestamp - outboundAsset.blockTimestamp,
+        ),
+        originTx: chains
+          .find((c) => c.shortName === outboundAsset.origin)
+          ?.getTxUrl(outboundAsset.txHash),
+        destinationTx: chains
+          .find((c) => c.shortName === inboundAsset.destination)
+          ?.getTxUrl(inboundAsset.txHash),
+        inputToken: chains
+          .find((c) => c.shortName === outboundAsset.origin)
+          ?.getAddressUrl(outboundAsset.token),
+        outputToken: chains
+          .find((c) => c.shortName === inboundAsset.destination)
+          ?.getAddressUrl(inboundAsset.token),
+        id: outboundAsset.matchingId,
+      })
+    }
   },
 })
 

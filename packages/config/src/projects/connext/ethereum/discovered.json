@@ -1,8 +1,8 @@
 {
   "name": "connext",
   "chain": "ethereum",
-  "blockNumber": 21285557,
-  "configHash": "0xdf60a200199cd8c5362036b889a07ad92fd42e063699e3b48a554bcc325df6c5",
+  "timestamp": 1753682687,
+  "configHash": "0xd8d81b28c10298af4a2c3702c9be6c5f39006e29f44e6b74f315711a3b1884b3",
   "entries": [
     {
       "address": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
@@ -31,8 +31,8 @@
         "MAX_TIMEOUT": 2592000,
         "MIN_TIMEOUT": 86400,
         "owner": "eth:0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493",
-        "proposed": "eth:0x0000000000000000000000000000000000000000",
-        "proposedTimestamp": 0,
+        "proposed": "eth:0xed7c5FEfE0790DB355b0316F41269006ecd87653",
+        "proposedTimestamp": 1753521239,
         "renounced": false,
         "routerOwnershipTimestamp": 0
       },
@@ -57,6 +57,11 @@
       "implementationNames": {
         "eth:0x5b9E4D0Dd21f4E071729A9eB522A2366AbeD149a": "FulfillInterpreter"
       }
+    },
+    {
+      "address": "eth:0xed7c5FEfE0790DB355b0316F41269006ecd87653",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -121,5 +126,6 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xb2030b2626dfd0da9688c4e24533d26d84d97494fbbee320dceadbe42e6300df"
+  "usedBlockNumbers": { "ethereum": 23015739 },
+  "permissionsConfigHash": "0x7d50df971908a9164c834454f24eb4da5a6846ba6d16e0be5e79372a9202752e"
 }

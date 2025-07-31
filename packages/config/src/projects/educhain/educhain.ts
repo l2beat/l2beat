@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,10 +6,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('educhain', 'arbitrum')
+const discovery = new ProjectDiscovery('educhain')
 
 export const educhain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1737072000), // 2025-01-17T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Gelato],
   additionalPurposes: ['Social'],
@@ -54,14 +55,18 @@ export const educhain: ScalingProject = orbitStackL3({
   associatedTokens: ['EDU'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x419e439e5c0B839d6e31d7C438939EEE1A4f4184'),
+      address: ChainSpecificAddress(
+        'arb1:0x419e439e5c0B839d6e31d7C438939EEE1A4f4184',
+      ),
       name: 'StandardGateway',
       description:
         'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination.',
       tokens: '*',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759'),
+      address: ChainSpecificAddress(
+        'arb1:0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759',
+      ),
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
@@ -81,5 +86,5 @@ export const educhain: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

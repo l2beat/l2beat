@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 22593509,
+  "timestamp": 1753449971,
   "configHash": "0x80c69257217a93514e84ec85fd25d47d63e23408592b9c0a77346cc49cc1474b",
   "entries": [
     {
@@ -14,7 +14,15 @@
       "name": "KintoFoundation",
       "address": "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "address": "eth:0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
@@ -264,7 +272,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
-        "nonce": 20,
+        "nonce": 21,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -340,7 +348,18 @@
     {
       "address": "eth:0x4a3BB34aDE10127752015A6aF6136da15fde636A",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
     },
     {
       "name": "RollupProxy",
@@ -403,13 +422,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2688,
+        "firstUnresolvedNode": 2801,
         "inbox": "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21107949,
-        "latestConfirmed": 2687,
-        "latestNodeCreated": 2700,
+        "latestConfirmed": 2800,
+        "latestNodeCreated": 2812,
         "loserStakeEscrow": "eth:0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -418,16 +437,20 @@
         "rollupDeploymentBlock": 18788587,
         "rollupEventInbox": "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
         "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "setValidatorCount": 4,
+        "setValidatorCount": 5,
         "stakerCount": 1,
         "stakeToken": "eth:0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": "50000000000000000",
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
+          "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
           "eth:0x2bfDA59220413DEd39dD0E443620b5277EcE6348",
           "eth:0x58028fFbc25aE2e12b96276bDB125955F41D41f3",
+          "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
           "eth:0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
           "eth:0x944eB0a2829A859959586b10D54229278534a696",
+          "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
+          "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1",
           "eth:0xe528E74302FFCF6F9F6a1c973968d98F0fDbad8f"
         ],
         "validatorUtils": "eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
@@ -635,7 +658,15 @@
       "name": "Certora 1",
       "address": "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "name": "ChallengeManager",
@@ -892,7 +923,7 @@
           "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 6357,
+        "delayedMessageCount": 6778,
         "inboxHistory": [
           "eth:0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
           "eth:0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
@@ -900,8 +931,8 @@
         "outboxHistory": ["eth:0x655761AD5FC251F414D6993A73184B0669F278c8"],
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "eth:0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 4787,
-        "sequencerReportedSubMessageCount": 874643
+        "sequencerMessageCount": 5129,
+        "sequencerReportedSubMessageCount": 904182
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -940,7 +971,18 @@
     {
       "address": "eth:0x8A577165f8ef813296043d5f75fF2F2F2349afFd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
     },
     {
       "name": "MamoriLabs3",
@@ -960,7 +1002,15 @@
       "name": "KintsugiFoundation",
       "address": "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "address": "eth:0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185",
@@ -987,7 +1037,18 @@
     {
       "address": "eth:0xad40f1440544475f4B70573a106F41dF1860598b",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
     },
     {
       "name": "Inbox",
@@ -1055,7 +1116,18 @@
     {
       "address": "eth:0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
@@ -1109,6 +1181,14 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722896903,
       "sinceBlock": 20465349,
@@ -1138,7 +1218,18 @@
     {
       "address": "eth:0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1" }
+          ]
+        }
+      ]
     },
     {
       "address": "eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39",
@@ -1230,7 +1321,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 262,
+        "nonce": 265,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1278,7 +1369,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 4787,
+        "batchCount": 5129,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "eth:0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -1306,7 +1397,7 @@
         "rollup": "eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 6355,
+        "totalDelayedMessagesRead": 6777,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -2103,5 +2194,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x8d7522bf880d8a7fc04e3b25b596692aceb44c06ebb3e882082d0bf0cdf5dc79"
+  "usedBlockNumbers": { "ethereum": 22996446 },
+  "permissionsConfigHash": "0x03811691b7d1b7df3f917cf6b8ff42ca2d36e6835a82353d5a4f6eded2083287"
 }

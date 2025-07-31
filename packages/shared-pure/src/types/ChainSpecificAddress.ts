@@ -41,6 +41,7 @@ const SHORT_TO_LONG_CHAIN_NAMES = {
   zircuit: 'zircuit',
   katana: 'katana',
   facet: 'facet',
+  gateway: 'gateway',
 } as const
 
 const LONG_TO_SHORT_CHAIN_NAMES = Object.fromEntries(

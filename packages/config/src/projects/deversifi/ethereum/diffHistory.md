@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xaec97a6efdf1332c3b4d5c94a8b0a523cf3cc653
+Generated with discovered.json: 0x6f6e56e31e42649fc14908f8779bc5ae73b7418e
 
 # Diff at Mon, 14 Jul 2025 12:44:58 GMT:
 
@@ -952,7 +952,7 @@ Generated with discovered.json: 0xbe7aa9d6888202e6db6653cea361e9478929504c
 
 ### Update on 10 Mar 2025:
 
-Rhino.fi upgrades their core contract to a simple withdraw contract that [transfered all funds to a multisig](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754) (labeled Rhino.fi treasury on etherscan). The current app.rhino.fi frontend points to new onchain escrows which act as simple EOA bridge escrows.
+Rhino.fi upgrades their core contract to a simple withdraw contract that [transferred all funds to a multisig](https://etherscan.io/tx/0x9c1692398b107161c7af2c1c02316d449bdf03b15e84b69170373b2864dba754) (labeled Rhino.fi treasury on etherscan). The current app.rhino.fi frontend points to new onchain escrows which act as simple EOA bridge escrows.
 
 On telegram their team promises a withdraw-only function to be deployed later today. We will keep the projects page up until we can link there.
 

@@ -1,7 +1,7 @@
 {
   "name": "hibachi",
   "chain": "arbitrum",
-  "blockNumber": 361069426,
+  "timestamp": 1753687629,
   "configHash": "0x4e1db2bd50baa98b17b8b4b24a341d32486bacc73d51a2caa4287450de89c6f6",
   "entries": [
     {
@@ -95,10 +95,10 @@
             "members": ["arb1:0x420eee5B429664F08f001786541acbE0F59feF5c"]
           }
         },
-        "accountsRoot": "0xef7d53b7776df079c78b7d901635abf6ba18e0b06ea0eee0f7dc6efe6f7db95a",
+        "accountsRoot": "0x5ee5446fefb0ab296b432deef9b81935d8b81829aef4067b420b0be1ddf93148",
         "activeHibachiChainIds": [1],
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-        "contractsRoot": "0xaaf9494cad6974fc2ecee8046bfe2e56e0bfff1c63f74d8b6e806d0530386c34",
+        "contractsRoot": "0xdc9d34aa370809356c2498116b88be1d0382c21613352fe11e8b34957917c77c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositReclaimTimeout": 86400,
         "exchangeVerificationAddress": "arb1:0x4aF802A931CADb2aF3a9Ec4C810A0485a2eF3610",
@@ -1103,5 +1103,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },
+  "usedBlockNumbers": { "arbitrum": 362381319 },
   "permissionsConfigHash": "0xe9a525d80996f3bce4d5cd1a7430d896ede903fbb5ba3f0948447f9c64c0108b"
 }

@@ -1,8 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -10,12 +6,13 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('game7', 'arbitrum')
+const discovery = new ProjectDiscovery('game7')
 
 const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 
 export const game7: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1738899615),
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -57,13 +54,15 @@ export const game7: ScalingProject = orbitStackL3({
   associatedTokens: ['G7'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(L1OrbitERC20Gateway.address),
+      address: L1OrbitERC20Gateway.address,
       name: L1OrbitERC20Gateway.name,
       description: L1OrbitERC20Gateway.description,
       tokens: '*',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x404922a9B29b4a5205a6074AbA31A7392BD28944'),
+      address: ChainSpecificAddress(
+        'arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944',
+      ),
       tokens: ['USDC'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description: 'Main entry point for users depositing USDC.',
@@ -81,5 +80,5 @@ export const game7: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

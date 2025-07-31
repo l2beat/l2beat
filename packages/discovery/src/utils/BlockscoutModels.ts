@@ -95,26 +95,30 @@ export type ContractSource = v.infer<typeof ContractSource>
 export const ContractSource = v.object({
   SourceCode: v.string(),
   ABI: v.string(),
-  AdditionalSources: v.array(
-    v.object({
-      Filename: v.string(),
-      SourceCode: v.string(),
-    }),
-  ),
+  AdditionalSources: v
+    .array(
+      v.object({
+        Filename: v.string(),
+        SourceCode: v.string(),
+      }),
+    )
+    .optional(),
   ContractName: v.string(),
   FileName: v.string(),
   CompilerVersion: v.string(),
   OptimizationUsed: v.string(),
-  OptimizationRuns: v.number(),
+  OptimizationRuns: v.number().optional(),
   EVMVersion: v.string(),
-  CompilerSettings: v.object({
-    libraries: v.record(v.string(), v.string()),
-    optimizer: v.object({
-      enabled: v.boolean(),
-      runs: v.number(),
-    }),
-    remappings: v.array(v.string()).optional(),
-  }),
+  CompilerSettings: v
+    .object({
+      libraries: v.record(v.string(), v.string()),
+      optimizer: v.object({
+        enabled: v.boolean(),
+        runs: v.number(),
+      }),
+      remappings: v.array(v.string()).optional(),
+    })
+    .optional(),
 })
 
 export type UnverifiedContractSource = v.infer<typeof UnverifiedContractSource>

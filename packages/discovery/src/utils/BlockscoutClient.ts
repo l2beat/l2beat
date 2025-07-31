@@ -122,7 +122,7 @@ export class BlockscoutClient implements IEtherscanClient {
     assert(result)
     const files: Record<string, string> = {}
     files[result.FileName] = result.SourceCode
-    for (const file of result.AdditionalSources) {
+    for (const file of result.AdditionalSources ?? []) {
       // NOTE(radomski): Blockscout API returns filenames with a leading
       // single quote. Potentially an error with string escaping on their
       // end.
@@ -138,7 +138,7 @@ export class BlockscoutClient implements IEtherscanClient {
       abi: jsonToHumanReadableAbi(result.ABI),
       solidityVersion: result.CompilerVersion,
       constructorArguments: '',
-      remappings: result.CompilerSettings.remappings ?? [],
+      remappings: result.CompilerSettings?.remappings ?? [],
       files,
     }
   }

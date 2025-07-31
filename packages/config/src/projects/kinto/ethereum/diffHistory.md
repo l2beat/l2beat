@@ -1,3 +1,107 @@
+Generated with discovered.json: 0xfd991e98ea0c0771b32c4d8200e1f3d30ea2e3f0
+
+# Diff at Fri, 25 Jul 2025 13:26:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@346150684eb21ba72c2fd55d5ba7151717f34745 block: 22593509
+- current block number: 22996446
+
+## Description
+
+    Kinto has added SC members to the validator list to satisfy the new stage 1 requirement.
+
+## Watched changes
+
+```diff
+    EOA KintoFoundation (0x08E674c4538caE03B6c05405881dDCd95DcaF5a8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}]
+    }
+```
+
+```diff
+    EOA  (0x4a3BB34aDE10127752015A6aF6136da15fde636A) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"}]}]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        4
++        5
+      values.validators.0:
++        "eth:0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+      values.validators.3:
++        "eth:0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621"
+      values.validators.6:
++        "eth:0x94561e98DD5E55271f91A103e4979aa6C493745E"
+      values.validators.7:
++        "eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"
+    }
+```
+
+```diff
+    EOA Certora 1 (0x5FB5040dfC5B8b9Ea40dFBd881188Ec85cDC0621) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}]
+    }
+```
+
+```diff
+    EOA  (0x8A577165f8ef813296043d5f75fF2F2F2349afFd) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"}]}]
+    }
+```
+
+```diff
+    EOA KintsugiFoundation (0x94561e98DD5E55271f91A103e4979aa6C493745E) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}]
+    }
+```
+
+```diff
+    EOA  (0xad40f1440544475f4B70573a106F41dF1860598b) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"}]}]
+    }
+```
+
+```diff
+    EOA  (0xCb5BCC84741b379BFa0968b841C5de1fC9240CBd) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"}]}]
+    }
+```
+
+```diff
+    contract Turnkey Multisig (0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1) {
+    +++ description: None
+      directlyReceivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}]
+    }
+```
+
+```diff
+    EOA  (0xDcbb957bF991A0b252Fd996946Ea27E51ECabA69) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"validate","from":"eth:0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"eth:0xD98B32e5D0Dcb5853e498225a15447a59b7a40e1"}]}]
+    }
+```
+
 Generated with discovered.json: 0xd61dec63ecc31da86afb0b987cd2c49c7214bfb6
 
 # Diff at Mon, 14 Jul 2025 12:46:56 GMT:

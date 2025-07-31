@@ -1,4 +1,40 @@
-Generated with discovered.json: 0xdb782e3c3d06982001c1cc4709377f02812e04d3
+Generated with discovered.json: 0xaab6317dad6cbfafe886dabf6b8d15e5e668d1ca
+
+# Diff at Thu, 31 Jul 2025 10:58:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract EthereumzkLink (0x5fD9F73286b7E8683Bab45019C94553b93e015Cf) {
+    +++ description: None
+      name:
+-        "zkLink"
++        "EthereumzkLink"
+    }
+```
+
+```diff
+    contract EthereumL1ERC20Bridge (0xAd16eDCF7DEB7e90096A259c81269d811544B6B6) {
+    +++ description: None
+      name:
+-        "L1ERC20Bridge"
++        "EthereumL1ERC20Bridge"
+    }
+```
+
+Generated with discovered.json: 0xe97119018539f81a5b2784d67ac5c1e95a1c548a
 
 # Diff at Mon, 14 Jul 2025 12:47:21 GMT:
 

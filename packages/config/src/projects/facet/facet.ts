@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
   EXITS,
@@ -189,6 +189,15 @@ export const facet: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
       FALLBACK_TIMEOUT_SECS,
     ),
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: ChainSpecificAddress(
+        'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
+      ),
+      tokens: ['ETH'],
+      description: 'Fast bridge contract.',
+    }),
+  ],
   },
 
   technology: {

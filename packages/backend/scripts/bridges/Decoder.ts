@@ -4,6 +4,7 @@ import { assert } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { Chain } from './chains'
 import type { Protocol } from './protocols/protocols'
+import type { Asset } from './types/Asset'
 import type { Message } from './types/Message'
 import { logToViemLog } from './utils/viem'
 
@@ -19,6 +20,7 @@ export class Decoder {
     assert(decoder, `${protocol}: Protocol not found`)
 
     const messages: Message[] = []
+    const assets: Asset[] = []
 
     for (const config of configs) {
       const chain = this.chains.find((c) => c.name === config.chain)
@@ -33,31 +35,66 @@ export class Decoder {
       this.logger.info(`Running decoder for ${protocol}`)
       for (const transaction of block.transactions) {
         assert(transaction.hash)
-        const decoded = decoder(chain, {
-          hash: transaction.hash,
-          blockNumber: block.number,
-          blockTimestamp: block.timestamp,
-          logs: (logsByTx[transaction.hash] ?? []).map(logToViemLog),
-        })
-        if (decoded) {
-          messages.push(decoded)
-          this.logger.info(`Decoded: ${decoded.direction} (${decoded.type})`)
-          this.logger.info(
-            'INPUT: Transaction with logs ./scripts/bridges/types/TransactionWithLogs.ts',
+        for (const log of logsByTx[transaction.hash] ?? []) {
+          const decoded = await decoder(
+            chain,
             {
-              hash: transaction.hash,
+              log: logToViemLog(log),
+              transactionHash: transaction.hash,
               blockNumber: block.number,
               blockTimestamp: block.timestamp,
-              logs: `Array<${(logsByTx[transaction.hash] ?? []).length}>`,
+              transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+                logToViemLog,
+              ),
             },
+            chain.rpc,
           )
-          this.logger.info(
-            'OUTPUT: Message ./scripts/bridges/types/Message.ts',
-            decoded,
-          )
+          if (decoded?.type === 'message') {
+            messages.push(decoded)
+            this.logger.info(
+              `MESSAGE ${decoded.direction} (${decoded.customType})`,
+              {
+                input: {
+                  interface:
+                    'DecoderInput ./scripts/bridges/types/DecoderInput.ts',
+                  log: logToViemLog(log),
+                  transactionHash: transaction.hash,
+                  blockNumber: block.number,
+                  blockTimestamp: block.timestamp,
+                  logs: `Array<${(logsByTx[transaction.hash] ?? []).length}>`,
+                },
+                output: {
+                  interface:
+                    'OUTPUT: Message ./scripts/bridges/types/Message.ts',
+                  ...decoded,
+                },
+              },
+            )
+          }
+
+          if (decoded?.type === 'asset') {
+            assets.push(decoded)
+            this.logger.info(
+              `ASSET ${decoded.direction} (${decoded.customType})`,
+              {
+                input: {
+                  interface:
+                    'INPUT: Transaction with logs ./scripts/bridges/types/TransactionWithLogs.ts',
+                  hash: transaction.hash,
+                  blockNumber: block.number,
+                  blockTimestamp: block.timestamp,
+                  logs: `Array<${(logsByTx[transaction.hash] ?? []).length}>`,
+                },
+                output: {
+                  interface: 'OUTPUT: Asset ./scripts/bridges/types/Asset.ts',
+                  ...decoded,
+                },
+              },
+            )
+          }
         }
       }
     }
-    return messages
+    return { messages, assets }
   }
 }

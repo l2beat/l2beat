@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -69,13 +73,17 @@ export const real: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0xfC89B875970122E24C6C5ADd4Dea139443943ea7'),
+      address: ChainSpecificAddress(
+        'eth:0xfC89B875970122E24C6C5ADd4Dea139443943ea7',
+      ),
       tokens: '*',
       description:
         "Default Gateway for non-native tokens. On depositing, a generic 'wrapped' version of the escrowed token is minted on the L2.",
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x679D4C1cC6855C57726BEA1784F578315d6431f6'),
+      address: ChainSpecificAddress(
+        'eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6',
+      ),
       tokens: ['stETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -115,5 +123,5 @@ export const real: ScalingProject = orbitStackL2({
       url: 'https://x.com/donnoh_eth/status/1937136543195398578',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
-const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
 const chainId = 8453
 
@@ -19,7 +18,6 @@ export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['base']: l2Discovery },
   display: {
     name: 'Base Chain',
     slug: 'base',
@@ -51,14 +49,18 @@ export const base: ScalingProject = opStackL2({
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+      address: ChainSpecificAddress(
+        'eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3'),
+      address: ChainSpecificAddress(
+        'eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3',
+      ),
       tokens: ['USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -180,7 +182,7 @@ export const base: ScalingProject = opStackL2({
         fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
-        principle: false,
+        principle: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
@@ -235,7 +237,7 @@ export const base: ScalingProject = opStackL2({
     },
   ],
   upgradesAndGovernance:
-    'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Optimism Security Council multisig, with a Safe Module that allows the OP Foundation to act through it to stop withdrawals in the whole Superchain, blacklist dispute games, or deactivate the fault proof system entirely in case of emergencies. The OP Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
+    'All contracts are upgradable by a `ProxyAdmin` contract which is controlled by a nested 2/2 `Base Governance Multisig` composed by the `Base Coordinator Multisig` and the OP Foundation. The `Base Coordinator Multisig` is a 2/2 controlled by the Base Security Council multisig and the Base team multisig. The Guardian role is assigned to the Security Council multisig, with a Safe Module that limits the Optimism Foundation to act through it to stop withdrawals in the whole Superchain or specific individual chains. Each pause automatically expires after 3 months if not extended or unpaused by the Security Council. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `Base Multisig 1` via the SystemConfig contract. The Base Governance multisig can also recover dispute bonds in case of bugs that would distribute them incorrectly.',
   nonTemplateContractRisks: {
     category: 'Funds can be stolen if',
     text: 'a contract receives a malicious code upgrade. Upgrades must be approved by 3 parties: Base Security Council, BaseMultisig2 and the OpFoundationOperationsSafe. There is no delay on upgrades.',

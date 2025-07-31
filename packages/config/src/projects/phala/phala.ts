@@ -1,6 +1,5 @@
 import {
   ChainSpecificAddress,
-  EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
@@ -111,12 +110,16 @@ export const phala: ScalingProject = {
     },
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521'),
+        address: ChainSpecificAddress(
+          'eth:0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521',
+        ),
         sinceTimestamp: UnixTime(1734388655),
         tokens: '*',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A'),
+        address: ChainSpecificAddress(
+          'eth:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A',
+        ),
         sinceTimestamp: UnixTime(1734388655),
         tokens: ['ETH'],
       }),

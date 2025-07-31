@@ -615,7 +615,14 @@
                                 "properties": {
                                   "coingeckoId": { "type": "string" },
                                   "category": {
-                                    "enum": ["ether", "stablecoin", "other"]
+                                    "enum": [
+                                      "ether",
+                                      "stablecoin",
+                                      "btc",
+                                      "rwaRestricted",
+                                      "rwaPublic",
+                                      "other"
+                                    ]
                                   },
                                   "source": {
                                     "enum": ["canonical", "external", "native"]
@@ -650,6 +657,11 @@
                                 }
                               }
                             },
+                            "required": ["type"]
+                          },
+                          {
+                            "type": "object",
+                            "properties": { "type": { "const": "tradable" } },
                             "required": ["type"]
                           }
                         ]

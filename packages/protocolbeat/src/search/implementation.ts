@@ -18,7 +18,7 @@ export type SearchResults =
       entries: ApiCodeSearchResponse['matches']
     }
 
-async function serachContractQuery(
+async function searchContractQuery(
   project: string,
   searchTerm: string,
 ): Promise<SearchResults> {
@@ -104,5 +104,5 @@ export async function searchQuery(
   if (isProjectSearchTerm(searchTerm)) {
     return await searchProjectQuery(searchTerm)
   }
-  return await serachContractQuery(project, searchTerm)
+  return await searchContractQuery(project, searchTerm)
 }

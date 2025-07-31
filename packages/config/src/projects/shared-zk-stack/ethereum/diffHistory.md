@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x5f4eddf7ef832dc153463e0b2b0da0eba8225030
+Generated with discovered.json: 0xb3a9b1f7871727dcd32d8fa65577ba180373643b
 
 # Diff at Thu, 24 Jul 2025 08:45:45 GMT:
 
@@ -5999,7 +5999,7 @@ Generated with discovered.json: 0x7a9585ff0df7f4aa277f5502d867069cae9ccba3
 
 ## Description
 
-update 03/11: old owner (PUH) is fully transfered, new contracts are governing.
+update 03/11: old owner (PUH) is fully transferred, new contracts are governing.
 
 Onchain execution of [[ZIP-5] Upgrade Governance Contracts](https://www.tally.xyz/gov/zksync/proposal/32477831455745537024214395992964479454779258818502397012096084176779102554510?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f).
 

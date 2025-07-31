@@ -2,5 +2,16 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "mint",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x2b3F201543adF73160bA42E1a5b7750024F30420"]
+  "initialAddresses": ["eth:0x2b3F201543adF73160bA42E1a5b7750024F30420"],
+  "overrides": {
+    "eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662": {
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+    },
+    "eth:0x3E2986901f7149b61C2F11603b165BAf9D33d531": {
+      "fields": {
+        "proposer": { "permissions": [{ "type": "propose" }] },
+        "challenger": { "permissions": [{ "type": "challenge" }] }
+      }
+    }
+  }
 }

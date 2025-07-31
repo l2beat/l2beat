@@ -75,6 +75,25 @@
     },
     {
       "mode": "auto",
+      "id": "facet-ETH-external",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "native",
+        "chain": "ethereum",
+        "escrowAddress": "0x0000000000000b07ED001607f5263D85bf28Ce4C",
+        "decimals": 18,
+        "sinceTimestamp": 1734701579
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "facet-WETH",
       "priceId": "weth",
       "symbol": "WETH",

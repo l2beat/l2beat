@@ -169,6 +169,7 @@ interface OrbitStackConfigCommon {
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   stackedRiskView?: Partial<ProjectScalingRiskView>
+  hostChain: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
@@ -491,9 +492,7 @@ function orbitStackCommon(
           [
             templateVars.discovery.getEscrowDetails({
               includeInTotal: type === 'layer2',
-              address: ChainSpecificAddress.address(
-                templateVars.bridge.address,
-              ),
+              address: templateVars.bridge.address,
               tokens: trackedGasTokens ?? ['ETH'],
               description: trackedGasTokens
                 ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
@@ -700,7 +699,7 @@ function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): ScalingProject {
   const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
-  const hostChain = templateVars.discovery.chain
+  const hostChain = templateVars.hostChain
 
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)

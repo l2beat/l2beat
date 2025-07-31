@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "zircuit",
-  "blockNumber": 15364203,
+  "timestamp": 1753687757,
   "configHash": "0x127004c822d62f183c8278cd5ab897a2d75c2988addb86ca14e4ffd3e27762c9",
   "entries": [
     {
@@ -39,21 +39,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 602997202,
+        "basefee": 294515603,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x860409be6049dd06c3bfe74926a7a552c3277fdd865315938507dfb5731814cc",
+        "hash": "0x0acc928251b1f6dcdad1a042f1be37ab222eeed394619e6908a57a99301cf5ae",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22765716,
+        "number": 23016159,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 0,
-        "timestamp": 1750664615,
+        "timestamp": 1753687751,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -119,7 +119,11 @@
       "name": "GnosisSafe",
       "address": "zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
       "type": "Contract",
-      "unverified": true,
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
@@ -146,6 +150,7 @@
           "role": ".owner"
         }
       ],
+      "ignoreInWatchMode": ["nonce"],
       "values": {
         "$immutable": false,
         "$implementation": "zircuit:0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
@@ -162,24 +167,13 @@
         "$threshold": 6,
         "domainSeparator": "0x0e6beaeca7fa9d76ff797b4cb9b1613246b764489fd9feeb5ac844c73acdd8c9",
         "getChainId": 48900,
-        "getOwners": [
-          "zircuit:0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
-          "zircuit:0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966",
-          "zircuit:0x63cbB9fA540F6249AE4A3576f48BF07609b3a355",
-          "zircuit:0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4",
-          "zircuit:0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec",
-          "zircuit:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
-          "zircuit:0x62C688FCa995e07632D64A9586896BB7EcD68567",
-          "zircuit:0x38809210f69ed6204E276d2Be6b15cd530698679"
-        ],
-        "getThreshold": 6,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 8 (75%)",
         "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "",
+        "zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38": "GnosisSafeProxy",
         "zircuit:0x69f4D1788e39c87893C980c06EdF4b7f686e2938": "GnosisSafe"
       }
     },
@@ -280,6 +274,9 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
+    "zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38": [
+      "constructor(address _singleton)"
+    ],
     "zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
       "function DEPOSITOR_ACCOUNT() view returns (address)",
       "function baseFeeScalar() view returns (uint32)",
@@ -306,7 +303,9 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xcd1b0abf9f22461ff80d58e65eddf15d64a125913c047f2c8e3e33080ede0ecf"
+  "usedBlockNumbers": { "zircuit": 16875771 },
+  "permissionsConfigHash": "0x09746112268d01a5544934017489fc0aa827bb2840230953dc985844f73f5b0d"
 }

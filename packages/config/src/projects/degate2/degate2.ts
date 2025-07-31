@@ -1,5 +1,6 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -96,7 +97,9 @@ export const degate2: ScalingProject = {
     associatedTokens: ['DG'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xF13e21653AEB763595D5E4baA1dC115689Da49b9'),
+        address: ChainSpecificAddress(
+          'eth:0xF13e21653AEB763595D5E4baA1dC115689Da49b9',
+        ),
         sinceTimestamp: UnixTime(1693304807),
         tokens: '*',
       }),
@@ -254,7 +257,7 @@ export const degate2: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'DefaultDepositContract Owner',
@@ -279,7 +282,7 @@ export const degate2: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
         discovery.getContractDetails(
           'LoopringIOExchangeOwner',

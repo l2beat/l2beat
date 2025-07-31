@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -132,7 +133,9 @@ export const katana: ScalingProject = {
     },
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
+        address: ChainSpecificAddress(
+          'eth:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
+        ),
         tokens: '*',
         sharedEscrow: {
           type: 'AggLayer',

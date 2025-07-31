@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xd08ff2017713b7d7bf5ebfdf63ac24e849f490de
+Generated with discovered.json: 0xff73bae1e8be12da793ade673d6b5c79f2cc4b6d
 
 # Diff at Mon, 14 Jul 2025 12:45:06 GMT:
 
@@ -4855,7 +4855,7 @@ Generated with discovered.json: 0xc3e8941178b3803db5522df6ac9a70c1c4868b70
 
 ## Description
 
-frxETH owner transfered to a 2-day timelock.
+frxETH owner transferred to a 2-day timelock.
 
 ## Watched changes
 

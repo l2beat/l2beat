@@ -5246,7 +5246,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1699979567,
       "coingeckoListingTimestamp": 1710979200,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "chainId": 1,
       "source": "canonical",
@@ -8870,6 +8870,50 @@
       }
     },
     {
+      "name": "Resolv Liquidity Provider Token",
+      "coingeckoId": "resolv-rlp",
+      "address": "0x35533f54740F1F1aA4179E57bA37039dfa16868B",
+      "symbol": "RLP",
+      "decimals": 18,
+      "deploymentTimestamp": 1750851847,
+      "coingeckoListingTimestamp": 1725321600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40017/large/orangeLogo..png?1725344586",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Resolv USD",
+      "coingeckoId": "resolv-usr",
+      "address": "0xb1b385542B6E80F77B94393Ba8342c3Af699f15c",
+      "symbol": "USR",
+      "decimals": 18,
+      "deploymentTimestamp": 1750860741,
+      "coingeckoListingTimestamp": 1725148800,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Solv BTC",
       "coingeckoId": "solv-btc",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
@@ -9032,6 +9076,28 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wrapped Staked USR",
+      "coingeckoId": "resolv-wstusr",
+      "address": "0x2a52B289bA68bBd02676640aA9F605700c9e5699",
+      "symbol": "wstUSR",
+      "decimals": 18,
+      "deploymentTimestamp": 1750861045,
+      "coingeckoListingTimestamp": 1736553600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
       "chainId": 1868,
       "source": "external",
       "supply": "totalSupply",
@@ -10879,7 +10945,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1719612631,
       "coingeckoListingTimestamp": 1720656000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
       "chainId": 8453,
       "source": "external",
@@ -14674,6 +14740,78 @@
       "coingeckoListingTimestamp": 1751587200,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/67047/large/ausd.png?1751587801",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Jito Staked SOL",
+      "coingeckoId": "jito-staked-sol",
+      "address": "0x6C16E26013f2431e8B2e1Ba7067ECCcad0Db6C52",
+      "symbol": "JitoSOL",
+      "decimals": 18,
+      "deploymentTimestamp": 1750409841,
+      "coingeckoListingTimestamp": 1667260800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28046/large/JitoSOL-200.png?1696527060",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1750956642,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Solana (Universal)",
+      "coingeckoId": "wrapped-solana-universal",
+      "address": "0x9B8Df6E244526ab5F6e6400d331DB28C8fdDdb55",
+      "symbol": "uSOL",
+      "decimals": 18,
+      "deploymentTimestamp": 1749138957,
+      "coingeckoListingTimestamp": 1724976000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39987/large/UA-SOL_1.png?1725027946",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Sui (Universal)",
+      "coingeckoId": "wrapped-sui-universal",
+      "address": "0xb0505e5a99abd03d94a1169e638B78EDfEd26ea4",
+      "symbol": "uSUI",
+      "decimals": 18,
+      "deploymentTimestamp": 1749138998,
+      "coingeckoListingTimestamp": 1727827200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50482/large/UA-SUI-PAD.png?1727888681",
       "chainId": 747474,
       "source": "native",
       "supply": "totalSupply"

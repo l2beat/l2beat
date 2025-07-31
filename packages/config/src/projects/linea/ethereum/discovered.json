@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22673062,
+  "timestamp": 1753682855,
   "configHash": "0x05298ee2849cf50750a14ce653425c692151101b6a24c0d120f1ec3e468edaaa",
   "entries": [
     {
@@ -303,6 +303,54 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Delay",
+      "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+      "type": "Contract",
+      "template": "gnosisSafeModules/ZodiacDelay",
+      "sourceHashes": [
+        "0x6fa89ecef1d104e0b7fd7adc29f3bbfbd1a0fb71fe67422181d1201980ec2d56"
+      ],
+      "proxyType": "gnosis safe zodiac module",
+      "description": "A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 90d, if registered as a module there.",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+          "role": ".GnosisSafe_modules"
+        }
+      ],
+      "ignoreInWatchMode": ["txNonce", "queueNonce"],
+      "sinceTimestamp": 1753454807,
+      "sinceBlock": 22996844,
+      "values": {
+        "$immutable": false,
+        "avatar": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+        "getGuard": "eth:0x0000000000000000000000000000000000000000",
+        "guard": "eth:0x0000000000000000000000000000000000000000",
+        "owner": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+        "queueNonce": 0,
+        "target": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+        "txCooldown": 7776000,
+        "txCooldownFmt": "90d",
+        "txExpiration": 0,
+        "txNonce": 0,
+        "ZodiacModule_avatar": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
+        "ZodiacModule_guard": "eth:0x0000000000000000000000000000000000000000",
+        "ZodiacModule_modules": [
+          "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+        ],
+        "ZodiacModule_target": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      },
+      "implementationNames": {
+        "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": "Delay"
+      }
+    },
+    {
+      "address": "eth:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Linea Multisig 1",
       "address": "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
@@ -318,6 +366,19 @@
           "from": "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
           "role": ".defaultAdminAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
+          "role": ".owner",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
         },
         {
           "permission": "interact",
@@ -356,6 +417,19 @@
           "permission": "interact",
           "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions.",
+          "role": ".proposerAC",
+          "via": [
+            { "address": "eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051" },
+            {
+              "address": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+              "delay": 7776000
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
           "role": ".proposerAC"
         },
         {
@@ -378,6 +452,12 @@
         }
       ],
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "delay": 7776000,
+          "role": ".ZodiacModule_modules"
+        },
         {
           "permission": "act",
           "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
@@ -469,6 +549,12 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436",
+          "description": "enable/disable the module, set delays and expiration of transactions, set the target.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "eth:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions.",
           "role": ".proposerAC"
@@ -483,16 +569,18 @@
         "$members": [
           "eth:0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
           "eth:0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
-          "eth:0xF112a2438a4e08836046D587350f9315C0eAE300",
+          "eth:0x7E55b79A01BD9125CD213Bc9F533d21Eb3bD68c5",
           "eth:0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
           "eth:0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
         ],
         "$threshold": 3,
         "domainSeparator": "0xc00e33af56f8ccba4ad8898e0858c3b0d9b46e751023faec112ed32395a3dc89",
         "getChainId": 1,
-        "GnosisSafe_modules": [],
+        "GnosisSafe_modules": [
+          "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436"
+        ],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 2,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -645,11 +733,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xf30b8034199eb9d3b4081365c97ac996b322efc41cacc995955bf1bd4e9fd188",
-        "currentFinalizedState": "0x7dfe33f2c4924bbab85f8233dfa63f5dc0538821b8a854dec7e828b1b764d284",
+        "currentFinalizedShnarf": "0xdb4f1ac51759540e6948b5585325b223079cf51492b6b9255a1b2b8807f0cdc3",
+        "currentFinalizedState": "0x83db020fc68c85e37e9027c768fe333f7617f912bdf1e8ac19914ffb5e73475a",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "104729093605821426455",
+        "currentPeriodAmountInWei": "242797681000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -816,11 +904,6 @@
       "implementationNames": {
         "eth:0xED39C0C41A7651006953AB58Ecb3039363620995": "PlonkVerifierMainnetFull"
       }
-    },
-    {
-      "address": "eth:0xF112a2438a4e08836046D587350f9315C0eAE300",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Roles",
@@ -1267,6 +1350,48 @@
     "eth:0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
+    "eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436": [
+      "constructor(address _owner, address _avatar, address _target, uint256 _cooldown, uint256 _expiration)",
+      "event AvatarSet(address indexed previousAvatar, address indexed newAvatar)",
+      "event ChangedGuard(address guard)",
+      "event DelaySetup(address indexed initiator, address indexed owner, address indexed avatar, address target)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TargetSet(address indexed previousTarget, address indexed newTarget)",
+      "event TransactionAdded(uint256 indexed queueNonce, bytes32 indexed txHash, address to, uint256 value, bytes data, uint8 operation)",
+      "function avatar() view returns (address)",
+      "function disableModule(address prevModule, address module)",
+      "function enableModule(address module)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function executeNextTx(address to, uint256 value, bytes data, uint8 operation)",
+      "function getGuard() view returns (address _guard)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation) pure returns (bytes32)",
+      "function getTxCreatedAt(uint256 _nonce) view returns (uint256)",
+      "function getTxHash(uint256 _nonce) view returns (bytes32)",
+      "function guard() view returns (address)",
+      "function isModuleEnabled(address _module) view returns (bool)",
+      "function owner() view returns (address)",
+      "function queueNonce() view returns (uint256)",
+      "function renounceOwnership()",
+      "function setAvatar(address _avatar)",
+      "function setGuard(address _guard)",
+      "function setTarget(address _target)",
+      "function setTxCooldown(uint256 cooldown)",
+      "function setTxExpiration(uint256 expiration)",
+      "function setTxNonce(uint256 _nonce)",
+      "function setUp(bytes initParams)",
+      "function skipExpired()",
+      "function target() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function txCooldown() view returns (uint256)",
+      "function txCreatedAt(uint256) view returns (uint256)",
+      "function txExpiration() view returns (uint256)",
+      "function txHash(uint256) view returns (bytes32)",
+      "function txNonce() view returns (uint256)"
+    ],
     "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
     ],
@@ -1448,6 +1573,7 @@
     "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
     "global/UpgradeableBeacon": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "gnosisSafeModules/ZodiacDelay": "0x1cf1f83927c30dff78d2b2b635f9995b93db52502fcae1b9478e1dd4664540c5",
     "linea/BridgedToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/CallForwardingProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "linea/LineaRollup": "0x62179b632448b6fa5622bfea4240428dcd0cd7f2fd455914a05b040313014dfe",
@@ -1455,5 +1581,6 @@
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x4c6af447ba9a35c5cbaaf2487287f4ee5306f1bcb2f6370f592cc30e4419afcf"
+  "usedBlockNumbers": { "ethereum": 23015753 },
+  "permissionsConfigHash": "0x773ff326c146c9f0de4cc0ba06cd29cedfc3440f60b6e705660620ebcc55faaf"
 }

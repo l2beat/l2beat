@@ -176,7 +176,7 @@ function CustomTooltip({
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
-        {payload.map((entry, index) => {
+        {payload.slice(0, 20).map((entry, index) => {
           if (entry.type === 'none') return null
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
@@ -204,6 +204,11 @@ function CustomTooltip({
             </div>
           )
         })}
+        {payload.length > 20 && (
+          <div className="font-medium text-label-value-14 text-secondary">
+            + {payload.length - 20} more
+          </div>
+        )}
       </div>
     </ChartTooltipWrapper>
   )
