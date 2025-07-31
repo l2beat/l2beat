@@ -6,7 +6,7 @@ import {
 import keyBy from 'lodash/keyBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRange } from '~/utils/range/range'
+import { getTimestampedValuesRange } from '~/utils/range/range'
 import { isTvsSynced } from './isTvsSynced'
 import type { TvsChartRange } from './range'
 import { rangeToResolution } from './range'
@@ -31,7 +31,7 @@ export async function getSummedTvsValues(
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const [from, to] = getRange(range, resolution, {
+  const [from, to] = getTimestampedValuesRange(range, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 

@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRange } from '~/utils/range/range'
+import { getTimestampedValuesRange } from '~/utils/range/range'
 import {
   getSummedTvsValues,
   type SummedTvsValues,
@@ -149,7 +149,7 @@ function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
   const resolution = rangeToResolution({ type: range })
-  const [from, to] = getRange({ type: range }, resolution)
+  const [from, to] = getTimestampedValuesRange({ type: range }, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

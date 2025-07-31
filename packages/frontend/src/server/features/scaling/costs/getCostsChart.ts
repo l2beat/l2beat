@@ -3,7 +3,7 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRange } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
 import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
@@ -137,7 +137,7 @@ function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution({ type: timeRange })
-  const [from, to] = getRange(
+  const [from, to] = getBucketValuesRange(
     timeRange === 'max' ? { type: '1y' } : { type: timeRange },
     resolution,
   )

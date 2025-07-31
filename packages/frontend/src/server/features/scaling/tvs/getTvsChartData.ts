@@ -2,7 +2,7 @@ import { assert } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRange } from '~/utils/range/range'
+import { getTimestampedValuesRange } from '~/utils/range/range'
 import { getEthPrices } from './utils/getEthPrices'
 import {
   getSummedTvsValues,
@@ -132,7 +132,7 @@ function getChartData(
 
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
-  const [from, to] = getRange(range, resolution)
+  const [from, to] = getTimestampedValuesRange(range, resolution)
   const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
   return {

@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
-import { getRange } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const DaThroughputTimeRangeValues = [
@@ -24,7 +24,7 @@ export function getThroughputRange(
     | { type: DataPostedTimeRange }
     | { type: 'custom'; from: number; to: number },
 ): [UnixTime | null, UnixTime] {
-  return getRange(range, rangeToResolution(range), {
+  return getBucketValuesRange(range, rangeToResolution(range), {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 }

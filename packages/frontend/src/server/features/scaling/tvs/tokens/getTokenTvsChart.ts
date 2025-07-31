@@ -4,7 +4,10 @@ import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRange } from '~/utils/range/range'
+import {
+  getBucketValuesRange,
+  getTimestampedValuesRange,
+} from '~/utils/range/range'
 import { isTvsSynced } from '../utils/isTvsSynced'
 import { rangeToResolution, TvsChartRange } from '../utils/range'
 
@@ -46,7 +49,7 @@ export async function getTokenTvsChart({
   const db = getDb()
   const resolution = rangeToResolution({ type: range })
 
-  const [from, to] = getRange({ type: range }, resolution, {
+  const [from, to] = getTimestampedValuesRange({ type: range }, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
@@ -102,7 +105,7 @@ function getMockTokenTvsChartData(
   params: TokenTvsChartParams,
 ): TokenTvsChartData {
   const resolution = rangeToResolution({ type: params.range })
-  const [from, to] = getRange({ type: params.range }, 'hourly')
+  const [from, to] = getBucketValuesRange({ type: params.range }, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? to - 730 * UnixTime.DAY,
     to,

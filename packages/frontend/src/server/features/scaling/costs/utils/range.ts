@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { getRange } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const CostsTimeRange = v.union([
@@ -19,7 +19,7 @@ export function getCostsRange(
     | { type: CostsTimeRange }
     | { type: 'custom'; from: number; to: number },
 ): [UnixTime | null, UnixTime] {
-  return getRange(range, rangeToResolution(range), {
+  return getBucketValuesRange(range, rangeToResolution(range), {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 }

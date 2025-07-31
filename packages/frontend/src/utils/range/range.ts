@@ -4,7 +4,29 @@ import { rangeToDays } from './rangeToDays'
 export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
 export type Resolution = 'hourly' | 'daily' | 'sixHourly'
 
-export function getRange(
+export function getTimestampedValuesRange(
+  range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
+  resolution: Resolution,
+  opts?: {
+    offset?: UnixTime
+  },
+): [UnixTime | null, UnixTime] {
+  const [from, to] = getBucketValuesRange(range, resolution, opts)
+
+  const adjustedFrom =
+    from !== null
+      ? from +
+        (resolution === 'daily'
+          ? UnixTime.DAY
+          : resolution === 'sixHourly'
+            ? UnixTime.SIX_HOURS
+            : UnixTime.HOUR)
+      : null
+
+  return [adjustedFrom, to]
+}
+
+export function getBucketValuesRange(
   range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
   resolution: Resolution,
   opts?: {

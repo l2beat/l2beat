@@ -10,7 +10,7 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getRange } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
 import { isLivenessSynced } from './utils/isLivenessSynced'
@@ -48,7 +48,7 @@ export async function getProjectLivenessChart({
 
   const db = getDb()
   const resolution = rangeToResolution(range)
-  const [from, to] = getRange({ type: range }, resolution, {
+  const [from, to] = getBucketValuesRange({ type: range }, resolution, {
     offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
@@ -153,7 +153,7 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
 function getMockProjectLivenessChartData({
   range,
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
-  const [from, to] = getRange({ type: range }, 'daily')
+  const [from, to] = getBucketValuesRange({ type: range }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     to,
