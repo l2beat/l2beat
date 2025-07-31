@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x08ab342713b83d45fea574fc70a7625f013121c1
+Generated with discovered.json: 0x496448b10222f09223772d1b8d4154ebcaa4585c
 
-# Diff at Wed, 30 Jul 2025 14:17:57 GMT:
+# Diff at Thu, 31 Jul 2025 08:18:06 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- current timestamp: 1753806898
+- current timestamp: 1753949758
 
 ## Description
 
@@ -397,6 +397,12 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
+    contract DealManager (0xCB06c6794B448d7E2d9A8c55609A94DDD7f3B6d9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Deal (0xCb352cF5A099772BC36f82A87c95a945CB4d1852)
     +++ description: None
 ```
@@ -422,6 +428,12 @@ Discovery rerun on the same block number with only config-related changes.
 ```diff
 +   Status: CREATED
     contract  (0xd9a7937CEb7c8fC8629DDE7C8557B24ae60C3717)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Deal (0xDa33e9DA12adBeEf7570d01bf14Eac377a397514)
     +++ description: None
 ```
 
