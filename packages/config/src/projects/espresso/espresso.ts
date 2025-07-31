@@ -290,9 +290,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       },
     ],
   },
-  permissions: {
-    ethereum: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
       title: 'EspressoDA launch on mainnet',
