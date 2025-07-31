@@ -21,6 +21,8 @@ export const zksync2: ScalingProject = zkStackL2({
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
+    headerWarning:
+      'ZKsync Era currently operates under limited liveness. Batches can be submitted, but neither proven nor executed because it was upgraded to a [PartialValidatorTimelock contract](https://gateway.explorer.zksync.io/address/0xcA027Fa98cdce4515E76ECf8dfb4189B16eE72A2#transactions). L2BEAT has been informed that the team is working on a fix.', // TODO: add an incident when removing this
     description:
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
     links: {
