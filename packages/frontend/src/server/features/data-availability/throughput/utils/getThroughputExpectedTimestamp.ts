@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure/build/types/UnixTime'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function getThroughputExpectedTimestamp(
   resolution: 'hourly' | 'sixHourly' | 'daily',

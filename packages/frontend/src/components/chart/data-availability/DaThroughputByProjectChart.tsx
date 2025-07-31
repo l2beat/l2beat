@@ -205,9 +205,8 @@ function CustomTooltip({
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {entry.value !== null && entry.value !== undefined
-                  ? formattedValue
+                  ? `${formattedValue} ${unit}`
                   : 'No data'}
-                {unit}
               </span>
             </div>
           )
