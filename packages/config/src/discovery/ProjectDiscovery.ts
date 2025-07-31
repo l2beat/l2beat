@@ -18,6 +18,7 @@ import {
   unique,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
 import uniq from 'lodash/uniq'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -42,7 +43,6 @@ import {
   isMultisigLike,
   trimTrailingDots,
 } from './utils'
-import groupBy from 'lodash/groupBy'
 
 const paths = getDiscoveryPaths()
 
@@ -918,7 +918,7 @@ export class ProjectDiscovery {
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
 
-    let roles = this.describeRolePermissions([
+    const roles = this.describeRolePermissions([
       ...permissionedContracts,
       ...permissionedEoas,
     ])
@@ -945,7 +945,7 @@ export class ProjectDiscovery {
     // introspect itself (reach into the configs of other projects) this point
     // will be true. As for now we don't know if such a occurrence has taken
     // place.
-    let actors = allActors.filter((actor) => {
+    const actors = allActors.filter((actor) => {
       const account = actor.accounts[0]
       const isEOA = account.type === 'EOA'
       if (!isEOA) {
