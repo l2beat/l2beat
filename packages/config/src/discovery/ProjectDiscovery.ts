@@ -42,6 +42,7 @@ import {
   isMultisigLike,
   trimTrailingDots,
 } from './utils'
+import groupBy from 'lodash/groupBy'
 
 const paths = getDiscoveryPaths()
 
@@ -917,7 +918,7 @@ export class ProjectDiscovery {
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
 
-    const roles = this.describeRolePermissions([
+    let roles = this.describeRolePermissions([
       ...permissionedContracts,
       ...permissionedEoas,
     ])
@@ -944,7 +945,7 @@ export class ProjectDiscovery {
     // introspect itself (reach into the configs of other projects) this point
     // will be true. As for now we don't know if such a occurrence has taken
     // place.
-    const actors = allActors.filter((actor) => {
+    let actors = allActors.filter((actor) => {
       const account = actor.accounts[0]
       const isEOA = account.type === 'EOA'
       if (!isEOA) {
@@ -984,12 +985,29 @@ export class ProjectDiscovery {
       )
     })
 
-    return {
-      [this.chain]: {
-        roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
-        actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
-      },
-    }
+    const rolesGrouped = groupBy(
+      roles.map((p) => ({ ...p, discoveryDrivenData: true })),
+      (p) => p.chain,
+    )
+    const actorsGrouped = groupBy(
+      actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+      (p) => p.chain,
+    )
+
+    const allChains = new Set([
+      ...Object.keys(rolesGrouped),
+      ...Object.keys(actorsGrouped),
+    ])
+
+    return Object.fromEntries(
+      Array.from(allChains).map((chain) => [
+        chain,
+        {
+          roles: rolesGrouped[chain] || [],
+          actors: actorsGrouped[chain] || [],
+        },
+      ]),
+    )
   }
 
   linkupActorsIntoAccounts(
@@ -1053,7 +1071,7 @@ export class ProjectDiscovery {
       }
     })
 
-    return { [this.chain]: result }
+    return groupBy(result, (contract) => contract.chain)
   }
 }
 
