@@ -33,7 +33,7 @@
     "baseTokenGasPriceMultiplierDenominator",
     "baseTokenGasPriceMultiplierNominator"
   ],
-  "ignoreRelatives": ["getBaseToken", "getSettlementLayer"],
+  "ignoreRelatives": ["getBaseToken", "getSettlementLayer", "validators"],
   "fields": {
     "getAdmin": {
       "severity": "HIGH",
@@ -44,12 +44,13 @@
         }
       ]
     },
+
     "validators": {
       "handler": {
         "type": "zksynceraValidators"
       }
+      // VALIDATOR PERMISSION OMITTED BECAUSE THIS IS NOT THE SETTLEMENT LAYER
     },
-    // VALIDATOR PERMISSION OMITTED BECAUSE THIS IS NOT THE SETTLEMENT LAYER
     "getTransactionFilterer": {
       "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
       "severity": "HIGH",

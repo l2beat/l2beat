@@ -73,20 +73,6 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
-  nonTemplatePermissions: {
-    ethereum: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Gateway Validators',
-          discovery.getPermissionedAccounts(
-            'ValidatorTimelock',
-            'validatorsVTL',
-          ),
-          'Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators.',
-        ),
-      ],
-    },
-  },
   validatorTimelockOnGateway: discovery.getContract('MainValidatorTimelock'),
   nonTemplateDaTracking: [
     {

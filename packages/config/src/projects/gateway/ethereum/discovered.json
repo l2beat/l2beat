@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "chain": "ethereum",
-  "timestamp": 1753953294,
+  "timestamp": 1753972641,
   "configHash": "0x0de4f51ee465d6574f54a398b75ba11f47229b6dc00fc9c4ebad649d242641ed",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -350,7 +350,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
-        "getFirstUnprocessedPriorityTx": 221,
+        "getFirstUnprocessedPriorityTx": 230,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -358,21 +358,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 8,
-        "getPriorityTreeRoot": "0xd3af78d048aa89d15701ca892beb7a48eb1a9ea542c538a0cc537324dd7869e5",
+        "getPriorityQueueSize": 7,
+        "getPriorityTreeRoot": "0xb37836cec54b2cdff6671c75634650559b2b3e2017b354b0f0756130fe9fa98a",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 476,
-        "getTotalBatchesExecuted": 474,
-        "getTotalBatchesVerified": 476,
-        "getTotalBlocksCommitted": 476,
-        "getTotalBlocksExecuted": 474,
-        "getTotalBlocksVerified": 476,
-        "getTotalPriorityTxs": 229,
+        "getTotalBatchesCommitted": 479,
+        "getTotalBatchesExecuted": 477,
+        "getTotalBatchesVerified": 478,
+        "getTotalBlocksCommitted": 479,
+        "getTotalBlocksExecuted": 477,
+        "getTotalBlocksVerified": 478,
+        "getTotalPriorityTxs": 237,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -478,8 +478,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators.",
           "role": ".validatorsVTL"
         }
       ]
@@ -490,8 +491,9 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "validateZkStack",
+          "permission": "interact",
           "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators.",
           "role": ".validatorsVTL"
         }
       ]
@@ -982,6 +984,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23038127 },
-  "permissionsConfigHash": "0x344c0cc01f1d05396805a4a8400eff3293dc7e6fed9fcc766bfd8980f155a18b"
+  "usedBlockNumbers": { "ethereum": 23039725 },
+  "permissionsConfigHash": "0x34b5852f64bbca62d7123c0a81464ec3608b2d14994db730c039170544c80e0b"
 }

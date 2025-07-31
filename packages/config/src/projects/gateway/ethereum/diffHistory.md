@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x579054b38a68bae853817393d7107628ec68be99
+Generated with discovered.json: 0xa9144f2dc89689405976b8b2ddb379c8eb50c12b
+
+# Diff at Thu, 31 Jul 2025 14:37:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1751365391
+- current timestamp: 1753972641
+
+## Description
+
+config: demote the gateway validator permission to not show as a role on the zksync2 proj page.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1751365391 (main branch discovery), not current.
+
+```diff
+    EOA  (0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xcb0fcb81c175a0ab7c702ba2e407e7fb47e3424b
 
 # Diff at Mon, 14 Jul 2025 12:45:07 GMT:
 

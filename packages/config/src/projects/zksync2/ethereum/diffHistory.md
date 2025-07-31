@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x6a2767c475d6e5acb5ebbc2cf2d07dc7cc32906d
+Generated with discovered.json: 0x75e31dd161b2d52705098858b5d1ba10810f9d06
 
-# Diff at Thu, 31 Jul 2025 13:44:28 GMT:
+# Diff at Thu, 31 Jul 2025 14:36:46 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@d80dc4f6980b901804009fa2bf032db56287416e block: 1750835963
-- current timestamp: 1753952494
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1750835963
+- current timestamp: 1753972594
 
 ## Description
 
@@ -30,11 +30,9 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1750835963 (main branch discovery), not current.
 
 ```diff
-    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"validateZkStack","from":"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","role":".validatorsVTL"}]
-    }
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
 ```
 
 ```diff
@@ -43,14 +41,6 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
       template:
 -        "shared-zk-stack/Diamond"
 +        "shared-zk-stack/Diamond_NotSettlementLayer"
-    }
-```
-
-```diff
-    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
-    +++ description: None
-      receivedPermissions:
--        [{"permission":"validateZkStack","from":"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","role":".validatorsVTL"}]
     }
 ```
 
@@ -67,19 +57,9 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+-   Status: DELETED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","role":".validators"}]
-      values.validatorsVTL:
--        ["eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
-      category.name:
--        "Spam"
-+        "Shared Infrastructure"
-      category.priority:
--        -1
-+        4
-    }
 ```
 
 ```diff
@@ -89,11 +69,9 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD) {
+-   Status: DELETED
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
     +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","role":".validators"}]
-    }
 ```
 
 ```diff

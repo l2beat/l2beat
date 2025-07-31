@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x03da73aefe580b83e2e1e02cb9e386944bfb2c50
+Generated with discovered.json: 0xb02c23b26bece5234d5cddfeeda52f75c9e5bde7
 
-# Diff at Thu, 31 Jul 2025 13:44:28 GMT:
+# Diff at Thu, 31 Jul 2025 14:36:46 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- current timestamp: 1753952494
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current timestamp: 1753972594
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+initial discovery after the migration to gateway. the only change wrt L1 are the DA validator contract and the partial validator timelock.
 
 ## Initial discovery
 
