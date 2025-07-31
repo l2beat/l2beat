@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x227389115f1813d27d18135e6ac0c45aa176d3e8
+Generated with discovered.json: 0x6a2767c475d6e5acb5ebbc2cf2d07dc7cc32906d
 
-# Diff at Thu, 31 Jul 2025 10:25:11 GMT:
+# Diff at Thu, 31 Jul 2025 13:44:28 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@fc6aee0100bcf523dbfb20b1884ed98a8717207a block: 1750835963
+- comparing to: main@d80dc4f6980b901804009fa2bf032db56287416e block: 1750835963
 - current timestamp: 1753952494
 
 ## Description
@@ -55,6 +55,18 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
 ```
 
 ```diff
+-   Status: DELETED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
     contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
       receivedPermissions:
@@ -71,13 +83,9 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+-   Status: DELETED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
-      receivedPermissions:
--        [{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","role":".validators"}]
-      values.validatorsVTL:
--        ["eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2","eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD"]
-    }
 ```
 
 ```diff
@@ -86,6 +94,12 @@ discovery. Values are for block 1750835963 (main branch discovery), not current.
       receivedPermissions:
 -        [{"permission":"interact","from":"eth:0x32400084C286CF3E17e7B677ea9583e60a000324","description":"commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.","role":".validators"}]
     }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
 ```
 
 Generated with discovered.json: 0x148f60fdf4e2c216eb4b02de6e6f5002798224ad

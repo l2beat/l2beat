@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
-const discovery_ongateway = new ProjectDiscovery('zksync2', 'gateway')
 const discovery_gateway = new ProjectDiscovery('gateway')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
@@ -76,11 +75,11 @@ export const zksync2: ScalingProject = zkStackL2({
     id: ProjectId('the-elastic-network'),
   },
   nonTemplatePermissions: {
-    [discovery_gateway.chain]: {
+    gateway: {
       actors: [
-        discovery_gateway.getPermissionDetails(
+        discovery.getPermissionDetails(
           'Gateway Validators',
-          discovery_gateway.getPermissionedAccounts(
+          discovery.getPermissionedAccounts(
             'ValidatorTimelock',
             'validatorsVTL',
           ),
@@ -89,8 +88,7 @@ export const zksync2: ScalingProject = zkStackL2({
       ],
     },
   },
-  validatorTimelockOnGateway:
-    discovery_ongateway.getContract('ValidatorTimelock'),
+  validatorTimelockOnGateway: discovery.getContract('MainValidatorTimelock'),
   nonTemplateDaTracking: [
     {
       // tracks old Era DA on ethereum

@@ -2,8 +2,8 @@
   "name": "zksync2",
   "chain": "gateway",
   "timestamp": 1753952494,
-  "configHash": "0xc4563a869cd76eb60dc26274f89a5a63b19fd12a31af52d7252f838599d38d54",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0xc98676f1b0cce81b2f52fa6e595546a58f08d1912868ea53427d0b02a475338f",
+  "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
       "name": "Bridgehub",
@@ -387,7 +387,7 @@
       }
     },
     {
-      "name": "ValidatorTimelock",
+      "name": "MainValidatorTimelock",
       "address": "gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa",
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",
@@ -1473,5 +1473,5 @@
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "gateway": 15675 },
-  "permissionsConfigHash": "0xf850d4185d002b5c0fffe6a7952b02d482d372360c881b743fb031d56dc2a0ab"
+  "permissionsConfigHash": "0xc5813bebd424f1c5637f770f3f0c70cacf631e34f3a15fef2105ed5e8eef686a"
 }

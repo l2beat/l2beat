@@ -2,8 +2,8 @@
   "name": "zksync2",
   "chain": "ethereum",
   "timestamp": 1753952494,
-  "configHash": "0x5364c8efb4ddf1fe3e65ff3ed8573c5919e6604c32427c9c4fe6719ecdb39e68",
-  "sharedModules": ["shared-zk-stack"],
+  "configHash": "0xe4f161bcb7dbbb6afca4e50a24f99334ec23b90607d96f3e8134538035640e91",
+  "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
     {
       "name": "Governance",
@@ -562,33 +562,6 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "DualVerifier",
-      "address": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
-      "type": "Contract",
-      "template": "shared-zk-stack/DualVerifier",
-      "sourceHashes": [
-        "0x3053378d5ee24f71669b27b5b3cd0d74206379e6b43a9af084c2eb886712773e"
-      ],
-      "proxyType": "immutable",
-      "description": "A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.",
-      "sinceTimestamp": 1747357991,
-      "sinceBlock": 22492297,
-      "values": {
-        "$immutable": true,
-        "FFLONK_VERIFIER": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
-        "PLONK_VERIFIER": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
-        "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        }
-      },
-      "implementationNames": {
-        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": "DualVerifier"
-      }
-    },
-    {
       "name": "L1ERC20Bridge",
       "address": "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
       "type": "Contract",
@@ -671,32 +644,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L1VerifierPlonk",
-      "address": "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierPlonk",
-      "sourceHashes": [
-        "0xeacd5b06c59874d47b7685e8f5d715a03e25bae887e159251920b78b0c084387"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the PlonK proof system.",
-      "sinceTimestamp": 1747357979,
-      "sinceBlock": 22492296,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0xd90459c5b727b9ceeb2b6192d2953dbf05970edf090333b3ad3bcac1a1442b78"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": "L1VerifierPlonk"
-      }
-    },
-    {
       "name": "ValidatorTimelock2",
       "address": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
       "type": "Contract",
@@ -720,33 +667,6 @@
       },
       "implementationNames": {
         "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
-      },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "name": "ValidatorTimelock",
-      "address": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-      "type": "Contract",
-      "template": "shared-zk-stack/ValidatorTimelock",
-      "sourceHashes": [
-        "0x2221508945ceea880f5d52488af1a7466fcdfadeaf3644dc5e3b82671b7947a3"
-      ],
-      "proxyType": "immutable",
-      "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.",
-      "sinceTimestamp": 1739108999,
-      "sinceBlock": 21809364,
-      "values": {
-        "$immutable": true,
-        "chainTypeManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "executionDelay": 10800,
-        "executionDelay_fmt": "3h",
-        "getName": "ValidatorTimelock",
-        "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "revertedBlocks": []
-      },
-      "implementationNames": {
-        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -785,32 +705,6 @@
         "eth:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD": "ValidatorTimelock"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "L1VerifierFflonk",
-      "address": "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
-      "type": "Contract",
-      "template": "shared-zk-stack/L1VerifierFflonk",
-      "sourceHashes": [
-        "0xb5da71a3ae0b3e2d792830222a0478c730acc075103b898ec899436fcc04323b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifies a zk-SNARK proof using an implementation of the fflonk proof system.",
-      "sinceTimestamp": 1747323275,
-      "sinceBlock": 22489437,
-      "values": {
-        "$immutable": true,
-        "verificationKeyHash": "0x17e8d7931f1314431359233e65c22657a32c335205e3c24ce292c5819becfaa7"
-      },
-      "fieldMeta": {
-        "verificationKeyHash": {
-          "severity": "HIGH",
-          "description": "keccak256 hash of the verification keys."
-        }
-      },
-      "implementationNames": {
-        "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
-      }
     }
   ],
   "abis": {
@@ -1083,16 +977,6 @@
       "function unfreezeDiamond()",
       "function upgradeChainFromVersion(uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
-    "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579": [
-      "constructor(address _fflonkVerifier, address _plonkVerifier)",
-      "error EmptyProofLength()",
-      "error UnknownVerifierType()",
-      "function FFLONK_VERIFIER() view returns (address)",
-      "function PLONK_VERIFIER() view returns (address)",
-      "function verificationKeyHash() view returns (bytes32)",
-      "function verificationKeyHash(uint256 _verifierType) view returns (bytes32)",
-      "function verify(uint256[] _publicInputs, uint256[] _proof) view returns (bool)"
-    ],
     "eth:0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1103,10 +987,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
     ],
     "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": [
       "constructor(address _initialOwner, uint32 _executionDelay, uint256 _eraChainId)",
@@ -1141,41 +1021,6 @@
       "function setExecutionDelay(uint32 _executionDelay)",
       "function setStateTransitionManager(address _stateTransitionManager)",
       "function stateTransitionManager() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function validators(uint256 _chainId, address _validator) view returns (bool)"
-    ],
-    "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
-      "constructor(address _initialOwner, uint32 _executionDelay)",
-      "error AddressAlreadyValidator(uint256 _chainId)",
-      "error TimeNotReached(uint256 expectedTimestamp, uint256 actualTimestamp)",
-      "error Unauthorized(address caller)",
-      "error ValidatorDoesNotExist(uint256 _chainId)",
-      "error ZeroAddress()",
-      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
-      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
-      "event NewExecutionDelay(uint256 _newExecutionDelay)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ValidatorAdded(uint256 indexed _chainId, address _addedValidator)",
-      "event ValidatorRemoved(uint256 indexed _chainId, address _removedValidator)",
-      "function acceptOwnership()",
-      "function addValidator(uint256 _chainId, address _newValidator)",
-      "function chainTypeManager() view returns (address)",
-      "function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
-      "function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)",
-      "function executionDelay() view returns (uint32)",
-      "function getCommittedBatchTimestamp(uint256 _chainId, uint256 _l2BatchNumber) view returns (uint256)",
-      "function getName() view returns (string)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)",
-      "function removeValidator(uint256 _chainId, address _validator)",
-      "function renounceOwnership()",
-      "function revertBatchesSharedBridge(uint256 _chainId, uint256)",
-      "function setChainTypeManager(address _chainTypeManager)",
-      "function setExecutionDelay(uint32 _executionDelay)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
@@ -1313,19 +1158,12 @@
       "function l2LogsRootHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
-    ],
-    "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": [
-      "function verificationKeyHash() pure returns (bytes32 vkHash)",
-      "function verify(uint256[], uint256[]) view returns (bool)"
     ]
   },
   "usedTemplates": {
     "shared-zk-stack/Diamond_NotSettlementLayer": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
-    "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
   "usedBlockNumbers": { "ethereum": 23038061 },
-  "permissionsConfigHash": "0xf850d4185d002b5c0fffe6a7952b02d482d372360c881b743fb031d56dc2a0ab"
+  "permissionsConfigHash": "0xc5813bebd424f1c5637f770f3f0c70cacf631e34f3a15fef2105ed5e8eef686a"
 }

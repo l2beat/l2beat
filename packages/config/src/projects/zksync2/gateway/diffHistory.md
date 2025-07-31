@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xf46ec04ce1b853a87fdc0c9eefdbb1cb3649d471
+Generated with discovered.json: 0x03da73aefe580b83e2e1e02cb9e386944bfb2c50
 
-# Diff at Thu, 31 Jul 2025 10:25:11 GMT:
+# Diff at Thu, 31 Jul 2025 13:44:28 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1753952494
@@ -79,7 +79,7 @@ Discovery rerun on the same block number with only config-related changes.
 
 ```diff
 +   Status: CREATED
-    contract ValidatorTimelock (0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
+    contract MainValidatorTimelock (0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
 ```
 
