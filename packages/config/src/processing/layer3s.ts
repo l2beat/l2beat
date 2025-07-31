@@ -12,6 +12,7 @@ import { bugbuster } from '../projects/bugbuster/bugbuster'
 import { cheese } from '../projects/cheese/cheese'
 import { clique } from '../projects/clique/clique'
 import { conwai } from '../projects/conwai/conwai'
+import { cvex } from '../projects/cvex/cvex'
 import { datalake } from '../projects/datalake/datalake'
 import { degen } from '../projects/degen/degen'
 import { deri } from '../projects/deri/deri'
@@ -80,6 +81,7 @@ export const layer3s: ScalingProject[] = [
   cheese,
   clique,
   conwai,
+  cvex,
   datalake,
   degen,
   deri,
