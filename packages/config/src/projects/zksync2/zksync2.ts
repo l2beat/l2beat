@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
-const discovery_gateway = new ProjectDiscovery('gateway')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 const chainId = 324
