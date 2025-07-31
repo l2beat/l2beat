@@ -423,7 +423,12 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                     url: 'https://matter-labs.github.io/zksync-era/core/latest/specs/contracts/gateway/overview.html',
                   },
                 ],
-                risks: [],
+                risks: [
+                  {
+                    category: 'Funds can be stolen if',
+                    text: "the Gateway settlement rollup's additional trust assumptions (different operators, separate rollup) are exploited.",
+                  },
+                ],
               },
             ]
           : undefined),
