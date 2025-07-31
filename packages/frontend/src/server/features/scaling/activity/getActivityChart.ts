@@ -99,16 +99,20 @@ export async function getActivityChart({
   const timestamps = generateTimestamps([startTimestamp, endTimestamp], 'daily')
 
   const data: ActivityChartDataPoint[] = timestamps.map((timestamp) => {
+    const isSynced = syncedUntil >= timestamp
+    const fallbackValue = isSynced ? 0 : null
+
     const entry = aggregatedEntries[timestamp]
     if (!entry) {
       return [timestamp, null, null, null, null]
     }
+
     return [
       timestamp,
-      entry.count,
-      entry.ethereumCount,
-      entry.uopsCount,
-      entry.ethereumUopsCount,
+      entry.count ?? fallbackValue,
+      entry.ethereumCount ?? fallbackValue,
+      entry.uopsCount ?? fallbackValue,
+      entry.ethereumUopsCount ?? fallbackValue,
     ]
   })
   return {
