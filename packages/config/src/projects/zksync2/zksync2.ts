@@ -73,7 +73,7 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
-  validatorTimelockOnGateway: discovery.getContract('MainValidatorTimelock'),
+  validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
   nonTemplateDaTracking: [
     {
       // tracks old Era DA on ethereum

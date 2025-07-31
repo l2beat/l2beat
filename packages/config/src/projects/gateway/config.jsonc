@@ -8,6 +8,7 @@
     "gateway:0x0000000000000000000000000000000000008008" // L1Messenger
   ],
   "names": {
+    "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": "Gateway",
     "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": "ProtocolUpgradeHandler_l2Alias",
     "gateway:0x3E04Bd6a9056b39999f3883955E183F655346174": "EraChainAdminProxy_l2Alias"
   },

@@ -387,7 +387,7 @@
       }
     },
     {
-      "name": "MainValidatorTimelock",
+      "name": "ZKsyncValidatorTimelock",
       "address": "gateway:0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa",
       "type": "Contract",
       "template": "shared-zk-stack/ValidatorTimelock",

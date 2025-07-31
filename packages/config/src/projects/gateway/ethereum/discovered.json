@@ -160,7 +160,7 @@
       }
     },
     {
-      "name": "DiamondProxy",
+      "name": "Gateway",
       "address": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
       "type": "Contract",
       "template": "shared-zk-stack/Diamond",

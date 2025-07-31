@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb02c23b26bece5234d5cddfeeda52f75c9e5bde7
+Generated with discovered.json: 0xabc2b0ebe479199fc17679a47d761e1bcf3e380b
 
-# Diff at Thu, 31 Jul 2025 14:36:46 GMT:
+# Diff at Thu, 31 Jul 2025 14:59:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current timestamp: 1753972594
@@ -79,7 +79,7 @@ initial discovery after the migration to gateway. the only change wrt L1 are the
 
 ```diff
 +   Status: CREATED
-    contract MainValidatorTimelock (0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
+    contract ZKsyncValidatorTimelock (0xb83fdD24F40cb2AA5CC9c2A2A0c06E50fA9B4CEa)
     +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
 ```
 

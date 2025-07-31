@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa9144f2dc89689405976b8b2ddb379c8eb50c12b
+Generated with discovered.json: 0xc6e3abffee96d2e86503fe2ba341043e680ac212
 
-# Diff at Thu, 31 Jul 2025 14:37:25 GMT:
+# Diff at Thu, 31 Jul 2025 14:59:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1751365391
@@ -10,11 +10,31 @@ Generated with discovered.json: 0xa9144f2dc89689405976b8b2ddb379c8eb50c12b
 
 config: demote the gateway validator permission to not show as a role on the zksync2 proj page.
 
+## Source code changes
+
+```diff
+.../{.flat@1751365391/Gateway => .flat/DiamondProxy}/AdminFacet.1.sol     | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/DiamondProxy.p.sol   | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/ExecutorFacet.4.sol  | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/GettersFacet.2.sol   | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/MailboxFacet.3.sol   | 0
+ 5 files changed, 0 insertions(+), 0 deletions(-)
+```
+
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1751365391 (main branch discovery), not current.
+
+```diff
+    contract Gateway (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      name:
+-        "DiamondProxy"
++        "Gateway"
+    }
+```
 
 ```diff
     EOA  (0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE) {
