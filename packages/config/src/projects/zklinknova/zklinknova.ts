@@ -21,17 +21,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
-const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
-const baseDiscovery = new ProjectDiscovery('zklinknova', 'base')
-const mantapacificDiscovery = new ProjectDiscovery('zklinknova', 'mantapacific')
-const mantleDiscovery = new ProjectDiscovery('zklinknova', 'mantle')
-const scrollDiscovery = new ProjectDiscovery('zklinknova', 'scroll')
-const blastDiscovery = new ProjectDiscovery('zklinknova', 'blast')
-const zksync2Discovery = new ProjectDiscovery('zklinknova', 'zksync2')
-const ethereumDiscovery = new ProjectDiscovery('zklinknova')
-
-const lineaDiscovery = new ProjectDiscovery('zklinknova', 'linea')
+const discovery = new ProjectDiscovery('zklinknova')
 
 const optimismUpgradability = {
   upgradableBy: [{ name: 'OptimismOwner', delay: 'no' }],
@@ -73,12 +63,12 @@ const lineaUpgradability = {
   upgradableBy: [{ name: 'LineaOwner', delay: 'no' }],
 }
 
-const executionDelaySeconds = lineaDiscovery.getContractValue<number>(
+const executionDelaySeconds = discovery.getContractValue<number>(
   'ValidatorTimelock',
   'executionDelay',
 )
 
-const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
+const upgradeDelaySeconds = discovery.getContractValue<number>(
   'Governance',
   'minDelay',
 )
@@ -455,229 +445,229 @@ export const zklinknova: ScalingProject = {
   contracts: {
     addresses: {
       linea: [
-        lineaDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Linea to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...lineaUpgradability,
         }),
-        lineaDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             'Main contract of the system where blocks are committed, proven and executed. It syncs messages from secondary chains ("slow" path) and accepts "fast" forwarded requests from permissioned validators that are later cross-checked with the slow path. ETH coming from secondary chains are transferred and escrowed here. State roots are then synced back to the secondary chains.',
           ...lineaUpgradability,
         }),
-        lineaDiscovery.getContractDetails('LineaL2Gateway', {
+        discovery.getContractDetails('LineaL2Gateway', {
           description:
             "High level interface between the main zkLink contract and Linea's message service.",
           ...lineaUpgradability,
         }),
-        lineaDiscovery.getContractDetails('ValidatorTimelock', {
+        discovery.getContractDetails('ValidatorTimelock', {
           description: `Intermediary contract between the one of the validators and the ZKsync Era diamond that can delay block execution (ie withdrawals and other L3 --> L2 messages). Currently, the delay is set to ${formatSeconds(
             executionDelaySeconds,
           )}.`,
         }),
-        lineaDiscovery.getContractDetails('Verifier', {
+        discovery.getContractDetails('Verifier', {
           description: 'Implements ZK proof verification logic.',
           ...lineaUpgradability,
         }),
-        lineaDiscovery.getContractDetails('Governance', {
+        discovery.getContractDetails('Governance', {
           description: `Intermediary governance contract with two roles and a customizable delay. This delay is only mandatory for transactions scheduled by the Owner role and can be set by the SecurityCouncil role. The SecurityCouncil role can execute arbitrary upgrade transactions immediately. Currently the delay is set to ${formatSeconds(
             upgradeDelaySeconds,
           )} and the SecurityCouncil role is not used.`,
         }),
       ],
       ethereum: [
-        ethereumDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Ethereum to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Ethereum and ETH escrow. Outgoing messages (like deposits) are sent through the EthereumL2Gateway which ultimately makes use of Ethereum's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('EthereumL1Gateway', {
+        discovery.getContractDetails('EthereumL1Gateway', {
           description:
             "High level interface between the local zkLink contract and Ethereum's message service.",
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('Arbitrator', {
+        discovery.getContractDetails('Arbitrator', {
           description:
             'Contract storing the mapping between secondary chain bridges and acts as an intermediary to receive and relay messages to and from the main zkLink contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('LineaL1Gateway', {
+        discovery.getContractDetails('LineaL1Gateway', {
           description:
             'L1 counterpart receiving messages from the LineaL2Gateway on Linea. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('MantaL1Gateway', {
+        discovery.getContractDetails('MantaL1Gateway', {
           description:
             'L1 counterpart receiving messages from the MantaL2Gateway on Manta Pacific. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('MantleL1Gateway', {
+        discovery.getContractDetails('MantleL1Gateway', {
           description:
             'L1 counterpart receiving messages from the MantleL2Gateway on Mantle. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('EraL1Gateway', {
+        discovery.getContractDetails('EraL1Gateway', {
           description:
             'L1 counterpart receiving messages from the EraL2Gateway on ZKsync Era. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('ArbitrumL1Gateway', {
+        discovery.getContractDetails('ArbitrumL1Gateway', {
           description:
             'L1 counterpart receiving messages from the ArbitrumL2Gateway on Arbitrum One. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('BlastL1Gateway', {
+        discovery.getContractDetails('BlastL1Gateway', {
           description:
             'L1 counterpart receiving messages from the BlastL2Gateway on Blast. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('OptimismL1Gateway', {
+        discovery.getContractDetails('OptimismL1Gateway', {
           description:
             'L1 counterpart receiving messages from the OptimismL2Gateway on OP Mainnet. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('BaseL1Gateway', {
+        discovery.getContractDetails('BaseL1Gateway', {
           description:
             'L1 counterpart receiving messages from the BaseL2Gateway on Base. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
-        ethereumDiscovery.getContractDetails('ScrollL1Gateway', {
+        discovery.getContractDetails('ScrollL1Gateway', {
           description:
             'L1 counterpart receiving messages from the ScrollL2Gateway on Scroll. It redirects them to the Arbitrator contract.',
           ...ethereumUpgradability,
         }),
       ],
       optimism: [
-        optimismDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from OP Mainnet to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...optimismUpgradability,
         }),
-        optimismDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on OP Mainnet and ETH escrow. Outgoing messages (like deposits) are sent through the OptimismL2Gateway which ultimately makes use of OP Mainnet's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...optimismUpgradability,
         }),
-        optimismDiscovery.getContractDetails('OptimismL2Gateway', {
+        discovery.getContractDetails('OptimismL2Gateway', {
           description:
             "High level interface between the local zkLink contract and OP's message service.",
           ...optimismUpgradability,
         }),
       ],
       arbitrum: [
-        arbitrumDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Arbitrum One to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...arbitrumUpgradability,
         }),
-        arbitrumDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Arbitrum One and ETH escrow. Outgoing messages (like deposits) are sent through the ArbitrumL2Gateway which ultimately makes use of Arbitrum One's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...arbitrumUpgradability,
         }),
-        arbitrumDiscovery.getContractDetails('ArbitrumL2Gateway', {
+        discovery.getContractDetails('ArbitrumL2Gateway', {
           description:
             "High level interface between the local zkLink contract and Arbitrum's message service.",
           ...arbitrumUpgradability,
         }),
       ],
       base: [
-        baseDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Base to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...baseUpgradability,
         }),
-        baseDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Base and ETH escrow. Outgoing messages (like deposits) are sent through the BaseL2Gateway which ultimately makes use of Base's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...baseUpgradability,
         }),
-        baseDiscovery.getContractDetails('BaseL2Gateway', {
+        discovery.getContractDetails('BaseL2Gateway', {
           description:
             "High level interface between the local zkLink contract and Base's message service.",
           ...baseUpgradability,
         }),
       ],
       mantapacific: [
-        mantapacificDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Manta Pacific to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...mantapacificUpgradability,
         }),
-        mantapacificDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Manta Pacific and ETH escrow. Outgoing messages (like deposits) are sent through the MantaPacificL2Gateway which ultimately makes use of Manta Pacific's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...mantapacificUpgradability,
         }),
-        mantapacificDiscovery.getContractDetails('MantaL2Gateway', {
+        discovery.getContractDetails('MantaL2Gateway', {
           description:
             "High level interface between the local zkLink contract and Manta Pacific's message service.",
           ...mantapacificUpgradability,
         }),
       ],
       mantle: [
-        mantleDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Mantle to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...mantleUpgradability,
         }),
-        mantleDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Mantle and ETH escrow. Outgoing messages (like deposits) are sent through the MantleL2Gateway which ultimately makes use of Mantle's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...mantleUpgradability,
         }),
-        mantleDiscovery.getContractDetails('MantleL2Gateway', {
+        discovery.getContractDetails('MantleL2Gateway', {
           description:
             "High level interface between the local zkLink contract and Mantle's message service.",
           ...mantleUpgradability,
         }),
       ],
       scroll: [
-        scrollDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Scroll to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...scrollUpgradability,
         }),
-        scrollDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Scroll and ETH escrow. Outgoing messages (like deposits) are sent through the ScrollL2Gateway which ultimately makes use of Scroll's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...scrollUpgradability,
         }),
-        scrollDiscovery.getContractDetails('ScrollL2Gateway', {
+        discovery.getContractDetails('ScrollL2Gateway', {
           description:
             "High level interface between the local zkLink contract and Scroll's message service.",
           ...scrollUpgradability,
         }),
       ],
       blast: [
-        blastDiscovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Blast to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...blastUpgradability,
         }),
-        blastDiscovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on Blast and ETH escrow. Outgoing messages (like deposits) are sent through the BlastL2Gateway which ultimately makes use of Blast's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...blastUpgradability,
         }),
-        blastDiscovery.getContractDetails('BlastL2Gateway', {
+        discovery.getContractDetails('BlastL2Gateway', {
           description:
             "High level interface between the local zkLink contract and Blast's message service.",
           ...blastUpgradability,
         }),
       ],
       zksync2: [
-        zksync2Discovery.getContractDetails('L1ERC20Bridge', {
+        discovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from ZKsync Era to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
           ...zksync2Upgradability,
         }),
-        zksync2Discovery.getContractDetails('zkLink', {
+        discovery.getContractDetails('zkLink', {
           description:
             "Main messaging contract on ZKsync Era and ETH escrow. Outgoing messages (like deposits) are sent through the ZKsync2L2Gateway which ultimately makes use of ZKsync Era's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
           ...zksync2Upgradability,
@@ -696,24 +686,24 @@ export const zklinknova: ScalingProject = {
   permissions: {
     linea: {
       actors: [
-        lineaDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'LineaOwner',
           'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
-        lineaDiscovery.getPermissionDetails(
+        discovery.getPermissionDetails(
           'Validators',
-          lineaDiscovery.getPermissionedAccounts('zkLink', 'validators'),
+          discovery.getPermissionedAccounts('zkLink', 'validators'),
           'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
         ),
       ],
     },
     optimism: {
       actors: [
-        optimismDiscovery.contractAsPermissioned(
-          optimismDiscovery.getContract('OptimismProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('OptimismProxyAdmin'),
           'Owner of the L1ERC20Bridge on OP Mainnet.',
         ),
-        optimismDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'OptimismOwner',
           'Admin of the zkLink contract on OP Mainnet and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -721,11 +711,11 @@ export const zklinknova: ScalingProject = {
     },
     arbitrum: {
       actors: [
-        arbitrumDiscovery.contractAsPermissioned(
-          arbitrumDiscovery.getContract('ArbitrumProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('ArbitrumProxyAdmin'),
           'Owner of the L1ERC20Bridge on Arbitrum One.',
         ),
-        arbitrumDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ArbitrumOwner',
           'Admin of the zkLink contract on Arbitrum One and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -733,11 +723,11 @@ export const zklinknova: ScalingProject = {
     },
     base: {
       actors: [
-        baseDiscovery.contractAsPermissioned(
-          baseDiscovery.getContract('BaseProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('BaseProxyAdmin'),
           'Owner of the L1ERC20Bridge on Base.',
         ),
-        baseDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'BaseOwner',
           'Admin of the zkLink contract on Base and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -745,13 +735,13 @@ export const zklinknova: ScalingProject = {
     },
     mantapacific: {
       actors: [
-        mantapacificDiscovery.contractAsPermissioned(
-          mantapacificDiscovery.getContract('MantaProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('MantaProxyAdmin'),
           'Owner of the L1ERC20Bridge on Manta Pacific.',
         ),
-        mantapacificDiscovery.getPermissionDetails(
+        discovery.getPermissionDetails(
           'MantaOwner',
-          mantapacificDiscovery.getPermissionedAccounts(
+          discovery.getPermissionedAccounts(
             'MantaProxyAdmin',
             'owner',
           ),
@@ -761,11 +751,11 @@ export const zklinknova: ScalingProject = {
     },
     mantle: {
       actors: [
-        mantleDiscovery.contractAsPermissioned(
-          mantleDiscovery.getContract('MantleProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('MantleProxyAdmin'),
           'Owner of the L1ERC20Bridge on Mantle.',
         ),
-        mantleDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'MantleOwner',
           'Admin of the zkLink contract on Mantle and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -773,11 +763,11 @@ export const zklinknova: ScalingProject = {
     },
     scroll: {
       actors: [
-        scrollDiscovery.contractAsPermissioned(
-          scrollDiscovery.getContract('ScrollProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('ScrollProxyAdmin'),
           'Owner of the L1ERC20Bridge on Scroll.',
         ),
-        scrollDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'ScrollOwner',
           'Admin of the zkLink contract on Scroll and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -785,11 +775,11 @@ export const zklinknova: ScalingProject = {
     },
     blast: {
       actors: [
-        blastDiscovery.contractAsPermissioned(
-          blastDiscovery.getContract('BlastProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('BlastProxyAdmin'),
           'Owner of the L1ERC20Bridge on Blast.',
         ),
-        blastDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'BlastOwner',
           'Admin of the zkLink contract on Blast and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -797,11 +787,11 @@ export const zklinknova: ScalingProject = {
     },
     zksync2: {
       actors: [
-        zksync2Discovery.contractAsPermissioned(
-          zksync2Discovery.getContract('EraProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('EraProxyAdmin'),
           'Owner of the L1ERC20Bridge on ZKsync Era.',
         ),
-        zksync2Discovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'EraOwner',
           'Admin of the zkLink contract on ZKsync Era and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -809,11 +799,11 @@ export const zklinknova: ScalingProject = {
     },
     ethereum: {
       actors: [
-        ethereumDiscovery.contractAsPermissioned(
-          ethereumDiscovery.getContract('EthereumProxyAdmin'),
+        discovery.contractAsPermissioned(
+          discovery.getContract('EthereumProxyAdmin'),
           'Owner of the L1ERC20Bridge on Ethereum.',
         ),
-        ethereumDiscovery.getMultisigPermission(
+        discovery.getMultisigPermission(
           'EthereumOwner',
           'Admin of the zkLink contract on Ethereum and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
         ),
@@ -821,15 +811,15 @@ export const zklinknova: ScalingProject = {
     },
   },
   discoveryInfo: getDiscoveryInfo([
-    optimismDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-    mantapacificDiscovery,
-    mantleDiscovery,
-    scrollDiscovery,
-    blastDiscovery,
-    zksync2Discovery,
-    ethereumDiscovery,
-    lineaDiscovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
   ]),
 }

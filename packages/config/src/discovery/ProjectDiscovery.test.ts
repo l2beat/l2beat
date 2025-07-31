@@ -16,7 +16,7 @@ describe(ProjectDiscovery.name, () => {
     readDiscovery: () => discoveredJsonStub,
   })
 
-  const discovery = new ProjectDiscovery(projectName, 'ethereum', configReader)
+  const discovery = new ProjectDiscovery(projectName, configReader)
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
@@ -82,7 +82,6 @@ describe(ProjectDiscovery.name, () => {
   it('reads configurations for different chainIds', () => {
     const discovery = new ProjectDiscovery(
       'ExampleProject',
-      'arbitrum',
       configReader,
     )
     const contract = discovery.getContract(contractStub.address.toString())
@@ -94,7 +93,6 @@ describe(ProjectDiscovery.name, () => {
     it('should find contracts and eoas by role', () => {
       const discovery = new ProjectDiscovery(
         'ExampleProject',
-        'ethereum',
         configReader,
       )
       const sequencers = discovery.getPermissionsByRole('sequence')

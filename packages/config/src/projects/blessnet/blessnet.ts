@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('blessnet', 'arbitrum')
+const discovery = new ProjectDiscovery('blessnet')
 
 export const blessnet: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1731061027), // 2024-11-08T10:17:07+00:00

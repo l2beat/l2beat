@@ -51,7 +51,7 @@ export function getDiscoveryTokenList(chains: ChainConfig[]): LegacyToken[] {
         continue
       }
 
-      const discovery = new ProjectDiscovery(tokenDiscovery, chain.name)
+      const discovery = new ProjectDiscovery(tokenDiscovery)
       const tokensFromDiscovery = discovery.get$TokenData()
       for (const token of tokensFromDiscovery) {
         const generatedToken = GeneratedToken.parse(token)

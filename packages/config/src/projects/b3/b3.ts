@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { CELESTIA_DA_PROVIDER, opStackL3 } from '../../templates/opStack'
 
-const discovery = new ProjectDiscovery('b3', 'base')
+const discovery = new ProjectDiscovery('b3')
 
 export const b3: ScalingProject = opStackL3({
   addedAt: UnixTime(1722376845),

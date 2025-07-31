@@ -11,7 +11,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('l3x', 'arbitrum')
+const discovery = new ProjectDiscovery('l3x')
 
 export const l3x: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718370384), // 2024-06-14T13:06:24Z

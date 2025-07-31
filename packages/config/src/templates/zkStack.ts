@@ -128,10 +128,7 @@ export type Upgradeability = {
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
-  const discovery_ZKstackGovL2 = new ProjectDiscovery(
-    'shared-zk-stack',
-    'zksync2',
-  )
+  const discovery_ZKstackGovL2 = new ProjectDiscovery('shared-zk-stack')
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
