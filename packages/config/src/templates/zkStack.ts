@@ -128,7 +128,7 @@ export type Upgradeability = {
 }
 
 export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
-  const discovery_ZKstackGovL2 = new ProjectDiscovery('shared-zk-stack')
+  const discoveryShared = new ProjectDiscovery('shared-zk-stack')
   const daProvider = templateVars.daProvider
   if (daProvider) {
     assert(
@@ -137,21 +137,21 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     )
   }
 
-  const protVotingDelayS = discovery_ZKstackGovL2.getContractValue<number>(
+  const protVotingDelayS = discoveryShared.getContractValue<number>(
     'ZkProtocolGovernor',
     'votingDelay',
   )
-  const protVotingPeriodS = discovery_ZKstackGovL2.getContractValue<number>(
+  const protVotingPeriodS = discoveryShared.getContractValue<number>(
     'ZkProtocolGovernor',
     'votingPeriod',
   )
 
   const protLateQuorumVoteExtensionS =
-    discovery_ZKstackGovL2.getContractValue<number>(
+    discoveryShared.getContractValue<number>(
       'ZkProtocolGovernor',
       'lateQuorumVoteExtension',
     )
-  const protTlMinDelayS = discovery_ZKstackGovL2.getContractValue<number>(
+  const protTlMinDelayS = discoveryShared.getContractValue<number>(
     'ProtocolTimelockController',
     'getMinDelay',
   )
@@ -226,19 +226,19 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       'EXTEND_LEGAL_VETO_THRESHOLD',
     )
   const protocolStartProposalThresholdM =
-    discovery_ZKstackGovL2.getContractValueBigInt(
+    discoveryShared.getContractValueBigInt(
       'ZkProtocolGovernor',
       'proposalThreshold',
     ) / 1000000000000000000000000n // result: M of tokens
   const protocolQuorumM =
-    discovery_ZKstackGovL2.getContractValueBigInt(
+    discoveryShared.getContractValueBigInt(
       'ZkProtocolGovernor',
       'currentQuorum',
     ) / 1000000000000000000000000n // result: M of tokens
   const scThresholdString = `${scMainThreshold}/${scMemberCount}`
   const guardiansThresholdString = `${guardiansMainThreshold}/${guardiansMemberCount}`
 
-  const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
+  const allDiscoveries = [templateVars.discovery, discoveryShared]
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
