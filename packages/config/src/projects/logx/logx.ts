@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
 
-export const logx: ScalingProject = upcomingL2({
+export const logx: ScalingProject = underReviewL2({
   id: 'logx',
   capability: 'universal',
   addedAt: UnixTime(1753947052),
