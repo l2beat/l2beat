@@ -23,7 +23,7 @@
     },
     {
       "mode": "auto",
-      "id": "facet-ETH",
+      "id": "facet-ETH-external",
       "priceId": "ethereum",
       "symbol": "ETH",
       "name": "Ether",
