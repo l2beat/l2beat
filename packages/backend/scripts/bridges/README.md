@@ -105,3 +105,11 @@ pnpm bridges:cli wormhole-portal base 33582518 ethereum 23038332
 ```bash
 pnpm bridges:cli wormhole-portal ethereum 23026060 arbitrum 362865582
 ```
+
+### Wormhole CCTP
+```bash
+pnpm bridges:cli wormhole-cctp base 33544977 ethereum 23032106
+```
+```bash
+pnpm bridges:cli wormhole-cctp arbitrum 362121993 ethereum 23010854
+```

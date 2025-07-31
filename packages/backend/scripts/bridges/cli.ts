@@ -89,8 +89,8 @@ const cmd = command({
 
       logger.info('Asset matching', {
         application: inboundAsset.application,
-        amount: Number(outboundAsset.amount),
-        fee: Number(outboundAsset.amount - inboundAsset.amount),
+        inputAmount: Number(inboundAsset.amount),
+        outputAmount: Number(outboundAsset.amount),
         latency: formatSeconds(
           inboundAsset.blockTimestamp - outboundAsset.blockTimestamp,
         ),
