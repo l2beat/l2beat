@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "timestamp": 1753943901,
-  "configHash": "0x82d1d15e59465bc5bb38692ccfbcf9caa7ed03d7c9c1808715b3ed7c7b2989da",
+  "timestamp": 1753952494,
+  "configHash": "0xb9267b00dc7c17540da9980c1e4b2f5a032c56acdc82dfddaab35dfeaada8724",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -40,26 +40,7 @@
     {
       "address": "eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        }
-      ]
-    },
-    {
-      "address": "eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "ZKsync",
@@ -451,8 +432,8 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 180,
-        "getPriorityTreeRoot": "0x07901694e7f7a55e6b3065fcd63d246ae3b8b184d6eb042313a61196e975f133",
+        "getPriorityQueueSize": 184,
+        "getPriorityTreeRoot": "0xb2ca859e1176fa0f0a97f09b00ae5f44936932e1646a5d904da5b45ad4b1ab20",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
@@ -465,7 +446,7 @@
         "getTotalBlocksCommitted": 501263,
         "getTotalBlocksExecuted": 501260,
         "getTotalBlocksVerified": 501263,
-        "getTotalPriorityTxs": 3278753,
+        "getTotalPriorityTxs": 3278757,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -533,14 +514,7 @@
     {
       "address": "eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge_wstETH",
@@ -750,16 +724,12 @@
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
-        "stateTransitionManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "validatorsVTL": [
-          "eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-          "eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
-        ]
+        "stateTransitionManager": "eth:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
       },
       "implementationNames": {
         "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ValidatorTimelock",
@@ -789,11 +759,7 @@
         "getName": "ValidatorTimelock",
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "revertedBlocks": [],
-        "validatorsVTL": [
-          "eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2",
-          "eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD"
-        ]
+        "revertedBlocks": []
       },
       "implementationNames": {
         "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": "ValidatorTimelock"
@@ -869,18 +835,6 @@
       "implementationNames": {
         "eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b": "L1VerifierFflonk"
       }
-    },
-    {
-      "address": "eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validateZkStack",
-          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
-        }
-      ]
     }
   ],
   "abis": {
@@ -1396,6 +1350,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23037349 },
-  "permissionsConfigHash": "0xb8aa724763da66abbc580a31e82ad158e19755f194b52d89e9876064062ec4a0"
+  "usedBlockNumbers": { "ethereum": 23038060 },
+  "permissionsConfigHash": "0x836dbd376120c9d761a28b11021db9910679f9fb46bff9c130651e9822b3be52"
 }

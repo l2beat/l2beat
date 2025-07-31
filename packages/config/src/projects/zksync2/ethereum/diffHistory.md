@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xff8c6d361198316f72a316fdf7c70aaef7eef16f
+Generated with discovered.json: 0x4ddbfdc19eb7af3eeaf6d176911cb70920d2c336
 
-# Diff at Thu, 31 Jul 2025 06:38:25 GMT:
+# Diff at Thu, 31 Jul 2025 09:13:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1750835963
-- current timestamp: 1753943901
+- current timestamp: 1753952494
 
 ## Description
 
@@ -20,6 +20,50 @@ permissions and upgrades remain the same. tracked transactions are now updated t
       values.getSettlementLayer:
 -        "eth:0x0000000000000000000000000000000000000000"
 +        "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1750835963 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","role":".validatorsVTL"}]
+    }
+```
+
+```diff
+    EOA  (0x3527439923a63F8C13CF72b8Fe80a77f6e572092) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"validateZkStack","from":"eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E","role":".validatorsVTL"}]
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL:
+-        ["eth:0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99","eth:0x3527439923a63F8C13CF72b8Fe80a77f6e572092"]
+      category.name:
+-        "Spam"
++        "Shared Infrastructure"
+      category.priority:
+-        -1
++        4
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL:
+-        ["eth:0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2","eth:0x30066439887C0a509Cb38E45c9262E6924a29BbD"]
     }
 ```
 
