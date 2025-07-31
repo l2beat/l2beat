@@ -198,13 +198,15 @@ export const lightlink: ScalingProject = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       ...discovery.getDiscoveredPermissions(),
-      ...discovery.getPermissionDetails(
-        'Validators',
-        discovery.formatPermissionedAccounts(validatorAddresses),
-        `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-      ),
+      roles: [
+        discovery.getPermissionDetails(
+          'Validators',
+          discovery.formatPermissionedAccounts(validatorAddresses),
+          `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+        ),
+      ],
     },
   },
   technology: {},

@@ -868,7 +868,7 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): ProjectPermissions {
+  getDiscoveredPermissions(): Record<string, ProjectPermissions> {
     const permissionedContracts = this.permissionRegistry
       .getPermissionedContracts()
       .map((address) => this.getContractByAddress(address))
@@ -985,8 +985,10 @@ export class ProjectDiscovery {
     })
 
     return {
-      roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
-      actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+      [this.chain]: {
+        roles: roles.map((p) => ({ ...p, discoveryDrivenData: true })),
+        actors: actors.map((p) => ({ ...p, discoveryDrivenData: true })),
+      },
     }
   }
 

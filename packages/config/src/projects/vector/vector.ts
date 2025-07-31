@@ -95,9 +95,7 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
       },
     ],
   },
-  permissions: {
-    ethereum: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
       title: 'Plonky3 vulnerability patch',
