@@ -76,9 +76,9 @@ export const zksync2: ScalingProject = zkStackL2({
     id: ProjectId('the-elastic-network'),
   },
   nonTemplatePermissions: {
-    [discovery.chain]: {
+    [discovery_gateway.chain]: {
       actors: [
-        discovery.getPermissionDetails(
+        discovery_gateway.getPermissionDetails(
           'Gateway Validators',
           discovery_gateway.getPermissionedAccounts(
             'ValidatorTimelock',
@@ -97,22 +97,11 @@ export const zksync2: ScalingProject = zkStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 21809364,
-      untilBlock: 23016895,
+      untilBlock: 23016895, // migration to Gateway
       inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
       sequencers: [
         '0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2',
         '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
-      ],
-    },
-    {
-      // tracks gateway DA
-      type: 'ethereum',
-      daLayer: ProjectId('ethereum'),
-      sinceBlock: 23016895,
-      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
-      sequencers: [
-        'eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE',
-        'eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF',
       ],
     },
   ],
@@ -128,7 +117,7 @@ export const zksync2: ScalingProject = zkStackL2({
           '0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102',
         ),
         l2EtherAddress: EthereumAddress(
-          '0x000000000000000000000000000`000000000800A',
+          '0x000000000000000000000000000000000000800A',
         ),
       },
     }),
