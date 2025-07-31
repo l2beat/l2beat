@@ -106,6 +106,21 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
+  nonTemplateTechnology: {
+    otherConsiderations: [
+      {
+        name: 'Gateway - Intermediate Settlement Layer',
+        description: `This chain settles on the Gateway, a validity rollup on Ethereum used as a specialized settlement layer. Chains settling on the Gateway keep the same overall architecture as when settling on Ethereum, but their main entrypoints and bridge messaging are replicated on both Ethereum and the Gateway. This abstracts away the intermediate settlement layer for users. Operators provide data and proofs on the Gateway as they would on Ethereum, and proofs are then aggregated into a single Gateway validity proof on Ethereum for all chains settling on the Gateway. Since ZK stack rollups use state diffs for data availability, pubdata posted to the Gateway must be relayed via L2->L1 messages by a 'RelayedSLDAValidator' contract. Unless stated otherwise, the permissions and governance for a given chain are synced between the Gateway and Ethereum.`,
+        references: [
+          {
+            title: 'Gateway - ZKsync Era Documentation',
+            url: 'https://matter-labs.github.io/zksync-era/core/latest/specs/contracts/gateway/overview.html',
+          },
+        ],
+        risks: [],
+      },
+    ],
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
@@ -214,6 +229,19 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1741792103),
+        untilTimestamp: UnixTime(1753696643),
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 9075,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0x98f81962',
+        functionSignature:
+          'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1753696643),
       },
     },
     {
@@ -305,6 +333,22 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: UnixTime(1741792103),
+        untilTimestamp: UnixTime(1753696643),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 9075,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xe12a6137',
+        functionSignature:
+          'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
+        sinceTimestamp: UnixTime(1753696643),
       },
     },
     {
@@ -396,10 +440,34 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1741792103),
+        untilTimestamp: UnixTime(1753696643),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 9075,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xcf02827d',
+        functionSignature:
+          'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1753696643),
       },
     },
   ],
   milestones: [
+    {
+      title: 'Gateway Migration',
+      url: 'https://x.com/zksync/status/1950502172384547245',
+      date: '2025-07-28T00:00:00Z',
+      description:
+        "ZKsync Era is the first chain migrating to the 'Gateway' settlement layer.",
+      type: 'general',
+    },
     {
       title: 'ZK token minter key compromised',
       url: 'https://zksync.mirror.xyz/W5vPDZqEqf2NuwQ5x7SyFnIxqqpE1szAFD69iaaBFnI',

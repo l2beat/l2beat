@@ -422,7 +422,7 @@ A proposal is only successful if it reaches both quorum (${protocolQuorumM}M ZK 
       )} is guaranteed by a potential late quorum vote extension.
 In the successful case, it can be queued in the ${formatSeconds(
         protTlMinDelayS,
-      )} timelock which forwards it to Ethereum as an L2->L1 log.
+      )} timelock which forwards it via the Gateway to Ethereum as an L2->L1 log.
 ### On Ethereum
 After the execution of the proposal-containing batch (${executionDelay} delay), the proposal is now picked up by the ProtocolUpgradeHandler and enters the ${formatSeconds(
         legalVetoStandardS,
@@ -433,7 +433,7 @@ This serves as a window in which a veto could be coordinated offchain, to be the
 After this a proposal enters a \*waiting\* state of ${formatSeconds(
         upgradeWaitOrExpireS,
       )}, from which it can be immediately approved (cancelling the delay) by ${scApprovalThreshold} participants of the SecurityCouncil.
-For the unlikely case that the SC does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
+For the unlikely case that the Security Council does not approve here, the Guardians can instead approve the proposal, or nobody. In the two latter cases, the waiting period is enforced in full.
 A proposal cannot be actively cancelled in the ProtocolUpgradeHandler, but will expire if not approved within the waiting period. An approved proposal now enters the \*pendingExecution\* state for a final delay of ${formatSeconds(upgradeDelayPeriodS)} and can then be executed.
 ### Other governance tracks
 There are two other tracks of Governance also starting with DAO Delegate proposals the ZKsync Era rollup: 1) Token Program Proposals that add new minters, allocations or upgrade the ZK token and
@@ -462,9 +462,9 @@ After a softFreeze and / or a hardFreeze, a proposal from the EmergencyUpgradeBo
 Only the SecurityCouncil can unfreeze an active freeze.
 ## ZK cluster Admin and Chain Admin
 Apart from the paths that can upgrade all shared implementations, the ZK stack governance system defines other roles that can modify the system:
-A single *ZK cluster Admin* role that governs parameters in the shared contracts and a *Chain Admin* role (defined in each chain-specific diamond contract) for managing parameters of each individual ZK chain that builds on the stack.
+A single *ZK cluster Admin* role who governs parameters in the shared contracts and a *Chain Admin* role (defined in each chain-specific diamond contract) for managing parameters of each individual ZK chain that builds on the stack.
 These chain-specific actions include critical operations like setting a transaction filterer that can censor L1 -> L2 messages, changing the DA mode, migrating the chain to a different settlement layer and standard operations like setting fee parameters and adding / removing Validators in the ValidatorTimelock.
-For rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract. Each rollup can become a permanent rollup (through their Chain Admin) which disallows any DA change to a non-whitelisted source in the future.
+For rollups, data availability on Ethereum is validated by a RollupL1DAValidator contract (or a RelayedSLDAValidator on the Gateway). Each rollup can become a permanent rollup (through their Chain Admin) which disallows DA changes to non-whitelisted sources or settlement layers in the future.
 The source of truth for rollup-compliant DA validator contracts is the RollupDAManager contract, which is administered via the ProtocolUpgradeHandler.
 ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cluster Admin* role in the shared ZK stack contracts.`
       return description
