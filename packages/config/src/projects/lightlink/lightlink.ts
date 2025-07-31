@@ -198,8 +198,9 @@ export const lightlink: ScalingProject = {
     risks: [],
   },
   permissions: {
+    ...discovery.getDiscoveredPermissions(),
     ethereum: {
-      ...discovery.getDiscoveredPermissions(),
+      ...discovery.getDiscoveredPermissions()['ethereum'],
       roles: [
         discovery.getPermissionDetails(
           'Validators',
