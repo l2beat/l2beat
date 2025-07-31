@@ -146,11 +146,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'votingPeriod',
   )
 
-  const protLateQuorumVoteExtensionS =
-    discoveryShared.getContractValue<number>(
-      'ZkProtocolGovernor',
-      'lateQuorumVoteExtension',
-    )
+  const protLateQuorumVoteExtensionS = discoveryShared.getContractValue<number>(
+    'ZkProtocolGovernor',
+    'lateQuorumVoteExtension',
+  )
   const protTlMinDelayS = discoveryShared.getContractValue<number>(
     'ProtocolTimelockController',
     'getMinDelay',
