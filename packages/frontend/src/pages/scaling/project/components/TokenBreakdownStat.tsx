@@ -72,6 +72,7 @@ export function TokenBreakdownStat({ tokenTvs }: Props) {
           associated={tokenTvs.breakdown.associated}
           ether={tokenTvs.breakdown.ether}
           stablecoin={tokenTvs.breakdown.stablecoin}
+          btc={tokenTvs.breakdown.btc}
           className="h-[18px] w-[88px]"
         />
         {tokenTvs.warnings.length > 0 && (
@@ -84,6 +85,7 @@ export function TokenBreakdownStat({ tokenTvs }: Props) {
           associated={tokenTvs.breakdown.associated}
           ether={tokenTvs.breakdown.ether}
           stablecoin={tokenTvs.breakdown.stablecoin}
+          btc={tokenTvs.breakdown.btc}
           associatedTokenSymbols={tokenTvs.associatedTokens}
           tvsWarnings={tokenTvs.warnings}
         />

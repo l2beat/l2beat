@@ -83,12 +83,17 @@ CommandInput.displayName = CommandPrimitive.Input.displayName
 const CommandInputActionButton = ({
   children,
   onClick,
+  className,
 }: {
   children: React.ReactNode
   onClick: (() => void) | undefined
+  className?: string
 }) => (
   <button
-    className={linkVariants({ underline: false, className: 'text-xs' })}
+    className={linkVariants({
+      underline: false,
+      className: cn('text-xs', className),
+    })}
     onClick={onClick}
   >
     {children}
