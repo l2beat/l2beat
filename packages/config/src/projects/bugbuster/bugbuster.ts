@@ -179,7 +179,7 @@ export const bugbuster: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   permissions: {
-    [discovery.chain]: {
+    optimism: {
       actors: [
         discovery.getPermissionDetails(
           'BugBuster Owner',
@@ -196,7 +196,7 @@ export const bugbuster: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      optimism: [
         discovery.getContractDetails('BugBuster', {
           description:
             'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',

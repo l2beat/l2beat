@@ -66,11 +66,12 @@ export const blessnet: ScalingProject = orbitStackL3({
     ],
     gasTokens: ['BLESS'],
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: '2 months of operator downtime',

@@ -136,7 +136,7 @@ export const orbiter: Bridge = {
     // For contracts, see:
     // https://github.com/Orbiter-Finance/orbiter-sdk/blob/main/src/config/contracts.ts
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'OBSource',
           "Proxies transfers into Makers' accounts (when using custom frontend via SDK).",
@@ -146,7 +146,7 @@ export const orbiter: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'ETH escrow',

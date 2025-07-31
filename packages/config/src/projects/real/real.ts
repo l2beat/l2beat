@@ -123,5 +123,5 @@ export const real: ScalingProject = orbitStackL2({
       url: 'https://x.com/donnoh_eth/status/1937136543195398578',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

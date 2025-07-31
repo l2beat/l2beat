@@ -294,7 +294,7 @@ export const termstructure: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Admins',
@@ -345,7 +345,7 @@ export const termstructure: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ZkTrueUp', {
           description:
             'Main contract of the system. It manages deposits, withdrawals, verification, permissions and DeFi operations.',

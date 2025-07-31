@@ -63,6 +63,7 @@ export const geist: ScalingProject = orbitStackL3({
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['GHST'],
+  hostChain: 'base',
   discovery,
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'base' }),
 })

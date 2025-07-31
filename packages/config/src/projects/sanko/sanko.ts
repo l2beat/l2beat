@@ -14,6 +14,7 @@ const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1716163200), // 2024-05-20T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['Gaming', 'Social'],
@@ -85,7 +86,7 @@ export const sanko: ScalingProject = orbitStackL3({
     },
     CONTRACTS.UPGRADE_NO_DELAY_RISK,
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

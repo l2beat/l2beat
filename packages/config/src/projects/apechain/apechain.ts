@@ -32,6 +32,7 @@ export const apechain: ScalingProject = orbitStackL3({
       ],
     },
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -51,7 +52,7 @@ export const apechain: ScalingProject = orbitStackL3({
     gasTokens: ['APE'],
   },
   associatedTokens: ['APE'],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

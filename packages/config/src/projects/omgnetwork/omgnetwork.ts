@@ -117,7 +117,7 @@ export const omgnetwork: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('EthVault'),
         discovery.getContractDetails('Erc20Vault'),
         discovery.getContractDetails('ETHDepositVerifier'),

@@ -12,6 +12,7 @@ const L1OrbitERC20Gateway = discovery.getContract('ERC20Gateway')
 
 export const game7: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1738899615),
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
@@ -79,5 +80,5 @@ export const game7: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

@@ -69,11 +69,12 @@ export const superposition: ScalingProject = orbitStackL3({
       tokens: '*',
     }),
   ],
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

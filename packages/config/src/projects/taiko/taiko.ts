@@ -424,14 +424,10 @@ export const taiko: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
       title: 'Plonky3 vulnerability patch',

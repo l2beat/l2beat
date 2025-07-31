@@ -53,7 +53,7 @@ export const layer2finance: ScalingProject = {
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('RollupChain', {
           references: [
             {

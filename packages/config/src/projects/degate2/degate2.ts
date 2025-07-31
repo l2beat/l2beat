@@ -257,7 +257,7 @@ export const degate2: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'DefaultDepositContract Owner',
@@ -282,7 +282,7 @@ export const degate2: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', 'Main ExchangeV3 contract.'),
         discovery.getContractDetails(
           'LoopringIOExchangeOwner',

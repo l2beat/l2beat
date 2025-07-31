@@ -12,6 +12,7 @@ export const popapex: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1709164800), // 2024-02-29T00:00:00Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -74,5 +75,5 @@ export const popapex: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

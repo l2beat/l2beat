@@ -101,7 +101,7 @@ export const hyphen: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('LiquidityPool'),
         discovery.getContractDetails(
           'TokenManager',
@@ -120,7 +120,7 @@ export const hyphen: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'ProxyAdmin owner',
