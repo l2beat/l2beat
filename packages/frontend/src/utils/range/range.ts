@@ -19,7 +19,7 @@ export function getRange(
   const days = rangeToDays(range)
   const offset = opts?.offset ?? 0
 
-  const end = UnixTime.toStartOf(UnixTime.now(), 'hour') + offset
+  const end = UnixTime.toStartOf(UnixTime.now() + offset, 'hour')
   const start =
     days !== null
       ? UnixTime.toStartOf(

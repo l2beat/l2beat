@@ -46,7 +46,9 @@ export async function getTokenTvsChart({
   const db = getDb()
   const resolution = rangeToResolution({ type: range })
 
-  const [from, to] = getRange({ type: range }, resolution)
+  const [from, to] = getRange({ type: range }, resolution, {
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
+  })
 
   const tokenValues = await db.tvsTokenValue.getByTokenIdInTimeRange(
     token.tokenId,

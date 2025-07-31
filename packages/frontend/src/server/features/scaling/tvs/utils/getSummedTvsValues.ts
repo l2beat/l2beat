@@ -1,4 +1,8 @@
-import type { ProjectId, ProjectValueType } from '@l2beat/shared-pure'
+import {
+  type ProjectId,
+  type ProjectValueType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -27,7 +31,10 @@ export async function getSummedTvsValues(
   const db = getDb()
   const resolution = rangeToResolution(range)
 
-  const [from, to] = getRange(range, resolution)
+  const [from, to] = getRange(range, resolution, {
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
+  })
+
   const [latest, valueRecords] = await Promise.all([
     db.tvsProjectValue.getLatestValues(type ?? 'SUMMARY', projectIds),
     db.tvsProjectValue.getSummedByTimestamp(projectIds, type ?? 'SUMMARY', [

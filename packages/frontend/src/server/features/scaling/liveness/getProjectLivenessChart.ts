@@ -49,7 +49,7 @@ export async function getProjectLivenessChart({
   const db = getDb()
   const resolution = rangeToResolution(range)
   const [from, to] = getRange({ type: range }, resolution, {
-    offset: -1 * UnixTime.HOUR,
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
   const [livenessProject] = await ps.getProjects({

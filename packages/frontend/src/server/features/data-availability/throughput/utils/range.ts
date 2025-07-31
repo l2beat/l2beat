@@ -25,9 +25,11 @@ export function getThroughputRange(
     | { type: 'custom'; from: number; to: number },
 ): [UnixTime | null, UnixTime] {
   return getRange(range, rangeToResolution(range), {
-    offset: -1 * UnixTime.HOUR,
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 }
+
+// feature | projectId | expected | synced | latestData
 
 export function rangeToResolution(
   range:
