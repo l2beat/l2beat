@@ -413,6 +413,23 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         },
         EXITS.FORCED_MESSAGING('forced-messages'),
       ],
+      otherConsiderations:
+        templateVars.nonTemplateTechnology?.otherConsiderations ??
+        (settlesOnGateway
+          ? [
+              {
+                name: 'Gateway - Intermediate Settlement Layer',
+                description: `This chain settles on the Gateway, a validity rollup on Ethereum used as a specialized settlement layer. Chains settling on the Gateway keep the same overall architecture as when settling on Ethereum, but their main entrypoints and bridge messaging are replicated on both Ethereum and the Gateway. This abstracts away the intermediate settlement layer for users. Operators provide data and proofs on the Gateway as they would on Ethereum, and proofs are then aggregated into a single Gateway validity proof on Ethereum for all chains settling on the Gateway. Since ZK stack rollups use state diffs for data availability, pubdata posted to the Gateway must be relayed via L2->L1 messages by a 'RelayedSLDAValidator' contract. Unless stated otherwise, the permissions and governance for a given chain are synced between the Gateway and Ethereum.`,
+                references: [
+                  {
+                    title: 'Gateway - ZKsync Era Documentation',
+                    url: 'https://matter-labs.github.io/zksync-era/core/latest/specs/contracts/gateway/overview.html',
+                  },
+                ],
+                risks: [],
+              },
+            ]
+          : undefined),
     },
     upgradesAndGovernance: (() => {
       const description = `
