@@ -84,7 +84,6 @@ export interface ZkStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   l2OutputOracle?: EntryParameters
   portal?: EntryParameters
-  validatorTimelock?: EntryParameters
   milestones?: Milestone[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
@@ -105,6 +104,7 @@ export interface ZkStackConfigCommon {
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
   reasonsForBeingOther?: ReasonForBeingInOther[]
   ecosystemInfo?: ProjectEcosystemInfo
+  validatorTimelockOnGateway?: EntryParameters
   /** Set to true if projects posts blobs to Ethereum */
   usesEthereumBlobs?: boolean
   /** Configure to enable DA metrics tracking for chain using Celestia DA */
@@ -159,10 +159,21 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
     'ProtocolTimelockController',
     'getMinDelay',
   )
-  const executionDelayS = templateVars.discovery.getContractValue<number>(
+  const settlesOnGateway =
+    templateVars.discovery.getContractValue<string>(
+      templateVars.diamondContract.name ?? 'ZKsync',
+      'getSettlementLayer',
+    ) === 'eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'
+  let executionDelayS = templateVars.discovery.getContractValue<number>(
     'ValidatorTimelock',
     'executionDelay',
   )
+  if (settlesOnGateway) {
+    // add gateway VTL delay (usually 0)
+    executionDelayS += Number(
+      templateVars.validatorTimelockOnGateway?.values?.executionDelay,
+    )
+  }
   const executionDelay = executionDelayS > 0 && formatSeconds(executionDelayS)
 
   const legalVetoStandardS = templateVars.discovery.getContractValue<number>(
@@ -244,11 +255,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
 
   const allDiscoveries = [templateVars.discovery, discovery_ZKstackGovL2]
 
-  const settlesOnGateway =
-    templateVars.discovery.getContractValue<string>(
-      templateVars.diamondContract.name ?? 'ZKsync',
-      'getSettlementLayer',
-    ) === 'eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9'
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -620,18 +626,16 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
-  const validatorTimelockEntry =
-    templateVars.validatorTimelock ??
-    templateVars.discovery.getContract('ValidatorTimelock')
-
   if (templateVars.usesEthereumBlobs) {
-    const validatorTimelock = validatorTimelockEntry.address
+    const validatorTimelock =
+      templateVars.discovery.getContractDetails('ValidatorTimelock').address
 
-    const validatorsVTL = validatorTimelockEntry.values?.[
-      'validatorsVTL'
-    ] as ChainSpecificAddress[]
+    const validatorsVTL = templateVars.discovery.getContractValue<
+      ChainSpecificAddress[]
+    >('ValidatorTimelock', 'validatorsVTL')
 
-    const inboxDeploymentBlockNumber = validatorTimelockEntry.sinceBlock ?? 0
+    const inboxDeploymentBlockNumber =
+      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
 
     return [
       {

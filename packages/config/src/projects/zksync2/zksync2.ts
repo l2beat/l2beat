@@ -11,7 +11,8 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
-const discoveryGateway = new ProjectDiscovery('zksync2', 'gateway')
+const discovery_ongateway = new ProjectDiscovery('zksync2', 'gateway')
+const discovery_gateway = new ProjectDiscovery('gateway')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 const chainId = 324
@@ -47,7 +48,6 @@ export const zksync2: ScalingProject = zkStackL2({
     },
   },
   diamondContract: discovery.getContract('ZKsync'),
-  validatorTimelock: discoveryGateway.getContract('ValidatorTimelock'),
   chainConfig: {
     name: 'zksync2',
     chainId,
@@ -75,6 +75,47 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
+  nonTemplatePermissions: {
+    [discovery.chain]: {
+      actors: [
+        discovery.getPermissionDetails(
+          'Gateway Validators',
+          discovery_gateway.getPermissionedAccounts(
+            'ValidatorTimelock',
+            'validatorsVTL',
+          ),
+          'Permissioned to call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these asdditional operators.',
+        ),
+      ],
+    },
+  },
+  validatorTimelockOnGateway:
+    discovery_ongateway.getContract('ValidatorTimelock'),
+  nonTemplateDaTracking: [
+    {
+      // tracks old Era DA on ethereum
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21809364,
+      untilBlock: 23016895,
+      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      sequencers: [
+        '0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2',
+        '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
+      ],
+    },
+    {
+      // tracks gateway DA
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 23016895,
+      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      sequencers: [
+        'eth:0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE',
+        'eth:0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF',
+      ],
+    },
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
@@ -87,7 +128,7 @@ export const zksync2: ScalingProject = zkStackL2({
           '0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102',
         ),
         l2EtherAddress: EthereumAddress(
-          '0x000000000000000000000000000000000000800A',
+          '0x000000000000000000000000000`000000000800A',
         ),
       },
     }),
