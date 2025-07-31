@@ -55,7 +55,7 @@ export const lasernet: ScalingProject = orbitStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

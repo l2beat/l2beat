@@ -59,7 +59,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
     adjustCount: { type: 'SubtractOne' },
     startBlock: 1,
   },
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       // ERC20 Gateway

@@ -405,7 +405,7 @@ export const degate3: ScalingProject = {
     },
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'BlockVerifier Owner',
@@ -430,7 +430,7 @@ export const degate3: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', {
           description: 'Main ExchangeV3 contract.',
           ...timelockUpgrades1,

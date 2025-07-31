@@ -17,6 +17,7 @@ interface TemplateVars {
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
   fallback?: TableReadyValue
   discovery: ProjectDiscovery
+  hostChain: string
 }
 
 export function AnytrustDAC(template: TemplateVars): ProjectCustomDa {
@@ -25,7 +26,7 @@ export function AnytrustDAC(template: TemplateVars): ProjectCustomDa {
     requiredSignatures: number
   }>('SequencerInbox', 'dacKeyset')
 
-  const isL2 = template.discovery.chain === 'ethereum'
+  const isL2 = template.hostChain === 'ethereum'
   const diagramType = isL2 ? 'L2' : 'L3'
 
   const technology: DaTechnology = {

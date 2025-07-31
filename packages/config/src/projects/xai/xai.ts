@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('xai', 'arbitrum')
 
 export const xai: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1704758400), // 2024-01-09T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
@@ -149,6 +150,7 @@ export const xai: ScalingProject = orbitStackL3({
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     },
+    hostChain: 'arbitrum',
     discovery,
   }),
 })

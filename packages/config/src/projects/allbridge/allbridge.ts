@@ -192,7 +192,7 @@ export const allbridge: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'LPBridge',
           'The main contract for the Allbridge liquidity network.',
@@ -230,7 +230,7 @@ export const allbridge: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'TokenBridge Admin',

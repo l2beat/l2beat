@@ -11,6 +11,7 @@ const discovery = new ProjectDiscovery('syndicateframe', 'base')
 export const syndicateframe: ScalingProject = opStackL3({
   addedAt: UnixTime(1711471599), // 2024-03-26T16:46:39Z
   discovery,
+  hostChain: 'base',
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],
   reasonsForBeingOther: [

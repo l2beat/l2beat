@@ -135,7 +135,7 @@ export const polynetwork: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'PolyWrapper',
           'Entrypoint contract for the bridge. It proxies requests to LockProxy.',
@@ -203,7 +203,7 @@ export const polynetwork: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Owner and Fee Collector at PolyWrapper and owner at LockProxyWithLP',

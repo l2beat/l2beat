@@ -122,7 +122,7 @@ export const near: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('NearBridge', {
           description: 'Contract storing Near state checkpoints.',
         }),
@@ -143,7 +143,7 @@ export const near: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'BridgeAdminMultisig',

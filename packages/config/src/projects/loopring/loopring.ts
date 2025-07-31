@@ -311,7 +311,7 @@ export const loopring: ScalingProject = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'LoopringMultisig',
@@ -336,7 +336,7 @@ export const loopring: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ExchangeV3', {
           description: 'Main Loopring contract.',
           ...upgrades,

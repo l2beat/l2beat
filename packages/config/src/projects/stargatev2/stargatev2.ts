@@ -295,7 +295,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'TokenMessaging',
           "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
@@ -353,7 +353,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         ...(() => {
           assert(

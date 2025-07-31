@@ -107,7 +107,7 @@ export const pulseChain: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'ForeignOmnibridge',
           'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
@@ -129,7 +129,7 @@ export const pulseChain: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'BridgeValidators',

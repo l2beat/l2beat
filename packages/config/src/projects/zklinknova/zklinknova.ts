@@ -454,7 +454,7 @@ export const zklinknova: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [lineaDiscovery.chain]: [
+      linea: [
         lineaDiscovery.getContractDetails('L1ERC20Bridge', {
           description:
             'Main entry point for depositing ERC20 tokens from Linea to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
@@ -694,7 +694,7 @@ export const zklinknova: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [lineaDiscovery.chain]: {
+    linea: {
       actors: [
         lineaDiscovery.getMultisigPermission(
           'LineaOwner',

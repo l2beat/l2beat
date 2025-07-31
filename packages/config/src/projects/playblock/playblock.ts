@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('playblock', 'nova')
 
 export const playblock: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z
+  hostChain: 'nova',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Nova, BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
@@ -44,5 +45,5 @@ export const playblock: ScalingProject = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'nova' }),
 })

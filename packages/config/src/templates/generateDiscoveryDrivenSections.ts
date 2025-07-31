@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectContract, ProjectPermissions } from '../types'
@@ -8,10 +7,6 @@ export function generateDiscoveryDrivenContracts(
 ): Record<string, ProjectContract[]> {
   let result: Record<string, ProjectContract[]> = {}
   for (const discovery of discoveries) {
-    // NOTE(radomski): Just make sure we don't insert twice. There is a
-    // talk to be had about "what about shared modules" and all of that but
-    // we will cross that bridge when we come to it
-    assert(!(discovery.chain in result))
     result = merge(result, discovery.getDiscoveredContracts())
   }
 
@@ -23,10 +18,6 @@ export function generateDiscoveryDrivenPermissions(
 ): Record<string, ProjectPermissions> {
   let result: Record<string, ProjectPermissions> = {}
   for (const discovery of discoveries) {
-    // NOTE(radomski): Just make sure we don't insert twice. There is a
-    // talk to be had about "what about shared modules" and all of that but
-    // we will cross that bridge when we come to it
-    assert(!(discovery.chain in result))
     result = merge(result, discovery.getDiscoveredPermissions())
   }
 

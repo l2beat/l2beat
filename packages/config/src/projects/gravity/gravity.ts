@@ -101,7 +101,7 @@ export const gravity: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'Gravity',
           'Contract holding locked assets and handling user interactions for transfers and withdrawals.',
@@ -111,7 +111,7 @@ export const gravity: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Cosmos Validators',

@@ -54,7 +54,7 @@ export class ProjectDiscovery {
 
   constructor(
     public readonly projectName: string,
-    public readonly chain: string = 'ethereum',
+    chain = 'ethereum',
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
     const discovery = configReader.readDiscovery(projectName, chain)
@@ -76,8 +76,14 @@ export class ProjectDiscovery {
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
-  get timestamp(): number {
-    return this.discoveries.reduce((min, d) => Math.max(min, d.timestamp), 0)
+  get timestampPerChain(): Record<string, number> {
+    const grouped = groupBy(this.discoveries, (d) => d.chain)
+    return Object.fromEntries(
+      Object.entries(grouped).map(([chain, discovery]) => [
+        chain,
+        Math.max(...discovery.map((d) => d.timestamp)),
+      ]),
+    )
   }
 
   getName(address: ChainSpecificAddress): string {

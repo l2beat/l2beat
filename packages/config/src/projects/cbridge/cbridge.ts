@@ -162,7 +162,7 @@ export const cBridge: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'MessageBus',
           'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
@@ -220,7 +220,7 @@ export const cBridge: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Bridge Governance',

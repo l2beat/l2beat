@@ -12,6 +12,7 @@ export const popboss: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1710836229), // 2024-03-19T08:17:09Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Conduit],
   additionalPurposes: ['Gaming'],
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -57,5 +58,5 @@ export const popboss: ScalingProject = orbitStackL3({
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

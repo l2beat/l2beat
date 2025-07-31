@@ -15,6 +15,7 @@ export const b3: ScalingProject = opStackL3({
     BADGES.L3ParentChain.Base,
   ],
   daProvider: CELESTIA_DA_PROVIDER,
+  hostChain: 'base',
   discovery,
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [

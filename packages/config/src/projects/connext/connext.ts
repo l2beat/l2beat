@@ -92,7 +92,7 @@ export const connext: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'TransactionManager',
           'Escrow and logic for cross-chain transactions.',
@@ -106,7 +106,7 @@ export const connext: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Owner of TransactionManager',

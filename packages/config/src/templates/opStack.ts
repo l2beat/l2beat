@@ -186,6 +186,7 @@ export interface OpStackConfigL2 extends OpStackConfigCommon {
 
 export interface OpStackConfigL3 extends OpStackConfigCommon {
   stackedRiskView?: ProjectScalingRiskView
+  hostChain: string
 }
 
 function opStackCommon(
@@ -466,7 +467,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
 
 export function opStackL3(templateVars: OpStackConfigL3): ScalingProject {
   const layer2s = require('../processing/layer2s').layer2s as ScalingProject[]
-  const hostChain = templateVars.discovery.chain
+  const hostChain = templateVars.hostChain
   const baseChain = layer2s.find((l2) => l2.id === hostChain)
   assert(baseChain, `Could not find base chain ${hostChain} in layer2s`)
 
