@@ -115,7 +115,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       websites: [
         'https://arbitrum.io/',
         'https://arbitrum.foundation/',
-        'https://forum.arbitrum.foundation',
+        'https://forum.arbitrum.foundation/',
       ],
       bridges: ['https://bridge.arbitrum.io'],
       documentation: [
