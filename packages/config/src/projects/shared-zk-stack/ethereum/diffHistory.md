@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x4b9e19932a5bec43ced845066d92427b1b1132fa
+Generated with discovered.json: 0x0b02f268e3408d205e41bbb6becb8620d4a1fc7a
 
-# Diff at Thu, 31 Jul 2025 06:49:39 GMT:
+# Diff at Thu, 31 Jul 2025 10:24:44 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1753346675
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc6aee0100bcf523dbfb20b1884ed98a8717207a block: 1753346675
 - current timestamp: 1753944518
 
 ## Description
@@ -39,7 +39,7 @@ discovery. Values are for block 1753346675 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x1c13d236967dbeac2044df69780c308c7df5fbb6
+Generated with discovered.json: 0xb3a9b1f7871727dcd32d8fa65577ba180373643b
 
 # Diff at Thu, 24 Jul 2025 08:45:45 GMT:
 

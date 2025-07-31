@@ -1,8 +1,8 @@
 Generated with discovered.json: 0xf46ec04ce1b853a87fdc0c9eefdbb1cb3649d471
 
-# Diff at Thu, 31 Jul 2025 10:10:03 GMT:
+# Diff at Thu, 31 Jul 2025 10:25:11 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current timestamp: 1753952494
 
 ## Description

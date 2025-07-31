@@ -1,9 +1,9 @@
 Generated with discovered.json: 0x76f6cbb0e4e49c26ab996406ebdffd2dd6b9cedc
 
-# Diff at Thu, 31 Jul 2025 06:49:39 GMT:
+# Diff at Thu, 31 Jul 2025 10:24:44 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1753346675
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fc6aee0100bcf523dbfb20b1884ed98a8717207a block: 1753346675
 - current timestamp: 1753944518
 
 ## Description
@@ -13,156 +13,12 @@ Changes are config related, ignore (an earlier config resolved incorrect permiss
 ## Watched changes
 
 ```diff
-    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
-    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
-      values.accessControl.TIMELOCK_ADMIN_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]}
-      values.accessControl.PROPOSER_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]}
-      values.accessControl.EXECUTOR_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]}
-      values.accessControl.CANCELLER_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]}
-      values.Canceller:
-+        ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
-      values.Executor:
-+        ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
-      values.Proposer:
-+        ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
-      values.timelockAdminAC:
-+        ["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]
-      errors:
--        {"Canceller":"Processing error occurred.","Executor":"Processing error occurred.","Proposer":"Processing error occurred.","timelockAdminAC":"Processing error occurred."}
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC"}]
-    }
-```
-
-```diff
-    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
-    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
-      values.$pastUpgrades.0:
-+        ["2024-05-21T18:48:46.000Z","0x5bfce59c2ad18019ef20d58a3f1ec496cdc85537fc9564c932f7dcbbb2a15b56",["zksync:0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]]
-      values.$pastUpgrades.1:
-+        ["2024-06-10T09:25:38.000Z","0xa6bc022ba0f60ac6f10a6efb84b261e9ca1b327a611bdd7a1f4d37cc9b027a3c",["zksync:0x01a6715d3560241E09E865a46122bf347A576c09"]]
-      values.$upgradeCount:
--        0
-+        2
-      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
-+        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
-      values.accessControl.MINTER_ROLE.adminRole:
--        "DEFAULT_ADMIN_ROLE"
-+        "MINTER_ADMIN_ROLE"
-      values.accessControl.MINTER_ROLE.members.0:
-+        "zksync:0xa97fBc75CcbC7d4353C4D2676ed18Cd0C5AaF7e6"
-      values.accessControl.MINTER_ROLE.members.1:
-+        "zksync:0xD78dc27D4dB8f428C67f542216a2b23663838405"
-      values.accessControl.MINTER_ROLE.members.2:
-+        "zksync:0x21b27952f8621f54f3CB652630E122Ec81dd2dc1"
-      values.accessControl.MINTER_ROLE.members.3:
-+        "zksync:0x0Ad50686C159040E57ddcE137Db0b63c67473450"
-      values.accessControl.MINTER_ROLE.members.4:
-+        "zksync:0x0681E3808a0aA12004fb815ebB4515DC823cfbb4"
-      values.accessControl.MINTER_ROLE.members.5:
-+        "zksync:0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4"
-      values.accessControl.MINTER_ROLE.members.6:
-+        "zksync:0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d"
-      values.accessControl.MINTER_ROLE.members.7:
-+        "zksync:0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b"
-      values.accessControl.MINTER_ROLE.members.8:
-+        "zksync:0x721b6d77a58FaaF540bE49F28D668a46214Ba44c"
-      values.accessControl.MINTER_ROLE.members.9:
-+        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
-      values.accessControl.MINTER_ADMIN_ROLE:
-+        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]}
-      values.accessControl.BURNER_ADMIN_ROLE:
-+        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
-      values.accessControl.BURNER_ROLE:
-+        {"adminRole":"BURNER_ADMIN_ROLE","members":[]}
-      values.DefaultAdmin.0:
-+        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
-      values.MinterAdmin:
-+        ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
-      errors:
--        {"MinterAdmin":"Processing error occurred."}
-    }
-```
-
-```diff
-    EOA Guardians_l2Alias (0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
-    +++ description: None
-      receivedPermissions.0:
-+        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
-    }
-```
-
-```diff
-    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
-    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
       values.proposalQueuedCount:
 -        2
-+        11
-      receivedPermissions:
-+        [{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"}]},{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"propose transactions.","role":".Proposer"}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","role":".Executor"}]
++        3
     }
-```
-
-```diff
-    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a) {
-    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
-      values.accessControl.TIMELOCK_ADMIN_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]}
-      values.accessControl.PROPOSER_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]}
-      values.accessControl.EXECUTOR_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]}
-      values.accessControl.CANCELLER_ROLE:
-+        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]}
-      values.Canceller:
-+        ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
-      values.Executor:
-+        ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
-      values.Proposer:
-+        ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
-      values.timelockAdminAC:
-+        ["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]
-      errors:
--        {"Canceller":"Processing error occurred.","Executor":"Processing error occurred.","Proposer":"Processing error occurred.","timelockAdminAC":"Processing error occurred."}
-      directlyReceivedPermissions:
-+        [{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC"}]
-    }
-```
-
-```diff
-    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
-    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
-      receivedPermissions:
-+        [{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200}]},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"propose transactions.","role":".Proposer"}]
-      directlyReceivedPermissions:
-+        [{"permission":"act","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"role":".Executor"}]
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746)
-    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
-```
-
-```diff
-+   Status: CREATED
-    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d)
-    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
-```
-
-## Source code changes
-
-```diff
-.../zksync2/.flat/ZkTokenGovernor.sol              | 5087 ++++++++++++++++++++
- .../zksync2/.flat/ZkTokenTimelockController.sol    | 1227 +++++
- 2 files changed, 6314 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -170,32 +26,6 @@ Changes are config related, ignore (an earlier config resolved incorrect permiss
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1753346675 (main branch discovery), not current.
-
-```diff
-    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
-    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
-      directlyReceivedPermissions:
--        [{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC"}]
-      values.accessControl.TIMELOCK_ADMIN_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]}
-      values.accessControl.PROPOSER_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]}
-      values.accessControl.EXECUTOR_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]}
-      values.accessControl.CANCELLER_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]}
-      values.Canceller:
--        ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
-      values.Executor:
--        ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
-      values.Proposer:
--        ["zksync:0x76705327e682F2d96943280D99464Ab61219e34f"]
-      values.timelockAdminAC:
--        ["zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"]
-      errors:
-+        {"Canceller":"Processing error occurred.","Executor":"Processing error occurred.","Proposer":"Processing error occurred.","timelockAdminAC":"Processing error occurred."}
-    }
-```
 
 ```diff
 -   Status: DELETED
@@ -222,80 +52,19 @@ discovery. Values are for block 1753346675 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
-    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
-      values.$pastUpgrades.0:
--        ["2024-05-21T18:48:46.000Z","0x5bfce59c2ad18019ef20d58a3f1ec496cdc85537fc9564c932f7dcbbb2a15b56",["zksync:0x3931e73ebA79a7C898D3b0e02c7C62bA4F11cB14"]]
-      values.$pastUpgrades.1:
--        ["2024-06-10T09:25:38.000Z","0xa6bc022ba0f60ac6f10a6efb84b261e9ca1b327a611bdd7a1f4d37cc9b027a3c",["zksync:0x01a6715d3560241E09E865a46122bf347A576c09"]]
-      values.$upgradeCount:
--        2
-+        0
-      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
--        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
-      values.accessControl.MINTER_ADMIN_ROLE:
--        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]}
-      values.accessControl.BURNER_ADMIN_ROLE:
--        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
-      values.accessControl.MINTER_ROLE.adminRole:
--        "MINTER_ADMIN_ROLE"
-+        "DEFAULT_ADMIN_ROLE"
-      values.accessControl.MINTER_ROLE.members.0:
--        "zksync:0xa97fBc75CcbC7d4353C4D2676ed18Cd0C5AaF7e6"
-      values.accessControl.MINTER_ROLE.members.1:
--        "zksync:0xD78dc27D4dB8f428C67f542216a2b23663838405"
-      values.accessControl.MINTER_ROLE.members.2:
--        "zksync:0x21b27952f8621f54f3CB652630E122Ec81dd2dc1"
-      values.accessControl.MINTER_ROLE.members.3:
--        "zksync:0x0Ad50686C159040E57ddcE137Db0b63c67473450"
-      values.accessControl.MINTER_ROLE.members.4:
--        "zksync:0x0681E3808a0aA12004fb815ebB4515DC823cfbb4"
-      values.accessControl.MINTER_ROLE.members.5:
--        "zksync:0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4"
-      values.accessControl.MINTER_ROLE.members.6:
--        "zksync:0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d"
-      values.accessControl.MINTER_ROLE.members.7:
--        "zksync:0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b"
-      values.accessControl.MINTER_ROLE.members.8:
--        "zksync:0x721b6d77a58FaaF540bE49F28D668a46214Ba44c"
-      values.accessControl.MINTER_ROLE.members.9:
--        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
-      values.accessControl.BURNER_ROLE:
--        {"adminRole":"BURNER_ADMIN_ROLE","members":[]}
-      values.DefaultAdmin.0:
--        "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
-      values.MinterAdmin:
--        ["zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"]
-      errors:
-+        {"MinterAdmin":"Processing error occurred."}
-    }
-```
-
-```diff
-    EOA Guardians_l2Alias (0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
-    +++ description: None
-      receivedPermissions.0:
--        {"permission":"interact","from":"zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746","description":"cancel proposals while they are pending (after having been proposed) or active (during the voting period).","role":".VETO_GUARDIAN"}
-    }
-```
-
-```diff
     contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
     +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
-      receivedPermissions:
--        [{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"}]},{"permission":"interact","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","description":"propose transactions.","role":".Proposer"},{"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"}]},{"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"propose transactions.","role":".Proposer"}]
-      directlyReceivedPermissions:
--        [{"permission":"act","from":"zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714","role":".Executor"},{"permission":"act","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","role":".Executor"}]
-      values.proposalQueuedCount:
--        11
-+        2
+      receivedPermissions.4:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.5:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"execute transactions that are ready.","role":".Executor"}
+      receivedPermissions.6:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"}]}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","description":"propose transactions.","role":".Proposer"}
+      directlyReceivedPermissions.1:
+-        {"permission":"act","from":"zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8","role":".Executor"}
     }
-```
-
-```diff
--   Status: DELETED
-    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746)
-    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
 ```
 
 ```diff
@@ -304,49 +73,7 @@ discovery. Values are for block 1753346675 (main branch discovery), not current.
     +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
 ```
 
-```diff
-    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a) {
-    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
-      directlyReceivedPermissions:
--        [{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC"}]
-      values.accessControl.TIMELOCK_ADMIN_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]}
-      values.accessControl.PROPOSER_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]}
-      values.accessControl.EXECUTOR_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]}
-      values.accessControl.CANCELLER_ROLE:
--        {"adminRole":"TIMELOCK_ADMIN_ROLE","members":["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]}
-      values.Canceller:
--        ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
-      values.Executor:
--        ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
-      values.Proposer:
--        ["zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"]
-      values.timelockAdminAC:
--        ["zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"]
-      errors:
-+        {"Canceller":"Processing error occurred.","Executor":"Processing error occurred.","Proposer":"Processing error occurred.","timelockAdminAC":"Processing error occurred."}
-    }
-```
-
-```diff
--   Status: DELETED
-    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d)
-    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
-```
-
-```diff
-    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
-    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
-      receivedPermissions:
--        [{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"description":"manage all access control roles and change the minimum delay.","role":".timelockAdminAC","via":[{"address":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200}]},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"cancel queued transactions.","role":".Canceller"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"execute transactions that are ready.","role":".Executor"},{"permission":"interact","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","description":"propose transactions.","role":".Proposer"}]
-      directlyReceivedPermissions:
--        [{"permission":"act","from":"zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a","delay":259200,"role":".Executor"}]
-    }
-```
-
-Generated with discovered.json: 0x09e112214e1fcbd212b535f121dab8260d87c0eb
+Generated with discovered.json: 0x32a53c40ad4ad5dfa11742e92c57427f5f2fefe5
 
 # Diff at Mon, 14 Jul 2025 12:47:17 GMT:
 
