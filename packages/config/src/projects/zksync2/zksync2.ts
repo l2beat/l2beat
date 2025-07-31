@@ -74,7 +74,7 @@ export const zksync2: ScalingProject = zkStackL2({
     id: ProjectId('the-elastic-network'),
   },
   nonTemplatePermissions: {
-    gateway: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Gateway Validators',
