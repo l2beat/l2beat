@@ -13,9 +13,7 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
-const ethereumDiscovery = new ProjectDiscovery('blobstream')
-const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
-const baseDiscovery = new ProjectDiscovery('blobstream', 'base')
+const discovery = new ProjectDiscovery('blobstream')
 
 export const blobstream: BaseProject = {
   id: ProjectId('blobstream'),
@@ -97,11 +95,7 @@ export const blobstream: BaseProject = {
     },
   },
   contracts: {
-    addresses: generateDiscoveryDrivenContracts([
-      ethereumDiscovery,
-      arbitrumDiscovery,
-      baseDiscovery,
-    ]),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -123,14 +117,6 @@ export const blobstream: BaseProject = {
       type: 'incident',
     },
   ],
-  permissions: generateDiscoveryDrivenPermissions([
-    ethereumDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-  ]),
-  discoveryInfo: getDiscoveryInfo([
-    ethereumDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-  ]),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

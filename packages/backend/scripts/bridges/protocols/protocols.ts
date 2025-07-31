@@ -1,3 +1,4 @@
+import type { RpcClient } from '@l2beat/shared'
 import type { Chain } from '../chains'
 import type { Asset } from '../types/Asset'
 import type { DecoderInput } from '../types/DecoderInput'
@@ -14,7 +15,11 @@ import { STARGATE } from './decoders/stargate'
 
 export interface Protocol {
   name: string
-  decoder: (chain: Chain, log: DecoderInput) => Message | Asset | undefined
+  decoder: (
+    chain: Chain,
+    log: DecoderInput,
+    rpc?: RpcClient,
+  ) => Promise<Message | Asset | undefined> | Message | Asset | undefined
 }
 
 export const PROTOCOLS: Protocol[] = [

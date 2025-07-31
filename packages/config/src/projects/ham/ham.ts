@@ -5,10 +5,11 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL3 } from '../../templates/opStack'
 
-const discovery = new ProjectDiscovery('ham', 'base')
+const discovery = new ProjectDiscovery('ham')
 
 export const ham: ScalingProject = opStackL3({
   addedAt: UnixTime(1722499160), // 2024-08-01T07:59:20Z
+  hostChain: 'base',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Base, BADGES.RaaS.Caldera],
   additionalPurposes: ['Social'],

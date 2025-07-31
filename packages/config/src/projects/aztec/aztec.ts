@@ -309,7 +309,7 @@ export const aztec: ScalingProject = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Rollup Providers',

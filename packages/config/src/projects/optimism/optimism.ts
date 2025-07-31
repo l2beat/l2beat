@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
-const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 
@@ -20,7 +19,6 @@ export const optimism: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['optimism']: l2Discovery },
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',

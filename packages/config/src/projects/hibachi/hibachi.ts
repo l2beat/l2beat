@@ -4,7 +4,7 @@ import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from '../../processing/utils/getStage'
 
-const discovery = new ProjectDiscovery('hibachi', 'arbitrum')
+const discovery = new ProjectDiscovery('hibachi')
 
 export const hibachi = {
   type: 'layer3',

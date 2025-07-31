@@ -508,7 +508,7 @@ export const fraxferry: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         // ARBITRUM
         discovery.getContractDetails('FRAX Ferry Bridge (Arbitrum)', {
           description: 'FRAX Bridge Contract (Escrow).',
@@ -1168,7 +1168,7 @@ export const fraxferry: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Bridge Owner',

@@ -17,7 +17,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('bugbuster', 'optimism')
+const discovery = new ProjectDiscovery('bugbuster')
 
 export const bugbuster: ScalingProject = {
   type: 'layer3',
@@ -179,7 +179,7 @@ export const bugbuster: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
   permissions: {
-    [discovery.chain]: {
+    optimism: {
       actors: [
         discovery.getPermissionDetails(
           'BugBuster Owner',
@@ -196,7 +196,7 @@ export const bugbuster: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      optimism: [
         discovery.getContractDetails('BugBuster', {
           description:
             'CartesiDApp instance for the Bug Buster DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',

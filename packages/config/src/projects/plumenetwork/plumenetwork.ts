@@ -9,7 +9,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('plumenetwork', 'ethereum')
+const discovery = new ProjectDiscovery('plumenetwork')
 
 export const plumenetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z

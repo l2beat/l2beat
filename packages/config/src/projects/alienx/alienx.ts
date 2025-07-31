@@ -68,5 +68,5 @@ export const alienx: ScalingProject = orbitStackL2({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
 })

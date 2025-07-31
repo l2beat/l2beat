@@ -409,7 +409,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "TimelockSCEmergency",
+      "name": "TimelockSCEmergencyScroll",
       "address": "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
       "type": "Contract",
       "template": "scroll/L1Timelock",
@@ -2942,5 +2942,5 @@
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "scroll": 17438826 },
-  "permissionsConfigHash": "0xc84f9f9508ee08bcf352d35aa1cf9d6915f5519d4fcce4779b91091ec8a617e8"
+  "permissionsConfigHash": "0xe46f9318a6fd60a2bfb49324c7a26d172209481e7f551d8602e573abd929280b"
 }

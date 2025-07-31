@@ -100,7 +100,7 @@ export const beamerbridgev2: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('Resolver', {
           name: 'Resolver',
           description:
@@ -145,7 +145,7 @@ export const beamerbridgev2: Bridge = {
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Owner',

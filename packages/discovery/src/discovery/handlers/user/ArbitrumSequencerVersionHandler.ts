@@ -113,7 +113,7 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     // integers (32 bytes) stored in big endian fashion. The first 32 bytes
     // are the first point. The first byte of every point is encoding data
     // from the end of the stream. This is Arbitrum specific! The following
-    // 31 bytes are sequentally encoding the stream. Taking the first point,
+    // 31 bytes are sequentially encoding the stream. Taking the first point,
     // dropping the first byte leaves us with 31 bytes from the begging of
     // the stream. Stream is RLP encoded. The first byte indicates that the
     // following data is a string with n-bytes following describing the length.
