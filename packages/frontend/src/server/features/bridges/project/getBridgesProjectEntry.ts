@@ -55,6 +55,7 @@ export interface BridgesProjectEntry {
         ether: number
         stablecoin: number
         associated: number
+        btc: number
         warnings: WarningWithSentiment[]
         associatedTokens: string[]
       }
