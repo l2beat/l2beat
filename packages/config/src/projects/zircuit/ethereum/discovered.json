@@ -1524,5 +1524,5 @@
     "opstack/zircuit/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 23016159 },
-  "permissionsConfigHash": "0xcd1b0abf9f22461ff80d58e65eddf15d64a125913c047f2c8e3e33080ede0ecf"
+  "permissionsConfigHash": "0x09746112268d01a5544934017489fc0aa827bb2840230953dc985844f73f5b0d"
 }

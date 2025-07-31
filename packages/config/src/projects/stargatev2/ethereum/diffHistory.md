@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x05b237484192fb173bfca74c4d3f0744d418ae4d
+
+# Diff at Thu, 31 Jul 2025 10:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1752074075
+- current timestamp: 1752074075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074075 (main branch discovery), not current.
+
+```diff
+    contract TokenMessagingEthereum (0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980) {
+    +++ description: This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes
+      name:
+-        "TokenMessaging"
++        "TokenMessagingEthereum"
+    }
+```
+
 Generated with discovered.json: 0x924c775bf9da7ce0cd14fbc82655bbbbda59cbee
 
 # Diff at Mon, 14 Jul 2025 12:47:12 GMT:

@@ -9,14 +9,12 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('unichain')
-const l2discovery = new ProjectDiscovery('unichain', 'unichain')
 const genesisTimestamp = UnixTime(1730748359)
 const chainId = 130
 
 export const unichain: ScalingProject = opStackL2({
   addedAt: UnixTime(1739318400), // 2025-02-11T00:00:00Z
   discovery,
-  additionalDiscoveries: { ['unichain']: l2discovery },
   additionalPurposes: ['Exchange'],
   display: {
     name: 'Unichain',

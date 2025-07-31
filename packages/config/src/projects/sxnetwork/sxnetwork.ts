@@ -7,7 +7,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
+const discovery = new ProjectDiscovery('sxnetwork')
 
 export const sxnetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1722430544), // 2024-07-31T12:55:44Z

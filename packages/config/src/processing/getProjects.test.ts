@@ -189,10 +189,10 @@ describe('getProjects', () => {
             })
 
             const upgradableBy = contract.upgradableBy
-            const permissionsForChain = (project.permissions ?? {})[chain]
+            const permissions = Object.values(project.permissions ?? {})
             const all = [
-              ...(permissionsForChain?.roles ?? []),
-              ...(permissionsForChain?.actors ?? []),
+              ...permissions.flatMap((p) => p.roles ?? []),
+              ...permissions.flatMap((p) => p.actors ?? []),
             ]
             const actors = all.map((x) => {
               if (x.name === 'EOA') {
@@ -203,7 +203,7 @@ describe('getProjects', () => {
             })
 
             if (upgradableBy) {
-              it(`contracts[${chain}][${i}].upgradableBy is valid`, () => {
+              it(`contracts[${project.id}][${chain}][${i}].upgradableBy is valid`, () => {
                 expect(actors).toInclude(...upgradableBy.map((a) => a.name))
               })
             }
