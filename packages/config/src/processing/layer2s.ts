@@ -170,6 +170,7 @@ import { scroll } from '../projects/scroll/scroll'
 import { settlus } from '../projects/settlus/settlus'
 import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
+import { silentData } from '../projects/silentdata/silentdata'
 import { silicon } from '../projects/silicon/silicon'
 import { singularityfinance } from '../projects/singularityfinance/singularityfinance'
 import { sischain } from '../projects/sischain/sischain'
@@ -397,6 +398,7 @@ export const layer2s: ScalingProject[] = [
   settlus,
   shape,
   shibarium,
+  silentData,
   silicon,
   singularityfinance,
   sischain,
