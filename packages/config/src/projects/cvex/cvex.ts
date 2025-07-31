@@ -18,7 +18,6 @@ export const cvex: ScalingProject = upcomingL3({
     links: {
       websites: ['https://jetstream.trade/'],
       documentation: ['https://docs.jetstream.trade/'],
-      repositories: ['https://github.com/0xSyndr'],
       socialMedia: [
         'https://t.me/JetStreamTrade',
         'https://discord.com/invite/WhYYaHHhy3',
