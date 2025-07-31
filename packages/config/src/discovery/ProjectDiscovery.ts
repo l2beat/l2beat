@@ -887,7 +887,9 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): Record<string, ProjectPermissions> {
+  getDiscoveredPermissions(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectPermissions> {
     const permissionedContracts = this.permissionRegistry
       .getPermissionedContracts()
       .map((address) => this.getContractByAddress(address))
@@ -1017,7 +1019,7 @@ export class ProjectDiscovery {
       ...Object.keys(actorsGrouped),
     ])
 
-    return Object.fromEntries(
+    const result = Object.fromEntries(
       Array.from(allChains).map((chain) => [
         chain,
         {
@@ -1026,6 +1028,10 @@ export class ProjectDiscovery {
         },
       ]),
     )
+    for (const chainToRemove of chainsToIgnore) {
+      delete result[chainToRemove]
+    }
+    return result
   }
 
   linkupActorsIntoAccounts(
@@ -1058,7 +1064,9 @@ export class ProjectDiscovery {
     return result
   }
 
-  getDiscoveredContracts(): Record<string, ProjectContract[]> {
+  getDiscoveredContracts(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectContract[]> {
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
@@ -1068,7 +1076,7 @@ export class ProjectDiscovery {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
       })
 
-    const result = contracts
+    const all = contracts
       .filter((contract) => contract.receivedPermissions === undefined)
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
@@ -1081,7 +1089,7 @@ export class ProjectDiscovery {
         })
       })
 
-    result.forEach((contract) => {
+    all.forEach((contract) => {
       if (contract.description !== undefined) {
         contract.description = this.replaceAddressesWithNames(
           contract.description,
@@ -1089,7 +1097,11 @@ export class ProjectDiscovery {
       }
     })
 
-    return groupBy(result, (contract) => contract.chain)
+    const result = groupBy(all, (contract) => contract.chain)
+    for (const chainToRemove of chainsToIgnore) {
+      delete result[chainToRemove]
+    }
+    return result
   }
 }
 
