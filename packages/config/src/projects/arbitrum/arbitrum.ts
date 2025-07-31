@@ -127,9 +127,8 @@ export const arbitrum: ScalingProject = orbitStackL2({
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
-        'https://github.com/OffchainLabs/arbitrum',
         'https://github.com/OffchainLabs/nitro',
-        'https://github.com/OffchainLabs/arb-os',
+        'https://github.com/OffchainLabs/nitro-contracts',
       ],
       socialMedia: [
         'https://twitter.com/arbitrum',
