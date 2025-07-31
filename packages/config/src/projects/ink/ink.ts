@@ -6,14 +6,12 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('ink')
-const l2Discovery = new ProjectDiscovery('ink', 'ink')
 const genesisTimestamp = UnixTime(1733498411)
 
 export const ink: ScalingProject = opStackL2({
   addedAt: UnixTime(1734480000), // 2024-10-18T00:00:00Z
   additionalBadges: [BADGES.RaaS.Gelato],
   discovery,
-  additionalDiscoveries: { ['ink']: l2Discovery },
   display: {
     name: 'Ink',
     slug: 'ink',

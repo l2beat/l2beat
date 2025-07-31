@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
-const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
 const chainId = 8453
 
@@ -19,7 +18,6 @@ export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['base']: l2Discovery },
   display: {
     name: 'Base Chain',
     slug: 'base',

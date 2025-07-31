@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('winr', 'arbitrum')
+const discovery = new ProjectDiscovery('winr')
 
 export const winr: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1734307200), // 2024-12-16T00:00:00Z

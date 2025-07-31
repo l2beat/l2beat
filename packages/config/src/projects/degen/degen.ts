@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('degen', 'base')
+const discovery = new ProjectDiscovery('degen')
 
 export const degen: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711584000), // 2024-03-28T00:00:00Z

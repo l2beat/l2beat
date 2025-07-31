@@ -169,7 +169,7 @@
       }
     },
     {
-      "name": "TokenMessaging",
+      "name": "TokenMessagingOptimism",
       "address": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
       "type": "Contract",
       "sourceHashes": [
@@ -577,5 +577,5 @@
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
   "usedBlockNumbers": { "optimism": 138237649 },
-  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
+  "permissionsConfigHash": "0x593eaca0c1e82111cbccd4d97b6e1641c02d7c73514b55fa60a9d4d19499aa4d"
 }

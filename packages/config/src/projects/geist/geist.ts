@@ -7,7 +7,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('geist', 'base')
+const discovery = new ProjectDiscovery('geist')
 
 export const geist: ScalingProject = orbitStackL3({
   archivedAt: UnixTime(1751373084), // Tuesday, July 1, 2025 12:31:24 PM
