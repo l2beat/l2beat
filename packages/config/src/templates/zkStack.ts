@@ -84,6 +84,7 @@ export interface ZkStackConfigCommon {
   nonTemplateTrackedTxs?: Layer2TxConfig[]
   l2OutputOracle?: EntryParameters
   portal?: EntryParameters
+  validatorTimelock?: EntryParameters
   milestones?: Milestone[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: Record<string, ProjectPermissions>
@@ -619,16 +620,18 @@ function getDaTracking(
     return templateVars.nonTemplateDaTracking
   }
 
+  const validatorTimelockEntry =
+    templateVars.validatorTimelock ??
+    templateVars.discovery.getContract('ValidatorTimelock')
+
   if (templateVars.usesEthereumBlobs) {
-    const validatorTimelock =
-      templateVars.discovery.getContractDetails('ValidatorTimelock').address
+    const validatorTimelock = validatorTimelockEntry.address
 
-    const validatorsVTL = templateVars.discovery.getContractValue<
-      ChainSpecificAddress[]
-    >('ValidatorTimelock', 'validatorsVTL')
+    const validatorsVTL = validatorTimelockEntry.values?.[
+      'validatorsVTL'
+    ] as ChainSpecificAddress[]
 
-    const inboxDeploymentBlockNumber =
-      templateVars.discovery.getContract('ValidatorTimelock').sinceBlock ?? 0
+    const inboxDeploymentBlockNumber = validatorTimelockEntry.sinceBlock ?? 0
 
     return [
       {

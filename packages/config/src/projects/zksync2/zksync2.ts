@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
@@ -12,6 +11,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
+const discoveryGateway = new ProjectDiscovery('zksync2', 'gateway')
 const bridge = discovery.getContract('L1NativeTokenVault')
 
 const chainId = 324
@@ -47,6 +47,7 @@ export const zksync2: ScalingProject = zkStackL2({
     },
   },
   diamondContract: discovery.getContract('ZKsync'),
+  validatorTimelock: discoveryGateway.getContract('ValidatorTimelock'),
   chainConfig: {
     name: 'zksync2',
     chainId,

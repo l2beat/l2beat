@@ -44,6 +44,11 @@
         }
       ]
     },
+    "validators": {
+      "handler": {
+        "type": "zksynceraValidators"
+      }
+    },
     // VALIDATOR PERMISSION OMITTED BECAUSE THIS IS NOT THE SETTLEMENT LAYER
     "getTransactionFilterer": {
       "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
