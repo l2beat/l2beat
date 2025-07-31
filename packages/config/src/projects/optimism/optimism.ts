@@ -261,7 +261,7 @@ export const optimism: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Maintainance Upgrade L1 Pectra Readiness',
+      title: 'Maintenance Upgrade L1 Pectra Readiness',
       url: 'https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829',
       date: '2025-03-05T00:00:00Z',
       description: "Optimism prepares for Ethereum's pectra upgrade.",
