@@ -60,8 +60,6 @@ export const lineaprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        // Custom verifier ID: SHA256 hash of all VK_... values from the smart contract
-        // abi packed in the same order they are defined
         hash: '0xcfdff368eb0a9961712338df56f966f0f28899dcd1892b9898fce4928ca0d582',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
@@ -69,6 +67,8 @@ export const lineaprover: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('linea')],
+        description:
+          'Custom verifier ID: SHA256 hash of all VK_... values from the smart contract abi packed in the same order they are defined',
       },
     ],
   },
