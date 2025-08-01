@@ -13,6 +13,7 @@ import {
   ChartTooltip,
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
+import { NoDataPatternDef } from '~/components/core/chart/defs/NoDataPatternDef'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -23,7 +24,7 @@ import { formatTimestamp } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
   timestamp: number
-  range: (number | null)[]
+  range: readonly [number | null, number | null] | null
   avg: number | null
 }
 
@@ -34,6 +35,8 @@ interface Props {
   subtype: TrackedTxsConfigSubtype
   milestones: Milestone[]
   tickCount?: number
+  lastValidTimestamp: number | undefined
+  anyAnomalyLive: boolean
 }
 
 export function LivenessChart({
@@ -43,6 +46,8 @@ export function LivenessChart({
   subtype,
   milestones,
   tickCount,
+  lastValidTimestamp,
+  anyAnomalyLive,
 }: Props) {
   const chartMeta = {
     range: {
@@ -58,9 +63,6 @@ export function LivenessChart({
       indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
-
-  const lastValidTimestamp = data?.findLast((d) => d.avg !== null)?.timestamp
-  const lastTimestamp = data?.at(-1)?.timestamp
 
   return (
     <ChartContainer
@@ -98,17 +100,29 @@ export function LivenessChart({
             domain: ['auto', 'auto'],
             tickCount,
           },
+          // We want to show custom ReferenceArea for this chart
+          syncedUntil: undefined,
         })}
-        <ReferenceArea
-          x1={lastValidTimestamp}
-          x2={lastTimestamp}
-          fill="var(--negative)"
-          fillOpacity={0.2}
+        {lastValidTimestamp && (
+          <ReferenceArea
+            x1={lastValidTimestamp}
+            fill={anyAnomalyLive ? 'var(--negative)' : 'url(#noDataFill)'}
+            fillOpacity={anyAnomalyLive ? 0.2 : undefined}
+          />
+        )}
+        <ChartTooltip
+          filterNull={false}
+          content={
+            <LivenessCustomTooltip
+              subtype={subtype}
+              anyAnomalyLive={anyAnomalyLive}
+            />
+          }
         />
-        <ChartTooltip content={<LivenessCustomTooltip subtype={subtype} />} />
         <defs>
           <PinkFillGradientDef id="fillRange" />
           <PinkStrokeGradientDef id="strokeRange" />
+          <NoDataPatternDef />
         </defs>
       </AreaChart>
     </ChartContainer>
@@ -120,10 +134,13 @@ export function LivenessCustomTooltip({
   payload,
   label: timestamp,
   subtype,
+  anyAnomalyLive,
 }: TooltipProps<number, string> & {
   subtype: TrackedTxsConfigSubtype
+  anyAnomalyLive: boolean
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
+
   const filteredPayload = payload.filter(
     (p) => p.name !== undefined && p.value !== undefined && p.type !== 'none',
   )
@@ -134,7 +151,7 @@ export function LivenessCustomTooltip({
   if (!range?.value || !avg?.value) {
     content = (
       <div className="mt-2 font-medium text-label-value-16">
-        {getTooltipContent(subtype)}
+        {anyAnomalyLive ? getTooltipContent(subtype) : 'No data'}
       </div>
     )
   } else {

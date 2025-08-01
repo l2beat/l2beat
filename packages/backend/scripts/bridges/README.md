@@ -19,7 +19,7 @@ pnpm bridges:cli across ethereum 23025199 base 33503830
 pnpm bridges:cli across arbitrum 362819685 ethereum 23025205
 ```
 
-### AggLayer
+### Agglayer
 ``` bash
 pnpm bridges:cli agglayer ethereum 22980710 polygonzkevm 24133897
 ```
@@ -96,4 +96,20 @@ pnpm bridges:cli stargate ethereum 22995640 arbitrum 361391483
 ```
 ``` bash
 pnpm bridges:cli stargate base 33245251 arbitrum 360748226
+```
+
+### Wormhole Portal
+```bash
+pnpm bridges:cli wormhole-portal base 33582518 ethereum 23038332
+```
+```bash
+pnpm bridges:cli wormhole-portal ethereum 23026060 arbitrum 362865582
+```
+
+### Wormhole CCTP
+```bash
+pnpm bridges:cli wormhole-cctp base 33544977 ethereum 23032106
+```
+```bash
+pnpm bridges:cli wormhole-cctp arbitrum 362121993 ethereum 23010854
 ```

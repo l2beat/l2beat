@@ -2,12 +2,17 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "gateway",
   "import": ["../globalConfig.jsonc"],
+  "sharedModules": ["shared-zk-stack"],
   "initialAddresses": [
-    "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"
-    // "gateway:0xCE7CBd23193d029410b40e0fD8a79a5121f9250C",
-    // "gateway:0x0000000000000000000000000000000000010002"
+    "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+    "gateway:0x0000000000000000000000000000000000008008" // L1Messenger
   ],
-  "names": { "eth:0x32400084C286CF3E17e7B677ea9583e60a000324": "ZKsync" },
+  "names": {
+    "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": "Gateway",
+    "gateway:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4": "ProtocolUpgradeHandler_l2Alias",
+    "gateway:0x3E04Bd6a9056b39999f3883955E183F655346174": "EraChainAdminProxy_l2Alias"
+  },
+  // this config assumes that it is used as a sharedModule by chains settling on the Gateway
   "overrides": {
     "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
       "fields": {
@@ -24,10 +29,14 @@
               "where": ["=", "#chainId", 9075]
             }
           },
-          "permissions": [{ "type": "validateZkStack" }]
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators."
+            }
+          ]
         }
       }
     }
-  },
-  "sharedModules": ["shared-zk-stack"]
+  }
 }

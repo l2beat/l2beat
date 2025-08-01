@@ -735,26 +735,6 @@
     },
     {
       "mode": "auto",
-      "id": "omni-FRAX",
-      "priceId": "frax-share",
-      "symbol": "FRAX",
-      "name": "Frax (prev. FXS)",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-        "decimals": 18,
-        "sinceTimestamp": 1608508800,
-        "untilTimestamp": 1749103200
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "omni-FRAX.legacy",
       "priceId": "frax",
       "symbol": "FRAX.legacy",

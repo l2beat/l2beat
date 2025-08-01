@@ -102,14 +102,11 @@ export function MonthlyUpdateThroughputChart({
             yAxis: {
               unit: ` ${unit}`,
             },
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip
-            content={
-              <ProjectDaThroughputCustomTooltip
-                unit={unit}
-                syncedUntil={data?.syncedUntil}
-              />
-            }
+            filterNull={false}
+            content={<ProjectDaThroughputCustomTooltip unit={unit} />}
           />
           <defs>
             <CustomFillGradientDef

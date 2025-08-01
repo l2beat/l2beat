@@ -1,0 +1,116 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions{{isPermanentRollupString}}",
+  "category": "core",
+  "types": {
+    "UintPermrollupString": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0": ".",
+        "1": ". isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+      }
+    }
+  },
+  "ignoreMethods": [
+    "storedBlockHash",
+    "storedBatchHash",
+    "l2LogsRootHash",
+    "getName",
+    "prepareChainCommitment" // ex reverted
+  ],
+  "ignoreInWatchMode": [
+    "getTotalPriorityTxs",
+    "getTotalBlocksCommitted",
+    "getTotalBlocksExecuted",
+    "getTotalBlocksVerified",
+    "getTotalBatchesExecuted",
+    "getTotalBatchesVerified",
+    "getTotalBatchesCommitted",
+    "getPriorityTreeStartIndex",
+    "getPriorityTreeRoot",
+    "getPriorityQueueSize",
+    "getFirstUnprocessedPriorityTx",
+    "baseTokenGasPriceMultiplierDenominator",
+    "baseTokenGasPriceMultiplierNominator"
+  ],
+  "ignoreRelatives": ["getBaseToken", "getSettlementLayer", "validators"],
+  "fields": {
+    "getAdmin": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+        }
+      ]
+    },
+
+    "validators": {
+      "handler": {
+        "type": "zksynceraValidators"
+      }
+      // VALIDATOR PERMISSION OMITTED BECAUSE THIS IS NOT THE SETTLEMENT LAYER
+    },
+    "getTransactionFilterer": {
+      "description": "This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet."
+        }
+      ]
+    },
+    "IsPorterAvailableStatus": {
+      "description": "zkPorter is a volition-like contruction and changes the zk proof input requirements.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "isPorterAvailable",
+        "set": {
+          "event": "IsPorterAvailableStatusUpdate"
+        }
+      }
+    },
+    "isPermanentRollup": {
+      "description": "true means that the DA mode cannot be changed to Validium in the future. compliant DAValidator pairs for the permanent rollup mode are defined/enforced by the RollupDAManager contract.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "storage",
+        "slot": 57,
+        "returnType": "uint8"
+      }
+    },
+    "isPermanentRollupString": {
+      "handler": {
+        "type": "storage",
+        "slot": 57,
+        "returnType": "uint8"
+      },
+      "edit": ["format", "UintPermrollupString"]
+    },
+    "getDAValidatorPair": {
+      "severity": "HIGH"
+    },
+    "getPendingAdmin": {
+      "severity": "HIGH"
+    },
+    "getPubdataPricingMode": {
+      "description": "0 - Rollup, 1 - Validium",
+      "severity": "HIGH"
+    },
+    "getProtocolVersion": {
+      "description": "Protocol version, increments with each protocol upgrade.",
+      "severity": "HIGH"
+    },
+    "getVerifierParams": {
+      "description": "Verifier parameters used for proving batches.",
+      "severity": "LOW"
+    },
+    "facets": {
+      "handler": {
+        "type": "eip2535Facets"
+      }
+    }
+  }
+}

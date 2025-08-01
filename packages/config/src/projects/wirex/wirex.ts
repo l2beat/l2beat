@@ -125,7 +125,7 @@ export const wirex: ScalingProject = polygonCDKStack({
       url: 'https://x.com/wirexpaychain/status/1828779629051793710',
       date: '2024-08-28',
       description:
-        'Wirex Pay Chain launches officially, integrated with Polygon AggLayer.',
+        'Wirex Pay Chain launches officially, integrated with Polygon Agglayer.',
       type: 'general',
     },
   ],

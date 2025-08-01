@@ -51,13 +51,18 @@ export function DaAbsoluteThroughputChart({
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
       return {
         timestamp,
-        ethereum: ethereum / denominator,
-        celestia: celestia / denominator,
-        avail: avail / denominator,
-        eigenda: eigenda / denominator,
+        ethereum: ethereum !== null ? ethereum / denominator : null,
+        celestia: celestia !== null ? celestia / denominator : null,
+        avail: avail !== null ? avail / denominator : null,
+        eigenda: eigenda !== null ? eigenda / denominator : null,
       }
     })
   }, [data, denominator])
+
+  const syncedUntil = useMemo(
+    () => Math.max(...Object.values(syncStatus ?? {})),
+    [syncStatus],
+  )
 
   return (
     <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
@@ -100,8 +105,10 @@ export function DaAbsoluteThroughputChart({
             unit: ` ${unit}`,
             tickCount: 3,
           },
+          syncedUntil,
         })}
         <ChartTooltip
+          filterNull={false}
           content={
             <CustomTooltip
               unit={unit}
@@ -164,7 +171,9 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)} {unit}
+                {entry.value !== null && entry.value !== undefined
+                  ? `${isEstimated ? 'est. ' : ''} ${entry.value?.toFixed(2)} ${unit}`
+                  : 'No data'}
               </span>
             </div>
           )
