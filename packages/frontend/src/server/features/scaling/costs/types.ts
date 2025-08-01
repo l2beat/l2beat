@@ -18,5 +18,5 @@ export interface LatestCostsValues {
   overhead: number
   calldata: number
   compute: number
-  blobs: number | undefined
+  blobs: number | null
 }

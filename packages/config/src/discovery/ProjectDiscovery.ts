@@ -54,25 +54,37 @@ export class ProjectDiscovery {
 
   constructor(
     public readonly projectName: string,
-    chain = 'ethereum',
     public readonly configReader = new ConfigReader(paths.discovery),
   ) {
-    const discovery = configReader.readDiscovery(projectName, chain)
-    this.discoveries = [
-      discovery,
-      ...(discovery.sharedModules ?? []).map((module) =>
-        configReader.readDiscovery(module, chain),
-      ),
-    ]
-    this.projectAndDependentDiscoveries = [
-      ...this.discoveries,
-      ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
-        ([projectName, chains]) =>
-          Object.keys(chains).map((chain) =>
-            configReader.readDiscovery(projectName, chain),
-          ),
-      ),
-    ]
+    const chains = configReader.readAllDiscoveredChainsForProject(projectName)
+    const projectDiscoveries = chains.map((chain) =>
+      configReader.readDiscovery(projectName, chain),
+    )
+
+    this.discoveries = [...projectDiscoveries]
+    for (const discovery of this.discoveries) {
+      for (const sharedModule of discovery.sharedModules ?? []) {
+        try {
+          this.discoveries.push(
+            configReader.readDiscovery(sharedModule, discovery.chain),
+          )
+        } catch {}
+      }
+    }
+
+    this.projectAndDependentDiscoveries = [...this.discoveries]
+    for (const discovery of projectDiscoveries) {
+      this.projectAndDependentDiscoveries.push(
+        ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
+          ([dependentProjectName, chains]) => {
+            if (dependentProjectName === projectName) return []
+            return Object.keys(chains).map((chain) =>
+              configReader.readDiscovery(dependentProjectName, chain),
+            )
+          },
+        ),
+      )
+    }
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
@@ -875,7 +887,9 @@ export class ProjectDiscovery {
     return priority
   }
 
-  getDiscoveredPermissions(): Record<string, ProjectPermissions> {
+  getDiscoveredPermissions(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectPermissions> {
     const permissionedContracts = this.permissionRegistry
       .getPermissionedContracts()
       .map((address) => this.getContractByAddress(address))
@@ -922,7 +936,7 @@ export class ProjectDiscovery {
     // NOTE(radomski): Checking for assumptions made about discovery driven actors
     assert(allActors.every((actor) => actor.accounts.length === 1))
     assert(allUnique(allActors.map((actor) => actor.accounts[0].address)))
-    assert(allUnique(allActors.map((actor) => actor.accounts[0].name)))
+    // assert(allUnique(allActors.map((actor) => actor.accounts[0].name))) // TODO(radomski): Between chains
 
     const roles = this.describeRolePermissions([
       ...permissionedContracts,
@@ -1005,7 +1019,7 @@ export class ProjectDiscovery {
       ...Object.keys(actorsGrouped),
     ])
 
-    return Object.fromEntries(
+    const result = Object.fromEntries(
       Array.from(allChains).map((chain) => [
         chain,
         {
@@ -1014,6 +1028,10 @@ export class ProjectDiscovery {
         },
       ]),
     )
+    for (const chainToRemove of chainsToIgnore) {
+      delete result[chainToRemove]
+    }
+    return result
   }
 
   linkupActorsIntoAccounts(
@@ -1046,7 +1064,9 @@ export class ProjectDiscovery {
     return result
   }
 
-  getDiscoveredContracts(): Record<string, ProjectContract[]> {
+  getDiscoveredContracts(
+    chainsToIgnore: string[] = [],
+  ): Record<string, ProjectContract[]> {
     const contracts = this.discoveries
       .flatMap((discovery) =>
         discovery.entries.filter((e) => e.type === 'Contract'),
@@ -1056,7 +1076,7 @@ export class ProjectDiscovery {
         return (b.category?.priority ?? 0) - (a.category?.priority ?? 0)
       })
 
-    const result = contracts
+    const all = contracts
       .filter((contract) => contract.receivedPermissions === undefined)
       .filter((contract) => !isMultisigLike(contract))
       .map((contract) => {
@@ -1069,7 +1089,7 @@ export class ProjectDiscovery {
         })
       })
 
-    result.forEach((contract) => {
+    all.forEach((contract) => {
       if (contract.description !== undefined) {
         contract.description = this.replaceAddressesWithNames(
           contract.description,
@@ -1077,7 +1097,11 @@ export class ProjectDiscovery {
       }
     })
 
-    return groupBy(result, (contract) => contract.chain)
+    const result = groupBy(all, (contract) => contract.chain)
+    for (const chainToRemove of chainsToIgnore) {
+      delete result[chainToRemove]
+    }
+    return result
   }
 }
 

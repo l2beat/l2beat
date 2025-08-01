@@ -5,7 +5,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL3 } from '../../templates/opStack'
 
-const discovery = new ProjectDiscovery('stack', 'base')
+const discovery = new ProjectDiscovery('stack')
 
 export const stack: ScalingProject = opStackL3({
   addedAt: UnixTime(1710853988), // 2024-03-19T13:13:08Z

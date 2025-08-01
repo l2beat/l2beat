@@ -19,16 +19,22 @@ import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
 interface ActivityRatioChartDataPoint {
   timestamp: number
-  ratio: number
+  ratio: number | null
 }
 
 interface Props {
   data: ActivityRatioChartDataPoint[] | undefined
+  syncedUntil: number | undefined
   isLoading: boolean
   className?: string
 }
 
-export function ActivityRatioChart({ data, isLoading, className }: Props) {
+export function ActivityRatioChart({
+  data,
+  isLoading,
+  syncedUntil,
+  className,
+}: Props) {
   const chartMeta = {
     ratio: {
       label: 'UOPS/TPS Ratio',
@@ -57,6 +63,7 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
           dot={false}
           isAnimationActive={false}
         />
+
         {getCommonChartComponents({
           data,
           isLoading,
@@ -64,11 +71,10 @@ export function ActivityRatioChart({ data, isLoading, className }: Props) {
             tickFormatter: (value) => `${round(value, 2)}x`,
             domain: ([_, dataMax]) => [1, dataMax + (dataMax - 1) * 0.1],
           },
+          syncedUntil,
         })}
 
-        <ChartTooltip
-          content={<ActivityCustomTooltip syncedUntil={undefined} />}
-        />
+        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <ChartLegend content={<ChartLegendContent />} />
         <defs>
           <EmeraldFillGradientDef id="fillRatio" />
@@ -82,10 +88,10 @@ export function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -120,8 +126,8 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
+                  {entry.value === null
+                    ? 'No data'
                     : formatActivityCount(entry.value)}
                 </span>
               </div>

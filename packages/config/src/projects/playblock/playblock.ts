@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('playblock', 'nova')
+const discovery = new ProjectDiscovery('playblock')
 
 export const playblock: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1720191862), // 2024-07-05T15:04:22Z

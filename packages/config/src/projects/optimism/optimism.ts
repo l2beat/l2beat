@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
-const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 
@@ -20,7 +19,6 @@ export const optimism: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['optimism']: l2Discovery },
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',
@@ -261,7 +259,7 @@ export const optimism: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Maintainance Upgrade L1 Pectra Readiness',
+      title: 'Maintenance Upgrade L1 Pectra Readiness',
       url: 'https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829',
       date: '2025-03-05T00:00:00Z',
       description: "Optimism prepares for Ethereum's pectra upgrade.",

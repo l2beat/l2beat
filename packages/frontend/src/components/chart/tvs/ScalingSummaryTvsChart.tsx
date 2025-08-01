@@ -8,6 +8,7 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import {
@@ -26,7 +27,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/getCommo
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PercentChange } from '~/components/PercentChange'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -73,14 +73,16 @@ export function ScalingSummaryTvsChart({
   })
 
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, rollups, validiumsAndOptimiums, others]) => {
-      return {
-        timestamp,
-        rollups,
-        validiumsAndOptimiums,
-        others,
-      }
-    })
+    return data?.chart.map(
+      ([timestamp, rollups, validiumsAndOptimiums, others]) => {
+        return {
+          timestamp,
+          rollups,
+          validiumsAndOptimiums,
+          others,
+        }
+      },
+    )
   }, [data])
   const stats = getStats(chartData)
 
@@ -131,8 +133,9 @@ export function ScalingSummaryTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<CustomTooltip />} />
+          <ChartTooltip content={<CustomTooltip />} filterNull={false} />
         </AreaChart>
       </ChartContainer>
     </div>
@@ -145,28 +148,42 @@ function CustomTooltip({
   label,
 }: TooltipProps<number, string>) {
   if (!active || !payload || typeof label !== 'number') return null
+
   const validPayload = payload.filter((p) => p.type !== 'none')
-  const total = validPayload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+  const total = validPayload.reduce<number | null>((acc, curr) => {
+    if (curr.value === null || curr.value === undefined) {
+      return acc
+    }
+    if (acc === null) {
+      return curr?.value ?? null
+    }
+    return acc + curr.value
+  }, null)
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
-    <div className={tooltipContentVariants()}>
-      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
+    <ChartTooltipWrapper>
+      <div className="flex w-[180px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })
-            : formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+            : formatTimestamp(label, {
+                longMonthName: true,
+                mode: 'datetime',
+              })}
         </div>
         <div className="mb-1.5 flex w-full items-center justify-between gap-2 text-heading-16">
           <span className="[@media(min-width:600px)]:hidden">Total</span>
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
           </span>
-          <span className="text-primary">{formatCurrency(total, 'usd')}</span>
+          <span className="text-primary">
+            {total !== null ? formatCurrency(total, 'usd') : 'No data'}
+          </span>
         </div>
         <HorizontalSeparator />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -183,14 +200,16 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, 'usd')}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, 'usd')
+                    : 'No data'}
                 </span>
               </div>
             )
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 
@@ -249,17 +268,29 @@ function getStats(
   data:
     | {
         timestamp: number
-        rollups: number
-        validiumsAndOptimiums: number
-        others: number
+        rollups: number | null
+        validiumsAndOptimiums: number | null
+        others: number | null
       }[]
     | undefined,
 ) {
   if (!data) {
     return undefined
   }
-  const oldestDataPoint = data.at(0)
-  const newestDataPoint = data.at(-1)
+  const pointsWithData = data.filter(
+    (point) =>
+      point.rollups !== null &&
+      point.validiumsAndOptimiums !== null &&
+      point.others !== null,
+  ) as {
+    timestamp: number
+    rollups: number
+    validiumsAndOptimiums: number
+    others: number
+  }[]
+
+  const oldestDataPoint = pointsWithData.at(0)
+  const newestDataPoint = pointsWithData.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }

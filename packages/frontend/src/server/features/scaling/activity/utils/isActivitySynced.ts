@@ -12,11 +12,8 @@ export function getActivitySyncWarning(
     return undefined
   }
 
-  return `Activity data for this item is not synced since ${formatTimestamp(
-    syncedUntil,
-    {
-      mode: 'datetime',
-      longMonthName: true,
-    },
-  )}.`
+  return `No activity data since ${formatTimestamp(syncedUntil, {
+    mode: 'datetime',
+    longMonthName: true,
+  })}.`
 }

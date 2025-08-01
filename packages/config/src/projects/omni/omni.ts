@@ -2,10 +2,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
-import {
-  generateDiscoveryDrivenContracts,
-  generateDiscoveryDrivenPermissions,
-} from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('omni')
@@ -172,9 +168,9 @@ export const omni: Bridge = {
     },
   ],
   contracts: {
-    addresses: generateDiscoveryDrivenContracts([discovery]),
+    addresses: discovery.getDiscoveredContracts(['gnosis']),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  permissions: discovery.getDiscoveredPermissions(['gnosis']),
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

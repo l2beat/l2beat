@@ -3,16 +3,16 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { getActivityForProjectAndRange } from '../../scaling/activity/getActivityForProjectAndRange'
 import { DataPostedTimeRange } from '../../scaling/data-posted/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { rangeToResolution } from './utils/range'
+import { isThroughputSynced } from './isThroughputSynced'
+import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
+import { getThroughputRange, rangeToResolution } from './utils/range'
 
 export type ScalingProjectDaThroughputChart = {
   chart: ScalingProjectDaThroughputChartPoint[]
-  range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
   stats: {
     total: number
@@ -42,23 +42,10 @@ export async function getScalingProjectDaThroughputChart(
 
   const db = getDb()
   const resolution = rangeToResolution({ type: params.range })
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
 
-  const [from, to] = getRangeWithMax(
-    {
-      type: params.range,
-    },
-    resolution,
-    {
-      now: target,
-    },
-  )
-
+  const range = getThroughputRange({ type: params.range })
   const [throughput, activityRecords] = await Promise.all([
-    db.dataAvailability.getByProjectIdsAndTimeRange(
-      [params.projectId],
-      [from, target],
-    ),
+    db.dataAvailability.getByProjectIdsAndTimeRange([params.projectId], range),
     getActivityForProjectAndRange(params.projectId, params.range),
   ])
 
@@ -66,32 +53,33 @@ export async function getScalingProjectDaThroughputChart(
     return undefined
   }
 
-  const { grouped, minTimestamp } = groupByTimestamp(throughput, resolution)
-  const chartAdjustedTo =
-    resolution === 'hourly'
-      ? to - UnixTime.HOUR
-      : resolution === 'sixHourly'
-        ? to - UnixTime.HOUR * 6
-        : to - UnixTime.DAY
-
-  const timestamps = generateTimestamps(
-    [minTimestamp, chartAdjustedTo],
-    resolution,
-  )
   const syncedUntil = throughput.at(-1)?.timestamp
   assert(syncedUntil, 'syncedUntil is undefined')
+
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestamp(
+    throughput,
+    resolution,
+  )
+
+  const expectedTo = getThroughputExpectedTimestamp(resolution)
+  const adjustedTo = isThroughputSynced(syncedUntil, false)
+    ? maxTimestamp
+    : expectedTo
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
 
   let total = 0
   const chart: ScalingProjectDaThroughputChartPoint[] = timestamps.map(
     (timestamp) => {
-      const posted =
-        timestamp <= syncedUntil ? (grouped[timestamp] ?? null) : null
-      total += posted ?? 0
+      const posted = timestamp <= syncedUntil ? (grouped[timestamp] ?? 0) : null
+      if (posted !== null) {
+        total += posted
+      }
       return [timestamp, posted]
     },
   )
 
-  const days = Math.round((chartAdjustedTo - minTimestamp) / UnixTime.DAY)
+  const days = Math.round((syncedUntil - minTimestamp) / UnixTime.DAY)
   const avgPerDay = total / days
 
   const throughputTimestamps = throughput.map((r) => r.timestamp)
@@ -107,7 +95,6 @@ export async function getScalingProjectDaThroughputChart(
 
   return {
     chart,
-    range: [minTimestamp, chartAdjustedTo],
     syncedUntil,
     stats: {
       total,
@@ -122,8 +109,21 @@ function groupByTimestamp(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
+  let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, number> = {}
-  for (const record of records) {
+
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
+  for (const record of fullySyncedRecords) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
       resolution === 'daily'
@@ -139,10 +139,12 @@ function groupByTimestamp(
       result[timestamp] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
   return {
     grouped: result,
     minTimestamp: UnixTime(minTimestamp),
+    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
@@ -171,7 +173,6 @@ function getMockScalingProjectDaThroughputChart({
 
   return {
     chart,
-    range: [from, to],
     syncedUntil: UnixTime.now(),
     stats: {
       total,

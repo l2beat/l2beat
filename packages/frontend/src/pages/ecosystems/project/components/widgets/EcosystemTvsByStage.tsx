@@ -181,7 +181,12 @@ export function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-32 flex-col gap-1">
         {payload.map((entry) => {
-          if (entry.name === undefined || entry.value === undefined) return null
+          if (
+            entry.name === undefined ||
+            entry.value === undefined ||
+            entry.value === null
+          )
+            return null
           const config = meta[entry.name]
           assert(config, 'No config')
 

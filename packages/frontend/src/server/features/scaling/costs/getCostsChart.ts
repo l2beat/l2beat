@@ -1,15 +1,15 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getRange, getRangeWithMax } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
+import { getCostsExpectedTimestamp } from './utils/getCostsExpectedTimestamp'
 import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
-import { CostsTimeRange, rangeToResolution } from './utils/range'
-
-const DENCUN_UPGRADE_TIMESTAMP = 1710288000
+import { isCostsSynced } from './utils/isCostsSynced'
+import { CostsTimeRange, getCostsRange, rangeToResolution } from './utils/range'
 
 export const CostsChartParams = v.object({
   range: CostsTimeRange,
@@ -17,23 +17,27 @@ export const CostsChartParams = v.object({
 })
 export type CostsChartParams = v.infer<typeof CostsChartParams>
 
-export type CostsChartDataPoint = readonly [
+export type CostsChartDataPoint = [
   timestamp: number,
-  overheadGas: number,
-  overheadGasEth: number,
-  overheadGasUsd: number,
-  calldataGas: number,
-  calldataGasEth: number,
-  calldataGasUsd: number,
-  computeGas: number,
-  computeGasEth: number,
-  computeGasUsd: number,
-  blobsGas: number | undefined,
-  blobsGasEth: number | undefined,
-  blobsGasUsd: number | undefined,
+  overheadGas: number | null,
+  overheadGasEth: number | null,
+  overheadGasUsd: number | null,
+  calldataGas: number | null,
+  calldataGasEth: number | null,
+  calldataGasUsd: number | null,
+  computeGas: number | null,
+  computeGasEth: number | null,
+  computeGasUsd: number | null,
+  blobsGas: number | null,
+  blobsGasEth: number | null,
+  blobsGasUsd: number | null,
 ]
 
-export type CostsChartData = CostsChartDataPoint[]
+export type CostsChartData = {
+  chart: CostsChartDataPoint[]
+  hasBlobs: boolean
+  syncedUntil: UnixTime
+}
 
 /**
  * A function that computes values for chart data of the costs over time.
@@ -53,47 +57,56 @@ export async function getCostsChart({
   const db = getDb()
   const projects = await getCostsProjects(filter)
   if (projects.length === 0) {
-    return []
+    return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
-  const resolution = rangeToResolution(timeRange)
-  const range = getRangeWithMax({ type: timeRange }, resolution)
+  const resolution = rangeToResolution({ type: timeRange })
+  const [from, to] = getCostsRange({ type: timeRange })
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
-    range,
+    [from, to],
   )
 
   if (data.length === 0) {
-    return []
+    return { chart: [], hasBlobs: false, syncedUntil: Number.POSITIVE_INFINITY }
   }
 
-  const summedByTimestamp = sumByTimestamp(data, resolution)
+  const syncedUntil = data.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
 
+  const summedByTimestamp = sumByTimestamp(data, resolution)
   const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
   const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
+  const blobsTimestamp = Array.from(summedByTimestamp.entries()).find(
+    ([_, value]) => value.blobsGas !== null,
+  )?.[0]
 
-  const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
-    resolution,
-  )
-  const result = timestamps.map((timestamp) => {
+  const expectedTo = getCostsExpectedTimestamp(resolution)
+  const adjustedTo = isCostsSynced(syncedUntil) ? maxTimestamp : expectedTo
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+
+  const chart: CostsChartDataPoint[] = timestamps.map((timestamp) => {
     const entry = summedByTimestamp.get(timestamp)
-    const blobsFallback = timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
+    const isSynced = timestamp <= maxTimestamp
+    const blobsFallback =
+      blobsTimestamp && timestamp >= blobsTimestamp ? 0 : null
     if (!entry) {
+      const value = isSynced ? 0 : null
       return [
         timestamp,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        blobsFallback,
-        blobsFallback,
-        blobsFallback,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
+        value,
       ] as const
     }
     return [
@@ -112,35 +125,45 @@ export async function getCostsChart({
       entry.blobsGasUsd ?? blobsFallback,
     ] as const
   })
-  return result
+
+  return {
+    chart,
+    hasBlobs: blobsTimestamp !== undefined,
+    syncedUntil,
+  }
 }
 
 function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
-  const resolution = rangeToResolution(timeRange)
-  const range = getRange(
+  const resolution = rangeToResolution({ type: timeRange })
+  const [from, to] = getBucketValuesRange(
     timeRange === 'max' ? { type: '1y' } : { type: timeRange },
     resolution,
   )
 
-  const timestamps = generateTimestamps(range, resolution)
+  const timestamps = generateTimestamps([from ?? 1573776000, to], resolution)
 
-  return timestamps.map((timestamp) => [
-    timestamp,
-    20000,
-    0.5,
-    1000,
-    400000,
-    10,
-    20000,
-    600000,
-    15,
-    30000,
-    1000000,
-    0.25,
-    500,
-  ])
+  return {
+    chart: timestamps.map((timestamp) => [
+      timestamp,
+      20000,
+      0.5,
+      1000,
+      400000,
+      10,
+      20000,
+      600000,
+      15,
+      30000,
+      1000000,
+      0.25,
+      500,
+    ]),
+    hasBlobs: true,
+    // biome-ignore lint/style/noNonNullAssertion: it's there
+    syncedUntil: timestamps.at(-1)!,
+  }
 }
 
 function sumByTimestamp(
@@ -150,9 +173,9 @@ function sumByTimestamp(
   const result = new Map<
     number,
     {
-      blobsGas: number | undefined
-      blobsGasEth: number | undefined
-      blobsGasUsd: number | undefined
+      blobsGas: number | null
+      blobsGasEth: number | null
+      blobsGasUsd: number | null
       calldataGas: number
       calldataGasEth: number
       calldataGasUsd: number
@@ -165,7 +188,19 @@ function sumByTimestamp(
     }
   >()
 
-  for (const record of records) {
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+
+  // Dismiss ranges that are not full
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
+  for (const record of fullySyncedRecords) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
       resolution === 'daily'
@@ -204,9 +239,9 @@ function sumByTimestamp(
       computeGas: record.computeGas,
       computeGasEth: record.computeGasEth,
       computeGasUsd: record.computeGasUsd,
-      blobsGas: record.blobsGas ?? undefined,
-      blobsGasEth: record.blobsGasEth ?? undefined,
-      blobsGasUsd: record.blobsGasUsd ?? undefined,
+      blobsGas: record.blobsGas ?? null,
+      blobsGasEth: record.blobsGasEth ?? null,
+      blobsGasUsd: record.blobsGasUsd ?? null,
     })
   }
 

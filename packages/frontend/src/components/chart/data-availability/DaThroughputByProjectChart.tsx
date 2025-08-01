@@ -46,9 +46,9 @@ export function DaThroughputByProjectChart({
   const max = useMemo(() => {
     return data
       ? Math.max(
-          ...data.map(([_, values]) =>
+          ...data.chart.map(([_, values]) =>
             sum(
-              Object.entries(values).map(([project, value]) => {
+              Object.entries(values ?? {}).map(([project, value]) => {
                 if (!projectsToShow.includes(project)) return 0
                 return value
               }),
@@ -84,38 +84,39 @@ export function DaThroughputByProjectChart({
       return []
     }
 
-    const lastProjectsDataTimestamp = data?.findLast(([_, values]) => {
-      return Object.entries(values).some(
+    const lastProjectsDataTimestamp = data?.chart.findLast(([_, values]) => {
+      return Object.entries(values ?? {}).some(
         ([name, value]) => name !== 'Unknown' && value > 0,
       )
     })?.[0]
 
     return (
-      data?.map(([timestamp, values]) => {
-        // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to cut the chart to the last project data timestamp
-        if (
-          daLayer === 'eigenda' &&
-          lastProjectsDataTimestamp &&
-          timestamp > lastProjectsDataTimestamp
-        ) {
-          return {
-            timestamp,
+      data?.chart.map(([timestamp, values]) => {
+        const isSynced =
+          lastProjectsDataTimestamp && timestamp <= lastProjectsDataTimestamp
+
+        const result: { timestamp: number; [key: string]: number | null } = {
+          timestamp,
+        }
+
+        for (const project of projectsToShow) {
+          const value = values?.[project]
+          if (value === undefined) {
+            result[project] = isSynced ? 0 : null
+          } else {
+            result[project] = value / denominator
           }
         }
-        return {
-          timestamp,
-          ...Object.fromEntries(
-            Object.entries(values)
-              .map(([key, value]) => {
-                if (!projectsToShow.includes(key)) return
-                return [key, value / denominator] as const
-              })
-              .filter((v) => v !== undefined),
-          ),
-        }
+
+        return result
       }) ?? []
     )
-  }, [data, projectsToShow, denominator, daLayer])
+  }, [data, projectsToShow, denominator])
+
+  const syncedUntil = chartData.findLast((r) => {
+    const [_, ...values] = Object.values(r)
+    return values.every((v) => v !== null)
+  })?.timestamp
 
   return (
     <ChartContainer
@@ -148,8 +149,13 @@ export function DaThroughputByProjectChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
+          syncedUntil,
+          chartType: 'bar',
         })}
-        <ChartTooltip content={<CustomTooltip denominator={denominator} />} />
+        <ChartTooltip
+          filterNull={false}
+          content={<CustomTooltip denominator={denominator} />}
+        />
       </BarChart>
     </ChartContainer>
   )
@@ -199,7 +205,9 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formattedValue} {unit}
+                {entry.value !== null && entry.value !== undefined
+                  ? `${formattedValue} ${unit}`
+                  : 'No data'}
               </span>
             </div>
           )

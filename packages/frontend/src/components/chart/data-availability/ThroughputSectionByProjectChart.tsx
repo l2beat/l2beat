@@ -48,9 +48,9 @@ export function ThroughputSectionByProjectChart({
     // We want to get latest top projects.
     const result = data
       ? uniq(
-          [...data]
+          [...data.chart]
             .reverse()
-            .flatMap(([_, values]) => Object.keys(values))
+            .flatMap(([_, values]) => Object.keys(values ?? {}))
             .sort((a, b) => {
               if (a === 'Unknown') return 1
               if (b === 'Unknown') return -1
@@ -66,7 +66,7 @@ export function ThroughputSectionByProjectChart({
   }, [data, includeScalingOnly])
 
   const chartRange = useMemo(
-    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
     [data],
   )
 

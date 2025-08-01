@@ -1,4 +1,4 @@
-import { NotSyncedIcon } from '~/components/not-synced/NotSyncedIcon'
+import { NoDataIcon } from '~/components/NoDataIcon'
 
 interface Props {
   iconUrl: string
@@ -25,7 +25,7 @@ export function TokenNameCell({
       <span className="font-medium text-xs">
         {symbol} {isGasToken && '(gas)'}
       </span>
-      {syncStatus && <NotSyncedIcon content={syncStatus} />}
+      {syncStatus && <NoDataIcon content={syncStatus} />}
     </div>
   )
 }

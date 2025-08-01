@@ -10,15 +10,10 @@ import type { Bridge } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('stargatev2')
-const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
-const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
-const discovery_base = new ProjectDiscovery('stargatev2', 'base')
-const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
-const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
 
 const discoveredOAppOwners = [
   ...discovery.getPermissionedAccounts('CreditMessaging', 'owner'),
-  ...discovery.getPermissionedAccounts('TokenMessaging', 'owner'),
+  ...discovery.getPermissionedAccounts('TokenMessagingEthereum', 'owner'),
 ]
 const discoveredDelegates = [
   ...discovery.getPermissionedAccounts(
@@ -214,77 +209,77 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
         description: 'Stargate liquidity pool for mETH on Ethereum.',
       }),
       // MULTICHAIN ESCROWS:
-      discovery_arbitrum.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'arb1:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
         ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Arbitrum.',
       }),
-      discovery_arbitrum.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'arb1:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
         ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Arbitrum.',
       }),
-      discovery_arbitrum.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'arb1:0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F',
         ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Arbitrum.',
       }),
-      discovery_optimism.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0',
         ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Optimism.',
       }),
-      discovery_optimism.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3',
         ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Optimism.',
       }),
-      discovery_optimism.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD',
         ),
         tokens: ['USDT'],
         description: 'Stargate liquidity pool for USDT on Optimism.',
       }),
-      discovery_base.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'base:0x27a16dc786820B16E5c9028b75B99F6f604b5d26',
         ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Base.',
       }),
-      discovery_base.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'base:0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7',
         ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for USDC on Base.',
       }),
-      discovery_scroll.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4',
         ),
         tokens: ['USDC'],
         description: 'Stargate liquidity pool for USDC on Scroll.',
       }),
-      discovery_scroll.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583',
         ),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Scroll.',
       }),
-      discovery_linea.getEscrowDetails({
+      discovery.getEscrowDetails({
         address: ChainSpecificAddress(
           'linea:0x81F6138153d473E8c5EcebD3DC8Cd4903506B075',
         ),
@@ -297,7 +292,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     addresses: {
       ethereum: [
         discovery.getContractDetails(
-          'TokenMessaging',
+          'TokenMessagingEthereum',
           "A LayerZero OApp owned by Stargate that manages bridging messages from all pools on Ethereum. It can batch messages with a 'bus' mode or dispatch them immediately for higher fees.",
         ),
         discovery.getContractDetails(
@@ -388,10 +383,10 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
   },
   discoveryInfo: getDiscoveryInfo([
     discovery,
-    discovery_arbitrum,
-    discovery_optimism,
-    discovery_base,
-    discovery_scroll,
-    discovery_linea,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
+    discovery,
   ]),
 }

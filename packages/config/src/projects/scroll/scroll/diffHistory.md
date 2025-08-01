@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x9b36c271cfd6a020df8e88b2d9ad59a584a8a454
+
+# Diff at Thu, 31 Jul 2025 10:55:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753093859
+- current timestamp: 1753093859
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergencyScroll (0x1f807E2E8ab2e61230a0A9C271F90242831278b4) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      name:
+-        "TimelockSCEmergency"
++        "TimelockSCEmergencyScroll"
+    }
+```
+
 Generated with discovered.json: 0x16f3ff55675a5fbde37e84d4506b3ff4ff786461
 
 # Diff at Mon, 14 Jul 2025 12:47:11 GMT:

@@ -12,7 +12,7 @@ import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getUnderReviewText } from '~/utils/project/underReview'
-import { NotSyncedIcon } from '../../not-synced/NotSyncedIcon'
+import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
 export interface ProjectCellProps {
@@ -78,7 +78,7 @@ export function ProjectNameCell({
           </Tooltip>
         )}
         {project.statuses?.syncWarning && (
-          <NotSyncedIcon content={project.statuses.syncWarning} />
+          <NoDataIcon content={project.statuses.syncWarning} />
         )}
       </div>
       {project.nameSecondLine && (
