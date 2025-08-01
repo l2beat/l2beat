@@ -110,7 +110,7 @@ export const fraxtal: ScalingProject = opStackL2({
       description: `
 ## Architecture
 FraxtalDA is a custom data availability solution built by the Fraxtal team. 
-The data is posted by the OP batcher to three separate locations: AWS, IPFS, and Cloudfare R2. 
+The data is posted by the OP batcher to three separate locations: AWS, IPFS, and Cloudflare R2. 
 The IPFS hash is then submitted to the onchain inbox contract on Ethereum.
 FraxtalDA relies on a single DA endpoint to manage data posting between the three different locations. 
 
