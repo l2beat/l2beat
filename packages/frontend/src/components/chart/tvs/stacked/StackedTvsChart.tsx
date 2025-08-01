@@ -36,17 +36,17 @@ interface Props {
 
 const chartMeta = {
   canonical: {
-    label: 'Canonical',
+    label: 'Canonically bridged',
     color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   native: {
-    label: 'Native',
+    label: 'Natively minted',
     color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   external: {
-    label: 'External',
+    label: 'Externally bridged',
     color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
