@@ -5,7 +5,7 @@ import { useTable } from '~/hooks/useTable'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/getBridgesSummaryEntries'
 import { bridgesSummaryOthersColumns } from './OthersColumns'
 
-export interface Props {
+interface Props {
   entries: BridgesSummaryEntry[]
 }
 

@@ -9,7 +9,7 @@ import { useLivenessTimeRangeContext } from '../LivenessTimeRangeContext'
 import { getScalingLivenessColumns } from './columns'
 import { toLivenessTableEntry } from './toTableEntry'
 
-export interface Props {
+interface Props {
   entries: ScalingLivenessEntry[]
   rollups?: boolean
   hideType?: boolean

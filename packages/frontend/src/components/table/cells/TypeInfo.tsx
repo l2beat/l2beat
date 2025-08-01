@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
 
-export interface TypeInfoProps {
+interface TypeInfoProps {
   children: string | undefined
   stacks?: ProjectScalingStack[]
 }
@@ -51,10 +51,7 @@ interface ProviderProps {
   text: string
 }
 
-export const providerMap: Record<
-  ProjectScalingStack,
-  ProviderProps | undefined
-> = {
+const providerMap: Record<ProjectScalingStack, ProviderProps | undefined> = {
   StarkEx: {
     Icon: StarkWareIcon,
     text: 'This project is built using StarkEx.',

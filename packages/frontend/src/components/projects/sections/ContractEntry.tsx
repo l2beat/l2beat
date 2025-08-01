@@ -43,7 +43,7 @@ export interface TechnologyContractAddress {
   verificationStatus: VerificationStatus
 }
 
-export interface ContractEntryProps {
+interface ContractEntryProps {
   contract: TechnologyContract
   className?: string
 }

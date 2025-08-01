@@ -90,7 +90,7 @@ function SwitchInfoTooltip() {
   )
 }
 
-export function ScalingFactorTooltip({
+function ScalingFactorTooltip({
   className,
   metric = 'uops',
 }: {

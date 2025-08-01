@@ -9,7 +9,7 @@ import { Callout } from './Callout'
 import { Markdown } from './markdown/Markdown'
 import { PlainLink } from './PlainLink'
 
-export interface WarningBarProps {
+interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'
   text: string
   href?: string

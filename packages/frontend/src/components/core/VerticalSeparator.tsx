@@ -1,6 +1,6 @@
 import { cn } from '~/utils/cn'
 
-export interface SeparatorProps {
+interface SeparatorProps {
   className?: string
 }
 export function VerticalSeparator({ className }: SeparatorProps) {

@@ -161,10 +161,7 @@ export function EcosystemTvsByTokenType({
   )
 }
 
-export function CustomTooltip({
-  active,
-  payload,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload) return null
   return (

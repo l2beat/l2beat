@@ -13,7 +13,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 import { TableLink } from '../../../../../components/table/TableLink'
 
-export interface TotalValueSecuredCellProps {
+interface TotalValueSecuredCellProps {
   href: string
   breakdown: {
     external: number

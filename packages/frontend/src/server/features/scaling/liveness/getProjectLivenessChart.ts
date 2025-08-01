@@ -24,7 +24,7 @@ export const ProjectLivenessChartParams = v.object({
   projectId: v.string(),
 })
 
-export type ProjectLivenessChartData = {
+type ProjectLivenessChartData = {
   data: [number, number | null, number | null, number | null][]
   stats:
     | Partial<

@@ -1,7 +1,7 @@
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
-export interface ValueSecuredCellProps {
+interface ValueSecuredCellProps {
   value: number
   change: number
 }

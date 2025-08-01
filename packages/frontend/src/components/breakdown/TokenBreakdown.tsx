@@ -8,7 +8,7 @@ import { Square } from '../Square'
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
-export interface TokenBreakdownProps {
+interface TokenBreakdownProps {
   total: number
   associated: number
   ether: number
@@ -17,7 +17,7 @@ export interface TokenBreakdownProps {
   className?: string
 }
 
-export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
+interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
   associatedTokenSymbols: string[]
   tvsWarnings: WarningWithSentiment[]
 }

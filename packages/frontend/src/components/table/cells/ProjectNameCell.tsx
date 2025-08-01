@@ -15,7 +15,7 @@ import { getUnderReviewText } from '~/utils/project/underReview'
 import { NoDataIcon } from '../../NoDataIcon'
 import { PrimaryValueCell } from './PrimaryValueCell'
 
-export interface ProjectCellProps {
+interface ProjectCellProps {
   project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
   className?: string
   withInfoTooltip?: boolean

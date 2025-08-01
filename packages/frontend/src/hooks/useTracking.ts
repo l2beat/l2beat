@@ -22,7 +22,7 @@ export const PlausibleEvents = v.object({
 })
 export type PlausibleEvents = v.infer<typeof PlausibleEvents>
 
-export type Plausible = {
+type Plausible = {
   <T extends keyof PlausibleEvents>(
     event: T,
     ...args: PlausibleEvents[T] extends undefined

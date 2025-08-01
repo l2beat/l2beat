@@ -3,7 +3,7 @@ import type { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
 
-export interface TvsProject {
+interface TvsProject {
   projectId: ProjectId
   category?: 'rollups' | 'validiumsAndOptimiums' | 'others'
 }

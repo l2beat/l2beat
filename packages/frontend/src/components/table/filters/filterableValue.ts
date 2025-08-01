@@ -3,7 +3,7 @@ import { v } from '@l2beat/validate'
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
 }
-export type FilterableValue = {
+type FilterableValue = {
   id: FilterableValueId
   value: string
 }

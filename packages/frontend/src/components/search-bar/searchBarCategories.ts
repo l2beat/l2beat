@@ -17,6 +17,3 @@ export const searchBarCategories = {
 } as const satisfies Record<string, { name: string }>
 
 export type SearchBarCategory = keyof typeof searchBarCategories
-export type SearchBarCategoryMeta<
-  T extends SearchBarCategory = SearchBarCategory,
-> = (typeof searchBarCategories)[T]

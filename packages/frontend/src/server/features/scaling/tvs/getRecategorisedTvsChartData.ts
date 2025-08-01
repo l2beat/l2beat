@@ -32,7 +32,7 @@ type RecategorisedTvsChartDataPoint = [
   others: number | null,
 ]
 
-export type RecategorisedTvsChartData = {
+type RecategorisedTvsChartData = {
   chart: RecategorisedTvsChartDataPoint[]
   syncedUntil: number
 }

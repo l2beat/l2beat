@@ -8,7 +8,8 @@ import {
 import type { ScaleType } from 'recharts/types/util/types'
 import { NoDataPatternDef } from '../defs/NoDataPatternDef'
 import { getXAxisProps } from './getXAxisProps'
-export interface CommonChartComponentsProps<
+
+interface CommonChartComponentsProps<
   T extends {
     timestamp: number
   },

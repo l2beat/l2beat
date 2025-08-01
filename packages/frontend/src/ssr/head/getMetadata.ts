@@ -1,7 +1,7 @@
 import type { Manifest } from '~/utils/Manifest'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
-export type OpenGraph = {
+type OpenGraph = {
   url: string
   type: 'article' | 'website'
   image?: string

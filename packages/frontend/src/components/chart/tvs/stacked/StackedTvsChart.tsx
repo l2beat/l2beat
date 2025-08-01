@@ -17,7 +17,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import type { ChartUnit } from '../../types'
 
-export interface StackedTvsChartDataPoint {
+interface StackedTvsChartDataPoint {
   timestamp: number
   native: number | null
   canonical: number | null

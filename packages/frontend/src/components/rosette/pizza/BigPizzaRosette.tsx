@@ -17,7 +17,7 @@ import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './PizzaRosetteIcon'
 import { PizzaRosetteLabels } from './PizzaRosetteLabels'
 
-export interface BigPizzaRosetteProps {
+interface BigPizzaRosetteProps {
   values: RosetteValue[]
   isUpcoming?: boolean
   isUnderReview?: boolean

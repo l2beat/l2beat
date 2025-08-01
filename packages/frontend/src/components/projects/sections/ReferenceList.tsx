@@ -2,7 +2,7 @@ import type { ReferenceLink } from '@l2beat/config'
 import { CustomLink } from '~/components/link/CustomLink'
 import { cn } from '~/utils/cn'
 
-export interface ReferenceListProps {
+interface ReferenceListProps {
   references: ReferenceLink[]
   tight?: boolean
 }

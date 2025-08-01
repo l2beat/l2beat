@@ -129,7 +129,7 @@ export function LivenessChart({
   )
 }
 
-export function LivenessCustomTooltip({
+function LivenessCustomTooltip({
   active,
   payload,
   label: timestamp,

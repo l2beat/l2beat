@@ -33,7 +33,7 @@ export type CostsChartDataPoint = [
   blobsGasUsd: number | null,
 ]
 
-export type CostsChartData = {
+type CostsChartData = {
   chart: CostsChartDataPoint[]
   hasBlobs: boolean
   syncedUntil: UnixTime

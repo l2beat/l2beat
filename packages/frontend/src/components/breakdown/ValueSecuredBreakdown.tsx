@@ -9,14 +9,14 @@ import { ValueWithPercentageChange } from '../table/cells/ValueWithPercentageCha
 import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
-export interface ValueSecuredBreakdownProps {
+interface ValueSecuredBreakdownProps {
   canonical: number
   external: number
   native: number
   className?: string
 }
 
-export interface ValueSecuredBreakdownTooltipContentProps
+interface ValueSecuredBreakdownTooltipContentProps
   extends ValueSecuredBreakdownProps {
   associatedTokenSymbols?: string[]
   tvsWarnings?: WarningWithSentiment[]

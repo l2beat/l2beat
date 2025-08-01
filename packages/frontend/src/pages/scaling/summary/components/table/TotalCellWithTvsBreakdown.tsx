@@ -15,7 +15,7 @@ import { sentimentToWarningBarColor, WarningBar } from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 
-export interface TotalCellProps {
+interface TotalCellProps {
   breakdown:
     | {
         total: number

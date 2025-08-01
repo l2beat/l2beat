@@ -17,7 +17,7 @@ import {
   useIndividualRosetteTooltipContext,
 } from './IndividualRosetteTooltipContext'
 
-export interface Props {
+interface Props {
   l2: {
     name: string
     risks: RosetteValueTuple

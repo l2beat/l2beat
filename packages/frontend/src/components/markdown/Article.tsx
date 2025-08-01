@@ -2,7 +2,7 @@ import MarkdownIt from 'markdown-it'
 import { cn } from '~/utils/cn'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 
-export interface ArticleProps {
+interface ArticleProps {
   children: string
   className?: string
 }

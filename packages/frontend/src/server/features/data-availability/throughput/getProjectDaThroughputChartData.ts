@@ -9,7 +9,7 @@ import {
   ProjectDaThroughputChartParams,
 } from './getProjectDaThroughtputChart'
 
-export type ProjectDaThroughputChartData = {
+type ProjectDaThroughputChartData = {
   chart: ProjectDaThroughputChartPoint[]
   stats: {
     pastDayAvgCapacityUtilization: number | undefined

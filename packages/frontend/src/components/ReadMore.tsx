@@ -2,7 +2,7 @@ import type React from 'react'
 import { useState } from 'react'
 import { cn } from '~/utils/cn'
 
-export interface ReadMoreProps {
+interface ReadMoreProps {
   children: string
   maxLength?: number
   onlyOnMobile?: boolean

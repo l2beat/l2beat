@@ -9,7 +9,7 @@ import { UserIcon } from '~/icons/User'
 import { cn } from '~/utils/cn'
 import type { LinkName } from './types'
 
-export interface LinkNameIconProps {
+interface LinkNameIconProps {
   name: LinkName
   className?: string
 }

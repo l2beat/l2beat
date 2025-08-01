@@ -5,7 +5,7 @@ import {
 } from '../core/tooltip/Tooltip'
 import { Badge } from './Badge'
 
-export interface UpcomingBadgeProps {
+interface UpcomingBadgeProps {
   isShort?: boolean
   className?: string
 }

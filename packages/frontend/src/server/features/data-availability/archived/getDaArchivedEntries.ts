@@ -66,7 +66,7 @@ export interface DaArchivedEntry extends CommonDaEntry {
   bridges: DaBridgeArchivedEntry[]
 }
 
-export interface DaBridgeArchivedEntry
+interface DaBridgeArchivedEntry
   extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon'> {
   risks: DaBridgeRisks
 }

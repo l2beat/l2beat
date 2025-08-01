@@ -33,8 +33,8 @@ export type BaseAssetBreakdownData = {
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {
   escrow?: AddressData
 }
-export type ExternalAssetBreakdownData = BaseAssetBreakdownData
-export type NativeAssetBreakdownData = BaseAssetBreakdownData
+type ExternalAssetBreakdownData = BaseAssetBreakdownData
+type NativeAssetBreakdownData = BaseAssetBreakdownData
 
 export type BreakdownRecord = {
   canonical: CanonicalAssetBreakdownData[]

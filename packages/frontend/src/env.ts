@@ -62,7 +62,7 @@ const SERVER_CONFIG = {
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
-export type Env = z.infer<typeof ServerEnv>
+type Env = z.infer<typeof ServerEnv>
 
 export const env = createEnv()
 

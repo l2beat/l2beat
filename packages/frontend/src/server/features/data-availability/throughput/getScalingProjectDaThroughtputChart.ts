@@ -20,7 +20,7 @@ export type ScalingProjectDaThroughputChart = {
     postedPerUop: number
   }
 }
-export type ScalingProjectDaThroughputChartPoint = [
+type ScalingProjectDaThroughputChartPoint = [
   timestamp: number,
   value: number | null,
 ]

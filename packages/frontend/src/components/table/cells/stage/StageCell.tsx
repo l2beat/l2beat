@@ -11,7 +11,7 @@ import { EmergencyIcon } from '~/icons/Emergency'
 import { StopwatchIcon } from '~/icons/Stopwatch'
 import { StageTooltip } from './StageTooltip'
 
-export interface StageCellProps {
+interface StageCellProps {
   stageConfig: ProjectScalingStage
   isAppchain: boolean
   href?: string
