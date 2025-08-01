@@ -42,8 +42,8 @@ export type ActivityChartType = 'Rollups' | 'ValidiumsAndOptimiums' | 'Others'
 
 interface ActivityChartDataPoint {
   timestamp: number
-  projects: number
-  ethereum: number
+  projects: number | null
+  ethereum: number | null
 }
 
 interface Props {
@@ -124,10 +124,9 @@ export function ActivityChart({
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
             tickCount,
           },
+          syncedUntil,
         })}
-        <ChartTooltip
-          content={<ActivityCustomTooltip syncedUntil={syncedUntil} />}
-        />
+        <ChartTooltip filterNull={false} content={<ActivityCustomTooltip />} />
         <defs>
           {type === 'Rollups' && (
             <>
@@ -159,10 +158,10 @@ export function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+}: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
@@ -175,12 +174,7 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none'
-            )
-              return null
+            if (entry.name === undefined || entry.type === 'none') return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -199,9 +193,9 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
-                    : formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )
@@ -236,8 +230,8 @@ export function ActivityCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
+                  {entry.value === null
+                    ? 'No data'
                     : formatInteger(entry.value * UnixTime.DAY)}
                 </span>
               </div>

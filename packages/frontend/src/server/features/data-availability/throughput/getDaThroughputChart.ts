@@ -2,16 +2,21 @@ import type {
   DataAvailabilityRecord,
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { isThroughputSynced } from './isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
+import {
+  DaThroughputTimeRange,
+  getThroughputRange,
+  rangeToResolution,
+} from './utils/range'
 
 export type DaThroughputChart = {
   data: DaThroughputDataPoint[]
@@ -20,10 +25,10 @@ export type DaThroughputChart = {
 
 export type DaThroughputDataPoint = [
   timestamp: number,
-  ethereum: number,
-  celestia: number,
-  avail: number,
-  eigenda: number,
+  ethereum: number | null,
+  celestia: number | null,
+  avail: number | null,
+  eigenda: number | null,
 ]
 
 export const DaThroughputChartParams = v.object({
@@ -41,9 +46,7 @@ export async function getDaThroughputChart({
   }
   const db = getDb()
   const resolution = rangeToResolution({ type: range })
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
-  })
+  const [from, to] = getThroughputRange({ type: range })
   const daLayers = await ps.getProjects({
     select: ['daLayer'],
   })
@@ -67,6 +70,9 @@ export async function getDaThroughputChart({
   if (throughput.length === 0) {
     return { data: [] }
   }
+  const syncedUntil = throughput.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
+
   const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
     throughput,
     resolution,
@@ -89,12 +95,17 @@ export async function getDaThroughputChart({
     }
   }
 
-  const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
-    resolution,
-  )
+  const expectedTo = getThroughputExpectedTimestamp(resolution)
+
+  const adjustedTo = isThroughputSynced(syncedUntil, false)
+    ? maxTimestamp
+    : expectedTo
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
   const data: DaThroughputDataPoint[] = timestamps.map((timestamp) => {
     const timestampValues = grouped[timestamp] ?? {}
+
+    const isSynced = timestamp <= maxTimestamp
 
     const layerValues: Record<string, number | undefined> = {}
     for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
@@ -108,12 +119,14 @@ export async function getDaThroughputChart({
       layerValues[layer] = lastData?.value
     }
 
+    const fallbackValue = isSynced ? 0 : null
+
     return [
       timestamp,
-      layerValues.ethereum ?? 0,
-      layerValues.celestia ?? 0,
-      layerValues.avail ?? 0,
-      layerValues.eigenda ?? 0,
+      layerValues.ethereum ?? fallbackValue,
+      layerValues.celestia ?? fallbackValue,
+      layerValues.avail ?? fallbackValue,
+      layerValues.eigenda ?? fallbackValue,
     ]
   })
   return {
@@ -134,7 +147,19 @@ export function groupByTimestampAndDaLayerId(
   let minTimestamp = Number.POSITIVE_INFINITY
   let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
-  for (const record of records) {
+
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
+  for (const record of fullySyncedRecords) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
       resolution === 'daily'

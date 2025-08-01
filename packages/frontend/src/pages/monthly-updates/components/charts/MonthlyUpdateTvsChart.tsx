@@ -47,9 +47,12 @@ export function MonthlyUpdateTvsChart({
     },
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       return {
         timestamp,
         value: total,
@@ -109,8 +112,12 @@ export function MonthlyUpdateTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, 'usd'),
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<TvsCustomTooltip unit={'usd'} fullDate />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<TvsCustomTooltip unit="usd" />}
+          />
           <ChartLegend content={<ChartLegendContent />} />
         </AreaChart>
       </ChartContainer>
@@ -155,7 +162,11 @@ function getStats(
     return undefined
   }
 
-  const last = chartData.at(-1)
+  const pointsWithData = chartData.filter((point) => point.value !== null) as {
+    timestamp: number
+    value: number
+  }[]
+  const last = pointsWithData.at(-1)
   if (!last) {
     return undefined
   }
