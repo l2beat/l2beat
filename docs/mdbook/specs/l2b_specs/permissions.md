@@ -157,4 +157,4 @@ With the grouping, the permissions section would look like this:
 
 ## Possible future developments
 
-While still in the discussion phase, there's a will to show immediate permissioned given by each contract. For example, if a contract makes use of access control, each immediate role assignment would be shown, regardless of whether it is an intermediate contract or a permissioned actor. It is likely that this entries will be displayed in the contracts section under each contract rather than the permissions section.
+While still in the discussion phase, there's a will to show immediate permissioned given by each contract. For example, if a contract makes use of access control, each immediate role assignment would be shown, regardless of whether it is an intermediate contract or a permissioned actor. It is likely that these entries will be displayed in the contracts section under each contract rather than the permissions section.
