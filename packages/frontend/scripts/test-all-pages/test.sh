@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
 pnpm build
 
 pnpm start:mock | grep ERROR & SERVER_PID=$!
