@@ -19,7 +19,8 @@
     "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6": "LidoStEthStrategy",
     "eth:0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": "SwapManager",
     "eth:0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4": "RealStrategiesMultisig",
-    "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50": "RealFastConfirmerMultisig"
+    "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50": "RealFastConfirmerMultisig",
+    "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164": "UnknownVault"
   },
   "overrides": {
     "eth:0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": {

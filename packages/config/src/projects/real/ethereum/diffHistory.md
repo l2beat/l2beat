@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x246991fba76f9ce20d0ab008e48f72634a6a0724
+Generated with discovered.json: 0xce1a7244de12459c69a71ad163213dc301add0bd
 
-# Diff at Fri, 01 Aug 2025 13:54:46 GMT:
+# Diff at Fri, 01 Aug 2025 14:27:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1752570563
@@ -58,7 +58,7 @@ Vault changed to unverified contract, disco archived.
 
 ```diff
 +   Status: CREATED
-    contract  (0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164)
+    contract UnknownVault (0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164)
     +++ description: None
 ```
 
