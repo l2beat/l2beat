@@ -138,14 +138,14 @@
         ],
         "oracleQuorum": 1,
         "oracles": ["arb1:0x735d77411693F244d35192d95D8804B6b371a553"],
-        "ordersRoot": "0x56798c8fe7d1a1614779a3b5544ec6ec68729b1a5eba3bee0bd4a23c85e8f30b",
+        "ordersRoot": "0x9bfc2815db7c47494a88cb8b2b3d6351af0176f7535bc28b6f82957afe101295",
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
         "risc0Verifier": "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-        "stateUpdateProgramImageId": "0xe36df63187239cb11fc29356c18dd9996c19ef4668379f72956f648fbb7c72f2",
-        "stateUpdateProgramVKey": "0x00761079b58d6d09fea47ee455238cae478986d76fc2c778e293f3c846a148b3",
-        "stateVersion": 32869,
+        "stateUpdateProgramImageId": "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328",
+        "stateUpdateProgramVKey": "0x00202b4f9c0e94c5915fcb43369795fd30f35491b4017ceecf876199d6b26163",
+        "stateVersion": 30773,
         "succinctVerifier": "arb1:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-        "systemTimestamp": 1753687454890,
+        "systemTimestamp": 1753359741221,
         "wormhole": "arb1:0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
         "wormholeConsistency": 0,
         "X_CHAIN_ADMIN_ROLE": "0x7f4e9d34561a2b0f5c5e4baeaa912930e44a73596dda16054a63f3c24a574197"
@@ -275,10 +275,12 @@
       "name": "SP1Verifier",
       "address": "arb1:0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748550121,
       "sinceBlock": 341867739,
       "values": {
@@ -1097,6 +1099,7 @@
     "hibachi/Hibachi": "0x3a32f94bd067707675239403b6066a4ef372d07752f0fe4e42283a9c7baddbc3",
     "hibachi/HibachiEscape": "0x8c07546a9915614b8f2fbb99d21c17bebe3af8b84e7aaca3abf5b0a40347642e",
     "risc0/RiscZeroVerifierRouter": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },

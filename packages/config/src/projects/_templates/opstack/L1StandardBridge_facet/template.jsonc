@@ -1,8 +1,14 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "L1StandardBridge",
-  "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
+  "displayName": "L1ETHLockbox",
+  "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge", "weth"],
+  "ignoreMethods": [
+    "systemConfig",
+    "messenger",
+    "MESSENGER",
+    "superchainConfig"
+  ],
   "fields": {
     "$admin": {
       "permissions": [
