@@ -1,3 +1,76 @@
+Generated with discovered.json: 0x246991fba76f9ce20d0ab008e48f72634a6a0724
+
+# Diff at Fri, 01 Aug 2025 13:54:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1752570563
+- current timestamp: 1754054742
+
+## Description
+
+Vault changed to unverified contract, disco archived.
+
+## Watched changes
+
+```diff
+    contract StrategyManager (0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8) {
+    +++ description: A gateway contract that manages strategies for assets that are deposited to the AssetsVault. From a user PoV this happens when bridging to the L2.
+      values.realVault:
+-        "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
++        "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Minter (0x655756824385F8903AC8cFDa17B656cc26f7C7da)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Real (0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421)
+    +++ description: None
+```
+
+```diff
+    contract RealStrategiesMultisig (0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1","description":"can manage asset strategies and fees for the user's funds backing reETH.","role":".owner"},{"permission":"upgrade","from":"eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1","role":".proposal"}]
+    }
+```
+
+```diff
+    contract AssetsVault (0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294) {
+    +++ description: This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.
+      values.realVault:
+-        "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
++        "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RealVault (0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1)
+    +++ description: This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.
+```
+
+```diff
++   Status: CREATED
+    contract  (0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@1752570563/Minter.sol => /dev/null       |   37 -
+ .../.flat@1752570563/Real.sol => /dev/null         |  457 ---------
+ .../.flat@1752570563/RealVault.sol => /dev/null    | 1021 --------------------
+ 3 files changed, 1515 deletions(-)
+```
+
 Generated with discovered.json: 0xda8b418f327cdb13c0c43ed64a443870e12165d7
 
 # Diff at Tue, 15 Jul 2025 09:09:57 GMT:
