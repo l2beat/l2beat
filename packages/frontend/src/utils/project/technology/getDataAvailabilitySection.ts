@@ -122,7 +122,7 @@ function getPublicDaSection(
               text: 'Learn more about the DA layer here:',
               project: {
                 name: daSolution.layerName,
-                slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
+                slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug}`,
                 type: 'data-availability',
                 icon: getProjectIcon(daSolution.layerSlug),
               },
