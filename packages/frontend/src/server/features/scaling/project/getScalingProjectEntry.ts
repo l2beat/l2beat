@@ -139,13 +139,13 @@ export async function getScalingProjectEntry(
   >,
   helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
+  const daSolution = await getScalingDaSolution(project)
   const [
     projectsChangeReport,
     activityProjectStats,
     tvsStats,
     tokens,
     liveness,
-    daSolution,
     contractUtils,
     stackedTvsSection,
     activitySection,
@@ -157,7 +157,6 @@ export async function getScalingProjectEntry(
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     getTokensForProject(project),
     getLiveness(project.id),
-    getScalingDaSolution(project),
     getContractUtils(),
     getStackedTvsSection(helpers, project),
     getActivitySection(helpers, project),
@@ -165,7 +164,7 @@ export async function getScalingProjectEntry(
       ? getCostsSection(helpers, project)
       : undefined,
     project.scalingInfo.layer === 'layer2'
-      ? getDataPostedSection(helpers, project)
+      ? await getDataPostedSection(helpers, project, daSolution)
       : undefined,
   ])
 
