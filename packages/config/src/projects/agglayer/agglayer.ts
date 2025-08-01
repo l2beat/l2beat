@@ -14,9 +14,9 @@ export const agglayer: BaseProject = {
     links: {
       websites: ['https://www.agglayer.dev/'],
       bridges: ['https://portal.polygon.technology/bridge'],
-      documentation: ['docs.agglayer.dev','https://www.agglayer.dev/learn'],
+      documentation: ['docs.agglayer.dev', 'https://www.agglayer.dev/learn'],
       explorers: ['https://visualizer.agglayer.dev/'],
-      socialMedia: ['https://x.com/agglayer']
+      socialMedia: ['https://x.com/agglayer'],
     },
     badges: [BADGES.Stack.CDKErigon, BADGES.Infra.Agglayer],
   },
@@ -25,7 +25,6 @@ export const agglayer: BaseProject = {
     secondary: '#6C51F4',
   },
   milestones: [
-
     {
       title: 'Agglayer CDK goes Multistack',
       url: 'https://x.com/Agglayer/status/1920114795333759063',
@@ -98,7 +97,6 @@ export const agglayer: BaseProject = {
         'Agglayer is introduced as a global settlement layer to bring crosschain unity to all blockchains.',
       type: 'general',
     },
-    
   ],
   ecosystemConfig: {
     links: {

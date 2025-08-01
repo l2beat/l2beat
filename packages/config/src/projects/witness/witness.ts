@@ -113,8 +113,7 @@ export const witness: ScalingProject = polygonCDKStack({
       title: 'Witness Chain Mainnet Launch',
       url: 'https://x.com/witnesschain/status/1808153753897652256',
       date: '2024-07-02',
-      description:
-        'WitnessChain is live on mainnet, integrated with Agglayer.',
+      description: 'WitnessChain is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],
