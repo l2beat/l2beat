@@ -32,7 +32,7 @@ export function DataPostedSection({
           <img
             src={daLayer.logo}
             alt={daLayer.name}
-            className="mr-1 inline-block size-6"
+            className="mr-1 inline-block size-5"
           />
           <span>{daLayer.name}</span>
         </CustomLink>
