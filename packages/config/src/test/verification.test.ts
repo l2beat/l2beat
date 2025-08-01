@@ -64,7 +64,9 @@ function getDiscoveries(
   const sharedModules = discovery.sharedModules ?? []
   if (sharedModules.length > 0) {
     for (const sharedModule of sharedModules) {
-      result.push(configReader.readDiscovery(sharedModule, chain))
+      try {
+        result.push(configReader.readDiscovery(sharedModule, chain))
+      } catch {}
     }
   }
 

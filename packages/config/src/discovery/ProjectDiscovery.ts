@@ -62,13 +62,20 @@ export class ProjectDiscovery {
     )
 
     this.discoveries = [...projectDiscoveries]
+    const alreadyAdded = new Set<string>(
+      projectDiscoveries.map((d) => `${d.chain}:${d.name}`),
+    )
     for (const discovery of this.discoveries) {
       for (const sharedModule of discovery.sharedModules ?? []) {
+        const key = `${discovery.chain}:${sharedModule}`
+        if (alreadyAdded.has(key)) continue
+
         try {
           this.discoveries.push(
             configReader.readDiscovery(sharedModule, discovery.chain),
           )
         } catch {}
+        alreadyAdded.add(key)
       }
     }
 
@@ -809,23 +816,21 @@ export class ProjectDiscovery {
         }
       }
 
-      const accounts = this.formatPermissionedAccounts(addresses)
+      const allAccounts = this.formatPermissionedAccounts(addresses)
       const uniqueChains = unique(
-        accounts.map((a) => ChainSpecificAddress.longChain(a.address)),
+        allAccounts.map((a) => ChainSpecificAddress.longChain(a.address)),
       )
-      assert(
-        uniqueChains.length === 1,
-        `All accounts must be on the same chain. Found ${uniqueChains.join(
-          ', ',
-        )}`,
-      )
-
-      result.push({
-        ...RoleDescriptions[role],
-        description: finalDescription.join('\n'),
-        accounts,
-        chain: uniqueChains[0],
-      })
+      for (const uniqueChain of uniqueChains) {
+        const accounts = allAccounts.filter(
+          (a) => ChainSpecificAddress.longChain(a.address) === uniqueChain,
+        )
+        result.push({
+          ...RoleDescriptions[role],
+          description: finalDescription.join('\n'),
+          accounts,
+          chain: uniqueChain,
+        })
+      }
     }
     return result
   }

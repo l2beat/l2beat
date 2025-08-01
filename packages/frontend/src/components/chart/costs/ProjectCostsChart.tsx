@@ -135,7 +135,6 @@ export function ProjectCostsChart({
         isLoading={isLoading}
         range={range}
         unit={unit}
-        hasPostedData={hasPostedData}
       />
     </div>
   )

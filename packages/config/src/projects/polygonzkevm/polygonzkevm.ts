@@ -4,7 +4,6 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { polygonCDKStack } from '../../templates/polygonCDKStack'
@@ -244,7 +243,6 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB',
       ),
       tokens: ['USDC'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
@@ -253,7 +251,6 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01',
       ),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
@@ -262,7 +259,6 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
         'eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98',
       ),
       tokens: ['DAI', 'sDAI'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.',
     }),
