@@ -173,7 +173,7 @@ Below is an example log output:
 
 Type: `LogFormatterEcs`
 
-In this format every message is logged on a single line as a single JSON object compatible with [ECS standard](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html). This format is best suited for deployment environments with ElastiSearch enabled
+In this format every message is logged on a single line as a single JSON object compatible with [ECS standard](https://www.elastic.co/guide/en/ecs/current/ecs-reference.html). This format is best suited for deployment environments with ElasticSearch enabled
 
 Below is an example log output:
 
