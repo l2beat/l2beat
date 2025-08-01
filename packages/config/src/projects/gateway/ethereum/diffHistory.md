@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf25e1df4d338661f17a5c23bacc5c5186fccd7ae
+
+# Diff at Fri, 01 Aug 2025 13:11:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753972641
+- current timestamp: 1754053524
+
+## Description
+
+config: give the gateway diamond a more distinct description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753972641 (main branch discovery), not current.
+
+```diff
+    contract Gateway (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      description:
+-        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
++        "The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+    }
+```
+
 Generated with discovered.json: 0x857fcd32ab3681b55a1725a9174a9ace0befcfe9
 
 # Diff at Thu, 31 Jul 2025 15:03:08 GMT:

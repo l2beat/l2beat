@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x365f04ed2284802afb6c78668fd35104b13c31c3
+
+# Diff at Fri, 01 Aug 2025 13:14:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753944518
+- current timestamp: 1754054035
+
+## Description
+
+Minter added([TPP](https://www.tally.xyz/gov/zksync/proposal/103009526770705342015760257902601847378333885610277726776315709127806766289886?govId=eip155:324:0xb83FF6501214ddF40C91C9565d095400f3F45746)).
+
+## Watched changes
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.12:
++        "zksync:0x496c401f5764D137a448C991D95B10125375AC08"
+    }
+```
+
 Generated with discovered.json: 0x76f6cbb0e4e49c26ab996406ebdffd2dd6b9cedc
 
 # Diff at Thu, 31 Jul 2025 10:24:44 GMT:

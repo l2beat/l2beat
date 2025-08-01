@@ -1,8 +1,8 @@
 {
   "name": "gateway",
   "chain": "ethereum",
-  "timestamp": 1753972641,
-  "configHash": "0x0de4f51ee465d6574f54a398b75ba11f47229b6dc00fc9c4ebad649d242641ed",
+  "timestamp": 1754053524,
+  "configHash": "0xa10b15e4c54de1367997fbab06bff4f3367b24f28f00a83ba3157122848b41e7",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -169,7 +169,7 @@
         "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
       ],
       "proxyType": "EIP2535 diamond proxy",
-      "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
+      "description": "The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.",
       "ignoreInWatchMode": [
         "getTotalPriorityTxs",
         "getTotalBlocksCommitted",
@@ -350,7 +350,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0x64E2AfcFE648201b2F4a749aF0B7229ecfa44281"
         ],
-        "getFirstUnprocessedPriorityTx": 230,
+        "getFirstUnprocessedPriorityTx": 281,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -358,21 +358,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 7,
-        "getPriorityTreeRoot": "0xb37836cec54b2cdff6671c75634650559b2b3e2017b354b0f0756130fe9fa98a",
+        "getPriorityQueueSize": 61,
+        "getPriorityTreeRoot": "0xea07f298155009df919bd12a9bae9785b9ea18797b1598d91471b264d904ff8a",
         "getPriorityTreeStartIndex": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 479,
-        "getTotalBatchesExecuted": 477,
-        "getTotalBatchesVerified": 478,
-        "getTotalBlocksCommitted": 479,
-        "getTotalBlocksExecuted": 477,
-        "getTotalBlocksVerified": 478,
-        "getTotalPriorityTxs": 237,
+        "getTotalBatchesCommitted": 493,
+        "getTotalBatchesExecuted": 489,
+        "getTotalBatchesVerified": 492,
+        "getTotalBlocksCommitted": 493,
+        "getTotalBlocksExecuted": 489,
+        "getTotalBlocksVerified": 492,
+        "getTotalPriorityTxs": 342,
         "getTransactionFilterer": "eth:0x5540DE94485dB078025318428F813C5d88215823",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -984,6 +984,6 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 23039725 },
+  "usedBlockNumbers": { "ethereum": 23046415 },
   "permissionsConfigHash": "0x851fd32130b5627e8a3128e6b9fb12041163446a2699a058346d1ac2774c5c08"
 }
