@@ -10,34 +10,26 @@ export async function glob(
   collectFilesFn: (dir: string) => Promise<string[]> = getFilesRecursively,
 ): Promise<string[]> {
   const regex = globToRegex(pattern)
-  const results: string[] = []
   const files = await collectFilesFn(startPath)
-
-  for (const filePath of files) {
-    if (regex.test(filePath)) {
-      results.push(filePath)
-    }
-  }
-
-  return results.sort()
+  return files.filter((f) => regex.test(f)).sort()
 }
 
-async function getFilesRecursively(
-  dir: string,
-  results: string[] = [],
-  startDir?: string,
-): Promise<string[]> {
-  const entries = await readdir(dir, { withFileTypes: true })
+async function getFilesRecursively(startPath: string): Promise<string[]> {
+  const results: string[] = []
 
-  for (const entry of entries) {
-    const path = join(dir, entry.name)
-    if (entry.isDirectory()) {
-      await getFilesRecursively(path, results, startDir ?? dir)
-    } else {
-      results.push(relative(startDir ?? dir, path))
+  async function recurse(dir: string) {
+    const entries = await readdir(dir, { withFileTypes: true })
+    for (const entry of entries) {
+      const path = join(dir, entry.name)
+      if (entry.isDirectory()) {
+        await recurse(path)
+      } else {
+        results.push(relative(startPath, path))
+      }
     }
   }
 
+  await recurse(startPath)
   return results
 }
 

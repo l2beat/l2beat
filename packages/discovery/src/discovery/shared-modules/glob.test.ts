@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import { glob } from './glob'
 
-describe.only('glob', () => {
+describe('glob', () => {
   const testDir = '/test'
 
   const mockFiles = [
@@ -133,18 +133,22 @@ describe.only('glob', () => {
       'src/utils/helpers.ts',
       'tests/components/Button.test.tsx',
     ]
-    const result = await glob(testDir, 'src/**/Button.*', async () => complexFiles)
+    const result = await glob(
+      testDir,
+      'src/**/Button.*',
+      async () => complexFiles,
+    )
 
     expect(result).toEqual(['src/components/Button/Button.tsx'])
   })
 
   it('should handle patterns with dots in extensions', async () => {
-    const filesWithDot = [
-      'config.dev.json',
-      'config.prod.json',
-      'config.js',
-    ]
-    const result = await glob(testDir, 'config.*.json', async () => filesWithDot)
+    const filesWithDot = ['config.dev.json', 'config.prod.json', 'config.js']
+    const result = await glob(
+      testDir,
+      'config.*.json',
+      async () => filesWithDot,
+    )
 
     expect(result).toEqual(['config.dev.json', 'config.prod.json'])
   })
