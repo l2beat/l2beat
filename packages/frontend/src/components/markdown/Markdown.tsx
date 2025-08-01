@@ -8,7 +8,7 @@ import {
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 
-export interface MarkdownProps {
+interface MarkdownProps {
   children: string
   inline?: boolean
   className?: string

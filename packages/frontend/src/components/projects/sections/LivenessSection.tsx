@@ -63,11 +63,7 @@ export function LivenessSection({
   )
 }
 
-export function OngoingAnomalies({
-  anomalies,
-}: {
-  anomalies: LivenessAnomaly[]
-}) {
+function OngoingAnomalies({ anomalies }: { anomalies: LivenessAnomaly[] }) {
   if (anomalies.length === 0) {
     return <NoAnomaliesState className="rounded-lg!" type="ongoing" />
   }

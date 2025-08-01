@@ -84,7 +84,7 @@ export function ActivityRatioChart({
   )
 }
 
-export function ActivityCustomTooltip({
+function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,

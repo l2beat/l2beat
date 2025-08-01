@@ -17,7 +17,7 @@ import {
   type UpcomingProjectUpdateEntry,
 } from './getUpcomingEntries'
 
-export interface MonthlyUpdateEntry {
+interface MonthlyUpdateEntry {
   id: string
   title: string
   publishedOn: string
