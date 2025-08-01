@@ -23,6 +23,16 @@
           "description": "approves deposits through AML checks."
         }
       ]
+    },
+    "relayer": {
+      "copy": "accessControl",
+      "edit": ["get", "RELAYER", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can relay deposits to the main rollup contract on Scroll."
+        }
+      ]
     }
   }
 }

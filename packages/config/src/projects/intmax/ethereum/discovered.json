@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "blockNumber": 23024991,
+  "blockNumber": 23045357,
   "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
   "entries": [
     {
@@ -240,7 +240,15 @@
     {
       "address": "eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+          "description": "can relay deposits to the main rollup contract on Scroll.",
+          "role": ".relayer"
+        }
+      ]
     },
     {
       "address": "eth:0xB89001Ef513E10482B2667a0fC70F06cfF3a7418",
@@ -367,11 +375,12 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 5670,
-        "getLastRelayedDepositId": 5670,
+        "getLastDepositId": 6007,
+        "getLastRelayedDepositId": 6007,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
+        "relayer": ["eth:0xA8E0Db294aD54E9187CeE41c4d471186bf5Aa7A6"],
         "RELAYER": "0xab4f864e5201b0fde9b5ee3e4cf96384802b0ffdfcf7f9de4699ce21a30afc4f",
         "rollup": "eth:0x1c88459D014e571c332BF9199aD2D35C93219A2e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
@@ -990,8 +999,8 @@
     "eigenlayer/PredicateServiceManager": "0xab8cdaa1cd6ce6003cf49746a5682bb5f3e224c6dbc43d244929cbb43e98051a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "intmax/Liquidity": "0xe5ffb6917a22917649f7ad0021caa73eaa31df72f1b181e9eaf16b7d0817ef2e",
+    "intmax/Liquidity": "0xb19d7ba5f0af7eed5809b1b18ee4470ac02cc710b98d5089348768ccb41e8b2a",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "permissionsConfigHash": "0xa9c4371e7d3151c5ec311189a06988d7ef8ac80c40c45c8ed004c0c902535268"
+  "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
 }
