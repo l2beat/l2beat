@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "timestamp": 1753346675,
-  "configHash": "0x67a7ecd7638462310962c6d3ac8e1a9bc65bf1f33a322aceab2fe02402985adb",
+  "timestamp": 1753944518,
+  "configHash": "0x0aaaef30a9547a261f336c6d448ed0f4644527e8980f2484a86102f52e582259",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -241,7 +241,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "EraAdminProxy",
+      "name": "EraChainAdminProxy",
       "address": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063",
       "type": "Contract",
       "template": "shared-zk-stack/ChainAdmin",
@@ -463,7 +463,13 @@
         "MAX_NUMBER_OF_ZK_CHAINS": 100,
         "messageRoot": "eth:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
         "migrationPaused": false,
-        "migrations": [],
+        "migrations": [
+          {
+            "chainId": 324,
+            "assetId": "0x4322964cbd328346d5f59803d2974742a54a69e59fd8b8d4ca5c64773646bf7a",
+            "settlementLayerChainId": 9075
+          }
+        ],
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -730,7 +736,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 209,
+        "nonce": 214,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3277,6 +3283,6 @@
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
     "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 22987909 },
-  "permissionsConfigHash": "0xb9682dc846f3016fdfa1695a55bb04416ea59a7f27a20fc52d7a78970bc9736d"
+  "usedBlockNumbers": { "ethereum": 23037401 },
+  "permissionsConfigHash": "0xb225a1c4ad9acaae4a1265042a215cb9c2dffbea01a44fa59f1fc00bc0dda257"
 }
