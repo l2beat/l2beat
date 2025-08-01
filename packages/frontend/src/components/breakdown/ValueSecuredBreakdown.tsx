@@ -56,17 +56,17 @@ export function ValueSecuredBreakdownTooltipContent({
   }
   const values = [
     {
-      title: 'Canonical',
+      title: 'Canonically bridged',
       value: canonical,
       variant: 'canonical',
     },
     {
-      title: 'Native',
+      title: 'Natively minted',
       value: native,
       variant: 'native',
     },
     {
-      title: 'External',
+      title: 'Externally bridged',
       value: external,
       variant: 'external',
     },

@@ -66,7 +66,7 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
   }),
   columnHelper.accessor('tvs.data.breakdown.canonical', {
     id: 'canonical',
-    header: 'Canonical',
+    header: 'Canonically bridged',
     cell: (ctx) => {
       const data = ctx.row.original.tvs.data
       if (!data) {
@@ -100,7 +100,7 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
   }),
   columnHelper.accessor('tvs.data.breakdown.native', {
     id: 'native',
-    header: 'Native',
+    header: 'Natively minted',
     cell: (ctx) => {
       const data = ctx.row.original.tvs.data
       if (!data) {
@@ -134,7 +134,7 @@ export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
   }),
   columnHelper.accessor('tvs.data.breakdown.external', {
     id: 'external',
-    header: 'External',
+    header: 'Externally bridged',
     cell: (ctx) => {
       const data = ctx.row.original.tvs.data
       if (!data) {
