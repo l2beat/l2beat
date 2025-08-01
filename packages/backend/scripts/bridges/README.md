@@ -19,7 +19,7 @@ pnpm bridges:cli across ethereum 23025199 base 33503830
 pnpm bridges:cli across arbitrum 362819685 ethereum 23025205
 ```
 
-### AggLayer
+### Agglayer
 ``` bash
 pnpm bridges:cli agglayer ethereum 22980710 polygonzkevm 24133897
 ```

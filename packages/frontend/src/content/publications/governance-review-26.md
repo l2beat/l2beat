@@ -267,9 +267,9 @@ Polygon has transitioned from MATIC to POL.
 Maxsam4 from Polygon [published a transparency report](https://forum.polygon.technology/t/matic-pol-migration-transparency-report/19703). After evaluating the efficacy, impact, execution specifications, and security considerations, the PC has reached a supermajority consensus of 10/13, thereby executing the change without timelock.
 
 
-### **AggLayer list of developer resources**
+### **Agglayer list of developer resources**
 
-Swader, DevRel at Polygon, [published a list of developer resources](https://forum.polygon.technology/t/agglayer-list-of-developer-resources/19692) for anyone interested in building on/for AggLayer. The list includes tutorials and explainers, developer tools, chain dev tools, and implementers.
+Swader, DevRel at Polygon, [published a list of developer resources](https://forum.polygon.technology/t/agglayer-list-of-developer-resources/19692) for anyone interested in building on/for Agglayer. The list includes tutorials and explainers, developer tools, chain dev tools, and implementers.
 
 
 ### **Upgrade to the Polygon Plasma and PoS Portal Smart Contracts**
