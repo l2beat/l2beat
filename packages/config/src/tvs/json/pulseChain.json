@@ -878,26 +878,6 @@
     },
     {
       "mode": "auto",
-      "id": "pulseChain-FRAX",
-      "priceId": "frax-share",
-      "symbol": "FRAX",
-      "name": "Frax (prev. FXS)",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
-        "decimals": 18,
-        "sinceTimestamp": 1684137600,
-        "untilTimestamp": 1749103200
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
       "id": "pulseChain-FRAX.legacy",
       "priceId": "frax",
       "symbol": "FRAX.legacy",
@@ -2465,6 +2445,25 @@
         "sinceTimestamp": 1684137600
       },
       "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "pulseChain-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+        "chain": "ethereum",
+        "escrowAddress": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+        "decimals": 18,
+        "sinceTimestamp": 1684137600
+      },
+      "category": "ether",
       "source": "canonical",
       "isAssociated": false
     },

@@ -130,7 +130,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Arbitrum escrow -> LayerZero AMB"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -159,7 +166,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Mantle escrow -> LayerZero AMB"
+          }
+        ]
+      }
     }
   ]
 }
