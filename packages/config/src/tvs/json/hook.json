@@ -79,6 +79,14 @@
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",
@@ -176,6 +184,14 @@
       "category": "ether",
       "source": "external",
       "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Socket bridge",
+            "slug": "socket"
+          }
+        ]
+      },
       "valueForSummary": {
         "type": "calculation",
         "operator": "sum",

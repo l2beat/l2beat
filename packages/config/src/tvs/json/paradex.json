@@ -19,7 +19,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     }
   ]
 }

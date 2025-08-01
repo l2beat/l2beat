@@ -7098,8 +7098,15 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 10,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "USD Coin",
@@ -7379,8 +7386,15 @@
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 130,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped BTC",
@@ -8133,8 +8147,15 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 324,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "USN Token",
@@ -8325,8 +8346,15 @@
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/50792/large/usdc.png?1729233082",
       "chainId": 480,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "Ether",
@@ -11040,8 +11068,15 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 8453,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "USDe",
@@ -12781,8 +12816,15 @@
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 42161,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "USD Coin (Arb1)",
@@ -13235,8 +13277,15 @@
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "chainId": 42220,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped Ether",
@@ -13923,8 +13972,15 @@
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/31270/large/USDC-icon.png?1696530094",
       "chainId": 59144,
-      "source": "native",
-      "supply": "totalSupply"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "USDe",

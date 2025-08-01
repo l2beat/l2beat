@@ -254,7 +254,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

@@ -1,29 +1,29 @@
 {
   "$schema": "schema/tvs-config-schema.json",
-  "projectId": "real",
+  "projectId": "intmax",
   "tokens": [
     {
       "mode": "auto",
-      "id": "real-cbBTC",
-      "priceId": "coinbase-wrapped-btc",
-      "symbol": "cbBTC",
-      "name": "Coinbase Wrapped BTC",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "id": "intmax-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
       "amount": {
         "type": "balanceOfEscrow",
-        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "address": "native",
         "chain": "ethereum",
-        "escrowAddress": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
-        "decimals": 8,
-        "sinceTimestamp": 1726099200
+        "escrowAddress": "0xF65e73aAc9182e353600a916a6c7681F810f79C3",
+        "decimals": 18,
+        "sinceTimestamp": 1750500599
       },
-      "category": "other",
+      "category": "ether",
       "source": "canonical",
       "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "real-stETH-2",
+      "id": "intmax-stETH",
       "priceId": "staked-ether",
       "symbol": "stETH",
       "name": "Liquid staked Ether 2.0",
@@ -32,51 +32,17 @@
         "type": "balanceOfEscrow",
         "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "chain": "ethereum",
-        "escrowAddress": "0x679D4C1cC6855C57726BEA1784F578315d6431f6",
+        "escrowAddress": "0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "decimals": 18,
-        "sinceTimestamp": 1715706239,
-        "untilTimestamp": 1753833600
+        "sinceTimestamp": 1750500599
       },
       "category": "ether",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Canonical (external escrow)"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     },
     {
       "mode": "auto",
-      "id": "real-USDC-1",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/50540/large/usd-coin-usdc-logo-200x200.png?1728269501",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xc518A88c67CECA8B3f24c4562CB71deeB2AF86B7",
-        "chain": "real",
-        "decimals": 6,
-        "sinceTimestamp": 1728259200
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Layer Zero",
-            "slug": "omnichain"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "real-USDC-2",
+      "id": "intmax-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -85,9 +51,9 @@
         "type": "balanceOfEscrow",
         "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "chain": "ethereum",
-        "escrowAddress": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+        "escrowAddress": "0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "decimals": 6,
-        "sinceTimestamp": 1710845159
+        "sinceTimestamp": 1750500599
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -95,7 +61,7 @@
     },
     {
       "mode": "auto",
-      "id": "real-USDT",
+      "id": "intmax-USDT",
       "priceId": "tether",
       "symbol": "USDT",
       "name": "Tether USD",
@@ -104,9 +70,9 @@
         "type": "balanceOfEscrow",
         "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "chain": "ethereum",
-        "escrowAddress": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+        "escrowAddress": "0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "decimals": 6,
-        "sinceTimestamp": 1710845159
+        "sinceTimestamp": 1750500599
       },
       "category": "stablecoin",
       "source": "canonical",
@@ -114,7 +80,7 @@
     },
     {
       "mode": "auto",
-      "id": "real-WBTC",
+      "id": "intmax-WBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "WBTC",
       "name": "Wrapped BTC",
@@ -123,9 +89,9 @@
         "type": "balanceOfEscrow",
         "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "chain": "ethereum",
-        "escrowAddress": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
+        "escrowAddress": "0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "decimals": 8,
-        "sinceTimestamp": 1710845159
+        "sinceTimestamp": 1750500599
       },
       "category": "other",
       "source": "canonical",

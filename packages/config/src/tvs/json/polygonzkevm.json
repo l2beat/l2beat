@@ -253,7 +253,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -578,7 +585,7 @@
         "chain": "polygonzkevm",
         "decimals": 18,
         "sinceTimestamp": 1679679015,
-        "untilTimestamp": 1749103200
+        "untilTimestamp": 1682208000
       }
     },
     {
@@ -1049,6 +1056,24 @@
     },
     {
       "mode": "auto",
+      "id": "polygonzkevm-PC",
+      "priceId": "pentagon-chain",
+      "symbol": "PC",
+      "name": "PentagonChain",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66638/large/pentagon-chain-token-fcp.png?1750094674",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb9A729Aff228c28d7eB0548c8C0E4a3FFf0083A1",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1750032000
+      }
+    },
+    {
+      "mode": "auto",
       "id": "polygonzkevm-PEPE",
       "priceId": "pepe",
       "symbol": "PEPE",
@@ -1244,7 +1269,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1513,7 +1545,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1640,7 +1679,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
