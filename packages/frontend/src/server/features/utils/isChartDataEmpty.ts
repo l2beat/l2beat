@@ -1,10 +1,10 @@
 import type { ActivityChartData } from '../scaling/activity/getActivityChart'
 import type { TvsChartData } from '../scaling/tvs/getTvsChartData'
 
-export function isTvsChartDataEmpty(data: TvsChartData) {
+export function isTvsChartDataEmpty(data: TvsChartData['chart']) {
   return data.every(
     ([_, native, canonical, external]) =>
-      native === 0 && canonical === 0 && external === 0,
+      native === null && canonical === null && external === null,
   )
 }
 

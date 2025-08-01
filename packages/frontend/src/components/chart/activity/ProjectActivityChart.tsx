@@ -2,7 +2,6 @@ import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
-import { NotSyncedBanner } from '~/components/not-synced/NotSyncedBanner'
 import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { ActivityMetricControls } from '~/pages/scaling/activity/components/ActivityMetricControls'
@@ -56,8 +55,10 @@ export function ProjectActivityChart({
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
           return {
             timestamp,
-            projects: projectMetric / UnixTime.DAY,
-            ethereum: ethereumMetric / UnixTime.DAY,
+            projects:
+              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
+            ethereum:
+              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
           }
         },
       ),
@@ -67,7 +68,12 @@ export function ProjectActivityChart({
   const ratioData = useMemo(() => {
     return chart?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
       timestamp,
-      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+      ratio:
+        projectsTx !== null && projectsUops !== null
+          ? projectsTx === 0
+            ? 1
+            : projectsUops / projectsTx
+          : null,
     }))
   }, [chart?.data])
 
@@ -98,6 +104,7 @@ export function ProjectActivityChart({
       />
       <ActivityRatioChart
         data={ratioData}
+        syncedUntil={chart?.syncedUntil}
         isLoading={isLoading}
         className="mb-2"
       />
@@ -130,7 +137,6 @@ export function ProjectActivityChart({
           <RadioGroupItem value="lin">LIN</RadioGroupItem>
         </RadioGroup>
       </div>
-      {chart?.syncWarning && <NotSyncedBanner content={chart.syncWarning} />}
     </div>
   )
 }

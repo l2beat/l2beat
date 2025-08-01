@@ -33,8 +33,12 @@ export function getEcosystemProjectsChartData(
     }
   })
 
+  const mostRecentProjectCount = chart.at(-1)?.projectCount
+
   return {
     chart,
-    marketShare: entries.length / allScalingProjectsCount,
+    marketShare: mostRecentProjectCount
+      ? mostRecentProjectCount / allScalingProjectsCount
+      : 0,
   }
 }

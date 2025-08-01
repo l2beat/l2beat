@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -64,7 +64,6 @@ export const game7: ScalingProject = orbitStackL3({
         'arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944',
       ),
       tokens: ['USDC'],
-      ...ESCROW.CANONICAL_EXTERNAL,
       description: 'Main entry point for users depositing USDC.',
     }),
   ],

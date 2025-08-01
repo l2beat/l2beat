@@ -104,13 +104,22 @@ function DefaultChart({
 
   const chartData = useMemo(
     () =>
-      data?.map(([timestamp, native, canonical, external, ethPrice]) => {
+      data?.chart.map(([timestamp, native, canonical, external, ethPrice]) => {
         const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
-          native: native / divider,
-          canonical: canonical / divider,
-          external: external / divider,
+          native:
+            native !== null && divider !== null && divider !== 0
+              ? native / divider
+              : null,
+          canonical:
+            canonical !== null && divider !== null && divider !== 0
+              ? canonical / divider
+              : null,
+          external:
+            external !== null && divider !== null && divider !== 0
+              ? external / divider
+              : null,
         }
       }),
     [data, unit],
@@ -134,6 +143,7 @@ function DefaultChart({
         isLoading={isLoading}
         tickCount={4}
         className="mt-4 mb-2"
+        syncedUntil={data?.syncedUntil}
       />
       <div className="flex flex-wrap items-center justify-between gap-1">
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>

@@ -220,7 +220,6 @@ export const nova: ScalingProject = orbitStackL2({
       ),
       sinceTimestamp: UnixTime(1659620187),
       tokens: '*',
-      ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2.',
       ...upgradeExecutorUpgradeability,

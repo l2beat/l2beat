@@ -1,0 +1,24 @@
+{
+  "ZkEvm_1": {
+    "hash": "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f",
+    "address": [
+      "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4",
+      "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4",
+      "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f",
+      "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "ZkEvm_2": {
+    "hash": "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308",
+    "address": [
+      "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb",
+      "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1",
+      "0x36b026c39125964D99596CE302866B5A59E4dE27",
+      "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  }
+}

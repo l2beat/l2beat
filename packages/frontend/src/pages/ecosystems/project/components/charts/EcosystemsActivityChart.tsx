@@ -88,8 +88,8 @@ export function EcosystemsActivityChart({
       data?.data.map(([timestamp, _, __, projectsUops, ethereumUops]) => {
         return {
           timestamp,
-          projects: projectsUops / UnixTime.DAY,
-          ethereum: ethereumUops / UnixTime.DAY,
+          projects: projectsUops !== null ? projectsUops / UnixTime.DAY : null,
+          ethereum: ethereumUops !== null ? ethereumUops / UnixTime.DAY : null,
         }
       }),
     [data?.data],
@@ -131,10 +131,9 @@ export function EcosystemsActivityChart({
               scale: 'lin',
               unit: ' UOPS',
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip
-            content={<ActivityCustomTooltip syncedUntil={undefined} />}
-          />
+          <ChartTooltip content={<ActivityCustomTooltip />} />
           <defs>
             <CustomFillGradientDef
               id="fillProjects"
@@ -204,19 +203,23 @@ function Header({
 }
 
 function getStats(
-  chartData: { projects: number }[] | undefined,
+  chartData: { projects: number | null }[] | undefined,
   allScalingProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
   }
-  const last = chartData.at(-1)
-  if (!last) {
+  const lastWithData = chartData.filter((d) => d.projects !== null).at(-1) as
+    | {
+        projects: number
+      }
+    | undefined
+  if (!lastWithData) {
     return undefined
   }
 
   return {
-    latestUops: last.projects,
-    marketShare: last.projects / allScalingProjectsUops,
+    latestUops: lastWithData.projects,
+    marketShare: lastWithData.projects / allScalingProjectsUops,
   }
 }

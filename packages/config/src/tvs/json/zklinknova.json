@@ -29,7 +29,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -48,7 +55,14 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -77,7 +91,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -172,7 +193,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -201,7 +229,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Base"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -440,7 +475,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -638,8 +680,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Hyperlane (xERC-20)",
-            "slug": "hyperlane"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -750,26 +791,63 @@
       "name": "Gains Network",
       "iconUrl": "https://assets.coingecko.com/coins/images/19737/large/logo.png?1696519161",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
-        "chain": "arbitrum",
-        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "decimals": 18,
-        "sinceTimestamp": 1709296973
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+            "chain": "arbitrum",
+            "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+            "decimals": 18,
+            "sinceTimestamp": 1709296973
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xFB1Aaba03c31EA98A3eEC7591808AcB1947ee7Ac",
+            "chain": "base",
+            "escrowAddress": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
+            "decimals": 18,
+            "sinceTimestamp": 1727111305
+          }
+        ]
       },
       "valueForSummary": {
-        "type": "value",
-        "amount": {
-          "type": "const",
-          "value": "0",
-          "decimals": 0,
-          "sinceTimestamp": 1709296973
-        },
-        "priceId": "gains-network"
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1709296973
+            },
+            "priceId": "gains-network"
+          },
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1727111305
+            },
+            "priceId": "gains-network"
+          }
+        ]
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -823,7 +901,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantapacific"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -852,7 +937,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from ZKsync Era"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -881,7 +973,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -900,7 +999,14 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -959,7 +1065,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -978,7 +1091,50 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zklinknova-MOZ",
+      "priceId": "mozaic",
+      "symbol": "MOZ",
+      "name": "Mozaic Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30100/large/Main_Logo_1-200x200jpg.jpg?1696529024",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+        "chain": "arbitrum",
+        "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+        "decimals": 18,
+        "sinceTimestamp": 1709296973
+      },
+      "valueForSummary": {
+        "type": "value",
+        "amount": {
+          "type": "const",
+          "value": "0",
+          "decimals": 0,
+          "sinceTimestamp": 1709296973
+        },
+        "priceId": "mozaic"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1007,7 +1163,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1026,7 +1189,14 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1059,8 +1229,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "zkLink Nova Bridge from Arbitrum"
           }
         ]
       }
@@ -1180,8 +1349,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -1272,7 +1440,14 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1301,7 +1476,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1407,8 +1589,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero",
-            "slug": "omnichain"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -1568,7 +1749,14 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1663,7 +1851,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1692,7 +1887,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantapacific"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1721,7 +1923,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1750,7 +1959,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1769,7 +1985,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1798,7 +2021,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1827,7 +2057,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from ZKsync Era"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1856,7 +2093,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Arbitrum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1984,7 +2228,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2013,7 +2264,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantapacific"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2042,7 +2300,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2075,8 +2340,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
+            "name": "zkLink Nova Bridge from Arbitrum"
           }
         ]
       }
@@ -2127,7 +2391,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2146,7 +2417,14 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2223,7 +2501,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2252,7 +2537,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantapacific"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2380,8 +2672,7 @@
       "bridgedUsing": {
         "bridges": [
           {
-            "name": "Layer Zero v2 OFT",
-            "slug": "layerzerov2oft"
+            "name": "zkLink Nova Bridge from Optimism"
           }
         ]
       }
@@ -2482,7 +2773,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2501,7 +2799,14 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2530,7 +2835,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Mantle"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2607,7 +2919,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Optimism"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2626,7 +2945,14 @@
       },
       "category": "ether",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2655,7 +2981,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from ZKsync Era"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2688,7 +3021,14 @@
       },
       "category": "other",
       "source": "canonical",
-      "isAssociated": true
+      "isAssociated": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "zkLink Nova Bridge from Ethereum"
+          }
+        ]
+      }
     }
   ]
 }

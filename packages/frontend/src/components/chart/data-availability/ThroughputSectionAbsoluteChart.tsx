@@ -134,7 +134,7 @@ function getDataWithConfiguredThroughputs(
 
     return [
       timestamp,
-      value ?? 0,
+      value,
       adjustThoughputToRange(range, config?.targetDaily),
       adjustThoughputToRange(range, config?.maxDaily),
     ]

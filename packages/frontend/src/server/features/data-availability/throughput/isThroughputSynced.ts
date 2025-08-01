@@ -9,7 +9,7 @@ export function isThroughputSynced(
     syncedUntil >=
     (pastDaySynced
       ? UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.HOUR
-      : UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR)
+      : UnixTime.toStartOf(UnixTime.now(), 'hour') - 6 * UnixTime.HOUR)
   )
 }
 
@@ -22,17 +22,14 @@ export function getThroughputSyncWarning(
   }
 
   if (opts?.shorter) {
-    return `Throughput data is not synced since ${formatTimestamp(syncedUntil, {
+    return `No throughput data since ${formatTimestamp(syncedUntil, {
       mode: 'datetime',
       longMonthName: true,
     })}.`
   }
 
-  return `Throughput data for this item is not synced since ${formatTimestamp(
-    syncedUntil,
-    {
-      mode: 'datetime',
-      longMonthName: true,
-    },
-  )}.`
+  return `No throughput data since ${formatTimestamp(syncedUntil, {
+    mode: 'datetime',
+    longMonthName: true,
+  })}.`
 }

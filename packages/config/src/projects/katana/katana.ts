@@ -45,7 +45,7 @@ export const katana: ScalingProject = {
     BADGES.VM.EVM,
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
-    BADGES.Infra.AggLayer,
+    BADGES.Infra.Agglayer,
     BADGES.Stack.OPStack,
   ],
   ecosystemInfo: {
@@ -325,7 +325,7 @@ export const katana: ScalingProject = {
           {
             title:
               'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-            url: 'https://etherscan.io/address/0x9ab2cb2107d3e737f7977b2e5042c58de98326ab#code#F1#L1210',
+            url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
           },
         ],
       },

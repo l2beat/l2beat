@@ -19,13 +19,14 @@ import type { ChartUnit } from '../../types'
 
 export interface StackedTvsChartDataPoint {
   timestamp: number
-  native: number
-  canonical: number
-  external: number
+  native: number | null
+  canonical: number | null
+  external: number | null
 }
 
 interface Props {
   data: StackedTvsChartDataPoint[] | undefined
+  syncedUntil: number | undefined
   milestones: Milestone[]
   unit: ChartUnit
   isLoading: boolean
@@ -35,17 +36,17 @@ interface Props {
 
 const chartMeta = {
   canonical: {
-    label: 'Canonical',
+    label: 'Canonically bridged',
     color: 'var(--chart-stacked-purple)',
     indicatorType: { shape: 'square' },
   },
   native: {
-    label: 'Native',
+    label: 'Natively minted',
     color: 'var(--chart-stacked-pink)',
     indicatorType: { shape: 'square' },
   },
   external: {
-    label: 'External',
+    label: 'Externally bridged',
     color: 'var(--chart-stacked-yellow)',
     indicatorType: { shape: 'square' },
   },
@@ -53,6 +54,7 @@ const chartMeta = {
 
 export function StackedTvsChart({
   data,
+  syncedUntil,
   milestones,
   unit,
   isLoading,
@@ -102,8 +104,12 @@ export function StackedTvsChart({
             tickCount,
           },
           isLoading,
+          syncedUntil,
         })}
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
+        <ChartTooltip
+          content={<CustomTooltip unit={unit} />}
+          filterNull={false}
+        />
       </AreaChart>
     </ChartContainer>
   )
@@ -116,7 +122,16 @@ function CustomTooltip({
   unit,
 }: TooltipProps<number, string> & { unit: ChartUnit }) {
   if (!active || !payload || typeof label !== 'number') return null
-  const total = payload.reduce((acc, curr) => acc + (curr?.value ?? 0), 0)
+
+  const total = payload.reduce<number | null>((acc, curr) => {
+    if (curr.value === null || curr.value === undefined) {
+      return acc
+    }
+    if (acc === null) {
+      return curr?.value ?? null
+    }
+    return acc + curr.value
+  }, null)
   const reversedPayload = [...payload].reverse()
   return (
     <ChartTooltipWrapper>
@@ -129,12 +144,14 @@ function CustomTooltip({
           <span className="hidden [@media(min-width:600px)]:inline">
             Total value secured
           </span>
-          <span className="text-primary">{formatCurrency(total, unit)}</span>
+          <span className="text-primary">
+            {total !== null ? formatCurrency(total, unit) : 'No data'}
+          </span>
         </div>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -151,7 +168,9 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, unit)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, unit)
+                    : 'No data'}
                 </span>
               </div>
             )

@@ -18,7 +18,7 @@ export const agglayer: BaseProject = {
       explorers: ['https://visualizer.agglayer.dev/'],
       socialMedia: ['https://x.com/agglayer']
     },
-    badges: [BADGES.Stack.CDKErigon, BADGES.Infra.AggLayer],
+    badges: [BADGES.Stack.CDKErigon, BADGES.Infra.Agglayer],
   },
   colors: {
     primary: '#6C00F6',
@@ -112,7 +112,7 @@ export const agglayer: BaseProject = {
       tokenId: 'polygonzkevm-POL',
       projectId: ProjectId('polygonzkevm'),
       description:
-        'The POL token is used for governance across the Polygon ecosystem, including Polygon PoS and AggLayer chains. It also secures the Polygon PoS network and functions as a gas token on the chain.',
+        'The POL token is used for governance across the Polygon ecosystem, including Polygon PoS and Agglayer chains. It also secures the Polygon PoS network and functions as a gas token on the chain.',
     },
   },
 }

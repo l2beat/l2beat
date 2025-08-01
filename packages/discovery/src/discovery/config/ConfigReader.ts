@@ -110,7 +110,7 @@ export class ConfigReader {
   // discovered.json file. Most of the time you want to use
   // readAllDiscoveredProjects()
   readAllConfiguredProjects(): { project: string; chains: string[] }[] {
-    return this.enumerateProjectDirectories()
+    const result = this.enumerateProjectDirectories()
       .map((projectPath) => {
         const projectName = path.basename(projectPath)
         const configPath = path.join(projectPath, 'config.jsonc')
@@ -139,6 +139,22 @@ export class ConfigReader {
         return { project: projectName, chains: [] as string[] }
       })
       .filter((x) => x.chains.length > 0)
+    const asDiscovered = this.readAllDiscoveredProjects()
+
+    for (const entry of asDiscovered) {
+      const found = result.find((x) => x.project === entry.project)
+      if (found === undefined) {
+        result.push(entry)
+      } else {
+        for (const chain of entry.chains) {
+          if (!found.chains.includes(chain)) {
+            found.chains.push(chain)
+          }
+        }
+      }
+    }
+
+    return result
   }
 
   // NOTE(radomski): Generates a list of projects that _have_ a
