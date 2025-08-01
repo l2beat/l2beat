@@ -174,7 +174,6 @@ export const scroll: ScalingProject = {
           'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
         ), // custom gateway
         tokens: '*',
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -182,7 +181,6 @@ export const scroll: ScalingProject = {
           'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
         ),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -190,7 +188,6 @@ export const scroll: ScalingProject = {
           'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
         ),
         tokens: ['DAI'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({

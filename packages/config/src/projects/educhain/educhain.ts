@@ -1,5 +1,5 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -70,7 +70,6 @@ export const educhain: ScalingProject = orbitStackL3({
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
-      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
     }),
   ],

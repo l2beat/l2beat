@@ -204,7 +204,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xcEe284F754E854890e311e3280b767F80797180d',
       ),
       tokens: '*',
-      ...ESCROW.CANONICAL_EXTERNAL,
       excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
       premintedTokens: ['SQD'],
       description:
