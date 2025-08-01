@@ -20,14 +20,6 @@ type Stats<T extends number | null> = {
   usd: T
 }
 
-type StatsValues<T extends number | null> = {
-  overhead: T
-  calldata: T
-  compute: T
-  blobs: number | null
-  total: T
-}
-
 export type ProjectCostsChartResponse = {
   chart: [...CostsChartDataPoint, posted: number | null][]
   hasBlobs: boolean
@@ -35,6 +27,7 @@ export type ProjectCostsChartResponse = {
     | {
         total: Stats<number>
         perL2Uop: Stats<number | null> | undefined
+        perDay: Stats<number>
       }
     | undefined
   syncedUntil: UnixTime
@@ -102,7 +95,9 @@ export async function getProjectCostsChart(
 
   return {
     chart,
+    hasBlobs: costsChart.hasBlobs,
     stats: { total, perL2Uop, perDay },
+    syncedUntil: costsChart.syncedUntil,
   }
 }
 
