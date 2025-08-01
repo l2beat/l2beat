@@ -35,7 +35,7 @@ Please note that you will want to run `pnpm install` after you perform a `git pu
 
 ## Running the website locally
 
-If you're planning working only on the frontend part of the website (i.e. you don't care what data
+If you're planning only on the frontend part of the website (i.e. you don't care what data
 is actually displayed) then it's quite easy. Just run the following commands after having cloned the
 repository:
 

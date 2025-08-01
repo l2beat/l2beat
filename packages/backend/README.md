@@ -213,7 +213,7 @@ pnpm tvs:calculate-ids --tokens=unichain-ETH,unichain-USDC
 ```
 - `pnpm tvs:translate-id` - find out which config corresponds to given ID. Examples:
 ```bash
-pnpm pnpm tvs:translate-id 5da09aa91cbd
+pnpm tvs:translate-id 5da09aa91cbd
 ```
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 
