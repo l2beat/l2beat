@@ -100,6 +100,7 @@ import { liftchain } from '../projects/liftchain/liftchain'
 import { lightlink } from '../projects/lightlink/lightlink'
 import { linea } from '../projects/linea/linea'
 import { lisk } from '../projects/lisk/lisk'
+import { logx } from '../projects/logx/logx'
 import { loopring } from '../projects/loopring/loopring'
 import { lootchain } from '../projects/lootchain/lootchain'
 import { lumia } from '../projects/lumia/lumia'
@@ -327,6 +328,7 @@ export const layer2s: ScalingProject[] = [
   lightlink,
   linea,
   lisk,
+  logx,
   loopring,
   lootchain,
   lumia,
