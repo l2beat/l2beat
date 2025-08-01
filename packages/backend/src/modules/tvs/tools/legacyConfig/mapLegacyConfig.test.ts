@@ -47,10 +47,10 @@ describe(mapLegacyConfig.name, () => {
     expect(result.tokens.length).toBeGreaterThanOrEqual(501)
 
     expect(
-      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH-1'),
+      result.tokens.find((t: TvsToken) => t.id === 'arbitrum-ETH'),
     ).toEqual({
       mode: 'auto',
-      id: TokenId('arbitrum-ETH-1'),
+      id: TokenId('arbitrum-ETH'),
       priceId: 'ethereum',
       symbol: 'ETH',
       name: 'Ether',
@@ -68,7 +68,17 @@ describe(mapLegacyConfig.name, () => {
               '0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a',
             ),
             decimals: 18,
-            sinceTimestamp: UnixTime(1661457944),
+            sinceTimestamp: 1661457944,
+          },
+          {
+            type: 'balanceOfEscrow',
+            address: 'native',
+            chain: 'ethereum',
+            escrowAddress: EthereumAddress(
+              '0xcEe284F754E854890e311e3280b767F80797180d',
+            ),
+            decimals: 18,
+            sinceTimestamp: 1623867835,
           },
           {
             type: 'balanceOfEscrow',
@@ -78,7 +88,7 @@ describe(mapLegacyConfig.name, () => {
               '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
             ),
             decimals: 18,
-            sinceTimestamp: UnixTime(1623784100),
+            sinceTimestamp: 1623784100,
           },
           {
             type: 'balanceOfEscrow',
@@ -88,7 +98,7 @@ describe(mapLegacyConfig.name, () => {
               '0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515',
             ),
             decimals: 18,
-            sinceTimestamp: UnixTime(1622243344),
+            sinceTimestamp: 1622243344,
           },
         ],
       },

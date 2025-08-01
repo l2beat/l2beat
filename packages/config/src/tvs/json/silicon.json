@@ -156,7 +156,8 @@
         "address": "0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B",
         "chain": "silicon",
         "decimals": 18,
-        "sinceTimestamp": 1724183531
+        "sinceTimestamp": 1724183531,
+        "untilTimestamp": 1754024400
       }
     },
     {

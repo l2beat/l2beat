@@ -18,15 +18,8 @@
         "sinceTimestamp": 1692341159
       },
       "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Canonical (external escrow)"
-          }
-        ]
-      }
+      "source": "canonical",
+      "isAssociated": false
     }
   ]
 }
