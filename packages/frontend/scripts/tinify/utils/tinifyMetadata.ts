@@ -7,7 +7,7 @@ const metadataFile = path.join(__dirname, '../metadata.json')
 const Metadata = v.record(v.string(), v.string())
 const metadata = getTinifiyMetadata()
 
-export function getTinifiyMetadata() {
+function getTinifiyMetadata() {
   const file = readFileSync(metadataFile, 'utf8')
   return Metadata.parse(JSON.parse(file))
 }

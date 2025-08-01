@@ -86,7 +86,7 @@ async function generateProjectOgImage(
   return resvg.render().asPng()
 }
 
-export function getOpengraphProjectTypes(
+function getOpengraphProjectTypes(
   project: Project<
     never,
     'isScaling' | 'isBridge' | 'isZkCatalog' | 'isDaLayer'
