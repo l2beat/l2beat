@@ -15,18 +15,9 @@ export const ProjectCostsChartParams = v.object({
 })
 
 type Stats<T extends number | null> = {
-  gas: StatsValues<T>
-  eth: StatsValues<T>
-  usd: StatsValues<T>
-  posted: number | null
-}
-
-type StatsValues<T extends number | null> = {
-  overhead: T
-  calldata: T
-  compute: T
-  blobs: number | null
-  total: T
+  gas: T
+  eth: T
+  usd: T
 }
 
 export type ProjectCostsChartResponse = {
@@ -36,6 +27,7 @@ export type ProjectCostsChartResponse = {
     | {
         total: Stats<number>
         perL2Uop: Stats<number | null> | undefined
+        perDay: Stats<number>
       }
     | undefined
   syncedUntil: UnixTime
@@ -69,9 +61,6 @@ export async function getProjectCostsChart(
   }
 
   const costsUopsCount = getSummedUopsCount(activityRecords, costs.range)
-  const throughputUopsCount = throughputChart
-    ? getSummedUopsCount(activityRecords, throughputChart.range)
-    : undefined
 
   const resolution = rangeToResolution({ type: params.range })
 
@@ -94,98 +83,66 @@ export async function getProjectCostsChart(
     },
   )
 
-  const summedThroughput =
-    throughputChart?.chart.reduce((acc, [_, throughput]) => {
-      return acc + (throughput ?? 0)
-    }, 0) ?? null
-  const total = withTotal({
-    ...costs,
-    posted: summedThroughput,
-  })
-
+  const total = getTotal(costs)
   const perL2Uop =
     costsUopsCount !== undefined && resolution !== 'hourly'
-      ? mapToPerL2UopsCost(total, {
+      ? getPerL2UopsCost(total, {
           costs: costsUopsCount,
-          throughput: throughputUopsCount,
         })
       : undefined
+  const days = Math.round((costs.range[1] - costs.range[0]) / UnixTime.DAY)
+  const perDay = getCostPerDay(total, days)
 
   return {
     chart,
     hasBlobs: costsChart.hasBlobs,
-    stats: { total, perL2Uop },
+    stats: { total, perL2Uop, perDay },
     syncedUntil: costsChart.syncedUntil,
   }
 }
 
-function withTotal(
-  data: LatestCostsProjectResponse & { posted: number | null },
-) {
+function getTotal(data: Omit<LatestCostsProjectResponse, 'syncedUntil'>) {
   return {
-    ...data,
-    gas: {
-      ...data.gas,
-      total:
-        data.gas.overhead +
-        data.gas.calldata +
-        data.gas.compute +
-        (data.gas.blobs ?? 0),
-    },
-    eth: {
-      ...data.eth,
-      total:
-        data.eth.overhead +
-        data.eth.calldata +
-        data.eth.compute +
-        (data.eth.blobs ?? 0),
-    },
-    usd: {
-      ...data.usd,
-      total:
-        data.usd.overhead +
-        data.usd.calldata +
-        data.usd.compute +
-        (data.usd.blobs ?? 0),
-    },
+    gas:
+      data.gas.overhead +
+      data.gas.calldata +
+      data.gas.compute +
+      (data.gas.blobs ?? 0),
+    eth:
+      data.eth.overhead +
+      data.eth.calldata +
+      data.eth.compute +
+      (data.eth.blobs ?? 0),
+    usd:
+      data.usd.overhead +
+      data.usd.calldata +
+      data.usd.compute +
+      (data.usd.blobs ?? 0),
   }
 }
 
-function mapToPerL2UopsCost(
-  data: ReturnType<typeof withTotal>,
-  uops: { costs: number; throughput: number | undefined },
+function getPerL2UopsCost(
+  data: ReturnType<typeof getTotal>,
+  uops: {
+    costs: number
+  },
 ) {
   function divideIfValid(value: number | null): number | null {
     return uops.costs && value !== null ? value / uops.costs : value
   }
 
   return {
-    overhead: divideIfValid(data.gas.total),
-    gas: {
-      overhead: divideIfValid(data.gas.overhead),
-      calldata: divideIfValid(data.gas.calldata),
-      compute: divideIfValid(data.gas.compute),
-      blobs: divideIfValid(data.gas.blobs),
-      total: divideIfValid(data.gas.total),
-    },
-    eth: {
-      overhead: divideIfValid(data.eth.overhead),
-      calldata: divideIfValid(data.eth.calldata),
-      compute: divideIfValid(data.eth.compute),
-      blobs: divideIfValid(data.eth.blobs),
-      total: divideIfValid(data.eth.total),
-    },
-    usd: {
-      overhead: divideIfValid(data.usd.overhead),
-      calldata: divideIfValid(data.usd.calldata),
-      compute: divideIfValid(data.usd.compute),
-      blobs: divideIfValid(data.usd.blobs),
-      total: divideIfValid(data.usd.total),
-    },
-    posted:
-      data.posted !== null && uops.throughput !== undefined
-        ? data.posted / uops.throughput
-        : null,
+    gas: divideIfValid(data.gas),
+    eth: divideIfValid(data.eth),
+    usd: divideIfValid(data.usd),
+  }
+}
+
+function getCostPerDay(data: ReturnType<typeof getTotal>, days: number) {
+  return {
+    gas: data.gas / days,
+    eth: data.eth / days,
+    usd: data.usd / days,
   }
 }
 

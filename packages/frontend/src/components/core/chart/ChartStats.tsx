@@ -41,7 +41,7 @@ export function ChartStatsItem({
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 md:flex-col md:items-start',
+        'flex flex-col items-start justify-between gap-2 max-md:flex-row max-md:items-center',
         className,
       )}
     >
