@@ -46,7 +46,7 @@ const DirectoryTabsList = ({
   className,
   ...props
 }: React.ComponentProps<typeof TabsPrimitive.List>) => (
-  <OverflowWrapper className="sticky top-0 z-50 bg-background pt-2 pr-4 max-md:mt-2 md:pt-4">
+  <OverflowWrapper className="sticky top-0 z-50 bg-background mt-4 pr-4">
     <TabsPrimitive.List
       ref={ref}
       className={cn('flex space-x-1 max-md:pl-4 md:space-x-2', className)}
