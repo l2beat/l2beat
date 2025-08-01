@@ -20,7 +20,7 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { MarketShare } from './MonthlyUpdateMarketShare'
@@ -158,9 +158,7 @@ export function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            longMonthName: true,
-          })}
+          {formatRange(label, label + UnixTime.DAY)}
         </div>
         {payload.map((entry) => {
           if (entry.name === undefined || entry.type === 'none') return null

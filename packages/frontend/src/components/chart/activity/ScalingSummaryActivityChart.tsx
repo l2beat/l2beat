@@ -33,7 +33,7 @@ import type { ActivityChartStats } from '~/server/features/scaling/activity/getA
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 
@@ -152,9 +152,7 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            longMonthName: true,
-          })}
+          {formatRange(label, label + UnixTime.DAY)}
         </div>
         <span className="text-heading-16">Average UOPS</span>
         <HorizontalSeparator className="mt-1.5" />

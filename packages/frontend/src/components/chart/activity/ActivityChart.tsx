@@ -32,7 +32,7 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 import { formatInteger } from '~/utils/number-format/formatInteger'
 import { getStrokeOverFillAreaComponents } from '../../core/chart/utils/getStrokeOverFillAreaComponents'
@@ -166,9 +166,7 @@ export function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-          })}
+          {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
         <span className="text-heading-16">Average UOPS</span>
         <HorizontalSeparator className="mt-1.5" />
