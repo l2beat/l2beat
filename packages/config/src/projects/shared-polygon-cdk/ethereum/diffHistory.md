@@ -5554,7 +5554,7 @@ This upgrade introduces an enum `VerifierType` that replaces the old `rollupComp
 
 ### PolygonRollupManager
 
-- add `rollupIDToRollupDataV2()` in addition to the old v1 function to accomodate the new members of the RollupData struct:
+- add `rollupIDToRollupDataV2()` in addition to the old v1 function to accommodate the new members of the RollupData struct:
   - VerifierType rollupVerifierType: a rename of the old rollupCompatibilityID, `StateTransition` or `Pessimistic`
   - bytes32 lastPessimisticRoot
   - bytes32 programVKey: SP1 program vKey 
