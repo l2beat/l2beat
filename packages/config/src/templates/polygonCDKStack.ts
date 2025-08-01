@@ -420,7 +420,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         BADGES.Stack.CDKErigon,
         BADGES.VM.EVM,
         BADGES.DA.EthereumCalldata,
-        BADGES.Infra.AggLayer,
+        BADGES.Infra.Agglayer,
       ],
       templateVars.additionalBadges ?? [],
     ),

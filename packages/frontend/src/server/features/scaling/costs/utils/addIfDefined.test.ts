@@ -4,7 +4,7 @@ import { addIfDefined } from './addIfDefined'
 type TestCase = {
   a: number | undefined | null
   b: number | undefined | null
-  expected: number | undefined
+  expected: number | null
   description: string
 }
 
@@ -42,26 +42,26 @@ const testCases: TestCase[] = [
   {
     a: undefined,
     b: undefined,
-    expected: undefined,
+    expected: null,
     description: 'should return undefined if both numbers are undefined',
   },
   {
     a: null,
     b: null,
-    expected: undefined,
+    expected: null,
     description: 'should return undefined if both numbers are null',
   },
   {
     a: undefined,
     b: null,
-    expected: undefined,
+    expected: null,
     description:
       'should return undefined if the first is undefined and the second is null',
   },
   {
     a: null,
     b: undefined,
-    expected: undefined,
+    expected: null,
     description:
       'should return undefined if the first is null and the second is undefined',
   },

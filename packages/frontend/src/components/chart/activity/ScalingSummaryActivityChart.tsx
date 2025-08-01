@@ -79,9 +79,12 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
       ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
         return {
           timestamp,
-          rollups: countPerSecond(rollups),
-          validiumsAndOptimiums: countPerSecond(validiumsAndOptimiums),
-          ethereum: countPerSecond(ethereum),
+          rollups: rollups !== null ? countPerSecond(rollups) : null,
+          validiumsAndOptimiums:
+            validiumsAndOptimiums !== null
+              ? countPerSecond(validiumsAndOptimiums)
+              : null,
+          ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
         }
       },
     )
@@ -129,6 +132,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             yAxis: {
               unit: ' UOPS',
             },
+            syncedUntil: data?.syncedUntil,
           })}
         </AreaChart>
       </ChartContainer>
@@ -139,15 +143,16 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 function CustomTooltip({
   active,
   payload,
-  label: timestamp,
+  label,
   syncedUntil,
 }: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!active || !payload || typeof label !== 'number') return null
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
+          {formatTimestamp(label, {
             longMonthName: true,
           })}
         </div>
@@ -155,7 +160,7 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -172,9 +177,9 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
-                    : formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )
@@ -185,7 +190,12 @@ function CustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.value === undefined || entry.type === 'none') return null
+            if (
+              entry.value === undefined ||
+              entry.value === null ||
+              entry.type === 'none'
+            )
+              return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -202,8 +212,8 @@ function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {syncedUntil && syncedUntil < timestamp
-                    ? 'Not synced'
+                  {syncedUntil && syncedUntil < label
+                    ? 'No data'
                     : formatInteger(entry.value * UnixTime.DAY)}
                 </span>
               </div>

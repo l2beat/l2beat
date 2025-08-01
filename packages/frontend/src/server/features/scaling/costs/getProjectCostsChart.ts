@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughtputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
-import { getCostsChart } from './getCostsChart'
+import { type CostsChartDataPoint, getCostsChart } from './getCostsChart'
 import { getCostsForProject } from './getCostsForProject'
 import type { LatestCostsProjectResponse } from './types'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
@@ -14,60 +14,90 @@ export const ProjectCostsChartParams = v.object({
   projectId: v.string(),
 })
 
-type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {
-  posted: number | undefined
+type Stats<T extends number | null> = {
+  gas: StatsValues<T>
+  eth: StatsValues<T>
+  usd: StatsValues<T>
+  posted: number | null
 }
 
-export type ProjectCostsChartResponse = Awaited<
-  ReturnType<typeof getProjectCostsChart>
->
+type StatsValues<T extends number | null> = {
+  overhead: T
+  calldata: T
+  compute: T
+  blobs: number | null
+  total: T
+}
 
-export async function getProjectCostsChart(params: ProjectCostsChartParams) {
-  const [costsChart, costs, throughput, activityRecords] = await Promise.all([
-    getCostsChart({
-      filter: { type: 'projects', projectIds: [params.projectId] },
-      range: params.range,
-    }),
-    getCostsForProject(params.projectId, params.range),
-    getProjectDaThroughputChart({
-      range: { type: params.range },
-      projectId: params.projectId,
-      includeScalingOnly: false,
-    }),
-    getActivityForProjectAndRange(params.projectId, params.range),
-  ])
+export type ProjectCostsChartResponse = {
+  chart: [...CostsChartDataPoint, posted: number | null][]
+  hasBlobs: boolean
+  stats:
+    | {
+        total: Stats<number>
+        perL2Uop: Stats<number | null> | undefined
+      }
+    | undefined
+  syncedUntil: UnixTime
+}
 
-  if (costsChart.length === 0 || !costs) {
+export async function getProjectCostsChart(
+  params: ProjectCostsChartParams,
+): Promise<ProjectCostsChartResponse> {
+  const [costsChart, costs, throughputChart, activityRecords] =
+    await Promise.all([
+      getCostsChart({
+        filter: { type: 'projects', projectIds: [params.projectId] },
+        range: params.range,
+      }),
+      getCostsForProject(params.projectId, params.range),
+      getProjectDaThroughputChart({
+        range: { type: params.range },
+        projectId: params.projectId,
+        includeScalingOnly: false,
+      }),
+      getActivityForProjectAndRange(params.projectId, params.range),
+    ])
+
+  if (costsChart.chart.length === 0 || !costs) {
     return {
       chart: [],
+      hasBlobs: false,
       stats: undefined,
+      syncedUntil: Number.POSITIVE_INFINITY,
     }
   }
 
   const costsUopsCount = getSummedUopsCount(activityRecords, costs.range)
-  const throughputUopsCount = throughput
-    ? getSummedUopsCount(activityRecords, throughput.range)
+  const throughputUopsCount = throughputChart
+    ? getSummedUopsCount(activityRecords, throughputChart.range)
     : undefined
 
-  const resolution = rangeToResolution(params.range)
+  const resolution = rangeToResolution({ type: params.range })
 
-  const timestampedDaData = Object.fromEntries(throughput?.chart ?? [])
-  const chart = costsChart.map((cost) => {
-    const dailyTimestamp = UnixTime.toStartOf(
-      cost[0],
-      resolution === 'daily'
-        ? 'day'
-        : resolution === 'sixHourly'
-          ? 'six hours'
-          : 'hour',
-    )
-    const posted = timestampedDaData[dailyTimestamp]
-    return [...cost, posted] as const
-  })
+  const timestampedDaData = Object.fromEntries(throughputChart?.chart ?? [])
+  const chart: ProjectCostsChartResponse['chart'] = costsChart.chart.map(
+    (cost) => {
+      const dailyTimestamp = UnixTime.toStartOf(
+        cost[0],
+        resolution === 'daily'
+          ? 'day'
+          : resolution === 'sixHourly'
+            ? 'six hours'
+            : 'hour',
+      )
+      const posted =
+        dailyTimestamp <= costsChart.syncedUntil
+          ? (timestampedDaData[dailyTimestamp] ?? null)
+          : null
+      return [...cost, posted]
+    },
+  )
 
-  const summedThroughput = throughput?.chart.reduce((acc, [_, throughput]) => {
-    return acc + (throughput ?? 0)
-  }, 0)
+  const summedThroughput =
+    throughputChart?.chart.reduce((acc, [_, throughput]) => {
+      return acc + (throughput ?? 0)
+    }, 0) ?? null
   const total = withTotal({
     ...costs,
     posted: summedThroughput,
@@ -83,11 +113,15 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
 
   return {
     chart,
+    hasBlobs: costsChart.hasBlobs,
     stats: { total, perL2Uop },
+    syncedUntil: costsChart.syncedUntil,
   }
 }
 
-function withTotal(data: ProjectLatestCosts) {
+function withTotal(
+  data: LatestCostsProjectResponse & { posted: number | null },
+) {
   return {
     ...data,
     gas: {
@@ -119,13 +153,11 @@ function withTotal(data: ProjectLatestCosts) {
 
 function mapToPerL2UopsCost(
   data: ReturnType<typeof withTotal>,
-  uops: {
-    costs: number
-    throughput: number | undefined
-  },
+  uops: { costs: number; throughput: number | undefined },
 ) {
-  const divideIfValid = (value: number | undefined) =>
-    uops.costs && value !== undefined ? value / uops.costs : undefined
+  function divideIfValid(value: number | null): number | null {
+    return uops.costs && value !== null ? value / uops.costs : value
+  }
 
   return {
     overhead: divideIfValid(data.gas.total),
@@ -151,9 +183,9 @@ function mapToPerL2UopsCost(
       total: divideIfValid(data.usd.total),
     },
     posted:
-      data.posted !== undefined && uops.throughput !== undefined
+      data.posted !== null && uops.throughput !== undefined
         ? data.posted / uops.throughput
-        : undefined,
+        : null,
   }
 }
 

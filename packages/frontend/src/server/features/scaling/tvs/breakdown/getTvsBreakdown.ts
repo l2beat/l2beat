@@ -107,7 +107,7 @@ function processAddresses(
 
 function getSyncStatus(valueTimestamp: UnixTime, targetTimestamp: UnixTime) {
   if (valueTimestamp < targetTimestamp) {
-    return `Token data is not synced since ${formatTimestamp(valueTimestamp, {
+    return `No token data since ${formatTimestamp(valueTimestamp, {
       mode: 'datetime',
       longMonthName: true,
     })}.`

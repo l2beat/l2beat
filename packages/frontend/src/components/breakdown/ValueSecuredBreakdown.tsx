@@ -20,7 +20,8 @@ export interface ValueSecuredBreakdownTooltipContentProps
   extends ValueSecuredBreakdownProps {
   associatedTokenSymbols?: string[]
   tvsWarnings?: WarningWithSentiment[]
-  change: number
+  change?: number
+  hideTotal?: boolean
 }
 
 export function ValueSecuredBreakdown(props: ValueSecuredBreakdownProps) {
@@ -47,6 +48,7 @@ export function ValueSecuredBreakdownTooltipContent({
   native,
   change,
   tvsWarnings,
+  hideTotal,
 }: ValueSecuredBreakdownTooltipContentProps) {
   const total = canonical + external + native
   if (total === 0) {
@@ -72,13 +74,17 @@ export function ValueSecuredBreakdownTooltipContent({
   return (
     <div className="space-y-2">
       <div>
-        <div className="flex items-center justify-between gap-1">
-          <span className="text-heading-16">TVS</span>
-          <ValueWithPercentageChange change={change}>
-            {formatCurrency(total, 'usd')}
-          </ValueWithPercentageChange>
-        </div>
-        <HorizontalSeparator className="mt-1.5 mb-3" />
+        {!hideTotal && (
+          <>
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-heading-16">TVS</span>
+              <ValueWithPercentageChange change={change}>
+                {formatCurrency(total, 'usd')}
+              </ValueWithPercentageChange>
+            </div>
+            <HorizontalSeparator className="mt-1.5 mb-3" />
+          </>
+        )}
         <div className="space-y-1">
           {values.map(
             (v, i) =>

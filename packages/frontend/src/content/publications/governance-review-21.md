@@ -260,9 +260,9 @@ H_Rook, the Governance Lead at PolygonLabs, [published a call for feature reques
 You can find more information and [submit your own feature request here](https://forum.polygon.technology/t/call-for-feature-requests-polygon-pos-pilani-upgrade/14235).
 
 
-### **Pre-PIP Discussion: zkPoS Phase 1, Connecting to the AggLayer**
+### **Pre-PIP Discussion: zkPoS Phase 1, Connecting to the Agglayer**
 
-H_Rook, the Governance Lead at PolygonLabs, [published a post](https://forum.polygon.technology/t/pre-pip-discussion-zkpos-phase-1-connecting-to-the-agglayer/14250) that invites the community to discuss a proposal for securely connecting Polygon PoS to the AggLayer using a zero-knowledge (ZK) verifier to validate the network’s consensus mechanism, thereby establishing the network’s finality for settling to the AggLayer. This proof of consensus would be in addition to the pessimistic proof, which ensures the safety of all chains connected to the AggLayer.
+H_Rook, the Governance Lead at PolygonLabs, [published a post](https://forum.polygon.technology/t/pre-pip-discussion-zkpos-phase-1-connecting-to-the-agglayer/14250) that invites the community to discuss a proposal for securely connecting Polygon PoS to the Agglayer using a zero-knowledge (ZK) verifier to validate the network’s consensus mechanism, thereby establishing the network’s finality for settling to the Agglayer. This proof of consensus would be in addition to the pessimistic proof, which ensures the safety of all chains connected to the Agglayer.
 
 
 ### **PIP 39 - Validator Admissions into PoS Network**

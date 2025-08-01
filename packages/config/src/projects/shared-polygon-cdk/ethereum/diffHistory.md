@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x78b250e88782006f4f115dbeee6eb5bc13518215
+
+# Diff at Thu, 31 Jul 2025 13:14:36 GMT:
+
+- author: maciekzygmunt (<maciekzygmunt@interia.pl>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753686755
+- current timestamp: 1753686755
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753686755 (main branch discovery), not current.
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to Agglayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      description:
+-        "The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages."
++        "The shared bridge contract, escrowing user funds sent to Agglayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages."
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      description:
+-        "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
++        "The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the eth:0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      description:
+-        "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability."
++        "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the Agglayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability."
+    }
+```
+
 Generated with discovered.json: 0x7dd12142fb878237e9beab50e614b839ae3686af
 
 # Diff at Mon, 28 Jul 2025 07:13:28 GMT:

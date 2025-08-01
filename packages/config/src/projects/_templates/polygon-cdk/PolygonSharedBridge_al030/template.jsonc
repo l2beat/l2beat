@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PolygonSharedBridge",
-  "description": "The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+  "description": "The shared bridge contract, escrowing user funds sent to Agglayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
   "ignoreMethods": [
     "claimedBitMap",
     "depositCount",

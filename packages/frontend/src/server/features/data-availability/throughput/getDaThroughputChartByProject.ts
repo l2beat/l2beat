@@ -6,16 +6,26 @@ import partition from 'lodash/partition'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+import { isThroughputSynced } from './isThroughputSynced'
+import { getThroughputExpectedTimestamp } from './utils/getThroughputExpectedTimestamp'
+import {
+  DaThroughputTimeRange,
+  getThroughputRange,
+  rangeToResolution,
+} from './utils/range'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
-export type DaThroughputChartDataByChart = [
+type DaThroughputChartDataPoint = [
   timestamp: number,
-  values: Record<string, number>,
-][]
+  values: Record<string, number> | null,
+]
+
+export type DaThroughputChartDataByChart = {
+  chart: DaThroughputChartDataPoint[]
+  syncedUntil: number
+}
 
 export const DaThroughputChartByProjectParams = v.object({
   range: DaThroughputTimeRange,
@@ -39,11 +49,9 @@ const getDaThroughputChartByProjectData = async (
 ): Promise<DaThroughputChartDataByChart> => {
   const db = getDb()
   const resolution = rangeToResolution({ type: params.range })
-  const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
-    now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
-  })
+  const range = getThroughputRange({ type: params.range })
   const [throughput, allProjects, daLayer] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], [from, to]),
+    db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], range),
     ps.getProjects({}),
     ps.getProject({
       id: params.daLayer as ProjectId,
@@ -51,8 +59,14 @@ const getDaThroughputChartByProjectData = async (
     }),
   ])
   if (throughput.length === 0) {
-    return []
+    return {
+      chart: [],
+      syncedUntil: UnixTime.now(),
+    }
   }
+
+  const syncedUntil = throughput.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
 
   const sovereignProjects = new Map(
     daLayer?.daLayer.sovereignProjectsTrackingConfig?.map((p) => [
@@ -61,25 +75,31 @@ const getDaThroughputChartByProjectData = async (
     ]) ?? [],
   )
 
-  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
     throughput,
     allProjects,
     resolution,
     sovereignProjects,
   )
 
-  const chartAdjustedTo =
-    resolution === 'hourly'
-      ? to - UnixTime.HOUR
-      : resolution === 'sixHourly'
-        ? to - UnixTime.HOUR * 6
-        : to - UnixTime.DAY
+  const expectedTo = getThroughputExpectedTimestamp(resolution)
 
-  const timestamps = generateTimestamps(
-    [minTimestamp, chartAdjustedTo],
-    resolution,
-  )
-  return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
+  const adjustedTo = isThroughputSynced(syncedUntil, false)
+    ? maxTimestamp
+    : expectedTo
+
+  const timestamps = generateTimestamps([minTimestamp, adjustedTo], resolution)
+
+  const chart: DaThroughputChartDataPoint[] = []
+  for (const timestamp of timestamps) {
+    const values = grouped[timestamp] ?? null
+    chart.push([timestamp, values])
+  }
+
+  return {
+    chart,
+    syncedUntil,
+  }
 }
 
 function groupByTimestampAndProjectId(
@@ -89,9 +109,21 @@ function groupByTimestampAndProjectId(
   sovereignProjects: Map<ProjectId, string>,
 ) {
   let minTimestamp = Number.POSITIVE_INFINITY
+  let maxTimestamp = Number.NEGATIVE_INFINITY
   const result: Record<number, Record<string, number>> = {}
+
+  const offset = UnixTime.toStartOf(
+    UnixTime.now(),
+    resolution === 'daily'
+      ? 'day'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'hour',
+  )
+  const fullySyncedRecords = records.filter((r) => r.timestamp < offset)
+
   const [daLayerRecords, projectRecords] = partition(
-    records,
+    fullySyncedRecords,
     (r) => r.daLayer === r.projectId,
   )
 
@@ -114,6 +146,7 @@ function groupByTimestampAndProjectId(
       [projectName]: Number(value),
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   // Add the difference between the total size and the sum of the other projects as 'Unknown'
@@ -129,11 +162,16 @@ function groupByTimestampAndProjectId(
       0,
     )
 
-    result[timestamp] = {
-      ...result[timestamp],
-      ['Unknown']: Number(value) - restSummed,
+    if (result[timestamp]) {
+      result[timestamp]['Unknown'] = Number(value) - restSummed
+    } else {
+      result[timestamp] = {
+        ['Unknown']: Number(value) - restSummed,
+      }
     }
+
     minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   return {
@@ -148,6 +186,7 @@ function groupByTimestampAndProjectId(
       ]),
     ),
     minTimestamp: UnixTime(minTimestamp),
+    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
@@ -159,18 +198,21 @@ function getMockDaThroughputChartByProjectData({
   const from = to - days * UnixTime.DAY
 
   const timestamps = generateTimestamps([from, to], 'daily')
-  return timestamps.map((timestamp) => {
-    const values = {
-      base: Math.random() * 900_000_000 + 90_000_000,
-      optimism: Math.random() * 900_000_000 + 90_000_000,
-      arbitrum: Math.random() * 900_000_000 + 90_000_000,
-      polygon: Math.random() * 900_000_000 + 90_000_000,
-      zkSync: Math.random() * 900_000_000 + 90_000_000,
-      zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
-      gnosis: Math.random() * 900_000_000 + 90_000_000,
-      linea: Math.random() * 900_000_000 + 90_000_000,
-    }
+  return {
+    chart: timestamps.map((timestamp) => {
+      const values = {
+        base: Math.random() * 900_000_000 + 90_000_000,
+        optimism: Math.random() * 900_000_000 + 90_000_000,
+        arbitrum: Math.random() * 900_000_000 + 90_000_000,
+        polygon: Math.random() * 900_000_000 + 90_000_000,
+        zkSync: Math.random() * 900_000_000 + 90_000_000,
+        zkSyncEra: Math.random() * 900_000_000 + 90_000_000,
+        gnosis: Math.random() * 900_000_000 + 90_000_000,
+        linea: Math.random() * 900_000_000 + 90_000_000,
+      }
 
-    return [timestamp, values]
-  })
+      return [timestamp, values]
+    }),
+    syncedUntil: to,
+  }
 }

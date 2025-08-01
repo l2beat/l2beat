@@ -77,8 +77,10 @@ export function ScalingActivityChart({
           const ethereumMetric = metric === 'tps' ? ethereumTx : ethereumUops
           return {
             timestamp,
-            projects: projectMetric / UnixTime.DAY,
-            ethereum: ethereumMetric / UnixTime.DAY,
+            projects:
+              projectMetric !== null ? projectMetric / UnixTime.DAY : null,
+            ethereum:
+              ethereumMetric !== null ? ethereumMetric / UnixTime.DAY : null,
           }
         },
       ),
@@ -88,7 +90,12 @@ export function ScalingActivityChart({
   const ratioData = useMemo(() => {
     return data?.data.map(([timestamp, projectsTx, _, projectsUops]) => ({
       timestamp,
-      ratio: projectsTx === 0 ? 1 : projectsUops / projectsTx,
+      ratio:
+        projectsTx !== null && projectsUops !== null
+          ? projectsTx === 0
+            ? 1
+            : projectsUops / projectsTx
+          : null,
     }))
   }, [data?.data])
 
@@ -115,6 +122,7 @@ export function ScalingActivityChart({
       <ActivityRatioChart
         data={ratioData}
         isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
         className="mb-2"
       />
       <Controls

@@ -138,7 +138,7 @@ export async function getEcosystemEntry(
   )
 
   const [upcomingProjects, liveProjects] = partition(
-    ecosystemProjects.filter((p) => !p.archivedAt),
+    ecosystemProjects,
     (p) => p.isUpcoming,
   )
 

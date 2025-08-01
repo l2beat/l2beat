@@ -1,9 +1,9 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
-  TokenBreakdown,
-  TokenBreakdownTooltipContent,
-} from '~/components/breakdown/TokenBreakdown'
+  ValueSecuredBreakdown,
+  ValueSecuredBreakdownTooltipContent,
+} from '~/components/breakdown/ValueSecuredBreakdown'
 import {
   Tooltip,
   TooltipContent,
@@ -19,10 +19,10 @@ export interface TotalCellProps {
   breakdown:
     | {
         total: number
-        ether: number
-        stablecoin: number
+        canonical: number
+        external: number
+        native: number
         associated: number
-        btc: number
       }
     | undefined
   associatedTokenSymbols: string[]
@@ -31,7 +31,7 @@ export interface TotalCellProps {
   tvsWarnings?: WarningWithSentiment[]
 }
 
-export function TotalCell(props: TotalCellProps) {
+export function TotalCellWithTvsBreakdown(props: TotalCellProps) {
   const tvsWarnings = props.tvsWarnings ?? []
   const anyBadWarnings = tvsWarnings.some((w) => w.sentiment === 'bad')
   const anyWarningWarnings = tvsWarnings.some((w) => w.sentiment === 'warning')
@@ -88,26 +88,22 @@ export function TotalCell(props: TotalCellProps) {
                 {formatDollarValueNumber(totalTvs)}
               </ValueWithPercentageChange>
             </div>
-            <TokenBreakdown
-              total={props.breakdown.total}
-              associated={props.breakdown.associated}
-              ether={props.breakdown.ether}
-              stablecoin={props.breakdown.stablecoin}
-              btc={props.breakdown.btc}
+            <ValueSecuredBreakdown
+              canonical={props.breakdown.canonical}
+              external={props.breakdown.external}
+              native={props.breakdown.native}
               className="h-[3px] w-[180px]"
             />
           </div>
         </TableLink>
       </TooltipTrigger>
       <TooltipContent>
-        <TokenBreakdownTooltipContent
-          total={props.breakdown.total}
-          associated={props.breakdown.associated}
-          ether={props.breakdown.ether}
-          stablecoin={props.breakdown.stablecoin}
-          btc={props.breakdown.btc}
+        <ValueSecuredBreakdownTooltipContent
+          canonical={props.breakdown.canonical}
+          external={props.breakdown.external}
+          native={props.breakdown.native}
           tvsWarnings={tvsWarnings}
-          associatedTokenSymbols={props.associatedTokenSymbols}
+          hideTotal
         />
       </TooltipContent>
     </Tooltip>

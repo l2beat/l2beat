@@ -10,6 +10,7 @@ import {
   ChartLegendContent,
   type ChartMeta,
   ChartTooltip,
+  ChartTooltipWrapper,
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
@@ -22,7 +23,6 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { useIsClient } from '~/hooks/useIsClient'
@@ -89,7 +89,7 @@ export function ProjectTokenChart({
   } satisfies ChartMeta
 
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, amount, usdValue]) => ({
+    return data?.chart.map(([timestamp, amount, usdValue]) => ({
       timestamp,
       value: unit === 'usd' ? usdValue : amount,
     }))
@@ -138,8 +138,12 @@ export function ProjectTokenChart({
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
               tickCount: 4,
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<CustomTooltip unit={properUnit} />} />
+          <ChartTooltip
+            filterNull={false}
+            content={<CustomTooltip unit={properUnit} />}
+          />
         </AreaChart>
       </ChartContainer>
       <div
@@ -175,16 +179,16 @@ function CustomTooltip({
 }: TooltipProps<number, string> & { unit: string }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
+
   return (
-    <div className={tooltipContentVariants()}>
+    <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col gap-1">
         <div className="mb-1 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, { longMonthName: true })}
+          {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
-              return null
+            if (entry.name === undefined) return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -203,14 +207,16 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {formatCurrency(entry.value, unit)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatCurrency(entry.value, unit)
+                    : 'No data'}
                 </span>
               </div>
             )
           })}
         </div>
       </div>
-    </div>
+    </ChartTooltipWrapper>
   )
 }
 

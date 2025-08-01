@@ -191,7 +191,7 @@ The latest proposal that discusses deploying the stables on the PoS bridge into 
 
 ### **Pre-PIP: Polygon PoS Bridge Liquidity Program**
 
-AllezLabs [published a proposal](https://forum.polygon.technology/t/pre-pip-polygon-pos-bridge-liquidity-program/20284) to initiate discussion on gradually deploying the DAI, USDC & USDT reserves of the Polygon PoS Portal Bridge into curated liquidity pools to kickstart a new Ecosystem Incentives program to grow the DeFi ecosystems of Polygon PoS and the AggLayer.
+AllezLabs [published a proposal](https://forum.polygon.technology/t/pre-pip-polygon-pos-bridge-liquidity-program/20284) to initiate discussion on gradually deploying the DAI, USDC & USDT reserves of the Polygon PoS Portal Bridge into curated liquidity pools to kickstart a new Ecosystem Incentives program to grow the DeFi ecosystems of Polygon PoS and the Agglayer.
 
 The PoS bridge currently holds ~$1.3B of stablecoins, which makes it one of the largest, holders of stablecoins onchain. At the current benchmark lending rate for the 3 major stables this is an opportunity cost of around ~$70M annually. However, it’s important to note that the stables in the bridge belong to users and not to the DAO.
 
