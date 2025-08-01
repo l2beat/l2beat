@@ -7995,32 +7995,6 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sUSDS-2",
-      "priceId": "susds",
-      "symbol": "sUSDS",
-      "name": "Savings USDS",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-        "chain": "ethereum",
-        "escrowAddress": "0xA10c7CE4b876998858b1a9E12b10092229539400",
-        "decimals": 18,
-        "sinceTimestamp": 1734048000
-      },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Canonical (external escrow)"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
       "id": "arbitrum-sUSDz",
       "priceId": "anzen-staked-usdz",
       "symbol": "sUSDz",
