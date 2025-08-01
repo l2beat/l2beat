@@ -61,7 +61,7 @@ const getDaThroughputChartByProjectData = async (
   if (throughput.length === 0) {
     return {
       chart: [],
-      syncedUntil: 0,
+      syncedUntil: UnixTime.now(),
     }
   }
 

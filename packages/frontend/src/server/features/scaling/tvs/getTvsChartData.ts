@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -75,7 +75,7 @@ export async function getTvsChart({
     withoutArchivedAndUpcoming: forSummary,
   })
   if (tvsProjects.length === 0) {
-    return { chart: [], syncedUntil: 0 }
+    return { chart: [], syncedUntil: UnixTime.now() }
   }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),

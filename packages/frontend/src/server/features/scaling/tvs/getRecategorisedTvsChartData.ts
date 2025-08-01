@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
@@ -60,7 +60,7 @@ export async function getRecategorisedTvsChart({
   if (tvsProjects.length === 0) {
     return {
       chart: [],
-      syncedUntil: 0,
+      syncedUntil: UnixTime.now(),
     }
   }
 
@@ -156,6 +156,6 @@ function getMockTvsChartData({
     chart: timestamps.map((timestamp) => {
       return [timestamp, 3000, 2000, 1000]
     }),
-    syncedUntil: 0,
+    syncedUntil: UnixTime.now(),
   }
 }
