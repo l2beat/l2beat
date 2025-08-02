@@ -31,7 +31,7 @@ export const witness: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1720180654), // 2024-07-05T11:57:34Z
   archivedAt: UnixTime(1738022400), // 2025-01-28T00:00:00.000Z,
   discovery,
-  additionalBadges: [BADGES.DA.DAC],
+  additionalBadges: [BADGES.DA.DAC, BADGES.RaaS.Gateway],
   additionalPurposes: ['IoT', 'Oracles'],
   daProvider: {
     layer: DA_LAYERS.DAC,
@@ -113,8 +113,7 @@ export const witness: ScalingProject = polygonCDKStack({
       title: 'Witness Chain Mainnet Launch',
       url: 'https://x.com/witnesschain/status/1808153753897652256',
       date: '2024-07-02',
-      description:
-        'L2 Diligence proofs are now posted to Witness Chain Mainnet by Eigenlayer operators.',
+      description: 'WitnessChain is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],

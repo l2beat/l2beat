@@ -141,5 +141,13 @@ export const lumia: ScalingProject = polygonCDKStack({
       membersCount: membersCountDAC,
     },
   }),
-  milestones: [],
+  milestones: [
+    {
+      title: 'Lumia Mainnet Launch',
+      url: 'https://x.com/BuildOnLumia/status/1895133948096676276',
+      date: '2025-02-27',
+      description: 'Lumia is live on mainnet, integrated with Agglayer.',
+      type: 'general',
+    },
+  ],
 })
