@@ -1,5 +1,5 @@
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
-import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughtputChart'
+import type { ScalingProjectDaThroughputChart } from '~/server/features/data-availability/throughput/getScalingProjectDaThroughputChart'
 import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
 import { cn } from '~/utils/cn'
 import { formatBytes } from '~/utils/number-format/formatBytes'

@@ -7,7 +7,7 @@ import { getDaThroughputTable } from './getDaThroughputTable'
 import {
   getProjectDaThroughputChart,
   ProjectDaThroughputChartParams,
-} from './getProjectDaThroughtputChart'
+} from './getProjectDaThroughputChart'
 
 export type ProjectDaThroughputChartData = {
   chart: ProjectDaThroughputChartPoint[]
