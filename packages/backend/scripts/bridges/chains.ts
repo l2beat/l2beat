@@ -81,8 +81,8 @@ export const CHAINS: Chain[] = [
     name: 'scroll',
     shortName: 'scr',
     rpcCallsPerMinute: 120,
-    getTxUrl: (hash: string) => `hhttps://scrollscan.com/tx/${hash}`,
-    getAddressUrl: (hash: string) => `hhttps://scrollscan.com/address/${hash}`,
+    getTxUrl: (hash: string) => `https://scrollscan.com/tx/${hash}`,
+    getAddressUrl: (hash: string) => `https://scrollscan.com/address/${hash}`,
     envioUrl: 'https://scroll.hypersync.xyz/query', //🥉
     envioCallsPerMinute: 120,
     envioBatchSize: 2000,
