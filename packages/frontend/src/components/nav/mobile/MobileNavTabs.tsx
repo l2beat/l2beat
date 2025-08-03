@@ -1,4 +1,4 @@
-Чimport { usePathname } from '~/hooks/usePathname'
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../../core/OverflowWrapper'
 import type { NavGroup } from '../types'
@@ -8,6 +8,7 @@ import type { NavGroup } from '../types'
  */
 export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()
+  
   const currentGroup = groups
     .filter((g) => g.type === 'multiple')
     .find(
