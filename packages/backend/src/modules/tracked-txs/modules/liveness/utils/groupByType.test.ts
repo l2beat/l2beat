@@ -39,7 +39,7 @@ describe(groupByType.name, () => {
     ])
   })
 
-  it('should throw on uknown type', () => {
+  it('should throw on unknown type', () => {
     const records = [
       {
         timestamp: NOW - 1 * UnixTime.HOUR,
