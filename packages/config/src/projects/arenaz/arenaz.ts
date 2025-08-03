@@ -21,7 +21,7 @@ export const arenaz = opStackL2({
     links: {
       websites: ['https://arena-z.gg/'],
       bridges: [
-        'https://bridge.arena-z.gg/bridge/arena-z',
+        'https://bridge.arena-z.gg/',
         'https://leagueofkingdoms.com/',
       ],
       explorers: ['https://explorer.arena-z.gg/'],
