@@ -2160,7 +2160,7 @@
         ]
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false
     },
     {
