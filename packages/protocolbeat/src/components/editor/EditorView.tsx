@@ -18,9 +18,7 @@ type Props = {
 
 export function EditorView(props: Props) {
   const [dirtyFiles, setDirtyFiles] = useState<Record<string, boolean>>({})
-  const [activeFileIndex, setActiveFileIndex] = useState(
-    props.initialFileIndex ?? 0,
-  )
+  const [activeFileIndex, setActiveFileIndex] = useState(0)
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
   const { resetRange } = useCodeStore()
@@ -52,6 +50,12 @@ export function EditorView(props: Props) {
       }
     }
   }, [editor, props.files, activeFileIndex])
+
+  useEffect(() => {
+    if (props.files.length > 0) {
+      setActiveFileIndex(props.initialFileIndex ?? 0)
+    }
+  }, [props.files])
 
   useEffect(() => {
     if (
