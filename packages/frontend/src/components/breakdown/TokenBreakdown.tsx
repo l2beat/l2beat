@@ -71,7 +71,7 @@ export function TokenBreakdownTooltipContent({
       variant: 'stable' as const,
     },
     {
-      title: 'BTC & deriviatives',
+      title: 'BTC & derivatives',
       value: btc,
       variant: 'btc' as const,
     },

@@ -162,7 +162,7 @@ export function StageSection({
             stage.principle && featureFlags.stageOneRequirementsChanged()
               ? [stage.principle]
               : stage.requirements
-          const satisifedForLabel = requirementsForLabel.filter(
+          const satisfiedForLabel = requirementsForLabel.filter(
             (r) => r.satisfied === true,
           )
           const missingForLabel = requirementsForLabel.filter(
@@ -192,7 +192,7 @@ export function StageSection({
                       <div className="flex items-center gap-2 font-bold">
                         <SatisfiedIcon className="size-4 shrink-0 fill-positive" />
                         <span>
-                          {reqTextSatisfied(satisifedForLabel.length)}
+                          {reqTextSatisfied(satisfiedForLabel.length)}
                         </span>
                       </div>
                       {underReviewForLabel.length > 0 && (

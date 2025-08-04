@@ -26,7 +26,7 @@ export function FaqSideNav(props: Props) {
   return (
     <div className="sticky top-6 mt-5 hidden h-[calc(100vh-230px)] lg:block">
       <ul
-        className="relative flex h-full w-72 shrink-0 flex-col gap-4 overflow-y-auto pr-4"
+        className="relative flex h-full w-72 shrink-0 flex-col gap-4 overflow-y-auto pr-4 pb-2"
         ref={overflowContainer}
       >
         {props.entries.map((entry) => {
@@ -46,6 +46,7 @@ export function FaqSideNav(props: Props) {
           )
         })}
       </ul>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 mr-2 h-8 bg-linear-to-t from-background via-transparent" />
     </div>
   )
 }
