@@ -6,6 +6,7 @@ export const rayls: ScalingProject = upcomingL2({
   id: 'rayls',
   capability: 'universal',
   addedAt: UnixTime(1753947052),
+  hasTestnet: true,
   display: {
     name: 'Rayls',
     slug: 'rayls',
