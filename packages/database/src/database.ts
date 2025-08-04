@@ -31,6 +31,7 @@ import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
+import { SyncMetadataRepository } from './other/sync-metadata/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
@@ -76,6 +77,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     liveness: new LivenessRepository(db),
     realTimeLiveness: new RealTimeLivenessRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
+    syncMetadata: new SyncMetadataRepository(db),
     // #endregion
     //
     // #region Tvs
