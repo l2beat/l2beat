@@ -26,10 +26,7 @@ export class SyncMetadataRepository extends BaseRepository {
   }
 
   async getAll(): Promise<SyncMetadataRecord[]> {
-    const rows = await this.db
-      .selectFrom('SyncMetadata')
-      .selectAll()
-      .execute()
+    const rows = await this.db.selectFrom('SyncMetadata').selectAll().execute()
     return rows.map(toRecord)
   }
 

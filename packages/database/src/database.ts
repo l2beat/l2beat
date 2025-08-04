@@ -22,6 +22,7 @@ import { LivenessRepository } from './other/liveness/repository'
 import { NotificationsRepository } from './other/notifications/repository'
 import { RealTimeAnomaliesRepository } from './other/real-time-anomalies/repository'
 import { RealTimeLivenessRepository } from './other/real-time-liveness/repository'
+import { SyncMetadataRepository } from './other/sync-metadata/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
 import { TvsAmountRepository } from './tvs/amount/repository'
 import { TvsBlockTimestampRepository } from './tvs/block-timestamp/repository'
@@ -31,7 +32,6 @@ import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 import { getDatabaseStats } from './utils/getDatabaseStats'
-import { SyncMetadataRepository } from './other/sync-metadata/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
