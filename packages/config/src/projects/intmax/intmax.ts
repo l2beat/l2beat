@@ -1,5 +1,6 @@
-import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
+  CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
@@ -34,7 +35,6 @@ export const intmax: ScalingProject = {
         'https://eprint.iacr.org/2023/1082.pdf',
         'https://medium.com/intmax/the-deep-dive-into-statelessness-intmax2-algorithm-was-published-be7a306048ff',
         'https://intmax-wallet.gitbook.io/intmax-developers-hub',
-
       ],
       repositories: ['https://github.com/InternetMaximalism'],
       socialMedia: ['https://twitter.com/intmaxIO'],
@@ -44,7 +44,9 @@ export const intmax: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress('eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
+        address: ChainSpecificAddress(
+          'eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3',
+        ),
         tokens: '*',
       }),
     ],
@@ -183,4 +185,13 @@ export const intmax: ScalingProject = {
     },
   ),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  contracts: {
+    addresses: {
+      ...discovery.getDiscoveredContracts(),
+    },
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+  },
+  permissions: {
+    ...discovery.getDiscoveredPermissions(),
+  },
 }
