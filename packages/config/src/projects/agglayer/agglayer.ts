@@ -14,7 +14,10 @@ export const agglayer: BaseProject = {
     links: {
       websites: ['https://www.agglayer.dev/'],
       bridges: ['https://portal.polygon.technology/bridge'],
-      documentation: ['https://docs.agglayer.dev', 'https://www.agglayer.dev/learn'],
+      documentation: [
+        'https://docs.agglayer.dev',
+        'https://www.agglayer.dev/learn',
+      ],
       explorers: ['https://visualizer.agglayer.dev/'],
       socialMedia: ['https://x.com/agglayer'],
     },
