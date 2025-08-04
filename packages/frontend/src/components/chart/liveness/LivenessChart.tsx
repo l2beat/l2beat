@@ -2,6 +2,7 @@ import type { Milestone } from '@l2beat/config'
 import {
   assertUnreachable,
   type TrackedTxsConfigSubtype,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart, ReferenceArea } from 'recharts'
@@ -20,7 +21,8 @@ import {
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import type { LivenessChartResolution } from '~/server/features/scaling/liveness/utils/chartRange'
+import { formatRange } from '~/utils/dates'
 
 interface LivenessChartDataPoint {
   timestamp: number
@@ -37,6 +39,7 @@ interface Props {
   tickCount?: number
   lastValidTimestamp: number | undefined
   anyAnomalyLive: boolean
+  resolution: LivenessChartResolution
 }
 
 export function LivenessChart({
@@ -48,6 +51,7 @@ export function LivenessChart({
   tickCount,
   lastValidTimestamp,
   anyAnomalyLive,
+  resolution,
 }: Props) {
   const chartMeta = {
     range: {
@@ -116,6 +120,7 @@ export function LivenessChart({
             <LivenessCustomTooltip
               subtype={subtype}
               anyAnomalyLive={anyAnomalyLive}
+              resolution={resolution}
             />
           }
         />
@@ -135,9 +140,11 @@ export function LivenessCustomTooltip({
   label: timestamp,
   subtype,
   anyAnomalyLive,
+  resolution,
 }: TooltipProps<number, string> & {
   subtype: TrackedTxsConfigSubtype
   anyAnomalyLive: boolean
+  resolution: LivenessChartResolution
 }) {
   if (!active || !payload || typeof timestamp !== 'number') return null
 
@@ -168,10 +175,15 @@ export function LivenessCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-fit flex-col">
         <div className="mb-1 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-            mode: 'datetime',
-          })}
+          {formatRange(
+            timestamp,
+            timestamp +
+              (resolution === 'hourly'
+                ? UnixTime.HOUR
+                : resolution === 'sixHourly'
+                  ? UnixTime.SIX_HOURS
+                  : UnixTime.DAY),
+          )}
         </div>
         <HorizontalSeparator className="mt-1.5" />
         {content}
