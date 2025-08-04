@@ -102,7 +102,7 @@
         {
           "permission": "interact",
           "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "description": "change external validation logic refered to by this contract (e.g. Hashi).",
+          "description": "change external validation logic referred to by this contract (e.g. Hashi).",
           "role": ".owner"
         },
         {
