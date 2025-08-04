@@ -93,7 +93,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "change external validation logic refered to by this contract (e.g. Hashi)."
+              "description": "change external validation logic referred to by this contract (e.g. Hashi)."
             }
           ]
         }
