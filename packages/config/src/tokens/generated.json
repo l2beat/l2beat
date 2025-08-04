@@ -10388,7 +10388,14 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/26045/large/euro.png?1696525125",
       "chainId": 8453,
       "source": "external",
-      "supply": "totalSupply"
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "name": "FAI",

@@ -3973,7 +3973,14 @@
       "address": "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
       "category": "stablecoin",
       "source": "external",
-      "supply": "totalSupply"
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "symbol": "cbBTC",
