@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -13,7 +13,6 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { scroll } from '../scroll/scroll'
 
 const discovery = new ProjectDiscovery('intmax')
-const scrollDiscovery = new ProjectDiscovery('intmax', 'scroll')
 
 export const intmax: ScalingProject = {
   type: 'layer3',
@@ -42,7 +41,7 @@ export const intmax: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
+        address: ChainSpecificAddress('scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
         tokens: '*',
       }),
     ],
@@ -180,16 +179,5 @@ export const intmax: ScalingProject = {
       rollupNodeLink: 'https://github.com/InternetMaximalism/intmax2-node',
     },
   ),
-  discoveryInfo: getDiscoveryInfo([discovery, scrollDiscovery]),
-  contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-      [scrollDiscovery.chain]: scrollDiscovery.getDiscoveredContracts(),
-    },
-    risks: [],
-  },
-  permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-    [scrollDiscovery.chain]: scrollDiscovery.getDiscoveredPermissions(),
-  },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }
