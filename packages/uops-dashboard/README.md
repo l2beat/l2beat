@@ -14,7 +14,7 @@ pnpm dev
 
 ### How to test newly added chain?
 
-1. Run `pnpmn dev` & open [local instance](http://localhost:3000)
+1. Run `pnpm dev` & open [local instance](http://localhost:3000)
 2. Select this new chain & explore latest block
 3. Check links: block, tx, contract
 4. Go to [stats](http://localhost:3000/stats)

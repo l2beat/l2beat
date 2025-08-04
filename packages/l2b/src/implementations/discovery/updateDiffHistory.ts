@@ -235,7 +235,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       : [{ project: projectName, chain }]
 
   for (const dependency of dependencies) {
-    // TODO(radomski): Remove the duplication after the PR containg this code is merged
+    // TODO(radomski): Remove the duplication after the PR containing this code is merged
     let timestamp =
       discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
         dependency.chain

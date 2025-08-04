@@ -33,7 +33,7 @@
     "baseTokenGasPriceMultiplierDenominator",
     "baseTokenGasPriceMultiplierNominator"
   ],
-  "ignoreRelatives": ["getBaseToken"],
+  "ignoreRelatives": ["getBaseToken", "getSettlementLayer"],
   "fields": {
     "getAdmin": {
       "severity": "HIGH",

@@ -32,7 +32,7 @@ export interface ProjectSevenDayTvsBreakdown {
   changeExcludingAssociated: BreakdownSplit
 }
 
-export interface BreakdownSplit {
+interface BreakdownSplit {
   total: number
   canonical: number
   external: number

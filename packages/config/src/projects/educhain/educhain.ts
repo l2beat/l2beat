@@ -1,15 +1,16 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('educhain', 'arbitrum')
+const discovery = new ProjectDiscovery('educhain')
 
 export const educhain: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1737072000), // 2025-01-17T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Gelato],
   additionalPurposes: ['Social'],
@@ -69,7 +70,6 @@ export const educhain: ScalingProject = orbitStackL3({
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
-      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
     }),
   ],
@@ -85,5 +85,5 @@ export const educhain: ScalingProject = orbitStackL3({
       type: 'general',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

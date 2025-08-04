@@ -23,7 +23,6 @@ import {
 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('arbitrum')
-const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
 
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 
@@ -36,7 +35,7 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
 )
-const l2TimelockDelay = l2Discovery.getContractValue<number>(
+const l2TimelockDelay = discovery.getContractValue<number>(
   'L2Timelock',
   'getMinDelay',
 ) // 3 days
@@ -63,18 +62,18 @@ const upgradeExecutorUpgradeability = {
 // }
 
 const l2CoreQuorumPercent =
-  (l2Discovery.getContractValue<number>('CoreGovernor', 'quorumNumerator') /
-    l2Discovery.getContractValue<number>('CoreGovernor', 'quorumDenominator')) *
+  (discovery.getContractValue<number>('CoreGovernor', 'quorumNumerator') /
+    discovery.getContractValue<number>('CoreGovernor', 'quorumDenominator')) *
   100
 const l2TreasuryQuorumPercent =
-  (l2Discovery.getContractValue<number>('TreasuryGovernor', 'quorumNumerator') /
-    l2Discovery.getContractValue<number>(
+  (discovery.getContractValue<number>('TreasuryGovernor', 'quorumNumerator') /
+    discovery.getContractValue<number>(
       'TreasuryGovernor',
       'quorumDenominator',
     )) *
   100
 
-const treasuryTimelockDelay = l2Discovery.getContractValue<number>(
+const treasuryTimelockDelay = discovery.getContractValue<number>(
   'TreasuryTimelock',
   'getMinDelay',
 )
@@ -192,7 +191,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
     treasuryTimelockDelay,
     l2TreasuryQuorumPercent,
   ),
-  additionalDiscoveries: { ['arbitrum']: l2Discovery },
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_EXCEPTION(
       formatSeconds(totalDelay),
@@ -206,7 +204,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         'eth:0xcEe284F754E854890e311e3280b767F80797180d',
       ),
       tokens: '*',
-      ...ESCROW.CANONICAL_EXTERNAL,
       excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
       premintedTokens: ['SQD'],
       description:

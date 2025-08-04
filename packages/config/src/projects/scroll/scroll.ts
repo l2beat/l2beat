@@ -17,7 +17,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
-  STATE_ZKP_SN,
+  STATE_ZKP_ST_SN_WRAP,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -28,7 +28,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('scroll')
-const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
 
 const enforcedModeDelayParameters = discovery.getContractValue<{
   maxDelayEnterEnforcedMode: number
@@ -175,7 +174,6 @@ export const scroll: ScalingProject = {
           'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
         ), // custom gateway
         tokens: '*',
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -183,7 +181,6 @@ export const scroll: ScalingProject = {
           'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
         ),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -191,7 +188,6 @@ export const scroll: ScalingProject = {
           'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
         ),
         tokens: ['DAI'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -371,7 +367,7 @@ export const scroll: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...STATE_ZKP_SN,
+      ...STATE_ZKP_ST_SN_WRAP,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -618,14 +614,12 @@ export const scroll: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-      [l2Discovery.chain]: l2Discovery.getDiscoveredContracts(),
+      ...discovery.getDiscoveredContracts(),
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-    [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
+    ...discovery.getDiscoveredPermissions(),
   },
   upgradesAndGovernance:
     'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposals through the `AgoraGovernor` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.',
@@ -700,5 +694,5 @@ export const scroll: ScalingProject = {
       type: 'general',
     },
   ],
-  discoveryInfo: getDiscoveryInfo([discovery, l2Discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

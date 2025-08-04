@@ -1,4 +1,183 @@
-Generated with discovered.json: 0xbfa52332615045fbe61859d92d75c5d06b676c6e
+Generated with discovered.json: 0x3e3e4e25083eca2428c5d1537b85f36fd8358f0b
+
+# Diff at Sat, 02 Aug 2025 07:32:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3d59e2b466fd3c111ff4d5621a7f80de65b0b3d5 block: 1754053524
+- current timestamp: 1754119529
+
+## Description
+
+Emergency upgrade to [protocol version v28.1](https://app.blocksec.com/explorer/tx/eth/0x3c27a371dbd4f6b0d97a87f950065eb48db3c51ae4e962d1b6b4d4e32d2fbdb1), which only affects the verifiers and is only activated for zksync era and gateway so far.
+
+diff fflonk: https://disco.l2beat.com/diff/eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b/eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911
+diff plonk: https://disco.l2beat.com/diff/eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1/eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract Gateway (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.$pastUpgrades.4:
++        ["2025-08-01T21:35:23.000Z","0xf2ec87ad88d9cf5a66fbd2ba7a5c1c1df026f8641e705f9bed91c52107ad9630",["eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC","eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22","eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec","eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"]]
+      values.$upgradeCount:
+-        4
++        5
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        120259084288
++        120259084289
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.getVerifier:
+-        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract ChainAdminOwnable (0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.0:
++        {"_protocolVersion":120259084289,"_upgradeTimestamp":0}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0x1AC4F629Fdc77A7700B68d03bF8D1A53f2210911 or eth:0x2db2ffdecb7446aaab01FAc3f4D55863db3C5bd6 depending on the supplied proof type.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@1754053524 => .flat}/L1VerifierFflonk.sol     | 4 ++--
+ .../ethereum/{.flat@1754053524 => .flat}/L1VerifierPlonk.sol      | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0xf25e1df4d338661f17a5c23bacc5c5186fccd7ae
+
+# Diff at Fri, 01 Aug 2025 13:11:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1753972641
+- current timestamp: 1754053524
+
+## Description
+
+config: give the gateway diamond a more distinct description.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753972641 (main branch discovery), not current.
+
+```diff
+    contract Gateway (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      description:
+-        "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
++        "The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future."
+    }
+```
+
+Generated with discovered.json: 0x857fcd32ab3681b55a1725a9174a9ace0befcfe9
+
+# Diff at Thu, 31 Jul 2025 15:03:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2ac2488a487f63fe85e66406479661b19d8a457e block: 1751365391
+- current timestamp: 1753972641
+
+## Description
+
+config: demote the gateway validator permission to not show as a role on the zksync2 proj page.
+
+## Source code changes
+
+```diff
+.../{.flat@1751365391/Gateway => .flat/DiamondProxy}/AdminFacet.1.sol     | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/DiamondProxy.p.sol   | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/ExecutorFacet.4.sol  | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/GettersFacet.2.sol   | 0
+ .../{.flat@1751365391/Gateway => .flat/DiamondProxy}/MailboxFacet.3.sol   | 0
+ 5 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1751365391 (main branch discovery), not current.
+
+```diff
+    contract Gateway (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      name:
+-        "DiamondProxy"
++        "Gateway"
+    }
+```
+
+```diff
+    EOA  (0xbF4c6806d1fF930B5bEcab99b93c5355bD08fFfE) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+```diff
+    EOA  (0xcEB302741E355E7Cf30b8479b7aD104d0C171EBF) {
+    +++ description: None
+      receivedPermissions.0.description:
++        "call the functions to commit, prove, execute and revert L2 batches through the ValidatorTimelock in the Gateway Diamond contract. Since this chain settles on the Gateway, the operator trust assumptions expand to these additional operators."
+      receivedPermissions.0.permission:
+-        "validateZkStack"
++        "interact"
+    }
+```
+
+Generated with discovered.json: 0xcb0fcb81c175a0ab7c702ba2e407e7fb47e3424b
 
 # Diff at Mon, 14 Jul 2025 12:45:07 GMT:
 

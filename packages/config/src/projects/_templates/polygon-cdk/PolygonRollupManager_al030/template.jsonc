@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PolygonRollupManager",
-  "description": "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the {{emergencyCouncilAdminAC}} or by anyone after {{_HALT_AGGREGATION_TIMEOUT}} of inactive verifiers.",
+  "description": "The central shared managing contract for Polygon Agglayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the {{emergencyCouncilAdminAC}} or by anyone after {{_HALT_AGGREGATION_TIMEOUT}} of inactive verifiers.",
   "category": "shared",
   "types": {
     "IsGreaterThanOne": {
@@ -72,7 +72,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+          "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types, migrate to pessimistic proofs and rollback batches, connect existing rollups to the PolygonRollupManager."
         }
       ]
     },

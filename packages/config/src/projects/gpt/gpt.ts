@@ -37,7 +37,7 @@ export const gpt: ScalingProject = polygonCDKStack({
     name: 'GPT Protocol',
     slug: 'gpt',
     headerWarning:
-      'The operator has stopped servicing this Validium and a fork was [deployed outside the shared Polygon AggLayer contracts](https://app.blocksec.com/explorer/tx/eth/0x6e3d75c42350019dce5484cc45e9db89b2a29bf8ff8c000ddfa2aa5a9df08628).',
+      'The operator has stopped servicing this Validium and a fork was [deployed outside the shared Polygon Agglayer contracts](https://app.blocksec.com/explorer/tx/eth/0x6e3d75c42350019dce5484cc45e9db89b2a29bf8ff8c000ddfa2aa5a9df08628).',
     description:
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     links: {
@@ -121,7 +121,7 @@ export const gpt: ScalingProject = polygonCDKStack({
       url: 'https://x.com/gpt_protocol/status/1827155009123090891',
       date: '2024-08-24',
       description:
-        'GPT Protocol launches officially, integrated with Polygon AggLayer.',
+        'GPT Protocol launches officially, integrated with Polygon Agglayer.',
       type: 'general',
     },
   ],

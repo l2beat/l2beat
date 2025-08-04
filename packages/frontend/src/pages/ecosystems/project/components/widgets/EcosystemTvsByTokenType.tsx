@@ -161,17 +161,19 @@ export function EcosystemTvsByTokenType({
   )
 }
 
-export function CustomTooltip({
-  active,
-  payload,
-}: TooltipProps<number, string>) {
+function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
   const { meta } = useChart()
   if (!active || !payload) return null
   return (
     <ChartTooltipWrapper>
       <div className="flex w-36 flex-col gap-1">
         {payload.map((entry) => {
-          if (entry.name === undefined || entry.value === undefined) return null
+          if (
+            entry.name === undefined ||
+            entry.value === undefined ||
+            entry.value === null
+          )
+            return null
           const config = meta[entry.name]
           assert(config, 'No config')
 

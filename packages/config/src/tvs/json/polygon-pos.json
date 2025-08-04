@@ -510,7 +510,7 @@
             "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
             "decimals": 18,
             "sinceTimestamp": 1602761920,
-            "untilTimestamp": 1748732400
+            "untilTimestamp": 1754013600
           },
           {
             "type": "balanceOfEscrow",
@@ -519,7 +519,7 @@
             "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
             "decimals": 18,
             "sinceTimestamp": 1602761920,
-            "untilTimestamp": 1748732400
+            "untilTimestamp": 1754013600
           },
           {
             "type": "balanceOfEscrow",
@@ -528,7 +528,7 @@
             "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
             "decimals": 18,
             "sinceTimestamp": 1613100777,
-            "untilTimestamp": 1748732400
+            "untilTimestamp": 1754013600
           },
           {
             "type": "balanceOfEscrow",
@@ -537,7 +537,7 @@
             "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
             "decimals": 18,
             "sinceTimestamp": 1627373890,
-            "untilTimestamp": 1748732400
+            "untilTimestamp": 1754013600
           }
         ]
       },
@@ -2445,6 +2445,55 @@
           {
             "type": "balanceOfEscrow",
             "address": "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84",
+            "chain": "ethereum",
+            "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
+            "decimals": 18,
+            "sinceTimestamp": 1627373890
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "polygon-pos-DIA",
+      "priceId": "dia-data",
+      "symbol": "DIA",
+      "name": "DIAToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
+            "chain": "ethereum",
+            "escrowAddress": "0x401F6c983eA34274ec46f84D70b31C151321188b",
+            "decimals": 18,
+            "sinceTimestamp": 1596412800
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
+            "chain": "ethereum",
+            "escrowAddress": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+            "decimals": 18,
+            "sinceTimestamp": 1598436664
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
+            "chain": "ethereum",
+            "escrowAddress": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+            "decimals": 18,
+            "sinceTimestamp": 1613100777
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x84cA8bc7997272c7CfB4D0Cd3D55cd942B3c9419",
             "chain": "ethereum",
             "escrowAddress": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
             "decimals": 18,

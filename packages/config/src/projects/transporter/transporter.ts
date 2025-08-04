@@ -112,7 +112,7 @@ export const transporter: Bridge = {
   contracts: {
     // this is not a full list of contracts - there would be too many.
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'Router',
           `Central contract in CCIP responsible for the configuration of OnRamp, OffRamp and Commit Stores for different chains.
@@ -153,7 +153,7 @@ export const transporter: Bridge = {
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'RBACTimelock',

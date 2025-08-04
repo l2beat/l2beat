@@ -89,17 +89,23 @@ const cmd = command({
 
       logger.info('Asset matching', {
         application: inboundAsset.application,
-        amount: Number(outboundAsset.amount),
-        fee: Number(outboundAsset.amount - inboundAsset.amount),
+        inputAmount: Number(inboundAsset.amount),
+        outputAmount: Number(outboundAsset.amount),
         latency: formatSeconds(
           inboundAsset.blockTimestamp - outboundAsset.blockTimestamp,
         ),
-        origin: chains
+        originTx: chains
           .find((c) => c.shortName === outboundAsset.origin)
           ?.getTxUrl(outboundAsset.txHash),
-        destination: chains
+        destinationTx: chains
           .find((c) => c.shortName === inboundAsset.destination)
           ?.getTxUrl(inboundAsset.txHash),
+        inputToken: chains
+          .find((c) => c.shortName === outboundAsset.origin)
+          ?.getAddressUrl(outboundAsset.token),
+        outputToken: chains
+          .find((c) => c.shortName === inboundAsset.destination)
+          ?.getAddressUrl(inboundAsset.token),
         id: outboundAsset.matchingId,
       })
     }

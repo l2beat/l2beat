@@ -49,7 +49,7 @@ export function GovernancePage({
   )
 }
 
-export interface DelegatedProjectWithIcon
+interface DelegatedProjectWithIcon
   extends CollectionEntry<'delegated-projects'> {
   icon: string
 }

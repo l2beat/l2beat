@@ -126,7 +126,7 @@ export async function getElasticChainTokens(
       const response = responses[index]
       const address = response.success
         ? toCheckTotalSupply[index].address
-        : '0x'
+        : EthereumAddress.ZERO
 
       await localStorage.writeAddress(`${project.id}-${id}`, address)
       resolved.push({ id, address: EthereumAddress(address) })

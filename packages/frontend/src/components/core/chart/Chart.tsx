@@ -136,7 +136,7 @@ function ChartContainer<T extends { timestamp: number }>({
             )}
           />
         )}
-        {!hasData && !isLoading && <ChartNoDataState />}
+        {!hasData && !isLoading && <ChartNoDataState size={size} />}
         {isClient && size !== 'small' && (
           <Logo
             animated={false}

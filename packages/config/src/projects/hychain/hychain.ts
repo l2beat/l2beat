@@ -6,7 +6,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL2 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('hychain', 'ethereum')
+const discovery = new ProjectDiscovery('hychain')
 
 export const hychain: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1709942400), // 2024-03-09T00:00:00Z
@@ -51,7 +51,7 @@ export const hychain: ScalingProject = orbitStackL2({
     ],
     gasTokens: ['TOPIA'],
   },
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'ethereum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

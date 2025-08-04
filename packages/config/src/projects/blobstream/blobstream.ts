@@ -13,9 +13,7 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
-const ethereumDiscovery = new ProjectDiscovery('blobstream')
-const arbitrumDiscovery = new ProjectDiscovery('blobstream', 'arbitrum')
-const baseDiscovery = new ProjectDiscovery('blobstream', 'base')
+const discovery = new ProjectDiscovery('blobstream')
 
 export const blobstream: BaseProject = {
   id: ProjectId('blobstream'),
@@ -36,7 +34,7 @@ export const blobstream: BaseProject = {
       'The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.',
     links: {
       documentation: [
-        'https://docs.celestia.org/developers/blobstream',
+        'https://docs.celestia.org/how-to-guides/blobstream',
         'https://hackmd.io/@succinctlabs/HJE7XRrup',
       ],
       repositories: [
@@ -97,11 +95,7 @@ export const blobstream: BaseProject = {
     },
   },
   contracts: {
-    addresses: generateDiscoveryDrivenContracts([
-      ethereumDiscovery,
-      arbitrumDiscovery,
-      baseDiscovery,
-    ]),
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -123,14 +117,6 @@ export const blobstream: BaseProject = {
       type: 'incident',
     },
   ],
-  permissions: generateDiscoveryDrivenPermissions([
-    ethereumDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-  ]),
-  discoveryInfo: getDiscoveryInfo([
-    ethereumDiscovery,
-    arbitrumDiscovery,
-    baseDiscovery,
-  ]),
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

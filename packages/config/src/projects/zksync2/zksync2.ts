@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
@@ -13,38 +12,6 @@ import { zkStackL2 } from '../../templates/zkStack'
 
 const discovery = new ProjectDiscovery('zksync2')
 const bridge = discovery.getContract('L1NativeTokenVault')
-
-const validatorsVTLold = () => {
-  // get validators added in the constructor args
-  const constructorArgsValis = discovery.getContractValue<{
-    _validators: string[]
-  }>('ValidatorTimelock3', 'constructorArgs')
-  // add the validators from events
-  const allValis = discovery
-    .getContractValue<string[]>('ValidatorTimelock3', 'validatorsVTLold')
-    .concat(constructorArgsValis._validators)
-  // dedup
-  return [...new Set(allValis)]
-}
-
-const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
-// Extract addresses from new validators and convert to lowercase for comparison
-const newValidatorAddresses = validatorsVTLnew.map((v) =>
-  v.address.toLowerCase(),
-)
-const oldValidators = validatorsVTLold()
-
-// Check if all old validators exist in new validators array
-const missingValidators = oldValidators.filter(
-  (oldValidator) => !newValidatorAddresses.includes(oldValidator.toLowerCase()),
-)
-
-assert(
-  missingValidators.length === 0,
-  `Some validators from old timelock are missing in new timelock: ${missingValidators.join(
-    ', ',
-  )}`,
-)
 
 const chainId = 324
 
@@ -106,6 +73,21 @@ export const zksync2: ScalingProject = zkStackL2({
   ecosystemInfo: {
     id: ProjectId('the-elastic-network'),
   },
+  validatorTimelockOnGateway: discovery.getContract('ZKsyncValidatorTimelock'),
+  nonTemplateDaTracking: [
+    {
+      // tracks old Era DA on ethereum
+      type: 'ethereum',
+      daLayer: ProjectId('ethereum'),
+      sinceBlock: 21809364,
+      untilBlock: 23016895, // migration to Gateway
+      inbox: 'eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564',
+      sequencers: [
+        '0xE1D8d4C8656949764c2c9Fa9faB2C15d3F42e6C2',
+        '0x30066439887C0a509Cb38E45c9262E6924a29BbD',
+      ],
+    },
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: bridge.address,
@@ -214,6 +196,19 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1741792103),
+        untilTimestamp: UnixTime(1753696643),
+      },
+    },
+    {
+      uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 9075,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0x98f81962',
+        functionSignature:
+          'function commitBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1753696643),
       },
     },
     {
@@ -305,6 +300,22 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
         sinceTimestamp: UnixTime(1741792103),
+        untilTimestamp: UnixTime(1753696643),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'proofSubmissions' },
+        { type: 'l2costs', subtype: 'proofSubmissions' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 9075,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xe12a6137',
+        functionSignature:
+          'function proveBatchesSharedBridge(uint256 _chainId, uint256, uint256, bytes)',
+        sinceTimestamp: UnixTime(1753696643),
       },
     },
     {
@@ -396,10 +407,42 @@ export const zksync2: ScalingProject = zkStackL2({
         functionSignature:
           'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
         sinceTimestamp: UnixTime(1741792103),
+        untilTimestamp: UnixTime(1753696643),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'sharedBridge',
+        chainId: 9075,
+        address: EthereumAddress('0x8c0bfc04ada21fd496c55b8c50331f904306f564'),
+        selector: '0xcf02827d',
+        functionSignature:
+          'function executeBatchesSharedBridge(uint256 _chainId, uint256 _processBatchFrom, uint256 _processBatchTo, bytes)',
+        sinceTimestamp: UnixTime(1753696643),
       },
     },
   ],
   milestones: [
+    {
+      title: 'Proof system intervention',
+      url: 'https://x.com/zksync/status/1951434107575214429',
+      date: '2025-07-30T00:00:00Z',
+      description:
+        'The proof system is manually paused due to a vulnerability, causing a partial liveness failure.',
+      type: 'incident',
+    },
+    {
+      title: 'Gateway Migration',
+      url: 'https://x.com/zksync/status/1950502172384547245',
+      date: '2025-07-28T00:00:00Z',
+      description:
+        "ZKsync Era is the first chain migrating to the 'Gateway' settlement layer.",
+      type: 'general',
+    },
     {
       title: 'ZK token minter key compromised',
       url: 'https://zksync.mirror.xyz/W5vPDZqEqf2NuwQ5x7SyFnIxqqpE1szAFD69iaaBFnI',

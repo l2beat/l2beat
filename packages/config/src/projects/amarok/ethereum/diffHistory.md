@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf2006ff7b1e15b9e18d0b6f380ba05420cff539c
+
+# Diff at Mon, 04 Aug 2025 11:41:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1751365883
+- current timestamp: 1754307650
+
+## Description
+
+One EOA has delegated to the Metamask 7702 delegator.
+
+## Watched changes
+
+```diff
+    EOA  (0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x6a0A93Cd6d6FB7a36bF6234ef4650Bf9474e7682","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xd917081b48992d80de39a3221072d3c1b453c5b6063c39322280b45abc776792","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
 Generated with discovered.json: 0x28696ab8867e779d43221f51a7ff16613520d8b5
 
 # Diff at Mon, 14 Jul 2025 12:44:43 GMT:

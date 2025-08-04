@@ -6,10 +6,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('xai', 'arbitrum')
+const discovery = new ProjectDiscovery('xai')
 
 export const xai: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1704758400), // 2024-01-09T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
@@ -149,6 +150,7 @@ export const xai: ScalingProject = orbitStackL3({
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     },
+    hostChain: 'arbitrum',
     discovery,
   }),
 })

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x545d9264a8c606bccbd320805cc6deda4da0acf7
+
+# Diff at Mon, 04 Aug 2025 11:45:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1753687577
+- current timestamp: 1754307917
+
+## Description
+
+ms signer removed.
+
+## Watched changes
+
+```diff
+    contract SafeL2 (0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971) {
+    +++ description: None
+      values.$members.3:
+-        "base:0xab7C7E7ac51f70dd959f3541316dBd715773158B"
+      values.multisigThreshold:
+-        "2 of 9 (22%)"
++        "2 of 8 (25%)"
+    }
+```
+
 Generated with discovered.json: 0xbd84259d2e240ee993e809379bcbf35df6bc53ce
 
 # Diff at Mon, 14 Jul 2025 12:46:37 GMT:

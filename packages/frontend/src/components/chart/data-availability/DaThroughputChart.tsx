@@ -5,6 +5,7 @@ import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/comp
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
+  rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -28,6 +29,8 @@ export function DaThroughputChart() {
     [chartData],
   )
 
+  const resolution = rangeToResolution({ type: range })
+
   return (
     <div>
       <div className="mb-4">
@@ -44,6 +47,7 @@ export function DaThroughputChart() {
           isLoading={isLoading}
           includeScalingOnly={includeScalingOnly}
           syncStatus={chartData?.syncStatus}
+          resolution={resolution}
         />
       ) : (
         <DaAbsoluteThroughputChart
@@ -51,6 +55,7 @@ export function DaThroughputChart() {
           isLoading={isLoading}
           includeScalingOnly={includeScalingOnly}
           syncStatus={chartData?.syncStatus}
+          resolution={resolution}
         />
       )}
       <div className="mt-2 flex justify-between gap-2">

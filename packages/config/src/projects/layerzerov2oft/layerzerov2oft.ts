@@ -163,7 +163,7 @@ To receive the original locked token back, a user would have to return to the ma
           url: 'https://etherscan.io/address/0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1#code#F1#L30',
         },
         {
-          title: 'L2Beat Blog: Circumventing Layer Zero',
+          title: 'L2BEAT Blog: Circumventing Layer Zero',
           url: 'https://medium.com/l2beat/circumventing-layer-zero-5e9f652a5d3e',
         },
       ],
@@ -333,7 +333,7 @@ To receive the original locked token back, a user would have to return to the ma
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'EndpointV2',
           'The central Endpoint contract for LayerZero v2 on Ethereum. OApps like OFT adapters or token contracts register with this Endpoint to define their send and receive libraries and LayerZero-related configurations.',
@@ -371,7 +371,7 @@ To receive the original locked token back, a user would have to return to the ma
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'LayerZero Multisig',

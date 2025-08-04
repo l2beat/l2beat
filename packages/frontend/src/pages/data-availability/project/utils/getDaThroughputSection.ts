@@ -28,19 +28,16 @@ export async function getDaThroughputSection(
 
   if (!throughputChart || throughputChart.chart.length === 0) return undefined
 
-  const notSyncedStatus = getThroughputSyncWarning(
-    throughputChart.syncedUntil,
-    {
-      shorter: true,
-    },
-  )
+  const syncWarning = getThroughputSyncWarning(throughputChart.syncedUntil, {
+    shorter: true,
+  })
 
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
     syncStatus: {
-      warning: notSyncedStatus,
-      isSynced: !notSyncedStatus,
+      warning: syncWarning,
+      isSynced: !syncWarning,
     },
     customColors: env.CLIENT_SIDE_PARTNERS
       ? Object.fromEntries(

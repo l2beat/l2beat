@@ -87,6 +87,10 @@ import {
 } from './StarkWareNamedStorageHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 import {
+  TradableDefinition,
+  TradableHandler,
+} from './TradableHandler/TradableHandler'
+import {
   ZKsyncEraScheduledTransactionHandler,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
 } from './ZKsyncEraScheduledTransactionHandler'
@@ -124,6 +128,7 @@ export const UserHandlerDefinition = v.union([
   OrbitPostsBlobsDefinition,
   PolygonCDKScheduledTransactionsHandlerDefinition,
   ERC20DataDefinition,
+  TradableDefinition,
 ])
 
 export function getUserHandler(
@@ -186,5 +191,7 @@ export function getUserHandler(
       return new PolygonCDKScheduledTransactionHandler(field, abi)
     case 'ERC20Data':
       return new ERC20DataHandler(field, definition)
+    case 'tradable':
+      return new TradableHandler(field)
   }
 }

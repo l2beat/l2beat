@@ -11,7 +11,7 @@
 //
 // But doing just that is not enough because we're always searching from the
 // start and block times are the start are very irregular so we want to narrow
-// the search range as fast as possible to have the highest resoluton on our
+// the search range as fast as possible to have the highest resolution on our
 // range. Tested empirically first guessing and later doing a single step of
 // binary search gives us the least amount of calls to the node. On average it
 

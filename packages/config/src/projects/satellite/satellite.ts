@@ -109,7 +109,7 @@ export const satellite: Bridge = {
     },
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'MintLimiter Multisig',
@@ -134,7 +134,7 @@ export const satellite: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'Gateway',
           'Main Gateway contract acting also as an escrow for bridged tokens.',

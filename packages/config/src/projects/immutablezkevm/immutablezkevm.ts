@@ -129,7 +129,7 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
     ],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'OwnerMultisig',
@@ -144,7 +144,7 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('Bridge', {
           description: 'Main escrow for tokens.',
           ...upgradeability,

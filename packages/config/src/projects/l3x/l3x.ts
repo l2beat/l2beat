@@ -11,11 +11,12 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('l3x', 'arbitrum')
+const discovery = new ProjectDiscovery('l3x')
 
 export const l3x: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1718370384), // 2024-06-14T13:06:24Z
   archivedAt: UnixTime(1743033600), // 2025-03-27T00:00:00.000Z,
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   reasonsForBeingOther: [
@@ -100,5 +101,5 @@ export const l3x: ScalingProject = orbitStackL3({
       chain: 'blast',
     },
   ],
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
 })

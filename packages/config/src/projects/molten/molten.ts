@@ -6,10 +6,11 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('molten', 'arbitrum')
+const discovery = new ProjectDiscovery('molten')
 
 export const molten: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1711843200), // 2024-03-31
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],

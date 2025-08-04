@@ -86,7 +86,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
         "decimals": 18,
-        "sinceTimestamp": 1679356800
+        "sinceTimestamp": 1679356800,
+        "untilTimestamp": 1753966800
       },
       "category": "other",
       "source": "canonical",
