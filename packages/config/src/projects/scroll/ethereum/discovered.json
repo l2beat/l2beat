@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "blockNumber": 22966983,
+  "timestamp": 1753093859,
   "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
   "entries": [
     {
@@ -3866,5 +3866,6 @@
     "scroll/ScrollOwner": "0xd4eda93bc90519848ba490c9a9dadcf87bde9d1528e271008a7e726f3bd6e998",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0xc84f9f9508ee08bcf352d35aa1cf9d6915f5519d4fcce4779b91091ec8a617e8"
+  "usedBlockNumbers": { "ethereum": 22966983 },
+  "permissionsConfigHash": "0xe46f9318a6fd60a2bfb49324c7a26d172209481e7f551d8602e573abd929280b"
 }

@@ -10,6 +10,7 @@ import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
+import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import {
   get7dTvsBreakdown,
   type SevenDayTvsBreakdown,
@@ -19,7 +20,7 @@ import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
 import { getLogger } from '~/server/utils/logger'
 
-export interface ZkCatalogEntry extends CommonProjectEntry {
+export interface ZkCatalogEntry extends CommonProjectEntry, FilterableEntry {
   name: string
   icon: string
   creator?: string
@@ -125,6 +126,15 @@ function getZkCatalogEntry(
     techStack: project.zkCatalogInfo.techStack,
     projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
     trustedSetups,
+    filterable: [
+      ...[
+        ...(project.zkCatalogInfo.techStack.finalWrap ?? []),
+        ...(project.zkCatalogInfo.techStack.zkVM ?? []),
+      ].map((techStack) => ({
+        id: 'techStack' as const,
+        value: `${techStack.type}: ${techStack.name}`,
+      })),
+    ],
   }
 }
 

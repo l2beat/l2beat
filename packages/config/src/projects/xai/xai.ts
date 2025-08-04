@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
 import { DaEconomicSecurityRisk, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,10 +6,11 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('xai', 'arbitrum')
+const discovery = new ProjectDiscovery('xai')
 
 export const xai: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1704758400), // 2024-01-09T00:00:00Z
+  hostChain: 'arbitrum',
   discovery,
   additionalBadges: [BADGES.L3ParentChain.Arbitrum],
   additionalPurposes: ['Gaming'],
@@ -94,7 +95,9 @@ export const xai: ScalingProject = orbitStackL3({
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
-      address: EthereumAddress('0xb591cE747CF19cF30e11d656EB94134F523A9e77'),
+      address: ChainSpecificAddress(
+        'arb1:0xb591cE747CF19cF30e11d656EB94134F523A9e77',
+      ),
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
@@ -147,6 +150,7 @@ export const xai: ScalingProject = orbitStackL3({
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     },
+    hostChain: 'arbitrum',
     discovery,
   }),
 })

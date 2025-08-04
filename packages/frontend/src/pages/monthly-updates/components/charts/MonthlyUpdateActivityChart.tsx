@@ -62,7 +62,7 @@ export function MonthlyUpdateActivityChart({
       data?.data.map(([timestamp, _, __, projectsUops]) => {
         return {
           timestamp,
-          projects: projectsUops / UnixTime.DAY,
+          projects: projectsUops !== null ? projectsUops / UnixTime.DAY : null,
         }
       }),
     [data?.data],
@@ -98,8 +98,9 @@ export function MonthlyUpdateActivityChart({
               scale: 'lin',
               unit: ' UOPS',
             },
+            syncedUntil: data?.syncedUntil,
           })}
-          <ChartTooltip content={<CustomTooltip />} />
+          <ChartTooltip filterNull={false} content={<CustomTooltip />} />
           <defs>
             <CustomFillGradientDef
               id={id}
@@ -145,28 +146,24 @@ function Header({
   )
 }
 
-export function CustomTooltip({
+function CustomTooltip({
   active,
   payload,
-  label: timestamp,
+  label,
 }: TooltipProps<number, string>) {
   const { meta } = useChart()
-  if (!active || !payload || typeof timestamp !== 'number') return null
+  if (!active || !payload || typeof label !== 'number') return null
+
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
+          {formatTimestamp(label, {
             longMonthName: true,
           })}
         </div>
         {payload.map((entry) => {
-          if (
-            entry.name === undefined ||
-            entry.value === undefined ||
-            entry.type === 'none'
-          )
-            return null
+          if (entry.name === undefined || entry.type === 'none') return null
           const config = meta[entry.name]
           assert(config, 'No config')
 
@@ -183,7 +180,9 @@ export function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {formatActivityCount(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatActivityCount(entry.value)
+                    : 'No data'}
                 </span>
               </div>
               <div className="flex w-full items-center justify-between gap-2">
@@ -197,7 +196,9 @@ export function CustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {formatInteger(entry.value * UnixTime.DAY)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatInteger(entry.value * UnixTime.DAY)
+                    : 'No data'}
                 </span>
               </div>
             </div>
@@ -209,19 +210,23 @@ export function CustomTooltip({
 }
 
 function getStats(
-  chartData: { projects: number }[] | undefined,
+  chartData: { projects: number | null }[] | undefined,
   allScalingProjectsUops: number,
 ) {
   if (!chartData) {
     return undefined
   }
-  const last = chartData.at(-1)
-  if (!last) {
+  const lastWithData = chartData.filter((d) => d.projects !== null).at(-1) as
+    | {
+        projects: number
+      }
+    | undefined
+  if (!lastWithData) {
     return undefined
   }
 
   return {
-    latestUops: last.projects,
-    marketShare: last.projects / allScalingProjectsUops,
+    latestUops: lastWithData.projects,
+    marketShare: lastWithData.projects / allScalingProjectsUops,
   }
 }

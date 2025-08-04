@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x83958f7e43a305ef1076f87f3c479d9916d0da22
+Generated with discovered.json: 0x59582ad02e59a23c611488c833f46fc6e8f2472c
+
+# Diff at Thu, 31 Jul 2025 10:51:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1752074075
+- current timestamp: 1752074075
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752074075 (main branch discovery), not current.
+
+```diff
+    contract TokenMessagingBase (0x5634c4a5FEd09819E3c46D86A965Dd9447d86e47) {
+    +++ description: None
+      name:
+-        "TokenMessaging"
++        "TokenMessagingBase"
+    }
+```
+
+Generated with discovered.json: 0x7fedefb53025da7603b638ba63b5bd1103a5a990
 
 # Diff at Mon, 14 Jul 2025 12:47:12 GMT:
 

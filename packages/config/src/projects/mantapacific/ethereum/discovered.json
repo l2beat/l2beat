@@ -1,7 +1,7 @@
 {
   "name": "mantapacific",
   "chain": "ethereum",
-  "blockNumber": 20927642,
+  "timestamp": 1728472175,
   "configHash": "0x81b7d6affd77053647c1cc6d77cb1e1033c448a399131ac49584f2f9d7f7a471",
   "entries": [
     {
@@ -787,5 +787,6 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 20927642 },
   "permissionsConfigHash": "0x49de9fd7ed7e98dfb61d951e397a4dbaccd7c44b48873e0aff92bc92d87430f1"
 }

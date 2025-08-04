@@ -39,18 +39,22 @@ function readProject(
   project: string,
   configReader: ConfigReader,
 ): ProjectData[] {
-  const discovery = configReader.readDiscovery(project, chain)
-  const sharedModules = discovery.sharedModules ?? []
+  try {
+    const discovery = configReader.readDiscovery(project, chain)
+    const sharedModules = discovery.sharedModules ?? []
 
-  return [
-    {
-      config: configReader.readConfig(project, chain),
-      discovery,
-    },
-    ...sharedModules.flatMap((sharedModule) =>
-      readProject(chain, sharedModule, configReader),
-    ),
-  ]
+    return [
+      {
+        config: configReader.readConfig(project, chain),
+        discovery,
+      },
+      ...sharedModules.flatMap((sharedModule) =>
+        readProject(chain, sharedModule, configReader),
+      ),
+    ]
+  } catch {
+    return []
+  }
 }
 
 export function getProject(
@@ -129,7 +133,7 @@ export function getProject(
           }
         })
         .sort(orderAddressEntries),
-      blockNumber: discovery.blockNumber,
+      blockNumber: discovery.usedBlockNumbers[chain],
     } satisfies ApiProjectChain
     response.entries.push(chainInfo)
   }

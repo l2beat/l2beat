@@ -40,17 +40,17 @@ export class DBStorage implements DataStorage {
     }
 
     this.amounts = new Map(timestamps.map((t) => [t, new Map()]))
-
     const from = timestamps[0]
     const to = timestamps[timestamps.length - 1]
-    const records = await this.db.tvsAmount.getAmountsInRange(
-      configurationIds,
-      from,
-      to,
-    )
 
-    for (const r of records) {
-      this.amounts.get(r.timestamp)?.set(r.configurationId, r.amount)
+    const batchSize = 1000
+    for (let i = 0; i < configurationIds.length; i += batchSize) {
+      const batch = configurationIds.slice(i, i + batchSize)
+
+      const records = await this.db.tvsAmount.getAmountsInRange(batch, from, to)
+      for (const r of records) {
+        this.amounts.get(r.timestamp)?.set(r.configurationId, r.amount)
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -41,7 +41,9 @@ export const pulseChain: Bridge = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x1715a3E4A142d8b698131108995174F37aEBA10D'),
+        address: ChainSpecificAddress(
+          'eth:0x1715a3E4A142d8b698131108995174F37aEBA10D',
+        ),
         sinceTimestamp: UnixTime(1684137600),
         tokens: '*',
       }),
@@ -105,7 +107,7 @@ export const pulseChain: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'ForeignOmnibridge',
           'The main Bridge contract and the escrow for the PulseChain bridge. It is used to deposit tokens to the bridge.',
@@ -127,7 +129,7 @@ export const pulseChain: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'BridgeValidators',

@@ -281,7 +281,8 @@
         "address": "0x1cf7b5f266A0F39d6f9408B90340E3E71dF8BF7B",
         "chain": "swell",
         "decimals": 8,
-        "sinceTimestamp": 1733862913
+        "sinceTimestamp": 1733862913,
+        "untilTimestamp": 1753966800
       },
       "category": "other",
       "source": "external",
@@ -468,7 +469,14 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     }
   ]
 }

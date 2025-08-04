@@ -164,7 +164,7 @@ export const orbit: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'ETH Vault',
           'Bridge contract, Proxy, Escrow, Governance.',
@@ -178,7 +178,7 @@ export const orbit: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'Bridge contract Governance',

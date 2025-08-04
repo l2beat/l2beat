@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -72,7 +73,9 @@ export const zkspace: ScalingProject = {
     associatedTokens: ['ZKS'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8'),
+        address: ChainSpecificAddress(
+          'eth:0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+        ),
         sinceTimestamp: UnixTime(1639569183),
         tokens: '*',
       }),
@@ -162,7 +165,7 @@ export const zkspace: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('ZkSync', {
           description:
             'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
@@ -199,7 +202,7 @@ export const zkspace: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getPermissionDetails(
           'zkSpace Admin',

@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('base')
-const l2Discovery = new ProjectDiscovery('base', 'base')
 const genesisTimestamp = UnixTime(1686074603)
 const chainId = 8453
 
@@ -19,7 +18,6 @@ export const base: ScalingProject = opStackL2({
   addedAt: UnixTime(1689206400), // 2023-07-13T00:00:00Z
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['base']: l2Discovery },
   display: {
     name: 'Base Chain',
     slug: 'base',
@@ -30,20 +28,19 @@ export const base: ScalingProject = opStackL2({
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
     links: {
       websites: ['https://base.org/'],
-      bridges: ['https://bridge.base.org/'],
-      documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
+      bridges: ['https://superbridge.app/base'],
+      documentation: ['https://docs.base.org/', 'https://docs.optimism.io/'],
       explorers: [
         'https://basescan.org/',
-        'https://base.superscan.network',
+        'https://basedscan.io/',
         'https://base.blockscout.com/',
-        'https://base.l2scan.co/',
       ],
       repositories: ['https://github.com/base-org'],
       socialMedia: [
         'https://twitter.com/BuildOnBase',
-        'https://discord.gg/buildonbase',
+        'https://discord.com/invite/buildonbase',
         'https://base.mirror.xyz/',
-        'https://warpcast.com/base',
+        'https://farcaster.xyz/base',
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
@@ -51,14 +48,18 @@ export const base: ScalingProject = opStackL2({
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
+      address: ChainSpecificAddress(
+        'eth:0x9de443AdC5A411E83F1878Ef24C3F52C61571e72',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3'),
+      address: ChainSpecificAddress(
+        'eth:0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3',
+      ),
       tokens: ['USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:

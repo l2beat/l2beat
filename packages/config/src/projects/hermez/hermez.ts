@@ -178,7 +178,7 @@ export const hermez: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('HermezAuctionProtocol'),
         discovery.getContractDetails('Hermez'),
         discovery.getContractDetails(

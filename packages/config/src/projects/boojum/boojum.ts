@@ -35,14 +35,14 @@ export const boojum: BaseProject = {
       zkVM: [
         ZK_CATALOG_TAGS.STARK.Boojum,
         ZK_CATALOG_TAGS.ISA.EraVM,
-        ZK_CATALOG_TAGS.Arithmetization.Plonkish,
+        // ZK_CATALOG_TAGS.Arithmetization.Plonkish,
         ZK_CATALOG_TAGS.Field.Goldilocks,
       ],
       finalWrap: [
         ZK_CATALOG_TAGS.Plonk.Bellman,
         ZK_CATALOG_TAGS.Fflonk.Zksync,
         ZK_CATALOG_TAGS.curve.BN254,
-        ZK_CATALOG_TAGS.PCS.KZG,
+        // ZK_CATALOG_TAGS.PCS.KZG,
       ],
     },
     proofSystemInfo: `

@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x04730c3e656f9d8e15bfdfca64490bd9b48d3a8e
+Generated with discovered.json: 0x593d0cc62cbb2e227028e506187cb66285620bfa
+
+# Diff at Fri, 01 Aug 2025 14:12:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@802242fc2209399893865092b1048d583aafc2bb block: 1751617043
+- current timestamp: 1754057499
+
+## Description
+
+EOA owner of Kinto's socket escrows has 7702-delegated to the standard metamask 7702 delegation contract.
+
+## Watched changes
+
+```diff
+    EOA  (0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c) {
+    +++ description: None
+      proxyType:
+-        "EOA"
++        "EIP7702 EOA"
+      sourceHashes:
++        ["0x41c6ce964a4ef3e910f9ddf78152734dae8d1b1094ffc8334c50249a3b112bbf"]
+      values:
++        {"$implementation":"eth:0x63c0c19a282a1B52b07dD5a65b58948A07DAE32B","delegationManager":"eth:0xdb9B1e94B5b69Df7e401DDbedE43491141047dB3","DOMAIN_VERSION":"1","eip712Domain":{"fields":"0x0f","name":"EIP7702StatelessDeleGator","version":"1","chainId":1,"verifyingContract":"eth:0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"entryPoint":"eth:0x0000000071727De22E5E9d8BAf0edAc6f37da032","getDeposit":0,"getDomainHash":"0xda4b68659d2780fff93228d9db78cb1666fdb544e28cfd9764b8cbe0938d1407","getNonce":0,"NAME":"EIP7702StatelessDeleGator","PACKED_USER_OP_TYPEHASH":"0xbc37962d8bd1d319c95199bdfda6d3f92baa8903a61b32d5f4ec1f4b36a3bc18","VERSION":"1.3.0"}
+    }
+```
+
+Generated with discovered.json: 0xddfd7b7e6f3fc24c25e2b4702066242178b9d7b1
 
 # Diff at Mon, 14 Jul 2025 12:46:23 GMT:
 

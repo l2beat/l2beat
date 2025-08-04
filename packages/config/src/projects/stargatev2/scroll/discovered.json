@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "scroll",
-  "blockNumber": 16325944,
+  "timestamp": 1752074075,
   "configHash": "0xedb12b9eac272860df81f99f9e3a9320c19cc3b21a70c7cfdc8d9e27ee67074e",
   "entries": [
     {
@@ -48,21 +48,21 @@
         "lpToken": "scr:0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "938955949518439120",
-        "poolBalance": 1911617722472,
+        "plannerFee": "945142070331603573",
+        "poolBalance": 5044552910112,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
-        "treasuryFee": 29289070266,
-        "tvl": 104874720875
+        "treasuryFee": 32950919146,
+        "tvl": 100450600717
       },
       "implementationNames": {
         "scr:0x3Fc69CC4A842838bCDC9499178740226062b14E4": "StargatePoolUSDC"
       }
     },
     {
-      "name": "TokenMessaging",
+      "name": "TokenMessagingScroll",
       "address": "scr:0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
       "type": "Contract",
       "sourceHashes": [
@@ -146,14 +146,14 @@
         "lpToken": "scr:0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "scr:0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
-        "plannerFee": "69508232134648544",
-        "poolBalance": "726038844000000000000",
+        "plannerFee": "141638628575183977",
+        "poolBalance": "748292412000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "scr:0x0000000000000000000000000000000000000000",
-        "treasuryFee": 29185668,
-        "tvl": "91079969000000000000"
+        "treasuryFee": 29323780,
+        "tvl": "82722849000000000000"
       },
       "implementationNames": {
         "scr:0xC2b638Cb5042c1B3c5d5C969361fB50569840583": "StargatePoolNative"
@@ -436,5 +436,6 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x014fe0fbed57603cad85210ae6d1e4561d9793d137c7304117c01ce30776e32d"
+  "usedBlockNumbers": { "scroll": 17075827 },
+  "permissionsConfigHash": "0x593eaca0c1e82111cbccd4d97b6e1641c02d7c73514b55fa60a9d4d19499aa4d"
 }

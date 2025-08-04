@@ -1,7 +1,7 @@
 {
   "name": "rss3",
   "chain": "ethereum",
-  "blockNumber": 21041870,
+  "timestamp": 1729850135,
   "configHash": "0xca724cca7946660788428c63749edc8a021c510189a34584e7a5321d734fc0dd",
   "entries": [
     {
@@ -1145,5 +1145,6 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
+  "usedBlockNumbers": { "ethereum": 21041870 },
   "permissionsConfigHash": "0xccae42fa922a0077e5b23903ccb241884dde77b715a4c333ee754c462792664c"
 }

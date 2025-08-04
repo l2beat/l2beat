@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
@@ -94,7 +94,9 @@ export const myria: ScalingProject = {
     associatedTokens: ['MYRIA'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7'),
+        address: ChainSpecificAddress(
+          'eth:0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7',
+        ),
         sinceTimestamp: UnixTime(1659542607),
         tokens: ['ETH'],
       }),

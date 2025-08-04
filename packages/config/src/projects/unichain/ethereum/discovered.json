@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "chain": "ethereum",
-  "blockNumber": 22996546,
+  "timestamp": 1753451183,
   "configHash": "0xdc905eb1d472f94b8221a5bf6e6b85f51a85ace024524ec6ffb8f1231b97dbc7",
   "entries": [
     {
@@ -3417,5 +3417,6 @@
     "opstack/SuperchainConfig_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
     "opstack/SystemConfig_pauseId": "0xef316e70cad418ce14ddb88a7a19b097cfba32c77a9c3a27c90e504e4500a3ba"
   },
+  "usedBlockNumbers": { "ethereum": 22996546 },
   "permissionsConfigHash": "0x3f03680df8ea185bc9435f75e33cbea99cd9184a68e764acbcb97ee8ffb6de97"
 }

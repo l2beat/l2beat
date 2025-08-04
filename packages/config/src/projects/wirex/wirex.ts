@@ -1,4 +1,4 @@
-import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -101,7 +101,7 @@ export const wirex: ScalingProject = polygonCDKStack({
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',
@@ -125,7 +125,7 @@ export const wirex: ScalingProject = polygonCDKStack({
       url: 'https://x.com/wirexpaychain/status/1828779629051793710',
       date: '2024-08-28',
       description:
-        'Wirex Pay Chain launches officially, integrated with Polygon AggLayer.',
+        'Wirex Pay Chain launches officially, integrated with Polygon Agglayer.',
       type: 'general',
     },
   ],

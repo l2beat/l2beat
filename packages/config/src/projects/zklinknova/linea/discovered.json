@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "linea",
-  "blockNumber": 19494394,
+  "timestamp": 1753687799,
   "configHash": "0x4d970af675873a74a16925dcd60e2be34128a7ae933417c5887a6a38851e9f4a",
   "entries": [
     {
@@ -111,7 +111,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "zkLink",
+      "name": "LineazkLink",
       "address": "linea:0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
       "type": "Contract",
       "unverified": true,
@@ -306,7 +306,7 @@
             ]
           }
         ],
-        "getFirstUnprocessedPriorityTx": 269010,
+        "getFirstUnprocessedPriorityTx": 269079,
         "getGateway": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "linea:0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "getL2BootloaderBytecodeHash": "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d",
@@ -315,16 +315,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "linea:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 2,
+        "getPriorityQueueSize": 0,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
-        "getTotalBatchesCommitted": 63058,
-        "getTotalBatchesExecuted": 63016,
-        "getTotalBatchesVerified": 63055,
-        "getTotalBlocksCommitted": 63058,
-        "getTotalBlocksExecuted": 63016,
-        "getTotalBlocksVerified": 63055,
-        "getTotalPriorityTxs": 269012,
+        "getTotalBatchesCommitted": 69665,
+        "getTotalBatchesExecuted": 69485,
+        "getTotalBatchesVerified": 69490,
+        "getTotalBlocksCommitted": 69665,
+        "getTotalBlocksExecuted": 69485,
+        "getTotalBlocksVerified": 69490,
+        "getTotalPriorityTxs": 269079,
         "getVerifier": "linea:0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -346,7 +346,7 @@
       }
     },
     {
-      "name": "L1ERC20Bridge",
+      "name": "LineaL1ERC20Bridge",
       "address": "linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
       "type": "Contract",
       "sourceHashes": [
@@ -719,5 +719,6 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
   },
-  "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
+  "usedBlockNumbers": { "linea": 21375252 },
+  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

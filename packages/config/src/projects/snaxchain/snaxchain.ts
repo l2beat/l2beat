@@ -40,6 +40,8 @@ export const snaxchain: ScalingProject = opStackL2({
     ],
   },
   isNodeAvailable: true,
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
   stateDerivation: DERIVATION.OPSTACK('SNAXCHAIN'),
   activityConfig: {
     type: 'block',

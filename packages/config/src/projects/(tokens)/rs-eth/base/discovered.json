@@ -1,7 +1,7 @@
 {
   "name": "rs-eth",
   "chain": "base",
-  "blockNumber": 33020590,
+  "timestamp": 1752830527,
   "configHash": "0x2b540159bb11769533b9cb89a2235f165d9414a774f330bef5bae3d77f9d21de",
   "entries": [
     {
@@ -140,5 +140,6 @@
     ]
   },
   "usedTemplates": {},
+  "usedBlockNumbers": { "base": 33020590 },
   "permissionsConfigHash": "0x92da27ecd6708d675fe4d33353e209fd03e381f8a4cfe1bb7fb4c1e0c2a4369d"
 }

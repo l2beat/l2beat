@@ -1,4 +1,41 @@
-Generated with discovered.json: 0x70f8632da8170e1150d1fe2afc9ab2b709d970a8
+Generated with discovered.json: 0x6c419d61eba851803a53aff30c925fa6172cb44e
+
+# Diff at Thu, 31 Jul 2025 13:15:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753687757
+- current timestamp: 1753687757
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687757 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xC463EaC02572CC964D43D2414023E2c6B62bAF38) {
+    +++ description: None
+      unverified:
+-        true
+      values.getOwners:
+-        ["zircuit:0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4","zircuit:0xC1Ea584f696ABF39044c18D510067f0Ce2cC8966","zircuit:0x63cbB9fA540F6249AE4A3576f48BF07609b3a355","zircuit:0x5E2a81d611e973C2ab1A4cAa71DD4E4Cdb2617d4","zircuit:0x2F9072d5A8118a60ce41611AEe3e393D107f8Cec","zircuit:0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb","zircuit:0x62C688FCa995e07632D64A9586896BB7EcD68567","zircuit:0x38809210f69ed6204E276d2Be6b15cd530698679"]
+      values.getThreshold:
+-        6
+      implementationNames.zircuit:0xC463EaC02572CC964D43D2414023E2c6B62bAF38:
+-        ""
++        "GnosisSafeProxy"
+      template:
++        "GnosisSafe"
+      sourceHashes:
++        ["0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff","0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"]
+    }
+```
+
+Generated with discovered.json: 0x430dcebe337cfb1b23b1da86a905add435c1776a
 
 # Diff at Mon, 28 Jul 2025 07:29:30 GMT:
 

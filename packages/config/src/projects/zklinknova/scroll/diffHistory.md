@@ -1,4 +1,40 @@
-Generated with discovered.json: 0xd6e377b28da41a25abca72355a1b34bad971ab18
+Generated with discovered.json: 0x258536464ea3ed90d2538ec904d55c2e03c28629
+
+# Diff at Thu, 31 Jul 2025 10:58:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@07319d194d312aca8103826b7db44d44613cc7fa block: 1753687799
+- current timestamp: 1753687799
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687799 (main branch discovery), not current.
+
+```diff
+    contract ScrollzkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2) {
+    +++ description: None
+      name:
+-        "zkLink"
++        "ScrollzkLink"
+    }
+```
+
+```diff
+    contract ScrollL1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c) {
+    +++ description: None
+      name:
+-        "L1ERC20Bridge"
++        "ScrollL1ERC20Bridge"
+    }
+```
+
+Generated with discovered.json: 0x6ac178f2ddeffb6e5086681e2777b9463662a653
 
 # Diff at Mon, 14 Jul 2025 12:47:20 GMT:
 
@@ -1020,7 +1056,7 @@ Generated with discovered.json: 0xedbd057508280d9873d1196125e4fa0e7282bc84
 
 ## Description
 
-The governance (owner, admin roles) of the scroll contracts are transfered from an EOA to a new Multisig.
+The governance (owner, admin roles) of the scroll contracts are transferred from an EOA to a new Multisig.
 
 ## Watched changes
 

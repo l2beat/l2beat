@@ -48,20 +48,18 @@ const cmd = command({
       },
     ])
 
-    const outboundMessage = messages.find((m) => m.direction === 'outbound')
-    if (!outboundMessage) {
-      logger.error('Outbound message not found, update decoder')
-    }
-    const inboundMessage = messages.find((m) => m.direction === 'inbound')
-    if (!inboundMessage) {
-      logger.error('Inbound message not found, update decoder')
-    }
-
-    if (inboundMessage && outboundMessage) {
-      assert(
-        inboundMessage.matchingId === outboundMessage.matchingId,
-        'Messages matchingId mismatch',
+    for (const outboundMessage of messages.filter(
+      (m) => m.direction === 'outbound',
+    )) {
+      const inboundMessage = messages.find(
+        (m) =>
+          m.direction === 'inbound' &&
+          m.matchingId === outboundMessage.matchingId,
       )
+      if (!inboundMessage) {
+        continue
+      }
+
       logger.info('Message matching', {
         protocol: inboundMessage.protocol,
         latency: formatSeconds(
@@ -77,33 +75,37 @@ const cmd = command({
       })
     }
 
-    const outboundAsset = assets.find((m) => m.direction === 'outbound')
-    if (!outboundAsset) {
-      logger.error('Outbound asset not found, update decoder')
-    }
-    const inboundAsset = assets.find((m) => m.direction === 'inbound')
-    if (!inboundAsset) {
-      logger.error('Inbound asset not found, update decoder')
-    }
-
-    if (inboundAsset && outboundAsset) {
-      assert(
-        inboundAsset.matchingId === outboundAsset.matchingId,
-        'Asset matchingId mismatch',
+    for (const outboundAsset of assets.filter(
+      (m) => m.direction === 'outbound',
+    )) {
+      const inboundAsset = assets.find(
+        (m) =>
+          m.direction === 'inbound' &&
+          m.matchingId === outboundAsset.matchingId,
       )
+      if (!inboundAsset) {
+        continue
+      }
+
       logger.info('Asset matching', {
         application: inboundAsset.application,
-        amount: Number(outboundAsset.amount),
-        fee: Number(outboundAsset.amount - inboundAsset.amount),
+        inputAmount: Number(inboundAsset.amount),
+        outputAmount: Number(outboundAsset.amount),
         latency: formatSeconds(
           inboundAsset.blockTimestamp - outboundAsset.blockTimestamp,
         ),
-        origin: chains
+        originTx: chains
           .find((c) => c.shortName === outboundAsset.origin)
           ?.getTxUrl(outboundAsset.txHash),
-        destination: chains
+        destinationTx: chains
           .find((c) => c.shortName === inboundAsset.destination)
           ?.getTxUrl(inboundAsset.txHash),
+        inputToken: chains
+          .find((c) => c.shortName === outboundAsset.origin)
+          ?.getAddressUrl(outboundAsset.token),
+        outputToken: chains
+          .find((c) => c.shortName === inboundAsset.destination)
+          ?.getAddressUrl(inboundAsset.token),
         id: outboundAsset.matchingId,
       })
     }

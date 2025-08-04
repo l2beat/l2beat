@@ -282,9 +282,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
     },
   },
   contracts: {
-    addresses: {
-      ethereum: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [
       {
         category: 'Funds can be lost if',
@@ -292,9 +290,7 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       },
     ],
   },
-  permissions: {
-    ethereum: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   milestones: [
     {
       title: 'EspressoDA launch on mainnet',

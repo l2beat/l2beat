@@ -11,7 +11,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
 
 const discovery = new ProjectDiscovery('optimism')
-const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 const genesisTimestamp = UnixTime(1636665399)
 const chainId = 10
 
@@ -20,7 +19,6 @@ export const optimism: ScalingProject = opStackL2({
   additionalBadges: [BADGES.Other.Governance],
   discovery,
   genesisTimestamp,
-  additionalDiscoveries: { ['optimism']: l2Discovery },
   display: {
     name: 'OP Mainnet',
     slug: 'op-mainnet',
@@ -55,7 +53,9 @@ export const optimism: ScalingProject = opStackL2({
   nonTemplateExcludedTokens: ['rsETH'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+      address: ChainSpecificAddress(
+        'eth:0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65',
+      ),
       sinceTimestamp: UnixTime(1625675779),
       ...ESCROW.CANONICAL_EXTERNAL,
       tokens: ['DAI', 'USDS', 'sUSDS'],
@@ -64,7 +64,9 @@ export const optimism: ScalingProject = opStackL2({
     }),
     discovery.getEscrowDetails({
       // current SNX bridge escrow
-      address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+      address: ChainSpecificAddress(
+        'eth:0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f',
+      ),
       sinceTimestamp: UnixTime(1620680982),
       tokens: ['SNX'],
       ...ESCROW.CANONICAL_EXTERNAL,
@@ -89,7 +91,9 @@ export const optimism: ScalingProject = opStackL2({
       chain: 'ethereum',
     },
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x76943C0D61395d8F2edF9060e1533529cAe05dE6'),
+      address: ChainSpecificAddress(
+        'eth:0x76943C0D61395d8F2edF9060e1533529cAe05dE6',
+      ),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
@@ -255,7 +259,7 @@ export const optimism: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Maintainance Upgrade L1 Pectra Readiness',
+      title: 'Maintenance Upgrade L1 Pectra Readiness',
       url: 'https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829',
       date: '2025-03-05T00:00:00Z',
       description: "Optimism prepares for Ethereum's pectra upgrade.",

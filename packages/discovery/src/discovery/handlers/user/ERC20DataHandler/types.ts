@@ -5,7 +5,16 @@ export type SourceEntry = v.infer<typeof SourceEntry>
 export const SourceEntry = v
   .object({
     coingeckoId: v.string().optional(),
-    category: v.enum(['ether', 'stablecoin', 'other']).optional(),
+    category: v
+      .enum([
+        'ether',
+        'stablecoin',
+        'btc',
+        'rwaRestricted',
+        'rwaPublic',
+        'other',
+      ])
+      .optional(),
     source: v.enum(['canonical', 'external', 'native']).optional(),
     supply: v.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
     bridgedUsing: v

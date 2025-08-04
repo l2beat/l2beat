@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 23015676,
+  "timestamp": 1753681931,
   "configHash": "0xdc09a119ba9b96e10c51f6389a16a0f0c1ee8e9a8074ce1007bb776ec199afec",
   "sharedModules": ["shared-sp1"],
   "entries": [
@@ -1336,5 +1336,6 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0"
   },
+  "usedBlockNumbers": { "ethereum": 23015676 },
   "permissionsConfigHash": "0x3c18feedf867890e06f784d5394d4aad6a83cd7817a61fa00e82fda9bb6bf8c8"
 }

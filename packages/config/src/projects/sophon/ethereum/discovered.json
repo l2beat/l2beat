@@ -1,7 +1,7 @@
 {
   "name": "sophon",
   "chain": "ethereum",
-  "blockNumber": 22865710,
+  "timestamp": 1753944345,
   "configHash": "0xb73e5364ce42e0e412646e9840e9c4e90ce6b575aaddfd5520237701942cff09",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -109,8 +109,8 @@
           ]
         ],
         "$upgradeCount": 6,
-        "baseTokenGasPriceMultiplierDenominator": 1327,
-        "baseTokenGasPriceMultiplierNominator": 100000000,
+        "baseTokenGasPriceMultiplierDenominator": 499,
+        "baseTokenGasPriceMultiplierNominator": 50000000,
         "facetAddresses": [
           "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
           "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
@@ -221,7 +221,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xf39dE5c61b276391b913cAFB057DC8B9de5d58dA"
         ],
-        "getFirstUnprocessedPriorityTx": 8719,
+        "getFirstUnprocessedPriorityTx": 8928,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -230,20 +230,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 3,
-        "getPriorityTreeRoot": "0xec745c3aa8a2dfa99e27447310beb61356e0a0c4a2aa8a2414e88ea3836d321f",
+        "getPriorityTreeRoot": "0x4f1575e893f1f93336806e1555d12a4a79842034c05b224ea4224a8e131cdd43",
         "getPriorityTreeStartIndex": 4136,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 28878,
-        "getTotalBatchesExecuted": 28874,
-        "getTotalBatchesVerified": 28878,
-        "getTotalBlocksCommitted": 28878,
-        "getTotalBlocksExecuted": 28874,
-        "getTotalBlocksVerified": 28878,
-        "getTotalPriorityTxs": 8722,
+        "getTotalBatchesCommitted": 30119,
+        "getTotalBatchesExecuted": 30113,
+        "getTotalBatchesVerified": 30119,
+        "getTotalBlocksCommitted": 30119,
+        "getTotalBlocksExecuted": 30113,
+        "getTotalBlocksVerified": 30119,
+        "getTotalPriorityTxs": 8931,
         "getTransactionFilterer": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -1313,7 +1313,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
+    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
@@ -1321,5 +1321,6 @@
     "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
+  "usedBlockNumbers": { "ethereum": 23037386 },
   "permissionsConfigHash": "0xb62281c4c0ccc90c8737e33d0e0246799f642f025f7b2710149ce521797cc5ad"
 }

@@ -21,27 +21,16 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
     projectId,
   })
 
-  const chartData = useMemo(() => {
-    if (!data) {
-      return undefined
-    }
-
-    const lastDataPosted = data.chart.findLast((d) => d[1])
-    const allDataPostedSynced = data.chart.at(-1)?.[0] === lastDataPosted?.[0]
-
-    return data.chart.map(([timestamp, posted]) => {
-      return {
-        timestamp,
-        posted,
-        notSyncedPosted:
-          !allDataPostedSynced &&
-          lastDataPosted &&
-          timestamp >= lastDataPosted[0]
-            ? (lastDataPosted[1] ?? 0)
-            : null,
-      }
-    })
-  }, [data])
+  const chartData = useMemo(
+    () =>
+      data?.chart.map(([timestamp, posted]) => {
+        return {
+          timestamp,
+          posted,
+        }
+      }),
+    [data],
+  )
 
   const chartRange = getChartRange(chartData)
 
@@ -57,8 +46,8 @@ export function ProjectDataPostedChart({ projectId, defaultRange }: Props) {
       </ChartControlsWrapper>
       <DataPostedChart
         data={chartData}
-        isLoading={isLoading}
         syncedUntil={data?.syncedUntil}
+        isLoading={isLoading}
         className="mt-4 mb-2"
         tickCount={4}
       />

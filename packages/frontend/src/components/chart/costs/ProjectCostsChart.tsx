@@ -84,11 +84,12 @@ export function ProjectCostsChart({
                 ? overheadEth
                 : overheadGas,
           posted,
-          notSyncedPosted:
+          estimatedPosted:
             !allDataPostedSynced &&
             lastDataPosted &&
+            timestamp <= data.syncedUntil &&
             timestamp >= lastDataPosted[0]
-              ? (lastDataPosted[13] ?? 0)
+              ? (lastDataPosted[13] ?? null)
               : null,
         }
       },
@@ -117,11 +118,13 @@ export function ProjectCostsChart({
       </div>
       <CostsChart
         data={chartData}
+        syncedUntil={data?.syncedUntil}
         unit={unit}
         isLoading={isLoading}
         milestones={milestones}
         range={range}
         showDataPosted={hasPostedData ? showDataPosted : false}
+        hasBlobs={!!data?.hasBlobs}
         tickCount={4}
         className="mt-4 mb-2"
       />
@@ -132,7 +135,6 @@ export function ProjectCostsChart({
         isLoading={isLoading}
         range={range}
         unit={unit}
-        hasPostedData={hasPostedData}
       />
     </div>
   )

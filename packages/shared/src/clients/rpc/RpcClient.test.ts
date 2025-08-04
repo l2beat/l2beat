@@ -153,7 +153,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getLogs.name, () => {
     it('fetches logs from rpc and parsers response', async () => {
-      const mockAdresses = [EthereumAddress.random(), EthereumAddress.random()]
+      const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]
       const mockTopics = ['0xabcd', '0xdcba']
       const mockFromBlock = 100
       const mockToBlock = 200
@@ -162,7 +162,7 @@ describe(RpcClient.name, () => {
         fetch: async () => ({
           result: [
             {
-              address: mockAdresses[0],
+              address: mockAddresses[0],
               topics: mockTopics,
               blockNumber: `0x${mockFromBlock.toString(16)}`,
               transactionHash:
@@ -177,13 +177,13 @@ describe(RpcClient.name, () => {
       const result = await rpc.getLogs(
         mockFromBlock,
         mockToBlock,
-        mockAdresses,
+        mockAddresses,
         mockTopics,
       )
 
       expect(result).toEqual([
         {
-          address: mockAdresses[0],
+          address: mockAddresses[0],
           topics: mockTopics,
           blockNumber: mockFromBlock,
           transactionHash:
@@ -197,7 +197,7 @@ describe(RpcClient.name, () => {
           method: 'eth_getLogs',
           params: [
             {
-              address: mockAdresses,
+              address: mockAddresses,
               topics: [mockTopics],
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
@@ -210,7 +210,7 @@ describe(RpcClient.name, () => {
     })
 
     it('splits in half when limit exceeded', async () => {
-      const mockAdresses = [EthereumAddress.random(), EthereumAddress.random()]
+      const mockAddresses = [EthereumAddress.random(), EthereumAddress.random()]
       const mockTopics = ['0xabcd', '0xdcba']
       const mockFromBlock = 100
       const mockToBlock = 200
@@ -228,7 +228,7 @@ describe(RpcClient.name, () => {
           .resolvesToOnce({
             result: [
               {
-                address: mockAdresses[0],
+                address: mockAddresses[0],
                 topics: mockTopics,
                 blockNumber: `0x${mockFromBlock.toString(16)}`,
                 transactionHash:
@@ -240,7 +240,7 @@ describe(RpcClient.name, () => {
           .resolvesToOnce({
             result: [
               {
-                address: mockAdresses[1],
+                address: mockAddresses[1],
                 topics: mockTopics,
                 blockNumber: `0x${mockFromBlock.toString(16)}`,
                 transactionHash:
@@ -255,7 +255,7 @@ describe(RpcClient.name, () => {
       const result = await rpc.getLogs(
         mockFromBlock,
         mockToBlock,
-        mockAdresses,
+        mockAddresses,
         mockTopics,
       )
 
@@ -264,7 +264,7 @@ describe(RpcClient.name, () => {
           method: 'eth_getLogs',
           params: [
             {
-              address: mockAdresses,
+              address: mockAddresses,
               topics: [mockTopics],
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
@@ -280,7 +280,7 @@ describe(RpcClient.name, () => {
           method: 'eth_getLogs',
           params: [
             {
-              address: mockAdresses,
+              address: mockAddresses,
               topics: [mockTopics],
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockMiddleBlock.toString(16)}`,
@@ -296,7 +296,7 @@ describe(RpcClient.name, () => {
           method: 'eth_getLogs',
           params: [
             {
-              address: mockAdresses,
+              address: mockAddresses,
               topics: [mockTopics],
               fromBlock: `0x${(mockMiddleBlock + 1).toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
@@ -309,7 +309,7 @@ describe(RpcClient.name, () => {
 
       expect(result).toEqualUnsorted([
         {
-          address: mockAdresses[0],
+          address: mockAddresses[0],
           topics: mockTopics,
           blockNumber: mockFromBlock,
           transactionHash:
@@ -317,7 +317,7 @@ describe(RpcClient.name, () => {
           data: '0xdata',
         },
         {
-          address: mockAdresses[1],
+          address: mockAddresses[1],
           topics: mockTopics,
           blockNumber: mockFromBlock,
           transactionHash:

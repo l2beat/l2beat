@@ -1,9 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -40,14 +35,16 @@ export const nearomni: Bridge = {
       ],
     },
     description:
-      'The NEAR Omni Bridge (also called Rainbow Bridge) is an MPC-validated multichain bridge. The MPC signature request/response logic is implemented on the NEAR blockchan and is called "Chain Signatures" there. Although it currently is limited to sending tokens between Ethereum and Near + Aurora, future plans include other chains and more light clients on the NEAR blockchain.',
+      'The NEAR Omni Bridge (also called Rainbow Bridge) is an MPC-validated multichain bridge. The MPC signature request/response logic is implemented on the NEAR blockchain and is called "Chain Signatures" there. Although it currently is limited to sending tokens between Ethereum and Near + Aurora, future plans include other chains and more light clients on the NEAR blockchain.',
     category: 'Single-chain',
   },
   config: {
     associatedTokens: ['AURORA', 'NEAR'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xe00c629aFaCCb0510995A2B95560E446A24c85B9'),
+        address: ChainSpecificAddress(
+          'eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9',
+        ),
         tokens: '*',
         description:
           'Main escrow for all tokens bridged from Ethereum via Near Omni Bridge to other chains.',

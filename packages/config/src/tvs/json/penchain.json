@@ -1,0 +1,43 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "penchain",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "penchain-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x5A77f1443D16ee5761d310e38b62f77f726bC71c",
+        "chain": "penchain",
+        "decimals": 18,
+        "sinceTimestamp": 1740743363
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "penchain-PC",
+      "priceId": "pentagon-chain",
+      "symbol": "PC",
+      "name": "PentagonChain",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66638/large/pentagon-chain-token-fcp.png?1750094674",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA1Aa371E450C5AeE7fff259cbF5ccA9384227272",
+        "chain": "ethereum",
+        "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "decimals": 18,
+        "sinceTimestamp": 1750032000
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    }
+  ]
+}

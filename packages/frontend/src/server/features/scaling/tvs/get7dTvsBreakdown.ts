@@ -20,17 +20,19 @@ export interface ProjectSevenDayTvsBreakdown {
   breakdown: BreakdownSplit & {
     ether: number
     stablecoin: number
+    btc: number
   }
   breakdown7d: BreakdownSplit & {
     ether: number
     stablecoin: number
+    btc: number
   }
   associated: BreakdownSplit
   change: BreakdownSplit
   changeExcludingAssociated: BreakdownSplit
 }
 
-export interface BreakdownSplit {
+interface BreakdownSplit {
   total: number
   canonical: number
   external: number
@@ -102,6 +104,7 @@ export async function get7dTvsBreakdown(
         external: latestValue.external,
         ether: latestValue.ether,
         stablecoin: latestValue.stablecoin,
+        btc: latestValue.btc,
       },
       breakdown7d: {
         total: oldestValue.value,
@@ -110,6 +113,7 @@ export async function get7dTvsBreakdown(
         external: oldestValue.external,
         ether: oldestValue.ether,
         stablecoin: oldestValue.stablecoin,
+        btc: oldestValue.btc,
       },
       associated: {
         total: latestValue.associated,
@@ -194,6 +198,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             external: 10,
             ether: 30,
             stablecoin: 30,
+            btc: 4,
           },
           breakdown7d: {
             total: 50,
@@ -202,6 +207,7 @@ async function getMockTvsBreakdownData(): Promise<SevenDayTvsBreakdown> {
             external: 10,
             ether: 25,
             stablecoin: 25,
+            btc: 5,
           },
           associated: {
             total: 6,

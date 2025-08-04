@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -6,7 +10,7 @@ import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('superposition', 'arbitrum')
+const discovery = new ProjectDiscovery('superposition')
 
 export const superposition: ScalingProject = orbitStackL3({
   capability: 'universal',
@@ -59,15 +63,18 @@ export const superposition: ScalingProject = orbitStackL3({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: EthereumAddress('0x62bEd4b862254789825Cd6F2352aa2b76B16145e'), // standardGW
+      address: ChainSpecificAddress(
+        'arb1:0x62bEd4b862254789825Cd6F2352aa2b76B16145e',
+      ), // standardGW
       tokens: '*',
     }),
   ],
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

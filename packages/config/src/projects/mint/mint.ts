@@ -1,5 +1,5 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -57,6 +57,9 @@ export const mint: ScalingProject = opStackL2({
     adjustCount: { type: 'SubtractOne' },
   },
   isNodeAvailable: true,
+  nodeSourceLink:
+    'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
+  stateDerivation: DERIVATION.OPSTACK('MINT'),
   genesisTimestamp: UnixTime(1715608931),
   milestones: [
     {

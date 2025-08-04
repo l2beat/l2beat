@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import floor from 'lodash/floor'
 import {
   CONTRACTS,
@@ -62,15 +62,21 @@ export const shibarium: ScalingProject = {
     associatedTokens: ['SHIB', 'BONE', 'LEASH'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xc3897302aB4B42931cB4857050Fa60f53B775870'), // etherpredicate
+        address: ChainSpecificAddress(
+          'eth:0xc3897302aB4B42931cB4857050Fa60f53B775870',
+        ), // etherpredicate
         tokens: ['ETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa'), // erc20predicate
+        address: ChainSpecificAddress(
+          'eth:0x6Aca26bFCE7675FF71C734BF26C8c0aC4039A4Fa',
+        ), // erc20predicate
         tokens: '*',
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x885fcE983b6a01633f764325B8c3c5D31032C995'), // DepositManager
+        address: ChainSpecificAddress(
+          'eth:0x885fcE983b6a01633f764325B8c3c5D31032C995',
+        ), // DepositManager
         tokens: '*',
       }),
     ],
@@ -92,7 +98,7 @@ export const shibarium: ScalingProject = {
       value: `${currentValidatorSetSize} validators`,
       sentiment: 'bad',
       description:
-        'The bridge verifies that at least 2/3+1 of the whitelisted validators stake has signed off on the checkpoint. The StakeMaanger contract is the source of truth for the current validator set. The identity of the validators is not public, so it is not possible to verify the presence of sybils, or the number of different entities behind the validators. Since members are whitelisted, the validator set effectively acts as a permissioned DAC.',
+        'The bridge verifies that at least 2/3+1 of the whitelisted validators stake has signed off on the checkpoint. The StakeManager contract is the source of truth for the current validator set. The identity of the validators is not public, so it is not possible to verify the presence of sybils, or the number of different entities behind the validators. Since members are whitelisted, the validator set effectively acts as a permissioned DAC.',
     },
     mode: DA_MODES.TRANSACTION_DATA,
   },
@@ -134,13 +140,9 @@ export const shibarium: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
-  permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-  },
+  permissions: discovery.getDiscoveredPermissions(),
   discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -1,29 +1,45 @@
-import type { ProjectId, ProjectValueType } from '@l2beat/shared-pure'
+import {
+  type ProjectId,
+  type ProjectValueType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
-import { getRangeWithMax } from '~/utils/range/range'
-import { getTvsTargetTimestamp } from './getTvsTargetTimestamp'
+import { getTimestampedValuesRange } from '~/utils/range/range'
+import { isTvsSynced } from './isTvsSynced'
 import type { TvsChartRange } from './range'
 import { rangeToResolution } from './range'
+
+export type SummedTvsValues = {
+  timestamp: number
+  value: number | null
+  canonical: number | null
+  external: number | null
+  native: number | null
+  ether: number | null
+  stablecoin: number | null
+  other: number | null
+  associated: number | null
+}
 
 export async function getSummedTvsValues(
   projectIds: ProjectId[],
   range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
   type?: ProjectValueType,
-) {
+): Promise<SummedTvsValues[]> {
   const db = getDb()
   const resolution = rangeToResolution(range)
-  const target = getTvsTargetTimestamp()
-  const adjustedTarget = range.type === 'custom' ? range.to : target
-  const [from] = getRangeWithMax(range, resolution, {
-    now: adjustedTarget,
+
+  const [from, to] = getTimestampedValuesRange(range, resolution, {
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
+
   const [latest, valueRecords] = await Promise.all([
     db.tvsProjectValue.getLatestValues(type ?? 'SUMMARY', projectIds),
     db.tvsProjectValue.getSummedByTimestamp(projectIds, type ?? 'SUMMARY', [
       from,
-      adjustedTarget,
+      to,
     ]),
   ])
 
@@ -77,14 +93,27 @@ export async function getSummedTvsValues(
 
   const timestamps = valueRecords.map((v) => v.timestamp)
   const fromTimestamp = Math.min(...timestamps)
+  const maxTimestamp = Math.max(...timestamps)
   const groupedByTimestamp = keyBy(valueRecords, (v) => v.timestamp)
 
-  return generateTimestamps([fromTimestamp, target], resolution, {
+  const adjustedTo = isTvsSynced(maxTimestamp) ? maxTimestamp : to
+
+  return generateTimestamps([fromTimestamp, adjustedTo], resolution, {
     addTarget: true,
   }).flatMap((timestamp) => {
     const record = groupedByTimestamp[timestamp]
     if (!record) {
-      return []
+      return {
+        timestamp,
+        value: null,
+        canonical: null,
+        external: null,
+        native: null,
+        ether: null,
+        stablecoin: null,
+        other: null,
+        associated: null,
+      }
     }
     return record
   })

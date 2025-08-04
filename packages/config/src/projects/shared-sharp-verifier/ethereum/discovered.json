@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 22472206,
+  "timestamp": 1747113875,
   "configHash": "0xb1a123234a45d77f212a3fbd08adf12ca823cc2d4a2efc73c8ac4a512d6caf50",
   "entries": [
     {
@@ -2209,5 +2209,6 @@
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
     "shared-sharp-verifier/SHARPVerifierCallProxy": "0xb722f821b03d51d507eb48a1dc2cde0313166b3320805356cd17128b9458ccfe"
   },
+  "usedBlockNumbers": { "ethereum": 22472206 },
   "permissionsConfigHash": "0x8a0ac755368c009c9a592a5482577a2284a1875f3d509c3c876a8d131d2accc5"
 }

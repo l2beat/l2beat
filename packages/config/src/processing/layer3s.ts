@@ -18,6 +18,7 @@ import { deri } from '../projects/deri/deri'
 import { dodochain } from '../projects/dodochain/dodochain'
 import { donatuz } from '../projects/donatuz/donatuz'
 import { educhain } from '../projects/educhain/educhain'
+import { ethereal } from '../projects/ethereal/ethereal'
 import { evedex } from '../projects/evedex/evedex'
 import { fiefdom } from '../projects/fiefdom/fiefdom'
 import { forta } from '../projects/forta/forta'
@@ -86,6 +87,7 @@ export const layer3s: ScalingProject[] = [
   dodochain,
   donatuz,
   educhain,
+  ethereal,
   evedex,
   fiefdom,
   forta,

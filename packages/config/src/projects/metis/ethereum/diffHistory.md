@@ -1,3 +1,173 @@
+Generated with discovered.json: 0xed1558c85ada56f0d1f361c1786fe90edc0f3cbe
+
+# Diff at Mon, 28 Jul 2025 17:42:23 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@2c26a3acc54ed5596db035d8504bd1cec71d3bfb block: 22774371
+- current block number: 23019202
+
+## Description
+
+Upgraded the proof system, new flow:
+1. A watcher requests a dispute by bonding METIS (unchanged).
+2. The request waits for a game to be deployed (by a whitelisted gameCreator) (unchanged)
+3. If the deadline arrives and no game exists, anyone can call disputeTimeout. The diffence here is that disputeTimeout is not just a flagging function, but it now calls saveDisputedBatchTimeout on the StateCommitmentChain, which marks the batch root as disputed with disputedBatches[root]=true.
+4. Because the batch is now disputed, all later safety checks treat it as not final until MVM_Verifier deletes it. In particular, L2->L1 messaging/withdrawal is blocked for the batch root since the relayMessage() function in the L1CrossDomainMessanger eventually (in _verifyStateRootProofByChainId()) calls the ovmStateCommitmentChain to check the earliestDisputedBlockNumber, and any withdrawal whose L2 block ≥ earliestDisputedBlockNumber reverts until the dispute batch is deleted.
+
+## Watched changes
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      sourceHashes.1:
+-        "0xda7b05d88be95072ae926d6f2b176d60c2d568f45ef6c67071b28159388c81e7"
++        "0x27041f5f59b6e2efc5f1041e1ffb068e899b3da3761cafa4259df6c44b760893"
+      values.$implementation:
+-        "eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36"
++        "eth:0xc1Ce5240B42AB158027095f658d530F9989b414F"
+      values.$pastUpgrades.1:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0xc1Ce5240B42AB158027095f658d530F9989b414F"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.eth:0x8bF439ef7167023F009E24b21719Ca5f768Ecb36:
+-        "L1CrossDomainMessenger"
+      implementationNames.eth:0xc1Ce5240B42AB158027095f658d530F9989b414F:
++        "L1CrossDomainMessenger"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      sourceHashes.1:
+-        "0x45c38e69c9d8bca18eef505efeea8dfbe4deec90b00e915cedc1a2bb22743119"
++        "0xd86d5b68e9916386254080e646f5f34295ee3dcc904ba1b186df6cdc65ea4268"
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.$implementation:
+-        "eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
++        "eth:0x61B220bbfeF9A94163764928B039d85e94A509d9"
+      values.$pastUpgrades.2:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x61B220bbfeF9A94163764928B039d85e94A509d9"]]
+      values.$upgradeCount:
+-        2
++        3
+      values.accessControl.GAME_CREATOR_ROLE.members.1:
++        "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799"
+      values.gameCreator.1:
++        "eth:0xAaaAA9A2e72753cE09915fee7c0AFa6f34745799"
+      values.gameImpls.0:
+-        "eth:0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235"
++        "eth:0xD362F83945118dC953924Da1E30D7029b9Cf113d"
+      values.DEFAULT_CHAIN_ID:
++        1088
+      implementationNames.eth:0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45:
+-        "DisputeGameFactory"
+      implementationNames.eth:0x61B220bbfeF9A94163764928B039d85e94A509d9:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      sourceHashes.1:
+-        "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
++        "0x4e82791368b36a60ae6fc09aeb4023ce27c20f273f81bd9d6822056101d268ec"
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      values.$implementation:
+-        "eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
++        "eth:0x1061528C33b8034952fb7355cC481e193b29FCa6"
+      values.$pastUpgrades.2:
++        ["2025-07-23T04:50:23.000Z","0xcbea695d784f8a5c4a51baebf910f7c3f449b48d690b52c937ec1dc1d5458e2b",["eth:0x1061528C33b8034952fb7355cC481e193b29FCa6"]]
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.eth:0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
+-        "LockingPool"
+      implementationNames.eth:0x1061528C33b8034952fb7355cC481e193b29FCa6:
++        "LockingPool"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x477f9d1CC62Ea2c8ff0963B11C5D782Cef536235)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.4.via:
++        [{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.5.via:
++        [{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.12.via:
++        [{"address":"eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      directlyReceivedPermissions.1:
++        {"permission":"upgrade","from":"eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3","role":"admin"}
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb","role":"admin"}
+      directlyReceivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+    }
+```
+
+```diff
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6) {
+    +++ description: The State Commitment Chain (SCC) stores a list of proposed state roots in a linked ChainStorageContainer contract. Only a permissioned state root proposer (MVM_Proposer) can submit new state roots.
+      sourceHashes.1:
+-        "0x97bafeecd79eafa0a2d331c68498ce2ccecf89112ed12cb22b90aac48f1d0aa5"
++        "0xc9988c7d5840913f9a08b776cd81c6474c41bcb476822f537b3763d33f8e30e3"
+      values.$implementation:
+-        "eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365"
++        "eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7"
+      values.earliestDisputedBlockNumber:
++        0
+      implementationNames.eth:0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365:
+-        "MVM_StateCommitmentChain"
+      implementationNames.eth:0x49A4D7ae835eA21c919B363fa88614b61d7985E7:
++        "MVM_StateCommitmentChain"
+    }
+```
+
+```diff
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      values.$admin:
+-        "eth:0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xD362F83945118dC953924Da1E30D7029b9Cf113d)
+    +++ description: Contract for handling fault disputes (should games be created). Successfully disputed batches are marked as disputed to the StateCommitmentChain.
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory/DisputeGameFactory.sol      |  83 ++-
+ .../{.flat@22774371 => .flat}/FaultDisputeGame.sol |   2 +-
+ .../FaultProofLockingPool/LockingPool.sol          |   3 +
+ .../L1CrossDomainMessenger.sol                     | 632 ++++++++++++++-------
+ .../MVM_StateCommitmentChain.sol                   | 131 ++++-
+ 5 files changed, 616 insertions(+), 235 deletions(-)
+```
+
 Generated with discovered.json: 0xfcc176a86d8568b55e1c49cb21e02bc24b16b86b
 
 # Diff at Mon, 14 Jul 2025 12:45:25 GMT:

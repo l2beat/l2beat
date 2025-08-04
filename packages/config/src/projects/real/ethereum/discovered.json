@@ -1,8 +1,8 @@
 {
   "name": "real",
   "chain": "ethereum",
-  "blockNumber": 22923592,
-  "configHash": "0xc91df13e5601fab608c3535bf1e3834fb512d29e80f1476eb6540d8400e43e99",
+  "timestamp": 1754054742,
+  "configHash": "0xcf143576b5eb89f0a8a7f261b0253937922fde46a815623a7b5496b51221cabc",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -75,7 +75,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1018,
+        "nonce": 1074,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -294,8 +294,8 @@
         "outboxHistory": ["eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761"],
         "rollup": "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
         "sequencerInbox": "eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-        "sequencerMessageCount": 4133,
-        "sequencerReportedSubMessageCount": 1611275
+        "sequencerMessageCount": 4192,
+        "sequencerReportedSubMessageCount": 1624816
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -455,7 +455,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 4133,
+        "batchCount": 4192,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "eth:0x0181F0f0260Ac4149CA7Abf6c53d3E8053f95715",
@@ -541,41 +541,17 @@
       "values": {
         "$immutable": true,
         "assetsVault": "eth:0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "getAllStrategiesValue": "97182931369002469943",
-        "getAllStrategyPendingValue": "18073921517358732",
+        "getAllStrategiesValue": 1,
+        "getAllStrategyPendingValue": 0,
         "getStrategies": {
           "addrs": ["eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6"],
           "allocations": [1000000]
         },
-        "getTotalInvestedValue": {
-          "_value": "97164857447485111211",
-          "strategiesValue": ["97164857447485111211"]
-        },
-        "realVault": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
+        "getTotalInvestedValue": { "_value": 1, "strategiesValue": [1] },
+        "realVault": "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164"
       },
       "implementationNames": {
         "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8": "StrategyManager"
-      }
-    },
-    {
-      "name": "Minter",
-      "address": "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x426161bad834d6302cbb3deabf564724483a57f7cdcdd24427d7dd9ea6405056"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["getTokenPrice"],
-      "sinceTimestamp": 1710542279,
-      "sinceBlock": 19443364,
-      "values": {
-        "$immutable": true,
-        "getTokenPrice": "1035924751160132408",
-        "real": "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "vault": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
-      },
-      "implementationNames": {
-        "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da": "Minter"
       }
     },
     {
@@ -595,29 +571,9 @@
       "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
-        "getInvestedValue": "97164857447485111211",
-        "getStETHWithdrawalStatus": {
-          "requestIds": [86017, 85909],
-          "statuses": [
-            {
-              "amountOfStETH": "13931140864770212",
-              "amountOfShares": "11532491708906402",
-              "owner": "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6",
-              "timestamp": 1752380411,
-              "isFinalized": false,
-              "isClaimed": false
-            },
-            {
-              "amountOfStETH": 4142780652588520,
-              "amountOfShares": 3429734567737457,
-              "owner": "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6",
-              "timestamp": 1752293711,
-              "isFinalized": false,
-              "isClaimed": false
-            }
-          ]
-        },
-        "getTotalValue": "97182931369002469943",
+        "getInvestedValue": 1,
+        "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
+        "getTotalValue": 1,
         "governance": "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
         "MAX_STETH_WITHDRAWAL_AMOUNT": "1000000000000000000000",
@@ -810,6 +766,19 @@
       }
     },
     {
+      "name": "UnknownVault",
+      "address": "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1753768031,
+      "sinceBlock": 23022800,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164": ""
+      }
+    },
+    {
       "address": "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259",
       "type": "EOA",
       "proxyType": "EOA"
@@ -953,7 +922,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 36,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -991,30 +960,6 @@
       "implementationNames": {
         "eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8": "UUPSProxy",
         "eth:0x977cA9732E618D32552BA16a52f258cEFadf970a": "Bridger"
-      }
-    },
-    {
-      "name": "Real",
-      "address": "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf263e5f0d820b658ef0dd05015c2b4b333f38c76fcee96b52b307a19e0654162"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["tokenPrice", "totalSupply"],
-      "sinceTimestamp": 1710542279,
-      "sinceBlock": 19443364,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "minter": "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da",
-        "name": "Real Ether",
-        "symbol": "reETH",
-        "tokenPrice": "1035924751160132408",
-        "totalSupply": "104297306087992713822"
-      },
-      "implementationNames": {
-        "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421": "Real"
       }
     },
     {
@@ -1084,13 +1029,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 3626,
+        "firstUnresolvedNode": 3682,
         "inbox": "eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21903159,
-        "latestConfirmed": 3625,
-        "latestNodeCreated": 3625,
+        "latestConfirmed": 3681,
+        "latestNodeCreated": 3681,
         "loserStakeEscrow": "eth:0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761",
@@ -1231,19 +1176,6 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
-          "description": "can manage asset strategies and fees for the user's funds backing reETH.",
-          "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
-          "role": ".proposal"
-        }
-      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1715303135,
       "sinceBlock": 19836249,
@@ -1262,7 +1194,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 5 (80%)",
-        "nonce": 2,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1446,8 +1378,8 @@
       "sinceBlock": 19869596,
       "values": {
         "$immutable": true,
-        "getBalance": "10799189311380572543",
-        "realVault": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
+        "getBalance": "4858167207664582125",
+        "realVault": "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164",
         "strategyManager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
       },
       "implementationNames": {
@@ -1463,47 +1395,6 @@
       "address": "eth:0xFc1A48d5875Adc0E5f9e2805083C9c5300704BD7",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "RealVault",
-      "address": "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x3a95f1a37b3000abfc131510d1895ebfa14d26888610509cb2dd8ff7ffe4c81c"
-      ],
-      "proxyType": "immutable",
-      "description": "This contract is responsible for managing deposit, withdrawal, and settlement processes for the assets backing reETH using the ERC4626 (tokenized vault) standard.",
-      "ignoreInWatchMode": [
-        "currentSharePrice",
-        "withdrawingSharesInPast",
-        "withdrawableAmountInPast",
-        "withdrawingSharesInRound",
-        "rebaseTime"
-      ],
-      "sinceTimestamp": 1715706239,
-      "sinceBlock": 19869596,
-      "values": {
-        "$immutable": true,
-        "assetsVault": "eth:0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-        "currentSharePrice": "1035924751160132408",
-        "feeRecipient": "eth:0x0000000000000000000000000000000000000000",
-        "minter": "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da",
-        "minWithdrawableShares": 100,
-        "owner": "eth:0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
-        "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
-        "proposal": "eth:0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
-        "real": "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-        "rebaseTime": 1752467147,
-        "rebaseTimeInterval": 86400,
-        "strategyManager": "eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-        "withdrawableAmountInPast": "10817263232897931275",
-        "withdrawFeeRate": 0,
-        "withdrawingSharesInPast": "10502020920155801833",
-        "withdrawingSharesInRound": 5145000000000000
-      },
-      "implementationNames": {
-        "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": "RealVault"
-      }
     },
     {
       "name": "ERC20Gateway",
@@ -1895,18 +1786,6 @@
       "function updateWhitelistSource(address newSource)",
       "function whitelist() view returns (address)"
     ],
-    "eth:0x655756824385F8903AC8cFDa17B656cc26f7C7da": [
-      "constructor(address _real, address _vault)",
-      "error Minter__NotVault()",
-      "error Minter__ZeroAddress()",
-      "event VaultUpdated(address oldRealVault, address newRealVault)",
-      "function burn(address _from, uint256 _amount)",
-      "function getTokenPrice() view returns (uint256 price)",
-      "function mint(address _to, uint256 _amount)",
-      "function real() view returns (address)",
-      "function setNewVault(address _vault)",
-      "function vault() view returns (address)"
-    ],
     "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6": [
       "constructor(address _stETHAdress, address _stETHWithdrawal, address _wstETHAdress, address _weth9, address _swapManager, address _manager, string _name)",
       "error Strategy__InsufficientBalance()",
@@ -2248,32 +2127,6 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
-    "eth:0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421": [
-      "constructor(address _minter)",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error Real__NotMinter()",
-      "error Real__ZeroAddress()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(address from, uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function mint(address to, uint256 amount)",
-      "function minter() view returns (address)",
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function tokenPrice() view returns (uint256 price)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)"
-    ],
     "eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -2491,92 +2344,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": [
-      "constructor(address _intialOwner, address _minter, address _assetsVault, address _strategyManager, address _proposal) payable",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error RealVault__ExceedBalance()",
-      "error RealVault__ExceedMaxFeeRate(uint256 _feeRate)",
-      "error RealVault__ExceedRequestedAmount(uint256 requestedAmount, uint256 actualAmount)",
-      "error RealVault__ExceedWithdrawAmount()",
-      "error RealVault__InsufficientShares()",
-      "error RealVault__InvalidAmount()",
-      "error RealVault__Migrated()",
-      "error RealVault__MinimumRebaseInterval(uint256 minInterval)",
-      "error RealVault__MinimumWithdrawableShares()",
-      "error RealVault__MininmumWithdraw()",
-      "error RealVault__NoRequestFound()",
-      "error RealVault__NotProposal()",
-      "error RealVault__NotReady()",
-      "error RealVault__WaitInQueue()",
-      "error RealVault__WithdrawInstantly()",
-      "error RealVault__ZeroAddress()",
-      "error ReentrancyGuardReentrantCall()",
-      "event CancelWithdraw(address indexed account, uint256 amount, uint256 round)",
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event FeeCharged(address indexed account, uint256 amount)",
-      "event InitiateWithdraw(address indexed account, uint256 shares, uint256 round)",
-      "event InvestmentPortfolioUpdated(address[] indexed strategies, uint256[] indexed ratios)",
-      "event MinWithdrawableSharesUpdated(uint256 indexed minShares)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ProposalUpdated(address indexed oldAddr, address newAddr)",
-      "event RollToNextRound(uint256 indexed round, uint256 vaultIn, uint256 vaultOut, uint256 sharePrice)",
-      "event SetFeeRecipient(address indexed oldAddr, address newAddr)",
-      "event SetRebaseInterval(uint256 indexed interval)",
-      "event SetWithdrawFeeRate(uint256 indexed oldRate, uint256 newRate)",
-      "event SettleWithdrawDust(uint256 indexed dust)",
-      "event StrategyAdded(address indexed strategy)",
-      "event StrategyCleared(address indexed strategy)",
-      "event StrategyDestroyed(address indexed strategy)",
-      "event VaultMigrated(address indexed oldVault, address newVault)",
-      "event Withdrawn(address indexed account, uint256 amount, uint256 round)",
-      "event WithdrawnFromStrategy(address indexed account, uint256 amount, uint256 actualAmount, uint256 totalAmount, uint256 round)",
-      "function acceptOwnership()",
-      "function addStrategy(address _strategy)",
-      "function assetsVault() view returns (address)",
-      "function cancelWithdraw(uint256 _shares)",
-      "function clearStrategy(address _strategy)",
-      "function currentSharePrice() view returns (uint256 price)",
-      "function deposit(uint256 mintAmountMin) payable returns (uint256 mintAmount)",
-      "function depositFor(address receiver, uint256 mintAmountMin) payable returns (uint256 mintAmount)",
-      "function destroyStrategy(address _strategy)",
-      "function feeRecipient() view returns (address)",
-      "function getVaultAvailableAmount() view returns (uint256 idleAmount, uint256 investedAmount)",
-      "function instantWithdraw(uint256 _amount, uint256 _shares) returns (uint256 actualWithdrawn)",
-      "function latestRoundID() view returns (uint256)",
-      "function migrateVault(address _vault)",
-      "function minWithdrawableShares() view returns (uint256)",
-      "function minter() view returns (address)",
-      "function onlyRebaseStrategies()",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function proposal() view returns (address)",
-      "function real() view returns (address)",
-      "function rebaseTime() view returns (uint256)",
-      "function rebaseTimeInterval() view returns (uint256)",
-      "function renounceOwnership()",
-      "function requestWithdraw(uint256 _shares)",
-      "function rollToNextRound()",
-      "function roundPricePerShare(uint256) view returns (uint256)",
-      "function setFeeRecipient(address _feeRecipient)",
-      "function setMinWithdrawableShares(uint256 _minWithdrawableShares)",
-      "function setRebaseInterval(uint256 _interval)",
-      "function setWithdrawFeeRate(uint256 _withdrawFeeRate)",
-      "function settleWithdrawDust(uint256 amount)",
-      "function settlementTime(uint256) view returns (uint256)",
-      "function strategyManager() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function updateInvestmentPortfolio(address[] _strategies, uint256[] _ratios)",
-      "function updateProposal(address _proposal)",
-      "function userReceipts(address) view returns (uint256 withdrawRound, uint256 withdrawShares, uint256 withdrawableAmount)",
-      "function withdrawAmountDust() view returns (uint256)",
-      "function withdrawFeeRate() view returns (uint256)",
-      "function withdrawableAmountInPast() view returns (uint256)",
-      "function withdrawingSharesInPast() view returns (uint256)",
-      "function withdrawingSharesInRound() view returns (uint256)"
-    ],
     "eth:0xfC89B875970122E24C6C5ADd4Dea139443943ea7": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2604,5 +2371,6 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x41c4b771f234d22f8c1921b000170983a3e133cd2fbf65ae954d2f6620b7d63b"
+  "usedBlockNumbers": { "ethereum": 23046515 },
+  "permissionsConfigHash": "0x97b6758e22a392ab87dae48c4775c65bebccc26a97693069963cb7027f7b4723"
 }

@@ -74,6 +74,7 @@ import { haust } from '../projects/haust/haust'
 import { hemi } from '../projects/hemi/hemi'
 import { hermez } from '../projects/hermez/hermez'
 import { honeypot } from '../projects/honeypot/honeypot'
+import { hpp } from '../projects/hpp/hpp'
 import { hybrid } from '../projects/hybrid/hybrid'
 import { hychain } from '../projects/hychain/hychain'
 import { hypr } from '../projects/hypr/hypr'
@@ -168,8 +169,10 @@ import { scroll } from '../projects/scroll/scroll'
 import { settlus } from '../projects/settlus/settlus'
 import { shape } from '../projects/shape/shape'
 import { shibarium } from '../projects/shibarium/shibarium'
+import { silentData } from '../projects/silentdata/silentdata'
 import { silicon } from '../projects/silicon/silicon'
 import { singularityfinance } from '../projects/singularityfinance/singularityfinance'
+import { sischain } from '../projects/sischain/sischain'
 import { skatechain } from '../projects/skatechain/skatechain'
 import { snaxchain } from '../projects/snaxchain/snaxchain'
 import { solo } from '../projects/solo/solo'
@@ -297,6 +300,7 @@ export const layer2s: ScalingProject[] = [
   hemi,
   hermez,
   honeypot,
+  hpp,
   hybrid,
   hychain,
   hypr,
@@ -392,8 +396,10 @@ export const layer2s: ScalingProject[] = [
   settlus,
   shape,
   shibarium,
+  silentData,
   silicon,
   singularityfinance,
+  sischain,
   skatechain,
   snaxchain,
   solo,

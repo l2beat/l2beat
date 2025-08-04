@@ -1,8 +1,4 @@
-import {
-  ChainSpecificAddress,
-  EthereumAddress,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -108,7 +104,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: ChainSpecificAddress.address(bridge.address),
+      address: bridge.address,
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',
@@ -139,7 +135,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
       url: 'https://astar.network/blog/astars-zkevm-mainnet-is-live-86096',
       date: '2024-03-06',
       description:
-        'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
+        'Astar Network launched Astar zkEVM, integrated with Polygon Agglayer.',
       type: 'general',
     },
   ],

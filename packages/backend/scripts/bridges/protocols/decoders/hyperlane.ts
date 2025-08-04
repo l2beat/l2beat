@@ -1,9 +1,16 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import { decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
+import type { RpcClient } from '@l2beat/shared'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  decodeEventLog,
+  encodeEventTopics,
+  encodeFunctionData,
+  parseAbi,
+} from 'viem'
 import type { Chain } from '../../chains'
 import type { Asset } from '../../types/Asset'
+import type { DecoderInput } from '../../types/DecoderInput'
 import type { Message } from '../../types/Message'
-import type { TransactionWithLogs } from '../../types/TransactionWithLogs'
+import { extractAddressFromPadded } from '../../utils/viem'
 
 export const HYPERLANE = {
   name: 'hyperlane',
@@ -11,106 +18,155 @@ export const HYPERLANE = {
 }
 
 const ABI = parseAbi([
+  'event SentTransferRemote(uint32 indexed destination, bytes32 indexed recipient, uint256 amount)',
   'event Dispatch(address indexed sender, uint32 indexed destination, bytes32 indexed recipient, bytes message)',
   'event DispatchId(bytes32 indexed messageId)',
+  'event ReceivedTransferRemote(uint32 indexed origin, bytes32 indexed recipient, uint256 amount)',
   'event Process(uint32 indexed origin, bytes32 indexed sender, address indexed recipient)',
   'event ProcessId(bytes32 indexed messageId)',
+  'function wrappedToken() public view returns (address)',
 ])
 
-function decoder(
+async function decoder(
   chain: Chain,
-  transaction: TransactionWithLogs,
-): Partial<{ message: Message; asset: Asset }> | undefined {
-  for (const log of transaction.logs) {
-    const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
+  input: DecoderInput,
+  rpc?: RpcClient,
+): Promise<Message | Asset | undefined> {
+  const network = NETWORKS.find((b) => b.chainShortName === chain.shortName)
 
-    if (!network) continue
+  if (!network) return undefined
 
-    if (
-      EthereumAddress(log.address) === network.mailbox &&
-      log.topics[0] ===
-        encodeEventTopics({ abi: ABI, eventName: 'Dispatch' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'Dispatch',
-      })
+  if (
+    EthereumAddress(input.log.address) === network.mailbox &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'Dispatch' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'Dispatch',
+    })
 
-      const destination = NETWORKS.find(
-        (b) => b.chainId === data.args.destination,
-      )?.chainShortName
+    const destination = NETWORKS.find(
+      (b) => b.chainId === data.args.destination,
+    )?.chainShortName
 
-      const logWithId = transaction.logs.find(
-        (l) =>
-          l.topics[0] ===
-          encodeEventTopics({ abi: ABI, eventName: 'DispatchId' })[0],
-      )
-      assert(logWithId, 'DispatchId not emitted')
+    const dispatchIdLog = input.transactionLogs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'DispatchId' })[0],
+    )
+    assert(dispatchIdLog, 'DispatchId not emitted')
 
-      const id = decodeEventLog({
-        abi: ABI,
-        data: logWithId.data,
-        topics: logWithId.topics,
-        eventName: 'DispatchId',
-      }).args.messageId
+    const id = decodeEventLog({
+      abi: ABI,
+      data: dispatchIdLog.data,
+      topics: dispatchIdLog.topics,
+      eventName: 'DispatchId',
+    }).args.messageId
 
-      return {
-        message: {
-          direction: 'outbound',
-          protocol: HYPERLANE.name,
-          origin: chain.shortName,
-          destination: destination ?? data.args.destination.toString(),
-          blockTimestamp: transaction.blockTimestamp,
-          txHash: transaction.hash,
-          type: 'Dispatch',
-          matchingId: id,
-        },
-      }
+    const sentTransferRemoteLog = input.transactionLogs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'SentTransferRemote' })[0],
+    )
+    assert(sentTransferRemoteLog, 'SentTransferRemote not emitted')
+
+    const token = await getTokenWrappedAddress(
+      rpc,
+      EthereumAddress(sentTransferRemoteLog.address),
+      input.blockNumber,
+    )
+
+    const amount = decodeEventLog({
+      abi: ABI,
+      data: sentTransferRemoteLog.data,
+      topics: sentTransferRemoteLog.topics,
+      eventName: 'SentTransferRemote',
+    }).args.amount
+
+    return {
+      type: 'asset',
+      direction: 'outbound',
+      application: HYPERLANE.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.destination.toString(),
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'Dispatch',
+      matchingId: id,
+      amount: amount,
+      token: token,
+      // messageProtocol?: string
+      // messageId?: string
     }
+  }
 
-    if (
-      EthereumAddress(log.address) === network.mailbox &&
-      log.topics[0] === encodeEventTopics({ abi: ABI, eventName: 'Process' })[0]
-    ) {
-      const data = decodeEventLog({
-        abi: ABI,
-        data: log.data,
-        topics: log.topics,
-        eventName: 'Process',
-      })
+  if (
+    EthereumAddress(input.log.address) === network.mailbox &&
+    input.log.topics[0] ===
+      encodeEventTopics({ abi: ABI, eventName: 'Process' })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'Process',
+    })
 
-      const origin = NETWORKS.find(
-        (c) => c.chainId === data.args.origin,
-      )?.chainShortName
+    const origin = NETWORKS.find(
+      (c) => c.chainId === data.args.origin,
+    )?.chainShortName
 
-      const logWithId = transaction.logs.find(
-        (l) =>
-          l.topics[0] ===
-          encodeEventTopics({ abi: ABI, eventName: 'ProcessId' })[0],
-      )
-      assert(logWithId, 'DispatchId not emitted')
+    const logWithId = input.transactionLogs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'ProcessId' })[0],
+    )
+    assert(logWithId, 'DispatchId not emitted')
 
-      const id = decodeEventLog({
-        abi: ABI,
-        data: logWithId.data,
-        topics: logWithId.topics,
-        eventName: 'ProcessId',
-      }).args.messageId
+    const id = decodeEventLog({
+      abi: ABI,
+      data: logWithId.data,
+      topics: logWithId.topics,
+      eventName: 'ProcessId',
+    }).args.messageId
 
-      return {
-        message: {
-          direction: 'inbound',
-          protocol: HYPERLANE.name,
-          origin: origin ?? data.args.origin.toString(),
-          destination: chain.shortName,
-          blockTimestamp: transaction.blockTimestamp,
-          txHash: transaction.hash,
-          type: 'Process',
-          matchingId: id,
-        },
-      }
+    const receivedTransferRemoteLog = input.transactionLogs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'ReceivedTransferRemote' })[0],
+    )
+    assert(receivedTransferRemoteLog, 'ReceivedTransferRemote not emitted')
+
+    const token = await getTokenWrappedAddress(
+      rpc,
+      EthereumAddress(receivedTransferRemoteLog.address),
+      input.blockNumber,
+    )
+
+    const amount = decodeEventLog({
+      abi: ABI,
+      data: receivedTransferRemoteLog.data,
+      topics: receivedTransferRemoteLog.topics,
+      eventName: 'ReceivedTransferRemote',
+    }).args.amount
+
+    return {
+      type: 'asset',
+      direction: 'inbound',
+      application: HYPERLANE.name,
+      origin: origin ?? data.args.origin.toString(),
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'Process',
+      matchingId: id,
+      amount: amount,
+      token: token,
+      // messageProtocol?: string
+      // messageId?: string
     }
   }
 
@@ -133,4 +189,32 @@ const NETWORKS = [
     chainShortName: 'base',
     mailbox: EthereumAddress('0xeA87ae93Fa0019a82A727bfd3eBd1cFCa8f64f1D'),
   },
+  {
+    chainId: 10,
+    chainShortName: 'oeth',
+    mailbox: EthereumAddress('0xd4C1905BB1D26BC93DAC913e13CaCC278CdCC80D'),
+  },
 ]
+
+async function getTokenWrappedAddress(
+  rpc: RpcClient | undefined,
+  tokenWrapper: EthereumAddress,
+  blockNumber: number,
+) {
+  assert(rpc)
+  const tokenWrappedAddress = await rpc.call(
+    {
+      to: tokenWrapper,
+      data: Bytes.fromHex(
+        encodeFunctionData({
+          abi: ABI,
+          functionName: 'wrappedToken',
+        }),
+      ),
+    },
+    blockNumber,
+  )
+
+  const token = extractAddressFromPadded(tokenWrappedAddress.toString())
+  return token
+}
