@@ -10,11 +10,20 @@ export function generateTimestamps(
   resolution: 'hourly' | 'sixHourly' | 'daily',
   opts?: Options,
 ) {
+  const adjustedFrom = UnixTime.toEndOf(
+    from,
+    resolution === 'hourly'
+      ? 'hour'
+      : resolution === 'sixHourly'
+        ? 'six hours'
+        : 'day',
+  )
+
   const generated = range(
     Math.floor((to - from) / divider(resolution)) + 1,
   ).map((i) => {
     return (
-      from +
+      adjustedFrom +
       UnixTime(i * (resolution === 'sixHourly' ? 6 : 1)) *
         (resolution === 'hourly' || resolution === 'sixHourly'
           ? UnixTime.HOUR

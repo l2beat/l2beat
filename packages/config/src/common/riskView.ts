@@ -67,15 +67,15 @@ export const STATE_FP_HYBRID_ZK: TableReadyValue = {
 }
 
 export const STATE_ZKP_SN: TableReadyValue = {
-  value: 'ZK proofs (SN)',
+  value: 'Validity proofs (SN)',
   description:
-    'SNARKs are zero knowledge proofs that ensure state correctness, but require trusted setup.',
+    'SNARKs are succinct zero knowledge proofs that ensure state correctness, but require trusted setup.',
   sentiment: 'good',
   orderHint: Number.POSITIVE_INFINITY,
 }
 
 export const STATE_ZKP_ST: TableReadyValue = {
-  value: 'ZK proofs (ST)',
+  value: 'Validity proofs (ST)',
   description:
     'STARKs are zero knowledge proofs that ensure state correctness.',
   sentiment: 'good',
@@ -83,7 +83,7 @@ export const STATE_ZKP_ST: TableReadyValue = {
 }
 
 export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
-  value: 'ZK proofs (ST, SN)',
+  value: 'Validity proofs (ST, SN)',
   description:
     'STARKs and SNARKs are zero knowledge proofs that ensure state correctness. STARKs proofs are wrapped in SNARKs proofs for efficiency. SNARKs require a trusted setup.',
   sentiment: 'good',
@@ -92,7 +92,7 @@ export const STATE_ZKP_ST_SN_WRAP: TableReadyValue = {
 
 export function STATE_ZKP_L3(L2: string): TableReadyValue {
   return {
-    value: 'ZK proofs',
+    value: 'Validity proofs',
     description: `Zero knowledge cryptography is used to ensure state correctness. Proofs are first verified on ${L2} and finally on Ethereum.`,
     sentiment: 'good',
     orderHint: Number.POSITIVE_INFINITY,

@@ -11,6 +11,7 @@ import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/comp
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
+  rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
@@ -84,6 +85,8 @@ export function ThroughputSectionByProjectChart({
     [allProjects, includeScalingOnly, selectedProjects],
   )
 
+  const resolution = rangeToResolution({ type: range })
+
   return (
     <div>
       <div className="mt-4 mb-3 flex flex-col justify-between gap-1">
@@ -126,6 +129,7 @@ export function ThroughputSectionByProjectChart({
         projectsToShow={projectsToShow}
         customColors={customColors}
         milestones={milestones}
+        resolution={resolution}
       />
     </div>
   )
