@@ -12,7 +12,7 @@ export const rayls: ScalingProject = upcomingL2({
     slug: 'rayls',
     description:
       'Rayls is a compliant, KYC-enabled L2 built on Arbitrum Orbit to bridge $100T in TradFi assets into DeFi.',
-    purposes: ['Universal'],
+    purposes: ['Universal', 'RWA'],
     category: 'Optimistic Rollup',
     stacks: ['Arbitrum'],
     links: {
