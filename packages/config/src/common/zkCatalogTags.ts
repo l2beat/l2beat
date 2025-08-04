@@ -83,8 +83,8 @@ export const zkCatalogTags = [
   {
     id: 'CASM',
     type: ZkCatalogTagType.ISA,
-    name: 'cASM',
-    description: 'Instruction language for CairoVM developed by Starkware.',
+    name: 'Cairo ASM',
+    description: 'Instruction language for Cairo VM developed by Starkware.',
   },
   {
     id: 'EVM',
@@ -248,6 +248,13 @@ export const zkCatalogTags = [
     name: 'eAIR',
     description:
       'Extended algebraic intermediate representation introduced by Polygon Zero for eSTARK.',
+  },
+  // Other
+  {
+    id: 'CustomCircuits',
+    type: ZkCatalogTagType.Other,
+    name: 'App-specific circuits',
+    description: 'This project uses custom app-specific ZK circuits.',
   },
 ] as const satisfies ZkCatalogTag[]
 
