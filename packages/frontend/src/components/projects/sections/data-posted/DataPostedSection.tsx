@@ -1,10 +1,12 @@
-import type { Milestone } from '@l2beat/config'
+import type { Milestone, ProjectDaTrackingConfig } from '@l2beat/config'
+import { EigenDataSourceInfo } from '~/components/chart/data-availability/EigenDataSourceInfo'
 import { ProjectDataPostedChart } from '~/components/chart/data-posted/ProjectDataPostedChart'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { CustomLink } from '~/components/link/CustomLink'
 import type { DataPostedTimeRange } from '~/server/features/scaling/data-posted/range'
-import { ProjectSection } from './ProjectSection'
-import type { ProjectSectionProps } from './types'
+import { ProjectSection } from '../ProjectSection'
+import type { ProjectSectionProps } from '../types'
+import { DataPostedTrackedTransactions } from './DataPostedTrackedTransactions'
 
 export interface DataPostedSectionProps extends ProjectSectionProps {
   projectId: string
@@ -15,6 +17,7 @@ export interface DataPostedSectionProps extends ProjectSectionProps {
   }
   milestones: Milestone[]
   defaultRange: DataPostedTimeRange
+  daTrackingConfig: ProjectDaTrackingConfig[]
 }
 
 export function DataPostedSection({
@@ -22,6 +25,7 @@ export function DataPostedSection({
   daLayer,
   milestones,
   defaultRange,
+  daTrackingConfig,
   ...sectionProps
 }: DataPostedSectionProps) {
   return (
@@ -39,10 +43,17 @@ export function DataPostedSection({
         .
       </p>
       <HorizontalSeparator className="my-4" />
+      {daLayer.name === 'EigenDA' && <EigenDataSourceInfo />}
       <ProjectDataPostedChart
         projectId={projectId}
         defaultRange={defaultRange}
       />
+      {daLayer.name !== 'EigenDA' && (
+        <>
+          <HorizontalSeparator className="my-4" />
+          <DataPostedTrackedTransactions daTrackingConfig={daTrackingConfig} />
+        </>
+      )}
     </ProjectSection>
   )
 }
