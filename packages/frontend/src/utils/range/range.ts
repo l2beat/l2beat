@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { rangeToDays } from './rangeToDays'
 
 export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
-export type Resolution = 'hourly' | 'daily' | 'sixHourly'
+type Resolution = 'hourly' | 'daily' | 'sixHourly'
 
 export function getTimestampedValuesRange(
   range: { type: TimeRange } | { type: 'custom'; from: number; to: number },

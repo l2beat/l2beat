@@ -18,7 +18,7 @@ import {
   rangeToResolution,
 } from './utils/range'
 
-export type DaThroughputChart = {
+type DaThroughputChart = {
   data: DaThroughputDataPoint[]
   syncStatus?: Record<string, number>
 }

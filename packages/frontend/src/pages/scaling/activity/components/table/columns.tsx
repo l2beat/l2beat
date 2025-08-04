@@ -13,7 +13,7 @@ import { formatUopsRatio } from '~/utils/number-format/formatUopsRatio'
 import type { ActivityMetric } from '../ActivityMetricContext'
 import { MaxCountCell } from './MaxCountCell'
 
-export type ScalingActivityTableEntry = ScalingActivityEntry & {
+type ScalingActivityTableEntry = ScalingActivityEntry & {
   data:
     | {
         isSynced: boolean

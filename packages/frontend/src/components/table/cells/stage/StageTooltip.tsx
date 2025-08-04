@@ -15,7 +15,7 @@ import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { UnderReviewIcon } from '~/icons/UnderReview'
 import { cn } from '~/utils/cn'
 
-export interface StageTooltipProps {
+interface StageTooltipProps {
   stageConfig: ProjectScalingStage
   isAppchain: boolean
   emergencyWarning?: string
