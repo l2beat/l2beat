@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd346a9ffd8d7bc7471c7d7fb64ff88f2f0b10010
+
+# Diff at Mon, 04 Aug 2025 11:45:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1753687577
+- current timestamp: 1754307917
+
+## Description
+
+key removal charge waived.
+
+## Watched changes
+
+```diff
+    contract CSModule (0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      values.keyRemovalCharge:
+-        "20000000000000000"
++        0
+    }
+```
+
 Generated with discovered.json: 0x76fe12f3b1e3403318e47cdb3211fbc918cf9ef0
 
 # Diff at Mon, 28 Jul 2025 07:26:43 GMT:

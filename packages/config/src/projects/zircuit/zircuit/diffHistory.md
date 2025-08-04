@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xec2e815aa36284e7096cae814d2591608a034551
+
+# Diff at Mon, 04 Aug 2025 12:35:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1753687757
+- current timestamp: 1754310248
+
+## Description
+
+add template for L1Block with 'depositExclusions' modification.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687757 (main branch discovery), not current.
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`.
+      template:
++        "opstack/Layer2/L1Block_depositExclusions"
+      description:
++        "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`."
+    }
+```
+
 Generated with discovered.json: 0x6c419d61eba851803a53aff30c925fa6172cb44e
 
 # Diff at Thu, 31 Jul 2025 13:15:24 GMT:

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
@@ -28,9 +28,6 @@ export const prom: ScalingProject = underReviewL2({
         'https://medium.com/@prom-io',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('agglayer'),
   },
   associatedTokens: ['PROM'],
   chainConfig: {
