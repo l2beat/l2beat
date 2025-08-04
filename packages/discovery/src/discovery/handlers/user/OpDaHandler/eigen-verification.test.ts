@@ -36,7 +36,7 @@ const confirmedBatchHeaderHashes = [
 ]
 
 describe(checkForEigenDA.name, () => {
-  it('should return false if byte-check failes for all sequencer transactions', async () => {
+  it('should return false if byte-check fails for all sequencer transactions', async () => {
     const invalidTransactions = [
       {
         hash: Hash256.random(),
