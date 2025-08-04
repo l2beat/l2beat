@@ -12,7 +12,6 @@ import { bugbuster } from '../projects/bugbuster/bugbuster'
 import { cheese } from '../projects/cheese/cheese'
 import { clique } from '../projects/clique/clique'
 import { conwai } from '../projects/conwai/conwai'
-import { cvex } from '../projects/cvex/cvex'
 import { datalake } from '../projects/datalake/datalake'
 import { degen } from '../projects/degen/degen'
 import { deri } from '../projects/deri/deri'
@@ -32,6 +31,7 @@ import { hook } from '../projects/hook/hook'
 import { huddle01 } from '../projects/huddle01/huddle01'
 import { hyperagi } from '../projects/hyperagi/hyperagi'
 import { inevm } from '../projects/inevm/inevm'
+import { jetstreamchain } from '../projects/jetstreamchain/jetstreamchain'
 import { l3x } from '../projects/l3x/l3x'
 import { lumiterra } from '../projects/lumiterra/lumiterra'
 import { mindchain } from '../projects/mindchain/mindchain'
@@ -81,7 +81,6 @@ export const layer3s: ScalingProject[] = [
   cheese,
   clique,
   conwai,
-  cvex,
   datalake,
   degen,
   deri,
@@ -96,6 +95,7 @@ export const layer3s: ScalingProject[] = [
   geist,
   gridy,
   inevm,
+  jetstreamchain,
   ham,
   henez,
   huddle01,
