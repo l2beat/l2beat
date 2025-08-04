@@ -117,6 +117,7 @@ export const EVMLog = z.object({
   blockNumber: Quantity.decode.transform((n) => Number(n)),
   transactionHash: z.string(),
   data: z.string(),
+  logIndex: Quantity.decode.transform((n) => Number(n)),
 })
 
 export type EVMLogsResponse = z.infer<typeof EVMLogsResponse>

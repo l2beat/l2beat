@@ -22,7 +22,9 @@ const ABI = parseAbi([
   'event InterchainTransfer(bytes32 indexed tokenId, address indexed sourceAddress, string destinationChain, bytes destinationAddress, uint256 amount, bytes32 indexed dataHash)',
   'function deployedTokenManager(bytes32 tokenId) public view returns (address)',
   'function tokenAddress() public view returns (address)',
-  'event InterchainTransferReceived(bytes32 indexed commandId, bytes32 indexed tokenId, string sourceChain, bytes sourceAddress, address indexed destinationAddress, uint256 amount, bytes32 dataHash)',
+  'event ContractCallApprovedWithMint(bytes32 indexed commandId, string sourceChain, string sourceAddress, address indexed contractAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, bytes32 sourceTxHash, uint256 sourceEventIndex)',
+  'function tokenAddresses(string symbol) view returns (address)',
+  'event ContractCallWithToken(address indexed sender, string destinationChain, string destinationContractAddress, bytes32 indexed payloadHash, bytes payload, string symbol, uint256 amount)',
 ])
 
 async function decoder(
@@ -79,7 +81,9 @@ async function decoder(
     const token = extractAddressFromPadded(tokenAddress.toString())
 
     const destination = NETWORKS.find(
-      (b) => b.axelarChainName === data.args.destinationChain,
+      (b) =>
+        b.axelarChainName.toLowerCase() ===
+        data.args.destinationChain.toLowerCase(),
     )?.chainShortName
 
     return {
@@ -103,45 +107,88 @@ async function decoder(
   }
 
   if (
-    EthereumAddress(input.log.address) === network.interchainTokenService &&
+    EthereumAddress(input.log.address) === network.gateway &&
     input.log.topics[0] ===
       encodeEventTopics({
         abi: ABI,
-        eventName: 'InterchainTransferReceived',
+        eventName: 'ContractCallWithToken',
       })[0]
   ) {
     const data = decodeEventLog({
       abi: ABI,
       data: input.log.data,
       topics: input.log.topics,
-      eventName: 'InterchainTransferReceived',
+      eventName: 'ContractCallWithToken',
     })
 
     assert(rpc)
-    const deployedTokenManager = await rpc.call(
+
+    const tokenAddress = await rpc.call(
       {
-        to: network.interchainTokenService,
+        to: network.gateway,
         data: Bytes.fromHex(
           encodeFunctionData({
             abi: ABI,
-            functionName: 'deployedTokenManager',
-            args: [data.args.tokenId],
+            functionName: 'tokenAddresses',
+            args: [data.args.symbol],
           }),
         ),
       },
       input.blockNumber,
     )
-    const tokenManager = extractAddressFromPadded(
-      deployedTokenManager.toString(),
-    )
+    const token = extractAddressFromPadded(tokenAddress.toString())
+
+    const destination = NETWORKS.find(
+      (b) =>
+        b.axelarChainName.toLowerCase() ===
+        data.args.destinationChain.toLowerCase(),
+    )?.chainShortName
+
+    return {
+      type: 'asset',
+      direction: 'outbound',
+      application: AXELAR.name,
+      origin: chain.shortName,
+      destination: destination ?? data.args.destinationChain,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'ContractCallWithToken',
+      matchingId: messageToCommandId(
+        network.axelarChainName,
+        input.transactionHash,
+      ),
+      amount: data.args.amount,
+      token: token,
+      // messageProtocol?: string
+      // messageId?: string
+    }
+  }
+
+  if (
+    EthereumAddress(input.log.address) === network.gateway &&
+    input.log.topics[0] ===
+      encodeEventTopics({
+        abi: ABI,
+        eventName: 'ContractCallApprovedWithMint',
+      })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'ContractCallApprovedWithMint',
+    })
+
+    assert(rpc)
+
     const tokenAddress = await rpc.call(
       {
-        to: EthereumAddress(tokenManager),
+        to: network.gateway,
         data: Bytes.fromHex(
           encodeFunctionData({
             abi: ABI,
-            functionName: 'tokenAddress',
-            args: [],
+            functionName: 'tokenAddresses',
+            args: [data.args.symbol],
           }),
         ),
       },
@@ -150,7 +197,8 @@ async function decoder(
     const token = extractAddressFromPadded(tokenAddress.toString())
 
     const origin = NETWORKS.find(
-      (b) => b.axelarChainName === data.args.sourceChain,
+      (b) =>
+        b.axelarChainName.toLowerCase() === data.args.sourceChain.toLowerCase(),
     )?.chainShortName
 
     return {
@@ -161,7 +209,7 @@ async function decoder(
       destination: chain.shortName,
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
-      customType: 'InterchainTransferReceived',
+      customType: 'ContractCallApprovedWithMint',
       matchingId: data.args.commandId,
       amount: data.args.amount,
       token: token,
@@ -179,6 +227,7 @@ const NETWORKS = [
     interchainTokenService: EthereumAddress(
       '0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C',
     ),
+    gateway: EthereumAddress('0x4F4495243837681061C4743b74B3eEdf548D56A5'),
     axelarChainName: 'Ethereum',
   },
   {
@@ -186,12 +235,31 @@ const NETWORKS = [
     interchainTokenService: EthereumAddress(
       '0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C',
     ),
+    gateway: EthereumAddress('0xe432150cce91c13a887f7D836923d5597adD8E31'),
     axelarChainName: 'base',
+  },
+  {
+    chainShortName: 'arb1',
+    interchainTokenService: EthereumAddress(
+      '0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C',
+    ),
+    gateway: EthereumAddress('0xe432150cce91c13a887f7D836923d5597adD8E31'),
+    axelarChainName: 'arbitrum',
+  },
+  {
+    chainShortName: 'oeth',
+    interchainTokenService: EthereumAddress(
+      '0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C',
+    ),
+    gateway: EthereumAddress('0xe432150cce91c13a887f7D836923d5597adD8E31'),
+    axelarChainName: 'optimism',
   },
 ]
 
+// TODO: this function does not correctly calculate commandId for now
 //https://axelarscan.io/gmp/0xc87067b17b65949c58628e02444fab84d804147edd8575dff77fb375b513e140
 // /https://docs.axelar.dev/resources/axelar-commandid/
+// message ID is somehow connected with event index, this "-<number>" suffix
 function messageToCommandId(sourceChain: string, messageId: string): string {
   // Axelar doesn't allow `sourceChain` to contain '_', hence this encoding is unambiguous
   const concatenated = `${sourceChain}_${messageId}`
