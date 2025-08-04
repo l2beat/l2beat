@@ -91,8 +91,16 @@
         ]
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "LayerZero OFT v2",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

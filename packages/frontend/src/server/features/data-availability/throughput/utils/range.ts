@@ -29,6 +29,7 @@ export function getThroughputRange(
   })
 }
 
+export type DaThroughputResolution = ReturnType<typeof rangeToResolution>
 export function rangeToResolution(
   range:
     | { type: DaThroughputTimeRange | CostsTimeRange }

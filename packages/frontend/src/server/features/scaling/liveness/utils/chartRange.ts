@@ -11,7 +11,10 @@ export const LivenessChartTimeRange = v.union([
 ] as const)
 export type LivenessChartTimeRange = v.infer<typeof LivenessChartTimeRange>
 
-export function rangeToResolution(range: LivenessChartTimeRange) {
+export type LivenessChartResolution = 'hourly' | 'sixHourly' | 'daily'
+export function rangeToResolution(
+  range: LivenessChartTimeRange,
+): LivenessChartResolution {
   const days = rangeToDays({ type: range })
   if (days && days <= 7) return 'hourly'
   if (days && days < 180) return 'sixHourly'

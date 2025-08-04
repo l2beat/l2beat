@@ -81,7 +81,6 @@ import { hypr } from '../projects/hypr/hypr'
 import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
-import { intmax } from '../projects/intmax/intmax'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -157,6 +156,7 @@ import { quarkchain } from '../projects/quarkchain/quarkchain'
 import { r0ar } from '../projects/r0ar/r0ar'
 import { race } from '../projects/race/race'
 import { rarimo } from '../projects/rarimo/rarimo'
+import { rayls } from '../projects/rayls/rayls'
 import { real } from '../projects/real/real'
 import { reddioex } from '../projects/reddioex/reddioex'
 import { reddiozkvm } from '../projects/reddiozkvm/reddiozkvm'
@@ -308,7 +308,6 @@ export const layer2s: ScalingProject[] = [
   immutablex,
   immutablezkevm,
   ink,
-  intmax,
   karak,
   katana,
   kinto,
@@ -384,6 +383,7 @@ export const layer2s: ScalingProject[] = [
   r0ar,
   race,
   rarimo,
+  rayls,
   real,
   reddioex,
   reddiozkvm,
