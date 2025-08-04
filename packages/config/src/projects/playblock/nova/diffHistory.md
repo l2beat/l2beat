@@ -1,29 +1,3 @@
-Generated with discovered.json: 0xd62eb34d7fe30f7556b0af90f8e37b7613ad6115
-
-# Diff at Mon, 04 Aug 2025 12:36:56 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1742892328
-- current timestamp: 1754309901
-
-## Description
-
-source unverified, not sure if this is a good way to show it.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1742892328 (main branch discovery), not current.
-
-```diff
-    contract RollupProxy (0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0) {
-    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
-      sourceHashes:
-+        [null,"0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"]
-    }
-```
-
 Generated with discovered.json: 0xe279eb4b23099ccac54d252bcd95850c085eb134
 
 # Diff at Mon, 14 Jul 2025 12:47:05 GMT:
