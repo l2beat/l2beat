@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "timestamp": 1754057499,
+  "timestamp": 1754311053,
   "configHash": "0xd38e9c53b1775bb619aefecfa164c450b440ce77e1acd2928e28d4bfea9f134b",
   "entries": [
     {
@@ -1071,7 +1071,7 @@
         "capacitorFactory__": "eth:0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "eth:0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 17642,
+        "globalMessageCount": 17775,
         "hasher__": "eth:0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "eth:0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -1256,7 +1256,8 @@
           "eth:0x3645C506F4E22eA2380B8c4fd5fA914F36dfc3b0",
           "eth:0x4CC07BCB7949CAbAb7b19EC94267AF5C0e47AEdA",
           "eth:0x47D5E4eCae70c9AD12eaDF469344B6B52a0ebCcE",
-          "eth:0xec837c413c25B6952845551183ba8900cc543b95"
+          "eth:0xec837c413c25B6952845551183ba8900cc543b95",
+          "eth:0xDb39c6502e6DaaC4d9EFe6383029bda464ea043c"
         ],
         "transmitManager__": "eth:0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -5138,6 +5139,6 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 23046743 },
+  "usedBlockNumbers": { "ethereum": 23067746 },
   "permissionsConfigHash": "0xe5be59e86f42d01f9d74e39c9aa5a752c0b23737bc5676c0d8ceeba8c86cc0d0"
 }
