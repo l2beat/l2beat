@@ -29,9 +29,6 @@ export const prom: ScalingProject = underReviewL2({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('agglayer'),
-  },
   associatedTokens: ['PROM'],
   chainConfig: {
     name: 'prom',
