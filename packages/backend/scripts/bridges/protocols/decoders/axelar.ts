@@ -19,12 +19,16 @@ export const AXELAR = {
 }
 
 const ABI = parseAbi([
+  // InterchainTransfer
   'event InterchainTransfer(bytes32 indexed tokenId, address indexed sourceAddress, string destinationChain, bytes destinationAddress, uint256 amount, bytes32 indexed dataHash)',
+  'event InterchainTransferReceived(bytes32 indexed commandId, bytes32 indexed tokenId, string sourceChain, bytes sourceAddress, address indexed destinationAddress, uint256 amount, bytes32 dataHash)',
+  // ContractCallWithToken
+  'event ContractCallWithToken(address indexed sender, string destinationChain, string destinationContractAddress, bytes32 indexed payloadHash, bytes payload, string symbol, uint256 amount)',
+  'event ContractCallExecuted(bytes32 indexed commandId)',
+  'event ExpressExecutionWithTokenFulfilled(bytes32 indexed commandId, string sourceChain, string sourceAddress, bytes32 payloadHash, string symbol, uint256 indexed amount, address indexed expressExecutor)',
   'function deployedTokenManager(bytes32 tokenId) public view returns (address)',
   'function tokenAddress() public view returns (address)',
-  'event ContractCallApprovedWithMint(bytes32 indexed commandId, string sourceChain, string sourceAddress, address indexed contractAddress, bytes32 indexed payloadHash, string symbol, uint256 amount, bytes32 sourceTxHash, uint256 sourceEventIndex)',
   'function tokenAddresses(string symbol) view returns (address)',
-  'event ContractCallWithToken(address indexed sender, string destinationChain, string destinationContractAddress, bytes32 indexed payloadHash, bytes payload, string symbol, uint256 amount)',
 ])
 
 async function decoder(
@@ -107,6 +111,74 @@ async function decoder(
   }
 
   if (
+    EthereumAddress(input.log.address) === network.interchainTokenService &&
+    input.log.topics[0] ===
+      encodeEventTopics({
+        abi: ABI,
+        eventName: 'InterchainTransferReceived',
+      })[0]
+  ) {
+    const data = decodeEventLog({
+      abi: ABI,
+      data: input.log.data,
+      topics: input.log.topics,
+      eventName: 'InterchainTransferReceived',
+    })
+
+    assert(rpc)
+    const deployedTokenManager = await rpc.call(
+      {
+        to: network.interchainTokenService,
+        data: Bytes.fromHex(
+          encodeFunctionData({
+            abi: ABI,
+            functionName: 'deployedTokenManager',
+            args: [data.args.tokenId],
+          }),
+        ),
+      },
+      input.blockNumber,
+    )
+    const tokenManager = extractAddressFromPadded(
+      deployedTokenManager.toString(),
+    )
+    const tokenAddress = await rpc.call(
+      {
+        to: EthereumAddress(tokenManager),
+        data: Bytes.fromHex(
+          encodeFunctionData({
+            abi: ABI,
+            functionName: 'tokenAddress',
+            args: [],
+          }),
+        ),
+      },
+      input.blockNumber,
+    )
+    const token = extractAddressFromPadded(tokenAddress.toString())
+
+    const origin = NETWORKS.find(
+      (b) => b.axelarChainName === data.args.sourceChain,
+    )?.chainShortName
+
+    return {
+      type: 'asset',
+      direction: 'inbound',
+      application: AXELAR.name,
+      origin: origin ?? data.args.sourceChain,
+      destination: chain.shortName,
+      blockTimestamp: input.blockTimestamp,
+      txHash: input.transactionHash,
+      customType: 'InterchainTransferReceived',
+      matchingId: data.args.commandId,
+      amount: data.args.amount,
+      token: token,
+      // messageProtocol?: string
+      // messageId?: string
+    }
+  }
+
+  if (
     EthereumAddress(input.log.address) === network.gateway &&
     input.log.topics[0] ===
       encodeEventTopics({
@@ -169,18 +241,36 @@ async function decoder(
     input.log.topics[0] ===
       encodeEventTopics({
         abi: ABI,
-        eventName: 'ContractCallApprovedWithMint',
+        eventName: 'ContractCallExecuted',
       })[0]
   ) {
     const data = decodeEventLog({
       abi: ABI,
       data: input.log.data,
       topics: input.log.topics,
-      eventName: 'ContractCallApprovedWithMint',
+      eventName: 'ContractCallExecuted',
+    })
+
+    const expressLog = input.transactionLogs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({
+          abi: ABI,
+          eventName: 'ExpressExecutionWithTokenFulfilled',
+        })[0],
+    )
+    if (!expressLog) {
+      return undefined
+    }
+
+    const expressData = decodeEventLog({
+      abi: ABI,
+      data: expressLog.data,
+      topics: expressLog.topics,
+      eventName: 'ExpressExecutionWithTokenFulfilled',
     })
 
     assert(rpc)
-
     const tokenAddress = await rpc.call(
       {
         to: network.gateway,
@@ -188,7 +278,7 @@ async function decoder(
           encodeFunctionData({
             abi: ABI,
             functionName: 'tokenAddresses',
-            args: [data.args.symbol],
+            args: [expressData.args.symbol],
           }),
         ),
       },
@@ -198,20 +288,21 @@ async function decoder(
 
     const origin = NETWORKS.find(
       (b) =>
-        b.axelarChainName.toLowerCase() === data.args.sourceChain.toLowerCase(),
+        b.axelarChainName.toLowerCase() ===
+        expressData.args.sourceChain.toLowerCase(),
     )?.chainShortName
 
     return {
       type: 'asset',
       direction: 'inbound',
       application: AXELAR.name,
-      origin: origin ?? data.args.sourceChain,
+      origin: origin ?? expressData.args.sourceChain,
       destination: chain.shortName,
       blockTimestamp: input.blockTimestamp,
       txHash: input.transactionHash,
-      customType: 'ContractCallApprovedWithMint',
+      customType: 'ExpressExecutionWithTokenFulfilled',
       matchingId: data.args.commandId,
-      amount: data.args.amount,
+      amount: expressData.args.amount,
       token: token,
       // messageProtocol?: string
       // messageId?: string
