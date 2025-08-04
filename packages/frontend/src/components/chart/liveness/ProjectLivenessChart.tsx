@@ -7,8 +7,8 @@ import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/component
 import { LivenessChartTimeRangeControls } from '~/pages/scaling/liveness/components/LivenessChartTimeRangeControls'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import {
-  rangeToResolution,
   type LivenessChartTimeRange,
+  rangeToResolution,
 } from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
