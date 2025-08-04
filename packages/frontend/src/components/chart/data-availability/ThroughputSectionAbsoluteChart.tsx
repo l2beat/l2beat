@@ -10,6 +10,7 @@ import type { ProjectDaThroughputChartPoint } from '~/server/features/data-avail
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
+  rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { EigenDataSourceInfo } from './EigenDataSourceInfo'
@@ -53,6 +54,8 @@ export function ThroughputSectionAbsoluteChart({
     range,
   )
 
+  const resolution = rangeToResolution({ type: range })
+
   return (
     <div>
       <div className="mt-2">
@@ -78,6 +81,7 @@ export function ThroughputSectionAbsoluteChart({
         showTarget={showTarget}
         milestones={milestones}
         syncedUntil={data?.syncedUntil}
+        resolution={resolution}
       />
       <div className="flex flex-wrap items-center gap-2">
         <EthereumProjectsOnlyCheckbox

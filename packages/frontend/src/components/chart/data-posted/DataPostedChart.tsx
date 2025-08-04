@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -13,7 +13,8 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 
 interface DataPostedChartDataPoint {
@@ -23,6 +24,7 @@ interface DataPostedChartDataPoint {
 
 interface Props {
   data: DataPostedChartDataPoint[] | undefined
+  resolution: DaThroughputResolution
   isLoading: boolean
   syncedUntil: number | undefined
   className?: string
@@ -31,6 +33,7 @@ interface Props {
 
 export function DataPostedChart({
   data,
+  resolution,
   isLoading,
   syncedUntil,
   className,
@@ -74,7 +77,7 @@ export function DataPostedChart({
           syncedUntil,
         })}
         <ChartTooltip
-          content={<DataPostedCustomTooltip />}
+          content={<DataPostedCustomTooltip resolution={resolution} />}
           filterNull={false}
         />
         <defs>
@@ -89,7 +92,10 @@ export function DataPostedCustomTooltip({
   active,
   payload,
   label: timestamp,
-}: TooltipProps<number, string>) {
+  resolution,
+}: TooltipProps<number, string> & {
+  resolution: DaThroughputResolution
+}) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
@@ -97,9 +103,15 @@ export function DataPostedCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            mode: 'datetime',
-          })}
+          {formatRange(
+            timestamp,
+            timestamp +
+              (resolution === 'daily'
+                ? UnixTime.DAY
+                : resolution === 'sixHourly'
+                  ? UnixTime.HOUR * 6
+                  : UnixTime.HOUR),
+          )}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {
