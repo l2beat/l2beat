@@ -5,7 +5,7 @@
   "configHash": "0xb81d8c40404aa4d34ab469d789613267174c537ce4cfe2c77b552a9d5893cf24",
   "entries": [
     {
-      "name": "EURSToken",
+      "name": "STASIS EURS Token",
       "address": "eth:0xdB25f211AB05b1c97D595516F45794528a807ad8",
       "type": "Contract",
       "sourceHashes": [

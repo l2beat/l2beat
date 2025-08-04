@@ -5,7 +5,7 @@
   "configHash": "0xdbd8faaf81f843bcb3a069bf26b2b8f581c1590601c5cf54f3b728b107623422",
   "entries": [
     {
-      "name": "USDY",
+      "name": "Ondo U.S. Dollar Yield Token",
       "address": "arb1:0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
       "type": "Contract",
       "sourceHashes": [

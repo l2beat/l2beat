@@ -5,7 +5,7 @@
   "configHash": "0x6a2a186bdefced57f1a4eddf659226ea6298d93bc8c492b014d090048ebe34e6",
   "entries": [
     {
-      "name": "EzEthToken",
+      "name": "Renzo Restaked ETH Token",
       "address": "eth:0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
       "type": "Contract",
       "sourceHashes": [

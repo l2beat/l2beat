@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xdaedee9bff58c518e96d094a8ed02b4ec5eccd02
+
+# Diff at Mon, 04 Aug 2025 19:08:34 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@79ef116bb03dfe870ed23d81b625544ae3a617a6 block: 1752830492
+- current timestamp: 1752830492
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1752830492 (main branch discovery), not current.
+
+```diff
+    contract BlackRock USD Institutional Digital Liquidity Fund Token (0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872) {
+    +++ description: None
+      name:
+-        "DSToken"
++        "BlackRock USD Institutional Digital Liquidity Fund Token"
+    }
+```
+
 Generated with discovered.json: 0xee33475452afbb9aa69ab670b81cecc4983b0170
 
 # Diff at Fri, 18 Jul 2025 10:03:31 GMT:
