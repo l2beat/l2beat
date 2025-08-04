@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "timestamp": 1753972594,
+  "timestamp": 1754118945,
   "configHash": "0xe4f161bcb7dbbb6afca4e50a24f99334ec23b90607d96f3e8134538035640e91",
   "sharedModules": ["shared-zk-stack", "gateway"],
   "entries": [
@@ -272,9 +272,19 @@
               "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
               "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
             ]
+          ],
+          [
+            "2025-08-01T23:42:11.000Z",
+            "0x4408299240ea4bef17153116dbd0ab1fbd58dbe9a4b9fb177b7664a71e9c70f1",
+            [
+              "eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC",
+              "eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22",
+              "eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec",
+              "eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+            ]
           ]
         ],
-        "$upgradeCount": 22,
+        "$upgradeCount": 23,
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 1,
         "facetAddresses": [
@@ -395,13 +405,13 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 192,
-        "getPriorityTreeRoot": "0x2b09815b5c7c0d8a6229560ddbbe545ca4cfac5d03cb89193b5646c5ed4deb19",
+        "getPriorityQueueSize": 334,
+        "getPriorityTreeRoot": "0x160bcffe18d509352840b442d5518908175662fa85d0ea79b748e4004c140099",
         "getPriorityTreeStartIndex": 3270719,
         "getPriorityTxMaxGasLimit": 72000000,
-        "getProtocolVersion": 120259084288,
+        "getProtocolVersion": 120259084289,
         "getPubdataPricingMode": 0,
-        "getSemverProtocolVersion": [0, 28, 0],
+        "getSemverProtocolVersion": [0, 28, 1],
         "getSettlementLayer": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
         "getTotalBatchesCommitted": 501263,
         "getTotalBatchesExecuted": 501260,
@@ -409,9 +419,9 @@
         "getTotalBlocksCommitted": 501263,
         "getTotalBlocksExecuted": 501260,
         "getTotalBlocksVerified": 501263,
-        "getTotalPriorityTxs": 3278765,
+        "getTotalPriorityTxs": 3278907,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
-        "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
+        "getVerifier": "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
           "recursionLeafLevelVkHash": "0xf9664f4324c1400fa5c3822d667f30e873f53f1b8033180cd15fe41c1e2355c6",
@@ -959,6 +969,6 @@
   "usedTemplates": {
     "shared-zk-stack/Diamond_NotSettlementLayer": "0x30b60445419f8d3893ba4eb0b4a8d04ad751d7ec8882a4a4ab5f7276c730ff8f"
   },
-  "usedBlockNumbers": { "ethereum": 23039721 },
-  "permissionsConfigHash": "0xda51ad876d2585ba65e512021145e6a18565485032eb6777334f78cb362f131e"
+  "usedBlockNumbers": { "ethereum": 23051819 },
+  "permissionsConfigHash": "0x9c1fe20cab2350396904a94b0812d699200d8adce8d1746a4e18a45feb6f9d93"
 }

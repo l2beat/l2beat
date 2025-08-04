@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x963d214162c0074b27985bdf072b9e90c5ce4df2
+
+# Diff at Sat, 02 Aug 2025 07:32:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@3d59e2b466fd3c111ff4d5621a7f80de65b0b3d5 block: 1753972594
+- current timestamp: 1754118945
+
+## Description
+
+Emergency upgrade to protocol version v28.1, which only affects the verifiers. No post-mortem yet: https://x.com/zksync/status/1951434107575214429.
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.$pastUpgrades.22:
++        ["2025-08-01T23:42:11.000Z","0x4408299240ea4bef17153116dbd0ab1fbd58dbe9a4b9fb177b7664a71e9c70f1",["eth:0x431449e2a28A69122860A4956A3f7191eE15aFBC","eth:0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22","eth:0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec","eth:0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"]]
+      values.$upgradeCount:
+-        22
++        23
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        120259084288
++        120259084289
+      values.getSemverProtocolVersion.2:
+-        0
++        1
+      values.getVerifier:
+-        "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
++        "eth:0xD71DDC9956781bf07DbFb9fCa891f971dbE9868A"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../.flat@1753972594/DualVerifier.sol => /dev/null |   97 --
+ .../L1VerifierFflonk.sol => /dev/null              | 1605 ------------------
+ .../L1VerifierPlonk.sol => /dev/null               | 1703 --------------------
+ 3 files changed, 3405 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753972594 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
 Generated with discovered.json: 0x1e2cdfe6cedc7495dc6cd1f4d2491ebb0d08c8ba
 
 # Diff at Thu, 31 Jul 2025 15:03:02 GMT:
