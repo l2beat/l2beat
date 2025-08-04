@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2340614408eb4ace0d27352ecec0eb590d7137d7
+Generated with discovered.json: 0x5c730b2d2b72e5b2a673ece32e6463fecf41c33a
 
-# Diff at Fri, 01 Aug 2025 09:32:32 GMT:
+# Diff at Mon, 04 Aug 2025 08:09:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 17802565
+- current timestamp: 1754294981
 
 ## Description
 
@@ -32,6 +32,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Contribution (0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x6f09FFEb68e8914944eCe03BB487ac35e8a73911)
     +++ description: None
 ```
 

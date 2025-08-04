@@ -1,8 +1,8 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "blockNumber": 23045357,
-  "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
+  "timestamp": 1754294981,
+  "configHash": "0x12d2a925f4f8ad7230c41d5595f02e94a78291d0e9f5c6d1bdd6bf0289fa4855",
   "entries": [
     {
       "name": "PredicatePermitter",
@@ -150,7 +150,7 @@
         "$upgradeCount": 1,
         "CONTRIBUTOR": "0xa0bb1af1c90aa52ed052b92714ff0087008cc720049bf1af77cca2600b31e80c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getCurrentPeriod": 5,
+        "getCurrentPeriod": 6,
         "periodInterval": 604800,
         "startTimestamp": 1750464000,
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -375,8 +375,8 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deploymentTime": 1750550400,
         "eligibilityPermitter": "eth:0x0000000000000000000000000000000000000000",
-        "getLastDepositId": 6007,
-        "getLastRelayedDepositId": 6007,
+        "getLastDepositId": 6523,
+        "getLastRelayedDepositId": 6523,
         "getNativeTokenIndex": 0,
         "paused": false,
         "RELAY_LIMIT": 450,
@@ -1002,5 +1002,6 @@
     "intmax/Liquidity": "0xb19d7ba5f0af7eed5809b1b18ee4470ac02cc710b98d5089348768ccb41e8b2a",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
+  "usedBlockNumbers": { "ethereum": 23066413 },
+  "permissionsConfigHash": "0xd0a9a77ff0ab1d53646fa0f9d04e520be52531f3e1a678b446d890cbb71bf341"
 }

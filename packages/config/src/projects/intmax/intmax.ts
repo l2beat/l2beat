@@ -41,7 +41,7 @@ export const intmax: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: ChainSpecificAddress('scr:0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
+        address: ChainSpecificAddress('eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
         tokens: '*',
       }),
     ],
