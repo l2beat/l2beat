@@ -860,7 +860,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
