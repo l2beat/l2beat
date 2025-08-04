@@ -191,7 +191,7 @@ export const phala: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
+      ...RISK_VIEW.STATE_ZKP_ST_SN_WRAP,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: {

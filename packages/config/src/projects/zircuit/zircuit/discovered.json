@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "zircuit",
-  "timestamp": 1753687757,
+  "timestamp": 1754310248,
   "configHash": "0x127004c822d62f183c8278cd5ab897a2d75c2988addb86ca14e4ffd3e27762c9",
   "entries": [
     {
@@ -23,11 +23,14 @@
       "name": "L1Block",
       "address": "zircuit:0x4200000000000000000000000000000000000015",
       "type": "Contract",
+      "template": "opstack/Layer2/L1Block_depositExclusions",
       "sourceHashes": [
         "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
         "0xbb69c5830d6e822e4bf9c51ad08b5ade53450cf808a5cabc8665f40e5c6d7c1a"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain. This version though also contains a storage slot for `depositExclusions`.",
+      "ignoreInWatchMode": ["basefee", "hash", "number", "timestamp"],
       "values": {
         "$admin": "zircuit:0x4200000000000000000000000000000000000018",
         "$implementation": "zircuit:0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
@@ -39,21 +42,21 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 294515603,
+        "basefee": 255273029,
         "baseFeeScalar": 1368,
         "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
         "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "depositExclusions": "0x",
         "DEPOSITOR_ACCOUNT": "zircuit:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x0acc928251b1f6dcdad1a042f1be37ab222eeed394619e6908a57a99301cf5ae",
+        "hash": "0x88cd72a8eb45b48fd58612fa9906c2014dbc73b5612e25c9a89d91d063d555ba",
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 23016159,
+        "number": 23067679,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
         "sequenceNumber": 0,
-        "timestamp": 1753687751,
+        "timestamp": 1754310239,
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -304,8 +307,9 @@
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "opstack/Layer2/L1Block_depositExclusions": "0x107d6cf6271658715c823f2b65c94bb392c36941cba8f2a7e923275a2cec6cb2"
   },
-  "usedBlockNumbers": { "zircuit": 16875771 },
+  "usedBlockNumbers": { "zircuit": 17187016 },
   "permissionsConfigHash": "0x09746112268d01a5544934017489fc0aa827bb2840230953dc985844f73f5b0d"
 }

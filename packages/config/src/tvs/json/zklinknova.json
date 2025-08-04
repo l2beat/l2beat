@@ -1113,7 +1113,8 @@
         "chain": "arbitrum",
         "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "decimals": 18,
-        "sinceTimestamp": 1709296973
+        "sinceTimestamp": 1709296973,
+        "untilTimestamp": 1754139600
       },
       "valueForSummary": {
         "type": "value",
@@ -1121,7 +1122,8 @@
           "type": "const",
           "value": "0",
           "decimals": 0,
-          "sinceTimestamp": 1709296973
+          "sinceTimestamp": 1709296973,
+          "untilTimestamp": 1754139600
         },
         "priceId": "mozaic"
       },

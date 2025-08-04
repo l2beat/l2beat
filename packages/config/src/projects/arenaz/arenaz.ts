@@ -20,10 +20,7 @@ export const arenaz = opStackL2({
       'Arena-Z is an OP stack Optimistic Rollup where studios and gamers, creators and players unite to pioneer the future of entertainment.',
     links: {
       websites: ['https://arena-z.gg/'],
-      bridges: [
-        'https://bridge.arena-z.gg/bridge/arena-z',
-        'https://leagueofkingdoms.com/',
-      ],
+      bridges: ['https://bridge.arena-z.gg/', 'https://leagueofkingdoms.com/'],
       explorers: ['https://explorer.arena-z.gg/'],
       socialMedia: ['https://x.com/OfficialArenaZ'],
     },

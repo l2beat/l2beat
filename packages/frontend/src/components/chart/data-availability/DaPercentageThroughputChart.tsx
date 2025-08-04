@@ -15,7 +15,8 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { getDaChartMeta } from './meta'
 
 interface Props {
@@ -23,12 +24,14 @@ interface Props {
   isLoading: boolean
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
+  resolution: DaThroughputResolution
 }
 export function DaPercentageThroughputChart({
   data,
   isLoading,
   includeScalingOnly,
   syncStatus,
+  resolution,
 }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
@@ -108,6 +111,7 @@ export function DaPercentageThroughputChart({
             <CustomTooltip
               includeScalingOnly={includeScalingOnly}
               syncStatus={syncStatus}
+              resolution={resolution}
             />
           }
         />
@@ -122,9 +126,11 @@ function CustomTooltip({
   label,
   includeScalingOnly,
   syncStatus,
+  resolution,
 }: TooltipProps<number, string> & {
   includeScalingOnly: boolean
   syncStatus?: Record<string, number>
+  resolution: DaThroughputResolution
 }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
@@ -134,7 +140,15 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatRange(
+          label,
+          label +
+            (resolution === 'daily'
+              ? UnixTime.DAY
+              : resolution === 'sixHourly'
+                ? UnixTime.HOUR * 6
+                : UnixTime.HOUR),
+        )}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">

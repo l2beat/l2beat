@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { DataPostedSectionProps } from '~/components/projects/sections/DataPostedSection'
+import type { DataPostedSectionProps } from '~/components/projects/sections/data-posted/DataPostedSection'
 import type { DaSolution } from '~/server/features/scaling/project/getScalingDaSolution'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import type { SsrHelpers } from '~/trpc/server'
@@ -9,7 +9,11 @@ export async function getDataPostedSection(
   project: Project<never | 'scalingInfo', 'archivedAt' | 'daTrackingConfig'>,
   daSolution: DaSolution | undefined,
 ): Promise<
-  Pick<DataPostedSectionProps, 'defaultRange' | 'daLayer'> | undefined
+  | Pick<
+      DataPostedSectionProps,
+      'defaultRange' | 'daLayer' | 'daTrackingConfig'
+    >
+  | undefined
 > {
   if (!project.daTrackingConfig || !daSolution) return undefined
 
@@ -28,5 +32,6 @@ export async function getDataPostedSection(
       href: `/data-availability/projects/${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
     },
     defaultRange: range,
+    daTrackingConfig: project.daTrackingConfig,
   }
 }
