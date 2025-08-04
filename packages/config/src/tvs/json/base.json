@@ -859,7 +859,7 @@
         "sinceTimestamp": 1717005065
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false
     },
     {
