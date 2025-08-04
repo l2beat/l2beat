@@ -31,19 +31,18 @@ export async function getScalingDaSolution(
   ])
 
   const hostChainSelector = project.scalingInfo.hostChain.id
-
-  if (!daLayer || !daBridge || !hostChainSelector) {
+  if (!daLayer || !hostChainSelector) {
     return
   }
 
-  const daBridgePermissions = daBridge.permissions?.[hostChainSelector]
-  const daBridgeContracts = daBridge.contracts?.addresses[hostChainSelector]
+  const daBridgePermissions = daBridge?.permissions?.[hostChainSelector]
+  const daBridgeContracts = daBridge?.contracts?.addresses[hostChainSelector]
 
   return {
     layerName: daLayer.name,
     layerSlug: daLayer.slug,
-    bridgeName: daBridge.name,
-    bridgeSlug: daBridge.slug,
+    bridgeName: daBridge?.name ?? 'No bridge',
+    bridgeSlug: daBridge?.slug ?? 'no-bridge',
     hostChainName: project.scalingInfo.hostChain.name,
     permissions: daBridgePermissions,
     contracts: daBridgeContracts,
