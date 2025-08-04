@@ -113,7 +113,7 @@
 
 .mdc a[data-link-role="glossary"]:hover::after {
   content: attr(data-description);
-  @apply absolute z-110 w-80 shadow-popover rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case top-[calc(100% + 8px)] left-1/2 -translate-x-1/2;
+  @apply absolute z-110 w-80 shadow-popover rounded-lg bg-surface-primary p-3 text-left font-medium text-paragraph-13 text-primary normal-case top-[calc(100%_+_8px)] left-1/2 -translate-x-1/2;
 }
 
 .mdc img {
