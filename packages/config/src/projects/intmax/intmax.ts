@@ -85,7 +85,7 @@ export const intmax: ScalingProject = {
       {
         name: 'Users can autonomously exit their funds',
         description:
-          'Users can autonomously exit by providing a ZK proof of sufficient balance. This requires keeping track of all funds received and sent.',
+          'Users can autonomously exit by providing a ZK proof of sufficient balance. This requires keeping track of all funds received and sent. While INTMAX is technically an L3 on Scroll, funds are stored on Ethereum.',
         risks: [],
         references: [
           {
