@@ -146,7 +146,7 @@ function Header({
   )
 }
 
-export function CustomTooltip({
+function CustomTooltip({
   active,
   payload,
   label,

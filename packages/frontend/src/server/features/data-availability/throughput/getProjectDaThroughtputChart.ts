@@ -15,15 +15,12 @@ import {
   rangeToResolution,
 } from './utils/range'
 
-export type ProjectDaThroughputChart = {
+type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
-export type ProjectDaThroughputChartPoint = [
-  timestamp: number,
-  value: number | null,
-]
+type ProjectDaThroughputChartPoint = [timestamp: number, value: number | null]
 
 export const ProjectDaThroughputChartParams = v.object({
   range: v.union([

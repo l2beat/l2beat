@@ -22,7 +22,7 @@ export interface RiskGroup {
   items: RiskItem[]
 }
 
-export interface RiskItem {
+interface RiskItem {
   text: string
   referencedId: string
   isCritical: boolean

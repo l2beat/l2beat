@@ -25,7 +25,7 @@ import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
 
-export interface ProjectDetailsProps {
+interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]

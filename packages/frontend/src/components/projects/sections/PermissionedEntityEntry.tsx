@@ -4,7 +4,7 @@ import { CustomLink } from '~/components/link/CustomLink'
 import { BulletIcon } from '~/icons/Bullet'
 import { cn } from '~/utils/cn'
 
-export interface PermissionedEntityEntryProps {
+interface PermissionedEntityEntryProps {
   entity: {
     name: string
     href: string

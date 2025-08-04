@@ -85,7 +85,7 @@ export function DataPostedChart({
   )
 }
 
-export function DataPostedCustomTooltip({
+function DataPostedCustomTooltip({
   active,
   payload,
   label: timestamp,

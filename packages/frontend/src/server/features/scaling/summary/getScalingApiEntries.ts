@@ -6,7 +6,7 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 
-export interface ScalingApiEntry {
+interface ScalingApiEntry {
   id: string
   name: string
   shortName: string | undefined

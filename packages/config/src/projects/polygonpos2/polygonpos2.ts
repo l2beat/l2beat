@@ -5,9 +5,10 @@ import { upcomingL2 } from '../../templates/upcoming'
 export const polygonpos2: ScalingProject = upcomingL2({
   id: 'polygonpos2',
   capability: 'universal',
+  hasTestnet: true,
   addedAt: UnixTime(1690896554), // 2023-08-01T13:29:14Z
   display: {
-    name: 'Polygon PoS 2.0',
+    name: 'Polygon PoS',
     slug: 'polygon-pos-2',
     description:
       'Polygon PoS 2.0 leverages ZK technology, ideally without changing anything for users or developers. All applications should continue working and fees should stay just as low. The only difference should be higher security and seamless interoperability with other chains in the Polygon 2.0 ecosystem.',
