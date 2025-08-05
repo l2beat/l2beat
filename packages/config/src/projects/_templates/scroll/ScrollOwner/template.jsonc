@@ -52,7 +52,7 @@
         {
           "type": "interact",
           "description": "update and reset the PauseController cooldown period."
-        },
+        }
       ]
     },
     "opsFast": {
@@ -80,16 +80,10 @@
         {
           "type": "interact",
           "description": "revert unfinalized batches."
-        }
-      ]
-    },
-    "pauseController": {
-      "copy": "accessControl",
-      "edit": ["get", "roles", "PAUSE_CONTROLLER_ROLE", "members"],
-      "permissions": [
+        },
         {
           "type": "interact",
-          "description": "pause the ScrollChain and L1 -> L2 message queue."
+          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue ."
         }
       ]
     }

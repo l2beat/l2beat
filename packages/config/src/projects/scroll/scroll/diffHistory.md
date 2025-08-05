@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x849af85eb74fa9038a0c522bda73d4dfa973d96b
+Generated with discovered.json: 0x0a1d9bc49661a410fb328108d35698d9c29b19f1
 
-# Diff at Tue, 05 Aug 2025 10:27:13 GMT:
+# Diff at Tue, 05 Aug 2025 11:49:16 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754387037
+- current timestamp: 1754394405
 
 ## Description
 
@@ -32,6 +32,18 @@ Provide description of changes. This section will be preserved.
 +        {"updateBaseFeeOverhead(uint256)":["ops-fast"],"updateBaseFeeScalar(uint256)":["ops-fast"]}
       values.accessControl.targets.scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd:
 +        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52"]}
+    }
+```
+
+```diff
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0) {
+    +++ description: Used to propose and manage onchain governance proposals.
+      values.votingDelay:
+-        86400
++        3600
+      values.votingPeriod:
+-        201600
++        432000
     }
 ```
 

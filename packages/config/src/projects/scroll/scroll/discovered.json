@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "timestamp": 1754387037,
+  "timestamp": 1754394405,
   "configHash": "0xa12f1f1e79c0de5d9f5176e9543d52e93842debbdd7f17315a6c3d1e9c2c1b23",
   "entries": [
     {
@@ -425,7 +425,7 @@
         "getChainId": 534352,
         "GnosisSafe_modules": [],
         "multisigThreshold": "9 of 12 (75%)",
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -791,8 +791,8 @@
         "token": "scr:0xd29687c813D741E2F938F4aC377128810E217b1b",
         "version": "1",
         "VERSION": 1,
-        "votingDelay": 86400,
-        "votingPeriod": 201600
+        "votingDelay": 3600,
+        "votingPeriod": 432000
       },
       "implementationNames": {
         "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0": "TransparentUpgradeableProxy",
@@ -911,9 +911,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0xc0ed600b56d8149d6192c30c25a5012b7ab72ac87c797c4f7f8a1055af8dd6d4",
+        "messageRoot": "0x0c52244b9420270114ba63647e00139442b055656bc1f74842a8ef29bd57fc8a",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 207141,
+        "nextMessageIndex": 207156,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -3088,6 +3088,6 @@
     "scroll/ScrollOwnerL2": "0x7e77245231051fbc6f335852afd5305e4b1c493b1005a7826e24aa54340b2ad4",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 18395076 },
-  "permissionsConfigHash": "0x1e0ae716d614e035675c5ea36b56ef47b849a382385ab944cc87a02d9946a8a1"
+  "usedBlockNumbers": { "scroll": 18402444 },
+  "permissionsConfigHash": "0x435139d5bf00f8da16671bd0b59c18453b74cac235dba97dd0d57950c1957ba0"
 }

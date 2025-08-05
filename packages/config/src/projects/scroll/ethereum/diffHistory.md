@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7f1c1cffd2b4834beb17d09fb71b01ab8bc9d9c8
+Generated with discovered.json: 0xb3eadc3c1af19873afb898297624d0fd9141767c
 
-# Diff at Tue, 05 Aug 2025 10:27:11 GMT:
+# Diff at Tue, 05 Aug 2025 11:49:15 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754387037
+- current timestamp: 1754394405
 
 ## Description
 
@@ -80,6 +80,74 @@ Provide description of changes. This section will be preserved.
  .../Safe.sol                                       | 1088 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   37 +
  4 files changed, 2473 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract TimelockSCEmergency (0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update and reset the PauseController cooldown period.","role":".scNoDelay"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".scNoDelay"}
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".scNoDelay"}
+    }
+```
+
+```diff
+    contract TimelockFast (0x0e58939204eEDa84F796FBc86840A50af10eC4F4) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.3:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".opsFast"}
+      directlyReceivedPermissions.4:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".opsFast"}
+    }
+```
+
+```diff
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      receivedPermissions.11:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update and reset the PauseController cooldown period.","role":".scNoDelay","via":[{"address":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+      receivedPermissions.13:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".scNoDelay","via":[{"address":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+      receivedPermissions.14:
++        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".scNoDelay","via":[{"address":"eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44"}]}
+    }
+```
+
+```diff
+    contract TimelockEmergency (0x826714adD4dDA2b8750794A467C892c0Cd49216b) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0.description:
+-        "pause the L1 -> L2 messenger and enforced transaction mode."
++        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue ."
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "pause the L1 -> L2 messenger and enforced transaction mode."
++        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue ."
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      receivedPermissions.6:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".opsFast","via":[{"address":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}
+      receivedPermissions.7:
+-        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".opsFast","via":[{"address":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}
+    }
 ```
 
 Generated with discovered.json: 0x6303a10360194ad898c7dc058c2695e0c9e1ca60

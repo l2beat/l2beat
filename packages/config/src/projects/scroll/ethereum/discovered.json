@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754387037,
+  "timestamp": 1754394405,
   "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
   "entries": [
     {
@@ -121,7 +121,25 @@
         {
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update and reset the PauseController cooldown period.",
+          "role": ".scNoDelay"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
           "description": "update ScrollChain zk proof verifier.",
+          "role": ".scNoDelay"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update the L1ScrollMessenger fee vault address.",
+          "role": ".scNoDelay"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
           "role": ".scNoDelay"
         },
         {
@@ -219,18 +237,6 @@
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
           "description": "set ERC20 gateways in the L1GatewayRouter.",
-          "role": ".opsFast"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the L1ScrollMessenger fee vault address.",
-          "role": ".opsFast"
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
           "role": ".opsFast"
         }
       ],
@@ -431,7 +437,34 @@
         {
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update and reset the PauseController cooldown period.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
           "description": "update ScrollChain zk proof verifier.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update the L1ScrollMessenger fee vault address.",
+          "role": ".scNoDelay",
+          "via": [
+            { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
+          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
           "role": ".scNoDelay",
           "via": [
             { "address": "eth:0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44" }
@@ -924,11 +957,11 @@
         "$upgradeCount": 2,
         "enforcedTxGateway": "eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d",
         "firstCrossDomainMessageIndex": 953885,
-        "getFirstUnfinalizedMessageEnqueueTime": 1754372687,
+        "getFirstUnfinalizedMessageEnqueueTime": 1754387135,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 959478,
-        "nextUnfinalizedQueueIndex": 959462,
+        "nextCrossDomainMessageIndex": 959485,
+        "nextUnfinalizedQueueIndex": 959478,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
         "systemConfig": "eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D"
@@ -1588,7 +1621,7 @@
         {
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "pause the L1 -> L2 messenger and enforced transaction mode.",
+          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue .",
           "role": ".opsNoDelay"
         },
         {
@@ -2002,15 +2035,15 @@
         "$upgradeCount": 7,
         "initialEuclidBatchIndex": 357915,
         "isEnforcedModeEnabled": false,
-        "lastFinalizedBatchIndex": 363791,
+        "lastFinalizedBatchIndex": 363802,
         "layer2ChainId": 534352,
         "maxNumTxInChunk": 100,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 363797,
-          "lastFinalizedBatchIndex": 363791,
-          "lastFinalizeTimestamp": 1754378255,
+          "lastCommittedBatchIndex": 363802,
+          "lastFinalizedBatchIndex": 363802,
+          "lastFinalizeTimestamp": 1754391719,
           "flags": 1,
           "reserved": 0
         },
@@ -2221,7 +2254,7 @@
         {
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "pause the L1 -> L2 messenger and enforced transaction mode.",
+          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue .",
           "role": ".opsNoDelay",
           "via": [
             { "address": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b" }
@@ -2664,30 +2697,6 @@
               "delay": 86400
             }
           ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the L1ScrollMessenger fee vault address.",
-          "role": ".opsFast",
-          "via": [
-            {
-              "address": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
-        },
-        {
-          "permission": "interact",
-          "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "update the minimum delay message queue parameters and enforced mode parameters.",
-          "role": ".opsFast",
-          "via": [
-            {
-              "address": "eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4",
-              "delay": 86400
-            }
-          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -2761,7 +2770,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 23723040272760,
+        "totalBridgedUSDC": 23751036301438,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -4013,6 +4022,6 @@
     "scroll/ScrollOwner": "0xff870a54f9261751cf0852ecfc793da35587c12740271d0a59271425adeb370f",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23074042 },
-  "permissionsConfigHash": "0x1e0ae716d614e035675c5ea36b56ef47b849a382385ab944cc87a02d9946a8a1"
+  "usedBlockNumbers": { "ethereum": 23074657 },
+  "permissionsConfigHash": "0x435139d5bf00f8da16671bd0b59c18453b74cac235dba97dd0d57950c1957ba0"
 }
