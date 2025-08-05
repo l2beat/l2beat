@@ -6,7 +6,7 @@ import { useTable } from '~/hooks/useTable'
 import type { BridgesArchivedEntry } from '~/server/features/bridges/getBridgesArchivedEntries'
 import { getBridgesArchivedColumns } from './columns'
 
-export interface Props {
+interface Props {
   entries: BridgesArchivedEntry[]
   isOthers?: boolean
 }

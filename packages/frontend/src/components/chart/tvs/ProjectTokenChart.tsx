@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
-import capitalize from 'lodash/capitalize'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -81,7 +80,7 @@ export function ProjectTokenChart({
     value: {
       label: token.name,
       color: sourceToColor(token.source),
-      legendLabel: capitalize(token.source),
+      legendLabel: sourceToLabel(token.source),
       indicatorType: {
         shape: 'square',
       },
@@ -267,6 +266,19 @@ function sourceToColor(source: ProjectToken['source']) {
       return 'var(--chart-stacked-purple)'
     case 'external':
       return 'var(--chart-stacked-yellow)'
+    default:
+      assertUnreachable(source)
+  }
+}
+
+function sourceToLabel(source: ProjectToken['source']) {
+  switch (source) {
+    case 'native':
+      return 'Natively minted'
+    case 'canonical':
+      return 'Canonically bridged'
+    case 'external':
+      return 'Externally bridged'
     default:
       assertUnreachable(source)
   }

@@ -73,7 +73,7 @@ describe(prefixAddresses.name, () => {
     ])
   })
 
-  it('prefixes addreses in objects values and keys', () => {
+  it('prefixes addresses in objects values and keys', () => {
     const obj = {
       '0x07D5c2f0eC7f791F1BB0760C7BaC21Eef10a0956':
         '0x33D66941465ac776C38096cb1bc496C673aE7390',
@@ -85,7 +85,7 @@ describe(prefixAddresses.name, () => {
     })
   })
 
-  it('prefixes addreses in objects values and keys', () => {
+  it('prefixes addresses in objects values and keys', () => {
     const obj = {
       k1: 123,
       k2: 'foo',

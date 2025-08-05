@@ -60,7 +60,7 @@ Such grouping can be achieved by first grouping individual contracts by delay, a
 [SystemConfig] with [no <via6>]
 >>>
 [FoochainPortal <via1_or_via2>, L1StandardBridge <via3_or_via4>] with [7d, no] delay
-[L1ERC721Brige <via5>] with [7d] delay
+[L1ERC721Bridge <via5>] with [7d] delay
 [SystemConfig <via6>] with [no] delays
 ```
 

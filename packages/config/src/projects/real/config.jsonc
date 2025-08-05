@@ -8,6 +8,7 @@
     "eth:0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
     "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6"
   ],
+  "archived": true,
   "names": {
     "eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8": "Bridger",
     "eth:0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1": "RealVault",
@@ -18,7 +19,8 @@
     "eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6": "LidoStEthStrategy",
     "eth:0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": "SwapManager",
     "eth:0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4": "RealStrategiesMultisig",
-    "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50": "RealFastConfirmerMultisig"
+    "eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50": "RealFastConfirmerMultisig",
+    "eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164": "UnknownVault"
   },
   "overrides": {
     "eth:0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335": {
