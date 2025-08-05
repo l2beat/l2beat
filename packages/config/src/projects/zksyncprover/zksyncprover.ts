@@ -28,7 +28,7 @@ export const zksyncprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Matter Labs',
     techStack: {
-      monolithicSnark: [
+      snark: [
         ZK_CATALOG_TAGS.Plonk.Zksync,
         // ZK_CATALOG_TAGS.Arithmetization.R1CS,
         // ZK_CATALOG_TAGS.PCS.KZG,
