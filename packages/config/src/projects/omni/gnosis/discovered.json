@@ -678,6 +678,7 @@
         "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748854505,
       "sinceBlock": 40374619,
       "values": {

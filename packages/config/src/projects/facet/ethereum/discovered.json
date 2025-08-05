@@ -1,8 +1,8 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "timestamp": 1745840699,
-  "configHash": "0x084f2aab0e8fb54e036efab14c67ad11ba4a48bdcb507a996422273dfd20c5a8",
+  "timestamp": 1754411666,
+  "configHash": "0x09c22825d1caee100606b8ecceddb408e78592894ce5a21699d8abe6fb78b596",
   "entries": [
     {
       "name": "Inbox",
@@ -256,19 +256,19 @@
       "values": {
         "$immutable": true,
         "AGG_VKEY": "0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc",
-        "anchorL2BlockNumber": 1604382,
-        "anchorProposalId": 0,
-        "anchorRoot": "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
+        "anchorL2BlockNumber": 1661982,
+        "anchorProposalId": 32,
+        "anchorRoot": "0x7ba05cac12025bbf522ecad8ceb230a6e5d3b082c81e4a8ffb99b962566c0dba",
         "canonicalProposalFor": [],
         "canonicalProposalIdFor": [],
         "CHALLENGER_BOND": "5000000000000000000",
         "computeL2Timestamp": [],
         "FALLBACK_TIMEOUT_SECS": 1209600,
         "getAnchorRoot": [
-          "0x2165cc0e91930e6ef56193b7636de5e5bc453cb2f42980ad6d719fabfa72b6b7",
-          1604382
+          "0x7ba05cac12025bbf522ecad8ceb230a6e5d3b082c81e4a8ffb99b962566c0dba",
+          1661982
         ],
-        "getProposalsLength": 16,
+        "getProposalsLength": 61,
         "isInFallbackWindow": [],
         "L2_BLOCK_TIME": 12,
         "L2_START_TIMESTAMP": 1753097123,
@@ -540,6 +540,6 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "usedBlockNumbers": { "ethereum": 22367347 },
-  "permissionsConfigHash": "0xa646de66d7c7ffba2fee93c739bac0ddfd9e298b23a34f1fd798fb377d50c8bb"
+  "usedBlockNumbers": { "ethereum": 23076085 },
+  "permissionsConfigHash": "0xca4442f35d48306dfa54ab1dcb8035b9f2c017911a82ca39e1ce4c6793f19930"
 }

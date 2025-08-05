@@ -347,9 +347,9 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'blockscout',
       url: 'https://explorer.facet.org/api',
-    }
+    },
   },
-    {
+  {
     name: 'gateway',
     chainId: 9075,
     shortName: 'gateway',
@@ -357,6 +357,6 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'routescan',
       url: 'https://block-explorer-api.era-gateway-mainnet.zksync.dev/api',
-    }
+    },
   },
 ] as const satisfies ChainConfig[]

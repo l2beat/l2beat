@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DATA_ON_CHAIN,
   EXITS,
@@ -14,7 +19,6 @@ import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('facet')
-const l2Discovery = new ProjectDiscovery('facet', 'facet')
 
 const FALLBACK_TIMEOUT_SECS = discovery.getContractValue<number>(
   'Rollup',
@@ -98,6 +102,15 @@ export const facet: ScalingProject = {
     },
   },
   config: {
+    escrows: [
+      discovery.getEscrowDetails({
+        address: ChainSpecificAddress(
+          'eth:0x13D21988F08997d20822d247A5015C4D13102F88',
+        ),
+        tokens: ['ETH'],
+        description: 'Escrow for ETH bridge.',
+      }),
+    ],
     trackedTxs: [
       {
         uses: [
@@ -166,13 +179,6 @@ export const facet: ScalingProject = {
         },
       },
     ],
-    escrows: [
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x13D21988F08997d20822d247A5015C4D13102F88'),
-        tokens: ['ETH'],
-        description: 'Escrow for ETH bridge.',
-      }),
-    ],
   },
   riskView: {
     stateValidation: {
@@ -189,17 +195,7 @@ export const facet: ScalingProject = {
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_MAX_DELAY(
       FALLBACK_TIMEOUT_SECS,
     ),
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: ChainSpecificAddress(
-        'eth:0x0000000000000b07ED001607f5263D85bf28Ce4C',
-      ),
-      tokens: ['ETH'],
-      description: 'Fast bridge contract.',
-    }),
-  ],
   },
-
   technology: {
     operator: OPERATOR.DECENTRALIZED_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.CANONICAL_ORDERING('EOA inbox'),
@@ -282,15 +278,11 @@ export const facet: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: discovery.getDiscoveredContracts(),
-      [l2Discovery.chain]: l2Discovery.getDiscoveredContracts(),
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
   permissions: {
-    [discovery.chain]: discovery.getDiscoveredPermissions(),
-    [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
+    addresses: discovery.getDiscoveredPermissions(),
   },
   chainConfig: {
     name: 'facet',

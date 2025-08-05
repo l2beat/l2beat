@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x3add8e1c2a9b4b38cc38deef68f13251eabbe64b
+Generated with discovered.json: 0xaccb10b091ee51c43d11fe706100f6ea8058c55f
 
-# Diff at Fri, 25 Jul 2025 11:13:34 GMT:
+# Diff at Tue, 05 Aug 2025 16:34:34 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 1633122
+- current timestamp: 1754411666
 
 ## Description
 
-Bridge version discovery.
+Initial discovery.
 
 ## Initial discovery
 

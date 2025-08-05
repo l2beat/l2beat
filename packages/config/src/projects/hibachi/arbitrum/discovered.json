@@ -1,7 +1,7 @@
 {
   "name": "hibachi",
   "chain": "arbitrum",
-  "timestamp": 1753687629,
+  "timestamp": 1754411762,
   "configHash": "0x4e1db2bd50baa98b17b8b4b24a341d32486bacc73d51a2caa4287450de89c6f6",
   "entries": [
     {
@@ -95,10 +95,10 @@
             "members": ["arb1:0x420eee5B429664F08f001786541acbE0F59feF5c"]
           }
         },
-        "accountsRoot": "0x5ee5446fefb0ab296b432deef9b81935d8b81829aef4067b420b0be1ddf93148",
+        "accountsRoot": "0x4e06223a4e18d4d483a1176e785043b5ab3be36d499fdd20e42a63c31af113b3",
         "activeHibachiChainIds": [1],
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-        "contractsRoot": "0xdc9d34aa370809356c2498116b88be1d0382c21613352fe11e8b34957917c77c",
+        "contractsRoot": "0xa8dda9dc4117ffd1077625d45e9b29426330ec6fe2af8a9827ed16ee39f80d47",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositReclaimTimeout": 86400,
         "exchangeVerificationAddress": "arb1:0x4aF802A931CADb2aF3a9Ec4C810A0485a2eF3610",
@@ -138,14 +138,14 @@
         ],
         "oracleQuorum": 1,
         "oracles": ["arb1:0x735d77411693F244d35192d95D8804B6b371a553"],
-        "ordersRoot": "0x9bfc2815db7c47494a88cb8b2b3d6351af0176f7535bc28b6f82957afe101295",
+        "ordersRoot": "0xee224266e0a8751d1f49aece045d30fb7adf7a461cd82e7279adea6850c03909",
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
         "risc0Verifier": "arb1:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
-        "stateUpdateProgramImageId": "0x6c66cc03d0d50933ca4558a6513f51cded2f48dd8f1ea8929f86f553f35b2328",
-        "stateUpdateProgramVKey": "0x00202b4f9c0e94c5915fcb43369795fd30f35491b4017ceecf876199d6b26163",
-        "stateVersion": 30773,
+        "stateUpdateProgramImageId": "0xe36df63187239cb11fc29356c18dd9996c19ef4668379f72956f648fbb7c72f2",
+        "stateUpdateProgramVKey": "0x00761079b58d6d09fea47ee455238cae478986d76fc2c778e293f3c846a148b3",
+        "stateVersion": 37310,
         "succinctVerifier": "arb1:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
-        "systemTimestamp": 1753359741221,
+        "systemTimestamp": 1754411499813,
         "wormhole": "arb1:0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
         "wormholeConsistency": 0,
         "X_CHAIN_ADMIN_ROLE": "0x7f4e9d34561a2b0f5c5e4baeaa912930e44a73596dda16054a63f3c24a574197"
@@ -1103,6 +1103,6 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },
-  "usedBlockNumbers": { "arbitrum": 362381319 },
+  "usedBlockNumbers": { "arbitrum": 365280108 },
   "permissionsConfigHash": "0xe9a525d80996f3bce4d5cd1a7430d896ede903fbb5ba3f0948447f9c64c0108b"
 }

@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x8b1abe3136353c3c91bb2e5d80c8533cd50ef80a
+
+# Diff at Tue, 05 Aug 2025 16:36:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@102320c86f8441c4ad97dd092d898f3142ff4433 block: 1753687629
+- current timestamp: 1754411762
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753687629 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      template:
++        "succinct/SP1Verifier"
+      description:
++        "Verifier contract for SP1 proofs (v5.0.0)."
+    }
+```
+
 Generated with discovered.json: 0xb6e52cc51123d51f680f068994abc3d2baa7290e
 
 # Diff at Mon, 28 Jul 2025 07:27:15 GMT:
@@ -26,15 +54,15 @@ verifier changes.
 
 Generated with discovered.json: 0xb74ec2373881c5581514daffc14019c45ae977c0
 
-# Diff at Thu, 24 Jul 2025 12:27:41 GMT:
+# Diff at Thu, 24 Jul 2025 11:35:40 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@713d113ee2954529e09a88c55545a95e9ba43ca7 block: 351073243
-- current block number: 361069426
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@daf9b4c0c3e0cc879ae7e4d12a2a3cc6a78da2a5 block: 351073243
+- current block number: 361056917
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+stateUpdateProgramImageId update.
 
 Config: Kailua added to OptimismPortal2 and DisputeGameFectory.
 
@@ -62,16 +90,6 @@ discovery. Values are for block 351073243 (main branch discovery), not current.
 +        "risc0/RiscZeroVerifierRouter"
       description:
 +        "A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (arb1:0xDC986a09728F76110FF666eE7b20d99086501d15)."
-    }
-```
-
-```diff
-    contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5) {
-    +++ description: Verifier contract for SP1 proofs (v5.0.0).
-      template:
-+        "succinct/SP1Verifier"
-      description:
-+        "Verifier contract for SP1 proofs (v5.0.0)."
     }
 ```
 
