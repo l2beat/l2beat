@@ -10,16 +10,24 @@ This page is to be considered an extended explainer for the latest version of th
 
 The Stages Framework has been [first introduced](https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571) in June 2023 to provide clear and simple indicators of the maturity of a rollup, measured through the level of decentralization and trust minimization achieved by the project. The idea was first proposed by Vitalik Buterin on [Ethereum Magicians](https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571) in Nov 2022 and later made consistent and precise by the L2BEAT team. The Framework has been updated a few times since its inception, and it is expected to continue evolving as the ecosystem matures and new requirements emerge.
 
-It's important to note that the Stages Framework only discusses the maturity of a rollup in terms of decentralization, and not in terms of security. If a project is assumed to be bug-free, then the Framework can be seen as a measure of security against permissioned actors. In practice, 
-
 The rough intuition is as follows: Stage 0 represents a project who is fully controlled by few entities, Stage 2 represents a project that is fully controlled by code, and Stage 1 as something in between. Defining exactly what it means to be "in between" Stage 0 and Stage 2 is the major challenge of the Stages Framework, but extensive effort has been made to provide a clear and objective set of requirements.
+
+It's important to note that the Stages Framework only discusses the maturity of a rollup in terms of decentralization, and not in terms of security. If a project is assumed to be bug-free, then the Framework can be seen as a measure of security against permissioned actors. In practice, it is very easy for a team to deploy a very unsafe but Stage 2 project, maybe because the proof system is very experimental or because contracts have not been properly audited. Decentralization is a proxy for security, including bug risk, only if the team decides to decentralize when the risk coming from permissioned operators becomes greater than the risk coming from bugs. Given some perceived probabilities of bugs and of actors being compromised, it is possible to compute what Stage guarantees the best security. 
+
+<p align="center">
+  <img src="/images/stages/optimal_stage.jpeg" alt="Stages math" width="600">
+  <em>Taken from "The math of when stage 1 and stage 2 make sense" (2025) by Vitalik Buterin</em>
+</p>
+
+Perceived probabilities are subjective, and therefore users should always do their own research and decide whether the project is "mature" enough for its Stage designation. An orthogonal framework that better captures the notion of security from bugs is being researched, with the main challenge being how to scale reviewing audits (meta-auditing) for a large number of projects.
+
 
 ## The requirements
 
 ### 🟥 Stage 0
 
 **Does the project call itself a rollup?**
-To be considered a rollup, the project must self-identify as such. This requirement is straightforward and helps distinguish rollups from other scaling solution, such as Optimiums, Validiums or other types of bridges.
+To be considered a rollup, the project must self-identify as such. This requirement is straightforward and helps distinguish rollups from other type of projects that socially signal that they do not necessarily follow Ethereum consensus and might eventually deviate from it.
 
 **Are L2 state roots posted on L1?**
 Posting state roots on L1 is a key characteristic of rollups that allows for withdrawals. If a rollup does not post state roots on L1, it falls short of a fundamental component of a bridged rollup.
@@ -41,6 +49,8 @@ A fraud proof system requires at least one honest actor to verify the correctnes
 ➡️ The only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal) is by compromising ≥75% of the Security Council.
 
 > ⚠️ **Assumption**: if the proposer set is open to anyone with enough resources, we assume at least one live proposer at any time (i.e. 1-of-N assumption with unbounded N). We don’t assume it to be non-censoring.
+
+Upgrades initiated by entities outside of the Security Council are allowed if they provide at least a 7 days exit window.
 
 Please refer to [this forum post](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) for a detailed explanation of the requirement and some examples.
 
