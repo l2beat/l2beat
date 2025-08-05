@@ -16136,7 +16136,7 @@ Generated with discovered.json: 0xa1e00fdc80fd5a87605ec534b24fed82c3d81449
 
 This timelock transaction is queued and executed, calling the `SwitchManagerRolesAction` on L2.
 
-Decription from the contract:
+Description from the contract:
 `Grant the non emergency council the MEMBER_ADDER_ROLE, MEMBER_REPLACER_ROLE, MEMBER_ROTATOR_ROLE and MEMBER_REMOVER_ROLE on the SecurityCouncilManager. Revoke those same roles from the emergency council.`
 
 Tx: https://app.blocksec.com/explorer/tx/arbitrum/0xf2929a5ee3c2a073de95293f91f163b4d743fdec38e4dceaa7c4796e090783c3
