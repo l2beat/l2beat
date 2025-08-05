@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4925058c5885329901dc75705bdab77669a43c3b
+Generated with discovered.json: 0x0a389a773d48e2df7beae0fa51258cdb6baa8e94
 
-# Diff at Tue, 05 Aug 2025 12:00:51 GMT:
+# Diff at Tue, 05 Aug 2025 12:25:40 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754395207
+- current timestamp: 1754396693
 
 ## Description
 
@@ -17,7 +17,7 @@ Access control changes.
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
       values.accessControl.roles.PAUSE_CONTROLLER_ROLE:
 +        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b"]}
-      values.accessControl.roles.0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52:
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE:
 +        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]}
       values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0:
 +        "SECURITY_COUNCIL_NO_DELAY_ROLE"
@@ -48,7 +48,7 @@ Access control changes.
 -        "emergency-nodelay"
 +        "PAUSE_CONTROLLER_ROLE"
       values.accessControl.targets.eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b:
-+        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52"]}
++        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"]}
     }
 ```
 

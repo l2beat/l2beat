@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754395207,
+  "timestamp": 1754396693,
   "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
   "entries": [
     {
@@ -960,7 +960,7 @@
         "getFirstUnfinalizedMessageEnqueueTime": 1754387135,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 959485,
+        "nextCrossDomainMessageIndex": 959487,
         "nextUnfinalizedQueueIndex": 959478,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -1393,7 +1393,7 @@
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b"]
             },
-            "0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52": {
+            "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]
             }
@@ -1484,7 +1484,7 @@
               ],
               "unpause(address)": [
                 "emergency-nodelay",
-                "0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52"
+                "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"
               ]
             }
           }
@@ -2041,7 +2041,7 @@
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 363802,
+          "lastCommittedBatchIndex": 363808,
           "lastFinalizedBatchIndex": 363802,
           "lastFinalizeTimestamp": 1754391719,
           "flags": 1,
@@ -4019,9 +4019,9 @@
     "scroll/MultipleVersionRollupVerifier": "0x12467348254718ddb1d7be2b7f101262147f9dc3ba171fa3d37fe21409f6d797",
     "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "scroll/ScrollChain": "0x047807130722fa3643ff477006ffca1906f79e3d9d198aee0e769485785f65b8",
-    "scroll/ScrollOwner": "0xff870a54f9261751cf0852ecfc793da35587c12740271d0a59271425adeb370f",
+    "scroll/ScrollOwner": "0x95f104a37db212846a47522114d2e16e0fbe1d9ecf346852d5b6faf077105952",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23074721 },
+  "usedBlockNumbers": { "ethereum": 23074845 },
   "permissionsConfigHash": "0x3dc9f6b43fadd3fbffaf834355d7c2e38ccaba744f1e38580629877ad5e5c464"
 }
