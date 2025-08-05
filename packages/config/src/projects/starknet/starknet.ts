@@ -285,7 +285,8 @@ export const starknet: ScalingProject = {
       rollupNodeLink: 'https://github.com/eqlabs/pathfinder',
       securityCouncilReference:
         'https://governance.starknet.io/learn/security_council',
-      stage1PrincipleDescription: 'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.'
+      stage1PrincipleDescription:
+        'While Starknet is considered Stage 1, the Security Council minority is employed to enforce censorship resistance in case the permissioned operator fails to include transactions. The process through which a censored user can contact the Security Council is not defined and currently unclear.',
     },
   ),
   technology: {

@@ -75,9 +75,7 @@ export const polygonpos: ScalingProject = {
     description:
       'Polygon PoS is an EVM-compatible, proof of stake sidechain for Ethereum, planning to become a Validium with a state validating bridge. The bridge is currently validated by Polygon validators and allows for asset as well as data movement between Polygon and Ethereum.',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: {},
   config: {
     associatedTokens: ['POL', 'MATIC'],
     escrows: [
