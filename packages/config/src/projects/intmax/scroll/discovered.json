@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "scroll",
-  "timestamp": 1754295529,
+  "timestamp": 1754378050,
   "configHash": "0xbf5228d93d76a9815248f29132efc51f9d8b74a0bcb55653e1b01db58d64d062",
   "entries": [
     {
@@ -41,6 +41,7 @@
         "0xfbb7d02542bc666f4b049d5138aced4257fcc21b784009966f830eae7b197643"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.",
       "sinceTimestamp": 1752665870,
       "sinceBlock": 17261666,
       "values": {
@@ -55,14 +56,14 @@
         ],
         "$upgradeCount": 1,
         "contribution": "scr:0x42Fe7Db60c4C70eBb7597dB9a0959F9fCa0114af",
-        "depositIndex": 6523,
-        "depositTreeRoot": "0x9b023e3f7aa1506627d5916156dff4c621df3646e0b7ae0512b375b520c4f3e5",
+        "depositIndex": 6651,
+        "depositTreeRoot": "0x341374c06925c6fe07caaba3fb027676e648d51e26eb526c8d403b219eff444c",
         "FULL_ACCOUNT_IDS_BYTES": 640,
-        "getLatestBlockNumber": 6973,
+        "getLatestBlockNumber": 7185,
         "getPenalty": 0,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "lastProcessedDepositId": 6523,
+        "lastProcessedDepositId": 6651,
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
         "NUM_SENDERS_IN_BLOCK": 128,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
@@ -112,11 +113,11 @@
           "numPhases": 7,
           "phase0Period": 16
         },
-        "getCurrentPeriod": 44,
+        "getCurrentPeriod": 45,
         "isMigrationCompleted": true,
         "l2ScrollMessenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
         "liquidity": "eth:0xF65e73aAc9182e353600a916a6c7681F810f79C3",
-        "nullifierNonce": 1956,
+        "nullifierNonce": 1998,
         "owner": "scr:0xA3C2a579af4cF3853172058e5c76d273DC1542DD",
         "RELAY_LIMIT": 100,
         "REWARD_TOKEN_INDEX": 1,
@@ -184,6 +185,7 @@
         "0x89b2cb04df88855ad4b770af6142b4e15034008b3b07a28ee1397052af0bb787"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.",
       "sinceTimestamp": 1752665900,
       "sinceBlock": 17261677,
       "values": {
@@ -628,6 +630,6 @@
     "intmax/Rollup": "0x368a94c919529ff9268ca20c0ea75a0cf1c3e1b49f449c9746aeb09917b6f584",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "scroll": 18303568 },
+  "usedBlockNumbers": { "scroll": 18386089 },
   "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
 }

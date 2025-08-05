@@ -1,9 +1,19 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "ignoreRelatives": ["l2ScrollMessenger"],
-  "ignoreMethods": ["proxiableUUID"],
+  "description": "Contract handling withdrawal requests, which require a validity proof of sufficient balance. It tracks amount of funds already withdrawn to prevent double withdrawals.",
+  "ignoreRelatives": [
+    "l2ScrollMessenger"
+  ],
+  "ignoreMethods": [
+    "proxiableUUID"
+  ],
   "fields": {
-    "liquidity": { "edit": ["format", "EthereumAddress"] },
+    "liquidity": {
+      "edit": [
+        "format",
+        "EthereumAddress"
+      ]
+    },
     "owner": {
       "permissions": [
         {
