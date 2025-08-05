@@ -1,5 +1,12 @@
-import { useEffect, useRef } from 'react'
-import { tooltipContentVariants } from '../core/tooltip/Tooltip'
+import { useLayoutEffect, useRef } from 'react'
+import { createRoot, type Root } from 'react-dom/client'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipProvider,
+  TooltipTrigger,
+} from '../core/tooltip/Tooltip'
 
 interface GlossaryTooltipWrapperProps {
   children: React.ReactNode
@@ -9,86 +16,67 @@ export function GlossaryTooltipWrapper({
   children,
 }: GlossaryTooltipWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const rootsRef = useRef<Root[]>([])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: we want to re-run this effect when the children change
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = containerRef.current
     if (!container) return
+
+    // Clean up previous roots
+    rootsRef.current.forEach((root) => {
+      root.unmount()
+    })
+    rootsRef.current = []
 
     // Find all glossary links
     const glossaryLinks = container.querySelectorAll(
       'a[data-link-role="glossary"]',
     )
 
-    const tooltips: (() => void)[] = []
-
     glossaryLinks.forEach((link) => {
       const description = link.getAttribute('data-description')
       if (!description) return
 
-      let tooltipElement: HTMLDivElement | null = null
+      // Create a wrapper element for the tooltip
+      const wrapper = document.createElement('span')
+      wrapper.style.display = 'inline'
 
-      const showTooltip = () => {
-        if (tooltipElement) {
-          hideTooltip()
-        }
+      // Replace the link with our wrapper
+      link.parentNode?.insertBefore(wrapper, link)
 
-        // Create tooltip element
-        tooltipElement = document.createElement('div')
-        tooltipElement.className = tooltipContentVariants({
-          className: 'fixed z-[9999]',
-        })
-        tooltipElement.textContent = description
+      // Create React root and render tooltip
+      const root = createRoot(wrapper)
+      rootsRef.current.push(root)
 
-        // First append to get real dimensions
-        tooltipElement.style.visibility = 'hidden'
-        document.body.appendChild(tooltipElement)
+      // Clean the href by removing the description query parameter
+      const originalHref = link.getAttribute('href') || '#'
+      const cleanHref = originalHref.split('?description=')[0]
 
-        // Get actual dimensions
-        const rect = link.getBoundingClientRect()
-        const tooltipRect = tooltipElement.getBoundingClientRect()
+      root.render(
+        <TooltipProvider>
+          <Tooltip delayDuration={0}>
+            <TooltipTrigger asChild>
+              <a href={cleanHref} data-link-role="glossary">
+                {link.textContent}
+              </a>
+            </TooltipTrigger>
+            <TooltipPortal>
+              <TooltipContent>{description}</TooltipContent>
+            </TooltipPortal>
+          </Tooltip>
+        </TooltipProvider>,
+      )
 
-        // Calculate position - prefer above, fallback to below
-        let top = rect.top - tooltipRect.height - 8
-        if (top < 10) {
-          top = rect.bottom + 8
-        }
-
-        let left = rect.left + rect.width / 2 - tooltipRect.width / 2
-
-        // Keep tooltip within viewport
-        if (left < 10) left = 10
-        if (left + tooltipRect.width > window.innerWidth - 10) {
-          left = window.innerWidth - tooltipRect.width - 10
-        }
-
-        // Apply final position and make visible
-        tooltipElement.style.top = `${top}px`
-        tooltipElement.style.left = `${left}px`
-        tooltipElement.style.visibility = 'visible'
-      }
-
-      const hideTooltip = () => {
-        if (tooltipElement) {
-          tooltipElement.remove()
-          tooltipElement = null
-        }
-      }
-
-      link.addEventListener('mouseenter', showTooltip)
-      link.addEventListener('mouseleave', hideTooltip)
-
-      tooltips.push(() => {
-        link.removeEventListener('mouseenter', showTooltip)
-        link.removeEventListener('mouseleave', hideTooltip)
-        if (tooltipElement) {
-          hideTooltip()
-        }
-      })
+      // Remove the original link
+      link.remove()
     })
 
     return () => {
-      tooltips.forEach((cleanup) => cleanup())
+      rootsRef.current.forEach((root) => {
+        root.unmount()
+      })
+      rootsRef.current = []
     }
   }, [children])
 
