@@ -52,7 +52,7 @@ const upgradeDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
-const finalizationPeriod = 0
+const finalizationPeriod = 0 // state root immediately finalized when proven
 const chainId = 534352
 
 export const scroll: ScalingProject = {

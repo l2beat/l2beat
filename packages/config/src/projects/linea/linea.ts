@@ -70,7 +70,7 @@ const withdrawalLimitInWei = discovery.getContractValue<number>(
   'limitInWei',
 )
 
-const finalizationPeriod = 0
+const finalizationPeriod = 0 // state root immediately finalized when proven
 
 const withdrawalLimitString = `Currently, there is a general limit of ${utils.formatEther(
   withdrawalLimitInWei,

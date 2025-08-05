@@ -9,7 +9,7 @@ const CORRECT_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
 const FAKE_SUPERCHAIN_CONFIG_ADDR = ChainSpecificAddress(
   'eth:0x26C7bFB430d68Bf74d2d52497836d4336b555dE7',
 )
-const CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH = Hash256(
+const CORRECT_SUPERCHAIN_CONFIG_IMPLEMENTATION_HASH = Hash256(
   '0x3ac96c9c95e25f689f65a50f24b325e3f891029cb1cea96dc642418bbb535b1d',
 )
 
@@ -49,14 +49,14 @@ const templateShapes: Record<string, Shape> = {
     criteria: {
       validAddresses: [CORRECT_SUPERCHAIN_CONFIG_ADDR.toString()],
     },
-    hashes: [CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH],
+    hashes: [CORRECT_SUPERCHAIN_CONFIG_IMPLEMENTATION_HASH],
   },
   'opstack/SuperchainConfigFake': {
     hashes: [
       Hash256(
         '0x65dcaf0bdde7cc90f916020b1615321a4b086bfd802f2c27f6ed226fc486b65d',
       ),
-      CORRECT_SUPERCHAIN_CONFIG_IMPLEMENATION_HASH,
+      CORRECT_SUPERCHAIN_CONFIG_IMPLEMENTATION_HASH,
     ],
   },
   'opstack/SystemConfig': {

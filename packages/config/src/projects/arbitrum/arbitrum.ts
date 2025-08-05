@@ -31,6 +31,11 @@ const challengeWindow = discovery.getContractValue<number>(
   'confirmPeriodBlocks',
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
+const challengeGracePeriodSeconds =
+  discovery.getContractValue<number>(
+    'RollupProxy',
+    'challengeGracePeriodBlocks',
+  ) * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
   'L1Timelock',
   'getMinDelay',
@@ -276,7 +281,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
       selfSequencingDelay,
       l1TimelockDelay,
     ),
-    stateValidation: RISK_VIEW.STATE_FP_INT,
+    stateValidation: RISK_VIEW.STATE_FP_INT(
+      challengeWindowSeconds,
+      challengeGracePeriodSeconds,
+    ),
   },
   isNodeAvailable: true,
   nodeSourceLink: 'https://github.com/OffchainLabs/nitro/',
