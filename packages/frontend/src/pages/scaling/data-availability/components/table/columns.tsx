@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
-import { Badge } from '~/components/badge/Badge'
+import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/CombinedGrissiniCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import {
@@ -90,7 +90,7 @@ export function getScalingDataAvailabilityColumns(hideType?: boolean) {
       header: 'Risks',
       cell: (ctx) => {
         if (!ctx.row.original.risks) {
-          return <Badge type="gray">N/A</Badge>
+          return <NotApplicableBadge />
         }
 
         return (
