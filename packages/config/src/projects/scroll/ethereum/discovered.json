@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754394405,
+  "timestamp": 1754395207,
   "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
   "entries": [
     {
@@ -1621,7 +1621,7 @@
         {
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue .",
+          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue.",
           "role": ".opsNoDelay"
         },
         {
@@ -2254,7 +2254,7 @@
         {
           "permission": "interact",
           "from": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
-          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue .",
+          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue.",
           "role": ".opsNoDelay",
           "via": [
             { "address": "eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b" }
@@ -4022,6 +4022,6 @@
     "scroll/ScrollOwner": "0xff870a54f9261751cf0852ecfc793da35587c12740271d0a59271425adeb370f",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23074657 },
-  "permissionsConfigHash": "0x435139d5bf00f8da16671bd0b59c18453b74cac235dba97dd0d57950c1957ba0"
+  "usedBlockNumbers": { "ethereum": 23074721 },
+  "permissionsConfigHash": "0x3dc9f6b43fadd3fbffaf834355d7c2e38ccaba744f1e38580629877ad5e5c464"
 }

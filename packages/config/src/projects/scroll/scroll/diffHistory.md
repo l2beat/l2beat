@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0a1d9bc49661a410fb328108d35698d9c29b19f1
+Generated with discovered.json: 0x933aa33a4974e90b58876fa2eb8b2101ab5a0840
 
-# Diff at Tue, 05 Aug 2025 11:49:16 GMT:
+# Diff at Tue, 05 Aug 2025 12:00:52 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754394405
+- current timestamp: 1754395207
 
 ## Description
 
@@ -63,14 +63,14 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract PauseController (0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd)
+    contract L2PauseController (0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../.flat/PauseController/PauseController.sol      |  619 +++++++++++
+.../.flat/L2PauseController/PauseController.sol    |  619 +++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
  .../SafeL2.sol                                     | 1152 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   37 +

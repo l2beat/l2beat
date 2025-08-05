@@ -74,7 +74,8 @@
     "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4": "TimelockSCEmergencyScroll",
     "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376": "TimelockFast",
     "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f": "TimelockEmergency",
-    "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "Scroll USDC"
+    "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4": "Scroll USDC",
+    "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": "L2PauseController"
   },
   "overrides": {
     "eth:0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": {

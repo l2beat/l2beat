@@ -83,7 +83,7 @@
         },
         {
           "type": "interact",
-          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue ."
+          "description": "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue."
         }
       ]
     }

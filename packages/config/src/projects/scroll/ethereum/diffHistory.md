@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb3eadc3c1af19873afb898297624d0fd9141767c
+Generated with discovered.json: 0x4925058c5885329901dc75705bdab77669a43c3b
 
-# Diff at Tue, 05 Aug 2025 11:49:15 GMT:
+# Diff at Tue, 05 Aug 2025 12:00:51 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754394405
+- current timestamp: 1754395207
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Access control changes.
 
 ## Watched changes
 
@@ -127,7 +127,7 @@ discovery. Values are for block 1753093859 (main branch discovery), not current.
     +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
       directlyReceivedPermissions.0.description:
 -        "pause the L1 -> L2 messenger and enforced transaction mode."
-+        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue ."
++        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue."
     }
 ```
 
@@ -136,7 +136,7 @@ discovery. Values are for block 1753093859 (main branch discovery), not current.
     +++ description: None
       receivedPermissions.0.description:
 -        "pause the L1 -> L2 messenger and enforced transaction mode."
-+        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue ."
++        "pause the ScrollChain in permissioned mode and the L1 -> L2 message queue."
     }
 ```
 
