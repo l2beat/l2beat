@@ -516,8 +516,15 @@
         ]
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -578,7 +585,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

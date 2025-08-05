@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -14,7 +14,7 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
 
 interface ActivityRatioChartDataPoint {
@@ -84,7 +84,7 @@ export function ActivityRatioChart({
   )
 }
 
-export function ActivityCustomTooltip({
+function ActivityCustomTooltip({
   active,
   payload,
   label: timestamp,
@@ -96,9 +96,7 @@ export function ActivityCustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            longMonthName: true,
-          })}
+          {formatRange(timestamp, timestamp + UnixTime.DAY)}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

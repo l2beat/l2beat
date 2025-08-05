@@ -742,7 +742,7 @@
         "sinceTimestamp": 1641759454
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [
@@ -2160,8 +2160,15 @@
         ]
       },
       "category": "stablecoin",
-      "source": "native",
-      "isAssociated": false
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Circle CCTP"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2286,7 +2293,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Canonical (external escrow)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

@@ -40,7 +40,7 @@ export function PartnersSection({ partners }: Props) {
   )
 }
 
-export function EcosystemTierCard({
+function EcosystemTierCard({
   partner,
 }: {
   partner: Partners['ecosystem'][number]
@@ -102,7 +102,7 @@ export function EcosystemTierCard({
   )
 }
 
-export function InnovatorTierCard({
+function InnovatorTierCard({
   partner,
 }: {
   partner: Partners['innovator'][number]
@@ -125,7 +125,7 @@ export function InnovatorTierCard({
   )
 }
 
-export function SupporterTierCard({
+function SupporterTierCard({
   partner,
 }: {
   partner: Partners['supporter'][number]

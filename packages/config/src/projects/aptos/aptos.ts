@@ -24,7 +24,7 @@ export const aptos: Bridge = {
         'https://layerzero.network/',
       ],
       repositories: [
-        'https://github.com/LayerZero-Labs/LayerZero-Aptos-Contract',
+        'https://github.com/LayerZero-Labs',
         'https://github.com/aptos-labs',
       ],
       socialMedia: [

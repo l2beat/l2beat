@@ -4,7 +4,7 @@ import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'
 import { PlainLink } from './PlainLink'
 
-export interface LinkWithThumbnailProps {
+interface LinkWithThumbnailProps {
   title: string
   description?: string
   src: string

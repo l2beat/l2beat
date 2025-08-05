@@ -1,5 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -17,7 +18,8 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -28,6 +30,7 @@ interface Props {
   projectsToShow: string[]
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
+  resolution: DaThroughputResolution
 }
 
 export function DaThroughputByProjectChart({
@@ -37,6 +40,7 @@ export function DaThroughputByProjectChart({
   projectsToShow,
   customColors,
   milestones,
+  resolution,
 }: Props) {
   const colors = useMemo(
     () => generateAccessibleColors(projectsToShow.length),
@@ -154,7 +158,9 @@ export function DaThroughputByProjectChart({
         })}
         <ChartTooltip
           filterNull={false}
-          content={<CustomTooltip denominator={denominator} />}
+          content={
+            <CustomTooltip denominator={denominator} resolution={resolution} />
+          }
         />
       </BarChart>
     </ChartContainer>
@@ -166,7 +172,11 @@ function CustomTooltip({
   payload,
   label,
   denominator: mainDenominator,
-}: TooltipProps<number, string> & { denominator: number }) {
+  resolution,
+}: TooltipProps<number, string> & {
+  denominator: number
+  resolution: DaThroughputResolution
+}) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   payload.sort((a, b) => {
@@ -178,7 +188,15 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatRange(
+          label,
+          label +
+            (resolution === 'daily'
+              ? UnixTime.DAY
+              : resolution === 'sixHourly'
+                ? UnixTime.HOUR * 6
+                : UnixTime.HOUR),
+        )}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

@@ -17,7 +17,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
-  STATE_ZKP_SN,
+  STATE_ZKP_ST_SN_WRAP,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -367,7 +367,7 @@ export const scroll: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...STATE_ZKP_SN,
+      ...STATE_ZKP_ST_SN_WRAP,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

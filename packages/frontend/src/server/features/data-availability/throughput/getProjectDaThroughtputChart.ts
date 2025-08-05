@@ -15,15 +15,12 @@ import {
   rangeToResolution,
 } from './utils/range'
 
-export type ProjectDaThroughputChart = {
+type ProjectDaThroughputChart = {
   chart: ProjectDaThroughputChartPoint[]
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
-export type ProjectDaThroughputChartPoint = [
-  timestamp: number,
-  value: number | null,
-]
+type ProjectDaThroughputChartPoint = [timestamp: number, value: number | null]
 
 export const ProjectDaThroughputChartParams = v.object({
   range: v.union([
@@ -84,7 +81,10 @@ export async function getProjectDaThroughputChart(
     resolution,
   )
 
-  const expectedTo = getThroughputExpectedTimestamp(resolution)
+  const expectedTo = getThroughputExpectedTimestamp(
+    resolution,
+    params.range.type === 'custom' ? params.range.to : undefined,
+  )
 
   const adjustedTo = isThroughputSynced(syncedUntil, false)
     ? maxTimestamp

@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -19,7 +20,7 @@ import {
   type CostsTimeRange,
   rangeToResolution,
 } from '~/server/features/scaling/costs/utils/range'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
@@ -285,10 +286,15 @@ function CustomTooltip({
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            mode: resolution === 'daily' ? 'date' : 'datetime',
-            longMonthName: resolution === 'daily',
-          })}
+          {formatRange(
+            label,
+            label +
+              (resolution === 'daily'
+                ? UnixTime.DAY
+                : resolution === 'sixHourly'
+                  ? UnixTime.HOUR * 6
+                  : UnixTime.HOUR),
+          )}
         </div>
         <div className="flex w-full items-center justify-between gap-2 text-heading-16">
           <span>Total</span>

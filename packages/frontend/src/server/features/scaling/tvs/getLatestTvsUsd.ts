@@ -3,7 +3,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 
-export type ProjectsLatestTvsUsd = Record<ProjectId, number>
+type ProjectsLatestTvsUsd = Record<ProjectId, number>
 
 /*
   This function should only be used for ordering projects by S.
