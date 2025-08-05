@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xd910381437ce057b4a96883cad106762af7ca351
+
+# Diff at Tue, 05 Aug 2025 07:17:57 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@79ef116bb03dfe870ed23d81b625544ae3a617a6 block: 1754295529
+- current timestamp: 1754378270
+
+## Description
+
+Added descriptions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754295529 (main branch discovery), not current.
+
+```diff
+    contract PredicatePermitter (0x11D58231A79D866674EaAa043Fdaeae9A3dF4c0E) {
+    +++ description: Contract that connects INTMAX deposits to the Predicate AVS that ultimately checks AML requirements. It stores a policy ID to be then referenced by the Predicate AVS.
+      description:
++        "Contract that connects INTMAX deposits to the Predicate AVS that ultimately checks AML requirements. It stores a policy ID to be then referenced by the Predicate AVS."
+    }
+```
+
+```diff
+    contract Liquidity (0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
+    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.
+      description:
++        "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check."
+    }
+```
+
 Generated with discovered.json: 0xbba2961125fdd21445f0710fd366f0c2125562df
 
 # Diff at Mon, 04 Aug 2025 08:18:56 GMT:

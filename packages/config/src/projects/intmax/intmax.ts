@@ -30,6 +30,7 @@ export const intmax: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://intmax.io/'],
+      explorers: ['https://explorer.intmax.io/'],
       documentation: [
         'https://docs.network.intmax.io',
         'https://eprint.iacr.org/2023/1082.pdf',
