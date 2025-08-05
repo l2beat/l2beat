@@ -1,16 +1,21 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
-
-import { CONTRACTS, DA_MODES } from '../../common'
-import { DA_LAYERS, RISK_VIEW } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  CONTRACTS,
+  DA_LAYERS,
+  DA_MODES,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -37,6 +42,8 @@ const currentValidatorSetCap = discovery.getContractValue<number>(
   'validatorThreshold',
 )
 
+const chainId = 137
+
 export const polygonpos: ScalingProject = {
   type: 'layer2',
   id: ProjectId('polygon-pos'),
@@ -52,7 +59,7 @@ export const polygonpos: ScalingProject = {
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
-      apps: ['https://wallet.polygon.technology'],
+      bridges: ['https://wallet.polygon.technology'],
       repositories: ['https://github.com/maticnetwork/'],
       documentation: ['https://docs.polygon.technology/pos/'],
       socialMedia: [
@@ -76,39 +83,51 @@ export const polygonpos: ScalingProject = {
     escrows: [
       discovery.getEscrowDetails({
         // DepositManager
-        address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
+        address: ChainSpecificAddress(
+          'eth:0x401F6c983eA34274ec46f84D70b31C151321188b',
+        ),
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20Predicate
-        address: EthereumAddress('0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf'),
+        address: ChainSpecificAddress(
+          'eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
+        ),
         premintedTokens: ['TRADE'],
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // MintableERC20Predicate
-        address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
+        address: ChainSpecificAddress(
+          'eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4',
+        ),
         tokens: '*',
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // EtherPredicate
-        address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
+        address: ChainSpecificAddress(
+          'eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30',
+        ),
         tokens: ['ETH'],
         ...upgrades,
       }),
       discovery.getEscrowDetails({
         // ERC20EscrowPredicate for TOWER token
-        address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
+        address: ChainSpecificAddress(
+          'eth:0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4',
+        ),
         tokens: '*',
         ...upgrades,
       }),
       // ...other predicates up until PolygonERC20MintBurnPredicate do not hold funds
       discovery.getEscrowDetails({
         // old MaticWETH contract escrowing ETH sent to Polygon
-        address: EthereumAddress('0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8'),
+        address: ChainSpecificAddress(
+          'eth:0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8',
+        ),
         tokens: ['ETH'],
       }),
     ],
@@ -116,10 +135,30 @@ export const polygonpos: ScalingProject = {
       type: 'block',
       startBlock: 5000000,
     },
+    trackedTxs: [
+      {
+        uses: [
+          // checkpoint submission counts both as data submission and state update
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: ChainSpecificAddress.address(
+            discovery.getContract('RootChain').address,
+          ),
+          selector: '0x4e43e495',
+          functionSignature:
+            'function submitCheckpoint(bytes data, uint256[3][] sigs)',
+          sinceTimestamp: UnixTime(1590850580),
+        },
+      },
+    ],
   },
   chainConfig: {
     name: 'polygonpos',
-    chainId: 137,
+    chainId,
     explorerUrl: 'https://polygonscan.com',
     multicallContracts: [
       {
@@ -135,7 +174,7 @@ export const polygonpos: ScalingProject = {
         url: 'https://polygon.llamarpc.com',
         callsPerMinute: 1500,
       },
-      { type: 'etherscan', url: 'https://api.polygonscan.com/api' },
+      { type: 'etherscan', chainId },
       { type: 'blockscoutV2', url: 'https://polygon.blockscout.com/api/v2' },
     ],
   },
@@ -164,27 +203,31 @@ export const polygonpos: ScalingProject = {
       currentValidatorSetCap,
     ),
   },
+  stateValidation: {
+    categories: [
+      {
+        title: 'No state validation',
+        description:
+          'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
+        references: [],
+        risks: [
+          {
+            category: 'Users can be censored if',
+            text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
+          },
+        ],
+      },
+    ],
+  },
   technology: {
-    stateCorrectness: {
-      name: 'No state validation',
-      description:
-        'State updates are settled on Ethereum if signed by at least 2/3+1 of the Polygon PoS validators stake. Contracts on Ethereum do not check whether the state transitions are valid.',
-      references: [],
-      risks: [
-        {
-          category: 'Users can be censored if',
-          text: 'validators on Polygon decide to not mint tokens after observing an event on Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators decide to mint more tokens than there are locked on Ethereum thus preventing some existing holders from being able to bring their funds back to Ethereum.',
-        },
-        {
-          category: 'Funds can be stolen if',
-          text: 'validators submit a fraudulent checkpoint allowing themselves to withdraw all locked funds.',
-        },
-      ],
-    },
     // dataAvailability: {},
     //operator: {},
     //forceTransactions: {},
@@ -207,7 +250,7 @@ export const polygonpos: ScalingProject = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('RootChain', {
           description:
             'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
@@ -273,7 +316,7 @@ export const polygonpos: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'PolygonMultisig',
@@ -282,4 +325,5 @@ export const polygonpos: ScalingProject = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }
