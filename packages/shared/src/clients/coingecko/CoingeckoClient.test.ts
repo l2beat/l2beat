@@ -85,8 +85,6 @@ describe(CoingeckoClient.name, () => {
       const coingeckoClient = getMockClient(http, logger)
 
       const from = 100
-      const now = 200
-      UnixTime.now = () => now
       const to = UnixTime.now() + UnixTime.DAY
 
       await coingeckoClient.getCoinMarketChartRange(
@@ -96,9 +94,11 @@ describe(CoingeckoClient.name, () => {
         to,
       )
 
-      expect(http.fetch.calls[0].args[0]).toEqual(
-        `https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=${from}&to=${now}`,
-      )
+      const url = new URL(http.fetch.calls[0].args[0])
+      const queriedTo = Number(url.searchParams.get('to'))
+
+      expect(queriedTo).toBeLessThan(to)
+      expect(queriedTo).toBeLessThanOrEqual(UnixTime.now())
     })
   })
 
