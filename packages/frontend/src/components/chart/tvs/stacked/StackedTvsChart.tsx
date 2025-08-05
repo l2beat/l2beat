@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -11,6 +10,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
@@ -61,6 +61,8 @@ export function StackedTvsChart({
   className,
   tickCount,
 }: Props) {
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
+
   return (
     <ChartContainer
       data={data}
@@ -70,9 +72,18 @@ export function StackedTvsChart({
       className={className}
     >
       <AreaChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              reverse
+              hiddenDataKeys={hiddenDataKeys}
+              onClick={toggleDataKey}
+            />
+          }
+        />
         <Area
           dataKey="external"
+          hide={hiddenDataKeys.includes('external')}
           fill={chartMeta.external.color}
           fillOpacity={1}
           strokeWidth={0}
@@ -82,6 +93,7 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="native"
+          hide={hiddenDataKeys.includes('native')}
           fill={chartMeta.native.color}
           fillOpacity={1}
           strokeWidth={0}
@@ -91,6 +103,7 @@ export function StackedTvsChart({
         />
         <Area
           dataKey="canonical"
+          hide={hiddenDataKeys.includes('canonical')}
           fill={chartMeta.canonical.color}
           fillOpacity={1}
           strokeWidth={0}

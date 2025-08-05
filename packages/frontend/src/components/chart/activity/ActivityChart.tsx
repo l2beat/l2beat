@@ -1,6 +1,5 @@
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable, UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -29,6 +28,7 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
+import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
@@ -51,7 +51,6 @@ interface Props {
   syncedUntil: number | undefined
   isLoading: boolean
   milestones: Milestone[]
-  showMainnet: boolean
   scale: ChartScale
   metric: ActivityMetric
   type: ActivityChartType
@@ -65,7 +64,6 @@ export function ActivityChart({
   syncedUntil,
   milestones,
   isLoading,
-  showMainnet,
   scale,
   type,
   metric,
@@ -73,6 +71,7 @@ export function ActivityChart({
   className,
   tickCount,
 }: Props) {
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
   const chartMeta = {
     projects: {
       label:
@@ -101,20 +100,29 @@ export function ActivityChart({
       milestones={milestones}
     >
       <AreaChart accessibilityLayer data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              hiddenDataKeys={hiddenDataKeys}
+              onClick={toggleDataKey}
+            />
+          }
+        />
         {getStrokeOverFillAreaComponents({
-          data: compact([
-            showMainnet && {
+          data: [
+            {
               dataKey: 'ethereum',
               stroke: 'url(#strokeEthereum)',
               fill: 'url(#fillEthereum)',
+              hide: hiddenDataKeys.includes('ethereum'),
             },
             {
               dataKey: 'projects',
               stroke: 'url(#strokeProjects)',
               fill: 'url(#fillProjects)',
+              hide: hiddenDataKeys.includes('projects'),
             },
-          ]),
+          ],
         })}
         {getCommonChartComponents({
           data,

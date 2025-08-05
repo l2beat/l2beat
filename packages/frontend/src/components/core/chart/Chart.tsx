@@ -192,10 +192,17 @@ function ChartLegendContent({
   verticalAlign = 'bottom',
   nameKey,
   reverse = false,
-}: React.ComponentProps<'div'> &
-  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
+  onClick,
+  hiddenDataKeys,
+}: Omit<React.ComponentProps<'div'>, 'onClick'> &
+  Pick<
+    RechartsPrimitive.LegendProps,
+    'payload' | 'verticalAlign'
+  > & {
     nameKey?: string
     reverse?: boolean
+    hiddenDataKeys?: string[]
+    onClick?: (dataKey: string) => void
   }) {
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta } = useChart()
@@ -224,11 +231,19 @@ function ChartLegendContent({
           return (
             <div
               key={item.value}
-              className="flex items-center gap-[3px] [&>svg]:text-secondary"
+              className={cn(
+                'flex items-center gap-[3px] [&>svg]:text-secondary',
+                !!onClick && 'cursor-pointer select-none',
+              )}
+              onClick={() => onClick?.(key)}
             >
               <ChartDataIndicator
                 type={itemConfig.indicatorType}
-                backgroundColor={itemConfig.color}
+                backgroundColor={
+                  hiddenDataKeys?.includes(key)
+                    ? 'var(--secondary)'
+                    : itemConfig.color
+                }
               />
               <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
                 {itemConfig.legendLabel ?? itemConfig.label}
