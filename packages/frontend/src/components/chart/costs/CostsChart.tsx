@@ -11,6 +11,7 @@ import {
   ChartTooltipWrapper,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
@@ -92,6 +93,7 @@ export function CostsChart({
   tickCount,
   hasBlobs,
 }: Props) {
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
   const chartMeta = {
     calldata: {
       label: 'Calldata',
@@ -140,7 +142,15 @@ export function CostsChart({
       className={className}
     >
       <ComposedChart data={data} margin={{ top: 20 }}>
-        <ChartLegend content={<ChartLegendContent reverse />} />
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              hiddenDataKeys={hiddenDataKeys}
+              onClick={toggleDataKey}
+              reverse
+            />
+          }
+        />
         <Area
           yAxisId="left"
           dataKey="overhead"
@@ -151,6 +161,7 @@ export function CostsChart({
           dot={false}
           activeDot={false}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('overhead')}
         />
         <Area
           yAxisId="left"
@@ -162,6 +173,7 @@ export function CostsChart({
           dot={false}
           activeDot={false}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('compute')}
         />
         {chartMeta.blobs && (
           <Area
@@ -174,6 +186,7 @@ export function CostsChart({
             dot={false}
             activeDot={false}
             isAnimationActive={false}
+            hide={hiddenDataKeys.includes('blobs')}
           />
         )}
         <Area
@@ -185,6 +198,7 @@ export function CostsChart({
           stackId="a"
           dot={false}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('calldata')}
         />
 
         {showDataPosted && (
@@ -195,6 +209,7 @@ export function CostsChart({
             stroke={chartMeta.posted.color}
             dot={false}
             isAnimationActive={false}
+            hide={hiddenDataKeys.includes('posted')}
           />
         )}
         {showDataPosted && (
@@ -209,6 +224,7 @@ export function CostsChart({
             dot={false}
             isAnimationActive={false}
             legendType="none"
+            hide={hiddenDataKeys.includes('posted')}
           />
         )}
         {showDataPosted && (
@@ -224,6 +240,7 @@ export function CostsChart({
             tick={{
               width: 100,
             }}
+            hide={hiddenDataKeys.includes('posted')}
           />
         )}
 
