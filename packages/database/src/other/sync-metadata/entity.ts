@@ -7,6 +7,7 @@ export type SyncMetadataFeature =
   | 'l2Cost'
   | 'liveness'
   | 'anomalies'
+  | 'tvs'
 
 export interface SyncMetadataRecord {
   feature: SyncMetadataFeature

@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type SyncMetadataRecord, toRecord, toRow } from './entity'
 
@@ -23,6 +24,28 @@ export class SyncMetadataRepository extends BaseRepository {
         .execute()
     })
     return records.length
+  }
+
+  async updateTarget(
+    record: Pick<SyncMetadataRecord, 'feature' | 'id' | 'target'>,
+  ): Promise<void> {
+    await this.db
+      .updateTable('SyncMetadata')
+      .set({ target: UnixTime.toDate(record.target) })
+      .where('feature', '=', record.feature)
+      .where('id', '=', record.id)
+      .execute()
+  }
+
+  async updateSyncedUntil(
+    record: Pick<SyncMetadataRecord, 'feature' | 'id' | 'syncedUntil'>,
+  ): Promise<void> {
+    await this.db
+      .updateTable('SyncMetadata')
+      .set({ syncedUntil: UnixTime.toDate(record.syncedUntil) })
+      .where('feature', '=', record.feature)
+      .where('id', '=', record.id)
+      .execute()
   }
 
   async getAll(): Promise<SyncMetadataRecord[]> {
