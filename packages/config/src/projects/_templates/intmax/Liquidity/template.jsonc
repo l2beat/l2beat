@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.",
+  "ignoreMethods": [
+    "l1ScrollMessenger",
+    "getDepositData",
+    "getDepositDataHash",
+    "proxiableUUID"
+  ],
+  "ignoreInWatchMode": ["getLastDepositId", "getLastRelayedDepositId"],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xab4f864e5201b0fde9b5ee3e4cf96384802b0ffdfcf7f9de4699ce21a30afc4f": "RELAYER",
+          "0x738128fe393bef1bcd8a524796fff40618b938cd467c71fcf37850ab0ba4f7d7": "WITHDRAWAL"
+        }
+      }
+    },
+    "amlPermitter": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "approves deposits through AML checks."
+        }
+      ]
+    },
+    "relayer": {
+      "copy": "accessControl",
+      "edit": ["get", "RELAYER", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can relay deposits to the main rollup contract on Scroll."
+        }
+      ]
+    }
+  }
+}

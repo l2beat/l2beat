@@ -95,7 +95,7 @@ export interface ScalingProject {
   badges?: Badge[]
   /** Reasons why the scaling project is included in the other categories. If defined - project will be displayed as other */
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  /** Things we have or haven't checked while assesing the stage */
+  /** Things we have or haven't checked while assessing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers - shouldn't be configured by a user */
   discoveryInfo: ProjectDiscoveryInfo

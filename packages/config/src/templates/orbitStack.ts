@@ -25,7 +25,7 @@ import {
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
-import { formatChallengePeriod, formatDelay } from '../common/formatDelays'
+import { formatDelay } from '../common/formatDelays'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -915,6 +915,12 @@ function getRiskView(
   const challengePeriodSeconds =
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
+  const challengeGracePeriodBlocks =
+    templateVars.discovery.getContractValueOrUndefined(
+      'RollupProxy',
+      'challengeGracePeriodBlocks',
+    )
+
   const validatorWhitelistDisabled =
     templateVars.discovery.getContractValue<boolean>(
       'RollupProxy',
@@ -926,7 +932,13 @@ function getRiskView(
       templateVars.nonTemplateRiskView?.stateValidation ??
       (() => {
         if (validatorWhitelistDisabled) {
-          return RISK_VIEW.STATE_FP_INT
+          return RISK_VIEW.STATE_FP_INT(
+            challengePeriodSeconds,
+            challengeGracePeriodBlocks
+              ? Number(challengeGracePeriodBlocks) *
+                  blockNumberOpcodeTimeSeconds
+              : undefined,
+          )
         }
 
         const nOfChallengers = isPostBoLD
@@ -944,8 +956,11 @@ function getRiskView(
             nOfChallengers,
             templateVars.hasAtLeastFiveExternalChallengers ?? false,
             challengePeriodSeconds,
+            challengeGracePeriodBlocks
+              ? Number(challengeGracePeriodBlocks) *
+                  blockNumberOpcodeTimeSeconds
+              : undefined,
           ),
-          secondLine: formatChallengePeriod(challengePeriodSeconds),
         }
       })(),
     dataAvailability:

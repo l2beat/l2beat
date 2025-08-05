@@ -11,6 +11,7 @@ import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/comp
 import {
   type DaThroughputTimeRange,
   DaThroughputTimeRangeValues,
+  rangeToResolution,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
@@ -48,9 +49,9 @@ export function ThroughputSectionByProjectChart({
     // We want to get latest top projects.
     const result = data
       ? uniq(
-          [...data]
+          [...data.chart]
             .reverse()
-            .flatMap(([_, values]) => Object.keys(values))
+            .flatMap(([_, values]) => Object.keys(values ?? {}))
             .sort((a, b) => {
               if (a === 'Unknown') return 1
               if (b === 'Unknown') return -1
@@ -66,7 +67,7 @@ export function ThroughputSectionByProjectChart({
   }, [data, includeScalingOnly])
 
   const chartRange = useMemo(
-    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
+    () => getChartRange(data?.chart.map(([timestamp]) => ({ timestamp }))),
     [data],
   )
 
@@ -83,6 +84,8 @@ export function ThroughputSectionByProjectChart({
         .slice(0, DEFAULT_PROJECTS_TO_SHOW),
     [allProjects, includeScalingOnly, selectedProjects],
   )
+
+  const resolution = rangeToResolution({ type: range })
 
   return (
     <div>
@@ -126,6 +129,7 @@ export function ThroughputSectionByProjectChart({
         projectsToShow={projectsToShow}
         customColors={customColors}
         milestones={milestones}
+        resolution={resolution}
       />
     </div>
   )

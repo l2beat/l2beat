@@ -1,5 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -17,7 +18,8 @@ import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generateColors'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -28,6 +30,7 @@ interface Props {
   projectsToShow: string[]
   customColors: Record<string, string> | undefined
   milestones: Milestone[]
+  resolution: DaThroughputResolution
 }
 
 export function DaThroughputByProjectChart({
@@ -37,6 +40,7 @@ export function DaThroughputByProjectChart({
   projectsToShow,
   customColors,
   milestones,
+  resolution,
 }: Props) {
   const colors = useMemo(
     () => generateAccessibleColors(projectsToShow.length),
@@ -46,9 +50,9 @@ export function DaThroughputByProjectChart({
   const max = useMemo(() => {
     return data
       ? Math.max(
-          ...data.map(([_, values]) =>
+          ...data.chart.map(([_, values]) =>
             sum(
-              Object.entries(values).map(([project, value]) => {
+              Object.entries(values ?? {}).map(([project, value]) => {
                 if (!projectsToShow.includes(project)) return 0
                 return value
               }),
@@ -84,38 +88,39 @@ export function DaThroughputByProjectChart({
       return []
     }
 
-    const lastProjectsDataTimestamp = data?.findLast(([_, values]) => {
-      return Object.entries(values).some(
+    const lastProjectsDataTimestamp = data?.chart.findLast(([_, values]) => {
+      return Object.entries(values ?? {}).some(
         ([name, value]) => name !== 'Unknown' && value > 0,
       )
     })?.[0]
 
     return (
-      data?.map(([timestamp, values]) => {
-        // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to cut the chart to the last project data timestamp
-        if (
-          daLayer === 'eigenda' &&
-          lastProjectsDataTimestamp &&
-          timestamp > lastProjectsDataTimestamp
-        ) {
-          return {
-            timestamp,
+      data?.chart.map(([timestamp, values]) => {
+        const isSynced =
+          lastProjectsDataTimestamp && timestamp <= lastProjectsDataTimestamp
+
+        const result: { timestamp: number; [key: string]: number | null } = {
+          timestamp,
+        }
+
+        for (const project of projectsToShow) {
+          const value = values?.[project]
+          if (value === undefined) {
+            result[project] = isSynced ? 0 : null
+          } else {
+            result[project] = value / denominator
           }
         }
-        return {
-          timestamp,
-          ...Object.fromEntries(
-            Object.entries(values)
-              .map(([key, value]) => {
-                if (!projectsToShow.includes(key)) return
-                return [key, value / denominator] as const
-              })
-              .filter((v) => v !== undefined),
-          ),
-        }
+
+        return result
       }) ?? []
     )
-  }, [data, projectsToShow, denominator, daLayer])
+  }, [data, projectsToShow, denominator])
+
+  const syncedUntil = chartData.findLast((r) => {
+    const [_, ...values] = Object.values(r)
+    return values.every((v) => v !== null)
+  })?.timestamp
 
   return (
     <ChartContainer
@@ -148,8 +153,15 @@ export function DaThroughputByProjectChart({
             unit: ` ${unit}`,
             tickCount: 4,
           },
+          syncedUntil,
+          chartType: 'bar',
         })}
-        <ChartTooltip content={<CustomTooltip denominator={denominator} />} />
+        <ChartTooltip
+          filterNull={false}
+          content={
+            <CustomTooltip denominator={denominator} resolution={resolution} />
+          }
+        />
       </BarChart>
     </ChartContainer>
   )
@@ -160,7 +172,11 @@ function CustomTooltip({
   payload,
   label,
   denominator: mainDenominator,
-}: TooltipProps<number, string> & { denominator: number }) {
+  resolution,
+}: TooltipProps<number, string> & {
+  denominator: number
+  resolution: DaThroughputResolution
+}) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   payload.sort((a, b) => {
@@ -172,7 +188,15 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatRange(
+          label,
+          label +
+            (resolution === 'daily'
+              ? UnixTime.DAY
+              : resolution === 'sixHourly'
+                ? UnixTime.HOUR * 6
+                : UnixTime.HOUR),
+        )}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">
@@ -199,7 +223,9 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="font-medium text-label-value-15 text-primary tabular-nums">
-                {formattedValue} {unit}
+                {entry.value !== null && entry.value !== undefined
+                  ? `${formattedValue} ${unit}`
+                  : 'No data'}
               </span>
             </div>
           )

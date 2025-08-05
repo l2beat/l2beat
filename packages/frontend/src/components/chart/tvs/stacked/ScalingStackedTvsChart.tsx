@@ -51,18 +51,26 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
 
   const chartData = useMemo(
     () =>
-      data?.map(([timestamp, native, canonical, external, ethPrice]) => {
+      data?.chart.map(([timestamp, native, canonical, external, ethPrice]) => {
         const divider = unit === 'usd' ? 1 : ethPrice
         return {
           timestamp,
-          native: native / divider,
-          canonical: canonical / divider,
-          external: external / divider,
+          native:
+            native !== null && divider !== null && divider !== 0
+              ? native / divider
+              : null,
+          canonical:
+            canonical !== null && divider !== null && divider !== 0
+              ? canonical / divider
+              : null,
+          external:
+            external !== null && divider !== null && divider !== 0
+              ? external / divider
+              : null,
         }
       }),
     [data, unit],
   )
-
   const chartRange = getChartRange(chartData)
   const stats = getStats(chartData)
 
@@ -81,6 +89,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
+        syncedUntil={data?.syncedUntil}
       />
       <ChartControlsWrapper>
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>
@@ -105,14 +114,25 @@ function getStats(
   data:
     | {
         timestamp: number
-        native: number
-        canonical: number
-        external: number
+        native: number | null
+        canonical: number | null
+        external: number | null
       }[]
     | undefined,
 ) {
-  const oldestDataPoint = data?.at(0)
-  const newestDataPoint = data?.at(-1)
+  const pointsWithData = data?.filter(
+    (point) =>
+      point.native !== null &&
+      point.canonical !== null &&
+      point.external !== null,
+  ) as {
+    timestamp: number
+    native: number
+    canonical: number
+    external: number
+  }[]
+  const oldestDataPoint = pointsWithData?.at(0)
+  const newestDataPoint = pointsWithData?.at(-1)
   if (!oldestDataPoint || !newestDataPoint) {
     return undefined
   }

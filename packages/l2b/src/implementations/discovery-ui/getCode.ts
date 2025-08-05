@@ -48,12 +48,22 @@ function isFlatCodeCurrent(
   const chain = ChainSpecificAddress.longChain(address)
 
   const discovery = configReader.readDiscovery(project, chain)
-  const discoveries = [
-    discovery,
-    ...(discovery.sharedModules ?? []).map((module) =>
-      configReader.readDiscovery(module, chain),
-    ),
-  ]
+
+  const discoveries = [discovery]
+
+  for (const sharedModule of discovery.sharedModules ?? []) {
+    const sharedModuleChains =
+      configReader.readAllDiscoveredChainsForProject(sharedModule)
+
+    if (sharedModuleChains.includes(chain)) {
+      const sharedModuleDiscovery = configReader.readDiscovery(
+        sharedModule,
+        chain,
+      )
+      discoveries.push(sharedModuleDiscovery)
+    }
+  }
+
   const discoHashes =
     discoveries.flatMap((d) => d.entries).find((e) => e.address === address)
       ?.sourceHashes ?? []

@@ -17,7 +17,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_VALIDATION,
-  STATE_ZKP_SN,
+  STATE_ZKP_ST_SN_WRAP,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -52,7 +52,7 @@ const upgradeDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 
-const finalizationPeriod = 0
+const finalizationPeriod = 0 // state root immediately finalized when proven
 const chainId = 534352
 
 export const scroll: ScalingProject = {
@@ -174,7 +174,6 @@ export const scroll: ScalingProject = {
           'eth:0xb2b10a289A229415a124EFDeF310C10cb004B6ff',
         ), // custom gateway
         tokens: '*',
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -182,7 +181,6 @@ export const scroll: ScalingProject = {
           'eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B',
         ),
         tokens: ['USDC'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -190,7 +188,6 @@ export const scroll: ScalingProject = {
           'eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515',
         ),
         tokens: ['DAI'],
-        ...ESCROW.CANONICAL_EXTERNAL,
         ...upgradesSC,
       }),
       discovery.getEscrowDetails({
@@ -370,7 +367,7 @@ export const scroll: ScalingProject = {
   },
   riskView: {
     stateValidation: {
-      ...STATE_ZKP_SN,
+      ...STATE_ZKP_ST_SN_WRAP,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

@@ -15,11 +15,8 @@ export function getLivenessSyncWarning(
   if (isLivenessSynced(syncedUntil)) {
     return undefined
   }
-  return `Liveness data for this item is not synced since ${formatTimestamp(
-    syncedUntil,
-    {
-      mode: 'datetime',
-      longMonthName: true,
-    },
-  )}.`
+  return `No liveness data since ${formatTimestamp(syncedUntil, {
+    mode: 'datetime',
+    longMonthName: true,
+  })}.`
 }

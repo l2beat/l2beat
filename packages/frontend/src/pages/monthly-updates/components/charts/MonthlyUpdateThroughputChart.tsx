@@ -15,6 +15,7 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
+import { rangeToResolution } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { MarketShare } from './MonthlyUpdateMarketShare'
@@ -102,12 +103,14 @@ export function MonthlyUpdateThroughputChart({
             yAxis: {
               unit: ` ${unit}`,
             },
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip
+            filterNull={false}
             content={
               <ProjectDaThroughputCustomTooltip
                 unit={unit}
-                syncedUntil={data?.syncedUntil}
+                resolution={rangeToResolution({ type: 'custom', from, to })}
               />
             }
           />

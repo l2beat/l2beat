@@ -3,8 +3,8 @@ import { ActivitySection } from './sections/ActivitySection'
 import { ContractsSection } from './sections/contracts/ContractsSection'
 import { CostsSection } from './sections/costs/CostsSection'
 import { DaRiskSummarySection } from './sections/DaRiskSummarySection'
-import { DataPostedSection } from './sections/DataPostedSection'
 import { DetailedDescriptionSection } from './sections/DetailedDescriptionSection'
+import { DataPostedSection } from './sections/data-posted/DataPostedSection'
 import { GrissiniRiskAnalysisSection } from './sections/GrissiniRiskAnalysisSection'
 import { GroupSection } from './sections/GroupSection'
 import { L3RiskAnalysisSection } from './sections/L3RiskAnalysisSection'
@@ -25,7 +25,7 @@ import { ThroughputSection } from './sections/throughput/ThroughputSection'
 import type { ProjectDetailsSection } from './sections/types'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
 
-export interface ProjectDetailsProps {
+interface ProjectDetailsProps {
   nested?: boolean
   parentSection?: string
   items: ProjectDetailsSection[]

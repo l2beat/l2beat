@@ -86,6 +86,7 @@ export function EcosystemsProjectsChart({
             yAxis: {
               tickCount: 2,
             },
+            syncedUntil: undefined,
           })}
           <ChartTooltip content={<CustomTooltip />} />
         </AreaChart>
@@ -117,7 +118,7 @@ function Header({
   )
 }
 
-export function CustomTooltip({
+function CustomTooltip({
   active,
   payload,
   label,
@@ -132,7 +133,11 @@ export function CustomTooltip({
         </div>
         <div>
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.value === undefined)
+            if (
+              entry.name === undefined ||
+              entry.value === undefined ||
+              entry.value === null
+            )
               return null
             const config = meta[entry.name]
             assert(config, 'No config')

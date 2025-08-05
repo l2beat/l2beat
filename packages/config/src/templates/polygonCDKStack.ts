@@ -339,7 +339,7 @@ export function polygonCDKStack(
             {
               title:
                 'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-              url: 'https://etherscan.io/address/0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab#code#F1#L1210',
+              url: 'https://etherscan.io/address/0x42B9fF0644741e3353162678596e7D6aA6a13240#code#F1#L1280',
             },
           ],
         },
@@ -420,7 +420,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
         BADGES.Stack.CDKErigon,
         BADGES.VM.EVM,
         BADGES.DA.EthereumCalldata,
-        BADGES.Infra.AggLayer,
+        BADGES.Infra.Agglayer,
       ],
       templateVars.additionalBadges ?? [],
     ),

@@ -22,7 +22,7 @@ type CostsAvailableData = {
   type: 'available'
   total: number
   calldata: number
-  blobs: number | undefined
+  blobs: number | null
   compute: number
   overhead: number
   uopsCount: number | undefined

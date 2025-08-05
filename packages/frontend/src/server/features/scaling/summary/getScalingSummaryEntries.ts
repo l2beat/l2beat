@@ -72,13 +72,9 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {
     breakdown:
-      | {
-          total: number
-          ether: number
-          stablecoin: number
+      | (ProjectSevenDayTvsBreakdown['breakdown'] & {
           associated: number
-          btc: number
-        }
+        })
       | undefined
     change: number | undefined
     associatedTokensExcludedChange: number | undefined

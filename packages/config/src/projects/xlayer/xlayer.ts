@@ -33,7 +33,7 @@ const rollupModuleContract = discovery.getContract('Validium')
 export const xlayer: ScalingProject = polygonCDKStack({
   addedAt: UnixTime(1713983341), // 2024-04-24T18:29:01Z
   discovery,
-  additionalBadges: [BADGES.DA.DAC, BADGES.Infra.AggLayer],
+  additionalBadges: [BADGES.DA.DAC, BADGES.Infra.Agglayer, BADGES.RaaS.Gateway],
   daProvider: {
     layer: DA_LAYERS.DAC,
     bridge: DA_BRIDGES.DAC_MEMBERS({
@@ -139,7 +139,7 @@ export const xlayer: ScalingProject = polygonCDKStack({
       title: 'X Layer Public Launch',
       url: 'https://x.com/XLayerOfficial/status/1780056275898048562',
       date: '2024-04-16',
-      description: 'X Layer is now accessible to everyone.',
+      description: 'X Layer is live on mainnet, integrated with Agglayer.',
       type: 'general',
     },
   ],

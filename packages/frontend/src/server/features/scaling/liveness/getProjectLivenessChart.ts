@@ -1,5 +1,6 @@
 import type { AggregatedLivenessRecord } from '@l2beat/database'
 import {
+  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -9,9 +10,10 @@ import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { getRangeWithMax } from '~/utils/range/range'
+import { getBucketValuesRange } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
+import { isLivenessSynced } from './utils/isLivenessSynced'
 
 export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams
@@ -22,14 +24,13 @@ export const ProjectLivenessChartParams = v.object({
   projectId: v.string(),
 })
 
-export type ProjectLivenessChartData = {
-  data: (
-    | readonly [number, null, null, null]
-    | readonly [number, number, number | null, number]
-  )[]
-  stats: Partial<
-    Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
-  >
+type ProjectLivenessChartData = {
+  data: [number, number | null, number | null, number | null][]
+  stats:
+    | Partial<
+        Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
+      >
+    | undefined
 }
 
 /**
@@ -40,17 +41,15 @@ export async function getProjectLivenessChart({
   range,
   subtype,
   projectId,
-}: ProjectLivenessChartParams) {
+}: ProjectLivenessChartParams): Promise<ProjectLivenessChartData> {
   if (env.MOCK) {
     return getMockProjectLivenessChartData({ range, subtype, projectId })
   }
 
   const db = getDb()
-  const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
-
   const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax({ type: range }, resolution, {
-    now: target,
+  const [from, to] = getBucketValuesRange({ type: range }, resolution, {
+    offset: -UnixTime.HOUR - 15 * UnixTime.MINUTE,
   })
 
   const [livenessProject] = await ps.getProjects({
@@ -92,6 +91,9 @@ export async function getProjectLivenessChart({
     stats[to] = stats[from]
   }
 
+  const syncedUntil = chartEntries.at(-1)?.timestamp
+  assert(syncedUntil, 'No syncedUntil found')
+
   const groupedByResolution = groupBy(chartEntries, (e) =>
     UnixTime.toStartOf(
       e.timestamp,
@@ -106,18 +108,27 @@ export async function getProjectLivenessChart({
   const startTimestamp = Math.min(
     ...Object.keys(groupedByResolution).map(Number),
   )
-  const timestamps = generateTimestamps([startTimestamp, to], resolution, {
-    addTarget: true,
-  })
+  const lastTimestamp = Math.max(
+    ...Object.keys(groupedByResolution).map(Number),
+  )
 
-  const data = timestamps.map((timestamp) => {
-    const entry = groupedByResolution[timestamp]
-    if (!entry) {
-      return [+timestamp, null, null, null] as const
-    }
-    const { min, max, avg } = calculateLivenessStats(entry)
-    return [+timestamp, min, avg, max] as const
-  })
+  const adjustedTo = isLivenessSynced(syncedUntil) ? lastTimestamp : to
+
+  const timestamps = generateTimestamps(
+    [startTimestamp, adjustedTo],
+    resolution,
+  )
+
+  const data: [number, number | null, number | null, number | null][] =
+    timestamps.map((timestamp) => {
+      const records = groupedByResolution[timestamp]
+      if (!records) {
+        return [timestamp, null, null, null]
+      }
+      const { min, max, avg } = calculateLivenessStats(records)
+      return [timestamp, min, avg, max]
+    })
+
   return {
     data,
     stats,
@@ -142,7 +153,7 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
 function getMockProjectLivenessChartData({
   range,
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
-  const [from, to] = getRangeWithMax({ type: range }, 'daily')
+  const [from, to] = getBucketValuesRange({ type: range }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     to,

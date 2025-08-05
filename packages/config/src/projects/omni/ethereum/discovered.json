@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "ethereum",
-  "timestamp": 1749466920,
+  "timestamp": 1754307769,
   "configHash": "0x88938a2c9d7af8afcb80ee249bc3c8dbdce0ff9adb3baba1105eaa6470301458",
   "entries": [
     {
@@ -193,11 +193,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "eth:0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "DaiForeignBridge",
       "address": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
       "type": "Contract",
@@ -277,10 +272,10 @@
         "hashiManager": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
         "implementation": "eth:0xb54042F5bA4B048fEa54aaE70abbbe41AC716299",
         "isInitialized": true,
-        "maxAvailablePerTx": "9963555522999972528549986",
+        "maxAvailablePerTx": "9945470000000000000000000",
         "maxPerTx": "9999999000000000000000000",
         "minPerTx": 5000000000000000,
-        "nonce": 869,
+        "nonce": 1559,
         "owner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "proxyOwner": "eth:0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "requiredBlockConfirmations": 20,
@@ -315,15 +310,14 @@
         "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "eth:0xD1aA7F557af9cC5Ba4Daf87D923d712fdAf1D709",
-          "eth:0x4743BA328C28dbC2b8B4e083b92cB4baA047494b",
           "eth:0x52F05Eff62fC36c83d840D9684daCAD3be43D8bf"
         ],
         "$threshold": 2,
         "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 20,
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1666,6 +1660,6 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "usedBlockNumbers": { "ethereum": 22666591 },
-  "permissionsConfigHash": "0x052d6352604ac6ec6fb5a8a880a86ca59f07a26158fc68cb68187136537e8d03"
+  "usedBlockNumbers": { "ethereum": 23067472 },
+  "permissionsConfigHash": "0x59501709611c93965ad209722baf49b221b517759119304e98aacd9b0b2a0a3c"
 }

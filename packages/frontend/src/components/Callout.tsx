@@ -21,7 +21,7 @@ const calloutVariants = cva('flex rounded-lg', {
   },
 })
 
-export interface CalloutProps extends VariantProps<typeof calloutVariants> {
+interface CalloutProps extends VariantProps<typeof calloutVariants> {
   icon: ReactNode
   body: ReactNode
   message?: ReactNode

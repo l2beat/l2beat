@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
-import { Area, ComposedChart, Line } from 'recharts'
+import { Area, ComposedChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -13,7 +13,8 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 
 interface DataPostedChartDataPoint {
@@ -23,16 +24,18 @@ interface DataPostedChartDataPoint {
 
 interface Props {
   data: DataPostedChartDataPoint[] | undefined
-  syncedUntil: number | undefined
+  resolution: DaThroughputResolution
   isLoading: boolean
+  syncedUntil: number | undefined
   className?: string
   tickCount?: number
 }
 
 export function DataPostedChart({
   data,
-  syncedUntil,
+  resolution,
   isLoading,
+  syncedUntil,
   className,
   tickCount,
 }: Props) {
@@ -43,11 +46,6 @@ export function DataPostedChart({
       indicatorType: {
         shape: 'line',
       },
-    },
-    notSyncedPosted: {
-      label: 'Data posted (not synced)',
-      color: 'var(--chart-emerald)',
-      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
     },
   } satisfies ChartMeta
 
@@ -69,17 +67,6 @@ export function DataPostedChart({
           isAnimationActive={false}
           dot={false}
         />
-        <Line
-          dataKey="notSyncedPosted"
-          strokeWidth={2}
-          stroke={chartMeta.notSyncedPosted.color}
-          strokeDasharray={
-            chartMeta.notSyncedPosted.indicatorType.strokeDasharray
-          }
-          dot={false}
-          isAnimationActive={false}
-          legendType="none"
-        />
         {getCommonChartComponents({
           data,
           isLoading,
@@ -87,9 +74,11 @@ export function DataPostedChart({
             tickCount,
             tickFormatter: (value: number) => formatBytes(value),
           },
+          syncedUntil,
         })}
         <ChartTooltip
-          content={<DataPostedCustomTooltip syncedUntil={syncedUntil} />}
+          content={<DataPostedCustomTooltip resolution={resolution} />}
+          filterNull={false}
         />
         <defs>
           <EmeraldFillGradientDef id="fillPosted" />
@@ -99,37 +88,34 @@ export function DataPostedChart({
   )
 }
 
-export function DataPostedCustomTooltip({
+function DataPostedCustomTooltip({
   active,
   payload,
   label: timestamp,
-  syncedUntil,
-}: TooltipProps<number, string> & { syncedUntil: number | undefined }) {
+  resolution,
+}: TooltipProps<number, string> & {
+  resolution: DaThroughputResolution
+}) {
   const { meta } = useChart()
   if (!active || !payload || typeof timestamp !== 'number') return null
 
-  const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndNotSynced =
-    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
-  const filteredPayload = payload.filter(
-    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
-  )
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
         <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(timestamp, {
-            mode: 'datetime',
-          })}
+          {formatRange(
+            timestamp,
+            timestamp +
+              (resolution === 'daily'
+                ? UnixTime.DAY
+                : resolution === 'sixHourly'
+                  ? UnixTime.HOUR * 6
+                  : UnixTime.HOUR),
+          )}
         </div>
         <div className="flex flex-col gap-2">
-          {filteredPayload.map((entry) => {
-            if (
-              entry.name === undefined ||
-              entry.value === undefined ||
-              entry.type === 'none'
-            )
-              return null
+          {payload.map((entry) => {
+            if (entry.name === undefined || entry.type === 'none') return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -148,7 +134,9 @@ export function DataPostedCustomTooltip({
                   </span>
                 </div>
                 <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
-                  {formatBytes(entry.value)}
+                  {entry.value !== null && entry.value !== undefined
+                    ? formatBytes(entry.value)
+                    : 'No data'}
                 </span>
               </div>
             )

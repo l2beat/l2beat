@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { EM_DASH } from '~/consts/characters'
 
 export const MONTHS: Record<
@@ -78,15 +78,29 @@ function toNiceDate(
 export function formatRange(from: number, to: number) {
   const parsedFrom = parseTimestamp(from)
   const parsedTo = parseTimestamp(to)
-  const fromDate = toNiceDate(parsedFrom.day, parsedFrom.month, parsedFrom.year)
-  const toDate = toNiceDate(
-    parsedTo.day,
-    parsedFrom.month === parsedTo.month && parsedFrom.year === parsedTo.year
-      ? undefined
-      : parsedTo.month,
-    parsedFrom.year === parsedTo.year ? undefined : parsedTo.year,
-  )
-  return `${fromDate} ${EM_DASH}\n${toDate}`
+
+  if (to - from >= 23 * UnixTime.HOUR) {
+    // Format as date range (existing behavior)
+    const fromDate = toNiceDate(
+      parsedFrom.day,
+      parsedFrom.month,
+      parsedFrom.year,
+    )
+    const toDate = toNiceDate(
+      parsedTo.day,
+      parsedFrom.month === parsedTo.month && parsedFrom.year === parsedTo.year
+        ? undefined
+        : parsedTo.month,
+      parsedFrom.year === parsedTo.year ? undefined : parsedTo.year,
+    )
+    return `${fromDate} ${EM_DASH}\n${toDate}`
+  }
+
+  // Format as "Jun 30 01:00 - 2:00"
+  const date = toNiceDate(parsedFrom.day, parsedFrom.month, parsedFrom.year)
+  const fromTime = parsedFrom.time
+  const toTime = parsedTo.time
+  return `${date} ${fromTime} ${EM_DASH} ${toTime}`
 }
 
 export function formatTimestamp(

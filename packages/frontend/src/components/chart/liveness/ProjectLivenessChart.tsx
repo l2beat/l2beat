@@ -6,7 +6,10 @@ import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromCo
 import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'
 import { LivenessChartTimeRangeControls } from '~/pages/scaling/liveness/components/LivenessChartTimeRangeControls'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
+import {
+  type LivenessChartTimeRange,
+  rangeToResolution,
+} from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { getDefaultSubtype } from './getDefaultSubtype'
@@ -44,52 +47,58 @@ export function ProjectLivenessChart({
     subtype,
   })
 
+  const anyAnomalyLive = anomalies.some(
+    (anomaly) => anomaly.subtype === subtype && anomaly.end === undefined,
+  )
   const chartData = useMemo(() => {
-    let rawChartData = chart?.data
-    const anyAnomalyLive = anomalies.some(
-      (anomaly) => anomaly.subtype === subtype && anomaly.end === undefined,
-    )
-
-    if (!anyAnomalyLive) {
-      // If there is no anomaly live, remove all data after the last valid timestamp
-      const lastValidTimestamp = rawChartData?.findLastIndex(
-        ([_, min, avg, max]) => min !== null && avg !== null && max !== null,
-      )
-      if (lastValidTimestamp !== undefined && lastValidTimestamp !== -1) {
-        rawChartData = rawChartData?.slice(0, lastValidTimestamp + 1)
-      }
-    }
-    return rawChartData?.map(([timestamp, min, avg, max]) => {
+    return chart?.data?.map(([timestamp, min, avg, max]) => {
       return {
         timestamp,
-        range: [min, max],
+        range: min === null && max === null ? null : ([min, max] as const),
         avg,
       }
     })
-  }, [chart?.data, anomalies, subtype])
+  }, [chart?.data])
+
+  const lastValidTimestamp = useMemo(() => {
+    if (!chart?.data) {
+      return undefined
+    }
+    const lastValidTimestamp = chart.data.findLast(([_, ...rest]) =>
+      rest.every((v) => v !== null),
+    )?.[0]
+
+    return lastValidTimestamp
+  }, [chart?.data])
 
   const chartRange = getChartRange(chartData)
 
   return (
     <div className="flex flex-col">
-      <ProjectChartTimeRange range={chartRange} />
-      <ChartControlsWrapper className="mt-4 mb-2 flex-wrap-reverse">
-        <LivenessChartSubtypeControls
-          subtype={subtype}
-          setSubtype={setSubtype}
-          configuredSubtypes={configuredSubtypes}
-        />
-        <LivenessChartTimeRangeControls
-          timeRange={timeRange}
-          setTimeRange={setTimeRange}
-        />
-      </ChartControlsWrapper>
+      <div className="flex flex-col gap-1">
+        <ProjectChartTimeRange range={chartRange} />
+        <ChartControlsWrapper className="flex-wrap-reverse">
+          <LivenessChartSubtypeControls
+            subtype={subtype}
+            setSubtype={setSubtype}
+            configuredSubtypes={configuredSubtypes}
+          />
+          <LivenessChartTimeRangeControls
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+        </ChartControlsWrapper>
+      </div>
       <LivenessChart
         data={chartData}
         isLoading={isLoading}
         subtype={subtype}
         milestones={milestones}
+        lastValidTimestamp={lastValidTimestamp}
+        anyAnomalyLive={anyAnomalyLive}
+        resolution={rangeToResolution(timeRange)}
         tickCount={4}
+        className="mt-4 mb-2"
       />
       <LivenessChartStats
         timeRange={timeRange}
