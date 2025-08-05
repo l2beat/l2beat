@@ -8,7 +8,7 @@ export const jetstreamchain: ScalingProject = underReviewL3({
   addedAt: UnixTime(1753947052),
   hostChain: ProjectId('arbitrum'),
   display: {
-    name: 'Jetstream Chain',
+    name: 'Jetstream',
     slug: 'jetstreamchain',
     description:
       'Jetstream Chain is a decentralized trading protocol powered by Arbitrum Orbit, offering ultra-low fees and a smoother trading experience on its own dedicated chain.',
