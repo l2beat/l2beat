@@ -32,7 +32,11 @@ export const intmaxprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'INTMAX',
     techStack: {
-      snark: [ZK_CATALOG_TAGS.STARK.Plonky2, ZK_CATALOG_TAGS.Field.Goldilocks],
+      snark: [
+        ZK_CATALOG_TAGS.STARK.Plonky2,
+        ZK_CATALOG_TAGS.Field.Goldilocks,
+        ZK_CATALOG_TAGS.Other.CustomCircuits,
+      ],
       finalWrap: [ZK_CATALOG_TAGS.Plonk.Gnark, ZK_CATALOG_TAGS.curve.BN254],
     },
     proofSystemInfo: '',
