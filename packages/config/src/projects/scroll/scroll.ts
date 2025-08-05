@@ -100,37 +100,34 @@ export const scroll: ScalingProject = {
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
     },
   },
-  stage: {
-    stage: 'UnderReview',
-  },
-  // stage: getStage(
-  //   {
-  //     stage0: {
-  //       callsItselfRollup: true,
-  //       stateRootsPostedToL1: true,
-  //       dataAvailabilityOnL1: true,
-  //       rollupNodeSourceAvailable: true,
-  //       stateVerificationOnL1: true,
-  //       fraudProofSystemAtLeast5Outsiders: null,
-  //     },
-  //     stage1: {
-  //       principle: false,
-  //       usersHave7DaysToExit: true,
-  //       usersCanExitWithoutCooperation: true,
-  //       securityCouncilProperlySetUp: true,
-  //     },
-  //     stage2: {
-  //       proofSystemOverriddenOnlyInCaseOfABug: false,
-  //       fraudProofSystemIsPermissionless: null,
-  //       delayWith30DExitWindow: false,
-  //     },
-  //   },
-  //   {
-  //     rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
-  //     securityCouncilReference:
-  //       'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
-  //   },
-  // ),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: true,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: false,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: false,
+      },
+    },
+    {
+      rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
+      securityCouncilReference:
+        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
+    },
+  ),
   chainConfig: {
     name: 'scroll',
     chainId,

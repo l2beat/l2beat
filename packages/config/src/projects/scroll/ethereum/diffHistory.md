@@ -1,3 +1,87 @@
+Generated with discovered.json: 0x7f1c1cffd2b4834beb17d09fb71b01ab8bc9d9c8
+
+# Diff at Tue, 05 Aug 2025 10:27:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
+- current timestamp: 1754387037
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.PAUSE_CONTROLLER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b"]}
+      values.accessControl.roles.0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]}
+      values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556.updateMaxNumTxInChunk(uint256):
+-        ["ops-fast"]
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateFeeVault(address).0:
+-        "ops-fast"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367.updateMaxReplayTimes(uint256):
+-        ["ops-fast"]
+      values.accessControl.targets.eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D.updateMessageQueueParameters((uint32,uint112,uint112)).0:
+-        "ops-fast"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x8432728A257646449245558B8b7Dbe51A16c7a4D.updateEnforcedBatchParameters((uint24,uint24)).0:
+-        "ops-fast"
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d.setPause(bool).0:
++        "SECURITY_COUNCIL_NO_DELAY_ROLE"
+      values.accessControl.targets.eth:0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d.setPause(bool).0:
+-        "emergency-nodelay"
++        "PAUSE_CONTROLLER_ROLE"
+      values.accessControl.targets.eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b:
++        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52"]}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEB803eb3F501998126bf37bB823646Ed3D59d072) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b","role":"admin"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauseController (0xb8f7eA9998530833Cbb7E0EF4f0D945957229D8b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/PauseController/PauseController.sol      |  619 +++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 4 files changed, 2473 insertions(+)
+```
+
 Generated with discovered.json: 0x6303a10360194ad898c7dc058c2695e0c9e1ca60
 
 # Diff at Mon, 21 Jul 2025 10:32:24 GMT:
