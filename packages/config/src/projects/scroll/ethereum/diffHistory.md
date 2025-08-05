@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0a389a773d48e2df7beae0fa51258cdb6baa8e94
+Generated with discovered.json: 0xc52cfedce3f2c8562d00dedb8dba9761eb2efe3f
 
-# Diff at Tue, 05 Aug 2025 12:25:40 GMT:
+# Diff at Tue, 05 Aug 2025 13:18:15 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754396693
+- current timestamp: 1754399860
 
 ## Description
 
@@ -62,7 +62,7 @@ Access control changes.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
     +++ description: None
 ```
 
@@ -77,7 +77,7 @@ Access control changes.
 ```diff
 .../.flat/PauseController/PauseController.sol      |  619 +++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
- .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../Scroll Security Council Minority/Safe.sol      | 1088 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   37 +
  4 files changed, 2473 insertions(+)
 ```

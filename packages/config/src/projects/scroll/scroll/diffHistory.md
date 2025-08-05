@@ -1,29 +1,29 @@
-Generated with discovered.json: 0xe3dfc94fafeb4eaeb315fef5dbee126e6aeab4ca
+Generated with discovered.json: 0x1d66ec0135326e9a8a609f62ef4fd6b0ff9d1e1a
 
-# Diff at Tue, 05 Aug 2025 12:25:41 GMT:
+# Diff at Tue, 05 Aug 2025 13:18:16 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754396693
+- current timestamp: 1754399860
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Access control changes.
 
 ## Watched changes
 
 ```diff
     contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
     +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
-      values.accessControl.roles.0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23:
+      values.accessControl.roles.PAUSE_CONTROLLER_ROLE:
 +        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd"]}
-      values.accessControl.roles.0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52:
+      values.accessControl.roles.SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE:
 +        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]}
       values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0:
 +        "SECURITY_COUNCIL_NO_DELAY_ROLE"
       values.accessControl.targets.scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC.setPause(bool).0:
 -        "emergency-nodelay"
-+        "0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23"
++        "PAUSE_CONTROLLER_ROLE"
       values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xaa5e9334:
 +        ["ops-fast"]
       values.accessControl.targets.scr:0x5300000000000000000000000000000000000002.0xc63b9e2d:
@@ -31,7 +31,7 @@ Provide description of changes. This section will be preserved.
       values.accessControl.targets.scr:0x331A873a2a85219863d80d248F9e2978fE88D0Ea:
 +        {"updateBaseFeeOverhead(uint256)":["ops-fast"],"updateBaseFeeScalar(uint256)":["ops-fast"]}
       values.accessControl.targets.scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd:
-+        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52"]}
++        {"pause(address)":["emergency-nodelay"],"updatePauseCooldownPeriod(uint256)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"resetPauseCooldownPeriod(address)":["SECURITY_COUNCIL_NO_DELAY_ROLE"],"unpause(address)":["emergency-nodelay","SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"]}
     }
 ```
 
@@ -57,7 +57,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SafeL2 (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
+    contract Scroll Security Council Minority (0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE)
     +++ description: None
 ```
 
@@ -72,9 +72,25 @@ Provide description of changes. This section will be preserved.
 ```diff
 .../.flat/L2PauseController/PauseController.sol    |  619 +++++++++++
  .../TransparentUpgradeableProxy.p.sol              |  729 +++++++++++++
- .../SafeL2.sol                                     | 1152 ++++++++++++++++++++
+ .../Scroll Security Council Minority/SafeL2.sol    | 1152 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   37 +
  4 files changed, 2537 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1753093859 (main branch discovery), not current.
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_TOLE:
+-        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+      values.accessControl.roles.TIMELOCK_1DAY_DELAY_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}
+    }
 ```
 
 Generated with discovered.json: 0x9b36c271cfd6a020df8e88b2d9ad59a584a8a454

@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754396693,
-  "configHash": "0x8d240b4c5ce00ecc2f4ae6612b6ecb6811d2eaa9d61d06dd9a1aedf34666300d",
+  "timestamp": 1754399860,
+  "configHash": "0xc21763bf201b9b076291a3c0f4c38ebbb27e5b957d63d7bcdf5bb6d3bd6ff18c",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",
@@ -780,7 +780,7 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "Safe",
+      "name": "Scroll Security Council Minority",
       "address": "eth:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -960,7 +960,7 @@
         "getFirstUnfinalizedMessageEnqueueTime": 1754387135,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 959487,
+        "nextCrossDomainMessageIndex": 959491,
         "nextUnfinalizedQueueIndex": 959478,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -2770,7 +2770,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 23751036301438,
+        "totalBridgedUSDC": 23760826276603,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -4022,6 +4022,6 @@
     "scroll/ScrollOwner": "0x95f104a37db212846a47522114d2e16e0fbe1d9ecf346852d5b6faf077105952",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23074845 },
-  "permissionsConfigHash": "0x3dc9f6b43fadd3fbffaf834355d7c2e38ccaba744f1e38580629877ad5e5c464"
+  "usedBlockNumbers": { "ethereum": 23075109 },
+  "permissionsConfigHash": "0x1cff89e86b05c7104e5cccb65756a9b1af6251be4d674e1fa1b3eb43d0212c83"
 }

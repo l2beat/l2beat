@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "timestamp": 1754396693,
-  "configHash": "0xa12f1f1e79c0de5d9f5176e9543d52e93842debbdd7f17315a6c3d1e9c2c1b23",
+  "timestamp": 1754399860,
+  "configHash": "0xa6c1196cd1937bec094db301961d1487845a767d071226fa4ae6777d91ec77e0",
   "entries": [
     {
       "address": "scr:0x0000000000000000000000000000000000000000",
@@ -190,7 +190,7 @@
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": []
             },
-            "TIMELOCK_1DAY_DELAY_TOLE": {
+            "TIMELOCK_1DAY_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": []
             },
@@ -206,11 +206,11 @@
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"]
             },
-            "0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23": {
+            "PAUSE_CONTROLLER_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd"]
             },
-            "0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52": {
+            "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE": {
               "adminRole": "DEFAULT_ADMIN_ROLE",
               "members": ["scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE"]
             }
@@ -277,7 +277,7 @@
             "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC": {
               "setPause(bool)": [
                 "SECURITY_COUNCIL_NO_DELAY_ROLE",
-                "0x906ae24cd9cf7cacfca327d94b093e52e6751face5c051d8ff21f5c1c3c2de23"
+                "PAUSE_CONTROLLER_ROLE"
               ]
             },
             "scr:0xAf9a61Aa21aB4a2fdbc88e81363D2e3D359749dd": {
@@ -290,7 +290,7 @@
               ],
               "unpause(address)": [
                 "emergency-nodelay",
-                "0xada6875fdb4fc1e83a47e2552d1fbd63d410baf773d318f17dec2324b8aaba52"
+                "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE"
               ]
             }
           }
@@ -818,7 +818,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "SafeL2",
+      "name": "Scroll Security Council Minority",
       "address": "scr:0x40bD67b02EBf1CFB4AdA7F60CabAc94d6aafc6eE",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -911,9 +911,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x409ff0c13757cebcd4b0cec5c86efcdb896c4bef6bc0b14d87e68b384879b861",
+        "messageRoot": "0x1a9faa742b91cc7194fb73509934ff6b60ac6801ce5d51aec6d1ff1bd3f16ed3",
         "messenger": "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 207157,
+        "nextMessageIndex": 207158,
         "owner": "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -3085,9 +3085,9 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
     "scroll/PauseController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "scroll/ScrollOwnerL2": "0x7e77245231051fbc6f335852afd5305e4b1c493b1005a7826e24aa54340b2ad4",
+    "scroll/ScrollOwnerL2": "0x77eb1863ff595be1f6d216e4eb34cc75c37aae99c08c2cd56f8adaa13c218141",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "scroll": 18404732 },
-  "permissionsConfigHash": "0x3dc9f6b43fadd3fbffaf834355d7c2e38ccaba744f1e38580629877ad5e5c464"
+  "usedBlockNumbers": { "scroll": 18407899 },
+  "permissionsConfigHash": "0x1cff89e86b05c7104e5cccb65756a9b1af6251be4d674e1fa1b3eb43d0212c83"
 }
