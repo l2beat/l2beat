@@ -27,11 +27,7 @@
     },
     "relayer": {
       "copy": "accessControl",
-      "edit": [
-        "get",
-        "RELAYER",
-        "members"
-      ],
+      "edit": ["get", "RELAYER", "members"],
       "permissions": [
         {
           "type": "interact",
