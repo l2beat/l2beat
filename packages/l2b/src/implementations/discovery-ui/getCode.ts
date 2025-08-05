@@ -52,10 +52,10 @@ function isFlatCodeCurrent(
   const discoveries = [discovery]
 
   for (const sharedModule of discovery.sharedModules ?? []) {
-    const sharedModuleChain =
+    const sharedModuleChains =
       configReader.readAllDiscoveredChainsForProject(sharedModule)
 
-    if (sharedModuleChain.includes(chain)) {
+    if (sharedModuleChains.includes(chain)) {
       const sharedModuleDiscovery = configReader.readDiscovery(
         sharedModule,
         chain,
