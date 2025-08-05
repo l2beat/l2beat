@@ -8,7 +8,12 @@ export function getProjectDiscoveries(
   const baseDiscovery = configReader.readDiscovery(project, chain)
   const discoveries = [baseDiscovery]
   for (const sharedModule of baseDiscovery.sharedModules ?? []) {
-    discoveries.push(configReader.readDiscovery(sharedModule, chain))
+    const sharedModuleChains =
+      configReader.readAllDiscoveredChainsForProject(sharedModule)
+
+    if (sharedModuleChains.includes(chain)) {
+      discoveries.push(configReader.readDiscovery(sharedModule, chain))
+    }
   }
 
   return discoveries

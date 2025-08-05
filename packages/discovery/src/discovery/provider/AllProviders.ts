@@ -92,8 +92,8 @@ export class AllProviders {
         logger,
         sourceName: 'coingecko',
         http,
-        callsPerMinute: config.coingeckoApiKey ? 400 : 10,
-        retryStrategy: 'SCRIPT',
+        callsPerMinute: config.coingeckoApiKey ? 240 : 10,
+        retryStrategy: 'RELIABLE',
       })
 
       this.config.set(config.name, {

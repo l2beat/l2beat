@@ -38,7 +38,16 @@ function readProject(
   chain: string,
   project: string,
   configReader: ConfigReader,
+  seen = new Set<string>(),
 ): ProjectData[] {
+  const key = `${project}::${chain}`
+
+  if (seen.has(key)) {
+    return []
+  }
+
+  seen.add(key)
+
   try {
     const discovery = configReader.readDiscovery(project, chain)
     const sharedModules = discovery.sharedModules ?? []
@@ -49,7 +58,7 @@ function readProject(
         discovery,
       },
       ...sharedModules.flatMap((sharedModule) =>
-        readProject(chain, sharedModule, configReader),
+        readProject(chain, sharedModule, configReader, seen),
       ),
     ]
   } catch {
