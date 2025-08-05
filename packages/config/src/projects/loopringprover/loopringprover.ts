@@ -36,7 +36,7 @@ export const loopringprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Loopring',
     techStack: {
-      monolithicSnark: [
+      snark: [
         ZK_CATALOG_TAGS.Groth16.EthSnarks,
         ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.Other.CustomCircuits,
