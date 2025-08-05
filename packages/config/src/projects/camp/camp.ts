@@ -18,9 +18,7 @@ export const camp: ScalingProject = upcomingL2({
       websites: ['https://campnetwork.xyz/'],
       bridges: ['https://camp-testnet-bridge.vercel.app/'],
       documentation: ['https://campaign-1.gitbook.io/camp-technical-docs'],
-      explorers: [
-        'https://explorerl2new-camp-network-4xje7wy105.t.conduit.xyz/',
-      ],
+      explorers: ['https://basecamp.cloud.blockscout.com/'],
       socialMedia: [
         'https://twitter.com/Camp_L2',
         'https://discord.com/invite/GDQRjR2PrY',
