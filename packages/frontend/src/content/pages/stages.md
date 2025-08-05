@@ -64,3 +64,7 @@ Users should be provided with at least 30 days to exit the system in case of unw
 
 **Is the Security Council restricted to act only due to errors detected on chain?**
 In the final stage of rollup development, the power of the Security Council, if present, should be highly limited. It should only be able to promptly intervene in the case of adjudicable onchain bugs, which are serious flaws in the system that could cause significant harm if not addressed. By restricting the council’s emergency actions to these types of errors, the system becomes more decentralized and the trust placed in the Security Council is reduced. This moves the rollup further towards the ideal of trust minimization, where the code itself is the ultimate authority. An example of this feature is present in the Polygon zkEVM contracts, where the rollup goes in “Emergency Mode” if two different valid proofs can be submitted using the same batches.
+
+## Open questions
+
+A number of edge cases have been identified for the Stages Framework, and we are actively working on clarifying them. Requirements for certain edge cases will be added as soon as some projects are discovered that fit them. The list of open questions can be found [here](https://docs.l2beat.com/l2b_specs/stages_edgecases.html).
