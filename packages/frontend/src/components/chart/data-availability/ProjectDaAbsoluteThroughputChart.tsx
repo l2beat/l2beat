@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -19,7 +19,8 @@ import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDe
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { formatTimestamp } from '~/utils/dates'
+import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
+import { formatRange } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
 
 export type ProjectChartDataWithConfiguredThroughput = [
@@ -38,6 +39,7 @@ interface Props {
   showTarget: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
+  resolution: DaThroughputResolution
 }
 
 export function ProjectDaAbsoluteThroughputChart({
@@ -48,6 +50,7 @@ export function ProjectDaAbsoluteThroughputChart({
   showTarget,
   milestones,
   syncedUntil,
+  resolution,
 }: Props) {
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
@@ -134,7 +137,12 @@ export function ProjectDaAbsoluteThroughputChart({
         )}
         <ChartTooltip
           filterNull={false}
-          content={<ProjectDaThroughputCustomTooltip unit={unit} />}
+          content={
+            <ProjectDaThroughputCustomTooltip
+              unit={unit}
+              resolution={resolution}
+            />
+          }
         />
         {getCommonChartComponents({
           data: chartData,
@@ -155,14 +163,26 @@ export function ProjectDaThroughputCustomTooltip({
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: string }) {
+  resolution,
+}: TooltipProps<number, string> & {
+  unit: string
+  resolution: DaThroughputResolution
+}) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
   return (
     <ChartTooltipWrapper>
       <div className="font-medium text-label-value-14 text-secondary">
-        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
+        {formatRange(
+          label,
+          label +
+            (resolution === 'daily'
+              ? UnixTime.DAY
+              : resolution === 'sixHourly'
+                ? UnixTime.HOUR * 6
+                : UnixTime.HOUR),
+        )}
       </div>
       <HorizontalSeparator className="my-2" />
       <div className="flex flex-col gap-2">

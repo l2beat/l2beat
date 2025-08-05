@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x667e2cbc7cfb762219e3c782c5623806ad25ffd5
+
+# Diff at Mon, 04 Aug 2025 12:37:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc919a780045cf2b13d42712da413a3bff12b3 block: 1754057499
+- current timestamp: 1754311053
+
+## Description
+
+new plugg (WETH, 0 tvs).
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.167:
++        "eth:0xDb39c6502e6DaaC4d9EFe6383029bda464ea043c"
+    }
+```
+
 Generated with discovered.json: 0x593d0cc62cbb2e227028e506187cb66285620bfa
 
 # Diff at Fri, 01 Aug 2025 14:12:30 GMT:

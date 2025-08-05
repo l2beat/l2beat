@@ -164,7 +164,7 @@
         "sinceTimestamp": 1637882522
       },
       "category": "stablecoin",
-      "source": "native",
+      "source": "external",
       "isAssociated": false,
       "bridgedUsing": {
         "bridges": [

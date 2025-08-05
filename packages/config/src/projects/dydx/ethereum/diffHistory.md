@@ -3040,7 +3040,7 @@ intended to bridge ethDYDX tokens from Treasury on Ethereum to dYdX Chain.
 
 Proposal: <https://dydx.community/dashboard/proposal/15>
 
-TLDR: added wethDYDX in the calculation of governance power. wethDYDX is a token minted by locking Ethereum DYDX tokens (called ethDYDX) permanently which will be later bridged to the dYdX Chain. wethDYDX is a transferrable ERC20. Does this mean that tokens will get duplicated?
+TLDR: added wethDYDX in the calculation of governance power. wethDYDX is a token minted by locking Ethereum DYDX tokens (called ethDYDX) permanently which will be later bridged to the dYdX Chain. wethDYDX is a transferable ERC20. Does this mean that tokens will get duplicated?
 
 We don't have a specific section on the website to specify this information, but we will soon with the Governance section, so I'll wait before adding anything to the project page.
 

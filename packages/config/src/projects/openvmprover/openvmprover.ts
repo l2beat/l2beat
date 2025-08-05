@@ -55,7 +55,6 @@ export const openvmprover: BaseProject = {
     ],
     verifierHashes: [
       {
-        // Custom verifier ID: SHA256 hash of the verifier byte code in the hex format '0x...'
         hash: '0xeea69613c0ab56b156122ce41ac52afc8434e8d2fa1b57cdd5e2c1491e06aaf9',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
@@ -63,6 +62,8 @@ export const openvmprover: BaseProject = {
         ],
         verificationStatus: 'notVerified',
         usedBy: [ProjectId('scroll')],
+        description:
+          "Custom verifier ID: SHA256 hash of the verifier byte code string in the hex format '0x...'.",
       },
     ],
   },

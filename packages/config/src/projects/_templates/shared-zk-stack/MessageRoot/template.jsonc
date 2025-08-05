@@ -8,5 +8,5 @@
     "chainRegistered",
     "l2BridgeAddress"
   ],
-  "ignoreInWatchMode": ["sharedTree"]
+  "ignoreInWatchMode": ["sharedTree", "getAggregatedRoot"]
 }

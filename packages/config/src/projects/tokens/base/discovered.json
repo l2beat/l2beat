@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "base",
-  "timestamp": 1753687577,
+  "timestamp": 1754307917,
   "configHash": "0x593213a3b90a8e6e3148ccfb62b67678dd08c3a79f8db6cc82ab1e51d88056d2",
   "entries": [
     {
@@ -305,7 +305,6 @@
           "base:0x052c01a2a88fa6Cba8Fc2DBEf39a442A140a35e3",
           "base:0x397729229B3d824Ca1B93e6E25e7CB197973df33",
           "base:0x15ff3859Af506d6e4D7e5FDf335628Fc1e3ef1CE",
-          "base:0xab7C7E7ac51f70dd959f3541316dBd715773158B",
           "base:0xce96ae6De784181d8Eb2639F1E347fD40b4fD403",
           "base:0x244df059d103347a054487Da7f8D42d52Cb29A55",
           "base:0xa96bD9c5D0b169f73c1c8570600aE0BAc9b2A7f4",
@@ -318,8 +317,8 @@
         "GnosisSafe_modules": [
           "base:0x362DBD4Ff662b2E2b05b9cEDC91da2Dd2c655b26"
         ],
-        "multisigThreshold": "2 of 9 (22%)",
-        "nonce": 264,
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 270,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -477,7 +476,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "base:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3696018810668433,
+        "totalSupply": 3698598807970807,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -591,7 +590,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 49,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -652,7 +651,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 632818,
+        "nextAvailableNonce": 638935,
         "owner": "base:0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "base:0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -746,7 +745,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "17359026183137837026435"
+        "totalSupply": "16633949186569431115224"
       },
       "implementationNames": {
         "base:0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
@@ -1482,6 +1481,6 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "usedBlockNumbers": { "base": 33449115 },
-  "permissionsConfigHash": "0x39cdc97ea0a7da958785647edddc899c2882e1cb68140385c57fa36f8ea0ff17"
+  "usedBlockNumbers": { "base": 33759285 },
+  "permissionsConfigHash": "0x0d8dfcb2f463bc6c8d4ba85c41d70a5da10c54484d03e6a8f584d7eb5c9266b3"
 }
