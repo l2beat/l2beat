@@ -19,7 +19,7 @@ interface ConfigSkeleton {
 export function initDiscovery(
   project: string,
   chain: string,
-  initalAddresses: EthereumAddress[],
+  initialAddresses: EthereumAddress[],
 ) {
   const paths = getDiscoveryPaths()
   const projectPath = path.join(paths.discovery, project)
@@ -34,7 +34,7 @@ export function initDiscovery(
   const config = createEmptyConfig(
     existingConfig,
     project,
-    initalAddresses.map((a) => ChainSpecificAddress.fromLong(chain, a)),
+    initialAddresses.map((a) => ChainSpecificAddress.fromLong(chain, a)),
   )
 
   const content = formatJson(config)
