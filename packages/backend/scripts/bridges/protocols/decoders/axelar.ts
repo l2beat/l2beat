@@ -254,10 +254,16 @@ async function decoder(
     const expressLog = input.transactionLogs.find(
       (l) =>
         l.topics[0] ===
-        encodeEventTopics({
+          encodeEventTopics({
+            abi: ABI,
+            eventName: 'ExpressExecutionWithTokenFulfilled',
+          })[0] &&
+        decodeEventLog({
           abi: ABI,
+          data: l.data,
+          topics: l.topics,
           eventName: 'ExpressExecutionWithTokenFulfilled',
-        })[0],
+        }).args.commandId === data.args.commandId,
     )
     if (!expressLog) {
       return undefined
