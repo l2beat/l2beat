@@ -52,10 +52,20 @@ export function EditorView(props: Props) {
   }, [editor, props.files, activeFileIndex])
 
   useEffect(() => {
-    if (props.files.length > 0) {
-      setActiveFileIndex(props.initialFileIndex ?? 0)
+    if (
+      props.files.length > 0 &&
+      props.initialFileIndex !== undefined &&
+      props.range?.index === undefined &&
+      props.range?.data === undefined
+    ) {
+      setActiveFileIndex(props.initialFileIndex)
     }
-  }, [props.files])
+  }, [
+    props.files,
+    props.initialFileIndex,
+    props.range?.index,
+    props.range?.data,
+  ])
 
   useEffect(() => {
     if (
