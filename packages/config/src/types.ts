@@ -742,6 +742,7 @@ export interface ProjectZkCatalogInfo {
   techStack: {
     zkVM?: ZkCatalogTag[]
     finalWrap?: ZkCatalogTag[]
+    monolithicSnark?: ZkCatalogTag[]
   }
   proofSystemInfo: string
   trustedSetups: (TrustedSetup & {

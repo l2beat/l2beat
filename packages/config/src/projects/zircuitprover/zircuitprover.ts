@@ -30,7 +30,7 @@ export const zircuitprover: BaseProject = {
   zkCatalogInfo: {
     creator: 'Zircuit Labs',
     techStack: {
-      finalWrap: [
+      monolithicSnark: [
         ZK_CATALOG_TAGS.Plonk.Halo2,
         ZK_CATALOG_TAGS.curve.BN254,
         ZK_CATALOG_TAGS.PCS.KZG,
