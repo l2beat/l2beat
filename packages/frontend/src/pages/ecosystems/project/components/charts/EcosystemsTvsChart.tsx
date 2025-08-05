@@ -157,40 +157,39 @@ function Header({
   invert?: boolean
 }) {
   return (
-    <div className="mb-3 flex items-start justify-between">
-      <div>
+    <div className="mb-3">
+      <div className="flex justify-between">
         <div className="font-bold text-xl">TVS</div>
-        <EcosystemChartTimeRange range={range} />
-      </div>
-      <div className="text-right">
         {invert ? (
-          <>
-            {stats?.marketShare ? (
-              <div className="font-bold text-xl">
-                {formatPercent(stats?.marketShare)} scaling market share
-              </div>
-            ) : (
-              <Skeleton className="my-[5px] ml-auto h-5 w-20" />
-            )}
-            {stats?.total ? (
-              <div className="font-medium text-branding-primary text-xs">
-                {formatCurrency(stats?.total, unit)}
-              </div>
-            ) : (
-              <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
-            )}
-          </>
+          stats?.marketShare ? (
+            <div className="font-semibold text-xl">
+              {formatPercent(stats?.marketShare)} market share
+            </div>
+          ) : (
+            <Skeleton className="my-[5px] ml-auto h-5 w-20" />
+          )
+        ) : stats?.total ? (
+          <div className="font-semibold text-xl">
+            {formatCurrency(stats?.total, unit)}
+          </div>
         ) : (
-          <>
-            {stats?.total ? (
-              <div className="font-bold text-xl">
-                {formatCurrency(stats?.total, unit)}
-              </div>
-            ) : (
-              <Skeleton className="my-[5px] ml-auto h-5 w-20" />
-            )}
+          <Skeleton className="my-[5px] ml-auto h-5 w-20" />
+        )}
+      </div>
+      <div className="flex justify-between gap-1">
+        <EcosystemChartTimeRange range={range} />
+        {invert ? (
+          stats?.total ? (
+            <div className="font-medium text-branding-primary text-xs">
+              {formatCurrency(stats?.total, unit)}
+            </div>
+          ) : (
+            <Skeleton className="my-[3px] ml-auto h-[14px] w-36" />
+          )
+        ) : (
+          <div className="text-right">
             <EcosystemsMarketShare marketShare={stats?.marketShare} />
-          </>
+          </div>
         )}
       </div>
     </div>
