@@ -153,10 +153,7 @@ export const cartesiprthoneypot: ScalingProject = {
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
-    stateValidation: {
-      ...RISK_VIEW.STATE_FP_INT,
-      secondLine: formatSeconds(minChallengePeriodSeconds),
-    },
+    stateValidation: RISK_VIEW.STATE_FP_INT(minChallengePeriodSeconds),
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
       value: 'Not applicable',
