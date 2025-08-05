@@ -280,11 +280,10 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
           : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
-          ? `${templateVars.display.name} is a ${
-              daProvider !== undefined
-                ? 'Validium that posts commitments'
-                : 'ZK rollup that posts state diffs'
-            } to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
+          ? `${templateVars.display.name} is a ${daProvider !== undefined
+            ? 'Validium that posts commitments'
+            : 'ZK rollup that posts state diffs'
+          } to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
           : undefined,
       },
       tvsWarning: templateVars.display.tvsWarning,
@@ -342,36 +341,36 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       templateVars.stage ??
       (templateVars.daProvider !== undefined
         ? {
-            stage: 'NotApplicable',
-          }
+          stage: 'NotApplicable',
+        }
         : getStage(
-            {
-              stage0: {
-                callsItselfRollup: true,
-                stateRootsPostedToL1: true,
-                dataAvailabilityOnL1: true,
-                rollupNodeSourceAvailable: true,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: null,
-              },
-              stage1: {
-                principle: false,
-                usersHave7DaysToExit: false,
-                usersCanExitWithoutCooperation: false,
-                securityCouncilProperlySetUp: null,
-              },
-              stage2: {
-                proofSystemOverriddenOnlyInCaseOfABug: null,
-                fraudProofSystemIsPermissionless: null,
-                delayWith30DExitWindow: false,
-              },
+          {
+            stage0: {
+              callsItselfRollup: true,
+              stateRootsPostedToL1: true,
+              dataAvailabilityOnL1: true,
+              rollupNodeSourceAvailable: true,
+              stateVerificationOnL1: true,
+              fraudProofSystemAtLeast5Outsiders: null,
             },
-            {
-              rollupNodeLink: 'https://github.com/matter-labs/zksync-era',
-              stage1PrincipleDescription:
-                'While the Security Council is properly set up and is able to recover from a misbehaving operator, the majority is required, meaning that a compromised quorum-blocking minority can prevent users from exiting. Recovery actions are not straightforward and require complex protocol upgrades.',
+            stage1: {
+              principle: false,
+              usersHave7DaysToExit: false,
+              usersCanExitWithoutCooperation: false,
+              securityCouncilProperlySetUp: true,
             },
-          )),
+            stage2: {
+              proofSystemOverriddenOnlyInCaseOfABug: null,
+              fraudProofSystemIsPermissionless: null,
+              delayWith30DExitWindow: false,
+            },
+          },
+          {
+            rollupNodeLink: 'https://github.com/matter-labs/zksync-era',
+            stage1PrincipleDescription:
+              'While the Security Council is properly set up and is able to recover from a misbehaving operator, the majority is required, meaning that a compromised quorum-blocking minority can prevent users from exiting. Recovery actions are not straightforward and require complex protocol upgrades.',
+          },
+        )),
     technology: {
       sequencing: templateVars.nonTemplateTechnology?.sequencing,
       dataAvailability:
@@ -416,23 +415,23 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         templateVars.nonTemplateTechnology?.otherConsiderations ??
         (settlesOnGateway
           ? [
-              {
-                name: 'Gateway - Intermediate Settlement Layer',
-                description: `This chain settles on the Gateway, a validity rollup on Ethereum used as a specialized settlement layer. Chains settling on the Gateway keep the same overall architecture as when settling on Ethereum, but their main entrypoints and bridge messaging are replicated on both Ethereum and the Gateway. This abstracts away the intermediate settlement layer for users. Operators provide data and proofs on the Gateway as they would on Ethereum, and proofs are then aggregated into a single Gateway validity proof on Ethereum for all chains settling on the Gateway. Since ZK stack rollups use state diffs for data availability, pubdata posted to the Gateway must be relayed via L2->L1 messages by a 'RelayedSLDAValidator' contract. Unless stated otherwise, the permissions and governance for a given chain are synced between the Gateway and Ethereum.`,
-                references: [
-                  {
-                    title: 'Gateway - ZKsync Era Documentation',
-                    url: 'https://matter-labs.github.io/zksync-era/core/latest/specs/contracts/gateway/overview.html',
-                  },
-                ],
-                risks: [
-                  {
-                    category: 'Funds can be stolen if',
-                    text: "the Gateway settlement rollup's additional trust assumptions (different operators, separate rollup) are exploited.",
-                  },
-                ],
-              },
-            ]
+            {
+              name: 'Gateway - Intermediate Settlement Layer',
+              description: `This chain settles on the Gateway, a validity rollup on Ethereum used as a specialized settlement layer. Chains settling on the Gateway keep the same overall architecture as when settling on Ethereum, but their main entrypoints and bridge messaging are replicated on both Ethereum and the Gateway. This abstracts away the intermediate settlement layer for users. Operators provide data and proofs on the Gateway as they would on Ethereum, and proofs are then aggregated into a single Gateway validity proof on Ethereum for all chains settling on the Gateway. Since ZK stack rollups use state diffs for data availability, pubdata posted to the Gateway must be relayed via L2->L1 messages by a 'RelayedSLDAValidator' contract. Unless stated otherwise, the permissions and governance for a given chain are synced between the Gateway and Ethereum.`,
+              references: [
+                {
+                  title: 'Gateway - ZKsync Era Documentation',
+                  url: 'https://matter-labs.github.io/zksync-era/core/latest/specs/contracts/gateway/overview.html',
+                },
+              ],
+              risks: [
+                {
+                  category: 'Funds can be stolen if',
+                  text: "the Gateway settlement rollup's additional trust assumptions (different operators, separate rollup) are exploited.",
+                },
+              ],
+            },
+          ]
           : undefined),
     },
     upgradesAndGovernance: (() => {
@@ -518,15 +517,15 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
       daProvider !== undefined
         ? undefined
         : {
-            nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
+          nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
     The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but ZKsync is actively working on a solution for this.`,
-            compressionScheme:
-              'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/11_compression.md).',
-            genesisState:
-              'There have been neither genesis states nor regenesis.',
-            dataFormat:
-              'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/09_pubdata.md).',
-          },
+          compressionScheme:
+            'Bytecodes undergo compression before deployment on Layer 1 (L1). You can find additional information on this process [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/11_compression.md).',
+          genesisState:
+            'There have been neither genesis states nor regenesis.',
+          dataFormat:
+            'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/src/guides/advanced/09_pubdata.md).',
+        },
     stateValidation: {
       description:
         'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
