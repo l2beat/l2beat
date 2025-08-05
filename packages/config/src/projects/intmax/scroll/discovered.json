@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "scroll",
-  "timestamp": 1754378050,
+  "timestamp": 1754378270,
   "configHash": "0xbf5228d93d76a9815248f29132efc51f9d8b74a0bcb55653e1b01db58d64d062",
   "entries": [
     {
@@ -42,6 +42,12 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Main rollup contract used to submit blocks and process deposits. It saves block hashes to be then referenced by the Withdrawal contract.",
+      "ignoreInWatchMode": [
+        "depositIndex",
+        "depositTreeRoot",
+        "getLatestBlockNumber",
+        "lastProcessedDepositId"
+      ],
       "sinceTimestamp": 1752665870,
       "sinceBlock": 17261666,
       "values": {
@@ -90,6 +96,7 @@
         "0xe45dd30cce4dd4d2fbbdcaf6165fb2e148035a2e139b6b671cee3e56c8d4f4c0"
       ],
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["getCurrentPeriod", "nullifierNonce"],
       "sinceTimestamp": 1752740586,
       "sinceBlock": 17291619,
       "values": {
@@ -625,11 +632,11 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "intmax/Claim": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7",
+    "intmax/Claim": "0x96ba300a18f4cb6ac05e9c5f4fcc8b3916daca44ae2a839e88592b0a700c1638",
     "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "intmax/Rollup": "0x368a94c919529ff9268ca20c0ea75a0cf1c3e1b49f449c9746aeb09917b6f584",
+    "intmax/Rollup": "0x9efdc4c4aebfdd09e6ab16141180d3f9fa8e1bfe833622003535a1d9b98836c6",
     "intmax/Withdrawal": "0x75b4c1362cc72d9da892fea60e4d80cb34235523f8074a5ba537671b9cd474c7"
   },
-  "usedBlockNumbers": { "scroll": 18386089 },
+  "usedBlockNumbers": { "scroll": 18386309 },
   "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
 }

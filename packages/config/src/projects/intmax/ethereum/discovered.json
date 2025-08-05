@@ -1,7 +1,7 @@
 {
   "name": "intmax",
   "chain": "ethereum",
-  "timestamp": 1754378050,
+  "timestamp": 1754378270,
   "configHash": "0xab3e140b35504785130784cc7c4e1c032524515bdb4084edb56f2417da06c907",
   "entries": [
     {
@@ -337,6 +337,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.",
+      "ignoreInWatchMode": ["getLastDepositId", "getLastRelayedDepositId"],
       "sinceTimestamp": 1750500599,
       "sinceBlock": 22752152,
       "values": {
@@ -1001,9 +1002,9 @@
     "eigenlayer/PredicateServiceManager": "0xab8cdaa1cd6ce6003cf49746a5682bb5f3e224c6dbc43d244929cbb43e98051a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "intmax/Contribution": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "intmax/Liquidity": "0xb19d7ba5f0af7eed5809b1b18ee4470ac02cc710b98d5089348768ccb41e8b2a",
+    "intmax/Liquidity": "0xd7d5acf0c2574b4d98b015b7e23864f0e8f319fe1fa58532e649aabe51a35cfd",
     "intmax/PredicatePermitter": "0x3558c47cc4cc15bddb87c33f9c6166935da9199ad3d5a55bd77681d197be6728"
   },
-  "usedBlockNumbers": { "ethereum": 23073298 },
+  "usedBlockNumbers": { "ethereum": 23073315 },
   "permissionsConfigHash": "0xf596c0d49109b82369a28ca6ee615a0f398f68fc5f5511120c267a29c74e2046"
 }

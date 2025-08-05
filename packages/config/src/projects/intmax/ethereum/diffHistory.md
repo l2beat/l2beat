@@ -1,28 +1,14 @@
-Generated with discovered.json: 0xe7b7000f85765d3884285be4f7bdf2baa4494a38
+Generated with discovered.json: 0xd910381437ce057b4a96883cad106762af7ca351
 
-# Diff at Tue, 05 Aug 2025 07:14:18 GMT:
+# Diff at Tue, 05 Aug 2025 07:17:57 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@79ef116bb03dfe870ed23d81b625544ae3a617a6 block: 1754295529
-- current timestamp: 1754378050
+- current timestamp: 1754378270
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract Liquidity (0xF65e73aAc9182e353600a916a6c7681F810f79C3) {
-    +++ description: Entry point of the project. Handles deposits, withdrawals, and the communication from and to the main rollup contract on Scroll. Deposits are gated by an AML check.
-      values.getLastDepositId:
--        6524
-+        6662
-      values.getLastRelayedDepositId:
--        6523
-+        6662
-    }
-```
+Added descriptions.
 
 ## Config/verification related changes
 
