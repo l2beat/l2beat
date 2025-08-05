@@ -24,7 +24,7 @@ export const aptos: Bridge = {
         'https://layerzero.network/',
       ],
       repositories: [
-        'https://github.com/LayerZero-Labs/LayerZero-Aptos-Contract',
+        'https://github.com/LayerZero-Labs',
         'https://github.com/aptos-labs',
       ],
       socialMedia: [
@@ -121,7 +121,7 @@ export const aptos: Bridge = {
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails('TokenBridge', 'Aptos Token Bridge.'),
         discovery.getContractDetails('LayerZero Relayer'),
         discovery.getContractDetails('LayerZero Oracle'),
@@ -140,7 +140,7 @@ export const aptos: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'Aptos Multisig',

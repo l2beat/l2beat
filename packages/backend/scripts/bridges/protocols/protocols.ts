@@ -1,3 +1,4 @@
+import type { RpcClient } from '@l2beat/shared'
 import type { Chain } from '../chains'
 import type { Asset } from '../types/Asset'
 import type { DecoderInput } from '../types/DecoderInput'
@@ -11,10 +12,16 @@ import { HYPERLANE } from './decoders/hyperlane'
 import { LAYERZEROV1 } from './decoders/layerzerov1'
 import { LAYERZEROV2 } from './decoders/layerzerov2'
 import { STARGATE } from './decoders/stargate'
+import { WORMHOLE_CCTP } from './decoders/wormhole-cctp'
+import { WORMHOLE_PORTAL } from './decoders/wormhole-portal'
 
 export interface Protocol {
   name: string
-  decoder: (chain: Chain, log: DecoderInput) => Message | Asset | undefined
+  decoder: (
+    chain: Chain,
+    log: DecoderInput,
+    rpc?: RpcClient,
+  ) => Promise<Message | Asset | undefined> | Message | Asset | undefined
 }
 
 export const PROTOCOLS: Protocol[] = [
@@ -27,4 +34,6 @@ export const PROTOCOLS: Protocol[] = [
   STARGATE,
   HYPERLANE,
   DEBRIDGE,
+  WORMHOLE_PORTAL,
+  WORMHOLE_CCTP,
 ]

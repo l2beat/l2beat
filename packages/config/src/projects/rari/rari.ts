@@ -6,12 +6,13 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('rari', 'arbitrum')
+const discovery = new ProjectDiscovery('rari')
 
 export const rari: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1706285474), // 2024-01-26T16:11:14Z
   additionalBadges: [BADGES.L3ParentChain.Arbitrum, BADGES.RaaS.Caldera],
   additionalPurposes: ['NFT'],
+  hostChain: 'arbitrum',
   discovery,
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {

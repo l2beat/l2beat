@@ -145,7 +145,7 @@ export const lightlink: ScalingProject = {
   },
   stateValidation: {
     description:
-      'The project implements an incomplete and non-funcional proof system.',
+      'The project implements an incomplete and non-functional proof system.',
     categories: [
       {
         title: 'Challenges',
@@ -194,19 +194,20 @@ export const lightlink: ScalingProject = {
     ],
   },
   contracts: {
-    addresses: {
-      [discovery.chain]: [...discovery.getDiscoveredContracts()],
-    },
+    addresses: discovery.getDiscoveredContracts(),
     risks: [],
   },
   permissions: {
-    [discovery.chain]: {
-      ...discovery.getDiscoveredPermissions(),
-      ...discovery.getPermissionDetails(
-        'Validators',
-        discovery.formatPermissionedAccounts(validatorAddresses),
-        `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
-      ),
+    ...discovery.getDiscoveredPermissions(),
+    ethereum: {
+      ...discovery.getDiscoveredPermissions()['ethereum'],
+      roles: [
+        discovery.getPermissionDetails(
+          'Validators',
+          discovery.formatPermissionedAccounts(validatorAddresses),
+          `Permissioned set of actors that can validate withdrawals from the bridge. Each validators has a voting power assigned that determines the weight of their vote. Currently, the threshold is set to ${validatorThresholdPercentage}% of the total voting power.`,
+        ),
+      ],
     },
   },
   technology: {},

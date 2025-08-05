@@ -1,12 +1,12 @@
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { AnytrustDAC } from '../../templates/anytrust-template'
 import { orbitStackL3 } from '../../templates/orbitStack'
 
-const discovery = new ProjectDiscovery('inevm', 'arbitrum')
+const discovery = new ProjectDiscovery('inevm')
 
 export const inevm: ScalingProject = orbitStackL3({
   addedAt: UnixTime(1709769600), // 2024-03-07
@@ -49,7 +49,6 @@ export const inevm: ScalingProject = orbitStackL3({
       name: 'CustomGateway',
       description:
         'Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.',
-      ...ESCROW.CANONICAL_EXTERNAL,
       tokens: '*',
     }),
   ],
@@ -67,11 +66,12 @@ export const inevm: ScalingProject = orbitStackL3({
     ],
     gasTokens: ['INJ'],
   },
+  hostChain: 'arbitrum',
   discovery,
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  customDa: AnytrustDAC({ discovery }),
+  customDa: AnytrustDAC({ discovery, hostChain: 'arbitrum' }),
   milestones: [
     {
       title: 'Mainnet Launch',

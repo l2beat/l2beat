@@ -1,7 +1,7 @@
 {
   "name": "abstract",
   "chain": "ethereum",
-  "timestamp": 1751869835,
+  "timestamp": 1753944307,
   "configHash": "0x79b1f196898f93382f95cf484d899f9b1321f99d021f3e3d4225b7efaa922fe9",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -294,7 +294,7 @@
           "eth:0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "eth:0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 21261,
+        "getFirstUnprocessedPriorityTx": 22012,
         "getL2BootloaderBytecodeHash": "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35",
         "getL2DefaultAccountBytecodeHash": "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e",
         "getL2EvmEmulatorBytecodeHash": "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da",
@@ -303,20 +303,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 3,
-        "getPriorityTreeRoot": "0x54220783ad93db248b74269f7c716a78b22e998f7577cdeaae8e0e7668d2b67f",
+        "getPriorityTreeRoot": "0x32f27ddd4b1268443468c98cb2a6dcdd5481368d05578fe8261b68894c7162ad",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 120259084288,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 28, 0],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 25967,
-        "getTotalBatchesExecuted": 25949,
-        "getTotalBatchesVerified": 25962,
-        "getTotalBlocksCommitted": 25967,
-        "getTotalBlocksExecuted": 25949,
-        "getTotalBlocksVerified": 25962,
-        "getTotalPriorityTxs": 21264,
+        "getTotalBatchesCommitted": 30154,
+        "getTotalBatchesExecuted": 30131,
+        "getTotalBatchesVerified": 30146,
+        "getTotalBlocksCommitted": 30154,
+        "getTotalBlocksExecuted": 30131,
+        "getTotalBlocksVerified": 30146,
+        "getTotalPriorityTxs": 22015,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579",
         "getVerifierParams": {
@@ -1284,12 +1284,12 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
+    "shared-zk-stack/Diamond": "0xf58468847183a89ea73709ca00dc1bd45baad858f179c87fa0b9a9a3099edb25",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "usedBlockNumbers": { "ethereum": 22865542 },
+  "usedBlockNumbers": { "ethereum": 23037383 },
   "permissionsConfigHash": "0x5d37294b538a61c76e19dd8560454ec0944539a7e312e79eadf40478d50894b8"
 }

@@ -3,7 +3,7 @@ import type { CustomLinkProps } from '../CustomLink'
 import { CustomLink } from '../CustomLink'
 import { useHiglightableLinkContext } from './HighlightableLinkContext'
 
-export type HighlightableLinkProps = {
+type HighlightableLinkProps = {
   address: string
 } & CustomLinkProps
 

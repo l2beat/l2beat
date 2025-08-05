@@ -1,6 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { RpcClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import type { Chain } from './chains'
 import type { Protocol } from './protocols/protocols'
@@ -36,15 +36,21 @@ export class Decoder {
       for (const transaction of block.transactions) {
         assert(transaction.hash)
         for (const log of logsByTx[transaction.hash] ?? []) {
-          const decoded = decoder(chain, {
-            log: logToViemLog(log),
-            transactionHash: transaction.hash,
-            blockNumber: block.number,
-            blockTimestamp: block.timestamp,
-            transactionLogs: (logsByTx[transaction.hash] ?? []).map(
-              logToViemLog,
-            ),
-          })
+          assert(transaction.to)
+          const decoded = await decoder(
+            chain,
+            {
+              log: logToViemLog(log),
+              transactionHash: transaction.hash,
+              blockNumber: block.number,
+              blockTimestamp: block.timestamp,
+              transactionLogs: (logsByTx[transaction.hash] ?? []).map(
+                logToViemLog,
+              ),
+              transactionTo: EthereumAddress(transaction.to),
+            },
+            chain.rpc,
+          )
           if (decoded?.type === 'message') {
             messages.push(decoded)
             this.logger.info(

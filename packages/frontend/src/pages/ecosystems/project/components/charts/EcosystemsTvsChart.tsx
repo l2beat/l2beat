@@ -55,13 +55,19 @@ export function EcosystemsTvsChart({
     },
   })
 
-  const chartData: TvsChartDataPoint[] | undefined = data?.map(
+  const chartData: TvsChartDataPoint[] | undefined = data?.chart.map(
     ([timestamp, native, canonical, external, ethPrice]) => {
-      const total = native + canonical + external
+      const total =
+        native !== null && canonical !== null && external !== null
+          ? native + canonical + external
+          : null
       const divider = unit === 'usd' ? 1 : ethPrice
       return {
         timestamp,
-        value: total / divider,
+        value:
+          total !== null && divider !== null && divider !== 0
+            ? total / divider
+            : null,
       }
     },
   )
@@ -113,6 +119,7 @@ export function EcosystemsTvsChart({
             yAxis: {
               tickFormatter: (value: number) => formatCurrency(value, unit),
             },
+            syncedUntil: data?.syncedUntil,
           })}
           <ChartTooltip content={<TvsCustomTooltip unit={unit} />} />
           <ChartLegend content={<ChartLegendContent />} />
@@ -166,8 +173,12 @@ function getStats(
   if (!chartData) {
     return undefined
   }
+  const pointsWithData = chartData.filter((point) => point.value !== null) as {
+    timestamp: number
+    value: number
+  }[]
 
-  const last = chartData.at(-1)
+  const last = pointsWithData.at(-1)
   if (!last) {
     return undefined
   }

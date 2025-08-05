@@ -8,7 +8,7 @@ import {
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
 
-export interface MarkdownProps {
+interface MarkdownProps {
   children: string
   inline?: boolean
   className?: string
@@ -56,7 +56,7 @@ export function Markdown(props: MarkdownProps) {
  * Format: [label: hidden content]
  * Uses the native <details> and <summary> elements with Tailwind classes
  */
-export function processCollapsibleText(markdown: string): string {
+function processCollapsibleText(markdown: string): string {
   const collapsiblePattern = /\[([^:]+):\s*(.*?)\]/g
 
   return markdown.replace(collapsiblePattern, (_match, label, content) => {

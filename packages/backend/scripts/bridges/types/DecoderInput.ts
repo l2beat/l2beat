@@ -1,4 +1,4 @@
-import type { UnixTime } from '@l2beat/shared-pure'
+import type { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { Log } from 'viem'
 
 export type DecoderInput = {
@@ -7,4 +7,5 @@ export type DecoderInput = {
   blockTimestamp: UnixTime
   transactionHash: string
   transactionLogs: Log[]
+  transactionTo: EthereumAddress
 }

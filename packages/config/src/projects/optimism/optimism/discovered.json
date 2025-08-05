@@ -10,11 +10,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "oeth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "MintManagerOwner",
       "address": "oeth:0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26",
       "type": "Contract",
@@ -925,11 +920,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "oeth:0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "oeth:0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1518,9 +1508,9 @@
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
+    "opstack/Layer2/L2CrossDomainMessenger": "0xe22f4bc25e3233f9cbc95891feb31bb13e525003e5dac36ec019619b44a06b89",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/L2StandardBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "opstack/Layer2/L2StandardBridge": "0xa3a1bc50117017a509d0dbef8f13b9b8e3bae9146504b23939e69814c6f31060",
     "opstack/Layer2/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
     "opstack/Layer2/OperatorFeeVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1529,5 +1519,5 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
   "usedBlockNumbers": { "optimism": 138918037 },
-  "permissionsConfigHash": "0xfc7324cf0a41696042b2e29721a0a677e3bd452e3999a888011ecca405d3408e"
+  "permissionsConfigHash": "0xfb3e1195e4777333549259e6fcdde01eaad19665e585978eb2c8ed47a088a5b5"
 }

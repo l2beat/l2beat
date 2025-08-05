@@ -1,4 +1,5 @@
 import type { Milestone } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'
@@ -19,7 +20,7 @@ import {
   type CostsTimeRange,
   rangeToResolution,
 } from '~/server/features/scaling/costs/utils/range'
-import { formatTimestamp } from '~/utils/dates'
+import { formatRange } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/formatBytes'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
@@ -50,8 +51,8 @@ const chartMeta = {
     color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line' },
   },
-  notSyncedPosted: {
-    label: 'Data posted (not synced)',
+  estimatedPosted: {
+    label: 'Data posted (estimated)',
     color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line', strokeDasharray: '3 3' },
   },
@@ -59,26 +60,29 @@ const chartMeta = {
 
 interface CostsChartDataPoint {
   timestamp: number
-  calldata: number
-  blobs: number | undefined
-  compute: number
-  overhead: number
+  calldata: number | null
+  blobs: number | null
+  compute: number | null
+  overhead: number | null
   posted?: number | null
 }
 
 interface Props {
   data: CostsChartDataPoint[] | undefined
+  syncedUntil: number | undefined
   unit: CostsUnit
   isLoading: boolean
   milestones: Milestone[]
   range: CostsTimeRange
   showDataPosted: boolean
-  className?: string
+  hasBlobs: boolean
   tickCount?: number
+  className?: string
 }
 
 export function CostsChart({
   data,
+  syncedUntil,
   unit,
   isLoading,
   milestones,
@@ -86,8 +90,46 @@ export function CostsChart({
   range,
   showDataPosted,
   tickCount,
+  hasBlobs,
 }: Props) {
-  const resolution = rangeToResolution(range)
+  const chartMeta = {
+    calldata: {
+      label: 'Calldata',
+      color: 'var(--chart-stacked-blue)',
+      indicatorType: { shape: 'square' },
+    },
+    ...(hasBlobs
+      ? {
+          blobs: {
+            label: 'Blobs',
+            color: 'var(--chart-stacked-yellow)',
+            indicatorType: { shape: 'square' },
+          },
+        }
+      : {}),
+    compute: {
+      label: 'Compute',
+      color: 'var(--chart-stacked-pink)',
+      indicatorType: { shape: 'square' },
+    },
+    overhead: {
+      label: 'Overhead',
+      color: 'var(--chart-stacked-purple)',
+      indicatorType: { shape: 'square' },
+    },
+    posted: {
+      label: 'Data posted',
+      color: 'var(--chart-emerald)',
+      indicatorType: { shape: 'line' },
+    },
+    estimatedPosted: {
+      label: 'Data posted (estimated)',
+      color: 'var(--chart-emerald)',
+      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+    },
+  } satisfies ChartMeta
+
+  const resolution = rangeToResolution({ type: range })
 
   return (
     <ChartContainer
@@ -121,17 +163,19 @@ export function CostsChart({
           activeDot={false}
           isAnimationActive={false}
         />
-        <Area
-          yAxisId="left"
-          dataKey="blobs"
-          fill={chartMeta.blobs.color}
-          fillOpacity={1}
-          strokeWidth={0}
-          stackId="a"
-          dot={false}
-          activeDot={false}
-          isAnimationActive={false}
-        />
+        {chartMeta.blobs && (
+          <Area
+            yAxisId="left"
+            dataKey="blobs"
+            fill={chartMeta.blobs.color}
+            fillOpacity={1}
+            strokeWidth={0}
+            stackId="a"
+            dot={false}
+            activeDot={false}
+            isAnimationActive={false}
+          />
+        )}
         <Area
           yAxisId="left"
           dataKey="calldata"
@@ -156,11 +200,11 @@ export function CostsChart({
         {showDataPosted && (
           <Line
             yAxisId="right"
-            dataKey="notSyncedPosted"
+            dataKey="estimatedPosted"
             strokeWidth={2}
-            stroke={chartMeta.notSyncedPosted.color}
+            stroke={chartMeta.estimatedPosted.color}
             strokeDasharray={
-              chartMeta.notSyncedPosted.indicatorType.strokeDasharray
+              chartMeta.estimatedPosted.indicatorType.strokeDasharray
             }
             dot={false}
             isAnimationActive={false}
@@ -194,9 +238,11 @@ export function CostsChart({
                 : formatCurrency(value, unit),
             tickCount,
           },
+          syncedUntil,
         })}
         <ChartTooltip
           content={<CustomTooltip unit={unit} resolution={resolution} />}
+          filterNull={false}
         />
       </ComposedChart>
     </ChartContainer>
@@ -214,38 +260,52 @@ function CustomTooltip({
   resolution: CostsResolution
 }) {
   if (!active || !payload || typeof label !== 'number') return null
+
   const dataKeys = payload.map((p) => p.dataKey)
-  const hasPostedAndNotSynced =
-    dataKeys.includes('posted') && dataKeys.includes('notSyncedPosted')
+  const hasPostedAndEstimated =
+    dataKeys.includes('posted') && dataKeys.includes('estimatedPosted')
   const filteredPayload = payload.filter(
-    (p) => !hasPostedAndNotSynced || p.name !== 'notSyncedPosted',
+    (p) => !hasPostedAndEstimated || p.name !== 'estimatedPosted',
   )
   const reversedPayload = [...filteredPayload].reverse()
-  const total = payload.reduce((acc, curr) => {
-    if (curr.name === 'posted' || curr.name === 'notSyncedPosted') {
+  const total = payload.reduce<number | null>((acc, curr) => {
+    if (curr.name === 'posted' || curr.name === 'estimatedPosted') {
       return acc
     }
-    return acc + (curr?.value ?? 0)
-  }, 0)
+    if (curr.value === null || curr.value === undefined) {
+      return acc
+    }
+
+    if (acc === null) {
+      return curr?.value ?? null
+    }
+
+    return acc + curr.value
+  }, null)
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
-          {formatTimestamp(label, {
-            mode: resolution === 'daily' ? 'date' : 'datetime',
-            longMonthName: resolution === 'daily',
-          })}
+          {formatRange(
+            label,
+            label +
+              (resolution === 'daily'
+                ? UnixTime.DAY
+                : resolution === 'sixHourly'
+                  ? UnixTime.HOUR * 6
+                  : UnixTime.HOUR),
+          )}
         </div>
         <div className="flex w-full items-center justify-between gap-2 text-heading-16">
           <span>Total</span>
           <span className="whitespace-nowrap text-primary tabular-nums">
-            {formatCostValue(total, unit, 'total')}
+            {total !== null ? formatCostValue(total, unit, 'total') : 'No data'}
           </span>
         </div>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {reversedPayload.map((entry) => {
-            if (entry.value === undefined) return null
+            if (entry.type === 'none') return null
             const config = chartMeta[entry.name as keyof typeof chartMeta]
             return (
               <div
@@ -262,9 +322,12 @@ function CustomTooltip({
                   </span>
                 </span>
                 <span className="whitespace-nowrap font-medium text-label-value-15">
-                  {entry.name === 'posted' || entry.name === 'notSyncedPosted'
-                    ? formatBytes(entry.value)
-                    : formatCostValue(entry.value, unit, 'total')}
+                  {entry.value !== null && entry.value !== undefined
+                    ? entry.name === 'posted' ||
+                      entry.name === 'estimatedPosted'
+                      ? formatBytes(entry.value)
+                      : formatCostValue(entry.value, unit, 'total')
+                    : 'No data'}
                 </span>
               </div>
             )

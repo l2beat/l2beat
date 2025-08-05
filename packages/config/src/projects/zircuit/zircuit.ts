@@ -130,6 +130,7 @@ export const zircuit: ScalingProject = opStackL2({
         chainId: 48900,
       },
     ],
+    explorerUrl: 'https://explorer.zircuit.com',
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
   l1StandardBridgePremintedTokens: ['ZRC'],

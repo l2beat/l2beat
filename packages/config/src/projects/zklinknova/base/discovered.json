@@ -70,7 +70,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "L1ERC20Bridge",
+      "name": "BaseL1ERC20Bridge",
       "address": "base:0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
       "type": "Contract",
       "sourceHashes": [
@@ -158,7 +158,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "zkLink",
+      "name": "BasezkLink",
       "address": "base:0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
@@ -508,5 +508,5 @@
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
   "usedBlockNumbers": { "base": 33449226 },
-  "permissionsConfigHash": "0x70de559a85af019e19413d9970b501211c2eef9c658ee39a81ec79c504a47f4c"
+  "permissionsConfigHash": "0xa52d924a2d1677aa8315bc14d2d2615ca2ff6a066d62370a3b3d9fd78a2dbb5e"
 }

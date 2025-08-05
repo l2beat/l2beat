@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Plugs into the DAValidator interface of zk stack Diamond contracts. This 'DA validator' simply checks correct formatting and encoding of data and relays it via the L1Messenger to L1 to guarantee data availability."
+}

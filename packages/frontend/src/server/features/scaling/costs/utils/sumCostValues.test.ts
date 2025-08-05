@@ -108,19 +108,19 @@ describe('sumValues', () => {
         overhead: 0,
         calldata: 0,
         compute: 0,
-        blobs: undefined,
+        blobs: null,
       },
       eth: {
         overhead: 0,
         calldata: 0,
         compute: 0,
-        blobs: undefined,
+        blobs: null,
       },
       usd: {
         overhead: 0,
         calldata: 0,
         compute: 0,
-        blobs: undefined,
+        blobs: null,
       },
     })
   })
@@ -150,19 +150,19 @@ describe('sumValues', () => {
         overhead: 100,
         calldata: 200,
         compute: 300,
-        blobs: undefined,
+        blobs: null,
       },
       eth: {
         overhead: 1.1,
         calldata: 2.2,
         compute: 3.3,
-        blobs: undefined,
+        blobs: null,
       },
       usd: {
         overhead: 10.1,
         calldata: 20.2,
         compute: 30.3,
-        blobs: undefined,
+        blobs: null,
       },
     })
   })

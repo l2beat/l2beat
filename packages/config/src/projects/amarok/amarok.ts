@@ -142,7 +142,7 @@ Although the values can be different for every message-receiving contract on eac
   },
   contracts: {
     addresses: {
-      [discovery.chain]: [
+      ethereum: [
         discovery.getContractDetails(
           'ConnextBridge',
           'The main Connext contract. Following Diamond design pattern, it contains multiple Facets that implement\
@@ -218,7 +218,7 @@ Although the values can be different for every message-receiving contract on eac
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: {
-    [discovery.chain]: {
+    ethereum: {
       actors: [
         discovery.getMultisigPermission(
           'Connext Multisig',

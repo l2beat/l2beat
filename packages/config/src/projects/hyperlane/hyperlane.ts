@@ -210,7 +210,7 @@ export const hyperlane: Bridge = {
       The Hyperlane messaging protocol consists of three main components: A Mailbox contract on each chain, Interchain Security Modules (ISMs), and Relayers. 
       The Mailbox as the central Endpoint contract on each chain is used for dispatching (out) and processing (in) messages. ISM contracts define the security model (validation logic) for a given message. 
       Unless overridden with a custom ISM config by an application or token router, the default 'multisig' ISM, configured by Hyperlane, is used. It validates messages by verifying that a threshold of ${multisigIsmThresholdString} signatures from a set of validators is reached.
-      Post-dispatch hooks on the origin chain allow for added customizability and can be verified with a synchronized ISM logic at the destination. Hyperlane security and hook configurations have chain-specifc defaults but can be customized for each token route by the router owner.
+      Post-dispatch hooks on the origin chain allow for added customizability and can be verified with a synchronized ISM logic at the destination. Hyperlane security and hook configurations have chain-specific defaults but can be customized for each token route by the router owner.
       
       
       To initiate a token transfer via the Nexus bridge, users call the transferRemote() function of the Nexus bridge token router (e.g. a contract called HypERC20). Depending on the specific token router, users' tokens may be wrapped, burned, or locked.

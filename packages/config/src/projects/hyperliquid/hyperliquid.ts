@@ -13,7 +13,7 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
-const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
+const discovery = new ProjectDiscovery('hyperliquid')
 
 const challengePeriod = discovery.getContractValue<number>(
   'HyperliquidBridge',

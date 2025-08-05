@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "If registrered as a validator in the {{validatorTimelock}}, forwards calls to it, but restricted to `commit`- and `revertBatchesSharedBridge()`.",
+  "fields": {
+    "validatorsPartialVTL": {
+      "handler": {
+        "type": "event",
+        "select": ["validator"],
+        "add": {
+          "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+          "where": ["=", "#chainId", 324]
+        },
+        "remove": {
+          "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+          "where": ["=", "#chainId", 324]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "commit and revert batches but not prove nor execute them."
+        }
+      ]
+    }
+  }
+}
