@@ -15,6 +15,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
@@ -39,6 +40,7 @@ export function DaAbsoluteThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
   const chartMeta = getDaChartMeta({ shape: 'line' })
   const max = useMemo(() => {
     return data
@@ -76,28 +78,39 @@ export function DaAbsoluteThroughputChart({
           <LimeFillGradientDef id="eigenda-fill" />
           <SkyFillGradientDef id="avail-fill" />
         </defs>
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              hiddenDataKeys={hiddenDataKeys}
+              onClick={toggleDataKey}
+            />
+          }
+        />
         {getStrokeOverFillAreaComponents({
           data: [
             {
               dataKey: 'ethereum',
               stroke: chartMeta.ethereum.color,
               fill: 'url(#ethereum-fill)',
+              hide: hiddenDataKeys.includes('ethereum'),
             },
             {
               dataKey: 'celestia',
               stroke: chartMeta.celestia.color,
               fill: 'url(#celestia-fill)',
+              hide: hiddenDataKeys.includes('celestia'),
             },
             {
               dataKey: 'avail',
               stroke: chartMeta.avail.color,
               fill: 'url(#avail-fill)',
+              hide: hiddenDataKeys.includes('avail'),
             },
             {
               dataKey: 'eigenda',
               stroke: chartMeta.eigenda.color,
               fill: 'url(#eigenda-fill)',
+              hide: hiddenDataKeys.includes('eigenda'),
             },
           ],
         })}

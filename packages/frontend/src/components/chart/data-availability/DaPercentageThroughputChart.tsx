@@ -12,6 +12,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
@@ -33,6 +34,7 @@ export function DaPercentageThroughputChart({
   syncStatus,
   resolution,
 }: Props) {
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
@@ -67,30 +69,41 @@ export function DaPercentageThroughputChart({
         margin={{ top: 20 }}
         barCategoryGap={0}
       >
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              hiddenDataKeys={hiddenDataKeys}
+              onClick={toggleDataKey}
+            />
+          }
+        />
         <Bar
           dataKey="ethereum"
           stackId="a"
           fill={chartMeta.ethereum.color}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('ethereum')}
         />
         <Bar
           dataKey="avail"
           stackId="a"
           fill={chartMeta.avail.color}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('avail')}
         />
         <Bar
           dataKey="celestia"
           stackId="a"
           fill={chartMeta.celestia.color}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('celestia')}
         />
         <Bar
           dataKey="eigenda"
           stackId="a"
           fill={chartMeta.eigenda.color}
           isAnimationActive={false}
+          hide={hiddenDataKeys.includes('eigenda')}
         />
         {getCommonChartComponents({
           data: chartData,
