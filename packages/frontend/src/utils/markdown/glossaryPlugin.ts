@@ -85,10 +85,12 @@ export function glossaryPlugin(md: MarkdownIt) {
     assert(token, 'Token is not defined')
     const href = token.attrGet('href')
     if (isGlossaryLink(href)) {
+      const [cleanHref, description] = href?.split('?description=') || []
+      assert(cleanHref && description, 'Href or description is not defined')
+
       token.attrSet('data-link-role', 'glossary')
-      const description = href?.split('?description=')[1]
-      assert(description, 'Description is not defined')
       token.attrSet('data-description', decodeURIComponent(description))
+      token.attrSet('href', cleanHref)
     }
     return defaultRender(tokens, index, options, env, self)
   }

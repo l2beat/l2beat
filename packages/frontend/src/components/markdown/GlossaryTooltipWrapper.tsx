@@ -23,13 +23,11 @@ export function GlossaryTooltipWrapper({
     const container = containerRef.current
     if (!container) return
 
-    // Clean up previous roots
     rootsRef.current.forEach((root) => {
       root.unmount()
     })
     rootsRef.current = []
 
-    // Find all glossary links
     const glossaryLinks = container.querySelectorAll(
       'a[data-link-role="glossary"]',
     )
@@ -38,26 +36,22 @@ export function GlossaryTooltipWrapper({
       const description = link.getAttribute('data-description')
       if (!description) return
 
-      // Create a wrapper element for the tooltip
       const wrapper = document.createElement('span')
       wrapper.style.display = 'inline'
 
       // Replace the link with our wrapper
       link.parentNode?.insertBefore(wrapper, link)
 
-      // Create React root and render tooltip
       const root = createRoot(wrapper)
       rootsRef.current.push(root)
 
-      // Clean the href by removing the description query parameter
-      const originalHref = link.getAttribute('href') || '#'
-      const cleanHref = originalHref.split('?description=')[0]
+      const href = link.getAttribute('href') ?? '#'
 
       root.render(
         <TooltipProvider>
           <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
-              <a href={cleanHref} data-link-role="glossary">
+              <a href={href} data-link-role="glossary">
                 {link.textContent}
               </a>
             </TooltipTrigger>
