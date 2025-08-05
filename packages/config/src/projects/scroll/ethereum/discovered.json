@@ -1,7 +1,7 @@
 {
   "name": "scroll",
   "chain": "ethereum",
-  "timestamp": 1754399860,
+  "timestamp": 1754403402,
   "configHash": "0xc21763bf201b9b076291a3c0f4c38ebbb27e5b957d63d7bcdf5bb6d3bd6ff18c",
   "entries": [
     {
@@ -960,7 +960,7 @@
         "getFirstUnfinalizedMessageEnqueueTime": 1754387135,
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
-        "nextCrossDomainMessageIndex": 959491,
+        "nextCrossDomainMessageIndex": 959493,
         "nextUnfinalizedQueueIndex": 959478,
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "scrollChain": "eth:0xa13BAF47339d63B743e7Da8741db5456DAc1E556",
@@ -2041,7 +2041,7 @@
         "messageQueueV1": "eth:0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "messageQueueV2": "eth:0x56971da63A3C0205184FEF096E9ddFc7A8C2D18a",
         "miscData": {
-          "lastCommittedBatchIndex": 363808,
+          "lastCommittedBatchIndex": 363814,
           "lastFinalizedBatchIndex": 363802,
           "lastFinalizeTimestamp": 1754391719,
           "flags": 1,
@@ -2770,7 +2770,7 @@
         "messenger": "eth:0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "router": "eth:0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6",
-        "totalBridgedUSDC": 23760826276603,
+        "totalBridgedUSDC": 22656079276103,
         "withdrawPaused": false
       },
       "implementationNames": {
@@ -2809,6 +2809,13 @@
         "defaultERC20Gateway": "eth:0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9",
         "ethGateway": "eth:0x7F2b8C31F88B6006c382775eea88297Ec1e3E905",
         "gatewayInContext": "eth:0x0000000000000000000000000000000000000000",
+        "gateways": {
+          "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
+          "eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B",
+          "eth:0x6B175474E89094C44Da98b954EedeAC495271d0F": "eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515",
+          "eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504",
+          "eth:0xD9A442856C234a39a81a089C06451EBAa4306a72": "eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a"
+        },
         "owner": "eth:0x798576400F7D662961BA15C6b3F3d813447a26a6"
       },
       "implementationNames": {
@@ -4009,7 +4016,7 @@
     "scroll/L1ERC1155Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ERC721Gateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
     "scroll/L1ETHGateway": "0x5568fac20f7a8fee66859dff5942732be58300b34bec128295476bd77ef9a2b5",
-    "scroll/L1GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "scroll/L1GatewayRouter": "0x174e26104220ab271c8fc9bd5407a0bcb515974cf8bb7adc401a9bccfef460e1",
     "scroll/L1MessageQueue": "0x5cec50d36f5c888cc9815ba4ee94ec48f3df987dc9b5ee78fbd46bd166e014b2",
     "scroll/L1ScrollMessenger": "0x56886461e1db51e3de8f8c9967c4888b7866eb7dfbd67fd7658e5c06256c8d0f",
     "scroll/L1StandardERC20Gateway": "0xa33e3df7e4fe83cb3d6299d79361bfa1ee10e2a4c4085ae4dc4d8557f2c264c3",
@@ -4022,6 +4029,6 @@
     "scroll/ScrollOwner": "0x95f104a37db212846a47522114d2e16e0fbe1d9ecf346852d5b6faf077105952",
     "scroll/SystemConfig": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "usedBlockNumbers": { "ethereum": 23075109 },
+  "usedBlockNumbers": { "ethereum": 23075402 },
   "permissionsConfigHash": "0x1cff89e86b05c7104e5cccb65756a9b1af6251be4d674e1fa1b3eb43d0212c83"
 }

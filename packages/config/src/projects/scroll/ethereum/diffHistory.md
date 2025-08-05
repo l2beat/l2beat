@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc52cfedce3f2c8562d00dedb8dba9761eb2efe3f
+Generated with discovered.json: 0xab6e2506f957aa6e6de33f09471f27c961bb729b
 
-# Diff at Tue, 05 Aug 2025 13:18:15 GMT:
+# Diff at Tue, 05 Aug 2025 14:17:50 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@c1e07047673eba24b2ca6018329031ddf50eef7d block: 1753093859
-- current timestamp: 1754399860
+- current timestamp: 1754403402
 
 ## Description
 
@@ -147,6 +147,14 @@ discovery. Values are for block 1753093859 (main branch discovery), not current.
 -        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the L1ScrollMessenger fee vault address.","role":".opsFast","via":[{"address":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}
       receivedPermissions.7:
 -        {"permission":"interact","from":"eth:0x798576400F7D662961BA15C6b3F3d813447a26a6","description":"update the minimum delay message queue parameters and enforced mode parameters.","role":".opsFast","via":[{"address":"eth:0x0e58939204eEDa84F796FBc86840A50af10eC4F4","delay":86400}]}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6) {
+    +++ description: Main entry point for depositing ETH and ERC20 tokens, which are then forwarded to the correct gateway.
+      values.gateways:
++        {"eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2":"eth:0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE","eth:0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48":"eth:0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B","eth:0x6B175474E89094C44Da98b954EedeAC495271d0F":"eth:0x67260A8B73C5B77B55c1805218A42A7A6F98F515","eth:0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0":"eth:0x6625C6332c9F91F2D27c304E729B86db87A3f504","eth:0xD9A442856C234a39a81a089C06451EBAa4306a72":"eth:0xA033Ff09f2da45f0e9ae495f525363722Df42b2a"}
     }
 ```
 
