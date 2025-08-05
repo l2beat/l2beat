@@ -2,13 +2,21 @@
 lastUpdated: '2025-07-23'
 ---
 
-## 1. The Stages Framework
+# The Stages Framework
 
-This document is to be considered the source of truth for the latest version of the Stages Framework, which was first introduced [here](https://medium.com/l2beat/introducing-stages-a-framework-to-evaluate-rollups-maturity-d290bb22befe). A changelog can be found at the bottom of the document.
+This page is to be considered an extended explainer for the latest version of the Stages Framework, whose precise specification can be found [here](https://forum.l2beat.com/t/the-stages-framework/291).
 
-# Specification
+## Introduction
 
-## Stage 0 requirements
+The Stages Framework has been [first introduced](https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571) in June 2023 to provide clear and simple indicators of the maturity of a rollup, measured through the level of decentralization and trust minimization achieved by the project. The idea was first proposed by Vitalik Buterin on [Ethereum Magicians](https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571) in Nov 2022 and later made consistent and precise by the L2BEAT team. The Framework has been updated a few times since its inception, and it is expected to continue evolving as the ecosystem matures and new requirements emerge.
+
+It's important to note that the Stages Framework only discusses the maturity of a rollup in terms of decentralization, and not in terms of security. If a project is assumed to be bug-free, then the Framework can be seen as a measure of security against permissioned actors. In practice, 
+
+The rough intuition is as follows: Stage 0 represents a project who is fully controlled by few entities, Stage 2 represents a project that is fully controlled by code, and Stage 1 as something in between. Defining exactly what it means to be "in between" Stage 0 and Stage 2 is the major challenge of the Stages Framework, but extensive effort has been made to provide a clear and objective set of requirements.
+
+## The requirements
+
+### 🟥 Stage 0
 
 **Does the project call itself a rollup?**
 To be considered a rollup, the project must self-identify as such. This requirement is straightforward and helps distinguish rollups from other scaling solution, such as Optimiums, Validiums or other types of bridges.
@@ -28,7 +36,7 @@ The proof system is used to adjudicate whether the proposed state root is correc
 **Are there at least 5 external actors that can submit a fraud proof?**
 A fraud proof system requires at least one honest actor to verify the correctness of proposed state roots and potentially dispute them. The fraud proof system must allow a minimum of 5 external actors to perform this task.
 
-## Stage 1 requirements
+### 🟨 Stage 1
 
 ➡️ The only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal) is by compromising ≥75% of the Security Council.
 
@@ -36,7 +44,7 @@ A fraud proof system requires at least one honest actor to verify the correctnes
 
 Please refer to [this forum post](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) for a detailed explanation of the requirement and some examples.
 
-## Stage 2 requirements
+### 🟩 Stage 2
 
 **Is the fraud proof system permissionless?**
 In this stage, the fraud proof system should be fully decentralized and open to everyone. This means that anyone, not just a set of allowlisted actors, should be able to submit fraud proofs. This is a key requirement to ensure that the system is not controlled by a limited set of entities and instead is subject to the collective scrutiny of the entire community.
@@ -46,15 +54,3 @@ Users should be provided with at least 30 days to exit the system in case of unw
 
 **Is the Security Council restricted to act only due to errors detected on chain?**
 In the final stage of rollup development, the power of the Security Council, if present, should be highly limited. It should only be able to promptly intervene in the case of adjudicable onchain bugs, which are serious flaws in the system that could cause significant harm if not addressed. By restricting the council’s emergency actions to these types of errors, the system becomes more decentralized and the trust placed in the Security Council is reduced. This moves the rollup further towards the ideal of trust minimization, where the code itself is the ultimate authority. An example of this feature is present in the Polygon zkEVM contracts, where the rollup goes in “Emergency Mode” if two different valid proofs can be submitted using the same batches.
-
-# Changelog
-
-* 31 July, 2025: Updated the Stage 1 requirement following the [new definition](https://forum.l2beat.com/t/stages-update-a-high-level-guiding-principle-for-stage-1/338?u=donnoh) that was announced 6 months prior.
-
-* 20 June, 2025: Updated Stage 0 requirements following the recent [Recategorization](https://medium.com/l2beat/framework-update-l2-projects-recategorization-5d43b0d1fe50). In particular, the 5 external challenger requirement has been moved from Stage 1 to Stage 0.
-
-* 4 March, 2025: Clarified how the Security Council size and threshold are assessed for Stages 1 and 2.
-
-* Dec 7, 2023: Updated the requirements for the Security Councils, rationale [here](https://medium.com/l2beat/stages-update-security-council-requirements-4c79cea8ef52).
-
-* Aug 25, 2023: Renamed Optimistic chains to Optimiums ([PR](https://github.com/l2beat/l2beat/pull/1823)).
