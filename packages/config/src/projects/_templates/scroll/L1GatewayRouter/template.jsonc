@@ -7,7 +7,7 @@
       "handler": {
         "type": "event",
         "select": "newGateway",
-        "groupBy": "token", 
+        "groupBy": "token",
         "set": {
           "event": "SetERC20Gateway"
         }
