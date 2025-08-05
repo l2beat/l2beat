@@ -77,6 +77,29 @@ describe(CoingeckoClient.name, () => {
         UnixTime(1622577232),
       )
     })
+
+    it('if range ends in the future queries until UnixTime.now()', async () => {
+      const http = mockObject<HttpClient>({
+        fetch: async () => MOCK_PARSED_DATA,
+      })
+      const coingeckoClient = getMockClient(http, logger)
+
+      const from = 100
+      const now = 200
+      UnixTime.now = () => now
+      const to = UnixTime.now() + UnixTime.DAY
+
+      await coingeckoClient.getCoinMarketChartRange(
+        CoingeckoId('ethereum'),
+        'usd',
+        UnixTime(from),
+        to,
+      )
+
+      expect(http.fetch.calls[0].args[0]).toEqual(
+        `https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=${from}&to=${now}`,
+      )
+    })
   })
 
   describe(CoingeckoClient.prototype.getCoinList.name, () => {
