@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-export function useHiddenDataKeys() {
-  const [hiddenDataKeys, setHiddenDataKeys] = useState<string[]>([])
+export function useHiddenDataKeys(initialHiddenDataKeys: string[] = []) {
+  const [hiddenDataKeys, setHiddenDataKeys] = useState<string[]>(
+    initialHiddenDataKeys,
+  )
 
   const toggleDataKey = (dataKey: string) => {
     setHiddenDataKeys((prev) => {

@@ -4,9 +4,11 @@ import * as RechartsPrimitive from 'recharts'
 import { Logo } from '~/components/Logo'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
+import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
+import { useChartCurrentLegend } from './ChartCurrentLegendContext'
 import {
   ChartDataIndicator,
   type ChartDataIndicatorType,
@@ -195,17 +197,18 @@ function ChartLegendContent({
   onClick,
   hiddenDataKeys,
 }: Omit<React.ComponentProps<'div'>, 'onClick'> &
-  Pick<
-    RechartsPrimitive.LegendProps,
-    'payload' | 'verticalAlign'
-  > & {
+  Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & {
     nameKey?: string
     reverse?: boolean
     hiddenDataKeys?: string[]
     onClick?: (dataKey: string) => void
   }) {
+  const id = React.useId()
+  const [hasFinishedLegendOnboarding, setHasFinishedLegendOnboarding] =
+    useLocalStorage('has-finished-legend-onboarding', false)
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta } = useChart()
+  const chartCurrentLegend = useChartCurrentLegend()
 
   if (!payload?.length) {
     return null
@@ -213,10 +216,13 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <OverflowWrapper childrenRef={contentRef}>
+    <OverflowWrapper
+      childrenRef={contentRef}
+      className={cn(!hasFinishedLegendOnboarding && !!onClick && 'mb-2.5')}
+    >
       <div
         className={cn(
-          'mx-auto flex w-fit items-center gap-2',
+          'group mx-auto flex h-3.5 w-fit items-center gap-2',
           verticalAlign === 'top' && 'pb-3',
           className,
         )}
@@ -228,22 +234,27 @@ function ChartLegendContent({
 
           if (!itemConfig || item.type === 'none') return null
 
+          const isHidden = hiddenDataKeys?.includes(key)
           return (
             <div
               key={item.value}
               className={cn(
                 'flex items-center gap-[3px] [&>svg]:text-secondary',
                 !!onClick && 'cursor-pointer select-none',
+                isHidden && 'opacity-50',
               )}
-              onClick={() => onClick?.(key)}
+              onClick={
+                onClick
+                  ? () => {
+                      onClick?.(key)
+                      setHasFinishedLegendOnboarding(true)
+                    }
+                  : undefined
+              }
             >
               <ChartDataIndicator
                 type={itemConfig.indicatorType}
-                backgroundColor={
-                  hiddenDataKeys?.includes(key)
-                    ? 'var(--secondary)'
-                    : itemConfig.color
-                }
+                backgroundColor={itemConfig.color}
               />
               <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
                 {itemConfig.legendLabel ?? itemConfig.label}
@@ -251,11 +262,23 @@ function ChartLegendContent({
             </div>
           )
         })}
+
+        {!hasFinishedLegendOnboarding && !!onClick && (
+          <div
+            id={id}
+            className={cn(
+              '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-13 italic transition-[opacity,font-size] ease-out group-hover:text-label-value-14',
+              chartCurrentLegend !== id && 'opacity-0',
+            )}
+            data-role="legend-onboarding"
+          >
+            Try clicking legend items to toggle data
+          </div>
+        )}
       </div>
     </OverflowWrapper>
   )
 }
-
 ChartLegendContent.displayName = 'ChartLegend'
 
 // Helper to extract item config from a payload.

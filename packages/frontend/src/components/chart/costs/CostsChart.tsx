@@ -75,7 +75,7 @@ interface Props {
   isLoading: boolean
   milestones: Milestone[]
   range: CostsTimeRange
-  showDataPosted: boolean
+  hasPostedData: boolean
   hasBlobs: boolean
   tickCount?: number
   className?: string
@@ -89,11 +89,11 @@ export function CostsChart({
   milestones,
   className,
   range,
-  showDataPosted,
   tickCount,
+  hasPostedData,
   hasBlobs,
 }: Props) {
-  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys(['posted'])
   const chartMeta = {
     calldata: {
       label: 'Calldata',
@@ -201,7 +201,7 @@ export function CostsChart({
           hide={hiddenDataKeys.includes('calldata')}
         />
 
-        {showDataPosted && (
+        {hasPostedData && (
           <Line
             yAxisId="right"
             dataKey="posted"
@@ -212,7 +212,7 @@ export function CostsChart({
             hide={hiddenDataKeys.includes('posted')}
           />
         )}
-        {showDataPosted && (
+        {hasPostedData && (
           <Line
             yAxisId="right"
             dataKey="estimatedPosted"
@@ -227,7 +227,7 @@ export function CostsChart({
             hide={hiddenDataKeys.includes('posted')}
           />
         )}
-        {showDataPosted && (
+        {hasPostedData && (
           <YAxis
             yAxisId="right"
             orientation="right"
