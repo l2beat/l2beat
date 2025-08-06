@@ -144,11 +144,36 @@ function TrustedSetupCells({
         </div>
       </TableCell>
       <TableCell>
-        <VerifiedCountWithDetails
-          successfulCount={trustedSetups.verifiers.successfulCount}
-          unsuccessfulCount={trustedSetups.verifiers.unsuccessfulCount}
-          notVerifiedCount={trustedSetups.verifiers.notVerifiedCount}
-        />
+        <div className="flex">
+          <VerifiedCountWithDetails
+            successfulCount={trustedSetups.verifiers.successfulCount}
+            unsuccessfulCount={trustedSetups.verifiers.unsuccessfulCount}
+            notVerifiedCount={trustedSetups.verifiers.notVerifiedCount}
+          />
+          {trustedSetups.attesters.length > 0 && (
+            <div className="ml-1 flex items-center gap-1">
+              <span className="font-medium text-label-value-14 text-secondary">
+                by
+              </span>
+              {trustedSetups.attesters.map((attester) => (
+                <Tooltip key={attester.id}>
+                  <TooltipTrigger>
+                    <a href={attester.link} target="_blank" rel="noreferrer">
+                      <img
+                        src={attester.icon}
+                        alt={attester.name}
+                        className="size-4 min-w-4"
+                        width={16}
+                        height={16}
+                      />
+                    </a>
+                  </TooltipTrigger>
+                  <TooltipContent>{attester.name}</TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          )}
+        </div>
       </TableCell>
     </>
   )

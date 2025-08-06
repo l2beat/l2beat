@@ -9,7 +9,7 @@ const columnHelper = createColumnHelper<ZkCatalogEntry>()
 
 const [indexColumn, logoColumn] = getCommonProjectColumns(
   columnHelper,
-  (row) => undefined,
+  () => undefined,
 )
 
 export const zkCatalogColumns = [
