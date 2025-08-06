@@ -5,11 +5,11 @@
 **Table of Contents**
 
 - [How to calculate time to inclusion](#how-to-calculate-time-to-inclusion)
-  - [OP stack](#op-stack)
+  - [OP Stack](#op-stack)
     - [Why this approach?](#why-this-approach)
     - [Example](#example)
 - [How to calculate withdrawal times (L2 -> L1)](#how-to-calculate-withdrawal-times-l2---l1)
-  - [OP stack (with fraud proofs)](#op-stack-with-fraud-proofs)
+  - [OP Stack (with fraud proofs)](#op-stack-with-fraud-proofs)
     - [Why this approach?](#why-this-approach-1)
     - [Example](#example-1)
   - [Scroll](#scroll)
@@ -21,9 +21,9 @@
 
 ## How to calculate time to inclusion
 
-### OP stack
+### OP Stack
 
-The OP stack RPC directly exposes a method, `optimism_syncStatus`, to fetch the latest `unsafe`, `safe` or `finalized` L2 block number. An `unsafe` block is a preconfirmed block but not yet published on L1, a `safe` block is a block that has been published on L1 but not yet finalized, and a `finalized` block is a block that has been finalized on L1.
+The OP Stack RPC directly exposes a method, `optimism_syncStatus`, to fetch the latest `unsafe`, `safe` or `finalized` L2 block number. An `unsafe` block is a preconfirmed block but not yet published on L1, a `safe` block is a block that has been published on L1 but not yet finalized, and a `finalized` block is a block that has been finalized on L1.
 The method can be called as follows:
 
 ```zsh
@@ -138,7 +138,7 @@ The time to inclusion of L2 blocks can be calculated by polling the method and c
 
 #### Why this approach?
 
-The very first approach to calculate the time to inclusion was to decode L2 batches posted to L1, get the list of transactions, and then calculate the difference between the L2 transactions timestamp and the L2 batch timestamp. This required a lot of maintaining, given that the batch format is generally not stable. There are a few possible approaches, like using the [batch decoder](https://github.com/ethereum-optimism/optimism/tree/a29cb96d30fab6fe4d86aaa5c4e6f0bb5270cb64/op-node/cmd/batch_decoder) provided by Optimism, but it's not guaranteed that OP stack forks properly maintain the tool and we might not have access to every project's batch decoder in the first place. A different approach involves using an external API to fetch info like shown in this [Blockscout's batches page](https://optimism.blockscout.com/batches), but they don't seem to expose an API for that.
+The very first approach to calculate the time to inclusion was to decode L2 batches posted to L1, get the list of transactions, and then calculate the difference between the L2 transactions timestamp and the L2 batch timestamp. This required a lot of maintenance, given that the batch format is generally not stable. There are a few possible approaches, like using the [batch decoder](https://github.com/ethereum-optimism/optimism/tree/a29cb96d30fab6fe4d86aaa5c4e6f0bb5270cb64/op-node/cmd/batch_decoder) provided by Optimism, but it's not guaranteed that OP Stack forks properly maintain the tool and we might not have access to every project's batch decoder in the first place. A different approach involves using an external API to fetch info like shown in this [Blockscout's batches page](https://optimism.blockscout.com/batches), but they don't seem to expose an API for that.
 
 #### Example
 
@@ -173,7 +173,7 @@ Batch Statistics for New Safe L2 Blocks:
 
 To calculate the withdrawal time from L2 to L1, we need to fetch the time when the withdrawal is initiated on L2 and the time when it is ready to be executed on L1 and calculate the interval.
 
-### OP stack (with fraud proofs)
+### OP Stack (with fraud proofs)
 
 Withdrawals are initiated by either calling `bridgeETH` or `bridgeETHTo` methods for ETH, or `bridgeERC20` or `bridgeERC20To` methods for ERC20 tokens. Both methods emit a `WithdrawalInitialized` event, which is defined as follows:
 
@@ -223,7 +223,7 @@ function hashWithdrawal(Types.WithdrawalTransaction memory _tx) internal pure re
 }
 ```
 
-where the nonce is must be fetched through the `SentMessage` event emitted by the `L2CrossDomainMessenger` when a withdrawal is initiated. The `SentMessage` event is defined as follows:
+where the nonce must be fetched through the `SentMessage` event emitted by the `L2CrossDomainMessenger` when a withdrawal is initiated. The `SentMessage` event is defined as follows:
 
 ```solidity
 // 0xcb0f7ffd78f9aee47a248fae8db181db6eee833039123e026dcbff529522e52a
