@@ -282,7 +282,9 @@ function ChartLegendContent({
                   interactiveLegend?.onItemClick
                     ? () => {
                         interactiveLegend.onItemClick(key)
-                        setHasFinishedOnboarding(true)
+                        if (!disableOnboarding) {
+                          setHasFinishedOnboarding(true)
+                        }
                       }
                     : undefined
                 }

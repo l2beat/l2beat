@@ -57,6 +57,13 @@ const chartMeta = {
       shape: 'line',
     },
   },
+  others: {
+    label: 'Others',
+    color: 'var(--chart-yellow)',
+    indicatorType: {
+      shape: 'line',
+    },
+  },
   ethereum: {
     label: 'Ethereum',
     color: 'var(--chart-ethereum)',
@@ -67,7 +74,7 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta)
+  const { dataKeys, toggleDataKey } = useChartDataKeys(chartMeta, ['others'])
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'withoutOthers' },
   })
@@ -78,7 +85,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const chartData = useMemo(() => {
     return data?.data.map(
-      ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
+      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
         return {
           timestamp,
           rollups: rollups !== null ? countPerSecond(rollups) : null,
@@ -86,6 +93,7 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             validiumsAndOptimiums !== null
               ? countPerSecond(validiumsAndOptimiums)
               : null,
+          others: others !== null ? countPerSecond(others) : null,
           ethereum: ethereum !== null ? countPerSecond(ethereum) : null,
         }
       },
@@ -129,6 +137,12 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
                 stroke: 'url(#validiums-and-optimiums-stroke)',
                 fill: 'url(#validiums-and-optimiums-fill)',
                 hide: !dataKeys.includes('validiumsAndOptimiums'),
+              },
+              {
+                dataKey: 'others',
+                stroke: 'url(#others-stroke)',
+                fill: 'url(#others-fill)',
+                hide: !dataKeys.includes('others'),
               },
               {
                 dataKey: 'ethereum',
