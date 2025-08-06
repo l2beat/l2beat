@@ -17,6 +17,7 @@ interface CommonChartComponentsProps<
   data: T[] | undefined
   yAxis?: Omit<YAxisProps, 'scale' | 'tick'> & { scale?: 'log' | 'lin' }
   chartType?: 'bar' | 'line'
+  isLoading: boolean | undefined
   syncedUntil: number | undefined
 }
 
@@ -25,6 +26,7 @@ interface CommonChartComponentsProps<
 export function getCommonChartComponents<T extends { timestamp: number }>({
   data,
   yAxis,
+  isLoading,
   chartType = 'line',
   syncedUntil,
 }: CommonChartComponentsProps<T>) {
@@ -37,7 +39,11 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
     )?.timestamp
 
   return [
-    <CartesianGrid key="cartesian-grid" vertical={false} />,
+    <CartesianGrid
+      key="cartesian-grid"
+      vertical={false}
+      syncWithTicks={!isLoading}
+    />,
     <YAxis
       key="y-axis"
       tickLine={false}

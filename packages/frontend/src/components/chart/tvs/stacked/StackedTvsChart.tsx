@@ -113,6 +113,7 @@ export function StackedTvsChart({
         />
         {getCommonChartComponents({
           data,
+          isLoading,
           yAxis: {
             tickFormatter: (value: number) => formatCurrency(value, unit),
             tickCount,
