@@ -191,7 +191,7 @@ function AssemblyIf(node: AST.AssemblyIf, out: OutputStream) {
   formatAstNode(node.condition, out)
   // TODO(radomski): The types in the fast-solidity-parser are wrong as they
   // are taken from the solidity-parser package verbatim. This check here
-  // shouldn't be present eitherway because we dependend on a bug inside the
+  // shouldn't be present anyway because we depended on a bug inside the
   // parser and now the hashes in the shapes expect that the output will
   // contain this bug artifact.
   // This can be removed once we have a script that goes over all the shapes
