@@ -10,5 +10,11 @@
     "address": "0xba4b2b8A076851A3044882493C2e36503d50b925",
     "chain": "ethereum",
     "blockNumber": 22424645
+  },
+  "StrategyManager_redistribution": {
+    "hash": "0x60a5779b3a2f393b1ced806a8d45492e70d92e11a9943b66a8511672ae88c7d3",
+    "address": "0x46aefd30415be99e20169eE7046F65784B46d123",
+    "chain": "ethereum",
+    "blockNumber": 23083543
   }
 }
