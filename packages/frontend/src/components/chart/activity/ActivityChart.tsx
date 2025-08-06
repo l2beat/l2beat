@@ -28,7 +28,7 @@ import {
   YellowFillGradientDef,
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
-import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
+import { useDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
@@ -71,7 +71,6 @@ export function ActivityChart({
   className,
   tickCount,
 }: Props) {
-  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys()
   const chartMeta = {
     projects: {
       label:
@@ -91,9 +90,12 @@ export function ActivityChart({
     },
   } satisfies ChartMeta
 
+  const { dataKeys, toggleDataKey } = useDataKeys(chartMeta)
+
   return (
     <ChartContainer
       data={data}
+      dataKeys={dataKeys}
       className={className}
       meta={chartMeta}
       isLoading={isLoading}
@@ -103,8 +105,8 @@ export function ActivityChart({
         <ChartLegend
           content={
             <ChartLegendContent
-              hiddenDataKeys={hiddenDataKeys}
-              onClick={toggleDataKey}
+              dataKeys={dataKeys}
+              onItemClick={toggleDataKey}
             />
           }
         />
@@ -114,13 +116,13 @@ export function ActivityChart({
               dataKey: 'ethereum',
               stroke: 'url(#strokeEthereum)',
               fill: 'url(#fillEthereum)',
-              hide: hiddenDataKeys.includes('ethereum'),
+              hide: !dataKeys.includes('ethereum'),
             },
             {
               dataKey: 'projects',
               stroke: 'url(#strokeProjects)',
               fill: 'url(#fillProjects)',
-              hide: hiddenDataKeys.includes('projects'),
+              hide: !dataKeys.includes('projects'),
             },
           ],
         })}
@@ -180,7 +182,8 @@ export function ActivityCustomTooltip({
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
-            if (entry.name === undefined || entry.type === 'none') return null
+            if (entry.name === undefined || entry.type === 'none' || entry.hide)
+              return null
             const config = meta[entry.name]
             assert(config, 'No config')
 
@@ -215,7 +218,8 @@ export function ActivityCustomTooltip({
             if (
               entry.name === undefined ||
               entry.value === undefined ||
-              entry.type === 'none'
+              entry.type === 'none' ||
+              entry.hide
             )
               return null
             const config = meta[entry.name]
