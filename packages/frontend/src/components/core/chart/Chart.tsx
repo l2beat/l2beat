@@ -206,9 +206,16 @@ function ChartLegendContent({
   const id = React.useId()
   const [hasFinishedLegendOnboarding, setHasFinishedLegendOnboarding] =
     useLocalStorage('has-finished-legend-onboarding', false)
+
   const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta } = useChart()
   const chartCurrentLegend = useChartCurrentLegend()
+
+  const hasFinishedLegendOnboardingInitial = React.useRef<boolean>(null)
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we want to run this only once
+  React.useEffect(() => {
+    hasFinishedLegendOnboardingInitial.current = hasFinishedLegendOnboarding
+  }, [])
 
   if (!payload?.length) {
     return null
@@ -216,67 +223,70 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <OverflowWrapper
-      childrenRef={contentRef}
-      className={cn(!hasFinishedLegendOnboarding && !!onClick && 'mb-2.5')}
+    <div
+      className={cn(
+        'relative',
+        !hasFinishedLegendOnboardingInitial.current && !!onClick && 'mb-3',
+      )}
     >
-      <div
-        className={cn(
-          'group mx-auto flex h-3.5 w-fit items-center gap-2',
-          verticalAlign === 'top' && 'pb-3',
-          className,
-        )}
-        ref={contentRef}
-      >
-        {actualPayload.map((item) => {
-          const key = `${nameKey ?? item.dataKey ?? 'value'}`
-          const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+      <OverflowWrapper childrenRef={contentRef}>
+        <div
+          className={cn(
+            'group mx-auto flex h-3.5 w-fit items-center gap-2',
+            verticalAlign === 'top' && 'pb-3',
+            className,
+          )}
+          ref={contentRef}
+        >
+          {actualPayload.map((item) => {
+            const key = `${nameKey ?? item.dataKey ?? 'value'}`
+            const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
-          if (!itemConfig || item.type === 'none') return null
+            if (!itemConfig || item.type === 'none') return null
 
-          const isHidden = hiddenDataKeys?.includes(key)
-          return (
-            <div
-              key={item.value}
-              className={cn(
-                'flex items-center gap-[3px] [&>svg]:text-secondary',
-                !!onClick && 'cursor-pointer select-none',
-                isHidden && 'opacity-50',
-              )}
-              onClick={
-                onClick
-                  ? () => {
-                      onClick?.(key)
-                      setHasFinishedLegendOnboarding(true)
-                    }
-                  : undefined
-              }
-            >
-              <ChartDataIndicator
-                type={itemConfig.indicatorType}
-                backgroundColor={itemConfig.color}
-              />
-              <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
-                {itemConfig.legendLabel ?? itemConfig.label}
-              </span>
-            </div>
-          )
-        })}
-
-        {!hasFinishedLegendOnboarding && !!onClick && (
-          <div
-            id={id}
-            className={cn(
-              '-bottom-4 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-13 italic transition-[opacity,font-size] ease-out group-hover:text-label-value-14',
-              chartCurrentLegend !== id && 'opacity-0',
-            )}
-            data-role="legend-onboarding"
-          >
-            Try clicking legend items to toggle data
-          </div>
-        )}
-      </div>
-    </OverflowWrapper>
+            const isHidden = hiddenDataKeys?.includes(key)
+            return (
+              <div
+                key={item.value}
+                className={cn(
+                  'flex items-center gap-[3px] [&>svg]:text-secondary',
+                  !!onClick && 'cursor-pointer select-none',
+                  isHidden && 'opacity-50',
+                )}
+                onClick={
+                  onClick
+                    ? () => {
+                        onClick?.(key)
+                        setHasFinishedLegendOnboarding(true)
+                      }
+                    : undefined
+                }
+              >
+                <ChartDataIndicator
+                  type={itemConfig.indicatorType}
+                  backgroundColor={itemConfig.color}
+                />
+                <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
+                  {itemConfig.legendLabel ?? itemConfig.label}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </OverflowWrapper>
+      {!hasFinishedLegendOnboarding && !!onClick && (
+        <div
+          id={id}
+          className={cn(
+            '-bottom-3.5 pointer-events-none absolute inset-x-0 min-w-44 rounded-xs text-center text-brand text-label-value-13 italic transition-[opacity,font-size] ease-out group-hover:text-label-value-14',
+            chartCurrentLegend !== id && 'opacity-0',
+          )}
+          data-role="legend-onboarding"
+        >
+          Try clicking legend items to toggle data
+        </div>
+      )}
+    </div>
   )
 }
 ChartLegendContent.displayName = 'ChartLegend'

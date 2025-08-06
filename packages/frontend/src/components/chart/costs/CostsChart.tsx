@@ -52,11 +52,6 @@ const chartMeta = {
     color: 'var(--chart-emerald)',
     indicatorType: { shape: 'line' },
   },
-  estimatedPosted: {
-    label: 'Data posted (estimated)',
-    color: 'var(--chart-emerald)',
-    indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-  },
 } satisfies ChartMeta
 
 interface CostsChartDataPoint {
@@ -124,11 +119,6 @@ export function CostsChart({
       color: 'var(--chart-emerald)',
       indicatorType: { shape: 'line' },
     },
-    estimatedPosted: {
-      label: 'Data posted (estimated)',
-      color: 'var(--chart-emerald)',
-      indicatorType: { shape: 'line', strokeDasharray: '3 3' },
-    },
   } satisfies ChartMeta
 
   const resolution = rangeToResolution({ type: range })
@@ -151,6 +141,17 @@ export function CostsChart({
             />
           }
         />
+        {hasPostedData && (
+          <Line
+            yAxisId="right"
+            dataKey="posted"
+            strokeWidth={2}
+            stroke={chartMeta.posted.color}
+            dot={false}
+            isAnimationActive={false}
+            hide={hiddenDataKeys.includes('posted')}
+          />
+        )}
         <Area
           yAxisId="left"
           dataKey="overhead"
@@ -201,32 +202,6 @@ export function CostsChart({
           hide={hiddenDataKeys.includes('calldata')}
         />
 
-        {hasPostedData && (
-          <Line
-            yAxisId="right"
-            dataKey="posted"
-            strokeWidth={2}
-            stroke={chartMeta.posted.color}
-            dot={false}
-            isAnimationActive={false}
-            hide={hiddenDataKeys.includes('posted')}
-          />
-        )}
-        {hasPostedData && (
-          <Line
-            yAxisId="right"
-            dataKey="estimatedPosted"
-            strokeWidth={2}
-            stroke={chartMeta.estimatedPosted.color}
-            strokeDasharray={
-              chartMeta.estimatedPosted.indicatorType.strokeDasharray
-            }
-            dot={false}
-            isAnimationActive={false}
-            legendType="none"
-            hide={hiddenDataKeys.includes('posted')}
-          />
-        )}
         {hasPostedData && (
           <YAxis
             yAxisId="right"
