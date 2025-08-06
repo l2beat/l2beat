@@ -17,6 +17,7 @@ import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGr
 import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
 import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
 import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
+import { useHiddenDataKeys } from '~/components/core/chart/hooks/useHiddenDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputResolution } from '~/server/features/data-availability/throughput/utils/range'
@@ -35,8 +36,6 @@ interface Props {
     | undefined
   projectId: ProjectId
   isLoading: boolean
-  showMax: boolean
-  showTarget: boolean
   milestones: Milestone[]
   syncedUntil: UnixTime | undefined
   resolution: DaThroughputResolution
@@ -46,12 +45,11 @@ export function ProjectDaAbsoluteThroughputChart({
   dataWithConfiguredThroughputs,
   isLoading,
   projectId,
-  showMax,
-  showTarget,
   milestones,
   syncedUntil,
   resolution,
 }: Props) {
+  const { hiddenDataKeys, toggleDataKey } = useHiddenDataKeys(['projectMax'])
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
       ? Math.max(
@@ -97,7 +95,14 @@ export function ProjectDaAbsoluteThroughputChart({
           {projectId === 'avail' && <SkyFillGradientDef id="avail-fill" />}
           {projectId === 'eigenda' && <LimeFillGradientDef id="eigenda-fill" />}
         </defs>
-        <ChartLegend content={<ChartLegendContent />} />
+        <ChartLegend
+          content={
+            <ChartLegendContent
+              onClick={toggleDataKey}
+              hiddenDataKeys={hiddenDataKeys}
+            />
+          }
+        />
         <Area
           dataKey="project"
           fill={`url(#${projectId}-fill)`}
@@ -106,35 +111,34 @@ export function ProjectDaAbsoluteThroughputChart({
           strokeWidth={2}
           isAnimationActive={false}
           dot={false}
+          hide={hiddenDataKeys.includes('project')}
         />
-        {showTarget && (
-          <Area
-            dataKey="projectTarget"
-            isAnimationActive={false}
-            fillOpacity={0}
-            stroke={projectChartMeta.projectTarget?.color}
-            strokeWidth={2}
-            strokeDasharray={
-              projectChartMeta.projectTarget?.indicatorType.strokeDasharray
-            }
-            type="stepAfter"
-            dot={false}
-          />
-        )}
-        {showMax && (
-          <Area
-            dataKey="projectMax"
-            isAnimationActive={false}
-            fillOpacity={0}
-            stroke={projectChartMeta.projectMax?.color}
-            strokeWidth={2}
-            strokeDasharray={
-              projectChartMeta.projectMax?.indicatorType.strokeDasharray
-            }
-            type="stepAfter"
-            dot={false}
-          />
-        )}
+        <Area
+          dataKey="projectTarget"
+          isAnimationActive={false}
+          fillOpacity={0}
+          stroke={projectChartMeta.projectTarget?.color}
+          strokeWidth={2}
+          strokeDasharray={
+            projectChartMeta.projectTarget?.indicatorType.strokeDasharray
+          }
+          type="stepAfter"
+          dot={false}
+          hide={hiddenDataKeys.includes('projectTarget')}
+        />
+        <Area
+          dataKey="projectMax"
+          isAnimationActive={false}
+          fillOpacity={0}
+          stroke={projectChartMeta.projectMax?.color}
+          strokeWidth={2}
+          strokeDasharray={
+            projectChartMeta.projectMax?.indicatorType.strokeDasharray
+          }
+          type="stepAfter"
+          dot={false}
+          hide={hiddenDataKeys.includes('projectMax')}
+        />
         <ChartTooltip
           filterNull={false}
           content={
