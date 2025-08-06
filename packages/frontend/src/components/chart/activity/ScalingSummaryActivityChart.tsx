@@ -23,6 +23,10 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
+import {
+  YellowFillGradientDef,
+  YellowStrokeGradientDef,
+} from '~/components/core/chart/defs/YellowGradientDef'
 import { useChartDataKeys } from '~/components/core/chart/hooks/useChartDataKeys'
 import { getCommonChartComponents } from '~/components/core/chart/utils/getCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/getStrokeOverFillAreaComponents'
@@ -118,6 +122,8 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <PinkStrokeGradientDef id="rollups-stroke" />
             <CyanFillGradientDef id="validiums-and-optimiums-fill" />
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
+            <YellowFillGradientDef id="others-fill" />
+            <YellowStrokeGradientDef id="others-stroke" />
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
