@@ -86,7 +86,8 @@ export const facet: ScalingProject = {
     slug: 'facet',
     description:
       'Facet is a based rollup built on OP-Succinct. It uses FCT as its native gas token, which is mintable by spending gas on L1.',
-    warning: 'External value warning',
+    warning:
+      'The vast majority of funds bridged to Facet are bridged through external non-canonical bridges. Note that external bridges may introduce additional trust assumptions and the Stage and risk rosette assessment on this page applies to the canonical bridge.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     links: {
@@ -225,7 +226,12 @@ export const facet: ScalingProject = {
         name: 'Multi-bridging',
         description:
           'Facet does not designate a canonical bridge and allows multiple bridges to be deployed that use the same Rollup state for depositing and withdrawing assets. Each bridge has its own smart contract counterpart on the L2, meaning the same L1 tokens bridged through different bridges will result in different L2 token representations. The risk analysis presented in this page is based on an arbitrarily selected ETH bridge built on top of Rollup.sol that does not introduce additional trust assumptions. However, there can be multiple other bridges to Facet that introduce additional trust assumptions, such as the FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) fast bridge that relies on a permissioned EOA as operator for withdrawal processing.',
-        risks: [],
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'Funds can be lost if the fast bridge EOA operator signs an invalid withdrawal request.',
+          },
+        ],
         references: [
           {
             title: 'L1 ETH Bridge - Etherscan',
