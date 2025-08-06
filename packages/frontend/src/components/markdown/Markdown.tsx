@@ -7,6 +7,7 @@ import {
 } from '~/utils/markdown/glossaryPlugin'
 import { outLinksPlugin } from '~/utils/markdown/outlinksPlugin'
 import { useGlossaryContext } from './GlossaryContext'
+import { GlossaryTooltipWrapper } from './GlossaryTooltipWrapper'
 
 interface MarkdownProps {
   children: string
@@ -44,10 +45,12 @@ export function Markdown(props: MarkdownProps) {
   const collapsed = processCollapsibleText(rendered)
 
   return (
-    <Comp
-      className={cn('mdc', props.className)}
-      dangerouslySetInnerHTML={{ __html: collapsed }}
-    />
+    <GlossaryTooltipWrapper>
+      <Comp
+        className={cn('mdc', props.className)}
+        dangerouslySetInnerHTML={{ __html: collapsed }}
+      />
+    </GlossaryTooltipWrapper>
   )
 }
 

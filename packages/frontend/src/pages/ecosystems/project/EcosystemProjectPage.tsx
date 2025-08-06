@@ -62,6 +62,7 @@ export function EcosystemProjectPage({
                   className="col-span-12"
                 />
                 <EcosystemsTvsChart
+                  id={ecosystem.id}
                   name={ecosystem.name}
                   entries={ecosystem.liveProjects}
                   allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
@@ -69,6 +70,7 @@ export function EcosystemProjectPage({
                   className="col-span-12 md:col-span-6"
                 />
                 <EcosystemsActivityChart
+                  id={ecosystem.id}
                   name={ecosystem.name}
                   entries={ecosystem.liveProjects}
                   allScalingProjectsUops={ecosystem.allScalingProjects.uops}

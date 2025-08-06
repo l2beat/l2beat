@@ -7,6 +7,10 @@ import type {
   WarningWithSentiment,
 } from '../types'
 import { getDacSentiment } from './dataAvailability'
+import {
+  formatChallengeAndExecutionDelay,
+  formatChallengePeriod,
+} from './formatDelays'
 
 // State validation
 
@@ -34,12 +38,22 @@ export const STATE_FP_1R: TableReadyValue = {
   orderHint: Number.POSITIVE_INFINITY,
 }
 
-export const STATE_FP_INT: TableReadyValue = {
-  value: 'Fraud proofs (INT)',
-  description:
-    'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
-  sentiment: 'good',
-  orderHint: Number.POSITIVE_INFINITY,
+export function STATE_FP_INT(
+  challengePeriodSeconds?: number,
+  executionDelaySeconds?: number,
+): TableReadyValue {
+  return {
+    value: 'Fraud proofs (INT)',
+    description:
+      'Fraud proofs allow actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
+    secondLine: executionDelaySeconds
+      ? formatChallengeAndExecutionDelay(
+          executionDelaySeconds + Number(challengePeriodSeconds),
+        )
+      : formatChallengePeriod(challengePeriodSeconds),
+    sentiment: 'good',
+    orderHint: Number.POSITIVE_INFINITY,
+  }
 }
 
 export const STATE_FP_INT_ZK: TableReadyValue = {
@@ -111,6 +125,7 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   nOfChallengers: number,
   hasAtLeastFiveExternalChallengers?: boolean,
   challengeWindowSeconds?: number,
+  executionDelaySeconds?: number,
 ): TableReadyValue {
   const challengePeriod = challengeWindowSeconds
     ? ` There is a ${formatSeconds(challengeWindowSeconds)} challenge period.`
@@ -146,6 +161,11 @@ export function STATE_ARBITRUM_PERMISSIONED_FRAUD_PROOFS(
   return {
     value: 'Fraud proofs (INT)',
     description: descriptionBase + challengePeriod,
+    secondLine: executionDelaySeconds
+      ? formatChallengeAndExecutionDelay(
+          Number(challengeWindowSeconds) + executionDelaySeconds,
+        )
+      : formatChallengePeriod(challengeWindowSeconds),
     sentiment: sentiment,
     orderHint: nOfChallengers,
   }
