@@ -3,7 +3,6 @@ import {
   type ReactNode,
   useCallback,
   useContext,
-  useEffect,
   useState,
 } from 'react'
 import { useEventListener } from '~/hooks/useEventListener'
@@ -48,10 +47,6 @@ export function ChartCurrentLegendProvider({
       setChartCurrentLegend(closestLegend.id)
     }
   }, [])
-
-  useEffect(() => {
-    onScroll()
-  }, [onScroll])
 
   useEventListener('scroll', onScroll)
 
