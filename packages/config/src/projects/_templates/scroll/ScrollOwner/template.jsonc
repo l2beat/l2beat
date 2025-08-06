@@ -90,7 +90,12 @@
     },
     "scMinorityNoDelay": {
       "copy": "accessControl",
-      "edit": ["get", "roles", "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE", "members"],
+      "edit": [
+        "get",
+        "roles",
+        "SECURITY_COUNCIL_MINORITY_NO_DELAY_ROLE",
+        "members"
+      ],
       "permissions": [
         {
           "type": "interact",
